@@ -14,6 +14,17 @@ const Home = () => {
       path: '/angle-quiz',
       difficulty: '初級 - 進階',
       topics: ['角度命名', '幾何圖形', '三點標記法']
+    },
+    { 
+      id: 'circle-theorems',
+      title: '高中DSE圓形定理',
+      description: 'DSE 圓形幾何互動模型：不同核心定理動態演示，可拖動點觀察數值變化',
+      icon: Calculator,
+      color: 'bg-purple-500',
+      hoverColor: 'hover:bg-purple-600',
+      path: '/circle-theorems',
+      difficulty: '中級 - 高級',
+      topics: ['圓形性質', '切線', '圓內接四邊形']
     }
     // 未來可以在這裡加入更多 apps
   ];
