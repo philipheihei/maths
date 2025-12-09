@@ -5,7 +5,7 @@ import AngleQuiz from './apps/AngleQuiz';
 
 function App() {
   return (
-    <BrowserRouter basename="/maths">
+    <BrowserRouter basename="/">  {/* 改成根路徑 */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/angle-quiz" element={<AngleQuiz />} />
