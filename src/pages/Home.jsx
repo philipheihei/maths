@@ -23,7 +23,7 @@ const Home = () => {
       color: 'bg-purple-500',
       hoverColor: 'hover:bg-purple-600',
       path: '/circle-theorems',
-      chapter: ['F5CH12', 'F2CH13']
+      chapter: ['F5CH12', 'F2CH13'],
       topics: ['圓形性質', '切線', '圓內接四邊形']
     },
     {  
@@ -34,7 +34,7 @@ const Home = () => {
       color: 'bg-indigo-500',
       hovercolor: 'hover:bg-indigo-500',  
       path: '/algebra',  
-      chapter: ['F2CH3', 'F2CH4']
+      chapter: ['F2CH3', 'F2CH4'],
       topics: ['完全平方', '展開', '因式分解']
     }  
     // 未來可以在這裡加入更多 apps
