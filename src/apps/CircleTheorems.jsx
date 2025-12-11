@@ -49,30 +49,6 @@ const getAngleArcPath = (x, y, radius, angle1, angle2) => {
     return ["M", x, y, "L", startPt.x, startPt.y, "A", radius, radius, 0, 0, 1, endPt.x, endPt.y, "Z"].join(" ");
 };
 
-// 強制畫指定方向的弧（用於內角）
-const getDirectedArcPath = (x, y, radius, startAngle, endAngle) => {
-    const startPt = getCoords(startAngle, radius, {x, y});
-    const endPt = getCoords(endAngle, radius, {x, y});
-    
-    let diff = endAngle - startAngle;
-    while (diff < 0) diff += 2 * Math.PI;
-    while (diff >= 2 * Math.PI) diff -= 2 * Math.PI;
-    
-    const largeArc = diff > Math.PI ? 1 : 0;
-    
-    return ["M", x, y, "L", startPt.x, startPt.y, "A", radius, radius, 0, largeArc, 1, endPt.x, endPt.y, "Z"].join(" ");
-};
-
-// 獲取弧中間點位置
-const getDirectedTextPos = (x, y, radius, startAngle, endAngle) => {
-    let diff = endAngle - startAngle;
-    while (diff < 0) diff += 2 * Math.PI;
-    while (diff >= 2 * Math.PI) diff -= 2 * Math.PI;
-    
-    const midAngle = startAngle + diff / 2;
-    return getCoords(midAngle, radius, {x, y});
-};
-
 const getCircleArcPath = (center, radius, startAngle, endAngle) => {
     let diff = endAngle - startAngle;
     while (diff < 0) diff += 2 * Math.PI;
@@ -203,6 +179,9 @@ const CircleTheorems = () => {
     T: Math.PI * 0.5,
   });
 
+  // Mode 8: T 點位置（獨立狀態）
+  const [tPosition, setTPosition] = useState({ x: center.x + 280, y: center.y });
+
   const [draggingPoint, setDraggingPoint] = useState(null);
   const svgRef = useRef(null);
 
@@ -242,6 +221,7 @@ const CircleTheorems = () => {
             break;
         case 'tangent_props':
             newAngles.T = 0;
+            setTPosition({ x: center.x + 280, y: center.y });
             break;
         default:
             newAngles.A = Math.PI * 0.8;
@@ -265,7 +245,19 @@ const CircleTheorems = () => {
     if (!draggingPoint || !svgRef.current) return;
     e.preventDefault();
     const rect = svgRef.current.getBoundingClientRect();
-    const newAngle = getAngle(e.clientX - rect.left, e.clientY - rect.top, center);
+    const scaleX = width / rect.width;
+    const scaleY = height / rect.height;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    const mouseY = (e.clientY - rect.top) * scaleY;
+
+    // Mode 8: T 點自由移動
+    if (mode === 'tangent_props' && draggingPoint === 'T') {
+        setTPosition({ x: mouseX, y: mouseY });
+        return;
+    }
+
+    // 其他模式：點在圓上移動
+    const newAngle = getAngle(mouseX, mouseY, center);
 
     setAngles(prev => {
       const next = { ...prev, [draggingPoint]: newAngle };
@@ -285,19 +277,23 @@ const CircleTheorems = () => {
   });
   coords.O = center;
 
-  // Mode 8 計算
-  const radiusExt = 280;
-  const coordsTExt = {
-      x: center.x + radiusExt * Math.cos(angles.T),
-      y: center.y + radiusExt * Math.sin(angles.T)
-  };
-  const distOT = radiusExt;
-  const angleOffset = Math.acos(radius / distOT);
-  const angleTanA = angles.T - angleOffset;
-  const angleTanB = angles.T + angleOffset;
-  
-  const coordsTanA = getCoords(angleTanA, radius, center);
-  const coordsTanB = getCoords(angleTanB, radius, center);
+  // Mode 8 計算 - T點自由移動
+  const distOT = Math.sqrt(Math.pow(tPosition.x - center.x, 2) + Math.pow(tPosition.y - center.y, 2));
+  const isOutsideCircle = distOT > radius + 1; // +1 避免邊界誤差
+
+  let coordsTanA = { x: 0, y: 0 };
+  let coordsTanB = { x: 0, y: 0 };
+  let angleTanA = 0;
+  let angleTanB = 0;
+
+  if (isOutsideCircle) {
+      const angleToCenter = Math.atan2(tPosition.y - center.y, tPosition.x - center.x);
+      const angleOffset = Math.acos(radius / distOT);
+      angleTanA = angleToCenter + Math.PI - angleOffset;
+      angleTanB = angleToCenter + Math.PI + angleOffset;
+      coordsTanA = getCoords(angleTanA, radius, center);
+      coordsTanB = getCoords(angleTanB, radius, center);
+  }
 
   // 通用角度計算
   const calcDeg = (p1, v, p2) => Math.round(calculateAngleDegrees(p1, v, p2) * 10) / 10;
@@ -332,22 +328,30 @@ const CircleTheorems = () => {
   const angleTanChord = calcDeg(coordsT1, coords.T, coords.A) < 90 ? calcDeg(coordsT1, coords.T, coords.A) : calcDeg(coordsT2, coords.T, coords.A);
   const angleAltSeg = calcDeg(coords.T, coords.P, coords.A);
 
-  // Mode 8 Values
-  const lenTanA = Math.sqrt(Math.pow(coordsTExt.x - coordsTanA.x, 2) + Math.pow(coordsTExt.y - coordsTanA.y, 2));
-  const lenTanB = Math.sqrt(Math.pow(coordsTExt.x - coordsTanB.x, 2) + Math.pow(coordsTExt.y - coordsTanB.y, 2));
-  const angleATO = calcDeg(coordsTanA, coordsTExt, center);
-  const angleBTO = calcDeg(coordsTanB, coordsTExt, center);
-  const angleAOT = calcDeg(coordsTanA, center, coordsTExt);
-  const angleBOT = calcDeg(coordsTanB, center, coordsTExt);
+  // Mode 8 Values（只有在圓外時計算）
+  let lenTanA = 0, lenTanB = 0;
+  let angleATO = 0, angleBTO = 0;
+  let angleAOT = 0, angleBOT = 0;
+  let angleToA = 0, angleToO = 0, angleToB = 0;
+  let angleOA = 0, angleOT = 0, angleOB = 0;
 
-  // Mode 8: 計算內角的弧度
-  const angleToA = getAngle(coordsTanA.x, coordsTanA.y, coordsTExt);
-  const angleToO = getAngle(center.x, center.y, coordsTExt);
-  const angleToB = getAngle(coordsTanB.x, coordsTanB.y, coordsTExt);
-  
-  const angleOA = getAngle(coordsTanA.x, coordsTanA.y, center);
-  const angleOT = getAngle(coordsTExt.x, coordsTExt.y, center);
-  const angleOB = getAngle(coordsTanB.x, coordsTanB.y, center);
+  if (isOutsideCircle) {
+      lenTanA = Math.sqrt(Math.pow(tPosition.x - coordsTanA.x, 2) + Math.pow(tPosition.y - coordsTanA.y, 2));
+      lenTanB = Math.sqrt(Math.pow(tPosition.x - coordsTanB.x, 2) + Math.pow(tPosition.y - coordsTanB.y, 2));
+      angleATO = calcDeg(coordsTanA, tPosition, center);
+      angleBTO = calcDeg(coordsTanB, tPosition, center);
+      angleAOT = calcDeg(coordsTanA, center, tPosition);
+      angleBOT = calcDeg(coordsTanB, center, tPosition);
+      
+      // 用於畫內角弧線
+      angleToA = getAngle(coordsTanA.x, coordsTanA.y, tPosition);
+      angleToO = getAngle(center.x, center.y, tPosition);
+      angleToB = getAngle(coordsTanB.x, coordsTanB.y, tPosition);
+      
+      angleOA = getAngle(coordsTanA.x, coordsTanA.y, center);
+      angleOT = getAngle(tPosition.x, tPosition.y, center);
+      angleOB = getAngle(coordsTanB.x, coordsTanB.y, center);
+  }
 
   const modes = [
     { id: 'center', label: '1. 圓心角兩倍於圓周角' },
@@ -436,7 +440,7 @@ const CircleTheorems = () => {
                   {/* 基礎圓形 */}
                   <circle cx={center.x} cy={center.y} r={radius} className="fill-white stroke-slate-300 stroke-2" />
                   
-                  {/* 圓心 O - 修正：更大更明顯 */}
+                  {/* 圓心 O */}
                   <circle cx={center.x} cy={center.y} r={5} fill="#475569" />
                   <text 
                       x={center.x - 15} 
@@ -567,99 +571,129 @@ const CircleTheorems = () => {
                       </>
                   )}
 
-                  {/* MODE 8 - 切線性質 (修正版) */}
+                  {/* MODE 8 - 切線性質 */}
                   {mode === 'tangent_props' && (
                       <>
-                          {/* Radii OA, OB */}
-                          <line x1={center.x} y1={center.y} x2={coordsTanA.x} y2={coordsTanA.y} className="stroke-slate-300 stroke-2 stroke-dasharray-4" />
-                          <line x1={center.x} y1={center.y} x2={coordsTanB.x} y2={coordsTanB.y} className="stroke-slate-300 stroke-2 stroke-dasharray-4" />
+                          {/* OT 連線（永遠顯示） */}
+                          <line 
+                              x1={center.x} y1={center.y} 
+                              x2={tPosition.x} y2={tPosition.y} 
+                              className="stroke-slate-400 stroke-2 stroke-dasharray-4" 
+                          />
                           
-                          {/* Tangents TA, TB */}
-                          <line x1={coordsTExt.x} y1={coordsTExt.y} x2={coordsTanA.x} y2={coordsTanA.y} className="stroke-red-500 stroke-2" />
-                          <line x1={coordsTExt.x} y1={coordsTExt.y} x2={coordsTanB.x} y2={coordsTanB.y} className="stroke-red-500 stroke-2" />
+                          {/* 顯示 OT 距離 */}
+                          <text 
+                              x={(center.x + tPosition.x) / 2 + 10} 
+                              y={(center.y + tPosition.y) / 2 - 10} 
+                              className="text-xs fill-slate-500 font-bold"
+                          >
+                              {distOT.toFixed(0)}
+                          </text>
                           
-                          {/* OT Line */}
-                          <line x1={center.x} y1={center.y} x2={coordsTExt.x} y2={coordsTExt.y} className="stroke-slate-400 stroke-1 stroke-dasharray-2" />
-                          
-                          {/* Right Angles at A, B */}
-                          <RightAngleMark p={coordsTanA} a={center} b={coordsTExt} />
-                          <RightAngleMark p={coordsTanB} a={center} b={coordsTExt} />
-                          
-                          {/* Length Equal Marks on TA, TB */}
-                          <EqualLengthMark p1={coordsTExt} p2={coordsTanA} count={2} />
-                          <EqualLengthMark p1={coordsTExt} p2={coordsTanB} count={2} />
-                          
-                          {/* 內角 ATO - 從 A 到 O (內側) */}
-                          <g>
-                              <path 
-                                  d={getDirectedArcPath(coordsTExt.x, coordsTExt.y, 50, angleToA, angleToO)} 
-                                  className="fill-blue-100 stroke-blue-500" 
-                              />
+                          {/* T 在圓內的提示 */}
+                          {!isOutsideCircle && (
                               <text 
-                                  x={getDirectedTextPos(coordsTExt.x, coordsTExt.y, 70, angleToA, angleToO).x} 
-                                  y={getDirectedTextPos(coordsTExt.x, coordsTExt.y, 70, angleToA, angleToO).y} 
-                                  className="text-xs font-bold fill-blue-600" 
+                                  x={center.x} 
+                                  y={center.y + radius + 40} 
                                   textAnchor="middle" 
-                                  dominantBaseline="middle"
+                                  className="text-sm fill-orange-500 font-bold"
                               >
-                                  {angleATO}°
+                                  將 T 點拖到圓外以顯示切線
                               </text>
-                          </g>
+                          )}
                           
-                          {/* 內角 BTO - 從 O 到 B (內側) */}
-                          <g>
-                              <path 
-                                  d={getDirectedArcPath(coordsTExt.x, coordsTExt.y, 50, angleToO, angleToB)} 
-                                  className="fill-blue-100 stroke-blue-500" 
-                              />
-                              <text 
-                                  x={getDirectedTextPos(coordsTExt.x, coordsTExt.y, 70, angleToO, angleToB).x} 
-                                  y={getDirectedTextPos(coordsTExt.x, coordsTExt.y, 70, angleToO, angleToB).y} 
-                                  className="text-xs font-bold fill-blue-600" 
-                                  textAnchor="middle" 
-                                  dominantBaseline="middle"
-                              >
-                                  {angleBTO}°
-                              </text>
-                          </g>
-                          
-                          {/* 內角 AOT - 從 A 到 T */}
-                          <g>
-                              <path 
-                                  d={getDirectedArcPath(center.x, center.y, 30, angleOA, angleOT)} 
-                                  className="fill-green-100 stroke-green-500" 
-                              />
-                              <text 
-                                  x={getDirectedTextPos(center.x, center.y, 45, angleOA, angleOT).x} 
-                                  y={getDirectedTextPos(center.x, center.y, 45, angleOA, angleOT).y} 
-                                  className="text-xs font-bold fill-green-600" 
-                                  textAnchor="middle" 
-                                  dominantBaseline="middle"
-                              >
-                                  {angleAOT}°
-                              </text>
-                          </g>
-                          
-                          {/* 內角 BOT - 從 T 到 B */}
-                          <g>
-                              <path 
-                                  d={getDirectedArcPath(center.x, center.y, 30, angleOT, angleOB)} 
-                                  className="fill-green-100 stroke-green-500" 
-                              />
-                              <text 
-                                  x={getDirectedTextPos(center.x, center.y, 45, angleOT, angleOB).x} 
-                                  y={getDirectedTextPos(center.x, center.y, 45, angleOT, angleOB).y} 
-                                  className="text-xs font-bold fill-green-600" 
-                                  textAnchor="middle" 
-                                  dominantBaseline="middle"
-                              >
-                                  {angleBOT}°
-                              </text>
-                          </g>
-                          
-                          {/* Labels */}
-                          <text x={coordsTanA.x - 15} y={coordsTanA.y - 10} className="text-sm font-bold fill-slate-700">A</text>
-                          <text x={coordsTanB.x - 15} y={coordsTanB.y + 20} className="text-sm font-bold fill-slate-700">B</text>
+                          {/* 只有 T 在圓外時顯示切線相關內容 */}
+                          {isOutsideCircle && (
+                              <>
+                                  {/* Radii OA, OB */}
+                                  <line x1={center.x} y1={center.y} x2={coordsTanA.x} y2={coordsTanA.y} className="stroke-slate-300 stroke-2 stroke-dasharray-4" />
+                                  <line x1={center.x} y1={center.y} x2={coordsTanB.x} y2={coordsTanB.y} className="stroke-slate-300 stroke-2 stroke-dasharray-4" />
+                                  
+                                  {/* Tangents TA, TB */}
+                                  <line x1={tPosition.x} y1={tPosition.y} x2={coordsTanA.x} y2={coordsTanA.y} className="stroke-red-500 stroke-2" />
+                                  <line x1={tPosition.x} y1={tPosition.y} x2={coordsTanB.x} y2={coordsTanB.y} className="stroke-red-500 stroke-2" />
+                                  
+                                  {/* Right Angles at A, B */}
+                                  <RightAngleMark p={coordsTanA} a={center} b={tPosition} />
+                                  <RightAngleMark p={coordsTanB} a={center} b={tPosition} />
+                                  
+                                  {/* Length Equal Marks on TA, TB */}
+                                  <EqualLengthMark p1={tPosition} p2={coordsTanA} count={2} />
+                                  <EqualLengthMark p1={tPosition} p2={coordsTanB} count={2} />
+                                  
+                                  {/* 內角 ATO */}
+                                  <g>
+                                      <path 
+                                          d={getAngleArcPath(tPosition.x, tPosition.y, 50, angleToA, angleToO)} 
+                                          className="fill-blue-100 stroke-blue-500" 
+                                      />
+                                      <text 
+                                          x={getTextPos(tPosition.x, tPosition.y, 70, angleToA, angleToO).x} 
+                                          y={getTextPos(tPosition.x, tPosition.y, 70, angleToA, angleToO).y} 
+                                          className="text-xs font-bold fill-blue-600" 
+                                          textAnchor="middle" 
+                                          dominantBaseline="middle"
+                                      >
+                                          {angleATO}°
+                                      </text>
+                                  </g>
+                                  
+                                  {/* 內角 BTO */}
+                                  <g>
+                                      <path 
+                                          d={getAngleArcPath(tPosition.x, tPosition.y, 50, angleToO, angleToB)} 
+                                          className="fill-blue-100 stroke-blue-500" 
+                                      />
+                                      <text 
+                                          x={getTextPos(tPosition.x, tPosition.y, 70, angleToO, angleToB).x} 
+                                          y={getTextPos(tPosition.x, tPosition.y, 70, angleToO, angleToB).y} 
+                                          className="text-xs font-bold fill-blue-600" 
+                                          textAnchor="middle" 
+                                          dominantBaseline="middle"
+                                      >
+                                          {angleBTO}°
+                                      </text>
+                                  </g>
+                                  
+                                  {/* 內角 AOT */}
+                                  <g>
+                                      <path 
+                                          d={getAngleArcPath(center.x, center.y, 30, angleOA, angleOT)} 
+                                          className="fill-green-100 stroke-green-500" 
+                                      />
+                                      <text 
+                                          x={getTextPos(center.x, center.y, 50, angleOA, angleOT).x} 
+                                          y={getTextPos(center.x, center.y, 50, angleOA, angleOT).y} 
+                                          className="text-xs font-bold fill-green-600" 
+                                          textAnchor="middle" 
+                                          dominantBaseline="middle"
+                                      >
+                                          {angleAOT}°
+                                      </text>
+                                  </g>
+                                  
+                                  {/* 內角 BOT */}
+                                  <g>
+                                      <path 
+                                          d={getAngleArcPath(center.x, center.y, 30, angleOT, angleOB)} 
+                                          className="fill-green-100 stroke-green-500" 
+                                      />
+                                      <text 
+                                          x={getTextPos(center.x, center.y, 50, angleOT, angleOB).x} 
+                                          y={getTextPos(center.x, center.y, 50, angleOT, angleOB).y} 
+                                          className="text-xs font-bold fill-green-600" 
+                                          textAnchor="middle" 
+                                          dominantBaseline="middle"
+                                      >
+                                          {angleBOT}°
+                                      </text>
+                                  </g>
+                                  
+                                  {/* Labels A, B */}
+                                  <text x={coordsTanA.x - 15} y={coordsTanA.y - 10} className="text-sm font-bold fill-slate-700">A</text>
+                                  <text x={coordsTanB.x - 15} y={coordsTanB.y + 20} className="text-sm font-bold fill-slate-700">B</text>
+                              </>
+                          )}
                       </>
                   )}
 
@@ -698,9 +732,7 @@ const CircleTheorems = () => {
                       </>
                   )}
                   {mode === 'tangent_props' && (
-                      <>
-                          <PointHandle id="T" coord={coordsTExt} onDown={handlePointerDown} color="fill-red-600" label="T" />
-                      </>
+                      <PointHandle id="T" coord={tPosition} onDown={handlePointerDown} color="fill-red-600" label="T" />
                   )}
 
               </svg>
@@ -754,20 +786,28 @@ const CircleTheorems = () => {
                       <span className="text-blue-600 font-bold">交錯弓形圓周角: {angleAltSeg}°</span>
                   </div>
               )}
-               {mode === 'tangent_props' && (
+              {mode === 'tangent_props' && (
                   <>
-                       <div className="flex justify-between items-center border-b pb-1">
-                          <span className="font-bold">切線長度 (AT vs BT)</span>
-                          <span className="font-mono">{lenTanA.toFixed(1)} vs {lenTanB.toFixed(1)}</span>
-                      </div>
                       <div className="flex justify-between items-center border-b pb-1">
-                          <span className="font-bold">切線夾角半角 (∠ATO vs ∠BTO)</span>
-                          <span className="font-mono text-blue-600">{angleATO}° vs {angleBTO}°</span>
+                          <span className="font-bold">T 到圓心距離 (OT)</span>
+                          <span className="font-mono">{distOT.toFixed(1)} {isOutsideCircle ? '> ' + radius + ' (圓外)' : '≤ ' + radius + ' (圓內)'}</span>
                       </div>
-                       <div className="flex justify-between items-center border-b pb-1">
-                          <span className="font-bold">圓心夾角半角 (∠AOT vs ∠BOT)</span>
-                          <span className="font-mono text-green-600">{angleAOT}° vs {angleBOT}°</span>
-                      </div>
+                      {isOutsideCircle && (
+                          <>
+                              <div className="flex justify-between items-center border-b pb-1">
+                                  <span className="font-bold">切線長度 (AT = BT)</span>
+                                  <span className="font-mono">{lenTanA.toFixed(1)}</span>
+                              </div>
+                              <div className="flex justify-between items-center border-b pb-1">
+                                  <span className="font-bold">切線夾角半角 (∠ATO = ∠BTO)</span>
+                                  <span className="font-mono text-blue-600">{angleATO}°</span>
+                              </div>
+                              <div className="flex justify-between items-center border-b pb-1">
+                                  <span className="font-bold">圓心夾角半角 (∠AOT = ∠BOT)</span>
+                                  <span className="font-mono text-green-600">{angleAOT}°</span>
+                              </div>
+                          </>
+                      )}
                   </>
               )}
               {['center', 'segment', 'semicircle'].includes(mode) && (
