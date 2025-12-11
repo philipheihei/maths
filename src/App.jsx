@@ -2,7 +2,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import AngleQuiz from './apps/AngleQuiz';
-import CircleTheorems from './apps/CircleTheorems';  // 新增
+import CircleTheorems from './apps/CircleTheorems';
+import IdentityQuiz from './apps/IdentityQuiz';
+// 新增
 
 function App() {
   return (
