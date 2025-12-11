@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/angle-quiz" element={<AngleQuiz />} />
+        <Route path="/circle-theorems" element={<CircleTheorems />} />
         <Route path="/circle-theorems" element={<CircleTheorems />} />  {/* 新增 */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
