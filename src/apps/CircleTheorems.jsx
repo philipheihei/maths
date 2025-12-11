@@ -289,8 +289,11 @@ const CircleTheorems = () => {
   if (isOutsideCircle) {
       const angleToCenter = Math.atan2(tPosition.y - center.y, tPosition.x - center.x);
       const angleOffset = Math.acos(radius / distOT);
-      angleTanA = angleToCenter + Math.PI - angleOffset;
-      angleTanB = angleToCenter + Math.PI + angleOffset;
+      
+      // 計算兩個切點的角度（相對於圓心）
+      angleTanA = angleToCenter + angleOffset;
+      angleTanB = angleToCenter - angleOffset;
+      
       coordsTanA = getCoords(angleTanA, radius, center);
       coordsTanB = getCoords(angleTanB, radius, center);
   }
@@ -581,15 +584,6 @@ const CircleTheorems = () => {
                               className="stroke-slate-400 stroke-2 stroke-dasharray-4" 
                           />
                           
-                          {/* 顯示 OT 距離 */}
-                          <text 
-                              x={(center.x + tPosition.x) / 2 + 10} 
-                              y={(center.y + tPosition.y) / 2 - 10} 
-                              className="text-xs fill-slate-500 font-bold"
-                          >
-                              {distOT.toFixed(0)}
-                          </text>
-                          
                           {/* T 在圓內的提示 */}
                           {!isOutsideCircle && (
                               <text 
@@ -786,28 +780,20 @@ const CircleTheorems = () => {
                       <span className="text-blue-600 font-bold">交錯弓形圓周角: {angleAltSeg}°</span>
                   </div>
               )}
-              {mode === 'tangent_props' && (
+              {mode === 'tangent_props' && isOutsideCircle && (
                   <>
                       <div className="flex justify-between items-center border-b pb-1">
-                          <span className="font-bold">T 到圓心距離 (OT)</span>
-                          <span className="font-mono">{distOT.toFixed(1)} {isOutsideCircle ? '> ' + radius + ' (圓外)' : '≤ ' + radius + ' (圓內)'}</span>
+                          <span className="font-bold">切線長度 (AT = BT)</span>
+                          <span className="font-mono">{lenTanA.toFixed(1)}</span>
                       </div>
-                      {isOutsideCircle && (
-                          <>
-                              <div className="flex justify-between items-center border-b pb-1">
-                                  <span className="font-bold">切線長度 (AT = BT)</span>
-                                  <span className="font-mono">{lenTanA.toFixed(1)}</span>
-                              </div>
-                              <div className="flex justify-between items-center border-b pb-1">
-                                  <span className="font-bold">切線夾角半角 (∠ATO = ∠BTO)</span>
-                                  <span className="font-mono text-blue-600">{angleATO}°</span>
-                              </div>
-                              <div className="flex justify-between items-center border-b pb-1">
-                                  <span className="font-bold">圓心夾角半角 (∠AOT = ∠BOT)</span>
-                                  <span className="font-mono text-green-600">{angleAOT}°</span>
-                              </div>
-                          </>
-                      )}
+                      <div className="flex justify-between items-center border-b pb-1">
+                          <span className="font-bold">切線夾角半角 (∠ATO = ∠BTO)</span>
+                          <span className="font-mono text-blue-600">{angleATO}°</span>
+                      </div>
+                      <div className="flex justify-between items-center border-b pb-1">
+                          <span className="font-bold">圓心夾角半角 (∠AOT = ∠BOT)</span>
+                          <span className="font-mono text-green-600">{angleAOT}°</span>
+                      </div>
                   </>
               )}
               {['center', 'segment', 'semicircle'].includes(mode) && (
