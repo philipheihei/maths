@@ -33,9 +33,9 @@ const Home = () => {
       icon: Calculator,  
       color: 'bg-indigo-500',
       hovercolor: 'hover:bg-indigo-500',  
-      path: '/algebra'  
+      path: '/algebra',  
       difficulty: '初級 - 高級',
-      topics: ['圓形性質', '切線', '圓內接四邊形']
+      topics: ['完全平方', '展開', '因式分解']
     }  
     // 未來可以在這裡加入更多 apps
   ];
