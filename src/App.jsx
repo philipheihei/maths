@@ -1,22 +1,20 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Home from './pages/Home';
-import AngleQuiz from './apps/AngleQuiz';
-import CircleTheorems from './apps/CircleTheorems';
-import IdentityQuiz from './apps/IdentityQuiz';
-// 新增
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import AngleQuiz from './components/AngleQuiz';
+import CircleTheorems from './components/CircleTheorems';
+import IdentityQuiz from './components/IdentityQuiz';
 
 function App() {
   return (
-    <BrowserRouter basename="/">
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/angle-quiz" element={<AngleQuiz />} />
         <Route path="/circle-theorems" element={<CircleTheorems />} />
-        <Route path="/identity" element={<IdentityQuiz />} />  {/* 新增 */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/identity-quiz" element={<IdentityQuiz />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
