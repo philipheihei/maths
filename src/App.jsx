@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import AngleQuiz from './components/AngleQuiz';
-import CircleTheorems from './components/CircleTheorems';
-import IdentityQuiz from './components/IdentityQuiz';
+import Home from './pages/Home';  // ✅ 改成 pages
+import AngleQuiz from './apps/AngleQuiz';  // ✅ 改成 apps
+import CircleTheorems from './apps/CircleTheorems';  // ✅ 改成 apps
+import IdentityQuiz from './apps/IdentityQuiz';  // ✅ 改成 apps
 
 function App() {
   return (
