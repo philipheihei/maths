@@ -15,8 +15,9 @@ const Home = () => {
       hoverColor: 'hover:bg-blue-600',
       path: '/angle-quiz',
       level: 'F1',
-      chapter: 'CH5',
-      subject: '面積和體積（一）',
+      badges: [
+        { level: 'F1', chapter: 'CH5', subject: '面積和體積（一）' }
+      ],
       category: '初中',
       topics: ['角度命名', '幾何圖形', '三點標記法']
     },
@@ -29,8 +30,10 @@ const Home = () => {
       hoverColor: 'hover:bg-purple-600',
       path: '/circle-theorems',
       level: 'F5',
-      chapter: 'CH12-13',
-      subject: '圓的基本性質 · 圓的切線',
+      badges: [
+        { level: 'F5', chapter: 'CH12', subject: '圓的基本性質' },
+        { level: 'F5', chapter: 'CH13', subject: '圓的切線' }
+      ],
       category: '高中',
       topics: ['圓形性質', '切線', '圓內接四邊形']
     },
@@ -43,8 +46,10 @@ const Home = () => {
       hoverColor: 'hover:bg-indigo-600',  
       path: '/identity-quiz',  
       level: 'F2',
-      chapter: 'CH3-4',
-      subject: '恆等式 · 因式分解',
+      badges: [
+        { level: 'F2', chapter: 'CH3', subject: '恆等式' },
+        { level: 'F2', chapter: 'CH4', subject: '因式分解' }
+      ],
       category: '初中',
       topics: ['完全平方', '展開', '因式分解']
     }  
@@ -159,16 +164,17 @@ const Home = () => {
                     <h3 className="text-2xl font-bold text-white mb-2">
                       {app.title}
                     </h3>
-                    {/* ✅ 課程標籤 (Form + Chapter) */}
-                    <div className="flex gap-2 mb-2">
-                      <span className="inline-block bg-white/30 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full">
-                        {app.level} {app.chapter}
-                      </span>
+                    {/* ✅ 課程標籤 - 支持多個 badges */}
+                    <div className="flex flex-wrap gap-2">
+                      {app.badges.map((badge, index) => (
+                        <span 
+                          key={index}
+                          className="inline-block bg-white/30 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full"
+                        >
+                          {badge.level} {badge.chapter} {badge.subject}
+                        </span>
+                      ))}
                     </div>
-                    {/* ✅ 課題名稱 */}
-                    <p className="text-white/90 text-sm font-medium">
-                      {app.subject}
-                    </p>
                   </div>
 
                   {/* Card Body */}
