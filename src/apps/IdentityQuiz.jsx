@@ -357,16 +357,17 @@ const IdentityQuiz = () => {
   const insertAtCursor = (textToInsert) => {
     const input = inputRef.current;
     if (!input) return;
-
+  
     const startPos = input.selectionStart;
     const endPos = input.selectionEnd;
     const currentValue = input.value;
-
-    let cursorOffset = textToInsert === '^2' ? 1 : textToInsert.length;
+  
+    // ✅ 所有插入內容都讓光標移到最後
+    const cursorOffset = textToInsert.length;
     
     const newValue = currentValue.substring(0, startPos) + textToInsert + currentValue.substring(endPos);
     setUserAnswer(newValue);
-
+  
     setTimeout(() => {
       input.focus();
       const newCursorPos = startPos + cursorOffset;
