@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BookOpen, Calculator, Lightbulb, Delete, CheckCircle, XCircle, Keyboard as KeyboardIcon, X, Trophy } from 'lucide-react';
+import { BookOpen, Calculator, Lightbulb, Delete, CheckCircle, XCircle, Keyboard as KeyboardIcon, X, Trophy, Home as HomeIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // --- 資料庫 (包含所有題目與邏輯) ---
 const QUESTIONS = [
@@ -694,7 +695,16 @@ export default function EquationQuizApp() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center">
+    <>
+      <Link 
+        to="/" 
+        className="fixed top-4 left-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
+      >
+        <HomeIcon size={18} />
+        <span className="font-medium">返回首頁</span>
+      </Link>
+
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center">
         <div className="w-full max-w-4xl bg-white shadow-2xl min-h-screen md:min-h-[90vh] md:my-4 md:rounded-2xl overflow-hidden flex flex-col relative">
             
             <header className="bg-slate-800 text-white p-4 md:p-6 flex justify-between items-center z-10">
@@ -886,6 +896,16 @@ export default function EquationQuizApp() {
                 </div>
             )}
         </div>
+        <CheatsheetModal isOpen={showNotes} onClose={() => setShowNotes(false)}/>
+        <Keypad 
+            onInput={handleKeypadInput} 
+            onDelete={handleDelete} 
+            onClear={handleClear}
+            onEnter={handleSubmit}
+            isVisible={keypadVisible}
+            toggleVisibility={toggleKeypad}
+        />
     </div>
+    </>
   );
 }

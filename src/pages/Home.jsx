@@ -66,7 +66,8 @@ const Home = () => {
         { level: 'F2', chapter: 'CH9', subject: '二元一次方程' }
       ],
       category: '初中',
-      topics: ['聯立方程', '設式']
+      topics: ['聯立方程', '設式'],
+      inDevelopment: true
     }
   ];
 
@@ -171,7 +172,12 @@ const Home = () => {
                   className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-blue-300 hover:-translate-y-1"
                 >
                   {/* Card Header */}
-                  <div className={`${app.color} p-6 ${app.hoverColor} transition-colors`}>
+                  <div className={`${app.color} p-6 ${app.hoverColor} transition-colors relative`}>
+                    {app.inDevelopment && (
+                      <div className="absolute top-2 right-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1">
+                        ⚠️ 開發中
+                      </div>
+                    )}
                     <div className="flex items-center justify-between mb-4">
                       <Icon className="w-10 h-10 text-white" />
                       <ArrowRight className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all" />
