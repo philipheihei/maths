@@ -414,7 +414,7 @@ const CheatsheetModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default function EquationQuizApp() {
+export default function SimultaneousEqQuiz() {
   const [level, setLevel] = useState(1);
   const [qIndex, setQIndex] = useState(0);
   const [questionOrder, setQuestionOrder] = useState([]); 
