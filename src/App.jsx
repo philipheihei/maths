@@ -5,6 +5,7 @@ import AngleQuiz from './apps/AngleQuiz';  // ✅ 改成 apps
 import CircleTheorems from './apps/CircleTheorems';  // ✅ 改成 apps
 import IdentityQuiz from './apps/IdentityQuiz';  // ✅ 改成 apps
 import SimultaneousEqQuiz from './apps/SimultaneousEqQuiz';
+import IndexLaws from './apps/IndexLaws';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/circle-theorems" element={<CircleTheorems />} />
         <Route path="/identity-quiz" element={<IdentityQuiz />} />
         <Route path="/simultaneous-eq-quiz" element={<SimultaneousEqQuiz />} />
+        <Route path="/index-laws" element={<IndexLaws />} />
       </Routes>
     </Router>
   );

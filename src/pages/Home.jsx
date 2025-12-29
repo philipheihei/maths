@@ -54,6 +54,21 @@ const Home = () => {
       topics: ['完全平方', '展開', '因式分解']
     },
     {
+      id: 'index-laws',
+      title: '指數定律',
+      description: 'F3 CH2 指數定律：同底相乘、相除、冪的乘方及負指數',
+      icon: Calculator,
+      color: 'bg-emerald-500',
+      hoverColor: 'hover:bg-emerald-600',
+      path: '/index-laws',
+      level: 'F3',
+      badges: [
+        { level: 'F3', chapter: 'CH2', subject: '指數定律' }
+      ],
+      category: '初中',
+      topics: ['指數運算', '負指數', '正指數表示']
+    },
+    {
       id: 'simultaneous-eq',
       title: '聯立方程特訓',
       description: '熟習聯立方程應用題設式',
