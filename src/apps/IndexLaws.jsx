@@ -184,8 +184,33 @@ export default function IndexLaws() {
     const den = `x^{${c}}y^{${d}}`;
     const qLatex = `\\frac{${num}}{${den}}`;
 
+    // Step 1: 拆括號
     const step1X = a * k;
     const step1Y = b * k;
+    let step1Str = `x^${step1X}y^${step1Y}/x^${c}y^${d}`;
+    
+    // Step 2: 負指數轉正指數 (將分子分母中的負指數項移動)
+    const step2NumParts = [];
+    const step2DenParts = [];
+    
+    if (step1X >= 0) step2NumParts.push(`x^${step1X}`);
+    else step2DenParts.push(`x^${Math.abs(step1X)}`);
+    
+    if (step1Y >= 0) step2NumParts.push(`y^${step1Y}`);
+    else step2DenParts.push(`y^${Math.abs(step1Y)}`);
+    
+    if (c >= 0) step2DenParts.push(`x^${c}`);
+    else step2NumParts.push(`x^${Math.abs(c)}`);
+    
+    if (d >= 0) step2DenParts.push(`y^${d}`);
+    else step2NumParts.push(`y^${Math.abs(d)}`);
+    
+    if (step2NumParts.length === 0) step2NumParts.push('1');
+    if (step2DenParts.length === 0) step2DenParts.push('1');
+    
+    let step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
+    
+    // Step 3: 指數約簡（正指數）- 最終答案
     const finalX = step1X - c;
     const finalY = step1Y - d;
 
@@ -210,7 +235,10 @@ export default function IndexLaws() {
       level: 2,
       qLatex,
       expectations: {
+        step1: step1Str,
         step1Keywords: [`x^${step1X}`, `y^${step1Y}`],
+        step2: step2Str,
+        step3: finalAnsStr,
         finalAns: finalAnsStr,
       },
     });
@@ -288,35 +316,39 @@ export default function IndexLaws() {
 
   const Keypad = () => {
     const keys = [
-      'x', 'y', '->', '^',
-      '7', '8', '9', '/',
-      '4', '5', '6', '-',
-      '1', '2', '3', '0',
-      'DEL', 'CLR'
+      ['x', 'y', '(', ')'],
+      ['7', '8', '9', '^'],
+      ['4', '5', '6', '/'],
+      ['1', '2', '3', '-'],
+      ['0', 'DEL', 'CLR']
     ];
 
     return (
       <div className="bg-gray-50 border-t border-gray-200 p-4 pb-8">
-        <div className="grid grid-cols-4 gap-2 max-w-md mx-auto">
-          {keys.map(k => (
-            <button
-              key={k}
-              onClick={() => {
-                if (k === 'DEL') backspace();
-                else if (k === 'CLR') clearInput();
-                else insertChar(k);
-              }}
-              disabled={hasChecked}
-              className={`h-12 rounded-xl text-lg font-medium shadow-sm active:scale-95 transition-all
-                ${hasChecked ? 'opacity-50 cursor-not-allowed' : ''}
-                ${['DEL', 'CLR'].includes(k) ? 'bg-red-50 text-red-500 hover:bg-red-100' : 
-                  ['x', 'y', '^', '/', '->', '-'].includes(k) ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-serif italic' : 
-                  'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
-            >
-              {k === '/' ? <FractionIcon /> : 
-               k === 'DEL' ? <Delete size={20} className="mx-auto"/> : 
-               k === 'CLR' ? <Eraser size={20} className="mx-auto"/> : k}
-            </button>
+        <div className="max-w-md mx-auto space-y-2">
+          {keys.map((row, rowIdx) => (
+            <div key={rowIdx} className="grid gap-2" style={{ gridTemplateColumns: `repeat(${row.length}, 1fr)` }}>
+              {row.map(k => (
+                <button
+                  key={k}
+                  onClick={() => {
+                    if (k === 'DEL') backspace();
+                    else if (k === 'CLR') clearInput();
+                    else insertChar(k);
+                  }}
+                  disabled={hasChecked}
+                  className={`h-12 rounded-xl text-lg font-medium shadow-sm active:scale-95 transition-all
+                    ${hasChecked ? 'opacity-50 cursor-not-allowed' : ''}
+                    ${['DEL', 'CLR'].includes(k) ? 'bg-red-50 text-red-500 hover:bg-red-100' : 
+                      ['x', 'y', '^', '/', '-', '(', ')'].includes(k) ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100' : 
+                      'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
+                >
+                  {k === '/' ? <FractionIcon /> : 
+                   k === 'DEL' ? <Delete size={20} className="mx-auto"/> : 
+                   k === 'CLR' ? <Eraser size={20} className="mx-auto"/> : k}
+                </button>
+              ))}
+            </div>
           ))}
         </div>
       </div>
@@ -494,10 +526,32 @@ export default function IndexLaws() {
                 </div>
                 <p className="font-bold text-lg">{feedback.msg}</p>
               </div>
-              {!feedback.correct && (
+              {level === 1 && !feedback.correct && (
                 <div className="mt-2 p-4 bg-white/60 rounded-xl border border-red-100/50 text-center">
                   <div className="text-3xl font-bold text-slate-800 my-2">
-                    <Latex>{level === 1 ? problem.ans : toLatex(problem.expectations.finalAns)}</Latex>
+                    <Latex>{problem.ans}</Latex>
+                  </div>
+                </div>
+              )}
+              {level === 2 && (
+                <div className="mt-2 space-y-3">
+                  <div className="p-3 bg-white/60 rounded-xl border border-blue-100/50">
+                    <div className="text-xs font-bold text-indigo-500 mb-1">步驟 1：拆括號</div>
+                    <div className="text-lg font-bold text-slate-800">
+                      <Latex>{toLatex(problem.expectations.step1)}</Latex>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-white/60 rounded-xl border border-blue-100/50">
+                    <div className="text-xs font-bold text-slate-600 mb-1">步驟 2：負指數轉正指數</div>
+                    <div className="text-lg font-bold text-slate-800">
+                      <Latex>{toLatex(problem.expectations.step2)}</Latex>
+                    </div>
+                  </div>
+                  <div className="p-3 bg-white/60 rounded-xl border border-emerald-100">
+                    <div className="text-xs font-bold text-emerald-600 mb-1">步驟 3：指數約簡（正指數）</div>
+                    <div className="text-2xl font-bold text-slate-800">
+                      <Latex>{toLatex(problem.expectations.step3)}</Latex>
+                    </div>
                   </div>
                 </div>
               )}
