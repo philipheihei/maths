@@ -212,7 +212,7 @@ export default function IndexLaws() {
   };
 
   const resetState = () => {
-    setUserInputs({ step1: '', step2: '', final: '' });
+    setUserInputs({ step1: '', step2: '', step3: '', final: '' });
     setFeedback(null);
     setShowHint(false);
     setHasChecked(false);
@@ -384,7 +384,7 @@ export default function IndexLaws() {
         <div className="m-4 mt-6 bg-white">
           <div className="flex justify-between items-center mb-6">
             <span className="text-xs font-bold text-indigo-500 uppercase tracking-widest bg-indigo-50 px-2 py-1 rounded">題目</span>
-            <span className="text-lg font-bold text-slate-400">請以正指數表示</span>
+            <span className="text-lg font-bold text-black">請以正指數表示</span>
             <button 
               onClick={() => setShowHint(!showHint)}
               className="text-slate-400 hover:text-indigo-500 flex items-center gap-1 text-xs font-medium transition-colors"
@@ -446,7 +446,7 @@ export default function IndexLaws() {
                 className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step1' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-indigo-500">步驟 1：去括號</span>
+                  <span className="text-xs font-bold text-indigo-500">步驟 1：拆括號</span>
                   <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
                 </div>
                 <div className="min-h-[2em] text-lg flex items-center">
@@ -458,11 +458,23 @@ export default function IndexLaws() {
                 className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step2' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-slate-400">步驟 2：整理</span>
-                  <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">可略</span>
+                  <span className="text-xs font-bold text-slate-400">步驟 2：負指數轉正指數</span>
+                  <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
                 </div>
                 <div className="min-h-[2em] text-lg flex items-center">
                   {userInputs.step2 ? <Latex>{toLatex(userInputs.step2)}</Latex> : <span className="text-slate-300 text-sm">輸入...</span>}
+                </div>
+              </div>
+
+              <div onClick={() => !hasChecked && setActiveField('step3')} 
+                className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step3' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xs font-bold text-slate-400">步驟 3：指數約簡</span>
+                  <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
+                </div>
+                <div className="min-h-[2em] text-lg flex items-center">
+                  {userInputs.step3 ? <Latex>{toLatex(userInputs.step3)}</Latex> : <span className="text-slate-300 text-sm">輸入...</span>}
                 </div>
               </div>
 
@@ -491,7 +503,7 @@ export default function IndexLaws() {
               {!feedback.correct && (
                 <div className="mt-2 p-4 bg-white/60 rounded-xl border border-red-100/50 text-center">
                   <div className="text-3xl font-bold text-slate-800 my-2">
-                    <Latex>{level === 1 ? problem.ans : problem.expectations.finalAns}</Latex>
+                    <Latex>{level === 1 ? problem.ans : toLatex(problem.expectations.finalAns)}</Latex>
                   </div>
                 </div>
               )}
