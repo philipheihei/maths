@@ -114,10 +114,10 @@ const QUESTIONS = [
     text: "在某夏令營,男生人數與女生人數之比為7:6。若17名男生和4名女生離開該夏令營,則男生人數與女生人數相等。求在夏令營原本的女生人數。",
     vars: "設 x 為男生人數,y 為女生人數。",
     segments: [
-      { text: "男生人數與女生人數之比為7:6。", keywords: ["男生人數", "與", "女生人數", "之比為", "7:6"], valid: ["x/y=7/6", "6x=7y"], color: "text-red-600", borderColor: "border-red-400" },
+      { text: "男生人數與女生人數之比為7:6。", keywords: ["男生人數與女生人數之比", "為", "7:6"], valid: ["x/y=7/6", "6x=7y"], color: "text-red-600", borderColor: "border-red-400" },
       { 
         text: "若17名男生和4名女生離開,人數相等。", 
-        keywords: ["17名男生", "和", "4名女生離開", "人數相等"], 
+        keywords: ["17名男生", "4名女生離開", "人數相等"], 
         previewOrder: [1, 3, 2],
         valid: ["x-17=y-4", "y-4=x-17"], 
         color: "text-green-600", 
@@ -162,7 +162,7 @@ const QUESTIONS = [
     text: "在設有6個展區的展覽中心內有132名保安員。各個展區均有相同人數的保安員。在每個展區內,女保安員均較男保安員多4名。求在該展覽中心內男保安員的人數。",
     vars: "設 x 為每區男保安,y 為每區女保安。",
     segments: [
-      { text: "在設有6個展區的展覽中心內有132名保安員。各個展區均有相同人數的保安員。", keywords: ["6個展區", "132名保安員"], valid: ["6(x+y)=132", "6x+6y=132"], color: "text-red-600", borderColor: "border-red-400" },
+      { text: "在設有6個展區的展覽中心內有132名保安員。各個展區均有相同人數的保安員。", keywords: ["6個展區", "內有", "132名保安員"], valid: ["6(x+y)=132", "6x+6y=132"], color: "text-red-600", borderColor: "border-red-400" },
       { text: "在每個展區內,女保安員均較男保安員多4名。", keywords: ["女", "較", "男", "多4名"], valid: ["y=x+4"], color: "text-green-600", borderColor: "border-green-400" }
     ],
     answers: [
@@ -231,8 +231,8 @@ const QUESTIONS = [
     text: "在某遊樂場,成人人數與小童人數之比為13:6 。若9名成人和24名小童進入該遊樂場,則成人人數與小童人數之比為8:7 。求在該遊樂場原本的成人人數。",
     vars: "設 x 為原本成人數,y 為原本小童數。",
     segments: [
-      { text: "成人人數與小童人數之比為13:6。", keywords: ["成人人數", "與", "小童人數", "之比為", "13:6"], valid: ["x/y=13/6", "6x=13y"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "9名成人和24名小童進入後,比為8:7。", keywords: ["9名成人", "和", "24名小童進入", "比為", "8:7"], valid: ["(x+9)/(y+24)=8/7", "7(x+9)=8(y+24)"], color: "text-green-600", borderColor: "border-green-400" }
+      { text: "成人人數與小童人數之比為13:6。", keywords: ["成人人數與小童人數之比", "為", "13:6"], valid: ["x/y=13/6", "6x=13y"], color: "text-red-600", borderColor: "border-red-400" },
+      { text: "若9名成人和24名小童進入該遊樂場,則成人人數與小童人數之比為8:7。", keywords: ["成人人數與小童人數之比", "為", "8:7"], valid: ["(x+9)/(y+24)=8/7", "7(x+9)=8(y+24)"], color: "text-green-600", borderColor: "border-green-400" }
     ],
     answers: [
       ["x/y=13/6", "6x=13y"],
@@ -328,6 +328,21 @@ const MathRenderer = ({ expression }) => {
           return <span key={idx}>{char}</span>;
         })}
       </span>
+    );
+  };
+
+  const renderTextWithItalics = (text) => {
+    // Replace x and y with italic versions
+    const parts = text.split(/([xy])/g);
+    return (
+      <>
+        {parts.map((part, idx) => {
+          if (part === 'x' || part === 'y') {
+            return <span key={idx} style={{ fontFamily: 'Times New Roman, serif', fontStyle: 'italic' }}>{part}</span>;
+          }
+          return part;
+        })}
+      </>
     );
   };
 
@@ -758,12 +773,12 @@ export default function SimultaneousEqQuiz() {
                 {currentQ && (
                     <>
                     <div className="bg-white p-4 mb-4 rounded-lg shadow-sm border border-gray-200">
-                        <p className="text-gray-800 text-lg leading-relaxed font-serif">{currentQ.text}</p>
+                        <p className="text-gray-800 text-lg leading-relaxed font-serif">{renderTextWithItalics(currentQ.text)}</p>
                     </div>
 
                     <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
                        <p className="text-blue-900 font-medium md:text-lg">
-                         <span className="font-bold">題目：</span>{currentQ.vars}
+                         <span className="font-bold">題目：</span>{renderTextWithItalics(currentQ.vars)}
                        </p>
                     </div>
 
