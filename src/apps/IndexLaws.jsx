@@ -64,7 +64,7 @@ const toLatex = (input) => {
     }
   }
 
-  latex = latex.replace(/\^([a-zA-Z0-9-]+)/g, '^{ $1 }');
+  latex = latex.replace(/\^([a-zA-Z0-9-]+)/g, '^{$1}');
   latex = latex.replace(/\*/g, '\\times ');
 
   return latex;
@@ -384,7 +384,7 @@ export default function IndexLaws() {
         <div className="m-4 mt-6 bg-white">
           <div className="flex justify-between items-center mb-6">
             <span className="text-xs font-bold text-indigo-500 uppercase tracking-widest bg-indigo-50 px-2 py-1 rounded">題目</span>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">請以正指數表示</span>
+            <span className="text-lg font-bold text-slate-400">請以正指數表示</span>
             <button 
               onClick={() => setShowHint(!showHint)}
               className="text-slate-400 hover:text-indigo-500 flex items-center gap-1 text-xs font-medium transition-colors"
@@ -423,8 +423,8 @@ export default function IndexLaws() {
         <div className="px-4 space-y-6">
           {level === 1 ? (
             <div className="group">
-              <label className="text-xs font-bold text-slate-400 mb-2 block uppercase tracking-wider">
-                答案
+              <label className="text-sm font-bold text-slate-700 mb-2 block">
+                預覽答案:
               </label>
               <div 
                 onClick={() => !hasChecked && setActiveField('final')}
