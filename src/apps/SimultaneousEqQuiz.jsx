@@ -66,11 +66,11 @@ const QUESTIONS = [
     vars: "設 x 為長者病人人數,y 為非長者病人人數。",
     segments: [
       { text: "在某日,該醫生為67位病人診症。", keywords: ["67位病人"], valid: ["x+y=67", "y+x=67"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "某醫生為長者病人及非長者病人診症的診金分別為$120及$160,總診金為$9000。", keywords: ["長者病人", "及", "非長者病人診症的診金", "為", "9000"], valid: ["120x+160y=9000", "160y+120x=9000"], color: "text-green-600", borderColor: "border-green-400" }
+      { text: "某醫生為長者病人及非長者病人診症的診金分別為$120及$160,總診金為$9000。", keywords: ["長者病人", "及", "非長者病人診症的診金", "為", "9000"], skipInputIndices: [1, 3], valid: ["120x+160y=9000"], color: "text-green-600", borderColor: "border-green-400" }
     ],
     answers: [
       ["x+y=67", "y+x=67"],
-      ["120x+160y=9000", "160y+120x=9000"]
+      ["120x+160y=9000"]
     ]
   },
   {
@@ -317,12 +317,18 @@ const MathRenderer = ({ expression }) => {
   }
 
   const renderToken = (token) => {
-    // Check if token contains English letters (variables)
-    const hasVariable = /[a-zA-Z]/.test(token);
-    if (hasVariable) {
-      return <span style={{ fontFamily: 'Times New Roman, serif', fontStyle: 'italic' }}>{token}</span>;
-    }
-    return token;
+    // Process each character: italicize only English letters, keep digits as normal
+    const parts = token.split('');
+    return (
+      <span>
+        {parts.map((char, idx) => {
+          if (/[a-zA-Z]/.test(char)) {
+            return <span key={idx} style={{ fontFamily: 'Times New Roman, serif', fontStyle: 'italic' }}>{char}</span>;
+          }
+          return <span key={idx}>{char}</span>;
+        })}
+      </span>
+    );
   };
 
   return (
