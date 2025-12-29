@@ -288,10 +288,10 @@ export default function IndexLaws() {
 
   const Keypad = () => {
     const keys = [
-      'x', 'y', '->', '7',
-      '8', '9', '^', '4',
-      '5', '6', '/', '1',
-      '2', '3', '-', '0',
+      'x', 'y', '->', '^',
+      '7', '8', '9', '/',
+      '4', '5', '6', '-',
+      '1', '2', '3', '0',
       'DEL', 'CLR'
     ];
 
@@ -362,6 +362,20 @@ export default function IndexLaws() {
         </Link>
         <div className="flex items-center gap-3">
           <span className="font-bold text-slate-700">指數定律</span>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => handleLevelChange(1)}
+              className={`px-6 py-2 rounded-full font-bold text-sm transition-all ${level === 1 ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
+            >
+              LV1 基礎指數定律
+            </button>
+            <button 
+              onClick={() => handleLevelChange(2)}
+              className={`px-6 py-2 rounded-full font-bold text-sm transition-all ${level === 2 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
+            >
+              LV2 DSE 實戰
+            </button>
+          </div>
         </div>
         <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
           <Trophy size={16} className="text-yellow-600" />
@@ -371,31 +385,18 @@ export default function IndexLaws() {
 
       <div className="flex-1 flex flex-col max-w-lg mx-auto w-full overflow-y-auto pb-4">
         <div className="m-4 mt-6 bg-white">
-          <div className="flex justify-between items-center mb-3">
+          <div className="flex justify-between items-center mb-6">
             <span className="text-xs font-bold text-indigo-500 uppercase tracking-widest bg-indigo-50 px-2 py-1 rounded">題目</span>
             <span className="text-lg font-bold text-black">請以正指數表示</span>
-            <button 
-              onClick={() => setShowHint(!showHint)}
-              className="text-slate-400 hover:text-indigo-500 flex items-center gap-1 text-xs font-medium transition-colors"
-            >
-              <HelpCircle size={14} /> 提示
-            </button>
-          </div>
-          <div className="flex justify-end items-center mb-6">
-            <div className="flex gap-2">
+            {level === 1 && (
               <button 
-                onClick={() => handleLevelChange(1)}
-                className={`px-6 py-2 rounded-full font-bold text-sm transition-all ${level === 1 ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
+                onClick={() => setShowHint(!showHint)}
+                className="text-slate-400 hover:text-indigo-500 flex items-center gap-1 text-xs font-medium transition-colors"
               >
-                LV1 基礎指數定律
+                <HelpCircle size={14} /> 提示
               </button>
-              <button 
-                onClick={() => handleLevelChange(2)}
-                className={`px-6 py-2 rounded-full font-bold text-sm transition-all ${level === 2 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
-              >
-                LV2 DSE 實戰
-              </button>
-            </div>
+            )}
+            {level === 2 && <div className="w-12"></div>}
           </div>
 
           {showHint && (
