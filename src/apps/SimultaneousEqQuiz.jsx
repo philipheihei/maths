@@ -95,8 +95,8 @@ const QUESTIONS = [
     segments: [
       { 
         text: "一瓶橙汁的成本與2瓶牛奶的成本相同。", 
-        keywords: ["橙汁的成本", "與", "2瓶牛奶的成本", "相同"], 
-        previewOrder: [1, 3, 2],
+        keywords: ["橙汁的成本", "2瓶牛奶的成本", "相同"], 
+        previewOrder: [0, 2, 1],
         valid: ["x=2y", "x=2*y"], 
         color: "text-red-600", 
         borderColor: "border-red-400" 
