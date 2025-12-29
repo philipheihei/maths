@@ -137,7 +137,7 @@ const Home = () => {
               <Award className="w-6 h-6 text-green-600" />
             </div>
             <div className="text-3xl font-bold text-slate-800 mb-1">{apps.length}</div>
-            <div className="text-sm text-slate-600">個學習工具</div>
+            <div className="text-sm text-slate-600">款互動程式</div>
           </div>
           <div className="bg-white rounded-xl p-6 shadow-md border border-slate-200 text-center">
             <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-3">
