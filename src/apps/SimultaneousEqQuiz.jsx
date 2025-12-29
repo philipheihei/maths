@@ -694,6 +694,8 @@ export default function SimultaneousEqQuiz() {
     );
   };
 
+  const currentQ = questionOrder.length ? QUESTIONS[questionOrder[qIndex]] : null;
+
   return (
     <>
       <Link 
