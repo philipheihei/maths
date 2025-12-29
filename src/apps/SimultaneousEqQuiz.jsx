@@ -552,7 +552,7 @@ export default function SimultaneousEqQuiz() {
   const checkAnswer = () => {
     let allCorrect = true;
     let correctCount = 0;
-    let correctAnswersText = "";
+    let correctAnswers = [];
 
     if (level === 1) {
         currentQ.segments.forEach((seg, idx) => {
@@ -564,7 +564,10 @@ export default function SimultaneousEqQuiz() {
             } else {
                 allCorrect = false;
             }
-            correctAnswersText += `${idx === 0 ? "第一個方程" : "第二個方程"}: ${seg.valid[0]}\n`;
+            correctAnswers.push({
+                label: idx === 0 ? "第一個方程" : "第二個方程",
+                value: seg.valid[0]
+            });
         });
 
         setScore(prev => prev + correctCount);
@@ -573,14 +576,16 @@ export default function SimultaneousEqQuiz() {
             setInlineFeedback({ 
                 type: 'success', 
                 msg: `全對！做得好！ (+${correctCount} 分)`,
-                action: nextQuestion
+                action: nextQuestion,
+                answers: []
             });
             setLv1Completed(true);
         } else {
             setInlineFeedback({ 
                 type: 'error', 
-                msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)\n\n` : ''}正確答案參考：\n${correctAnswersText}`,
-                action: nextQuestion
+                msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)` : ''}`,
+                action: nextQuestion,
+                answers: correctAnswers
             });
         }
     } else {
@@ -596,7 +601,10 @@ export default function SimultaneousEqQuiz() {
                     } else {
                         allCorrect = false;
                     }
-                    correctAnswersText += `方程 (${idx + 1}): ${currentQ.answers[idx][0]}\n`;
+                    correctAnswers.push({
+                        label: `方程 (${idx + 1})`,
+                        value: currentQ.answers[idx][0]
+                    });
                 }
             });
         }
@@ -607,14 +615,16 @@ export default function SimultaneousEqQuiz() {
             setInlineFeedback({ 
                 type: 'success', 
                 msg: `全對！做得好！ (+${correctCount} 分)`,
-                action: nextQuestion 
+                action: nextQuestion,
+                answers: []
             });
             setLv1Completed(true);
         } else {
             setInlineFeedback({ 
                 type: 'error', 
-                msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)\n\n` : ''}正確答案參考：\n${correctAnswersText}`,
-                action: nextQuestion 
+                msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)` : ''}`,
+                action: nextQuestion,
+                answers: correctAnswers
             });
         }
     }
@@ -753,9 +763,24 @@ export default function SimultaneousEqQuiz() {
                                          {inlineFeedback.type === 'success' ? <CheckCircle size={20}/> : <XCircle size={20}/>}
                                          {inlineFeedback.type === 'success' ? '答對了！' : '再試一次'}
                                     </h3>
-                                    <div className="font-mono whitespace-pre-wrap pl-7">
-                                        {inlineFeedback.msg}
-                                    </div>
+                                    {inlineFeedback.msg && (
+                                        <div className="mb-3 text-sm">
+                                            {inlineFeedback.msg}
+                                        </div>
+                                    )}
+                                    {inlineFeedback.answers && inlineFeedback.answers.length > 0 && (
+                                        <div className="space-y-2 mb-3 pl-7">
+                                            <p className="text-sm font-semibold">正確答案參考：</p>
+                                            {inlineFeedback.answers.map((ans, idx) => (
+                                                <div key={idx} className="text-sm">
+                                                    <span className="font-semibold">{ans.label}: </span>
+                                                    <span className="inline-block ml-2">
+                                                        <MathRenderer expression={ans.value} />
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                     <div className="mt-3 flex gap-2">
                                         <button 
                                             onClick={inlineFeedback.action} 
@@ -840,9 +865,24 @@ export default function SimultaneousEqQuiz() {
                                          {inlineFeedback.type === 'success' ? <CheckCircle size={20}/> : <XCircle size={20}/>}
                                          {inlineFeedback.type === 'success' ? '答對了！' : '再試一次'}
                                     </h3>
-                                    <div className="font-mono whitespace-pre-wrap pl-7">
-                                        {inlineFeedback.msg}
-                                    </div>
+                                    {inlineFeedback.msg && (
+                                        <div className="mb-3 text-sm">
+                                            {inlineFeedback.msg}
+                                        </div>
+                                    )}
+                                    {inlineFeedback.answers && inlineFeedback.answers.length > 0 && (
+                                        <div className="space-y-2 mb-3 pl-7">
+                                            <p className="text-sm font-semibold">正確答案參考：</p>
+                                            {inlineFeedback.answers.map((ans, idx) => (
+                                                <div key={idx} className="text-sm">
+                                                    <span className="font-semibold">{ans.label}: </span>
+                                                    <span className="inline-block ml-2">
+                                                        <MathRenderer expression={ans.value} />
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                     <div className="mt-3 flex gap-2">
                                         <button 
                                             onClick={inlineFeedback.action} 
