@@ -252,10 +252,17 @@ const QUESTIONS = [
     text: "某男生擁有的貼紙數目為某女生擁有的3倍。若該男生將他其中的20張貼紙送給該女生,則該女生擁有貼紙的數目為該男生擁有的2倍。求該男生和該女生擁有貼紙的總數。",
     vars: "設 x 為男生數目,y 為女生數目。",
     segments: [
-      { text: "某男生擁有的貼紙數目為某女生擁有的3倍。", keywords: ["男生", "為", "女生", "3倍"], valid: ["x=3y", "3y=x"], color: "text-red-600", borderColor: "border-red-400" },
+      { 
+        text: "某男生擁有的貼紙數目為某女生擁有的3倍。", 
+        keywords: ["男生", "為", "女生", "3倍"],
+        skipInputIndices: [0],
+        valid: ["x=3y", "3y=x"], 
+        color: "text-red-600", 
+        borderColor: "border-red-400" 
+      },
       { 
         text: "若該男生將他其中的20張貼紙送給該女生,則該女生擁有貼紙的數目為該男生擁有的2倍。", 
-        keywords: ["男生", "女生擁有貼紙的數目", "為", "該", "男生", "2倍"], 
+        keywords: ["男生", "女生擁有貼紙的數目", "為", "男生", "2倍"], 
         skipInputIndices: [0, 3],
         valid: ["y+20=2(x-20)"], 
         color: "text-green-600", 
@@ -273,8 +280,8 @@ const QUESTIONS = [
     text: "設x及y為兩數。x與y之和為456,而7與x之積為y。求x。",
     vars: "設 x, y 為兩數。",
     segments: [
-      { text: "x與y之和為456。", keywords: ["x", "與", "y", "之和為", "456"], valid: ["x+y=456"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "7與x之積為y。", keywords: ["7", "與", "x", "之積為", "y"], valid: ["7x=y", "y=7x"], color: "text-green-600", borderColor: "border-green-400" }
+      { text: "x與y之和為456。", keywords: ["x", "與y之和:", "為", "456"], valid: ["x+y=456"], color: "text-red-600", borderColor: "border-red-400" },
+      { text: "7與x之積為y。", keywords: ["7", "與x之積", "為", "y"], valid: ["7x=y", "y=7x"], color: "text-green-600", borderColor: "border-green-400" }
     ],
     answers: [
       ["x+y=456"],
