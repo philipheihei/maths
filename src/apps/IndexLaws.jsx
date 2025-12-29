@@ -87,7 +87,7 @@ const LAWS = [
 ];
 
 export default function IndexLaws() {
-  const [level, setLevel] = useState(null);
+  const [level, setLevel] = useState(1);
   const [problem, setProblem] = useState(null);
   const [userInputs, setUserInputs] = useState({});
   const [feedback, setFeedback] = useState(null);
@@ -95,6 +95,13 @@ export default function IndexLaws() {
   const [activeField, setActiveField] = useState('final');
   const [hasChecked, setHasChecked] = useState(false);
   const [score, setScore] = useState(0);
+
+  // 初始化：載入第一道題目
+  useEffect(() => {
+    if (!problem) {
+      generateProblemLV1();
+    }
+  }, []);
 
   // --- Input Logic ---
   const handleInput = (val, fieldName) => {
@@ -218,8 +225,9 @@ export default function IndexLaws() {
     setHasChecked(false);
   };
 
-  const handleNextQuestion = () => {
-    if (level === 1) generateProblemLV1();
+  const handleLevelChange = (newLevel) => {
+    setLevel(newLevel);
+    if (newLevel === 1) generateProblemLV1();
     else generateProblemLV2();
   };
 
@@ -317,50 +325,26 @@ export default function IndexLaws() {
   };
 
   // --- Main Render ---
-  if (level === null) {
+  if (!problem) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 font-sans">
-        <Link 
-          to="/"
-          className="absolute top-4 left-4 z-10 bg-white hover:bg-slate-50 text-slate-700 px-3 py-2 rounded-lg shadow border border-slate-200 flex items-center gap-2 transition-all"
-        >
-          <HomeIcon size={18} />
-          <span className="font-medium">返回首頁</span>
-        </Link>
-        <div className="bg-white max-w-sm w-full p-8 rounded-3xl shadow-xl text-center border border-slate-100">
-          <div className="w-20 h-20 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white shadow-lg shadow-indigo-200 transform -rotate-3">
-            <Calculator size={36} />
+      <div className="min-h-screen bg-white flex flex-col">
+        <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-10">
+          <Link 
+            to="/"
+            className="p-2 -ml-2 text-slate-400 hover:text-slate-700 flex items-center gap-1"
+          >
+            <HomeIcon size={20} />
+          </Link>
+          <h1 className="font-bold text-slate-700">指數定律特訓</h1>
+          <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
+            <Trophy size={16} className="text-yellow-600" />
+            <span className="font-bold text-yellow-700">{score}</span>
           </div>
-          <h1 className="text-2xl font-bold text-slate-800 mb-1">指數定律特訓</h1>
-          <p className="text-slate-400 text-sm mb-8">F3 CH2 指數定律</p>
-          <div className="space-y-3">
-            <button 
-              onClick={() => { setLevel(1); setTimeout(generateProblemLV1, 50); }}
-              className="w-full py-4 bg-white border-2 border-slate-100 hover:border-emerald-400 hover:bg-emerald-50 text-slate-700 rounded-xl flex items-center px-4 transition-all group"
-            >
-              <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
-                <span className="font-bold">1</span>
-              </div>
-              <div className="text-left flex-1">
-                <div className="font-bold">Level 1: 基礎法則</div>
-                <div className="text-xs text-slate-400">同底相乘 / 相除 / 冪的乘方 / 負指數</div>
-              </div>
-              <ChevronRight className="text-slate-300 group-hover:text-emerald-500" />
-            </button>
+        </div>
 
-            <button 
-              onClick={() => { setLevel(2); setTimeout(generateProblemLV2, 50); }}
-              className="w-full py-4 bg-white border-2 border-slate-100 hover:border-indigo-400 hover:bg-indigo-50 text-slate-700 rounded-xl flex items-center px-4 transition-all group"
-            >
-              <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform">
-                <span className="font-bold">2</span>
-              </div>
-              <div className="text-left flex-1">
-                <div className="font-bold">Level 2: DSE 模擬</div>
-                <div className="text-xs text-slate-400">雙變量 + 負指數</div>
-              </div>
-              <ChevronRight className="text-slate-300 group-hover:text-indigo-500" />
-            </button>
+        <div className="flex-1 flex items-center justify-center p-4">
+          <div className="text-center">
+            <p className="text-slate-400 mb-6">正在載入...</p>
           </div>
         </div>
       </div>
@@ -370,10 +354,29 @@ export default function IndexLaws() {
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans">
       <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-10">
-        <button onClick={() => setLevel(null)} className="p-2 -ml-2 text-slate-400 hover:text-slate-700">
-          <ChevronRight className="rotate-180" size={20} />
-        </button>
-        <span className="font-bold text-slate-700">Level {level}</span>
+        <Link 
+          to="/"
+          className="p-2 -ml-2 text-slate-400 hover:text-slate-700 flex items-center gap-1"
+        >
+          <HomeIcon size={20} />
+        </Link>
+        <div className="flex items-center gap-3">
+          <span className="font-bold text-slate-700">指數定律</span>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => handleLevelChange(1)}
+              className={`px-3 py-1 rounded-full font-bold text-sm transition-all ${level === 1 ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
+            >
+              LV1
+            </button>
+            <button 
+              onClick={() => handleLevelChange(2)}
+              className={`px-3 py-1 rounded-full font-bold text-sm transition-all ${level === 2 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
+            >
+              LV2
+            </button>
+          </div>
+        </div>
         <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
           <Trophy size={16} className="text-yellow-600" />
           <span className="font-bold text-yellow-700">{score}</span>
@@ -446,7 +449,7 @@ export default function IndexLaws() {
                 className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step1' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-indigo-500">步驟 1：拆括號</span>
+                  <span className="text-sm font-bold text-indigo-500">步驟 1：拆括號</span>
                   <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
                 </div>
                 <div className="min-h-[2em] text-lg flex items-center">
@@ -458,7 +461,7 @@ export default function IndexLaws() {
                 className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step2' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-slate-400">步驟 2：負指數轉正指數</span>
+                  <span className="text-sm font-bold text-slate-600">步驟 2：負指數轉正指數</span>
                   <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
                 </div>
                 <div className="min-h-[2em] text-lg flex items-center">
@@ -470,7 +473,7 @@ export default function IndexLaws() {
                 className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step3' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-slate-400">步驟 3：指數約簡</span>
+                  <span className="text-sm font-bold text-slate-600">步驟 3：指數約簡</span>
                   <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
                 </div>
                 <div className="min-h-[2em] text-lg flex items-center">
@@ -523,7 +526,10 @@ export default function IndexLaws() {
             </button>
           ) : (
             <button 
-              onClick={handleNextQuestion}
+              onClick={() => {
+                if (level === 1) generateProblemLV1();
+                else generateProblemLV2();
+              }}
               className="w-full py-4 rounded-xl font-bold text-lg shadow-lg transition-all active:scale-95 mb-4 bg-slate-800 text-white hover:bg-slate-900 shadow-slate-200 flex items-center justify-center gap-2"
             >
               下一題 <ArrowRight size={20} />
