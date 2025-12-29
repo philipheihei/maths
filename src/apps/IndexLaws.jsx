@@ -223,6 +223,7 @@ export default function IndexLaws() {
     setFeedback(null);
     setShowHint(false);
     setHasChecked(false);
+    setActiveField(level === 1 ? 'final' : 'step1');
   };
 
   const handleLevelChange = (newLevel) => {
@@ -252,8 +253,9 @@ export default function IndexLaws() {
         setFeedback({ correct: false, msg: '正確答案是:' });
       }
     } else {
+      const userStep3 = normalizeStr(userInputs.step3);
       const correctAns = normalizeStr(problem.expectations.finalAns);
-      isCorrect = userFinal === correctAns;
+      isCorrect = userStep3 === correctAns;
 
       let stepCredit = false;
       const userStep1 = normalizeStr(userInputs.step1);
@@ -286,11 +288,11 @@ export default function IndexLaws() {
 
   const Keypad = () => {
     const keys = [
-      'x', 'y', '(', ')',
-      '7', '8', '9', '^',
-      '4', '5', '6', '/',
-      '1', '2', '3', '-',
-      '0', 'step', 'DEL', 'CLR'
+      'x', 'y', '->', '7',
+      '8', '9', '^', '4',
+      '5', '6', '/', '1',
+      '2', '3', '-', '0',
+      'DEL', 'CLR'
     ];
 
     return (
@@ -302,21 +304,18 @@ export default function IndexLaws() {
               onClick={() => {
                 if (k === 'DEL') backspace();
                 else if (k === 'CLR') clearInput();
-                else if (k === 'step') { /* no-op for now */ }
                 else insertChar(k);
               }}
               disabled={hasChecked}
               className={`h-12 rounded-xl text-lg font-medium shadow-sm active:scale-95 transition-all
                 ${hasChecked ? 'opacity-50 cursor-not-allowed' : ''}
                 ${['DEL', 'CLR'].includes(k) ? 'bg-red-50 text-red-500 hover:bg-red-100' : 
-                  ['x', 'y', '^', '/', 'step', '-'].includes(k) ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-serif italic' : 
-                  ['(', ')'].includes(k) ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-sans' : 
+                  ['x', 'y', '^', '/', '->', '-'].includes(k) ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-serif italic' : 
                   'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
             >
               {k === '/' ? <FractionIcon /> : 
                k === 'DEL' ? <Delete size={20} className="mx-auto"/> : 
-               k === 'CLR' ? <Eraser size={20} className="mx-auto"/> : 
-               k === 'step' ? 'Tab' : k}
+               k === 'CLR' ? <Eraser size={20} className="mx-auto"/> : k}
             </button>
           ))}
         </div>
@@ -362,16 +361,17 @@ export default function IndexLaws() {
         </Link>
         <div className="flex items-center gap-3">
           <span className="font-bold text-slate-700">指數定律</span>
+          <span className="bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full">⚠️ 開發中</span>
           <div className="flex gap-2">
             <button 
               onClick={() => handleLevelChange(1)}
-              className={`px-3 py-1 rounded-full font-bold text-sm transition-all ${level === 1 ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
+              className={`px-4 py-2 rounded-full font-bold text-sm transition-all ${level === 1 ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
             >
               LV1
             </button>
             <button 
               onClick={() => handleLevelChange(2)}
-              className={`px-3 py-1 rounded-full font-bold text-sm transition-all ${level === 2 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
+              className={`px-4 py-2 rounded-full font-bold text-sm transition-all ${level === 2 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-slate-700 hover:bg-gray-300'}`}
             >
               LV2
             </button>
@@ -470,26 +470,14 @@ export default function IndexLaws() {
               </div>
 
               <div onClick={() => !hasChecked && setActiveField('step3')} 
-                className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step3' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
+                className={`p-4 rounded-xl border-2 transition-all ${activeField === 'step3' && !hasChecked ? 'border-emerald-500 bg-white shadow-md' : 'border-slate-200 bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-bold text-slate-600">步驟 3：指數約簡</span>
-                  <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
-                </div>
-                <div className="min-h-[2em] text-lg flex items-center">
-                  {userInputs.step3 ? <Latex>{toLatex(userInputs.step3)}</Latex> : <span className="text-slate-300 text-sm">輸入...</span>}
-                </div>
-              </div>
-
-              <div onClick={() => !hasChecked && setActiveField('final')} 
-                className={`p-4 rounded-xl border-2 transition-all ${activeField === 'final' && !hasChecked ? 'border-emerald-500 bg-white shadow-md' : 'border-slate-200 bg-slate-50'}`}
-              >
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-bold text-emerald-600">最終答案（正指數）</span>
-                  <span className="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">計分</span>
+                  <span className="text-xs font-bold text-emerald-600">步驟 3：指數約簡（正指數）</span>
+                  <span className="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">答案分</span>
                 </div>
                 <div className="min-h-[3em] text-4xl flex items-center justify-center font-bold text-slate-800">
-                  {userInputs.final ? <Latex>{toLatex(userInputs.final)}</Latex> : <span className="text-slate-300 text-base font-normal">輸入最終答案...</span>}
+                  {userInputs.step3 ? <Latex>{toLatex(userInputs.step3)}</Latex> : <span className="text-slate-300 text-base font-normal">輸入最終答案...</span>}
                 </div>
               </div>
             </>
@@ -516,9 +504,9 @@ export default function IndexLaws() {
           {!hasChecked ? (
             <button 
               onClick={checkAnswer}
-              disabled={!userInputs.final}
+              disabled={level === 1 ? !userInputs.final : !userInputs.step3}
               className={`w-full py-4 rounded-xl font-bold text-lg shadow-lg transition-all active:scale-95 mb-4 flex items-center justify-center
-                ${!userInputs.final 
+                ${(level === 1 ? !userInputs.final : !userInputs.step3) 
                   ? 'bg-slate-100 text-slate-300 cursor-not-allowed shadow-none' 
                   : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-200'}`}
             >

@@ -66,7 +66,8 @@ const Home = () => {
         { level: 'F3', chapter: 'CH2', subject: '指數定律' }
       ],
       category: '初中',
-      topics: ['指數運算', '負指數']
+      topics: ['指數運算', '負指數'],
+      inDevelopment: true
     },
     {
       id: 'simultaneous-eq',
