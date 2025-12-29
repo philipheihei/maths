@@ -66,7 +66,14 @@ const QUESTIONS = [
     vars: "設 x 為長者病人人數,y 為非長者病人人數。",
     segments: [
       { text: "在某日,該醫生為67位病人診症。", keywords: ["67位病人"], valid: ["x+y=67", "y+x=67"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "某醫生為長者病人及非長者病人診症的診金分別為$120及$160,總診金為$9000。", keywords: ["長者病人", "及", "非長者病人診症的診金", "為", "9000"], skipInputIndices: [1, 3], valid: ["120x+160y=9000"], color: "text-green-600", borderColor: "border-green-400" }
+      { 
+        text: "某醫生為長者病人及非長者病人診症的診金分別為$120及$160,總診金為$9000。", 
+        keywords: ["為", "長者病人", "及", "非長者病人診症的診金", "為", "及", "為", "9000"], 
+        skipInputIndices: [0, 4, 5], 
+        valid: ["120x+160y=9000"], 
+        color: "text-green-600", 
+        borderColor: "border-green-400" 
+      }
     ],
     answers: [
       ["x+y=67", "y+x=67"],
@@ -80,7 +87,7 @@ const QUESTIONS = [
     vars: "設 x 為偉明郵票數,y 為小麗郵票數。",
     segments: [
       { text: "偉明和小麗擁有郵票的總數為300", keywords: ["偉明", "和", "小麗", "為", "300"], valid: ["x+y=300", "y+x=300"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "若小麗從郵局購入20枚郵票, 她擁有郵票的數目將為偉明擁有的4倍。", keywords: ["購入20枚郵票", "將為", "偉明", "4倍"], valid: ["y+20=4x", "y+20=x*4"], color: "text-green-600", borderColor: "border-green-400" }
+      { text: "若小麗從郵局購入20枚郵票, 她擁有郵票的數目將為偉明擁有的4倍。", keywords: ["購入20枚郵票, 她擁有郵票的數目", "將為", "偉明", "4倍"], valid: ["y+20=4x", "y+20=x*4"], color: "text-green-600", borderColor: "border-green-400" }
     ],
     answers: [
       ["x+y=300", "y+x=300"],
