@@ -294,6 +294,21 @@ const escapeRegExp = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
+// 將題目文字中的 x, y 以 Times New Roman 斜體顯示（僅題目文本，不影響算式渲染）
+const renderTextWithItalics = (text) => {
+  if (!text) return null;
+  const parts = text.split(/([xy])/g);
+  return (
+    <>
+      {parts.map((part, idx) => (
+        part === 'x' || part === 'y'
+          ? <span key={idx} style={{ fontFamily: 'Times New Roman, serif', fontStyle: 'italic' }}>{part}</span>
+          : part
+      ))}
+    </>
+  );
+};
+
 const MathRenderer = ({ expression }) => {
   if (!expression) return <span className="text-gray-400 italic text-sm md:text-base">等待輸入...</span>;
 
@@ -331,20 +346,7 @@ const MathRenderer = ({ expression }) => {
     );
   };
 
-  const renderTextWithItalics = (text) => {
-    // Replace x and y with italic versions
-    const parts = text.split(/([xy])/g);
-    return (
-      <>
-        {parts.map((part, idx) => {
-          if (part === 'x' || part === 'y') {
-            return <span key={idx} style={{ fontFamily: 'Times New Roman, serif', fontStyle: 'italic' }}>{part}</span>;
-          }
-          return part;
-        })}
-      </>
-    );
-  };
+  
 
   return (
     <div className="flex items-center flex-wrap gap-1 font-mono text-xl md:text-2xl text-gray-800">
