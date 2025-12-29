@@ -604,14 +604,14 @@ export default function SimultaneousEqQuiz() {
         setScore(prev => prev + correctCount);
 
         if (allCorrect) {
-            setFeedback({ 
+            setInlineFeedback({ 
                 type: 'success', 
-                msg: `全對！ (+${correctCount} 分)`, 
+                msg: `全對！做得好！ (+${correctCount} 分)`,
                 action: nextQuestion 
             });
             setLv1Completed(true);
         } else {
-            setFeedback({ 
+            setInlineFeedback({ 
                 type: 'error', 
                 msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)\n\n` : ''}正確答案參考：\n${correctAnswersText}`,
                 action: nextQuestion 
@@ -833,6 +833,31 @@ export default function SimultaneousEqQuiz() {
                                     </div>
                                 ))}
                             </div>
+
+                            {inlineFeedback && (
+                                <div className={`p-4 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${inlineFeedback.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
+                                    <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
+                                         {inlineFeedback.type === 'success' ? <CheckCircle size={20}/> : <XCircle size={20}/>}
+                                         {inlineFeedback.type === 'success' ? '答對了！' : '再試一次'}
+                                    </h3>
+                                    <div className="font-mono whitespace-pre-wrap pl-7">
+                                        {inlineFeedback.msg}
+                                    </div>
+                                    <div className="mt-3 flex gap-2">
+                                        <button 
+                                            onClick={inlineFeedback.action} 
+                                            className="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
+                                        >
+                                            下一題
+                                        </button>
+                                        {inlineFeedback.type === 'error' && (
+                                            <button onClick={() => setInlineFeedback(null)} className="text-sm underline opacity-70 hover:opacity-100 px-4 py-2">
+                                                關閉提示
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                     </>
@@ -867,36 +892,7 @@ export default function SimultaneousEqQuiz() {
             />
             
             <CheatsheetModal isOpen={showNotes} onClose={() => setShowNotes(false)} />
-
-            {feedback && (
-                <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-                    <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center animate-in fade-in zoom-in duration-200">
-                        {feedback.type === 'success' ? (
-                            <div className="text-green-600 flex flex-col items-center">
-                                <CheckCircle size={64} className="mb-4"/>
-                                <h3 className="text-2xl font-bold mb-2">答對了！</h3>
-                                <p className="text-gray-500">正在前往下一題...</p>
-                            </div>
-                        ) : (
-                            <div className="text-red-500 flex flex-col items-center">
-                                <XCircle size={64} className="mb-4"/>
-                                <h3 className="text-2xl font-bold mb-2">再試一次</h3>
-                                <div className="bg-red-50 p-4 rounded-xl w-full mb-4">
-                                    <p className="text-gray-800 font-mono break-all whitespace-pre-wrap">{feedback.msg}</p>
-                                </div>
-                                <button 
-                                    onClick={feedback.action} 
-                                    className="w-full bg-gray-800 text-white py-3 rounded-xl font-bold hover:bg-gray-700 transition"
-                                >
-                                    下一題
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            )}
         </div>
-    </div>
-    </>
-  );
+        </div>
+    </>  );
 }
