@@ -694,8 +694,6 @@ export default function SimultaneousEqQuiz() {
     );
   };
 
-  const currentQ = questionOrder.length ? QUESTIONS[questionOrder[qIndex]] : null;
-
   return (
     <>
       <Link 
@@ -898,15 +896,6 @@ export default function SimultaneousEqQuiz() {
                 </div>
             )}
         </div>
-        <CheatsheetModal isOpen={showNotes} onClose={() => setShowNotes(false)}/>
-        <Keypad 
-            onInput={handleKeypadInput} 
-            onDelete={handleDelete} 
-            onClear={handleClear}
-            onEnter={handleSubmit}
-            isVisible={keypadVisible}
-            toggleVisibility={toggleKeypad}
-        />
     </div>
     </>
   );
