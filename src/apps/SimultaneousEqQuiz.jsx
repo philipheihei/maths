@@ -63,14 +63,14 @@ const QUESTIONS = [
     id: 3,
     title: "醫生診金",
     text: "某醫生為長者病人及非長者病人診症的診金分別為$120及$160。在某日,該醫生為67位病人診症,且總診金為$9000。該醫生當為多少位長者病人診症?",
-    vars: "某醫生為長者病人及非長者病人診症的診金分別為$120及$160。設 x 為長者病人數,y 為非長者病人數。",
+    vars: "設 x 為長者病人人數,y 為非長者病人人數。",
     segments: [
-      { text: "該醫生為67位病人診症。", keywords: ["67位病人"], valid: ["x+y=67", "y+x=67"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "長者及非長者總診金為$9000。", keywords: ["長者", "非長者", "9000"], valid: ["120x+160y=9000"], color: "text-green-600", borderColor: "border-green-400" }
+      { text: "在某日,該醫生為67位病人診症。", keywords: ["67位病人"], valid: ["x+y=67", "y+x=67"], color: "text-red-600", borderColor: "border-red-400" },
+      { text: "某醫生為長者病人及非長者病人診症的診金分別為$120及$160,總診金為$9000。", keywords: ["長者病人", "及", "非長者病人診症的診金", "為", "9000"], valid: ["120x+160y=9000", "160y+120x=9000"], color: "text-green-600", borderColor: "border-green-400" }
     ],
     answers: [
       ["x+y=67", "y+x=67"],
-      ["120x+160y=9000"]
+      ["120x+160y=9000", "160y+120x=9000"]
     ]
   },
   {
@@ -316,20 +316,29 @@ const MathRenderer = ({ expression }) => {
     }
   }
 
+  const renderToken = (token) => {
+    // Check if token contains English letters (variables)
+    const hasVariable = /[a-zA-Z]/.test(token);
+    if (hasVariable) {
+      return <span style={{ fontFamily: 'Times New Roman, serif', fontStyle: 'italic' }}>{token}</span>;
+    }
+    return token;
+  };
+
   return (
     <div className="flex items-center flex-wrap gap-1 font-mono text-xl md:text-2xl text-gray-800">
       {processedTokens.map((part, idx) => {
         if (typeof part === 'object' && part.type === 'frac') {
           return (
             <div key={idx} className="inline-flex flex-col items-center justify-center align-middle mx-1">
-              <span className="border-b-2 border-gray-800 px-1 leading-none pb-0.5 text-sm md:text-base">{part.num}</span>
-              <span className="leading-none pt-0.5 text-sm md:text-base">{part.den}</span>
+              <span className="border-b-2 border-gray-800 px-1 leading-none pb-0.5 text-sm md:text-base" style={{ fontFamily: 'Times New Roman, serif', fontStyle: 'italic' }}>{part.num}</span>
+              <span className="leading-none pt-0.5 text-sm md:text-base" style={{ fontFamily: 'Times New Roman, serif', fontStyle: 'italic' }}>{part.den}</span>
             </div>
           );
         } else if (['+', '-', '*', '='].includes(part)) {
            return <span key={idx} className="mx-1 font-bold">{part === '*' ? '×' : part}</span>;
         } else {
-           return <span key={idx}>{part}</span>;
+           return <span key={idx}>{renderToken(part)}</span>;
         }
       })}
     </div>
