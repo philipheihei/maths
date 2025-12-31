@@ -1,294 +1,292 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { Home as HomeIcon, Trophy, HelpCircle, CheckCircle, XCircle, ChevronRight, ArrowRight, Check, BarChart3, Table, GitBranch, Lightbulb } from 'lucide-react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { 
+  Calculator, 
+  BarChart2, 
+  Table, 
+  LayoutList, 
+  HelpCircle, 
+  CheckCircle, 
+  XCircle, 
+  ArrowRight, 
+  BookOpen, 
+  RotateCcw,
+  Sigma,
+  TrendingUp
+} from 'lucide-react';
 
-// --- KaTeX Loader ---
-const useKatex = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    if (window.katex) { setIsLoaded(true); return; }
-    const link = document.createElement('link');
-    link.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js';
-    script.onload = () => setIsLoaded(true);
-    document.head.appendChild(script);
-  }, []);
-  return isLoaded;
-};
-
-const Latex = ({ children, block = false, className = '' }) => {
-  const containerRef = useRef(null);
-  const isKatexLoaded = useKatex();
-  useEffect(() => {
-    if (isKatexLoaded && containerRef.current && children) {
-      try {
-        window.katex.render(children, containerRef.current, { throwOnError: false, displayMode: block });
-      } catch (e) { containerRef.current.innerText = children; }
-    }
-  }, [children, isKatexLoaded, block]);
-  if (!children) return <span className="text-gray-300 italic">...</span>;
-  if (!isKatexLoaded) return <span className="font-serif animate-pulse">{children}</span>;
-  return <span ref={containerRef} className={className} />;
-};
-
-// --- 統計計算函數 ---
-const calculateStats = (data) => {
-  const sorted = [...data].sort((a, b) => a - b);
-  const n = sorted.length;
+// --- 數學工具函數庫 ---
+const MathUtils = {
+  sum: (arr) => arr.reduce((a, b) => a + b, 0),
   
-  // 平均數
-  const mean = data.reduce((a, b) => a + b, 0) / n;
+  mean: (arr) => {
+    return MathUtils.sum(arr) / arr.length;
+  },
   
-  // 中位數
-  const median = n % 2 === 0 
-    ? (sorted[n/2 - 1] + sorted[n/2]) / 2 
-    : sorted[Math.floor(n/2)];
+  median: (arr) => {
+    const sorted = [...arr].sort((a, b) => a - b);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 !== 0 
+      ? sorted[mid] 
+      : (sorted[mid - 1] + sorted[mid]) / 2;
+  },
   
-  // 眾數
-  const freq = {};
-  data.forEach(x => freq[x] = (freq[x] || 0) + 1);
-  const maxFreq = Math.max(...Object.values(freq));
-  const modes = Object.keys(freq).filter(k => freq[k] === maxFreq).map(Number);
-  const mode = modes.length === data.length ? null : modes; // 無眾數情況
+  mode: (arr) => {
+    const freq = {};
+    let maxFreq = 0;
+    arr.forEach(val => {
+      freq[val] = (freq[val] || 0) + 1;
+      if (freq[val] > maxFreq) maxFreq = freq[val];
+    });
+    if (maxFreq === 1) return []; // 無眾數
+    return Object.keys(freq).filter(k => freq[k] === maxFreq).map(Number).sort((a,b)=>a-b);
+  },
   
-  // 方差與標準差
-  const variance = data.reduce((sum, x) => sum + Math.pow(x - mean, 2), 0) / n;
-  const stdDev = Math.sqrt(variance);
+  range: (arr) => {
+    return Math.max(...arr) - Math.min(...arr);
+  },
   
-  // 四分位數
-  const getQuartile = (arr, q) => {
-    const pos = (arr.length - 1) * q;
-    const base = Math.floor(pos);
-    const rest = pos - base;
-    if (arr[base + 1] !== undefined) {
-      return arr[base] + rest * (arr[base + 1] - arr[base]);
-    } else {
-      return arr[base];
-    }
-  };
+  quartiles: (arr) => {
+    const sorted = [...arr].sort((a, b) => a - b);
+    const q2 = MathUtils.median(sorted);
+    const mid = Math.floor(sorted.length / 2);
+    
+    let lowerHalf = sorted.slice(0, mid);
+    let upperHalf = sorted.length % 2 === 0 ? sorted.slice(mid) : sorted.slice(mid + 1);
+    
+    const q1 = MathUtils.median(lowerHalf);
+    const q3 = MathUtils.median(upperHalf);
+    
+    return { q1, q2, q3 };
+  },
   
-  const q1 = getQuartile(sorted, 0.25);
-  const q3 = getQuartile(sorted, 0.75);
-  const iqr = q3 - q1;
+  iqr: (arr) => {
+    const { q1, q3 } = MathUtils.quartiles(arr);
+    return q3 - q1;
+  },
   
-  // 分佈域 (Range)
-  const range = sorted[n - 1] - sorted[0];
-  const min = sorted[0];
-  const max = sorted[n - 1];
+  variance: (arr) => {
+    const m = MathUtils.mean(arr);
+    const sqDiffs = arr.map(v => (v - m) * (v - m));
+    return MathUtils.sum(sqDiffs) / arr.length; // Population Variance
+  },
   
-  return { mean, median, mode, variance, stdDev, q1, q3, iqr, range, min, max, sorted };
-};
-
-// --- 數據生成器 ---
-const generateData = (type) => {
-  const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-  
-  switch(type) {
-    case 'boxplot':
-      // 生成10-15個數據，範圍適中
-      const boxData = [];
-      const boxBase = getRandomInt(20, 50);
-      for (let i = 0; i < getRandomInt(10, 15); i++) {
-        boxData.push(boxBase + getRandomInt(-15, 25));
-      }
-      return boxData;
-    case 'stemleaf':
-      // 生成8-12個兩位數
-      const stemData = [];
-      const stemBase = getRandomInt(3, 7) * 10;
-      for (let i = 0; i < getRandomInt(8, 12); i++) {
-        stemData.push(stemBase + getRandomInt(-15, 20));
-      }
-      return stemData.filter(x => x >= 10 && x <= 99);
-    case 'barchart':
-      // 生成頻率數據
-      const barData = [];
-      const values = [1, 2, 3, 4, 5];
-      values.forEach(v => {
-        const freq = getRandomInt(1, 6);
-        for (let i = 0; i < freq; i++) barData.push(v);
-      });
-      return barData;
-    case 'table':
-      // 生成6-10個數據
-      const tableData = [];
-      for (let i = 0; i < getRandomInt(6, 10); i++) {
-        tableData.push(getRandomInt(10, 50));
-      }
-      return tableData;
-    default:
-      return [10, 20, 30, 40, 50];
+  stdDev: (arr) => {
+    return Math.sqrt(MathUtils.variance(arr));
   }
 };
 
-// --- 圖表組件 ---
+// --- 數據生成器 ---
+const DataGenerator = {
+  // 生成適合幹葉圖的數據 (10-99)
+  generateStemLeafData: () => {
+    const count = 15 + Math.floor(Math.random() * 10);
+    const data = Array.from({ length: count }, () => Math.floor(Math.random() * 50) + 40); // 40-90 range
+    return data.sort((a, b) => a - b);
+  },
 
-// 框線圖 (Box Plot)
-const BoxPlot = ({ data, showAnimation, highlightPart }) => {
-  const stats = calculateStats(data);
-  const { min, max, q1, median, q3 } = stats;
+  // 生成適合棒形圖/表格的數據 (離散，頻數)
+  generateFrequencyData: () => {
+    const values = [1, 2, 3, 4, 5, 6]; // 例如骰子或評分
+    const data = [];
+    values.forEach(v => {
+      const freq = Math.floor(Math.random() * 5) + 1; // 1-5 頻數
+      for (let i = 0; i < freq; i++) data.push(v);
+    });
+    return data.sort((a, b) => a - b);
+  },
   
-  const width = 320;
-  const height = 120;
+  // 生成適合框線圖的數據
+  generateBoxPlotData: () => {
+    const count = 11 + Math.floor(Math.random() * 10); // 奇數較好算中位數
+    const data = Array.from({ length: count }, () => Math.floor(Math.random() * 40) + 10);
+    return data.sort((a, b) => a - b);
+  }
+};
+
+// --- SVG 圖表組件 ---
+
+const BoxPlot = ({ data, highlight }) => {
+  const sorted = [...data].sort((a, b) => a - b);
+  const min = sorted[0];
+  const max = sorted[sorted.length - 1];
+  const { q1, q2, q3 } = MathUtils.quartiles(data);
+  
+  // Scale helper
   const padding = 40;
-  const plotWidth = width - 2 * padding;
-  
-  const scale = (val) => padding + ((val - min) / (max - min)) * plotWidth;
-  
+  const width = 500;
+  const scale = (val) => ((val - (min - 5)) / ((max + 5) - (min - 5))) * (width - 2 * padding) + padding;
+
+  const getStroke = (type) => highlight === type ? "#ef4444" : "#3b82f6";
+  const getStrokeWidth = (type) => highlight === type ? 4 : 2;
+
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="w-full max-w-md mx-auto">
-      {/* 軸線 */}
-      <line x1={padding} y1={80} x2={width - padding} y2={80} stroke="#cbd5e1" strokeWidth="1" />
+    <svg viewBox={`0 0 ${width} 200`} className="w-full bg-white rounded-lg shadow-sm border border-slate-200">
+      <text x={width/2} y="20" textAnchor="middle" className="font-bold text-slate-700">框線圖 (Box Plot)</text>
       
-      {/* 刻度 */}
-      {[min, q1, median, q3, max].map((val, i) => (
+      {/* Axis */}
+      <line x1={padding} y1="150" x2={width-padding} y2="150" stroke="#94a3b8" strokeWidth="2" />
+      {[min, q1, q2, q3, max].map((val, i) => (
         <g key={i}>
-          <line x1={scale(val)} y1={78} x2={scale(val)} y2={82} stroke="#64748b" strokeWidth="1" />
-          <text x={scale(val)} y={95} textAnchor="middle" className="text-xs fill-slate-600">{val.toFixed(1)}</text>
+          <line x1={scale(val)} y1="145" x2={scale(val)} y2="155" stroke="#64748b" />
+          <text x={scale(val)} y="170" textAnchor="middle" className="text-xs fill-slate-500">{val}</text>
         </g>
       ))}
+
+      {/* Box Plot Elements */}
+      {/* Whiskers */}
+      <line x1={scale(min)} y1="100" x2={scale(q1)} y2="100" stroke={getStroke('range')} strokeWidth={getStrokeWidth('range')} />
+      <line x1={scale(q3)} y1="100" x2={scale(max)} y2="100" stroke={getStroke('range')} strokeWidth={getStrokeWidth('range')} />
       
-      {/* 鬚線 */}
-      <line x1={scale(min)} y1={50} x2={scale(q1)} y2={50} stroke="#6366f1" strokeWidth="2" 
-        className={highlightPart === 'range' ? 'animate-pulse' : ''} />
-      <line x1={scale(q3)} y1={50} x2={scale(max)} y2={50} stroke="#6366f1" strokeWidth="2"
-        className={highlightPart === 'range' ? 'animate-pulse' : ''} />
-      
-      {/* 端點 */}
-      <line x1={scale(min)} y1={40} x2={scale(min)} y2={60} stroke="#6366f1" strokeWidth="2" />
-      <line x1={scale(max)} y1={40} x2={scale(max)} y2={60} stroke="#6366f1" strokeWidth="2" />
-      
-      {/* 箱體 */}
+      {/* Min/Max Caps */}
+      <line x1={scale(min)} y1="80" x2={scale(min)} y2="120" stroke={getStroke('min')} strokeWidth={getStrokeWidth('min')} />
+      <line x1={scale(max)} y1="80" x2={scale(max)} y2="120" stroke={getStroke('max')} strokeWidth={getStrokeWidth('max')} />
+
+      {/* Box (IQR) */}
       <rect 
-        x={scale(q1)} y={30} 
-        width={scale(q3) - scale(q1)} height={40} 
-        fill={highlightPart === 'iqr' ? '#c7d2fe' : '#e0e7ff'} 
-        stroke="#6366f1" strokeWidth="2"
-        className={highlightPart === 'iqr' ? 'animate-pulse' : ''}
+        x={scale(q1)} y="70" 
+        width={scale(q3) - scale(q1)} height="60" 
+        fill="none" 
+        stroke={getStroke('iqr')} 
+        strokeWidth={getStrokeWidth('iqr')} 
       />
       
-      {/* 中位數線 */}
-      <line 
-        x1={scale(median)} y1={30} x2={scale(median)} y2={70} 
-        stroke={highlightPart === 'median' ? '#dc2626' : '#4f46e5'} 
-        strokeWidth="3"
-        className={highlightPart === 'median' ? 'animate-pulse' : ''}
-      />
-      
-      {/* 標籤 */}
-      <text x={scale(min)} y={22} textAnchor="middle" className="text-xs fill-slate-500">最小值</text>
-      <text x={scale(q1)} y={22} textAnchor="middle" className="text-xs fill-slate-500">Q₁</text>
-      <text x={scale(median)} y={22} textAnchor="middle" className="text-xs fill-indigo-600 font-bold">中位數</text>
-      <text x={scale(q3)} y={22} textAnchor="middle" className="text-xs fill-slate-500">Q₃</text>
-      <text x={scale(max)} y={22} textAnchor="middle" className="text-xs fill-slate-500">最大值</text>
+      {/* Median Line */}
+      <line x1={scale(q2)} y1="70" x2={scale(q2)} y2="130" stroke={getStroke('median')} strokeWidth={getStrokeWidth('median')} />
+
+      {/* Dynamic Labels based on Highlight */}
+      {highlight === 'iqr' && <text x={scale(q2)} y="60" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">IQR (四分位數間距)</text>}
+      {highlight === 'range' && (
+        <g>
+          <path d={`M ${scale(min)} 50 Q ${scale((min+max)/2)} 20 ${scale(max)} 50`} fill="none" stroke="#ef4444" markerEnd="url(#arrow)" />
+          <text x={scale((min+max)/2)} y="35" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">分佈域 (Range)</text>
+        </g>
+      )}
     </svg>
   );
 };
 
-// 幹葉圖 (Stem-and-Leaf)
-const StemLeafPlot = ({ data, highlightPart }) => {
-  const sorted = [...data].sort((a, b) => a - b);
+const StemLeafPlot = ({ data, highlight }) => {
   const stems = {};
-  
-  sorted.forEach(val => {
+  data.forEach(val => {
     const stem = Math.floor(val / 10);
     const leaf = val % 10;
     if (!stems[stem]) stems[stem] = [];
     stems[stem].push(leaf);
   });
   
-  const stemKeys = Object.keys(stems).map(Number).sort((a, b) => a - b);
-  
+  const sortedStems = Object.keys(stems).sort((a,b)=>a-b);
+
   return (
-    <div className="bg-white rounded-xl p-4 border border-slate-200 max-w-xs mx-auto">
-      <div className="text-xs text-slate-500 mb-2 text-center">幹 | 葉</div>
-      <div className="font-mono text-sm space-y-1">
-        {stemKeys.map(stem => (
-          <div key={stem} className="flex">
-            <span className="w-8 text-right pr-2 border-r-2 border-slate-300 text-slate-600 font-bold">{stem}</span>
-            <span className="pl-2 text-indigo-600">{stems[stem].join(' ')}</span>
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center">
+      <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf)</h3>
+      <div className="flex flex-col border-l-2 border-slate-800 pl-4">
+        <div className="flex border-b border-slate-300 mb-2 pb-1 text-slate-500 text-sm">
+          <span className="w-12 text-right pr-4 border-r border-slate-300">幹(10)</span>
+          <span className="pl-4">葉(1)</span>
+        </div>
+        {sortedStems.map(stem => (
+          <div key={stem} className={`flex items-center hover:bg-slate-50 ${highlight === 'row' ? 'animate-pulse' : ''}`}>
+            <span className="w-12 text-right pr-4 border-r border-slate-800 font-bold text-lg">{stem}</span>
+            <div className="pl-4 tracking-[0.5em] text-lg">
+              {stems[stem].map((leaf, i) => (
+                <span key={i} className={`inline-block transition-colors ${highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
+                  {leaf}
+                </span>
+              ))}
+            </div>
           </div>
         ))}
       </div>
-      <div className="text-xs text-slate-400 mt-3 text-center">例: 3|5 = 35</div>
+      <div className="mt-4 text-xs text-slate-500">
+        Key: 4 | 2 = 42
+      </div>
     </div>
   );
 };
 
-// 棒型圖 (Bar Chart)
-const BarChart = ({ data, highlightPart }) => {
+const BarChart = ({ data, highlight }) => {
   const freq = {};
-  data.forEach(x => freq[x] = (freq[x] || 0) + 1);
-  const values = Object.keys(freq).map(Number).sort((a, b) => a - b);
+  data.forEach(v => freq[v] = (freq[v] || 0) + 1);
+  const keys = Object.keys(freq).map(Number).sort((a,b)=>a-b);
   const maxFreq = Math.max(...Object.values(freq));
   
-  const width = 300;
-  const height = 160;
-  const barWidth = 40;
-  const gap = 10;
+  const width = 500;
+  const height = 250;
+  const margin = 40;
+  const barWidth = (width - 2*margin) / keys.length * 0.6;
   
+  const scaleY = (f) => ((f) / (maxFreq + 1)) * (height - 2*margin);
+
   return (
-    <svg viewBox={`0 0 ${width} ${height}`} className="w-full max-w-sm mx-auto">
-      {/* Y軸 */}
-      <line x1={40} y1={20} x2={40} y2={130} stroke="#cbd5e1" strokeWidth="1" />
-      {/* X軸 */}
-      <line x1={40} y1={130} x2={width - 20} y2={130} stroke="#cbd5e1" strokeWidth="1" />
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full bg-white rounded-lg shadow-sm border border-slate-200">
+      <text x={width/2} y="20" textAnchor="middle" className="font-bold text-slate-700">棒型圖 (Bar Chart)</text>
       
-      {/* Y軸刻度 */}
-      {[0, Math.ceil(maxFreq/2), maxFreq].map((v, i) => (
-        <g key={i}>
-          <text x={35} y={130 - (v / maxFreq) * 100} textAnchor="end" className="text-xs fill-slate-500">{v}</text>
-          <line x1={38} y1={130 - (v / maxFreq) * 100} x2={40} y2={130 - (v / maxFreq) * 100} stroke="#64748b" />
-        </g>
-      ))}
+      {/* Axes */}
+      <line x1={margin} y1={height-margin} x2={width-margin} y2={height-margin} stroke="#334155" strokeWidth="2" />
+      <line x1={margin} y1={height-margin} x2={margin} y2={margin} stroke="#334155" strokeWidth="2" />
       
-      {/* 柱狀 */}
-      {values.map((val, i) => {
-        const barHeight = (freq[val] / maxFreq) * 100;
-        const x = 50 + i * (barWidth + gap);
+      <text x={width/2} y={height-10} textAnchor="middle" className="text-xs">數值 (Score)</text>
+      <text x={10} y={height/2} transform={`rotate(-90, 10, ${height/2})`} textAnchor="middle" className="text-xs">頻數 (Freq)</text>
+
+      {keys.map((k, i) => {
+        const x = margin + i * ((width - 2*margin) / keys.length) + 20;
+        const h = scaleY(freq[k]);
+        const isMode = highlight === 'mode' && freq[k] === maxFreq;
+        
         return (
-          <g key={val}>
+          <g key={k}>
             <rect 
-              x={x} y={130 - barHeight} 
-              width={barWidth} height={barHeight}
-              fill="#818cf8" 
-              className="hover:fill-indigo-500 transition-colors"
+              x={x} 
+              y={height - margin - h} 
+              width={barWidth} 
+              height={h} 
+              fill={isMode ? "#ef4444" : "#60a5fa"}
+              className="transition-all duration-300 hover:opacity-80"
             />
-            <text x={x + barWidth/2} y={145} textAnchor="middle" className="text-xs fill-slate-600">{val}</text>
-            <text x={x + barWidth/2} y={125 - barHeight} textAnchor="middle" className="text-xs fill-slate-700 font-bold">{freq[val]}</text>
+            <text x={x + barWidth/2} y={height - margin + 15} textAnchor="middle" className="text-xs">{k}</text>
+            <text x={x + barWidth/2} y={height - margin - h - 5} textAnchor="middle" className="text-xs font-bold text-slate-600">{freq[k]}</text>
           </g>
         );
       })}
-      
-      {/* 標籤 */}
-      <text x={width/2} y={158} textAnchor="middle" className="text-xs fill-slate-500">數值</text>
-      <text x={12} y={75} textAnchor="middle" className="text-xs fill-slate-500" transform="rotate(-90, 12, 75)">頻率</text>
     </svg>
   );
 };
 
-// 表格顯示
-const DataTable = ({ data }) => {
+const FrequencyTable = ({ data, highlight }) => {
+  const freq = {};
+  data.forEach(v => freq[v] = (freq[v] || 0) + 1);
+  const keys = Object.keys(freq).map(Number).sort((a,b)=>a-b);
+  
+  // 計算累積頻數 for Median explanation
+  let cumFreq = 0;
+  const cumFreqs = keys.map(k => {
+    cumFreq += freq[k];
+    return cumFreq;
+  });
+
   return (
-    <div className="bg-white rounded-xl p-4 border border-slate-200 max-w-md mx-auto overflow-x-auto">
-      <table className="w-full text-center">
-        <thead>
-          <tr className="border-b border-slate-200">
-            <th className="py-2 px-3 text-xs text-slate-500">序號</th>
-            {data.map((_, i) => (
-              <th key={i} className="py-2 px-3 text-xs text-slate-500">{i + 1}</th>
-            ))}
+    <div className="w-full overflow-hidden bg-white rounded-lg shadow-sm border border-slate-200">
+      <div className="p-2 bg-slate-50 border-b border-slate-200 font-bold text-center text-slate-700">頻數表 (Frequency Table)</div>
+      <table className="w-full text-sm text-center">
+        <thead className="bg-slate-100 text-slate-600">
+          <tr>
+            <th className="p-2 border-r">數值 (x)</th>
+            <th className="p-2 border-r">頻數 (f)</th>
+            <th className="p-2">f × x</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="py-2 px-3 text-sm text-slate-600 font-medium">數值</td>
-            {data.map((val, i) => (
-              <td key={i} className="py-2 px-3 text-lg font-bold text-indigo-600">{val}</td>
-            ))}
+          {keys.map((k, i) => (
+            <tr key={k} className={`border-b ${highlight === 'data' ? 'bg-blue-50' : ''}`}>
+              <td className="p-2 border-r font-medium">{k}</td>
+              <td className={`p-2 border-r ${highlight === 'mode' && freq[k] === Math.max(...Object.values(freq)) ? 'bg-red-100 font-bold' : ''}`}>{freq[k]}</td>
+              <td className="p-2 text-slate-500">{k * freq[k]}</td>
+            </tr>
+          ))}
+          <tr className="bg-slate-50 font-bold">
+            <td className="p-2 border-r">總和</td>
+            <td className="p-2 border-r">{data.length}</td>
+            <td className="p-2">{MathUtils.sum(data)}</td>
           </tr>
         </tbody>
       </table>
@@ -296,423 +294,362 @@ const DataTable = ({ data }) => {
   );
 };
 
-// --- 統計量定義 ---
-const STAT_TYPES = {
-  mean: { name: '平均數', symbol: '\\bar{x}', availableIn: ['stemleaf', 'barchart', 'table'] },
-  median: { name: '中位數', symbol: 'M', availableIn: ['boxplot', 'stemleaf', 'barchart', 'table'] },
-  mode: { name: '眾數', symbol: 'Mo', availableIn: ['stemleaf', 'barchart', 'table'] },
-  stdDev: { name: '標準差', symbol: '\\sigma', availableIn: ['stemleaf', 'barchart', 'table'] },
-  variance: { name: '方差', symbol: '\\sigma^2', availableIn: ['stemleaf', 'barchart', 'table'] },
-  iqr: { name: '四分位數間距', symbol: 'IQR', availableIn: ['boxplot', 'stemleaf', 'barchart', 'table'] },
-  range: { name: '分佈域', symbol: 'R', availableIn: ['boxplot', 'stemleaf', 'barchart', 'table'] },
-};
+// --- 主應用邏輯 ---
 
-const CHART_TYPES = {
-  boxplot: { name: '框線圖', icon: '📊', stats: ['median', 'iqr', 'range'] },
-  stemleaf: { name: '幹葉圖', icon: '🌿', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
-  barchart: { name: '棒型圖', icon: '📶', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
-  table: { name: '表格', icon: '📋', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
-};
-
-// --- 提示內容 ---
-const getHint = (statType) => {
-  const hints = {
-    mean: {
-      formula: '\\bar{x} = \\frac{\\sum x_i}{n}',
-      steps: ['1. 將所有數據加總', '2. 除以數據個數 n'],
-    },
-    median: {
-      formula: 'M = \\text{排序後中間位置的數}',
-      steps: ['1. 將數據由小到大排序', '2. 若 n 為奇數：中位數 = 第 (n+1)/2 個數', '3. 若 n 為偶數：中位數 = 第 n/2 和 n/2+1 個數的平均'],
-    },
-    mode: {
-      formula: 'Mo = \\text{出現次數最多的數}',
-      steps: ['1. 數出每個數值出現的次數', '2. 找出出現最多次的數值', '3. 可能有多個眾數，或無眾數'],
-    },
-    variance: {
-      formula: '\\sigma^2 = \\frac{\\sum(x_i - \\bar{x})^2}{n}',
-      steps: ['1. 先計算平均數 x̄', '2. 每個數據減去平均數', '3. 將差值平方後加總', '4. 除以數據個數 n'],
-    },
-    stdDev: {
-      formula: '\\sigma = \\sqrt{\\frac{\\sum(x_i - \\bar{x})^2}{n}}',
-      steps: ['1. 先計算方差 σ²', '2. 將方差開根號'],
-    },
-    iqr: {
-      formula: 'IQR = Q_3 - Q_1',
-      steps: ['1. 將數據排序', '2. 找出 Q₁（第25百分位數）', '3. 找出 Q₃（第75百分位數）', '4. IQR = Q₃ - Q₁'],
-    },
-    range: {
-      formula: 'R = \\text{最大值} - \\text{最小值}',
-      steps: ['1. 找出數據中的最大值', '2. 找出數據中的最小值', '3. 相減得到分佈域'],
-    },
-  };
-  return hints[statType];
-};
-
-// --- 計算過程生成 ---
-const getSolution = (statType, data, stats) => {
-  const n = data.length;
-  const sorted = stats.sorted;
-  
-  switch(statType) {
-    case 'mean':
-      const sum = data.reduce((a, b) => a + b, 0);
-      return {
-        formula: `\\bar{x} = \\frac{${data.join(' + ')}}{${n}} = \\frac{${sum}}{${n}} = ${stats.mean.toFixed(2)}`,
-        answer: stats.mean.toFixed(2),
-      };
-    case 'median':
-      if (n % 2 === 0) {
-        const mid1 = sorted[n/2 - 1];
-        const mid2 = sorted[n/2];
-        return {
-          formula: `\\text{排序: } ${sorted.join(', ')} \\\\ M = \\frac{${mid1} + ${mid2}}{2} = ${stats.median.toFixed(2)}`,
-          answer: stats.median.toFixed(2),
-        };
-      } else {
-        return {
-          formula: `\\text{排序: } ${sorted.join(', ')} \\\\ M = \\text{第 } ${Math.ceil(n/2)} \\text{ 個} = ${stats.median}`,
-          answer: stats.median.toString(),
-        };
-      }
-    case 'mode':
-      if (stats.mode === null) {
-        return { formula: `\\text{每個數值出現次數相同，無眾數}`, answer: '無眾數' };
-      }
-      return {
-        formula: `Mo = ${stats.mode.join(', ')}`,
-        answer: stats.mode.join(', '),
-      };
-    case 'variance':
-      const meanVal = stats.mean;
-      const deviations = data.map(x => `(${x} - ${meanVal.toFixed(2)})^2`).join(' + ');
-      return {
-        formula: `\\sigma^2 = \\frac{${deviations}}{${n}} = ${stats.variance.toFixed(2)}`,
-        answer: stats.variance.toFixed(2),
-      };
-    case 'stdDev':
-      return {
-        formula: `\\sigma = \\sqrt{${stats.variance.toFixed(2)}} = ${stats.stdDev.toFixed(2)}`,
-        answer: stats.stdDev.toFixed(2),
-      };
-    case 'iqr':
-      return {
-        formula: `IQR = Q_3 - Q_1 = ${stats.q3.toFixed(2)} - ${stats.q1.toFixed(2)} = ${stats.iqr.toFixed(2)}`,
-        answer: stats.iqr.toFixed(2),
-      };
-    case 'range':
-      return {
-        formula: `R = ${stats.max} - ${stats.min} = ${stats.range}`,
-        answer: stats.range.toString(),
-      };
-    default:
-      return { formula: '', answer: '' };
-  }
-};
-
-// --- 主組件 ---
-export default function DispersionQuiz() {
-  const [chartType, setChartType] = useState(null); // 當前選擇的圖表類型
-  const [currentStat, setCurrentStat] = useState(null); // 當前練習的統計量
+export default function StatisticsApp() {
+  const [mode, setMode] = useState('menu'); // menu, quiz, learn
+  const [currentChart, setCurrentChart] = useState(null); // box, stem, bar, table
+  const [currentMeasure, setCurrentMeasure] = useState(null);
   const [data, setData] = useState([]);
-  const [stats, setStats] = useState(null);
   const [userAnswer, setUserAnswer] = useState('');
-  const [feedback, setFeedback] = useState(null);
-  const [showHint, setShowHint] = useState(false);
+  const [feedback, setFeedback] = useState(null); // { type: 'correct' | 'wrong' | 'hint', msg: '', detail: '' }
   const [score, setScore] = useState(0);
-  const [mode, setMode] = useState('select'); // 'select' | 'learn' | 'quiz'
-  const [learnStep, setLearnStep] = useState(0);
+  const [totalQuestions, setTotalQuestions] = useState(0);
+  const [highlight, setHighlight] = useState(null);
 
-  // 選擇圖表類型
-  const selectChartType = (type) => {
-    setChartType(type);
-    setMode('learn');
-    setLearnStep(0);
-    setCurrentStat(CHART_TYPES[type].stats[0]);
-    const newData = generateData(type);
+  const topics = [
+    { id: 'mean', label: '平均數 (Mean)', layers: ['stem', 'bar', 'table'] },
+    { id: 'median', label: '中位數 (Median)', layers: ['box', 'stem', 'bar', 'table'] },
+    { id: 'mode', label: '眾數 (Mode)', layers: ['stem', 'bar', 'table'] },
+    { id: 'range', label: '分佈域 (Range)', layers: ['box', 'stem', 'bar', 'table'] },
+    { id: 'iqr', label: '四分位數間距 (IQR)', layers: ['box', 'stem', 'bar', 'table'] },
+    { id: 'variance', label: '方差 (Variance)', layers: ['stem', 'bar', 'table'] },
+    { id: 'stdDev', label: '標準差 (SD)', layers: ['stem', 'bar', 'table'] },
+  ];
+
+  const generateNewQuestion = (forceTopic = null) => {
+    // 1. Pick Topic
+    const topic = forceTopic || topics[Math.floor(Math.random() * topics.length)];
+    // 2. Pick Compatible Chart Layer
+    const chartType = topic.layers[Math.floor(Math.random() * topic.layers.length)];
+    
+    // 3. Generate Data
+    let newData = [];
+    if (chartType === 'box') newData = DataGenerator.generateBoxPlotData();
+    else if (chartType === 'stem') newData = DataGenerator.generateStemLeafData();
+    else newData = DataGenerator.generateFrequencyData();
+
+    setCurrentMeasure(topic);
+    setCurrentChart(chartType);
     setData(newData);
-    setStats(calculateStats(newData));
-  };
-
-  // 開始測驗
-  const startQuiz = (statType) => {
-    setMode('quiz');
-    setCurrentStat(statType);
     setUserAnswer('');
     setFeedback(null);
-    setShowHint(false);
-    const newData = generateData(chartType);
-    setData(newData);
-    setStats(calculateStats(newData));
+    setHighlight(null);
   };
 
-  // 檢查答案
+  const getCorrectAnswer = () => {
+    switch (currentMeasure.id) {
+      case 'mean': return MathUtils.mean(data);
+      case 'median': return MathUtils.median(data);
+      case 'mode': 
+        const modes = MathUtils.mode(data);
+        return modes.length > 0 ? modes[0] : 0; // Simplification for quiz
+      case 'range': return MathUtils.range(data);
+      case 'iqr': return MathUtils.iqr(data);
+      case 'variance': return MathUtils.variance(data);
+      case 'stdDev': return MathUtils.stdDev(data);
+      default: return 0;
+    }
+  };
+
   const checkAnswer = () => {
-    const solution = getSolution(currentStat, data, stats);
-    const userVal = parseFloat(userAnswer);
-    const correctVal = parseFloat(solution.answer);
+    const correct = getCorrectAnswer();
+    const user = parseFloat(userAnswer);
     
-    let isCorrect = false;
-    if (currentStat === 'mode') {
-      // 眾數特殊處理
-      const userModes = userAnswer.split(',').map(s => s.trim());
-      if (stats.mode === null && userAnswer.includes('無')) {
-        isCorrect = true;
-      } else if (stats.mode) {
-        isCorrect = stats.mode.every(m => userModes.includes(m.toString())) && 
-                   userModes.every(u => stats.mode.includes(parseInt(u)));
-      }
-    } else {
-      isCorrect = Math.abs(userVal - correctVal) < 0.1;
+    if (isNaN(user)) {
+      setFeedback({ type: 'wrong', msg: '請輸入數字', detail: '' });
+      return;
     }
-    
-    if (isCorrect) {
-      setFeedback({ correct: true, solution });
+
+    // Tolerance for float
+    if (Math.abs(user - correct) < 0.05) {
+      setFeedback({ type: 'correct', msg: '答對了！太棒了！', detail: '' });
       setScore(s => s + 1);
+      setTotalQuestions(t => t + 1);
     } else {
-      setFeedback({ correct: false, solution });
+      let explanation = "";
+      if (currentMeasure.id === 'mean') explanation = `平均數 = 總和 (${MathUtils.sum(data)}) ÷ 數量 (${data.length})`;
+      if (currentMeasure.id === 'range') explanation = `分佈域 = 最大值 (${Math.max(...data)}) - 最小值 (${Math.min(...data)})`;
+      if (currentMeasure.id === 'iqr') {
+        const {q1, q3} = MathUtils.quartiles(data);
+        explanation = `IQR = Q3 (${q3}) - Q1 (${q1})`;
+      }
+      if (currentMeasure.id === 'variance') explanation = `方差 (σ²) = 每個數與平均數差的平方和 ÷ N`;
+      if (currentMeasure.id === 'stdDev') explanation = `標準差 (σ) = √方差`;
+      if (currentMeasure.id === 'median') explanation = `中位數 = 排序後中間的數`;
+
+      setFeedback({ 
+        type: 'wrong', 
+        msg: '答案不正確', 
+        detail: `正確答案是 ${correct.toFixed(2)}。\n${explanation}` 
+      });
+      setTotalQuestions(t => t + 1);
     }
   };
 
-  // 下一題
-  const nextQuestion = () => {
-    const newData = generateData(chartType);
-    setData(newData);
-    setStats(calculateStats(newData));
-    setUserAnswer('');
-    setFeedback(null);
-    setShowHint(false);
+  const showHint = () => {
+    let hintMsg = "";
+    if (currentMeasure.id === 'range') {
+      setHighlight('range');
+      hintMsg = "提示：找出最大值和最小值，然後相減。";
+    } else if (currentMeasure.id === 'iqr') {
+      setHighlight('iqr');
+      hintMsg = "提示：找出第三四分位數 (Q3) 和第一四分位數 (Q1)，然後相減。";
+    } else if (currentMeasure.id === 'mode') {
+      setHighlight('mode');
+      hintMsg = "提示：找出出現次數最多的數值。";
+    } else if (currentMeasure.id === 'mean') {
+      setHighlight('data');
+      hintMsg = "提示：將所有數值加起來，除以總數量。";
+    } else if (currentMeasure.id === 'median') {
+      setHighlight('median');
+      hintMsg = "提示：將數據由小至大排列，找出正中間的數。";
+    } else {
+      setHighlight('data');
+      hintMsg = "提示：仔細觀察數據分佈。";
+    }
+    setFeedback({ type: 'hint', msg: hintMsg });
   };
 
-  // 返回選擇頁面
-  const backToSelect = () => {
-    setMode('select');
-    setChartType(null);
-    setCurrentStat(null);
-    setFeedback(null);
-    setShowHint(false);
-  };
+  // --- Views ---
 
-  // 渲染圖表
   const renderChart = () => {
-    switch(chartType) {
-      case 'boxplot':
-        return <BoxPlot data={data} highlightPart={currentStat} />;
-      case 'stemleaf':
-        return <StemLeafPlot data={data} highlightPart={currentStat} />;
-      case 'barchart':
-        return <BarChart data={data} highlightPart={currentStat} />;
-      case 'table':
-        return <DataTable data={data} />;
-      default:
-        return null;
-    }
+    if (currentChart === 'box') return <BoxPlot data={data} highlight={highlight} />;
+    if (currentChart === 'stem') return <StemLeafPlot data={data} highlight={highlight} />;
+    if (currentChart === 'bar') return <BarChart data={data} highlight={highlight} />;
+    if (currentChart === 'table') return <FrequencyTable data={data} highlight={highlight} />;
+    return null;
   };
 
-  // 選擇頁面
-  if (mode === 'select') {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-10">
-          <Link to="/" className="p-2 -ml-2 text-slate-400 hover:text-slate-700 flex items-center gap-1">
-            <HomeIcon size={20} />
-            <span className="text-sm">返回首頁</span>
-          </Link>
-          <span className="font-bold text-slate-700">統計離差特訓</span>
-          <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
-            <Trophy size={16} className="text-yellow-600" />
-            <span className="font-bold text-yellow-700">{score}</span>
-          </div>
-        </div>
-
-        <div className="max-w-2xl mx-auto p-6">
-          <h1 className="text-2xl font-bold text-center text-slate-800 mb-2">選擇圖表類型</h1>
-          <p className="text-center text-slate-500 mb-8">先學習如何從不同圖表中找出各種統計量</p>
-          
-          <div className="grid grid-cols-2 gap-4">
-            {Object.entries(CHART_TYPES).map(([key, chart]) => (
-              <button
-                key={key}
-                onClick={() => selectChartType(key)}
-                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all border border-slate-200 hover:border-indigo-300 hover:-translate-y-1 text-left"
-              >
-                <div className="text-4xl mb-3">{chart.icon}</div>
-                <h3 className="text-lg font-bold text-slate-800 mb-2">{chart.name}</h3>
-                <div className="flex flex-wrap gap-1">
-                  {chart.stats.map(stat => (
-                    <span key={stat} className="text-xs bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full">
-                      {STAT_TYPES[stat].name}
-                    </span>
-                  ))}
-                </div>
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-8 p-4 bg-amber-50 rounded-xl border border-amber-100">
-            <h3 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
-              <Lightbulb size={18} /> 統計量速查
-            </h3>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              {Object.entries(STAT_TYPES).map(([key, stat]) => (
-                <div key={key} className="flex items-center gap-2">
-                  <Latex>{stat.symbol}</Latex>
-                  <span className="text-slate-600">{stat.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+  const MenuView = () => (
+    <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-blue-600 mb-2">📊 統計學離差大師</h1>
+        <p className="text-slate-500">掌握 Mean, Median, Mode, Variance, SD, IQR</p>
       </div>
-    );
-  }
-
-  // 學習/測驗頁面
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col">
-      <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-10">
-        <button onClick={backToSelect} className="p-2 -ml-2 text-slate-400 hover:text-slate-700 flex items-center gap-1">
-          <HomeIcon size={20} />
-          <span className="text-sm">選擇圖表</span>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl px-4">
+        <button 
+          onClick={() => { setMode('learn'); generateNewQuestion(); }}
+          className="p-6 bg-white border-2 border-blue-100 hover:border-blue-500 rounded-xl shadow-sm hover:shadow-md transition-all group"
+        >
+          <div className="flex items-center justify-center mb-3 text-blue-500 group-hover:scale-110 transition-transform">
+            <BookOpen size={48} />
+          </div>
+          <h3 className="text-xl font-bold text-slate-700">教學模式 (Learn)</h3>
+          <p className="text-sm text-slate-500 mt-2">視覺化解釋各種概念</p>
         </button>
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">{CHART_TYPES[chartType].icon}</span>
-          <span className="font-bold text-slate-700">{CHART_TYPES[chartType].name}</span>
-        </div>
-        <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
-          <Trophy size={16} className="text-yellow-600" />
-          <span className="font-bold text-yellow-700">{score}</span>
+
+        <button 
+          onClick={() => { setMode('quiz'); setScore(0); setTotalQuestions(0); generateNewQuestion(); }}
+          className="p-6 bg-white border-2 border-green-100 hover:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all group"
+        >
+          <div className="flex items-center justify-center mb-3 text-green-500 group-hover:scale-110 transition-transform">
+            <Calculator size={48} />
+          </div>
+          <h3 className="text-xl font-bold text-slate-700">測驗模式 (Quiz)</h3>
+          <p className="text-sm text-slate-500 mt-2">隨機題型挑戰</p>
+        </button>
+      </div>
+    </div>
+  );
+
+  const QuizView = () => (
+    <div className="max-w-4xl mx-auto p-4">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
+          <RotateCcw size={16} /> 返回目錄
+        </button>
+        <div className="bg-slate-800 text-white px-4 py-2 rounded-full font-mono">
+          Score: {score} / {totalQuestions}
         </div>
       </div>
 
-      <div className="flex-1 max-w-lg mx-auto w-full p-4 overflow-y-auto">
-        {/* 統計量選擇器 */}
-        <div className="flex flex-wrap gap-2 mb-4 justify-center">
-          {CHART_TYPES[chartType].stats.map(stat => (
+      {/* Question Card */}
+      <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden mb-6">
+        <div className="bg-blue-50 p-4 border-b border-blue-100 flex items-center justify-between">
+          <h2 className="text-lg font-bold text-blue-800 flex items-center gap-2">
+            <HelpCircle size={20} />
+            題目: 找出 <span className="underline decoration-wavy decoration-blue-400">{currentMeasure?.label}</span>
+          </h2>
+          <span className="text-xs uppercase tracking-wider text-blue-400 font-bold bg-white px-2 py-1 rounded">
+            {currentChart === 'box' ? '框線圖' : currentChart === 'stem' ? '幹葉圖' : currentChart === 'bar' ? '棒型圖' : '頻數表'}
+          </span>
+        </div>
+        
+        <div className="p-6 flex flex-col items-center justify-center min-h-[300px] bg-slate-50/50">
+          <div className="w-full max-w-lg">
+            {renderChart()}
+          </div>
+        </div>
+
+        {/* Input Area */}
+        <div className="p-4 bg-white border-t border-slate-100">
+          {!feedback || feedback.type === 'hint' ? (
+            <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+              <input 
+                type="number" 
+                step="0.01"
+                value={userAnswer}
+                onChange={(e) => setUserAnswer(e.target.value)}
+                placeholder="輸入你的答案..."
+                className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
+                onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
+              />
+              <div className="flex gap-2 w-full md:w-auto">
+                <button 
+                  onClick={showHint}
+                  className="flex-1 md:flex-none px-6 py-3 bg-amber-100 text-amber-700 font-bold rounded-lg hover:bg-amber-200 transition-colors flex items-center justify-center gap-2"
+                >
+                  <HelpCircle size={18} /> 提示
+                </button>
+                <button 
+                  onClick={checkAnswer}
+                  className="flex-1 md:flex-none px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+                >
+                  提交答案
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className={`p-4 rounded-lg flex flex-col items-center text-center ${feedback.type === 'correct' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+              <div className="flex items-center gap-2 font-bold text-lg mb-2">
+                {feedback.type === 'correct' ? <CheckCircle /> : <XCircle />}
+                {feedback.msg}
+              </div>
+              {feedback.detail && (
+                <pre className="text-sm font-mono whitespace-pre-wrap bg-white/50 p-3 rounded mb-4">
+                  {feedback.detail}
+                </pre>
+              )}
+              <button 
+                onClick={() => generateNewQuestion()}
+                className="px-6 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 flex items-center gap-2"
+              >
+                下一題 <ArrowRight size={16} />
+              </button>
+            </div>
+          )}
+
+          {/* Hint Display */}
+          {feedback?.type === 'hint' && (
+             <div className="mt-4 p-3 bg-amber-50 text-amber-800 text-sm rounded border border-amber-200 flex items-start gap-2 animate-fadeIn">
+               <div className="mt-1"><HelpCircle size={14} /></div>
+               <div>{feedback.msg}</div>
+             </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  // Simplified Learn View (reuses Quiz components but with forced flow)
+  const LearnView = () => (
+    <div className="max-w-4xl mx-auto p-4">
+      <div className="flex justify-between items-center mb-6">
+        <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
+          <RotateCcw size={16} /> 返回目錄
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Sidebar Topics */}
+        <div className="space-y-2">
+          <h3 className="font-bold text-slate-700 mb-2 px-2">選擇學習主題:</h3>
+          {topics.map(t => (
             <button
-              key={stat}
-              onClick={() => startQuiz(stat)}
-              className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${
-                currentStat === stat 
-                  ? 'bg-indigo-600 text-white' 
-                  : 'bg-white text-slate-600 hover:bg-indigo-50 border border-slate-200'
-              }`}
+              key={t.id}
+              onClick={() => {
+                const topic = t;
+                const chartType = topic.layers[0];
+                let newData;
+                if (chartType === 'box') newData = DataGenerator.generateBoxPlotData();
+                else if (chartType === 'stem') newData = DataGenerator.generateStemLeafData();
+                else newData = DataGenerator.generateFrequencyData();
+                
+                setCurrentMeasure(topic);
+                setCurrentChart(chartType);
+                setData(newData);
+                setHighlight(null);
+                setFeedback(null);
+              }}
+              className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${currentMeasure?.id === t.id ? 'bg-blue-100 text-blue-700 border border-blue-200' : 'bg-white hover:bg-slate-50 border border-transparent'}`}
             >
-              {STAT_TYPES[stat].name}
+              {t.label}
             </button>
           ))}
         </div>
 
-        {/* 圖表顯示 */}
-        <div className="bg-white rounded-2xl p-4 shadow-lg mb-4">
-          {renderChart()}
-        </div>
+        {/* Display Area */}
+        <div className="md:col-span-2 space-y-4">
+          {currentMeasure && (
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+               <h2 className="text-xl font-bold text-slate-800 mb-4">{currentMeasure.label}</h2>
+               
+               {/* Chart Selection for Learning */}
+               <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+                 {currentMeasure.layers.map(layer => (
+                   <button
+                    key={layer}
+                    onClick={() => {
+                      setCurrentChart(layer);
+                      if (layer === 'box') setData(DataGenerator.generateBoxPlotData());
+                      else if (layer === 'stem') setData(DataGenerator.generateStemLeafData());
+                      else setData(DataGenerator.generateFrequencyData());
+                      setHighlight(null);
+                    }}
+                    className={`px-3 py-1 text-xs rounded-full border ${currentChart === layer ? 'bg-slate-800 text-white' : 'bg-white text-slate-600'}`}
+                   >
+                     {layer === 'box' ? '框線圖' : layer === 'stem' ? '幹葉圖' : layer === 'bar' ? '棒型圖' : '頻數表'}
+                   </button>
+                 ))}
+               </div>
 
-        {/* 當前統計量信息 */}
-        {currentStat && (
-          <div className="bg-white rounded-2xl p-4 shadow-lg mb-4">
-            <div className="flex justify-between items-center mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold text-indigo-600">
-                  <Latex>{STAT_TYPES[currentStat].symbol}</Latex>
-                </span>
-                <span className="font-bold text-slate-800">{STAT_TYPES[currentStat].name}</span>
-              </div>
-              <button
-                onClick={() => setShowHint(!showHint)}
-                className="text-amber-500 hover:text-amber-600 flex items-center gap-1 text-sm"
-              >
-                <HelpCircle size={16} />
-                {showHint ? '隱藏提示' : '提示'}
-              </button>
+               <div className="mb-6">
+                 {renderChart()}
+               </div>
+
+               <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                 <h4 className="font-bold text-sm mb-2 text-slate-600">如何計算?</h4>
+                 <div className="space-y-2">
+                   <button 
+                    onClick={() => {
+                      setHighlight('data');
+                      if(currentMeasure.id === 'iqr') setHighlight('iqr');
+                      if(currentMeasure.id === 'range') setHighlight('range');
+                      if(currentMeasure.id === 'median') setHighlight('median');
+                      if(currentMeasure.id === 'mode') setHighlight('mode');
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded shadow-sm hover:bg-blue-50 text-sm w-full text-left"
+                   >
+                     <TrendingUp size={16} className="text-blue-500"/>
+                     1. 視覺化重點 (點擊查看)
+                   </button>
+                   
+                   <div className="p-3 bg-white rounded border border-slate-100 text-sm leading-relaxed">
+                     {currentMeasure.id === 'mean' && <p>將所有數值加總，除以數據個數。<br/> <code>Sum = {MathUtils.sum(data)}, Count = {data.length}</code><br/> <b>Mean = {(MathUtils.mean(data)).toFixed(2)}</b></p>}
+                     {currentMeasure.id === 'median' && <p>將數據由小到大排列，找出正中間的位置。<br/>如果是偶數個，取中間兩個數的平均。<br/> <b>Median = {MathUtils.median(data)}</b></p>}
+                     {currentMeasure.id === 'range' && <p>最大值減去最小值。<br/> <code>Max = {Math.max(...data)}, Min = {Math.min(...data)}</code><br/> <b>Range = {MathUtils.range(data)}</b></p>}
+                     {currentMeasure.id === 'iqr' && <p>四分位數間距 = Q3 - Q1。<br/> <code>Q3 = {MathUtils.quartiles(data).q3}, Q1 = {MathUtils.quartiles(data).q1}</code><br/> <b>IQR = {MathUtils.iqr(data)}</b></p>}
+                     {currentMeasure.id === 'mode' && <p>出現頻率最高的數值。<br/> <b>Mode = {MathUtils.mode(data).join(', ')}</b></p>}
+                     {currentMeasure.id === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>Variance = {MathUtils.variance(data).toFixed(2)}</b></p>}
+                     {currentMeasure.id === 'stdDev' && <p>方差開根號。<br/> <b>SD = {MathUtils.stdDev(data).toFixed(2)}</b></p>}
+                   </div>
+                 </div>
+               </div>
             </div>
-
-            {/* 提示 */}
-            {showHint && (
-              <div className="mb-4 p-4 bg-amber-50 rounded-xl border border-amber-100 animate-in slide-in-from-top-2">
-                <div className="text-lg mb-2 text-center">
-                  <Latex block>{getHint(currentStat).formula}</Latex>
-                </div>
-                <ol className="list-decimal list-inside space-y-1 text-sm text-amber-900">
-                  {getHint(currentStat).steps.map((step, i) => (
-                    <li key={i}>{step}</li>
-                  ))}
-                </ol>
-              </div>
-            )}
-
-            {/* 輸入區 */}
-            {mode === 'quiz' && !feedback && (
-              <div className="space-y-3">
-                <input
-                  type="text"
-                  value={userAnswer}
-                  onChange={(e) => setUserAnswer(e.target.value)}
-                  placeholder={currentStat === 'mode' ? '輸入眾數（多個用逗號分隔，或輸入「無眾數」）' : '輸入答案（保留兩位小數）'}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-indigo-500 focus:outline-none text-lg text-center"
-                />
-                <button
-                  onClick={checkAnswer}
-                  disabled={!userAnswer}
-                  className={`w-full py-3 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${
-                    userAnswer 
-                      ? 'bg-indigo-600 text-white hover:bg-indigo-700' 
-                      : 'bg-slate-100 text-slate-300 cursor-not-allowed'
-                  }`}
-                >
-                  <Check size={24} /> 確認答案
-                </button>
-              </div>
-            )}
-
-            {/* 反饋 */}
-            {feedback && (
-              <div className={`p-4 rounded-xl ${feedback.correct ? 'bg-emerald-50 border border-emerald-100' : 'bg-red-50 border border-red-100'}`}>
-                <div className="flex items-center gap-2 mb-3">
-                  {feedback.correct ? (
-                    <>
-                      <CheckCircle className="text-emerald-600" size={24} />
-                      <span className="font-bold text-emerald-800 text-lg">答對了！</span>
-                    </>
-                  ) : (
-                    <>
-                      <XCircle className="text-red-600" size={24} />
-                      <span className="font-bold text-red-800 text-lg">答錯了</span>
-                    </>
-                  )}
-                </div>
-                
-                <div className="bg-white/60 rounded-lg p-3 mb-3">
-                  <div className="text-sm text-slate-600 mb-1">計算過程：</div>
-                  <div className="text-center">
-                    <Latex block>{feedback.solution.formula}</Latex>
-                  </div>
-                </div>
-                
-                <div className="text-center">
-                  <span className="text-sm text-slate-600">正確答案：</span>
-                  <span className="text-xl font-bold text-slate-800 ml-2">{feedback.solution.answer}</span>
-                </div>
-                
-                <button
-                  onClick={nextQuestion}
-                  className="w-full mt-4 py-3 rounded-xl font-bold bg-slate-800 text-white hover:bg-slate-900 flex items-center justify-center gap-2"
-                >
-                  下一題 <ArrowRight size={20} />
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* 數據列表（非表格時顯示） */}
-        {chartType !== 'table' && data.length > 0 && (
-          <div className="bg-slate-100 rounded-xl p-3 text-center">
-            <span className="text-xs text-slate-500">原始數據：</span>
-            <span className="text-sm text-slate-700 ml-2">{data.join(', ')}</span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
+      {mode === 'menu' && <MenuView />}
+      {mode === 'quiz' && <QuizView />}
+      {mode === 'learn' && <LearnView />}
     </div>
   );
 }

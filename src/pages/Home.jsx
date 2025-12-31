@@ -87,7 +87,7 @@ const Home = () => {
     },
     {
       id: 'dispersion-quiz',
-      title: '統計離差特訓',
+      title: '高中統計特訓',
       description: 'F5 CH14 統計：平均數、中位數、眾數、標準差、方差、四分位數間距、分佈域',
       icon: Calculator,
       color: 'bg-teal-500',
