@@ -905,8 +905,8 @@ export default function StatisticsApp() {
                           {selectedStat === 'mean' && (
                             <p>
                               將所有數值加總，除以數據個數。<br/>
-                              {selectedChart === 'table' ? (
-                                // 頻數表：使用 f × x 格式
+                              {selectedChart === 'table' || selectedChart === 'bar' ? (
+                                // 頻數表和棒型圖：使用 f × x 格式
                                 (() => {
                                   const freq = {};
                                   learnData.forEach(v => freq[v] = (freq[v] || 0) + 1);
