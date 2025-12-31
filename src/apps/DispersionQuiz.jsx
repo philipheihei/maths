@@ -187,7 +187,7 @@ const BoxPlot = ({ data, highlight }) => {
   );
 };
 
-const StemLeafPlot = ({ data, highlight }) => {
+const StemLeafPlot = ({ data, highlight, highlightValues = [] }) => {
   const stems = {};
   data.forEach(val => {
     const stem = Math.floor(val / 10);
@@ -210,11 +210,15 @@ const StemLeafPlot = ({ data, highlight }) => {
           <div key={stem} className={`flex items-center hover:bg-slate-50 ${highlight === 'row' ? 'animate-pulse' : ''}`}>
             <span className="w-12 text-right pr-4 border-r border-slate-800 font-bold text-lg">{stem}</span>
             <div className="pl-4 tracking-[0.5em] text-lg">
-              {stems[stem].map((leaf, i) => (
-                <span key={i} className={`inline-block transition-colors ${highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
-                  {leaf}
-                </span>
-              ))}
+              {stems[stem].map((leaf, i) => {
+                const value = parseInt(stem) * 10 + leaf;
+                const isHighlighted = highlightValues.includes(value);
+                return (
+                  <span key={i} className={`inline-block transition-colors ${isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded px-1' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
+                    {leaf}
+                  </span>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -741,8 +745,30 @@ export default function StatisticsApp() {
 
     const renderLearnChart = () => {
       if (!selectedChart || learnData.length === 0) return null;
+      
+      // 計算需要高亮的數值
+      let highlightValues = [];
+      if (selectedChart === 'stem' && learnHighlight === 'median') {
+        // 中位數：高亮中間的一個或兩個數
+        const sorted = [...learnData].sort((a, b) => a - b);
+        const mid = Math.floor(sorted.length / 2);
+        if (sorted.length % 2 === 0) {
+          // 偶數個：高亮中間兩個
+          highlightValues = [sorted[mid - 1], sorted[mid]];
+        } else {
+          // 奇數個：高亮中間一個
+          highlightValues = [sorted[mid]];
+        }
+      } else if (selectedChart === 'stem' && learnHighlight === 'mode') {
+        // 眾數：高亮所有眾數
+        const modes = MathUtils.mode(learnData);
+        if (modes.length > 0) {
+          highlightValues = modes;
+        }
+      }
+      
       if (selectedChart === 'box') return <BoxPlot data={learnData} highlight={learnHighlight} />;
-      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} />;
+      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} highlightValues={highlightValues} />;
       if (selectedChart === 'bar') return <BarChart data={learnData} highlight={learnHighlight} />;
       if (selectedChart === 'table') return <FrequencyTable data={learnData} highlight={learnHighlight} />;
       return null;
@@ -821,28 +847,53 @@ export default function StatisticsApp() {
                     <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
                       <h4 className="font-bold text-lg mb-4 text-slate-700">{learnMeasure.label}</h4>
                       <div className="space-y-4">
-                        <button 
-                          type="button"
-                          onClick={() => {
-                            if(selectedStat === 'iqr') setLearnHighlight('iqr');
-                            else if(selectedStat === 'range') setLearnHighlight('range');
-                            else if(selectedStat === 'median') setLearnHighlight('median');
-                            else if(selectedStat === 'mode') setLearnHighlight('mode');
-                            else setLearnHighlight('data');
-                          }}
-                          className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg hover:bg-blue-50 text-sm w-full text-left"
-                        >
-                          <TrendingUp size={16} className="text-blue-500"/>
-                          1. 視覺化重點 (點擊查看)
-                        </button>
+                        {/* 標準差和方差沒有視覺化重點按鈕 */}
+                        {selectedStat !== 'stdDev' && selectedStat !== 'variance' && (
+                          <button 
+                            type="button"
+                            onClick={() => {
+                              if(selectedStat === 'iqr') setLearnHighlight('iqr');
+                              else if(selectedStat === 'range') setLearnHighlight('range');
+                              else if(selectedStat === 'median') setLearnHighlight('median');
+                              else if(selectedStat === 'mode') setLearnHighlight('mode');
+                              else setLearnHighlight('data');
+                            }}
+                            className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg hover:bg-blue-50 text-sm w-full text-left"
+                          >
+                            <TrendingUp size={16} className="text-blue-500"/>
+                            視覺化重點 (點擊查看)
+                          </button>
+                        )}
                         
                         <div className="p-4 bg-slate-50 rounded-lg border border-slate-100 text-sm leading-relaxed">
                           {selectedStat === 'mean' && (
                             <p>
-                              將所有數值加總，除以數據個數。<br/> 
-                              <code>{learnData.join(' + ')} = {MathUtils.sum(learnData)}</code><br/>
-                              <code>數量 = {learnData.length}</code><br/> 
-                              <b>平均數 = {MathUtils.sum(learnData)} ÷ {learnData.length} = {formatAnswer(MathUtils.mean(learnData))}</b>
+                              將所有數值加總，除以數據個數。<br/>
+                              {selectedChart === 'table' ? (
+                                // 頻數表：使用 f × x 格式
+                                (() => {
+                                  const freq = {};
+                                  learnData.forEach(v => freq[v] = (freq[v] || 0) + 1);
+                                  const keys = Object.keys(freq).map(Number).sort((a,b)=>a-b);
+                                  const terms = keys.map(k => `${k}(${freq[k]})`);
+                                  return (
+                                    <>
+                                      <code className="block mt-2">= {terms.join(' + ')}</code>
+                                      <code className="block">= {MathUtils.sum(learnData)}</code>
+                                      <code className="block">數量 = {learnData.length}</code>
+                                      <b className="block mt-2">平均數 = {MathUtils.sum(learnData)} ÷ {learnData.length} = {formatAnswer(MathUtils.mean(learnData))}</b>
+                                    </>
+                                  );
+                                })()
+                              ) : (
+                                // 其他圖表：列出所有數據
+                                <>
+                                  <code className="block mt-2">= {learnData.join(' + ')}</code>
+                                  <code className="block">= {MathUtils.sum(learnData)}</code>
+                                  <code className="block">數量 = {learnData.length}</code>
+                                  <b className="block mt-2">平均數 = {MathUtils.sum(learnData)} ÷ {learnData.length} = {formatAnswer(MathUtils.mean(learnData))}</b>
+                                </>
+                              )}
                             </p>
                           )}
                           
@@ -856,8 +907,26 @@ export default function StatisticsApp() {
                           {selectedStat === 'median' && selectedChart !== 'box' && (
                             <p>
                               將數據由小到大排列，找出正中間的位置。<br/>
-                              如果是偶數個，取中間兩個數的平均。<br/>
-                              <b>中位數 = {formatAnswer(MathUtils.median(learnData))}</b>
+                              如果數據總數為雙數，取中間兩個數的平均。<br/>
+                              {learnData.length % 2 === 0 ? (
+                                <>
+                                  排序後的數據：{[...learnData].sort((a,b) => a-b).join(', ')}<br/>
+                                  數據總數 = {learnData.length} (雙數)<br/>
+                                  中間兩個位置：第 {learnData.length/2} 和第 {learnData.length/2 + 1} 個數<br/>
+                                  {(() => {
+                                    const sorted = [...learnData].sort((a,b) => a-b);
+                                    const mid1 = sorted[learnData.length/2 - 1];
+                                    const mid2 = sorted[learnData.length/2];
+                                    return <><b>中位數 = ({mid1} + {mid2}) / 2 = {formatAnswer((mid1 + mid2) / 2)}</b></>;
+                                  })()}
+                                </>
+                              ) : (
+                                <>
+                                  排序後的數據：{[...learnData].sort((a,b) => a-b).join(', ')}<br/>
+                                  數據總數 = {learnData.length} (單數)<br/>
+                                  <b>中位數 = {formatAnswer(MathUtils.median(learnData))}</b>
+                                </>
+                              )}
                             </p>
                           )}
                           
