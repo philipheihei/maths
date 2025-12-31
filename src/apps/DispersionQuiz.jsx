@@ -650,7 +650,7 @@ export default function StatisticsApp() {
     </div>
   );
 
-  // Restructured Learn View with Chart Type Selection First
+  // Learn View - Chart on left, stats on top
   const LearnView = () => {
     const [selectedChart, setSelectedChart] = useState(null);
     const [selectedStat, setSelectedStat] = useState(null);
@@ -667,21 +667,21 @@ export default function StatisticsApp() {
     const handleChartSelect = (chartType) => {
       setSelectedChart(chartType);
       setSelectedStat(null);
-      setLearnData([]);
       setLearnMeasure(null);
+      
+      let newData = [];
+      if (chartType === 'box') newData = DataGenerator.generateBoxPlotData();
+      else if (chartType === 'stem') newData = DataGenerator.generateStemLeafData();
+      else newData = DataGenerator.generateFrequencyData();
+      
+      setLearnData(newData);
       setHighlight(null);
     };
 
     const handleStatSelect = (statId) => {
       setSelectedStat(statId);
       const topic = topics.find(t => t.id === statId);
-      let newData = [];
-      if (selectedChart === 'box') newData = DataGenerator.generateBoxPlotData();
-      else if (selectedChart === 'stem') newData = DataGenerator.generateStemLeafData();
-      else newData = DataGenerator.generateFrequencyData();
-      
       setLearnMeasure(topic);
-      setLearnData(newData);
       setHighlight(null);
     };
 
@@ -694,127 +694,113 @@ export default function StatisticsApp() {
       return null;
     };
 
-    // Chart Selection Screen
-    if (!selectedChart) {
-      return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-          <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
-            <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
-              <HomeIcon size={20} />
-              <span className="text-sm">返回首頁</span>
-            </Link>
-            <span className="font-bold text-slate-700">高中統計特訓 - 教學模式</span>
-            <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
-              <RotateCcw size={16} /> 返回主選單
-            </button>
-          </div>
-
-          <div className="flex flex-col items-center justify-center min-h-[500px] p-4">
-            <h2 className="text-3xl font-bold text-slate-800 mb-8">選擇圖表類別</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
-              {Object.entries(chartTypes).map(([key, chart]) => (
-                <button
-                  key={key}
-                  onClick={() => handleChartSelect(key)}
-                  className="p-6 bg-white border-2 border-slate-200 hover:border-blue-500 rounded-xl shadow-sm hover:shadow-md transition-all group text-left"
-                >
-                  <h3 className="text-xl font-bold text-slate-700 group-hover:text-blue-600 transition-colors">
-                    {chart.name}
-                  </h3>
-                  <p className="text-sm text-slate-500 mt-2">
-                    包含 {chart.stats.length} 個統計量
-                  </p>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // Chart Detail Screen
     return (
       <div className="min-h-screen bg-slate-100">
         <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
-          <button 
-            onClick={() => setSelectedChart(null)} 
-            className="text-slate-500 hover:text-slate-700 flex items-center gap-2"
-          >
+          <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
             <RotateCcw size={20} />
-            <span className="text-sm">返回圖表選擇</span>
-          </button>
-          <span className="font-bold text-slate-700">{chartTypes[selectedChart].name}</span>
+            <span className="text-sm">返回目錄</span>
+          </Link>
+          <span className="font-bold text-slate-700">高中統計特訓 - 教學模式</span>
           <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
             <HomeIcon size={16} /> 主選單
           </button>
         </div>
 
-        <div className="max-w-4xl mx-auto p-4">
-          {/* 統計量標籤按鈕 */}
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6">
-            <div className="flex flex-wrap gap-2">
-              {chartTypes[selectedChart].stats.map(statId => {
-                const stat = topics.find(t => t.id === statId);
-                return (
-                  <button
-                    key={statId}
-                    onClick={() => handleStatSelect(statId)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      selectedStat === statId
-                        ? 'bg-slate-800 text-white'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                    }`}
-                  >
-                    {stat?.label.split(' ')[0]}
-                  </button>
-                );
-              })}
+        <div className="flex h-[calc(100vh-60px)]">
+          {/* 左側邊欄：圖表類型選擇 */}
+          <div className="w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto">
+            <h3 className="font-bold text-slate-700 mb-4 px-2">選擇圖表類別:</h3>
+            <div className="space-y-2">
+              {Object.entries(chartTypes).map(([key, chart]) => (
+                <button
+                  key={key}
+                  onClick={() => handleChartSelect(key)}
+                  className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${
+                    selectedChart === key
+                      ? 'bg-blue-100 text-blue-800 border border-blue-300'
+                      : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                  }`}
+                >
+                  {chart.name}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* 教學內容 */}
-          {selectedStat && learnMeasure && learnData.length > 0 ? (
-            <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
-              <h2 className="text-2xl font-bold text-slate-800 mb-4">{learnMeasure.label}</h2>
-              
-              <div className="mb-6">
-                {renderLearnChart()}
-              </div>
+          {/* 右側主內容 */}
+          <div className="flex-1 p-6 overflow-y-auto">
+            {selectedChart && learnData.length > 0 ? (
+              <div className="max-w-4xl">
+                {/* 標題 */}
+                <h2 className="text-3xl font-bold text-slate-800 mb-4">{chartTypes[selectedChart].name}</h2>
 
-              <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                <h4 className="font-bold text-sm mb-3 text-slate-600">如何計算?</h4>
-                <div className="space-y-3">
-                  <button 
-                    onClick={() => {
-                      setHighlight('data');
-                      if(selectedStat === 'iqr') setHighlight('iqr');
-                      if(selectedStat === 'range') setHighlight('range');
-                      if(selectedStat === 'median') setHighlight('median');
-                      if(selectedStat === 'mode') setHighlight('mode');
-                    }}
-                    className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded shadow-sm hover:bg-blue-50 text-sm w-full text-left"
-                   >
-                     <TrendingUp size={16} className="text-blue-500"/>
-                     1. 視覺化重點 (點擊查看)
-                   </button>
-                   
-                   <div className="p-4 bg-white rounded border border-slate-100 text-sm leading-relaxed">
-                     {selectedStat === 'mean' && <p>將所有數值加總，除以數據個數。<br/> <code>Sum = {MathUtils.sum(learnData)}, Count = {learnData.length}</code><br/> <b>Mean = {formatAnswer(MathUtils.mean(learnData))}</b></p>}
-                     {selectedStat === 'median' && <p>將數據由小到大排列，找出正中間的位置。<br/>如果是偶數個，取中間兩個數的平均。<br/> <b>Median = {formatAnswer(MathUtils.median(learnData))}</b></p>}
-                     {selectedStat === 'range' && <p>最大值減去最小值。<br/> <code>Max = {Math.max(...learnData)}, Min = {Math.min(...learnData)}</code><br/> <b>Range = {formatAnswer(MathUtils.range(learnData))}</b></p>}
-                     {selectedStat === 'iqr' && <p>四分位數間距 = Q3 - Q1。<br/> <code>Q3 = {formatAnswer(MathUtils.quartiles(learnData).q3)}, Q1 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/> <b>IQR = {formatAnswer(MathUtils.iqr(learnData))}</b></p>}
-                     {selectedStat === 'mode' && <p>出現頻率最高的數值。<br/> <b>Mode = {formatAnswer(MathUtils.mode(learnData).length > 0 ? MathUtils.mode(learnData) : null)}</b></p>}
-                     {selectedStat === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>Variance = {formatAnswer(MathUtils.variance(learnData))}</b></p>}
-                     {selectedStat === 'stdDev' && <p>方差開根號。<br/> <b>SD = {formatAnswer(MathUtils.stdDev(learnData))}</b></p>}
-                   </div>
-                 </div>
+                {/* 統計量選擇按鈕（橫排） */}
+                <div className="flex flex-wrap gap-2 mb-6 bg-white rounded-lg p-4 border border-slate-200">
+                  {chartTypes[selectedChart].stats.map(statId => {
+                    const stat = topics.find(t => t.id === statId);
+                    return (
+                      <button
+                        key={statId}
+                        onClick={() => handleStatSelect(statId)}
+                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                          selectedStat === statId
+                            ? 'bg-slate-800 text-white'
+                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                        }`}
+                      >
+                        {stat?.label.split(' ')[0]}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* 教學內容 */}
+                {selectedStat && learnMeasure && (
+                  <div className="space-y-6">
+                    {/* 圖表 */}
+                    <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                      {renderLearnChart()}
+                    </div>
+
+                    {/* 計算說明 */}
+                    <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                      <h4 className="font-bold text-lg mb-4 text-slate-700">{learnMeasure.label}</h4>
+                      <div className="space-y-4">
+                        <button 
+                          onClick={() => {
+                            setHighlight('data');
+                            if(selectedStat === 'iqr') setHighlight('iqr');
+                            if(selectedStat === 'range') setHighlight('range');
+                            if(selectedStat === 'median') setHighlight('median');
+                            if(selectedStat === 'mode') setHighlight('mode');
+                          }}
+                          className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg hover:bg-blue-50 text-sm w-full text-left"
+                        >
+                          <TrendingUp size={16} className="text-blue-500"/>
+                          1. 視覺化重點 (點擊查看)
+                        </button>
+                        
+                        <div className="p-4 bg-slate-50 rounded-lg border border-slate-100 text-sm leading-relaxed">
+                          {selectedStat === 'mean' && <p>將所有數值加總，除以數據個數。<br/> <code>Sum = {MathUtils.sum(learnData)}, Count = {learnData.length}</code><br/> <b>Mean = {formatAnswer(MathUtils.mean(learnData))}</b></p>}
+                          {selectedStat === 'median' && <p>將數據由小到大排列，找出正中間的位置。<br/>如果是偶數個，取中間兩個數的平均。<br/> <b>Median = {formatAnswer(MathUtils.median(learnData))}</b></p>}
+                          {selectedStat === 'range' && <p>最大值減去最小值。<br/> <code>Max = {Math.max(...learnData)}, Min = {Math.min(...learnData)}</code><br/> <b>Range = {formatAnswer(MathUtils.range(learnData))}</b></p>}
+                          {selectedStat === 'iqr' && <p>四分位數間距 = Q3 - Q1。<br/> <code>Q3 = {formatAnswer(MathUtils.quartiles(learnData).q3)}, Q1 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/> <b>IQR = {formatAnswer(MathUtils.iqr(learnData))}</b></p>}
+                          {selectedStat === 'mode' && <p>出現頻率最高的數值。<br/> <b>Mode = {formatAnswer(MathUtils.mode(learnData).length > 0 ? MathUtils.mode(learnData) : null)}</b></p>}
+                          {selectedStat === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>Variance = {formatAnswer(MathUtils.variance(learnData))}</b></p>}
+                          {selectedStat === 'stdDev' && <p>方差開根號。<br/> <b>SD = {formatAnswer(MathUtils.stdDev(learnData))}</b></p>}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          ) : (
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-12 text-center">
-              <p className="text-slate-400">請選擇上方的統計量</p>
-            </div>
-          )}
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <p className="text-slate-400 text-lg">請從左側選擇圖表類別</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );

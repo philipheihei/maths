@@ -100,6 +100,22 @@ const Home = () => {
       category: '高中',
       topics: ['平均數', '中位數', '標準差', '四分位數'],
       inDevelopment: true
+    },
+    {
+      id: 'inequality-quiz',
+      title: '基礎不等式',
+      description: 'F2 CH8 不等式：文字轉換、數線圖形判讀、不等式基本概念',
+      icon: Calculator,
+      color: 'bg-red-500',
+      hoverColor: 'hover:bg-red-600',
+      path: '/inequality-quiz',
+      level: 'F2',
+      badges: [
+        { level: 'F2', chapter: 'CH8', subject: '一元一次不等式' }
+      ],
+      category: '初中',
+      topics: ['不等式', '文字翻譯', '數線表示'],
+      inDevelopment: true
     }
   ];
 

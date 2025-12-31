@@ -7,6 +7,7 @@ import IdentityQuiz from './apps/IdentityQuiz';  // ✅ 改成 apps
 import SimultaneousEqQuiz from './apps/SimultaneousEqQuiz';
 import IndexLaws from './apps/IndexLaws';
 import DispersionQuiz from './apps/DispersionQuiz';
+import InequalityQuiz from './apps/InequalityQuiz';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/simultaneous-eq-quiz" element={<SimultaneousEqQuiz />} />
         <Route path="/index-laws" element={<IndexLaws />} />
         <Route path="/dispersion-quiz" element={<DispersionQuiz />} />
+        <Route path="/inequality-quiz" element={<InequalityQuiz />} />
       </Routes>
     </Router>
   );
