@@ -774,11 +774,11 @@ export default function StatisticsApp() {
                         <button 
                           type="button"
                           onClick={() => {
-                            setHighlight('data');
                             if(selectedStat === 'iqr') setHighlight('iqr');
-                            if(selectedStat === 'range') setHighlight('range');
-                            if(selectedStat === 'median') setHighlight('median');
-                            if(selectedStat === 'mode') setHighlight('mode');
+                            else if(selectedStat === 'range') setHighlight('range');
+                            else if(selectedStat === 'median') setHighlight('median');
+                            else if(selectedStat === 'mode') setHighlight('mode');
+                            else setHighlight('data');
                           }}
                           className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg hover:bg-blue-50 text-sm w-full text-left"
                         >
@@ -788,9 +788,53 @@ export default function StatisticsApp() {
                         
                         <div className="p-4 bg-slate-50 rounded-lg border border-slate-100 text-sm leading-relaxed">
                           {selectedStat === 'mean' && <p>將所有數值加總，除以數據個數。<br/> <code>Sum = {MathUtils.sum(learnData)}, Count = {learnData.length}</code><br/> <b>Mean = {formatAnswer(MathUtils.mean(learnData))}</b></p>}
-                          {selectedStat === 'median' && <p>將數據由小到大排列，找出正中間的位置。<br/>如果是偶數個，取中間兩個數的平均。<br/> <b>Median = {formatAnswer(MathUtils.median(learnData))}</b></p>}
-                          {selectedStat === 'range' && <p>最大值減去最小值。<br/> <code>Max = {Math.max(...learnData)}, Min = {Math.min(...learnData)}</code><br/> <b>Range = {formatAnswer(MathUtils.range(learnData))}</b></p>}
-                          {selectedStat === 'iqr' && <p>四分位數間距 = Q3 - Q1。<br/> <code>Q3 = {formatAnswer(MathUtils.quartiles(learnData).q3)}, Q1 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/> <b>IQR = {formatAnswer(MathUtils.iqr(learnData))}</b></p>}
+                          
+                          {selectedStat === 'median' && selectedChart === 'box' && (
+                            <p>
+                              <b>在框線圖中：</b>找出長方框中間的直線。<br/>
+                              該直線所對應的數值就是中位數。<br/>
+                              <b>Median = {formatAnswer(MathUtils.median(learnData))}</b>
+                            </p>
+                          )}
+                          {selectedStat === 'median' && selectedChart !== 'box' && (
+                            <p>
+                              將數據由小到大排列，找出正中間的位置。<br/>
+                              如果是偶數個，取中間兩個數的平均。<br/>
+                              <b>Median = {formatAnswer(MathUtils.median(learnData))}</b>
+                            </p>
+                          )}
+                          
+                          {selectedStat === 'range' && selectedChart === 'box' && (
+                            <p>
+                              <b>在框線圖中：</b>從最左端（最小值）到最右端（最大值）的距離。<br/>
+                              <code>Max = {Math.max(...learnData)}, Min = {Math.min(...learnData)}</code><br/>
+                              <b>Range = {formatAnswer(MathUtils.range(learnData))}</b>
+                            </p>
+                          )}
+                          {selectedStat === 'range' && selectedChart !== 'box' && (
+                            <p>
+                              最大值減去最小值。<br/>
+                              <code>Max = {Math.max(...learnData)}, Min = {Math.min(...learnData)}</code><br/>
+                              <b>Range = {formatAnswer(MathUtils.range(learnData))}</b>
+                            </p>
+                          )}
+                          
+                          {selectedStat === 'iqr' && selectedChart === 'box' && (
+                            <p>
+                              <b>在框線圖中：</b>長方框的寬度。<br/>
+                              從方框左邊（Q1）到右邊（Q3）的距離。<br/>
+                              <code>Q3 = {formatAnswer(MathUtils.quartiles(learnData).q3)}, Q1 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
+                              <b>IQR = {formatAnswer(MathUtils.iqr(learnData))}</b>
+                            </p>
+                          )}
+                          {selectedStat === 'iqr' && selectedChart !== 'box' && (
+                            <p>
+                              四分位數間距 = Q3 - Q1。<br/>
+                              <code>Q3 = {formatAnswer(MathUtils.quartiles(learnData).q3)}, Q1 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
+                              <b>IQR = {formatAnswer(MathUtils.iqr(learnData))}</b>
+                            </p>
+                          )}
+                          
                           {selectedStat === 'mode' && <p>出現頻率最高的數值。<br/> <b>Mode = {formatAnswer(MathUtils.mode(learnData).length > 0 ? MathUtils.mode(learnData) : null)}</b></p>}
                           {selectedStat === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>Variance = {formatAnswer(MathUtils.variance(learnData))}</b></p>}
                           {selectedStat === 'stdDev' && <p>方差開根號。<br/> <b>SD = {formatAnswer(MathUtils.stdDev(learnData))}</b></p>}
