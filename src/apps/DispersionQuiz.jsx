@@ -149,33 +149,39 @@ const BoxPlot = ({ data, highlight }) => {
       })}
 
       {/* Box Plot Elements */}
-      {/* Whiskers */}
-      <line x1={scale(min)} y1="100" x2={scale(q1)} y2="100" stroke={getStroke('range')} strokeWidth={getStrokeWidth('range')} />
-      <line x1={scale(q3)} y1="100" x2={scale(max)} y2="100" stroke={getStroke('range')} strokeWidth={getStrokeWidth('range')} />
+      {/* Whiskers - 橫線保持藍色 */}
+      <line x1={scale(min)} y1="100" x2={scale(q1)} y2="100" stroke="#3b82f6" strokeWidth="2" />
+      <line x1={scale(q3)} y1="100" x2={scale(max)} y2="100" stroke="#3b82f6" strokeWidth="2" />
       
-      {/* Min/Max Caps */}
-      <line x1={scale(min)} y1="80" x2={scale(min)} y2="120" stroke={getStroke('min')} strokeWidth={getStrokeWidth('min')} />
-      <line x1={scale(max)} y1="80" x2={scale(max)} y2="120" stroke={getStroke('max')} strokeWidth={getStrokeWidth('max')} />
+      {/* Min/Max Caps - 只在 highlight === 'range' 時顯示 */}
+      {highlight === 'range' && (
+        <>
+          <line x1={scale(min)} y1="80" x2={scale(min)} y2="120" stroke="#ef4444" strokeWidth="4" />
+          <line x1={scale(max)} y1="80" x2={scale(max)} y2="120" stroke="#ef4444" strokeWidth="4" />
+          <text x={scale(min)} y="60" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">最小值</text>
+          <text x={scale(max)} y="60" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">最大值</text>
+        </>
+      )}
 
-      {/* Box (IQR) */}
-      <rect 
-        x={scale(q1)} y="70" 
-        width={scale(q3) - scale(q1)} height="60" 
-        fill="none" 
-        stroke={getStroke('iqr')} 
-        strokeWidth={getStrokeWidth('iqr')} 
-      />
+      {/* Box - 長方形保持藍色，但Q1和Q3的直線在highlight時變紅 */}
+      {/* 上下橫線 */}
+      <line x1={scale(q1)} y1="70" x2={scale(q3)} y2="70" stroke="#3b82f6" strokeWidth="2" />
+      <line x1={scale(q1)} y1="130" x2={scale(q3)} y2="130" stroke="#3b82f6" strokeWidth="2" />
+      {/* Q1 直線 */}
+      <line x1={scale(q1)} y1="70" x2={scale(q1)} y2="130" stroke={highlight === 'iqr' ? "#ef4444" : "#3b82f6"} strokeWidth={highlight === 'iqr' ? 4 : 2} />
+      {/* Q3 直線 */}
+      <line x1={scale(q3)} y1="70" x2={scale(q3)} y2="130" stroke={highlight === 'iqr' ? "#ef4444" : "#3b82f6"} strokeWidth={highlight === 'iqr' ? 4 : 2} />
       
       {/* Median Line */}
       <line x1={scale(q2)} y1="70" x2={scale(q2)} y2="130" stroke={getStroke('median')} strokeWidth={getStrokeWidth('median')} />
 
       {/* Dynamic Labels based on Highlight */}
-      {highlight === 'iqr' && <text x={scale(q2)} y="60" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">IQR (四分位數間距)</text>}
-      {highlight === 'range' && (
-        <g>
-          <path d={`M ${scale(min)} 50 Q ${scale((min+max)/2)} 20 ${scale(max)} 50`} fill="none" stroke="#ef4444" markerEnd="url(#arrow)" />
-          <text x={scale((min+max)/2)} y="35" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">分佈域 (Range)</text>
-        </g>
+      {highlight === 'iqr' && (
+        <>
+          <text x={scale(q1)} y="55" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">Q1</text>
+          <text x={scale(q3)} y="55" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">Q3</text>
+          <text x={scale(q2)} y="40" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">四分位數間距</text>
+        </>
       )}
     </svg>
   );
@@ -408,6 +414,15 @@ export default function StatisticsApp() {
     if (Number.isInteger(val)) return val.toString();
     // 移除尾隨零 (32.50 -> 32.5)
     return parseFloat(val.toFixed(2)).toString();
+  };
+
+  // 格式化為指定有效數字
+  const formatToSignificantFigures = (val, sigFigs = 3) => {
+    if (val === 0) return '0';
+    const magnitude = Math.floor(Math.log10(Math.abs(val)));
+    const factor = Math.pow(10, sigFigs - magnitude - 1);
+    const rounded = Math.round(val * factor) / factor;
+    return rounded.toString();
   };
 
   const checkAnswer = () => {
@@ -675,7 +690,20 @@ export default function StatisticsApp() {
       
       let newData = [];
       if (chartType === 'box') newData = DataGenerator.generateBoxPlotData();
-      else if (chartType === 'stem') newData = DataGenerator.generateStemLeafData();
+      else if (chartType === 'stem') {
+        // 幹葉圖特殊處理：確保有單一眾數
+        let attempts = 0;
+        do {
+          newData = DataGenerator.generateStemLeafData();
+          const modes = MathUtils.mode(newData);
+          if (modes.length === 1) break; // 有單一眾數
+          attempts++;
+        } while (attempts < 10);
+        // 如果10次都無法生成，強制生成一個有眾數的數據
+        if (attempts >= 10) {
+          newData = [42, 42, 42, 45, 47, 50, 53, 55, 58, 60, 63, 65, 68, 70, 72]; // 眾數=42
+        }
+      }
       else newData = DataGenerator.generateFrequencyData();
       
       setLearnData(newData);
@@ -693,6 +721,22 @@ export default function StatisticsApp() {
       const topic = topics.find(t => t.id === statId);
       setLearnMeasure(topic);
       setLearnHighlight(null);
+      
+      // 如果是幹葉圖且選擇眾數，重新生成數據確保有單一眾數
+      if (selectedChart === 'stem' && statId === 'mode') {
+        let newData = [];
+        let attempts = 0;
+        do {
+          newData = DataGenerator.generateStemLeafData();
+          const modes = MathUtils.mode(newData);
+          if (modes.length === 1) break;
+          attempts++;
+        } while (attempts < 10);
+        if (attempts >= 10) {
+          newData = [42, 42, 42, 45, 47, 50, 53, 55, 58, 60, 63, 65, 68, 70, 72];
+        }
+        setLearnData(newData);
+      }
     };
 
     const renderLearnChart = () => {
@@ -821,14 +865,16 @@ export default function StatisticsApp() {
                             <p>
                               <b>在框線圖中：</b>從最左端（最小值）到最右端（最大值）的距離。<br/>
                               <code>最大值 = {Math.max(...learnData)}，最小值 = {Math.min(...learnData)}</code><br/>
-                              <b>分佈域 = {formatAnswer(MathUtils.range(learnData))}</b>
+                              <b>公式：分佈域 = 最大值 - 最小值</b><br/>
+                              <b>分佈域 = {Math.max(...learnData)} - {Math.min(...learnData)} = {formatAnswer(MathUtils.range(learnData))}</b>
                             </p>
                           )}
                           {selectedStat === 'range' && selectedChart !== 'box' && (
                             <p>
                               最大值減去最小值。<br/>
                               <code>最大值 = {Math.max(...learnData)}，最小值 = {Math.min(...learnData)}</code><br/>
-                              <b>分佈域 = {formatAnswer(MathUtils.range(learnData))}</b>
+                              <b>公式：分佈域 = 最大值 - 最小值</b><br/>
+                              <b>分佈域 = {Math.max(...learnData)} - {Math.min(...learnData)} = {formatAnswer(MathUtils.range(learnData))}</b>
                             </p>
                           )}
                           
@@ -848,9 +894,46 @@ export default function StatisticsApp() {
                             </p>
                           )}
                           
-                          {selectedStat === 'mode' && <p>出現頻率最高的數值。<br/> <b>眾數 = {formatAnswer(MathUtils.mode(learnData).length > 0 ? MathUtils.mode(learnData) : '無')}</b></p>}
-                          {selectedStat === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>方差 = {formatAnswer(MathUtils.variance(learnData))}</b></p>}
-                          {selectedStat === 'stdDev' && <p>方差開根號。<br/> <b>標準差 = {formatAnswer(MathUtils.stdDev(learnData))}</b></p>}
+                          {selectedStat === 'mode' && (
+                            <p>
+                              出現頻率最高的數值。<br/>
+                              <b>眾數 = {formatAnswer(MathUtils.mode(learnData).length > 0 ? MathUtils.mode(learnData) : '無')}</b><br/>
+                              <br/>
+                              <span className="text-slate-600 text-sm">
+                                • <b>無眾數</b>：當所有數值出現次數相同時，則無眾數。<br/>
+                                • <b>多個眾數</b>：當有多個數值出現最高頻率時，則有多個眾數。<br/>
+                                例：1, 1, 2, 2, 3 → 眾數為 1 和 2
+                              </span>
+                            </p>
+                          )}
+                          {selectedStat === 'variance' && (
+                            <p>
+                              計算每個數與平均數距離的平方，取平均。<br/>
+                              <br/>
+                              <b>使用 CASIO fx-50FH II 計算機計算：</b><br/>
+                              <span className="text-slate-600 text-sm">
+                                1. 先按上述方法計算標準差 (σn)<br/>
+                                2. 將標準差平方即可得到方差<br/>
+                              </span>
+                              <br/>
+                              <b>公式：方差 = (標準差)²</b><br/>
+                              標準差 = {formatToSignificantFigures(MathUtils.stdDev(learnData), 3)}<br/>
+                              <b>方差 = ({formatToSignificantFigures(MathUtils.stdDev(learnData), 3)})² = {formatAnswer(MathUtils.variance(learnData))}</b>
+                            </p>
+                          )}
+                          {selectedStat === 'stdDev' && (
+                            <p>
+                              <b>使用 CASIO fx-50FH II 計算機 SD 模式：</b><br/>
+                              <span className="text-slate-600 text-sm">
+                                1. 按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">MODE</kbd> → 選擇 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2 (SD)</kbd><br/>
+                                2. 逐個輸入數據，每個數後按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">M+</kbd> 或 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">DATA</kbd><br/>
+                                3. 輸入完畢後，按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">SHIFT</kbd> + <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2</kbd> (Ïσn) 得到標準差<br/>
+                              </span>
+                              <br/>
+                              數據：{learnData.slice(0, 10).join(', ')}{learnData.length > 10 ? '...' : ''}<br/>
+                              <b>標準差 (SD) = {formatToSignificantFigures(MathUtils.stdDev(learnData), 3)}</b> <span className="text-slate-500 text-sm">(約至3位有效數字)</span>
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
