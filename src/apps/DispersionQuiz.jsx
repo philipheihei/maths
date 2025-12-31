@@ -134,12 +134,18 @@ const BoxPlot = ({ data, highlight }) => {
       
       {/* Axis */}
       <line x1={padding} y1="150" x2={width-padding} y2="150" stroke="#94a3b8" strokeWidth="2" />
-      {[min, q1, q2, q3, max].map((val, i) => (
-        <g key={i}>
-          <line x1={scale(val)} y1="145" x2={scale(val)} y2="155" stroke="#64748b" />
-          <text x={scale(val)} y="170" textAnchor="middle" className="text-xs fill-slate-500">{val}</text>
-        </g>
-      ))}
+      {[min, q1, q2, q3, max].map((val, i) => {
+        const formatValue = (v) => {
+          if (Number.isInteger(v)) return v.toString();
+          return v.toString().replace(/\.?0+$/, '');
+        };
+        return (
+          <g key={i}>
+            <line x1={scale(val)} y1="145" x2={scale(val)} y2="155" stroke="#64748b" />
+            <text x={scale(val)} y="170" textAnchor="middle" className="text-xs fill-slate-500">{formatValue(val)}</text>
+          </g>
+        );
+      })}
 
       {/* Box Plot Elements */}
       {/* Whiskers */}
@@ -773,11 +779,14 @@ export default function StatisticsApp() {
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            if(selectedStat === 'iqr') setHighlight('iqr');
-                            else if(selectedStat === 'range') setHighlight('range');
-                            else if(selectedStat === 'median') setHighlight('median');
-                            else if(selectedStat === 'mode') setHighlight('mode');
-                            else setHighlight('data');
+                            setTimeout(() => {
+                              if(selectedStat === 'iqr') setHighlight('iqr');
+                              else if(selectedStat === 'range') setHighlight('range');
+                              else if(selectedStat === 'median') setHighlight('median');
+                              else if(selectedStat === 'mode') setHighlight('mode');
+                              else setHighlight('data');
+                            }, 0);
+                            return false;
                           }}
                           className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg hover:bg-blue-50 text-sm w-full text-left"
                         >
