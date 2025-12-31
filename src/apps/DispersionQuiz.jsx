@@ -90,7 +90,7 @@ const DataGenerator = {
   generateFrequencyData: () => {
     const values = [1, 2, 3, 4, 5, 6]; // 例如骨子或計分
     const data = [];
-    const freqs = values.map(() => Math.floor(Math.random() * 4) + 1); // 1-4 頻數
+    const freqs = values.map(() => Math.floor(Math.random() * 8) + 1); // 1-8 頻數
     const maxFreq = Math.max(...freqs);
     // 確保只有一個眾數（最高頻率的數似ぬ史は特策は一一不同）
     values.forEach((v, i) => {
@@ -267,6 +267,7 @@ const BarChart = ({ data, highlight }) => {
         const x = margin + i * ((width - 2*margin) / keys.length) + 20;
         const h = scaleY(freq[k]);
         const isMode = highlight === 'mode' && freq[k] === maxFreq;
+        const isRange = highlight === 'range' && (i === 0 || i === keys.length - 1);
         
         return (
           <g key={k}>
@@ -275,7 +276,7 @@ const BarChart = ({ data, highlight }) => {
               y={height - margin - h} 
               width={barWidth} 
               height={h} 
-              fill={isMode ? "#ef4444" : "#60a5fa"}
+              fill={isMode ? "#ef4444" : isRange ? "#ef4444" : "#60a5fa"}
               className="transition-all duration-300 hover:opacity-80"
             />
             <text x={x + barWidth/2} y={height - margin + 15} textAnchor="middle" className="text-xs">{k}</text>
@@ -310,12 +311,15 @@ const FrequencyTable = ({ data, highlight }) => {
           </tr>
         </thead>
         <tbody>
-          {keys.map((k, i) => (
-            <tr key={k} className={`border-b ${highlight === 'data' ? 'bg-blue-50' : ''}`}>
-              <td className="p-2 border-r font-medium">{k}</td>
-              <td className={`p-2 ${highlight === 'mode' && freq[k] === Math.max(...Object.values(freq)) ? 'bg-red-100 font-bold' : ''}`}>{freq[k]}</td>
-            </tr>
-          ))}
+          {keys.map((k, i) => {
+            const isMinMax = highlight === 'range' && (k === Math.min(...keys) || k === Math.max(...keys));
+            return (
+              <tr key={k} className={`border-b ${highlight === 'data' ? 'bg-blue-50' : ''}`}>
+                <td className={`p-2 border-r font-medium ${isMinMax ? 'bg-red-100 font-bold text-red-700' : ''}`}>{k}</td>
+                <td className={`p-2 ${highlight === 'mode' && freq[k] === Math.max(...Object.values(freq)) ? 'bg-red-100 font-bold' : ''}`}>{freq[k]}</td>
+              </tr>
+            );
+          })}
           <tr className="bg-slate-50 font-bold">
             <td className="p-2 border-r">總和</td>
             <td className="p-2">{data.length}</td>
@@ -911,9 +915,9 @@ export default function StatisticsApp() {
                                   return (
                                     <>
                                       <div className="mt-2 flex flex-col items-center">
-                                        <code className="block">{terms.join(' + ')}</code>
-                                        <div className="border-t-2 border-slate-400 w-full my-1"></div>
-                                        <code className="block">{learnData.length}</code>
+                                        <code className="block text-base font-mono">{terms.join(' + ')}</code>
+                                        <div className="border-t-2 border-slate-400 w-full my-2"></div>
+                                        <code className="block text-base font-mono">{learnData.length}</code>
                                       </div>
                                       <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
                                     </>
@@ -923,9 +927,9 @@ export default function StatisticsApp() {
                                 // 其他圖表：列出所有數據
                                 <>
                                   <div className="mt-2 flex flex-col items-center">
-                                    <code className="block text-xs">{learnData.join(' + ')}</code>
-                                    <div className="border-t-2 border-slate-400 w-full my-1"></div>
-                                    <code className="block">{learnData.length}</code>
+                                    <code className="block text-base font-mono">{learnData.join(' + ')}</code>
+                                    <div className="border-t-2 border-slate-400 w-full my-2"></div>
+                                    <code className="block text-base font-mono">{learnData.length}</code>
                                   </div>
                                   <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
                                 </>
