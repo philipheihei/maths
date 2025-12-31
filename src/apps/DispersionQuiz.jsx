@@ -187,13 +187,17 @@ const BoxPlot = ({ data, highlight }) => {
   );
 };
 
-const StemLeafPlot = ({ data, highlight, highlightValues = [] }) => {
+const StemLeafPlot = ({ data, highlight, highlightIndices = [] }) => {
+  // 先將數據排序並記錄位置
+  const sortedData = [...data].sort((a, b) => a - b);
+  
+  // 建立幹葉結構，保留排序後的索引
   const stems = {};
-  data.forEach(val => {
+  sortedData.forEach((val, sortedIndex) => {
     const stem = Math.floor(val / 10);
     const leaf = val % 10;
     if (!stems[stem]) stems[stem] = [];
-    stems[stem].push(leaf);
+    stems[stem].push({ leaf, sortedIndex });
   });
   
   const sortedStems = Object.keys(stems).sort((a,b)=>a-b);
@@ -201,28 +205,33 @@ const StemLeafPlot = ({ data, highlight, highlightValues = [] }) => {
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center">
       <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf)</h3>
-      <div className="flex flex-col border-l-2 border-slate-800 pl-4">
-        <div className="flex border-b border-slate-300 mb-2 pb-1 text-slate-500 text-sm">
-          <span className="w-12 text-right pr-4 border-r border-slate-300">幹(10)</span>
-          <span className="pl-4">葉(1)</span>
-        </div>
-        {sortedStems.map(stem => (
-          <div key={stem} className={`flex items-center hover:bg-slate-50 ${highlight === 'row' ? 'animate-pulse' : ''}`}>
-            <span className="w-12 text-right pr-4 border-r border-slate-800 font-bold text-lg">{stem}</span>
-            <div className="pl-4 tracking-[0.5em] text-lg">
-              {stems[stem].map((leaf, i) => {
-                const value = parseInt(stem) * 10 + leaf;
-                const isHighlighted = highlightValues.includes(value);
-                return (
-                  <span key={i} className={`inline-block transition-colors ${isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded px-1' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
-                    {leaf}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
+      <table className="border-collapse">
+        <thead>
+          <tr className="text-slate-500 text-sm">
+            <th className="pr-2 text-right border-r-2 border-slate-400">幹（十位）</th>
+            <th className="pl-2 text-left">葉（個位）</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedStems.map(stem => (
+            <tr key={stem} className="hover:bg-slate-50">
+              <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">{stem}</td>
+              <td className="pl-2 text-left">
+                <span className="tracking-[0.3em] text-lg">
+                  {stems[stem].map((item, i) => {
+                    const isHighlighted = highlightIndices.includes(item.sortedIndex);
+                    return (
+                      <span key={i} className={`inline-block transition-colors ${isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded px-1 mx-0.5' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
+                        {item.leaf}
+                      </span>
+                    );
+                  })}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       <div className="mt-4 text-xs text-slate-500">
         Key: 4 | 2 = 42
       </div>
@@ -746,29 +755,34 @@ export default function StatisticsApp() {
     const renderLearnChart = () => {
       if (!selectedChart || learnData.length === 0) return null;
       
-      // 計算需要高亮的數值
-      let highlightValues = [];
+      // 計算需要高亮的位置索引（基於排序後的位置）
+      let highlightIndices = [];
       if (selectedChart === 'stem' && learnHighlight === 'median') {
-        // 中位數：高亮中間的一個或兩個數
-        const sorted = [...learnData].sort((a, b) => a - b);
-        const mid = Math.floor(sorted.length / 2);
-        if (sorted.length % 2 === 0) {
-          // 偶數個：高亮中間兩個
-          highlightValues = [sorted[mid - 1], sorted[mid]];
+        // 中位數：高亮中間的一個或兩個數的位置
+        const n = learnData.length;
+        const mid = Math.floor(n / 2);
+        if (n % 2 === 0) {
+          // 偶數個：高亮第 mid-1 和第 mid 個位置（排序後）
+          highlightIndices = [mid - 1, mid];
         } else {
-          // 奇數個：高亮中間一個
-          highlightValues = [sorted[mid]];
+          // 奇數個：高亮第 mid 個位置
+          highlightIndices = [mid];
         }
       } else if (selectedChart === 'stem' && learnHighlight === 'mode') {
-        // 眾數：高亮所有眾數
+        // 眾數：高亮所有眾數的位置
         const modes = MathUtils.mode(learnData);
         if (modes.length > 0) {
-          highlightValues = modes;
+          const sorted = [...learnData].sort((a, b) => a - b);
+          sorted.forEach((val, idx) => {
+            if (modes.includes(val)) {
+              highlightIndices.push(idx);
+            }
+          });
         }
       }
       
       if (selectedChart === 'box') return <BoxPlot data={learnData} highlight={learnHighlight} />;
-      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} highlightValues={highlightValues} />;
+      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} highlightIndices={highlightIndices} />;
       if (selectedChart === 'bar') return <BarChart data={learnData} highlight={learnHighlight} />;
       if (selectedChart === 'table') return <FrequencyTable data={learnData} highlight={learnHighlight} />;
       return null;
