@@ -301,7 +301,7 @@ const Home = () => {
       {/* Footer */}
       <footer className="bg-white border-t border-slate-200 mt-16">
         <div className="max-w-6xl mx-auto px-4 py-6 text-center text-slate-600 text-sm">
-          <p>© 2025 遊數得計 數學自習天地 | 創建者:李柏熹老師</p>
+          <p>© 2026 遊數得計 數學自習天地 | 創建者:李柏熹老師</p>
         </div>
       </footer>
     </div>

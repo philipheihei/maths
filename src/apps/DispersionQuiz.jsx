@@ -658,8 +658,8 @@ export default function StatisticsApp() {
     const [learnMeasure, setLearnMeasure] = useState(null);
 
     const chartTypes = {
-      box: { name: '框線圖 (Box Plot)', stats: ['median', 'iqr', 'range'] },
-      stem: { name: '幹葉圖 (Stem-and-Leaf)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
+      box: { name: '框線圖 (Box-and-Whisker Diagram)', stats: ['median', 'iqr', 'range'] },
+      stem: { name: '幹葉圖 (Stem-and-Leaf Diagram)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
       bar: { name: '棒型圖 (Bar Chart)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
       table: { name: '頻數表 (Frequency Table)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] }
     };
@@ -702,12 +702,12 @@ export default function StatisticsApp() {
       <div className="min-h-screen bg-slate-100">
         <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
           <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
-            <RotateCcw size={20} />
-            <span className="text-sm">返回目錄</span>
+            <HomeIcon size={20} />
+            <span className="text-sm">返回首頁</span>
           </Link>
           <span className="font-bold text-slate-700">高中統計特訓 - 教學模式</span>
           <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
-            <HomeIcon size={16} /> 主選單
+            <RotateCcw size={16} /> 返回目錄
           </button>
         </div>
 
@@ -772,6 +772,7 @@ export default function StatisticsApp() {
                       <h4 className="font-bold text-lg mb-4 text-slate-700">{learnMeasure.label}</h4>
                       <div className="space-y-4">
                         <button 
+                          type="button"
                           onClick={() => {
                             setHighlight('data');
                             if(selectedStat === 'iqr') setHighlight('iqr');
