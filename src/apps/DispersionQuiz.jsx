@@ -694,73 +694,86 @@ export default function StatisticsApp() {
       return null;
     };
 
-    return (
-      <div className="min-h-screen bg-slate-100">
-        <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
-          <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
-            <HomeIcon size={20} />
-            <span className="text-sm">返回首頁</span>
-          </Link>
-          <span className="font-bold text-slate-700">高中統計特訓 - 教學模式</span>
-          <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
-            <RotateCcw size={16} /> 返回主選單
-          </button>
-        </div>
+    // Chart Selection Screen
+    if (!selectedChart) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+          <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+            <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+              <HomeIcon size={20} />
+              <span className="text-sm">返回首頁</span>
+            </Link>
+            <span className="font-bold text-slate-700">高中統計特訓 - 教學模式</span>
+            <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
+              <RotateCcw size={16} /> 返回主選單
+            </button>
+          </div>
 
-        <div className="max-w-5xl mx-auto p-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
-            {/* 圖表類別選擇 */}
-            <div className="space-y-2">
-              <h3 className="font-bold text-slate-700 mb-3 px-2">選擇圖表類別:</h3>
+          <div className="flex flex-col items-center justify-center min-h-[500px] p-4">
+            <h2 className="text-3xl font-bold text-slate-800 mb-8">選擇圖表類別</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
               {Object.entries(chartTypes).map(([key, chart]) => (
                 <button
                   key={key}
                   onClick={() => handleChartSelect(key)}
-                  className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${
-                    selectedChart === key 
-                      ? 'bg-indigo-600 text-white border border-indigo-700' 
-                      : 'bg-white hover:bg-slate-50 border border-slate-200'
-                  }`}
+                  className="p-6 bg-white border-2 border-slate-200 hover:border-blue-500 rounded-xl shadow-sm hover:shadow-md transition-all group text-left"
                 >
-                  {chart.name}
+                  <h3 className="text-xl font-bold text-slate-700 group-hover:text-blue-600 transition-colors">
+                    {chart.name}
+                  </h3>
+                  <p className="text-sm text-slate-500 mt-2">
+                    包含 {chart.stats.length} 個統計量
+                  </p>
                 </button>
               ))}
             </div>
+          </div>
+        </div>
+      );
+    }
 
-            {/* 統計量選擇 */}
-            <div className="lg:col-span-3">
-              {selectedChart ? (
-                <div className="space-y-2">
-                  <h3 className="font-bold text-slate-700 mb-3 px-2">選擇統計量:</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                    {chartTypes[selectedChart].stats.map(statId => {
-                      const stat = topics.find(t => t.id === statId);
-                      return (
-                        <button
-                          key={statId}
-                          onClick={() => handleStatSelect(statId)}
-                          className={`p-3 rounded-lg text-sm font-medium transition-colors ${
-                            selectedStat === statId
-                              ? 'bg-emerald-600 text-white border border-emerald-700'
-                              : 'bg-white hover:bg-slate-50 border border-slate-200'
-                          }`}
-                        >
-                          {stat?.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-full bg-slate-50 rounded-lg border-2 border-dashed border-slate-300 p-6">
-                  <p className="text-slate-400 text-center">← 請先選擇圖表類別</p>
-                </div>
-              )}
+    // Chart Detail Screen
+    return (
+      <div className="min-h-screen bg-slate-100">
+        <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+          <button 
+            onClick={() => setSelectedChart(null)} 
+            className="text-slate-500 hover:text-slate-700 flex items-center gap-2"
+          >
+            <RotateCcw size={20} />
+            <span className="text-sm">返回圖表選擇</span>
+          </button>
+          <span className="font-bold text-slate-700">{chartTypes[selectedChart].name}</span>
+          <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
+            <HomeIcon size={16} /> 主選單
+          </button>
+        </div>
+
+        <div className="max-w-4xl mx-auto p-4">
+          {/* 統計量標籤按鈕 */}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6">
+            <div className="flex flex-wrap gap-2">
+              {chartTypes[selectedChart].stats.map(statId => {
+                const stat = topics.find(t => t.id === statId);
+                return (
+                  <button
+                    key={statId}
+                    onClick={() => handleStatSelect(statId)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                      selectedStat === statId
+                        ? 'bg-slate-800 text-white'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    {stat?.label.split(' ')[0]}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {/* 教學內容 */}
-          {selectedStat && learnMeasure && learnData.length > 0 && (
+          {selectedStat && learnMeasure && learnData.length > 0 ? (
             <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
               <h2 className="text-2xl font-bold text-slate-800 mb-4">{learnMeasure.label}</h2>
               
@@ -796,6 +809,10 @@ export default function StatisticsApp() {
                    </div>
                  </div>
               </div>
+            </div>
+          ) : (
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-12 text-center">
+              <p className="text-slate-400">請選擇上方的統計量</p>
             </div>
           )}
         </div>
