@@ -207,9 +207,9 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [] }) => {
       <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf)</h3>
       <table className="border-collapse">
         <thead>
-          <tr className="text-slate-500 text-sm">
-            <th className="pr-2 text-right border-r-2 border-slate-400">幹（十位）</th>
-            <th className="pl-2 text-left">葉（個位）</th>
+          <tr className="text-slate-500 text-sm border-b border-slate-400">
+            <th className="pr-2 text-right border-r-2 border-slate-400 pb-1 underline">幹（十位）</th>
+            <th className="pl-2 text-left pb-1 underline">葉（個位）</th>
           </tr>
         </thead>
         <tbody>
@@ -217,11 +217,11 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [] }) => {
             <tr key={stem} className="hover:bg-slate-50">
               <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">{stem}</td>
               <td className="pl-2 text-left">
-                <span className="tracking-[0.3em] text-lg">
+                <span className="text-lg flex">
                   {stems[stem].map((item, i) => {
                     const isHighlighted = highlightIndices.includes(item.sortedIndex);
                     return (
-                      <span key={i} className={`inline-block transition-colors ${isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded px-1 mx-0.5' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
+                      <span key={i} className={`inline-block w-6 text-center transition-colors ${isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
                         {item.leaf}
                       </span>
                     );
