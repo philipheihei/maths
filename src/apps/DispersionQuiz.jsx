@@ -137,7 +137,8 @@ const BoxPlot = ({ data, highlight }) => {
       {[min, q1, q2, q3, max].map((val, i) => {
         const formatValue = (v) => {
           if (Number.isInteger(v)) return v.toString();
-          return v.toString().replace(/\.?0+$/, '');
+          // 使用 parseFloat 移除尾隨零 (37.50 -> 37.5)
+          return parseFloat(v.toFixed(2)).toString();
         };
         return (
           <g key={i}>
@@ -401,11 +402,12 @@ export default function StatisticsApp() {
   const formatAnswer = (val) => {
     if (Array.isArray(val)) {
       // 眾數情況
-      return val.join(',');
+      return val.map(v => formatAnswer(v)).join(',');
     }
     // 整數不顯示小數
     if (Number.isInteger(val)) return val.toString();
-    return val.toFixed(2);
+    // 移除尾隨零 (32.50 -> 32.5)
+    return parseFloat(val.toFixed(2)).toString();
   };
 
   const checkAnswer = () => {
@@ -659,6 +661,7 @@ export default function StatisticsApp() {
     const [selectedStat, setSelectedStat] = useState(null);
     const [learnData, setLearnData] = useState([]);
     const [learnMeasure, setLearnMeasure] = useState(null);
+    const [learnHighlight, setLearnHighlight] = useState(null);
 
     const chartTypes = {
       box: { name: '框線圖 (Box-and-Whisker Diagram)', stats: ['median', 'iqr', 'range'] },
@@ -676,7 +679,7 @@ export default function StatisticsApp() {
       else newData = DataGenerator.generateFrequencyData();
       
       setLearnData(newData);
-      setHighlight(null);
+      setLearnHighlight(null);
       
       // 自動選擇該圖表的第一個統計量
       const firstStat = chartTypes[chartType].stats[0];
@@ -689,15 +692,15 @@ export default function StatisticsApp() {
       setSelectedStat(statId);
       const topic = topics.find(t => t.id === statId);
       setLearnMeasure(topic);
-      setHighlight(null);
+      setLearnHighlight(null);
     };
 
     const renderLearnChart = () => {
       if (!selectedChart || learnData.length === 0) return null;
-      if (selectedChart === 'box') return <BoxPlot data={learnData} highlight={highlight} />;
-      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={highlight} />;
-      if (selectedChart === 'bar') return <BarChart data={learnData} highlight={highlight} />;
-      if (selectedChart === 'table') return <FrequencyTable data={learnData} highlight={highlight} />;
+      if (selectedChart === 'box') return <BoxPlot data={learnData} highlight={learnHighlight} />;
+      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} />;
+      if (selectedChart === 'bar') return <BarChart data={learnData} highlight={learnHighlight} />;
+      if (selectedChart === 'table') return <FrequencyTable data={learnData} highlight={learnHighlight} />;
       return null;
     };
 
@@ -776,17 +779,12 @@ export default function StatisticsApp() {
                       <div className="space-y-4">
                         <button 
                           type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setTimeout(() => {
-                              if(selectedStat === 'iqr') setHighlight('iqr');
-                              else if(selectedStat === 'range') setHighlight('range');
-                              else if(selectedStat === 'median') setHighlight('median');
-                              else if(selectedStat === 'mode') setHighlight('mode');
-                              else setHighlight('data');
-                            }, 0);
-                            return false;
+                          onClick={() => {
+                            if(selectedStat === 'iqr') setLearnHighlight('iqr');
+                            else if(selectedStat === 'range') setLearnHighlight('range');
+                            else if(selectedStat === 'median') setLearnHighlight('median');
+                            else if(selectedStat === 'mode') setLearnHighlight('mode');
+                            else setLearnHighlight('data');
                           }}
                           className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg hover:bg-blue-50 text-sm w-full text-left"
                         >
