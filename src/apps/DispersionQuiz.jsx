@@ -654,6 +654,8 @@ export default function StatisticsApp() {
   const LearnView = () => {
     const [selectedChart, setSelectedChart] = useState(null);
     const [selectedStat, setSelectedStat] = useState(null);
+    const [learnData, setLearnData] = useState([]);
+    const [learnMeasure, setLearnMeasure] = useState(null);
 
     const chartTypes = {
       box: { name: '框線圖 (Box Plot)', stats: ['median', 'iqr', 'range'] },
@@ -665,7 +667,8 @@ export default function StatisticsApp() {
     const handleChartSelect = (chartType) => {
       setSelectedChart(chartType);
       setSelectedStat(null);
-      setData([]);
+      setLearnData([]);
+      setLearnMeasure(null);
       setHighlight(null);
     };
 
@@ -677,11 +680,18 @@ export default function StatisticsApp() {
       else if (selectedChart === 'stem') newData = DataGenerator.generateStemLeafData();
       else newData = DataGenerator.generateFrequencyData();
       
-      setCurrentMeasure(topic);
-      setCurrentChart(selectedChart);
-      setData(newData);
+      setLearnMeasure(topic);
+      setLearnData(newData);
       setHighlight(null);
-      setFeedback(null);
+    };
+
+    const renderLearnChart = () => {
+      if (!selectedChart || learnData.length === 0) return null;
+      if (selectedChart === 'box') return <BoxPlot data={learnData} highlight={highlight} />;
+      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={highlight} />;
+      if (selectedChart === 'bar') return <BarChart data={learnData} highlight={highlight} />;
+      if (selectedChart === 'table') return <FrequencyTable data={learnData} highlight={highlight} />;
+      return null;
     };
 
     return (
@@ -750,12 +760,12 @@ export default function StatisticsApp() {
           </div>
 
           {/* 教學內容 */}
-          {selectedStat && currentMeasure && data.length > 0 && (
+          {selectedStat && learnMeasure && learnData.length > 0 && (
             <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
-              <h2 className="text-2xl font-bold text-slate-800 mb-4">{currentMeasure.label}</h2>
+              <h2 className="text-2xl font-bold text-slate-800 mb-4">{learnMeasure.label}</h2>
               
               <div className="mb-6">
-                {renderChart()}
+                {renderLearnChart()}
               </div>
 
               <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
@@ -776,13 +786,13 @@ export default function StatisticsApp() {
                    </button>
                    
                    <div className="p-4 bg-white rounded border border-slate-100 text-sm leading-relaxed">
-                     {selectedStat === 'mean' && <p>將所有數值加總，除以數據個數。<br/> <code>Sum = {MathUtils.sum(data)}, Count = {data.length}</code><br/> <b>Mean = {formatAnswer(MathUtils.mean(data))}</b></p>}
-                     {selectedStat === 'median' && <p>將數據由小到大排列，找出正中間的位置。<br/>如果是偶數個，取中間兩個數的平均。<br/> <b>Median = {formatAnswer(MathUtils.median(data))}</b></p>}
-                     {selectedStat === 'range' && <p>最大值減去最小值。<br/> <code>Max = {Math.max(...data)}, Min = {Math.min(...data)}</code><br/> <b>Range = {formatAnswer(MathUtils.range(data))}</b></p>}
-                     {selectedStat === 'iqr' && <p>四分位數間距 = Q3 - Q1。<br/> <code>Q3 = {formatAnswer(MathUtils.quartiles(data).q3)}, Q1 = {formatAnswer(MathUtils.quartiles(data).q1)}</code><br/> <b>IQR = {formatAnswer(MathUtils.iqr(data))}</b></p>}
-                     {selectedStat === 'mode' && <p>出現頻率最高的數值。<br/> <b>Mode = {formatAnswer(MathUtils.mode(data).length > 0 ? MathUtils.mode(data) : null)}</b></p>}
-                     {selectedStat === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>Variance = {formatAnswer(MathUtils.variance(data))}</b></p>}
-                     {selectedStat === 'stdDev' && <p>方差開根號。<br/> <b>SD = {formatAnswer(MathUtils.stdDev(data))}</b></p>}
+                     {selectedStat === 'mean' && <p>將所有數值加總，除以數據個數。<br/> <code>Sum = {MathUtils.sum(learnData)}, Count = {learnData.length}</code><br/> <b>Mean = {formatAnswer(MathUtils.mean(learnData))}</b></p>}
+                     {selectedStat === 'median' && <p>將數據由小到大排列，找出正中間的位置。<br/>如果是偶數個，取中間兩個數的平均。<br/> <b>Median = {formatAnswer(MathUtils.median(learnData))}</b></p>}
+                     {selectedStat === 'range' && <p>最大值減去最小值。<br/> <code>Max = {Math.max(...learnData)}, Min = {Math.min(...learnData)}</code><br/> <b>Range = {formatAnswer(MathUtils.range(learnData))}</b></p>}
+                     {selectedStat === 'iqr' && <p>四分位數間距 = Q3 - Q1。<br/> <code>Q3 = {formatAnswer(MathUtils.quartiles(learnData).q3)}, Q1 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/> <b>IQR = {formatAnswer(MathUtils.iqr(learnData))}</b></p>}
+                     {selectedStat === 'mode' && <p>出現頻率最高的數值。<br/> <b>Mode = {formatAnswer(MathUtils.mode(learnData).length > 0 ? MathUtils.mode(learnData) : null)}</b></p>}
+                     {selectedStat === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>Variance = {formatAnswer(MathUtils.variance(learnData))}</b></p>}
+                     {selectedStat === 'stdDev' && <p>方差開根號。<br/> <b>SD = {formatAnswer(MathUtils.stdDev(learnData))}</b></p>}
                    </div>
                  </div>
               </div>
