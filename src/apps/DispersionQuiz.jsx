@@ -718,8 +718,8 @@ export default function StatisticsApp() {
             </div>
 
             {/* 統計量選擇 */}
-            {selectedChart && (
-              <div className="lg:col-span-3">
+            <div className="lg:col-span-3">
+              {selectedChart ? (
                 <div className="space-y-2">
                   <h3 className="font-bold text-slate-700 mb-3 px-2">選擇統計量:</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -741,8 +741,12 @@ export default function StatisticsApp() {
                     })}
                   </div>
                 </div>
-              </div>
-            )}
+              ) : (
+                <div className="flex items-center justify-center h-full bg-slate-50 rounded-lg border-2 border-dashed border-slate-300 p-6">
+                  <p className="text-slate-400 text-center">← 請先選擇圖表類別</p>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* 教學內容 */}
