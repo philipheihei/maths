@@ -208,8 +208,8 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [] }) => {
       <table className="border-collapse">
         <thead>
           <tr className="text-slate-500 text-sm border-b border-slate-400">
-            <th className="pr-2 text-right border-r-2 border-slate-400 pb-1 underline">幹（十位）</th>
-            <th className="pl-2 text-left pb-1 underline">葉（個位）</th>
+            <th className="pr-2 text-right border-r-2 border-slate-400 pb-1">幹（十位）</th>
+            <th className="pl-2 text-left pb-1">葉（個位）</th>
           </tr>
         </thead>
         <tbody>
@@ -779,6 +779,24 @@ export default function StatisticsApp() {
             }
           });
         }
+      } else if (selectedChart === 'stem' && learnHighlight === 'range') {
+        // 分佈域：高亮最小值和最大值的位置
+        highlightIndices = [0, learnData.length - 1];
+      } else if (selectedChart === 'stem' && learnHighlight === 'iqr') {
+        // 四分位數間距：高亮 Q1 和 Q3 的位置
+        const n = learnData.length;
+        const sorted = [...learnData].sort((a, b) => a - b);
+        const mid = Math.floor(n / 2);
+        
+        let lowerHalf = sorted.slice(0, mid);
+        let upperHalf = n % 2 === 0 ? sorted.slice(mid) : sorted.slice(mid + 1);
+        
+        // 計算 Q1 和 Q3 的位置
+        const q1Index = Math.floor(lowerHalf.length / 2);
+        const q3Index = mid + Math.floor(upperHalf.length / 2) + (n % 2 === 1 ? 1 : 0);
+        
+        // 轉換回原始排序後的數據中的位置
+        highlightIndices = [q1Index, q3Index];
       }
       
       if (selectedChart === 'box') return <BoxPlot data={learnData} highlight={learnHighlight} />;
@@ -892,20 +910,24 @@ export default function StatisticsApp() {
                                   const terms = keys.map(k => `${k}(${freq[k]})`);
                                   return (
                                     <>
-                                      <code className="block mt-2">= {terms.join(' + ')}</code>
-                                      <code className="block">= {MathUtils.sum(learnData)}</code>
-                                      <code className="block">數量 = {learnData.length}</code>
-                                      <b className="block mt-2">平均數 = {MathUtils.sum(learnData)} ÷ {learnData.length} = {formatAnswer(MathUtils.mean(learnData))}</b>
+                                      <div className="mt-2 flex flex-col items-center">
+                                        <code className="block">{terms.join(' + ')}</code>
+                                        <div className="border-t-2 border-slate-400 w-full my-1"></div>
+                                        <code className="block">{learnData.length}</code>
+                                      </div>
+                                      <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
                                     </>
                                   );
                                 })()
                               ) : (
                                 // 其他圖表：列出所有數據
                                 <>
-                                  <code className="block mt-2">= {learnData.join(' + ')}</code>
-                                  <code className="block">= {MathUtils.sum(learnData)}</code>
-                                  <code className="block">數量 = {learnData.length}</code>
-                                  <b className="block mt-2">平均數 = {MathUtils.sum(learnData)} ÷ {learnData.length} = {formatAnswer(MathUtils.mean(learnData))}</b>
+                                  <div className="mt-2 flex flex-col items-center">
+                                    <code className="block text-xs">{learnData.join(' + ')}</code>
+                                    <div className="border-t-2 border-slate-400 w-full my-1"></div>
+                                    <code className="block">{learnData.length}</code>
+                                  </div>
+                                  <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
                                 </>
                               )}
                             </p>
