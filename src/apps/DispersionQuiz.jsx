@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Calculator, 
   BarChart2, 
@@ -11,7 +12,8 @@ import {
   BookOpen, 
   RotateCcw,
   Sigma,
-  TrendingUp
+  TrendingUp,
+  Home as HomeIcon
 } from 'lucide-react';
 
 // --- 數學工具函數庫 ---
@@ -84,13 +86,20 @@ const DataGenerator = {
     return data.sort((a, b) => a - b);
   },
 
-  // 生成適合棒形圖/表格的數據 (離散，頻數)
+  // 生成適合棒形圖/表格的數據 (離散，頻數) - 確保眾數唯一
   generateFrequencyData: () => {
-    const values = [1, 2, 3, 4, 5, 6]; // 例如骰子或評分
+    const values = [1, 2, 3, 4, 5, 6]; // 例如骨子或計分
     const data = [];
-    values.forEach(v => {
-      const freq = Math.floor(Math.random() * 5) + 1; // 1-5 頻數
-      for (let i = 0; i < freq; i++) data.push(v);
+    const freqs = values.map(() => Math.floor(Math.random() * 4) + 1); // 1-4 頻數
+    const maxFreq = Math.max(...freqs);
+    // 確保只有一個眾數（最高頻率的數似ぬ史は特策は一一不同）
+    values.forEach((v, i) => {
+      const freq = freqs[i] === maxFreq ? maxFreq : Math.max(1, Math.floor(Math.random() * maxFreq));
+      if (freq === maxFreq && freqs.filter(f => f === maxFreq).length > 1) {
+        // 如果有多個數有相同的最高頻率，減少後者
+        freqs[i] = maxFreq - 1;
+      }
+      for (let j = 0; j < freqs[i]; j++) data.push(v);
     });
     return data.sort((a, b) => a - b);
   },
@@ -319,11 +328,45 @@ export default function StatisticsApp() {
 
   const generateNewQuestion = (forceTopic = null) => {
     // 1. Pick Topic
-    const topic = forceTopic || topics[Math.floor(Math.random() * topics.length)];
-    // 2. Pick Compatible Chart Layer
+    let topic = forceTopic || topics[Math.floor(Math.random() * topics.length)];
+    
+    // 2. For mode questions, regenerate until we get a single mode
+    let attempts = 0;
+    while (topic.id === 'mode' && attempts < 5) {
+      // Pick chart type compatible with mode
+      const chartType = topic.layers[Math.floor(Math.random() * topic.layers.length)];
+      
+      // Generate data
+      let newData = [];
+      if (chartType === 'box') newData = DataGenerator.generateBoxPlotData();
+      else if (chartType === 'stem') newData = DataGenerator.generateStemLeafData();
+      else newData = DataGenerator.generateFrequencyData();
+      
+      // Check if mode is valid (exactly one mode, not multiple)
+      const modes = MathUtils.mode(newData);
+      if (modes.length === 1) {
+        // Valid single mode - use this data
+        setCurrentMeasure(topic);
+        setCurrentChart(chartType);
+        setData(newData);
+        setUserAnswer('');
+        setFeedback(null);
+        setHighlight(null);
+        return;
+      }
+      attempts++;
+    }
+    
+    // If we couldn't get a valid mode, skip to a non-mode topic
+    if (topic.id === 'mode') {
+      const nonModeTopics = topics.filter(t => t.id !== 'mode');
+      topic = nonModeTopics[Math.floor(Math.random() * nonModeTopics.length)];
+    }
+    
+    // 3. Pick Compatible Chart Layer
     const chartType = topic.layers[Math.floor(Math.random() * topic.layers.length)];
     
-    // 3. Generate Data
+    // 4. Generate Data
     let newData = [];
     if (chartType === 'box') newData = DataGenerator.generateBoxPlotData();
     else if (chartType === 'stem') newData = DataGenerator.generateStemLeafData();
@@ -343,7 +386,7 @@ export default function StatisticsApp() {
       case 'median': return MathUtils.median(data);
       case 'mode': 
         const modes = MathUtils.mode(data);
-        return modes.length > 0 ? modes[0] : 0; // Simplification for quiz
+        return modes.length > 0 ? modes : null; // 返回所有眾數
       case 'range': return MathUtils.range(data);
       case 'iqr': return MathUtils.iqr(data);
       case 'variance': return MathUtils.variance(data);
@@ -352,38 +395,89 @@ export default function StatisticsApp() {
     }
   };
 
+  const formatAnswer = (val) => {
+    if (Array.isArray(val)) {
+      // 眾數情況
+      return val.join(',');
+    }
+    // 整數不顯示小數
+    if (Number.isInteger(val)) return val.toString();
+    return val.toFixed(2);
+  };
+
   const checkAnswer = () => {
     const correct = getCorrectAnswer();
-    const user = parseFloat(userAnswer);
     
-    if (isNaN(user)) {
-      setFeedback({ type: 'wrong', msg: '請輸入數字', detail: '' });
-      return;
-    }
-
-    // Tolerance for float
-    if (Math.abs(user - correct) < 0.05) {
-      setFeedback({ type: 'correct', msg: '答對了！太棒了！', detail: '' });
-      setScore(s => s + 1);
-      setTotalQuestions(t => t + 1);
-    } else {
-      let explanation = "";
-      if (currentMeasure.id === 'mean') explanation = `平均數 = 總和 (${MathUtils.sum(data)}) ÷ 數量 (${data.length})`;
-      if (currentMeasure.id === 'range') explanation = `分佈域 = 最大值 (${Math.max(...data)}) - 最小值 (${Math.min(...data)})`;
-      if (currentMeasure.id === 'iqr') {
-        const {q1, q3} = MathUtils.quartiles(data);
-        explanation = `IQR = Q3 (${q3}) - Q1 (${q1})`;
+    if (currentMeasure.id === 'mode') {
+      // 眾數特殊處理
+      if (correct === null) {
+        // 無眾數
+        if (userAnswer.toLowerCase().includes('無') || userAnswer === '') {
+          setFeedback({ type: 'correct', msg: '答對了！太棒了！', detail: '' });
+          setScore(s => s + 1);
+          setTotalQuestions(t => t + 1);
+        } else {
+          setFeedback({ 
+            type: 'wrong', 
+            msg: '答案不正確', 
+            detail: `正確答案是：無眾數（每個數值出現的次數相同）` 
+          });
+          setTotalQuestions(t => t + 1);
+        }
+      } else {
+        // 有眾數
+        const userModes = userAnswer.split(',').map(s => s.trim()).map(Number).filter(n => !isNaN(n)).sort((a,b)=>a-b);
+        const correctModes = [...correct].sort((a,b)=>a-b);
+        
+        const isCorrect = userModes.length === correctModes.length && 
+                          userModes.every((val, idx) => val === correctModes[idx]);
+        
+        if (isCorrect) {
+          setFeedback({ type: 'correct', msg: '答對了！太棒了！', detail: '' });
+          setScore(s => s + 1);
+          setTotalQuestions(t => t + 1);
+        } else {
+          setFeedback({ 
+            type: 'wrong', 
+            msg: '答案不正確', 
+            detail: `正確答案是：${formatAnswer(correct)}（用逗號分隔多個眾數）` 
+          });
+          setTotalQuestions(t => t + 1);
+        }
       }
-      if (currentMeasure.id === 'variance') explanation = `方差 (σ²) = 每個數與平均數差的平方和 ÷ N`;
-      if (currentMeasure.id === 'stdDev') explanation = `標準差 (σ) = √方差`;
-      if (currentMeasure.id === 'median') explanation = `中位數 = 排序後中間的數`;
+    } else {
+      // 其他統計量
+      const user = parseFloat(userAnswer);
+      
+      if (isNaN(user)) {
+        setFeedback({ type: 'wrong', msg: '請輸入數字', detail: '' });
+        return;
+      }
 
-      setFeedback({ 
-        type: 'wrong', 
-        msg: '答案不正確', 
-        detail: `正確答案是 ${correct.toFixed(2)}。\n${explanation}` 
-      });
-      setTotalQuestions(t => t + 1);
+      // Tolerance for float
+      if (Math.abs(user - correct) < 0.05) {
+        setFeedback({ type: 'correct', msg: '答對了！太棒了！', detail: '' });
+        setScore(s => s + 1);
+        setTotalQuestions(t => t + 1);
+      } else {
+        let explanation = "";
+        if (currentMeasure.id === 'mean') explanation = `平均數 = 總和 (${MathUtils.sum(data)}) ÷ 數量 (${data.length})`;
+        if (currentMeasure.id === 'range') explanation = `分佈域 = 最大值 (${Math.max(...data)}) - 最小值 (${Math.min(...data)})`;
+        if (currentMeasure.id === 'iqr') {
+          const {q1, q3} = MathUtils.quartiles(data);
+          explanation = `IQR = Q3 (${q3}) - Q1 (${q1})`;
+        }
+        if (currentMeasure.id === 'variance') explanation = `方差 (σ²) = 每個數與平均數差的平方和 ÷ N`;
+        if (currentMeasure.id === 'stdDev') explanation = `標準差 (σ) = √方差`;
+        if (currentMeasure.id === 'median') explanation = `中位數 = 排序後中間的數`;
+
+        setFeedback({ 
+          type: 'wrong', 
+          msg: '答案不正確', 
+          detail: `正確答案是 ${formatAnswer(correct)}。\n${explanation}` 
+        });
+        setTotalQuestions(t => t + 1);
+      }
     }
   };
 
@@ -422,11 +516,20 @@ export default function StatisticsApp() {
   };
 
   const MenuView = () => (
-    <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-blue-600 mb-2">📊 統計學離差大師</h1>
-        <p className="text-slate-500">掌握 Mean, Median, Mode, Variance, SD, IQR</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+          <HomeIcon size={20} />
+          <span className="text-sm">返回首頁</span>
+        </Link>
+        <span className="font-bold text-slate-700">高中統計特訓</span>
+        <div className="w-24"></div>
       </div>
+      <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-blue-600 mb-2">📊 統計學離差大師</h1>
+          <p className="text-slate-500">掌握 Mean, Median, Mode, Variance, SD, IQR</p>
+        </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl px-4">
         <button 
@@ -451,20 +554,23 @@ export default function StatisticsApp() {
           <p className="text-sm text-slate-500 mt-2">隨機題型挑戰</p>
         </button>
       </div>
+      </div>
     </div>
   );
 
   const QuizView = () => (
-    <div className="max-w-4xl mx-auto p-4">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+    <div className="min-h-screen bg-slate-100">
+      <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+          <HomeIcon size={20} />
+          <span className="text-sm">返回首頁</span>
+        </Link>
+        <span className="font-bold text-slate-700">高中統計特訓</span>
         <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
           <RotateCcw size={16} /> 返回目錄
         </button>
-        <div className="bg-slate-800 text-white px-4 py-2 rounded-full font-mono">
-          Score: {score} / {totalQuestions}
-        </div>
       </div>
+    <div className="max-w-4xl mx-auto p-4">
 
       {/* Question Card */}
       <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden mb-6">
@@ -489,11 +595,10 @@ export default function StatisticsApp() {
           {!feedback || feedback.type === 'hint' ? (
             <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
               <input 
-                type="number" 
-                step="0.01"
+                type="text" 
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
-                placeholder="輸入你的答案..."
+                placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
                 className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
                 onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
               />
@@ -541,85 +646,124 @@ export default function StatisticsApp() {
           )}
         </div>
       </div>
+      </div>
     </div>
   );
 
-  // Simplified Learn View (reuses Quiz components but with forced flow)
-  const LearnView = () => (
-    <div className="max-w-4xl mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
-        <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
-          <RotateCcw size={16} /> 返回目錄
-        </button>
-      </div>
+  // Restructured Learn View with Chart Type Selection First
+  const LearnView = () => {
+    const [selectedChart, setSelectedChart] = useState(null);
+    const [selectedStat, setSelectedStat] = useState(null);
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Sidebar Topics */}
-        <div className="space-y-2">
-          <h3 className="font-bold text-slate-700 mb-2 px-2">選擇學習主題:</h3>
-          {topics.map(t => (
-            <button
-              key={t.id}
-              onClick={() => {
-                const topic = t;
-                const chartType = topic.layers[0];
-                let newData;
-                if (chartType === 'box') newData = DataGenerator.generateBoxPlotData();
-                else if (chartType === 'stem') newData = DataGenerator.generateStemLeafData();
-                else newData = DataGenerator.generateFrequencyData();
-                
-                setCurrentMeasure(topic);
-                setCurrentChart(chartType);
-                setData(newData);
-                setHighlight(null);
-                setFeedback(null);
-              }}
-              className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${currentMeasure?.id === t.id ? 'bg-blue-100 text-blue-700 border border-blue-200' : 'bg-white hover:bg-slate-50 border border-transparent'}`}
-            >
-              {t.label}
-            </button>
-          ))}
+    const chartTypes = {
+      box: { name: '框線圖 (Box Plot)', stats: ['median', 'iqr', 'range'] },
+      stem: { name: '幹葉圖 (Stem-and-Leaf)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
+      bar: { name: '棒型圖 (Bar Chart)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
+      table: { name: '頻數表 (Frequency Table)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] }
+    };
+
+    const handleChartSelect = (chartType) => {
+      setSelectedChart(chartType);
+      setSelectedStat(null);
+      setData([]);
+      setHighlight(null);
+    };
+
+    const handleStatSelect = (statId) => {
+      setSelectedStat(statId);
+      const topic = topics.find(t => t.id === statId);
+      let newData = [];
+      if (selectedChart === 'box') newData = DataGenerator.generateBoxPlotData();
+      else if (selectedChart === 'stem') newData = DataGenerator.generateStemLeafData();
+      else newData = DataGenerator.generateFrequencyData();
+      
+      setCurrentMeasure(topic);
+      setCurrentChart(selectedChart);
+      setData(newData);
+      setHighlight(null);
+      setFeedback(null);
+    };
+
+    return (
+      <div className="min-h-screen bg-slate-100">
+        <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+          <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+            <HomeIcon size={20} />
+            <span className="text-sm">返回首頁</span>
+          </Link>
+          <span className="font-bold text-slate-700">高中統計特訓 - 教學模式</span>
+          <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
+            <RotateCcw size={16} /> 返回主選單
+          </button>
         </div>
 
-        {/* Display Area */}
-        <div className="md:col-span-2 space-y-4">
-          {currentMeasure && (
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-               <h2 className="text-xl font-bold text-slate-800 mb-4">{currentMeasure.label}</h2>
-               
-               {/* Chart Selection for Learning */}
-               <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-                 {currentMeasure.layers.map(layer => (
-                   <button
-                    key={layer}
-                    onClick={() => {
-                      setCurrentChart(layer);
-                      if (layer === 'box') setData(DataGenerator.generateBoxPlotData());
-                      else if (layer === 'stem') setData(DataGenerator.generateStemLeafData());
-                      else setData(DataGenerator.generateFrequencyData());
-                      setHighlight(null);
-                    }}
-                    className={`px-3 py-1 text-xs rounded-full border ${currentChart === layer ? 'bg-slate-800 text-white' : 'bg-white text-slate-600'}`}
-                   >
-                     {layer === 'box' ? '框線圖' : layer === 'stem' ? '幹葉圖' : layer === 'bar' ? '棒型圖' : '頻數表'}
-                   </button>
-                 ))}
-               </div>
+        <div className="max-w-5xl mx-auto p-4">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
+            {/* 圖表類別選擇 */}
+            <div className="space-y-2">
+              <h3 className="font-bold text-slate-700 mb-3 px-2">選擇圖表類別:</h3>
+              {Object.entries(chartTypes).map(([key, chart]) => (
+                <button
+                  key={key}
+                  onClick={() => handleChartSelect(key)}
+                  className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${
+                    selectedChart === key 
+                      ? 'bg-indigo-600 text-white border border-indigo-700' 
+                      : 'bg-white hover:bg-slate-50 border border-slate-200'
+                  }`}
+                >
+                  {chart.name}
+                </button>
+              ))}
+            </div>
 
-               <div className="mb-6">
-                 {renderChart()}
-               </div>
+            {/* 統計量選擇 */}
+            {selectedChart && (
+              <div className="lg:col-span-3">
+                <div className="space-y-2">
+                  <h3 className="font-bold text-slate-700 mb-3 px-2">選擇統計量:</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                    {chartTypes[selectedChart].stats.map(statId => {
+                      const stat = topics.find(t => t.id === statId);
+                      return (
+                        <button
+                          key={statId}
+                          onClick={() => handleStatSelect(statId)}
+                          className={`p-3 rounded-lg text-sm font-medium transition-colors ${
+                            selectedStat === statId
+                              ? 'bg-emerald-600 text-white border border-emerald-700'
+                              : 'bg-white hover:bg-slate-50 border border-slate-200'
+                          }`}
+                        >
+                          {stat?.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
-               <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                 <h4 className="font-bold text-sm mb-2 text-slate-600">如何計算?</h4>
-                 <div className="space-y-2">
-                   <button 
+          {/* 教學內容 */}
+          {selectedStat && currentMeasure && data.length > 0 && (
+            <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
+              <h2 className="text-2xl font-bold text-slate-800 mb-4">{currentMeasure.label}</h2>
+              
+              <div className="mb-6">
+                {renderChart()}
+              </div>
+
+              <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4 className="font-bold text-sm mb-3 text-slate-600">如何計算?</h4>
+                <div className="space-y-3">
+                  <button 
                     onClick={() => {
                       setHighlight('data');
-                      if(currentMeasure.id === 'iqr') setHighlight('iqr');
-                      if(currentMeasure.id === 'range') setHighlight('range');
-                      if(currentMeasure.id === 'median') setHighlight('median');
-                      if(currentMeasure.id === 'mode') setHighlight('mode');
+                      if(selectedStat === 'iqr') setHighlight('iqr');
+                      if(selectedStat === 'range') setHighlight('range');
+                      if(selectedStat === 'median') setHighlight('median');
+                      if(selectedStat === 'mode') setHighlight('mode');
                     }}
                     className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-300 rounded shadow-sm hover:bg-blue-50 text-sm w-full text-left"
                    >
@@ -627,23 +771,23 @@ export default function StatisticsApp() {
                      1. 視覺化重點 (點擊查看)
                    </button>
                    
-                   <div className="p-3 bg-white rounded border border-slate-100 text-sm leading-relaxed">
-                     {currentMeasure.id === 'mean' && <p>將所有數值加總，除以數據個數。<br/> <code>Sum = {MathUtils.sum(data)}, Count = {data.length}</code><br/> <b>Mean = {(MathUtils.mean(data)).toFixed(2)}</b></p>}
-                     {currentMeasure.id === 'median' && <p>將數據由小到大排列，找出正中間的位置。<br/>如果是偶數個，取中間兩個數的平均。<br/> <b>Median = {MathUtils.median(data)}</b></p>}
-                     {currentMeasure.id === 'range' && <p>最大值減去最小值。<br/> <code>Max = {Math.max(...data)}, Min = {Math.min(...data)}</code><br/> <b>Range = {MathUtils.range(data)}</b></p>}
-                     {currentMeasure.id === 'iqr' && <p>四分位數間距 = Q3 - Q1。<br/> <code>Q3 = {MathUtils.quartiles(data).q3}, Q1 = {MathUtils.quartiles(data).q1}</code><br/> <b>IQR = {MathUtils.iqr(data)}</b></p>}
-                     {currentMeasure.id === 'mode' && <p>出現頻率最高的數值。<br/> <b>Mode = {MathUtils.mode(data).join(', ')}</b></p>}
-                     {currentMeasure.id === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>Variance = {MathUtils.variance(data).toFixed(2)}</b></p>}
-                     {currentMeasure.id === 'stdDev' && <p>方差開根號。<br/> <b>SD = {MathUtils.stdDev(data).toFixed(2)}</b></p>}
+                   <div className="p-4 bg-white rounded border border-slate-100 text-sm leading-relaxed">
+                     {selectedStat === 'mean' && <p>將所有數值加總，除以數據個數。<br/> <code>Sum = {MathUtils.sum(data)}, Count = {data.length}</code><br/> <b>Mean = {formatAnswer(MathUtils.mean(data))}</b></p>}
+                     {selectedStat === 'median' && <p>將數據由小到大排列，找出正中間的位置。<br/>如果是偶數個，取中間兩個數的平均。<br/> <b>Median = {formatAnswer(MathUtils.median(data))}</b></p>}
+                     {selectedStat === 'range' && <p>最大值減去最小值。<br/> <code>Max = {Math.max(...data)}, Min = {Math.min(...data)}</code><br/> <b>Range = {formatAnswer(MathUtils.range(data))}</b></p>}
+                     {selectedStat === 'iqr' && <p>四分位數間距 = Q3 - Q1。<br/> <code>Q3 = {formatAnswer(MathUtils.quartiles(data).q3)}, Q1 = {formatAnswer(MathUtils.quartiles(data).q1)}</code><br/> <b>IQR = {formatAnswer(MathUtils.iqr(data))}</b></p>}
+                     {selectedStat === 'mode' && <p>出現頻率最高的數值。<br/> <b>Mode = {formatAnswer(MathUtils.mode(data).length > 0 ? MathUtils.mode(data) : null)}</b></p>}
+                     {selectedStat === 'variance' && <p>計算每個數與平均數距離的平方，取平均。<br/> <b>Variance = {formatAnswer(MathUtils.variance(data))}</b></p>}
+                     {selectedStat === 'stdDev' && <p>方差開根號。<br/> <b>SD = {formatAnswer(MathUtils.stdDev(data))}</b></p>}
                    </div>
                  </div>
-               </div>
+              </div>
             </div>
           )}
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
