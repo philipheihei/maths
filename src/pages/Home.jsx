@@ -84,6 +84,22 @@ const Home = () => {
       category: '初中',
       topics: ['聯立方程', '設式'],
       inDevelopment: true
+    },
+    {
+      id: 'dispersion-quiz',
+      title: '統計離差特訓',
+      description: 'F5 CH14 統計：平均數、中位數、眾數、標準差、方差、四分位數間距、分佈域',
+      icon: Calculator,
+      color: 'bg-teal-500',
+      hoverColor: 'hover:bg-teal-600',
+      path: '/dispersion-quiz',
+      level: 'F5',
+      badges: [
+        { level: 'F5', chapter: 'CH14', subject: '統計' }
+      ],
+      category: '高中',
+      topics: ['平均數', '中位數', '標準差', '四分位數'],
+      inDevelopment: true
     }
   ];
 
