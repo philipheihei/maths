@@ -525,7 +525,7 @@ export default function StatisticsApp() {
       hintMsg = "提示：找出最大值和最小值，然後相減。";
     } else if (currentMeasure.id === 'iqr') {
       setHighlight('iqr');
-      hintMsg = "提示：找出第三四分位數 (Q3) 和第一四分位數 (Q1)，然後相減。";
+      hintMsg = "提示：找出上四分位數和下四分位數，然後相減。";
     } else if (currentMeasure.id === 'mode') {
       setHighlight('mode');
       hintMsg = "提示：找出出現次數最多的數值。";
@@ -632,12 +632,14 @@ export default function StatisticsApp() {
           {!feedback || feedback.type === 'hint' ? (
             <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
               <input 
+                key={`${currentChart}-${currentMeasure?.id}`}
                 type="text" 
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
                 placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
                 className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
                 onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
+                autoFocus
               />
               <div className="flex gap-2 w-full md:w-auto">
                 <button 
