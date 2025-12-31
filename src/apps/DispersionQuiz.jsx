@@ -666,8 +666,6 @@ export default function StatisticsApp() {
 
     const handleChartSelect = (chartType) => {
       setSelectedChart(chartType);
-      setSelectedStat(null);
-      setLearnMeasure(null);
       
       let newData = [];
       if (chartType === 'box') newData = DataGenerator.generateBoxPlotData();
@@ -676,6 +674,12 @@ export default function StatisticsApp() {
       
       setLearnData(newData);
       setHighlight(null);
+      
+      // 自動選擇該圖表的第一個統計量
+      const firstStat = chartTypes[chartType].stats[0];
+      setSelectedStat(firstStat);
+      const topic = topics.find(t => t.id === firstStat);
+      setLearnMeasure(topic);
     };
 
     const handleStatSelect = (statId) => {

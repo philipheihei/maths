@@ -131,7 +131,7 @@ const NumberLine = ({ value, operator }) => {
       ticks.push(
         <g key={i}>
           <line x1={x} y1={axisY - 6} x2={x} y2={axisY + 6} stroke="#94a3b8" strokeWidth="2" />
-          <text x={x} y={axisY + 30} textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="500">{i}</text>
+          <text x={x} y={axisY + 30} textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="600" fontFamily="monospace">{i}</text>
         </g>
       );
     }
@@ -293,28 +293,28 @@ export default function InequalityQuiz() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col">
-      <nav className="bg-slate-800 text-white p-4 shadow-md sticky top-0 z-10">
-        <div className="max-w-xl mx-auto flex justify-between items-center">
-          <div>
-            <h1 className="text-lg md:text-xl font-bold flex items-center gap-2">
-               一元一次不等式
-            </h1>
-            <div className="mt-2 flex">
-                <div className="bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full font-bold flex items-center gap-2 shadow-sm border-2 border-yellow-400">
-                    <Trophy size={18} className="fill-yellow-100 text-yellow-800" />
-                    <span className="text-lg leading-none pt-0.5">{score}</span>
-                </div>
+      <nav className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+          <RotateCcw size={20} />
+          <span className="text-sm">返回首頁</span>
+        </Link>
+        <div className="flex-1 text-center">
+          <h1 className="font-bold text-slate-700">一元一次不等式</h1>
+          <div className="mt-1 flex justify-center">
+            <div className="bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full font-bold flex items-center gap-2 shadow-sm border-2 border-yellow-400">
+              <Trophy size={16} className="fill-yellow-100 text-yellow-800" />
+              <span className="text-sm leading-none">{score}</span>
             </div>
           </div>
-          {page !== 'menu' && (
-            <button 
-              onClick={() => switchPage('menu')}
-              className="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded border border-slate-600 transition-colors"
-            >
-              回主選單
-            </button>
-          )}
         </div>
+        {page !== 'menu' && (
+          <button 
+            onClick={() => switchPage('menu')}
+            className="text-slate-500 hover:text-slate-800 flex items-center gap-2"
+          >
+            <HomeIcon size={16} /> 主選單
+          </button>
+        )}
       </nav>
 
       <main className="flex-1 w-full max-w-xl mx-auto p-4 flex flex-col">
@@ -400,7 +400,7 @@ export default function InequalityQuiz() {
                   ${status === 'correct' ? 'bg-green-100 border-green-200 text-green-800' : 'bg-red-50 border-red-100 text-red-800'}`}>
                   <div className="font-bold text-lg mb-2 flex items-center justify-center gap-2">
                     {status === 'correct' ? <CheckCircle className="text-green-600" /> : <XCircle className="text-red-600"/>}
-                    {status === 'correct' ? 'Correct!' : 'Incorrect'}
+                    {status === 'correct' ? 'Correct!' : '錯誤'}
                   </div>
                   <div className="text-sm md:text-base whitespace-pre-line text-left bg-white/60 p-4 rounded-lg border border-black/5 leading-relaxed">
                     {feedbackMsg}
