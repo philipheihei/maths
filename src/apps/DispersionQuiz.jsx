@@ -52,7 +52,7 @@ const Fraction = ({ numerator, denominator }) => {
         const latex = `\\frac{${numerator}}{${denominator}}`;
         window.katex.render(latex, containerRef.current, {
           throwOnError: false,
-          displayMode: true
+          displayMode: false
         });
       } catch (e) {
         console.error("KaTeX render error:", e);
@@ -60,7 +60,36 @@ const Fraction = ({ numerator, denominator }) => {
     }
   }, [numerator, denominator, katexLoaded]);
 
-  return <div ref={containerRef} className="inline-block text-center" />;
+  return <div ref={containerRef} className="inline-block text-left" />;
+};
+
+// KaTeX 系統方程式組件 (用於 Q1, Q2, Q3)
+const QuartilesDisplay = ({ q1, q2, q3 }) => {
+  const [katexLoaded, setKatexLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    loadKatex().then(() => setKatexLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    if (katexLoaded && containerRef.current && window.katex) {
+      try {
+        const q1Val = parseFloat(q1.toFixed(2)).toString();
+        const q2Val = parseFloat(q2.toFixed(2)).toString();
+        const q3Val = parseFloat(q3.toFixed(2)).toString();
+        const latex = `\\left\\{\\begin{array}{l} Q_1 = ${q1Val} \\\\ Q_2 = ${q2Val} \\\\ Q_3 = ${q3Val} \\end{array}\\right.`;
+        window.katex.render(latex, containerRef.current, {
+          throwOnError: false,
+          displayMode: false
+        });
+      } catch (e) {
+        console.error("KaTeX render error:", e);
+      }
+    }
+  }, [q1, q2, q3, katexLoaded]);
+
+  return <div ref={containerRef} className="inline-block text-left" />;
 };
 
 // --- 數學工具函數庫 ---
@@ -395,7 +424,7 @@ export default function StatisticsApp() {
     { id: 'median', label: '中位數 (Median)', layers: ['box', 'stem', 'bar', 'table'] },
     { id: 'mode', label: '眾數 (Mode)', layers: ['stem', 'bar', 'table'] },
     { id: 'range', label: '分佈域 (Range)', layers: ['box', 'stem', 'bar', 'table'] },
-    { id: 'iqr', label: '四分位數間距 (IQR)', layers: ['box', 'stem', 'bar', 'table'] },
+    { id: 'iqr', label: '四分位數間距 (Interquartile Range)', layers: ['box', 'stem', 'bar', 'table'] },
     { id: 'variance', label: '方差 (Variance)', layers: ['stem', 'bar', 'table'] },
     { id: 'stdDev', label: '標準差 (SD)', layers: ['stem', 'bar', 'table'] },
   ];
@@ -963,26 +992,26 @@ export default function StatisticsApp() {
                                   const terms = keys.map(k => `${k}(${freq[k]})`);
                                   return (
                                     <>
-                                      <div className="mt-2 flex justify-center">
+                                      <div className="mt-2 flex justify-start">
                                         <Fraction 
                                           numerator={terms.join(' + ')} 
                                           denominator={learnData.length}
                                         />
                                       </div>
-                                      <b className="block mt-2 text-center">= {formatAnswer(MathUtils.mean(learnData))}</b>
+                                      <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
                                     </>
                                   );
                                 })()
                               ) : (
                                 // 其他圖表：列出所有數據
                                 <>
-                                  <div className="mt-2 flex justify-center">
+                                  <div className="mt-2 flex justify-start">
                                     <Fraction 
                                       numerator={learnData.join(' + ')} 
                                       denominator={learnData.length}
                                     />
                                   </div>
-                                  <b className="block mt-2 text-center">= {formatAnswer(MathUtils.mean(learnData))}</b>
+                                  <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
                                 </>
                               )}
                             </p>
@@ -1010,13 +1039,13 @@ export default function StatisticsApp() {
                                     const mid2 = sorted[learnData.length/2];
                                     return (
                                       <>
-                                        <div className="mt-2 flex justify-center">
+                                        <div className="mt-2 flex justify-start">
                                           <Fraction 
                                             numerator={`${mid1} + ${mid2}`}
                                             denominator="2"
                                           />
                                         </div>
-                                        <b className="block mt-2 text-center">= {formatAnswer((mid1 + mid2) / 2)}</b>
+                                        <b className="block mt-2">= {formatAnswer((mid1 + mid2) / 2)}</b>
                                       </>
                                     );
                                   })()}
@@ -1052,15 +1081,31 @@ export default function StatisticsApp() {
                             <p>
                               <b>在框線圖中：</b>長方框的寬度。<br/>
                               從方框左邊（Q1）到右邊（Q3）的距離。<br/>
-                              <code>上四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q3)}，下四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
-                              <b>四分位數間距 = Q3 - Q1 = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
+                              <div className="mt-2">
+                                <QuartilesDisplay 
+                                  q1={MathUtils.quartiles(learnData).q1}
+                                  q2={MathUtils.quartiles(learnData).q2}
+                                  q3={MathUtils.quartiles(learnData).q3}
+                                />
+                              </div>
+                              <div className="mt-3">
+                                <b>四分位數間距 = Q₃ - Q₁ = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
+                              </div>
                             </p>
                           )}
                           {selectedStat === 'iqr' && selectedChart !== 'box' && (
                             <p>
                               四分位數間距 = 上四分位數 - 下四分位數。<br/>
-                              <code>上四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q3)}，下四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
-                              <b>四分位數間距 = Q3 - Q1 = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
+                              <div className="mt-2">
+                                <QuartilesDisplay 
+                                  q1={MathUtils.quartiles(learnData).q1}
+                                  q2={MathUtils.quartiles(learnData).q2}
+                                  q3={MathUtils.quartiles(learnData).q3}
+                                />
+                              </div>
+                              <div className="mt-3">
+                                <b>四分位數間距 = Q₃ - Q₁ = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
+                              </div>
                             </p>
                           )}
                           
