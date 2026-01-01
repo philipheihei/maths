@@ -110,79 +110,76 @@ const KeyButton = ({ val, onClick, disabled, className }) => (
 const NumberLine = ({ value, operator }) => {
   if (!operator) return null;
 
-  const width = 320;
-  const height = 160; 
-  
-  const axisY = 120;  
-  const graphY = 60;  
-  
-  const unitPixels = 40; 
-  const range = 3; 
+  const height = 160;
+  const axisY = 120;
+  const graphY = 60;
 
-  const centerX = width / 2;
-  
+  // 動態寬度讓「0」與目標值都能出現在視窗內
+  const minTick = Math.min(0, value) - 1;
+  const maxTick = Math.max(0, value) + 1;
+  const unitPixels = 50;
+  const span = maxTick - minTick;
+  const width = Math.max(360, span * unitPixels + 80);
+
+  const mapX = (n) => 40 + (n - minTick) * unitPixels;
+  const zeroX = mapX(0);
+  const valueX = mapX(value);
+
   const isRight = operator.includes('>');
   const isEqual = operator.includes('=');
-  
-  const ticks = [];
-  for (let i = value - range; i <= value + range; i++) {
-    const x = centerX + (i - value) * unitPixels;
-    if (x > 10 && x < width - 10) {
-      ticks.push(
-        <g key={i}>
-          <line x1={x} y1={axisY - 6} x2={x} y2={axisY + 6} stroke="#94a3b8" strokeWidth="2" />
-          <text x={x} y={axisY + 30} textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="600" fontFamily="monospace">{i}</text>
-        </g>
-      );
-    }
-  }
+
+  // 僅顯示 0 和目標值
+  const ticks = [0, value].filter((v, idx, arr) => arr.indexOf(v) === idx).map((n) => (
+    <g key={n}>
+      <line x1={mapX(n)} y1={axisY - 6} x2={mapX(n)} y2={axisY + 6} stroke="#94a3b8" strokeWidth="2" />
+      <text x={mapX(n)} y={axisY + 30} textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="600" fontFamily="monospace">{n}</text>
+    </g>
+  ));
 
   return (
     <div className="flex justify-center overflow-hidden py-2">
-        <svg width={width} height={height} className="bg-white rounded-xl border border-slate-200 shadow-sm">
-        
+      <svg width={width} height={height} className="bg-white rounded-xl border border-slate-200 shadow-sm">
         {/* --- 1. Axis --- */}
         <line x1="20" y1={axisY} x2={width - 20} y2={axisY} stroke="#cbd5e1" strokeWidth="2" />
         <polygon points={`${width-20},${axisY-5} ${width-5},${axisY} ${width-20},${axisY+5}`} fill="#cbd5e1" />
         <polygon points={`20,${axisY-5} 5,${axisY} 20,${axisY+5}`} fill="#cbd5e1" />
-        
+
         {ticks}
 
         {/* --- 2. Graph --- */}
         <g>
-            <line 
-                x1={centerX} 
-                y1={axisY} 
-                x2={centerX} 
-                y2={graphY} 
-                stroke="#3b82f6" 
-                strokeWidth="3" 
-            />
-            <line 
-                x1={centerX} 
-                y1={graphY} 
-                x2={isRight ? width - 30 : 30} 
-                y2={graphY} 
-                stroke="#3b82f6" 
-                strokeWidth="4" 
-            />
-            <polygon 
-                points={isRight 
-                ? `${width-30},${graphY-8} ${width-10},${graphY} ${width-30},${graphY+8}`
-                : `30,${graphY-8} 10,${graphY} 30,${graphY+8}`
-                } 
-                fill="#3b82f6" 
-            />
-            <circle 
-                cx={centerX} 
-                cy={graphY} 
-                r="7" 
-                fill={isEqual ? "#3b82f6" : "white"} 
-                stroke="#3b82f6" 
-                strokeWidth="3" 
-            />
+          <line
+            x1={valueX}
+            y1={axisY}
+            x2={valueX}
+            y2={graphY}
+            stroke="#3b82f6"
+            strokeWidth="3"
+          />
+          <line
+            x1={valueX}
+            y1={graphY}
+            x2={isRight ? width - 30 : 30}
+            y2={graphY}
+            stroke="#3b82f6"
+            strokeWidth="4"
+          />
+          <polygon
+            points={isRight
+              ? `${width-30},${graphY-8} ${width-10},${graphY} ${width-30},${graphY+8}`
+              : `30,${graphY-8} 10,${graphY} 30,${graphY+8}`}
+            fill="#3b82f6"
+          />
+          <circle
+            cx={valueX}
+            cy={graphY}
+            r="7"
+            fill={isEqual ? "#3b82f6" : "white"}
+            stroke="#3b82f6"
+            strokeWidth="3"
+          />
         </g>
-        </svg>
+      </svg>
     </div>
   );
 };
@@ -293,28 +290,30 @@ export default function InequalityQuiz() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col">
-      <nav className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
-        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+      <nav className="bg-white px-4 py-4 border-b border-gray-100 grid grid-cols-[1fr_auto_1fr] items-center sticky top-0 z-10 gap-3">
+        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2 justify-self-start text-sm md:text-base">
           <RotateCcw size={20} />
-          <span className="text-sm">返回首頁</span>
+          <span>返回首頁</span>
         </Link>
-        <div className="flex-1 text-center">
-          <h1 className="font-bold text-slate-700">一元一次不等式</h1>
-          <div className="mt-1 flex justify-center">
-            <div className="bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full font-bold flex items-center gap-2 shadow-sm border-2 border-yellow-400">
-              <Trophy size={16} className="fill-yellow-100 text-yellow-800" />
-              <span className="text-sm leading-none">{score}</span>
-            </div>
-          </div>
+
+        <div className="text-center">
+          <h1 className="font-bold text-slate-700 text-lg md:text-xl">一元一次不等式</h1>
         </div>
-        {page !== 'menu' && (
-          <button 
-            onClick={() => switchPage('menu')}
-            className="text-slate-500 hover:text-slate-800 flex items-center gap-2"
-          >
-            <HomeIcon size={16} /> 主選單
-          </button>
-        )}
+
+        <div className="flex items-center justify-end gap-3 justify-self-end">
+          <div className="bg-yellow-500 text-yellow-900 px-4 py-2 rounded-full font-bold flex items-center gap-2 shadow-sm border-2 border-yellow-400 text-base md:text-lg">
+            <Trophy size={18} className="fill-yellow-100 text-yellow-800" />
+            <span className="leading-none">{score}</span>
+          </div>
+          {page !== 'menu' && (
+            <button 
+              onClick={() => switchPage('menu')}
+              className="text-slate-500 hover:text-slate-800 flex items-center gap-2 text-sm md:text-base"
+            >
+              <HomeIcon size={16} /> 主選單
+            </button>
+          )}
+        </div>
       </nav>
 
       <main className="flex-1 w-full max-w-xl mx-auto p-4 flex flex-col">
