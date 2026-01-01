@@ -16,6 +16,53 @@ import {
   Home as HomeIcon
 } from 'lucide-react';
 
+// --- KaTeX 加載與渲染組件 ---
+const loadKatex = () => {
+  return new Promise((resolve, reject) => {
+    if (window.katex) {
+      resolve();
+      return;
+    }
+    if (!document.querySelector('link[href*="katex.min.css"]')) {
+      const link = document.createElement('link');
+      link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css";
+      link.rel = "stylesheet";
+      document.head.appendChild(link);
+    }
+    const script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js";
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error("KaTeX 載入失敗"));
+    document.head.appendChild(script);
+  });
+};
+
+// KaTeX 分數元件
+const Fraction = ({ numerator, denominator }) => {
+  const [katexLoaded, setKatexLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    loadKatex().then(() => setKatexLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    if (katexLoaded && containerRef.current && window.katex) {
+      try {
+        const latex = `\\frac{${numerator}}{${denominator}}`;
+        window.katex.render(latex, containerRef.current, {
+          throwOnError: false,
+          displayMode: true
+        });
+      } catch (e) {
+        console.error("KaTeX render error:", e);
+      }
+    }
+  }, [numerator, denominator, katexLoaded]);
+
+  return <div ref={containerRef} className="inline-block text-center" />;
+};
+
 // --- 數學工具函數庫 ---
 const MathUtils = {
   sum: (arr) => arr.reduce((a, b) => a + b, 0),
@@ -916,24 +963,26 @@ export default function StatisticsApp() {
                                   const terms = keys.map(k => `${k}(${freq[k]})`);
                                   return (
                                     <>
-                                      <div className="mt-2 flex flex-col items-center">
-                                        <code className="block text-base font-mono">{terms.join(' + ')}</code>
-                                        <div className="border-t-2 border-slate-400 w-full my-2"></div>
-                                        <code className="block text-base font-mono">{learnData.length}</code>
+                                      <div className="mt-2 flex justify-center">
+                                        <Fraction 
+                                          numerator={terms.join(' + ')} 
+                                          denominator={learnData.length}
+                                        />
                                       </div>
-                                      <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
+                                      <b className="block mt-2 text-center">= {formatAnswer(MathUtils.mean(learnData))}</b>
                                     </>
                                   );
                                 })()
                               ) : (
                                 // 其他圖表：列出所有數據
                                 <>
-                                  <div className="mt-2 flex flex-col items-center">
-                                    <code className="block text-base font-mono">{learnData.join(' + ')}</code>
-                                    <div className="border-t-2 border-slate-400 w-full my-2"></div>
-                                    <code className="block text-base font-mono">{learnData.length}</code>
+                                  <div className="mt-2 flex justify-center">
+                                    <Fraction 
+                                      numerator={learnData.join(' + ')} 
+                                      denominator={learnData.length}
+                                    />
                                   </div>
-                                  <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
+                                  <b className="block mt-2 text-center">= {formatAnswer(MathUtils.mean(learnData))}</b>
                                 </>
                               )}
                             </p>
@@ -961,12 +1010,13 @@ export default function StatisticsApp() {
                                     const mid2 = sorted[learnData.length/2];
                                     return (
                                       <>
-                                        <div className="mt-2 flex flex-col items-center">
-                                          <code className="block text-base font-mono">({mid1} + {mid2})</code>
-                                          <div className="border-t-2 border-slate-400 w-full my-2"></div>
-                                          <code className="block text-base font-mono">2</code>
+                                        <div className="mt-2 flex justify-center">
+                                          <Fraction 
+                                            numerator={`${mid1} + ${mid2}`}
+                                            denominator="2"
+                                          />
                                         </div>
-                                        <b className="block mt-2">= {formatAnswer((mid1 + mid2) / 2)}</b>
+                                        <b className="block mt-2 text-center">= {formatAnswer((mid1 + mid2) / 2)}</b>
                                       </>
                                     );
                                   })()}
