@@ -988,14 +988,14 @@ export default function StatisticsApp() {
                                   const terms = keys.map(k => `${k}(${freq[k]})`);
                                   return (
                                     <>
-                                      <div className="mt-2 flex items-start gap-2">
+                                      <div className="mt-2 flex items-center gap-2">
                                         <span className="font-semibold">平均數 =</span>
                                         <Fraction 
                                           numerator={terms.join(' + ')} 
                                           denominator={learnData.length}
                                         />
                                       </div>
-                                      <div className="mt-2 flex items-start gap-2">
+                                      <div className="mt-2 flex items-center gap-2">
                                         <span className="font-semibold">平均數 =</span>
                                         <KaTeXValue value={formatAnswer(MathUtils.mean(learnData))} />
                                       </div>
@@ -1005,14 +1005,14 @@ export default function StatisticsApp() {
                               ) : (
                                 // 其他圖表：列出所有數據
                                 <>
-                                  <div className="mt-2 flex items-start gap-2">
+                                  <div className="mt-2 flex items-center gap-2">
                                     <span className="font-semibold">平均數 =</span>
                                     <Fraction 
                                       numerator={learnData.join(' + ')} 
                                       denominator={learnData.length}
                                     />
                                   </div>
-                                  <div className="mt-2 flex items-start gap-2">
+                                  <div className="mt-2 flex items-center gap-2">
                                     <span className="font-semibold">平均數 =</span>
                                     <KaTeXValue value={formatAnswer(MathUtils.mean(learnData))} />
                                   </div>
