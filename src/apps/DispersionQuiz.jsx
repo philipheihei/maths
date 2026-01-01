@@ -90,8 +90,8 @@ const KaTeXValue = ({ value }) => {
   return <div ref={containerRef} className="inline-block text-left text-2xl" />;
 };
 
-// 橫向分數顯示元件 (a/b 格式，支援換行)
-const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
+// 橫向分數顯示元件（分子可換行，分母在下）
+const MeanFormula = ({ numerator, denominator }) => {
   const [katexLoaded, setKatexLoaded] = useState(false);
   const containerRef = useRef(null);
 
@@ -102,11 +102,11 @@ const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
   useEffect(() => {
     if (katexLoaded && containerRef.current && window.katex) {
       try {
-        // 使用 \cfrac 或简单的 / 格式，允许分子换行
-        const latex = `${numerator} / ${denominator}`;
+        // 使用 \cfrac 允許分子在較寬的空間內顯示
+        const latex = `\\cfrac{${numerator}}{${denominator}}`;
         window.katex.render(latex, containerRef.current, {
           throwOnError: false,
-          displayMode: false
+          displayMode: true  // 使用 displayMode 以獲得更好的排版
         });
       } catch (e) {
         console.error("KaTeX render error:", e);
@@ -114,7 +114,7 @@ const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
     }
   }, [numerator, denominator, katexLoaded]);
 
-  return <div ref={containerRef} className="inline-block text-left text-2xl" style={{ maxWidth }} />;
+  return <div ref={containerRef} className="inline-block text-left my-2" />;
 };
 
 // --- 數學工具函數庫 ---
@@ -1017,9 +1017,9 @@ export default function StatisticsApp() {
                                   const terms = keys.map(k => `${k}(${freq[k]})`);
                                   return (
                                     <>
-                                      <div className="mt-2 flex items-center gap-2">
+                                      <div className="mt-2">
                                         <span className="font-semibold">平均數 =</span>
-                                        <Fraction 
+                                        <MeanFormula 
                                           numerator={terms.join(' + ')} 
                                           denominator={learnData.length}
                                         />
@@ -1034,9 +1034,9 @@ export default function StatisticsApp() {
                               ) : (
                                 // 其他圖表：列出所有數據
                                 <>
-                                  <div className="mt-2 flex items-center gap-2">
+                                  <div className="mt-2">
                                     <span className="font-semibold">平均數 =</span>
-                                    <Fraction 
+                                    <MeanFormula 
                                       numerator={learnData.join(' + ')} 
                                       denominator={learnData.length}
                                     />
