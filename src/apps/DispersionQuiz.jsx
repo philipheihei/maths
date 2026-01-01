@@ -733,7 +733,6 @@ export default function StatisticsApp() {
           {!feedback || feedback.type === 'hint' ? (
             <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
               <input 
-                key={`${currentChart}-${currentMeasure?.id}`}
                 type="text" 
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
