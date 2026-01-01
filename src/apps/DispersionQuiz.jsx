@@ -443,6 +443,7 @@ export default function StatisticsApp() {
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [highlight, setHighlight] = useState(null);
+  const inputRef = useRef(null);
 
   const topics = [
     { id: 'mean', label: '平均數 (Mean)', layers: ['stem', 'bar', 'table'] },
@@ -733,6 +734,7 @@ export default function StatisticsApp() {
           {!feedback || feedback.type === 'hint' ? (
             <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
               <input 
+                ref={inputRef}
                 type="text" 
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
