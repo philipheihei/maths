@@ -740,7 +740,6 @@ export default function StatisticsApp() {
                 placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
                 className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
                 onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
-                autoFocus
               />
               <div className="flex gap-2 w-full md:w-auto">
                 <button 
@@ -1170,7 +1169,7 @@ export default function StatisticsApp() {
                                 3. 輸入完畢後，按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">SHIFT</kbd> + <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2</kbd> (Ïσn) 得到標準差<br/>
                               </span>
                               <br/>
-                              數據：{learnData.slice(0, 10).join(', ')}{learnData.length > 10 ? '...' : ''}<br/>
+                              數據：{learnData.join(', ')}<br/>
                               <b>標準差 (SD) = {formatToSignificantFigures(MathUtils.stdDev(learnData), 3)}</b> <span className="text-slate-500 text-sm">(約至3位有效數字)</span>
                             </p>
                           )}
