@@ -698,10 +698,10 @@ export default function StatisticsApp() {
     const [learnHighlight, setLearnHighlight] = useState(null);
 
     const chartTypes = {
-      box: { name: '框線圖 (Box-and-Whisker Diagram)', stats: ['median', 'iqr', 'range'] },
-      stem: { name: '幹葉圖 (Stem-and-Leaf Diagram)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
-      bar: { name: '棒型圖 (Bar Chart)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] },
-      table: { name: '頻數表 (Frequency Table)', stats: ['mean', 'median', 'mode', 'stdDev', 'variance', 'iqr', 'range'] }
+      box: { name: '框線圖 (Box-and-Whisker Diagram)', stats: ['median', 'range', 'iqr'] },
+      stem: { name: '幹葉圖 (Stem-and-Leaf Diagram)', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] },
+      bar: { name: '棒型圖 (Bar Chart)', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] },
+      table: { name: '頻數表 (Frequency Table)', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] }
     };
 
     const handleChartSelect = (chartType) => {

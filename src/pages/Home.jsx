@@ -88,7 +88,7 @@ const Home = () => {
     {
       id: 'dispersion-quiz',
       title: '高中統計特訓',
-      description: 'F5 CH14 統計：平均數、中位數、眾數、標準差、方差、四分位數間距、分佈域',
+      description: '學習如何在不同圖表得出以下集中趨勢的量度：平均數、中位數、眾數、四分位數間距、分佈域、標準差、方差',
       icon: Calculator,
       color: 'bg-teal-500',
       hoverColor: 'hover:bg-teal-600',
