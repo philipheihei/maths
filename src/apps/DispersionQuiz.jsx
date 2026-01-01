@@ -614,7 +614,7 @@ export default function StatisticsApp() {
         <div className="bg-blue-50 p-4 border-b border-blue-100 flex items-center justify-between">
           <h2 className="text-lg font-bold text-blue-800 flex items-center gap-2">
             <HelpCircle size={20} />
-            題目: 找出 <span className="underline decoration-wavy decoration-blue-400">{currentMeasure?.label}</span>
+            題目: 找出以下「{currentChart === 'box' ? '框線圖' : currentChart === 'stem' ? '幹葉圖' : currentChart === 'bar' ? '棒型圖' : '頻數表'}」中的「{currentMeasure?.label}」
           </h2>
           <span className="text-xs uppercase tracking-wider text-blue-400 font-bold bg-white px-2 py-1 rounded">
             {currentChart === 'box' ? '框線圖' : currentChart === 'stem' ? '幹葉圖' : currentChart === 'bar' ? '棒型圖' : '頻數表'}
@@ -959,7 +959,16 @@ export default function StatisticsApp() {
                                     const sorted = [...learnData].sort((a,b) => a-b);
                                     const mid1 = sorted[learnData.length/2 - 1];
                                     const mid2 = sorted[learnData.length/2];
-                                    return <><b>中位數 = ({mid1} + {mid2}) / 2 = {formatAnswer((mid1 + mid2) / 2)}</b></>;
+                                    return (
+                                      <>
+                                        <div className="mt-2 flex flex-col items-center">
+                                          <code className="block text-base font-mono">({mid1} + {mid2})</code>
+                                          <div className="border-t-2 border-slate-400 w-full my-2"></div>
+                                          <code className="block text-base font-mono">2</code>
+                                        </div>
+                                        <b className="block mt-2">= {formatAnswer((mid1 + mid2) / 2)}</b>
+                                      </>
+                                    );
                                   })()}
                                 </>
                               ) : (

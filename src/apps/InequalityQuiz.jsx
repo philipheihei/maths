@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, CheckCircle, XCircle, Delete, Trophy, HomeIcon } from 'lucide-react';
+import { ArrowRight, ArrowLeft, CheckCircle, XCircle, Delete, Trophy, HomeIcon, RotateCcw } from 'lucide-react';
 
 // --- Constants & Data ---
 const TEXT_QUESTIONS = [
