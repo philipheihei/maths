@@ -1072,14 +1072,14 @@ export default function StatisticsApp() {
                                     const mid2 = sorted[learnData.length/2];
                                     return (
                                       <>
-                                        <div className="mt-2 flex items-start gap-2">
+                                        <div className="mt-2 flex items-center gap-2">
                                           <span className="font-semibold">中位數 =</span>
                                           <Fraction 
                                             numerator={`${mid1} + ${mid2}`}
                                             denominator="2"
                                           />
                                         </div>
-                                        <div className="mt-2 flex items-start gap-2">
+                                        <div className="mt-2 flex items-center gap-2">
                                           <span className="font-semibold">中位數 =</span>
                                           <KaTeXValue value={formatAnswer((mid1 + mid2) / 2)} />
                                         </div>
@@ -1091,7 +1091,7 @@ export default function StatisticsApp() {
                                 <>
                                   排序後的數據：{[...learnData].sort((a,b) => a-b).join(', ')}<br/>
                                   數據總數 = {learnData.length} (單數)<br/>
-                                  <div className="mt-2 flex items-start gap-2">
+                                  <div className="mt-2 flex items-center gap-2">
                                     <span className="font-semibold">中位數 =</span>
                                     <KaTeXValue value={formatAnswer(MathUtils.median(learnData))} />
                                   </div>
