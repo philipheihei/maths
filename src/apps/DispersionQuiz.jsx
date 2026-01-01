@@ -60,36 +60,7 @@ const Fraction = ({ numerator, denominator }) => {
     }
   }, [numerator, denominator, katexLoaded]);
 
-  return <div ref={containerRef} className="inline-block text-left" />;
-};
-
-// KaTeX 系統方程式組件 (用於 Q1, Q2, Q3)
-const QuartilesDisplay = ({ q1, q2, q3 }) => {
-  const [katexLoaded, setKatexLoaded] = useState(false);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    loadKatex().then(() => setKatexLoaded(true));
-  }, []);
-
-  useEffect(() => {
-    if (katexLoaded && containerRef.current && window.katex) {
-      try {
-        const q1Val = parseFloat(q1.toFixed(2)).toString();
-        const q2Val = parseFloat(q2.toFixed(2)).toString();
-        const q3Val = parseFloat(q3.toFixed(2)).toString();
-        const latex = `\\left\\{\\begin{array}{l} Q_1 = ${q1Val} \\\\ Q_2 = ${q2Val} \\\\ Q_3 = ${q3Val} \\end{array}\\right.`;
-        window.katex.render(latex, containerRef.current, {
-          throwOnError: false,
-          displayMode: false
-        });
-      } catch (e) {
-        console.error("KaTeX render error:", e);
-      }
-    }
-  }, [q1, q2, q3, katexLoaded]);
-
-  return <div ref={containerRef} className="inline-block text-left" />;
+  return <div ref={containerRef} className="inline-block text-left text-lg" />;
 };
 
 // --- 數學工具函數庫 ---
@@ -1080,32 +1051,16 @@ export default function StatisticsApp() {
                           {selectedStat === 'iqr' && selectedChart === 'box' && (
                             <p>
                               <b>在框線圖中：</b>長方框的寬度。<br/>
-                              從方框左邊（Q1）到右邊（Q3）的距離。<br/>
-                              <div className="mt-2">
-                                <QuartilesDisplay 
-                                  q1={MathUtils.quartiles(learnData).q1}
-                                  q2={MathUtils.quartiles(learnData).q2}
-                                  q3={MathUtils.quartiles(learnData).q3}
-                                />
-                              </div>
-                              <div className="mt-3">
-                                <b>四分位數間距 = Q₃ - Q₁ = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
-                              </div>
+                              從方框左邊（Q<sub>1</sub>）到右邊（Q<sub>3</sub>）的距離。<br/>
+                              <code>上四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q3)}，下四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
+                              <b>四分位數間距 = Q<sub>3</sub> - Q<sub>1</sub> = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
                             </p>
                           )}
                           {selectedStat === 'iqr' && selectedChart !== 'box' && (
                             <p>
                               四分位數間距 = 上四分位數 - 下四分位數。<br/>
-                              <div className="mt-2">
-                                <QuartilesDisplay 
-                                  q1={MathUtils.quartiles(learnData).q1}
-                                  q2={MathUtils.quartiles(learnData).q2}
-                                  q3={MathUtils.quartiles(learnData).q3}
-                                />
-                              </div>
-                              <div className="mt-3">
-                                <b>四分位數間距 = Q₃ - Q₁ = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
-                              </div>
+                              <code>上四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q3)}，下四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
+                              <b>四分位數間距 = Q<sub>3</sub> - Q<sub>1</sub> = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
                             </p>
                           )}
                           
