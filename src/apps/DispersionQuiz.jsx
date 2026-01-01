@@ -60,7 +60,7 @@ const Fraction = ({ numerator, denominator }) => {
     }
   }, [numerator, denominator, katexLoaded]);
 
-  return <div ref={containerRef} className="inline-block text-left text-lg" />;
+  return <div ref={containerRef} className="inline-block text-left text-2xl" />;
 };
 
 // --- 數學工具函數庫 ---
@@ -177,7 +177,7 @@ const BoxPlot = ({ data, highlight }) => {
 
   return (
     <svg viewBox={`0 0 ${width} 200`} className="w-full bg-white rounded-lg shadow-sm border border-slate-200">
-      <text x={width/2} y="20" textAnchor="middle" className="font-bold text-slate-700">框線圖 (Box Plot)</text>
+      <text x={width/2} y="20" textAnchor="middle" className="font-bold text-slate-700">框線圖 (Box-and-Whisker Diagram)</text>
       
       {/* Axis */}
       <line x1={padding} y1="150" x2={width-padding} y2="150" stroke="#94a3b8" strokeWidth="2" />
@@ -225,8 +225,8 @@ const BoxPlot = ({ data, highlight }) => {
       {/* Dynamic Labels based on Highlight */}
       {highlight === 'iqr' && (
         <>
-          <text x={scale(q1)} y="55" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">Q1</text>
-          <text x={scale(q3)} y="55" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">Q3</text>
+          <text x={scale(q1)} y="55" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">Q<tspan dy="3" fontSize="0.75em">1</tspan></text>
+          <text x={scale(q3)} y="55" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">Q<tspan dy="3" fontSize="0.75em">3</tspan></text>
           <text x={scale(q2)} y="40" textAnchor="middle" fill="#ef4444" className="text-sm font-bold">四分位數間距</text>
         </>
       )}
@@ -251,7 +251,7 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [] }) => {
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center">
-      <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf)</h3>
+      <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf Diagram)</h3>
       <table className="border-collapse">
         <thead>
           <tr className="text-slate-500 text-sm border-b border-slate-400">
