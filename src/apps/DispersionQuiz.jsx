@@ -1019,10 +1019,9 @@ export default function StatisticsApp() {
                                     <>
                                       <div className="mt-2 flex items-center gap-2">
                                         <span className="font-semibold">平均數 =</span>
-                                        <HorizontalFraction 
+                                        <Fraction 
                                           numerator={terms.join(' + ')} 
                                           denominator={learnData.length}
-                                          maxWidth="80%"
                                         />
                                       </div>
                                       <div className="mt-2 flex items-center gap-2">
@@ -1037,10 +1036,9 @@ export default function StatisticsApp() {
                                 <>
                                   <div className="mt-2 flex items-center gap-2">
                                     <span className="font-semibold">平均數 =</span>
-                                    <HorizontalFraction 
+                                    <Fraction 
                                       numerator={learnData.join(' + ')} 
                                       denominator={learnData.length}
-                                      maxWidth="80%"
                                     />
                                   </div>
                                   <div className="mt-2 flex items-center gap-2">
