@@ -75,7 +75,9 @@ const KaTeXValue = ({ value }) => {
   useEffect(() => {
     if (katexLoaded && containerRef.current && window.katex) {
       try {
-        window.katex.render(String(value), containerRef.current, {
+        // 用 text style 确保大小与分数一致
+        const latex = `\\textstyle ${String(value)}`;
+        window.katex.render(latex, containerRef.current, {
           throwOnError: false,
           displayMode: false
         });
@@ -86,6 +88,33 @@ const KaTeXValue = ({ value }) => {
   }, [value, katexLoaded]);
 
   return <div ref={containerRef} className="inline-block text-left text-2xl" />;
+};
+
+// 橫向分數顯示元件 (a/b 格式，支援換行)
+const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
+  const [katexLoaded, setKatexLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    loadKatex().then(() => setKatexLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    if (katexLoaded && containerRef.current && window.katex) {
+      try {
+        // 使用 \cfrac 或简单的 / 格式，允许分子换行
+        const latex = `${numerator} / ${denominator}`;
+        window.katex.render(latex, containerRef.current, {
+          throwOnError: false,
+          displayMode: false
+        });
+      } catch (e) {
+        console.error("KaTeX render error:", e);
+      }
+    }
+  }, [numerator, denominator, katexLoaded]);
+
+  return <div ref={containerRef} className="inline-block text-left text-2xl" style={{ maxWidth }} />;
 };
 
 // --- 數學工具函數庫 ---
@@ -990,9 +1019,10 @@ export default function StatisticsApp() {
                                     <>
                                       <div className="mt-2 flex items-center gap-2">
                                         <span className="font-semibold">平均數 =</span>
-                                        <Fraction 
+                                        <HorizontalFraction 
                                           numerator={terms.join(' + ')} 
                                           denominator={learnData.length}
+                                          maxWidth="80%"
                                         />
                                       </div>
                                       <div className="mt-2 flex items-center gap-2">
@@ -1007,9 +1037,10 @@ export default function StatisticsApp() {
                                 <>
                                   <div className="mt-2 flex items-center gap-2">
                                     <span className="font-semibold">平均數 =</span>
-                                    <Fraction 
+                                    <HorizontalFraction 
                                       numerator={learnData.join(' + ')} 
                                       denominator={learnData.length}
+                                      maxWidth="80%"
                                     />
                                   </div>
                                   <div className="mt-2 flex items-center gap-2">
