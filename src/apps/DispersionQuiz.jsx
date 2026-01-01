@@ -63,6 +63,31 @@ const Fraction = ({ numerator, denominator }) => {
   return <div ref={containerRef} className="inline-block text-left text-2xl" />;
 };
 
+// KaTeX 單值顯示元件（用於統一答案格式）
+const KaTeXValue = ({ value }) => {
+  const [katexLoaded, setKatexLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    loadKatex().then(() => setKatexLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    if (katexLoaded && containerRef.current && window.katex) {
+      try {
+        window.katex.render(String(value), containerRef.current, {
+          throwOnError: false,
+          displayMode: false
+        });
+      } catch (e) {
+        console.error("KaTeX render error:", e);
+      }
+    }
+  }, [value, katexLoaded]);
+
+  return <div ref={containerRef} className="inline-block text-left text-2xl" />;
+};
+
 // --- 數學工具函數庫 ---
 const MathUtils = {
   sum: (arr) => arr.reduce((a, b) => a + b, 0),
@@ -963,26 +988,34 @@ export default function StatisticsApp() {
                                   const terms = keys.map(k => `${k}(${freq[k]})`);
                                   return (
                                     <>
-                                      <div className="mt-2 flex justify-start">
+                                      <div className="mt-2 flex items-start gap-2">
+                                        <span className="font-semibold">平均數 =</span>
                                         <Fraction 
                                           numerator={terms.join(' + ')} 
                                           denominator={learnData.length}
                                         />
                                       </div>
-                                      <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
+                                      <div className="mt-2 flex items-start gap-2">
+                                        <span className="font-semibold">平均數 =</span>
+                                        <KaTeXValue value={formatAnswer(MathUtils.mean(learnData))} />
+                                      </div>
                                     </>
                                   );
                                 })()
                               ) : (
                                 // 其他圖表：列出所有數據
                                 <>
-                                  <div className="mt-2 flex justify-start">
+                                  <div className="mt-2 flex items-start gap-2">
+                                    <span className="font-semibold">平均數 =</span>
                                     <Fraction 
                                       numerator={learnData.join(' + ')} 
                                       denominator={learnData.length}
                                     />
                                   </div>
-                                  <b className="block mt-2">= {formatAnswer(MathUtils.mean(learnData))}</b>
+                                  <div className="mt-2 flex items-start gap-2">
+                                    <span className="font-semibold">平均數 =</span>
+                                    <KaTeXValue value={formatAnswer(MathUtils.mean(learnData))} />
+                                  </div>
                                 </>
                               )}
                             </p>
@@ -1010,13 +1043,17 @@ export default function StatisticsApp() {
                                     const mid2 = sorted[learnData.length/2];
                                     return (
                                       <>
-                                        <div className="mt-2 flex justify-start">
+                                        <div className="mt-2 flex items-start gap-2">
+                                          <span className="font-semibold">中位數 =</span>
                                           <Fraction 
                                             numerator={`${mid1} + ${mid2}`}
                                             denominator="2"
                                           />
                                         </div>
-                                        <b className="block mt-2">= {formatAnswer((mid1 + mid2) / 2)}</b>
+                                        <div className="mt-2 flex items-start gap-2">
+                                          <span className="font-semibold">中位數 =</span>
+                                          <KaTeXValue value={formatAnswer((mid1 + mid2) / 2)} />
+                                        </div>
                                       </>
                                     );
                                   })()}
@@ -1025,7 +1062,10 @@ export default function StatisticsApp() {
                                 <>
                                   排序後的數據：{[...learnData].sort((a,b) => a-b).join(', ')}<br/>
                                   數據總數 = {learnData.length} (單數)<br/>
-                                  <b>中位數 = {formatAnswer(MathUtils.median(learnData))}</b>
+                                  <div className="mt-2 flex items-start gap-2">
+                                    <span className="font-semibold">中位數 =</span>
+                                    <KaTeXValue value={formatAnswer(MathUtils.median(learnData))} />
+                                  </div>
                                 </>
                               )}
                             </p>
@@ -1059,6 +1099,7 @@ export default function StatisticsApp() {
                           {selectedStat === 'iqr' && selectedChart !== 'box' && (
                             <p>
                               四分位數間距 = 上四分位數 - 下四分位數。<br/>
+                              排序後的數據：{[...learnData].sort((a,b) => a-b).join(', ')}<br/>
                               <code>上四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q3)}，下四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
                               <b>四分位數間距 = Q<sub>3</sub> - Q<sub>1</sub> = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
                             </p>
