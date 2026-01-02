@@ -271,6 +271,7 @@ const CompoundInequalityQuiz = () => {
   const [feedback, setFeedback] = useState('idle'); // 'idle', 'correct', 'wrong'
   const [showDiagram, setShowDiagram] = useState(false);
   const [streak, setStreak] = useState(0);
+  const [learnHighlight, setLearnHighlight] = useState(null); // 教學模式高亮
   const inputRef = useRef(null);
 
   // 8 種複合不等式情況
@@ -280,8 +281,8 @@ const CompoundInequalityQuiz = () => {
       title: '方向相同 (向右)',
       subtitle: 'AND取大，OR取小',
       examples: [
-        { label: 'AND (及)', latex: 'x > 2 \\text{ 及 } x > 5', result: 'x > 5', color: 'blue' },
-        { label: 'OR (或)', latex: 'x > 2 \\text{ 或 } x > 5', result: 'x > 2', color: 'red' }
+        { label: 'AND (及)', latex: 'x > 2 \\text{ 及 } x > 5', result: 'x > 5', color: 'blue', highlight: { start: 5, end: 8, color: '#3b82f6' } },
+        { label: 'OR (或)', latex: 'x > 2 \\text{ 或 } x > 5', result: 'x > 2', color: 'red', highlight: { start: 2, end: 8, color: '#ef4444' } }
       ],
       numberLines: [
         { min: 0, max: 8, lines: [
@@ -295,8 +296,8 @@ const CompoundInequalityQuiz = () => {
       title: '方向相同 (向左)',
       subtitle: 'AND取小，OR取大',
       examples: [
-        { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x < 5', result: 'x < 2', color: 'blue' },
-        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x < 5', result: 'x < 5', color: 'red' }
+        { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x < 5', result: 'x < 2', color: 'blue', highlight: { start: 0, end: 2, color: '#3b82f6' } },
+        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x < 5', result: 'x < 5', color: 'red', highlight: { start: 0, end: 5, color: '#ef4444' } }
       ],
       numberLines: [
         { min: 0, max: 8, lines: [
@@ -310,8 +311,8 @@ const CompoundInequalityQuiz = () => {
       title: '方向相對 (重疊)',
       subtitle: 'AND夾中間，OR全實數',
       examples: [
-        { label: 'AND (及)', latex: 'x > 2 \\text{ 及 } x < 5', result: '2 < x < 5', color: 'blue' },
-        { label: 'OR (或)', latex: 'x > 2 \\text{ 或 } x < 5', result: '所有實數', color: 'red' }
+        { label: 'AND (及)', latex: 'x > 2 \\text{ 及 } x < 5', result: '2 < x < 5', color: 'blue', highlight: { start: 2, end: 5, color: '#3b82f6' } },
+        { label: 'OR (或)', latex: 'x > 2 \\text{ 或 } x < 5', result: '所有實數', color: 'red', highlight: { start: 0, end: 8, color: '#ef4444' } }
       ],
       numberLines: [
         { min: 0, max: 8, lines: [
@@ -325,8 +326,8 @@ const CompoundInequalityQuiz = () => {
       title: '方向相反 (分離)',
       subtitle: 'AND無解，OR分兩邊',
       examples: [
-        { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x > 5', result: '無解', color: 'blue' },
-        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x > 5', result: 'x < 2 或 x > 5', color: 'red' }
+        { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x > 5', result: '無解', color: 'blue', highlight: { start: 0, end: 0, color: '#3b82f6' } },
+        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x > 5', result: 'x < 2 或 x > 5', color: 'red', highlight: { start: 0, end: 8, color: '#ef4444' } }
       ],
       numberLines: [
         { min: 0, max: 8, lines: [
@@ -338,18 +339,30 @@ const CompoundInequalityQuiz = () => {
   ];
 
   // 雙線數線 SVG 組件（用於教學模式）
-  const TwoLineNumberLine = ({ min, max, lines }) => {
+  const TwoLineNumberLine = ({ min, max, lines, highlightRegion }) => {
     const width = 400;
-    const height = 100;
+    const height = 140;
     const padding = 40;
     const usableWidth = width - 2 * padding;
     const scale = usableWidth / (max - min);
-    const axisY = 80;
+    const axisY = 120;
 
     const getX = (value) => padding + (value - min) * scale;
 
     return (
       <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-2">
+        {/* 高亮區域 */}
+        {highlightRegion && (
+          <rect
+            x={getX(highlightRegion.start)}
+            y={highlightRegion.lineY - 15}
+            width={Math.abs(getX(highlightRegion.end) - getX(highlightRegion.start))}
+            height={30}
+            fill={highlightRegion.color}
+            opacity="0.2"
+          />
+        )}
+
         {/* 數軸 */}
         <line x1={padding} y1={axisY} x2={width - padding} y2={axisY} stroke="#374151" strokeWidth="2" />
         
@@ -360,7 +373,7 @@ const CompoundInequalityQuiz = () => {
           return (
             <g key={`tick-${value}`}>
               <line x1={x} y1={axisY - 5} x2={x} y2={axisY + 5} stroke="#6b7280" strokeWidth="1.5" />
-              <text x={x} y={axisY + 18} textAnchor="middle" fontSize="11" fill="#374151">{value}</text>
+              <text x={x} y={axisY + 20} textAnchor="middle" fontSize="11" fill="#374151">{value}</text>
             </g>
           );
         })}
@@ -368,12 +381,12 @@ const CompoundInequalityQuiz = () => {
         {/* 繪製兩條不等式線 */}
         {lines.map((line, idx) => {
           const x = getX(line.start);
-          const lineY = line.y;
+          const lineY = line.y + 20;
           const arrowEnd = line.direction === 'right' ? width - padding + 10 : padding - 10;
           
           return (
             <g key={`line-${idx}`}>
-              {/* 不等式線 */}
+              {/* 不等式線 - 全實線 */}
               <line 
                 x1={x} 
                 y1={lineY} 
@@ -388,7 +401,7 @@ const CompoundInequalityQuiz = () => {
               ) : (
                 <path d={`M ${arrowEnd + 8} ${lineY - 5} L ${arrowEnd} ${lineY} L ${arrowEnd + 8} ${lineY + 5}`} fill={line.color} />
               )}
-              {/* 邊界圓 */}
+              {/* 邊界圓 - 無縫貼合連接線 */}
               <circle 
                 cx={x} 
                 cy={lineY} 
@@ -397,12 +410,12 @@ const CompoundInequalityQuiz = () => {
                 stroke={line.color} 
                 strokeWidth="2" 
               />
-              {/* 垂直連接線到數軸 */}
+              {/* 垂直連接線到數軸 - 實線，無縫貼合 */}
               <line 
                 x1={x} 
-                y1={lineY + 8} 
+                y1={lineY + 5} 
                 x2={x} 
-                y2={axisY - 8} 
+                y2={axisY - 5} 
                 stroke={line.color} 
                 strokeWidth="2" 
               />
@@ -757,20 +770,32 @@ const CompoundInequalityQuiz = () => {
               
               {/* 數線圖 */}
               <div className="bg-slate-50 rounded-lg p-3 mb-4">
-                <TwoLineNumberLine {...caseItem.numberLines[0]} />
+                <TwoLineNumberLine 
+                  {...caseItem.numberLines[0]} 
+                  highlightRegion={learnHighlight?.caseId === caseItem.id ? learnHighlight.region : null}
+                />
               </div>
 
               {/* AND 和 OR 結果 */}
               <div className="grid grid-cols-2 gap-4">
                 {caseItem.examples.map((ex, idx) => (
-                  <div key={idx} className={`p-3 rounded-lg ${ex.color === 'blue' ? 'bg-blue-50 border border-blue-200' : 'bg-red-50 border border-red-200'}`}>
-                    <div className={`text-xs font-bold mb-1 ${ex.color === 'blue' ? 'text-blue-600' : 'text-red-600'}`}>
+                  <div 
+                    key={idx} 
+                    onClick={() => {
+                      setLearnHighlight({
+                        caseId: caseItem.id,
+                        region: { ...ex.highlight, lineY: 50 }
+                      });
+                    }}
+                    className={`p-4 rounded-lg cursor-pointer transition-all ${ex.color === 'blue' ? 'bg-blue-50 border border-blue-200 hover:shadow-md' : 'bg-red-50 border border-red-200 hover:shadow-md'} ${learnHighlight?.caseId === caseItem.id && ((ex.color === 'blue' && learnHighlight.region.color === '#3b82f6') || (ex.color === 'red' && learnHighlight.region.color === '#ef4444')) ? 'ring-2 ring-offset-1 ring-yellow-400' : ''}`}
+                  >
+                    <div className={`text-xs font-bold mb-2 ${ex.color === 'blue' ? 'text-blue-600' : 'text-red-600'}`}>
                       {ex.label}
                     </div>
-                    <div className="text-sm text-slate-700">
+                    <div className="text-sm text-slate-700 mb-2">
                       <Latex math={ex.latex} /> 
                     </div>
-                    <div className={`text-sm font-bold mt-1 ${ex.color === 'blue' ? 'text-blue-800' : 'text-red-800'}`}>
+                    <div className={`text-lg md:text-xl font-bold ${ex.color === 'blue' ? 'text-blue-800' : 'text-red-800'}`}>
                       → {ex.result}
                     </div>
                   </div>
