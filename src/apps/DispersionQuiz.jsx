@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Calculator, 
@@ -458,6 +458,11 @@ export default function StatisticsApp() {
     }
   }, [mode, feedback]);
 
+  // 使用 useCallback 優化輸入處理，避免不必要的重新渲染
+  const handleInputChange = useCallback((e) => {
+    setUserAnswer(e.target.value);
+  }, []);
+
   const topics = [
     { id: 'mean', label: '平均數 (Mean)', layers: ['stem', 'bar', 'table'] },
     { id: 'median', label: '中位數 (Median)', layers: ['box', 'stem', 'bar', 'table'] },
@@ -659,13 +664,14 @@ export default function StatisticsApp() {
 
   // --- Views ---
 
-  const renderChart = () => {
+  // 使用 useMemo 緩存圖表渲染，避免輸入時不必要的重新渲染
+  const chartElement = useMemo(() => {
     if (currentChart === 'box') return <BoxPlot data={data} highlight={highlight} />;
     if (currentChart === 'stem') return <StemLeafPlot data={data} highlight={highlight} />;
     if (currentChart === 'bar') return <BarChart data={data} highlight={highlight} />;
     if (currentChart === 'table') return <FrequencyTable data={data} highlight={highlight} />;
     return null;
-  };
+  }, [currentChart, data, highlight]);
 
   const MenuView = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -738,7 +744,7 @@ export default function StatisticsApp() {
         
         <div className="p-6 flex flex-col items-center justify-center min-h-[300px] bg-slate-50/50">
           <div className="w-full max-w-lg">
-            {renderChart()}
+            {chartElement}
           </div>
         </div>
 
@@ -749,8 +755,9 @@ export default function StatisticsApp() {
               <input 
                 ref={inputRef}
                 type="text" 
+                inputMode="decimal"
                 value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
+                onChange={handleInputChange}
                 placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
                 className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
                 onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
