@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Calculator, ArrowRight, BookOpen, Award, 
-  Variable, ChartColumnBig, EqualNot, Radius, TriangleRight 
+  Variable, BarChart3, EqualNot, Radius, TriangleRight 
 } from 'lucide-react';
 
 const Home = () => {
@@ -92,7 +92,7 @@ const Home = () => {
       id: 'dispersion-quiz',
       title: '高中統計特訓',
       description: '學習如何在不同圖表得出以下集中趨勢的量度：平均數、中位數、眾數、四分位數間距、分佈域、標準差、方差',
-      icon: ChartColumnBig,
+      icon: BarChart3,
       color: 'bg-teal-500',
       hoverColor: 'hover:bg-teal-600',
       path: '/dispersion-quiz',
