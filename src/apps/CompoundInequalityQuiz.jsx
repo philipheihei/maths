@@ -394,7 +394,302 @@ const CompoundInequalityQuiz = () => {
   const [questionStage, setQuestionStage] = useState(1); // 題目階段：1 或 2
   const [stage2Question, setStage2Question] = useState(null); // 第二階段題目
   const [showHint, setShowHint] = useState(false); // 提示按鈕狀態
+  const [usedQuestionIds, setUsedQuestionIds] = useState([]); // 已使用的題目 ID
   const inputRef = useRef(null);
+
+  // 自動題目生成器
+  const generateQuestion = (phaseType) => {
+    const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const getRandomSymbol = () => Math.random() > 0.5 ? { text: '>', sym: '>', closed: false } : { text: '\\geq', sym: '≥', closed: true };
+    const getRandomSymbolLess = () => Math.random() > 0.5 ? { text: '<', sym: '<', closed: false } : { text: '\\leq', sym: '≤', closed: true };
+    
+    const questionId = Date.now() + getRandomInt(1, 9999);
+
+    if (phaseType === 'simplification') {
+      const types = [
+        'and-overlap',    // x > a 及 x < b (有重疊)
+        'and-same-right', // x > a 及 x > b (同向右)
+        'and-same-left',  // x < a 及 x < b (同向左)
+        'and-no-solution',// x < a 及 x > b (無解)
+        'or-all',         // x > a 或 x < b (全實數)
+        'or-same-right',  // x > a 或 x > b (同向右)
+        'or-same-left',   // x < a 或 x < b (同向左)
+        'or-split'        // x < a 或 x > b (分離)
+      ];
+      
+      const type = types[getRandomInt(0, types.length - 1)];
+      let a, b, sym1, sym2, answer, alternatives, explanation, numberLine;
+      
+      switch(type) {
+        case 'and-overlap': {
+          a = getRandomInt(-4, 2);
+          b = a + getRandomInt(3, 6);
+          sym1 = getRandomSymbol();
+          sym2 = getRandomSymbolLess();
+          answer = `${a} ${sym1.sym} x ${sym2.sym} ${b}`;
+          alternatives = [`x ${sym1.sym} ${a} 及 x ${sym2.sym} ${b}`, `${b} ${sym2.sym} x ${sym1.sym} ${a}`];
+          explanation = '「及」表示同時滿足兩個條件，找出重疊區域';
+          numberLine = {
+            solutions: [{
+              type: 'interval',
+              start: a,
+              end: b,
+              startClosed: sym1.closed,
+              endClosed: sym2.closed,
+              lines: [
+                { start: a, direction: 'right', closed: sym1.closed, color: '#3b82f6' },
+                { start: b, direction: 'left', closed: sym2.closed, color: '#ef4444' }
+              ]
+            }]
+          };
+          break;
+        }
+        
+        case 'and-same-right': {
+          a = getRandomInt(-4, 2);
+          b = a + getRandomInt(2, 4);
+          sym1 = getRandomSymbol();
+          sym2 = getRandomSymbol();
+          answer = `x ${sym2.sym} ${b}`;
+          alternatives = [`x ${sym1.sym} ${a} 及 x ${sym2.sym} ${b}`];
+          explanation = '同方向向右，AND 取較大值';
+          numberLine = {
+            solutions: [{
+              type: 'interval',
+              start: b,
+              end: 5,
+              startClosed: sym2.closed,
+              endClosed: false,
+              lines: [
+                { start: a, direction: 'right', closed: sym1.closed, color: '#3b82f6' },
+                { start: b, direction: 'right', closed: sym2.closed, color: '#ef4444' }
+              ]
+            }]
+          };
+          break;
+        }
+        
+        case 'and-same-left': {
+          a = getRandomInt(-2, 4);
+          b = a + getRandomInt(2, 4);
+          sym1 = getRandomSymbolLess();
+          sym2 = getRandomSymbolLess();
+          answer = `x ${sym1.sym} ${a}`;
+          alternatives = [`x ${sym1.sym} ${a} 及 x ${sym2.sym} ${b}`];
+          explanation = '同方向向左，AND 取較小值';
+          numberLine = {
+            solutions: [{
+              type: 'interval',
+              start: -5,
+              end: a,
+              startClosed: false,
+              endClosed: sym1.closed,
+              lines: [
+                { start: a, direction: 'left', closed: sym1.closed, color: '#3b82f6' },
+                { start: b, direction: 'left', closed: sym2.closed, color: '#ef4444' }
+              ]
+            }]
+          };
+          break;
+        }
+        
+        case 'and-no-solution': {
+          a = getRandomInt(-2, 2);
+          b = a + getRandomInt(2, 4);
+          sym1 = getRandomSymbolLess();
+          sym2 = getRandomSymbol();
+          answer = '無解';
+          alternatives = ['空集', '∅'];
+          explanation = '沒有數既小於較小值又大於較大值';
+          numberLine = {
+            solutions: [{
+              type: 'empty',
+              lines: [
+                { start: a, direction: 'left', closed: sym1.closed, color: '#3b82f6' },
+                { start: b, direction: 'right', closed: sym2.closed, color: '#ef4444' }
+              ]
+            }]
+          };
+          break;
+        }
+        
+        case 'or-all': {
+          a = getRandomInt(-4, 2);
+          b = a + getRandomInt(2, 5);
+          sym1 = getRandomSymbol();
+          sym2 = getRandomSymbolLess();
+          answer = '所有實數';
+          alternatives = ['全部實數', 'ℝ'];
+          explanation = '「或」表示至少滿足一個條件，覆蓋全部實數';
+          numberLine = {
+            solutions: [{
+              type: 'all',
+              lines: [
+                { start: a, direction: 'right', closed: sym1.closed, color: '#3b82f6' },
+                { start: b, direction: 'left', closed: sym2.closed, color: '#ef4444' }
+              ]
+            }]
+          };
+          break;
+        }
+        
+        case 'or-same-right': {
+          a = getRandomInt(-4, 2);
+          b = a + getRandomInt(2, 4);
+          sym1 = getRandomSymbol();
+          sym2 = getRandomSymbol();
+          answer = `x ${sym1.sym} ${a}`;
+          alternatives = [`x ${sym1.sym} ${a} 或 x ${sym2.sym} ${b}`];
+          explanation = '同方向向右，OR 取較小值';
+          numberLine = {
+            solutions: [{
+              type: 'interval',
+              start: a,
+              end: 5,
+              startClosed: sym1.closed,
+              endClosed: false,
+              lines: [
+                { start: a, direction: 'right', closed: sym1.closed, color: '#3b82f6' },
+                { start: b, direction: 'right', closed: sym2.closed, color: '#ef4444' }
+              ]
+            }]
+          };
+          break;
+        }
+        
+        case 'or-same-left': {
+          a = getRandomInt(-2, 4);
+          b = a + getRandomInt(2, 4);
+          sym1 = getRandomSymbolLess();
+          sym2 = getRandomSymbolLess();
+          answer = `x ${sym2.sym} ${b}`;
+          alternatives = [`x ${sym1.sym} ${a} 或 x ${sym2.sym} ${b}`];
+          explanation = '同方向向左，OR 取較大值';
+          numberLine = {
+            solutions: [{
+              type: 'interval',
+              start: -5,
+              end: b,
+              startClosed: false,
+              endClosed: sym2.closed,
+              lines: [
+                { start: a, direction: 'left', closed: sym1.closed, color: '#3b82f6' },
+                { start: b, direction: 'left', closed: sym2.closed, color: '#ef4444' }
+              ]
+            }]
+          };
+          break;
+        }
+        
+        case 'or-split': {
+          a = getRandomInt(-2, 2);
+          b = a + getRandomInt(2, 4);
+          sym1 = getRandomSymbolLess();
+          sym2 = getRandomSymbol();
+          answer = `x ${sym1.sym} ${a} 或 x ${sym2.sym} ${b}`;
+          alternatives = [`x ${sym2.sym} ${b} 或 x ${sym1.sym} ${a}`];
+          explanation = '兩個分離區間的並集';
+          numberLine = {
+            solutions: [{
+              type: 'union',
+              intervals: [
+                { start: -5, end: a, startClosed: false, endClosed: sym1.closed },
+                { start: b, end: 5, startClosed: sym2.closed, endClosed: false }
+              ],
+              lines: [
+                { start: a, direction: 'left', closed: sym1.closed, color: '#3b82f6' },
+                { start: b, direction: 'right', closed: sym2.closed, color: '#ef4444' }
+              ]
+            }]
+          };
+          break;
+        }
+      }
+      
+      // 生成 stage2 整數解題目
+      let stage2 = null;
+      if (['and-overlap', 'and-same-right', 'and-same-left'].includes(type)) {
+        const integers = [];
+        const rangeStart = type === 'and-overlap' ? a : (type === 'and-same-right' ? b : -5);
+        const rangeEnd = type === 'and-overlap' ? b : (type === 'and-same-right' ? 5 : a);
+        
+        for (let i = Math.ceil(rangeStart); i <= Math.floor(rangeEnd); i++) {
+          const checkStart = type === 'and-overlap' ? a : (type === 'and-same-right' ? b : rangeStart);
+          const checkEnd = type === 'and-overlap' ? b : (type === 'and-same-right' ? rangeEnd : a);
+          const startSym = type === 'and-overlap' ? sym1 : (type === 'and-same-right' ? sym2 : { closed: false });
+          const endSym = type === 'and-overlap' ? sym2 : (type === 'and-same-right' ? { closed: false } : sym1);
+          
+          const passStart = startSym.closed ? i >= checkStart : i > checkStart;
+          const passEnd = endSym.closed ? i <= checkEnd : i < checkEnd;
+          
+          if (passStart && passEnd) {
+            integers.push(i);
+          }
+        }
+        
+        if (integers.length > 0 && integers.length <= 12) {
+          stage2 = {
+            id: questionId + 10000,
+            text: `求滿足 $${answer.replace(/[<>≤≥]/g, m => {
+              const map = {'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'};
+              return map[m] || m;
+            })}$ 的整數`,
+            type: 'interval-integer',
+            answer: integers.join(', '),
+            alternatives: [integers.join(','), `x ∈ {${integers.join(', ')}}`],
+            explanation: `在範圍內的整數有 ${integers.length} 個`,
+            numberLine: numberLine
+          };
+        }
+      }
+      
+      return {
+        id: questionId,
+        text: `化簡：$x ${sym1.text} ${a}$ ${type.includes('or') ? '或' : '及'} $x ${sym2.text} ${b}$`,
+        type: type,
+        answer: answer,
+        alternatives: alternatives,
+        explanation: explanation,
+        numberLine: numberLine,
+        stage2: stage2
+      };
+    }
+    
+    // integer-solutions phase
+    if (phaseType === 'integer-solutions') {
+      const a = getRandomInt(-5, 2);
+      const b = a + getRandomInt(3, 7);
+      const sym1 = getRandomSymbol();
+      const sym2 = getRandomSymbolLess();
+      
+      const integers = [];
+      for (let i = a; i <= b; i++) {
+        const passStart = sym1.closed ? i >= a : i > a;
+        const passEnd = sym2.closed ? i <= b : i < b;
+        if (passStart && passEnd) {
+          integers.push(i);
+        }
+      }
+      
+      return {
+        id: questionId,
+        text: `求滿足 $${a} ${sym1.sym} x ${sym2.sym} ${b}$ 的整數`,
+        type: 'interval-integer',
+        answer: integers.join(', '),
+        alternatives: [integers.join(','), `x ∈ {${integers.join(', ')}}`],
+        explanation: `在範圍內的整數共 ${integers.length} 個`,
+        numberLine: {
+          solutions: [{
+            type: 'interval',
+            start: a,
+            end: b,
+            startClosed: sym1.closed,
+            endClosed: sym2.closed
+          }]
+        }
+      };
+    }
+  };
 
   // 8 種複合不等式情況
   const EIGHT_CASES = [
@@ -830,12 +1125,31 @@ const CompoundInequalityQuiz = () => {
   }, [phase]);
 
   const selectRandomQuestion = () => {
-    const randomQuestion = currentQuestions[Math.floor(Math.random() * currentQuestions.length)];
-    setCurrentQuestion(randomQuestion);
+    // 70% 使用自動生成，30% 使用固定題目
+    const useGenerated = Math.random() < 0.7;
+    
+    let newQuestion;
+    if (useGenerated) {
+      newQuestion = generateQuestion(phase);
+      // 確保不與最近 3 題重複
+      let attempts = 0;
+      while (usedQuestionIds.slice(-3).includes(newQuestion.id) && attempts < 10) {
+        newQuestion = generateQuestion(phase);
+        attempts++;
+      }
+    } else {
+      // 使用固定題目
+      newQuestion = currentQuestions[Math.floor(Math.random() * currentQuestions.length)];
+    }
+    
+    setCurrentQuestion(newQuestion);
+    setUsedQuestionIds(prev => [...prev.slice(-10), newQuestion.id]); // 只保留最近 10 題記錄
     setUserAnswer('');
     setFeedback('idle');
     setShowDiagram(false);
     setShowHint(false);
+    setQuestionStage(1);
+    setStage2Question(null);
   };
 
   // 驗證答案
