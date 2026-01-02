@@ -490,8 +490,8 @@ const CompoundInequalityQuiz = () => {
           b = a + getRandomInt(3, 6);
           sym1 = getRandomSymbol();
           sym2 = getRandomSymbolLess();
-          answer = `${a} ${sym1.sym} x ${sym2.sym} ${b}`;
-          alternatives = [`x ${sym1.sym} ${a} 及 x ${sym2.sym} ${b}`, `${b} ${sym2.sym} x ${sym1.sym} ${a}`];
+          answer = `${a} < x < ${b}`;
+          alternatives = [`x ${sym1.sym} ${a} 及 x ${sym2.sym} ${b}`, `x > ${a} 及 x < ${b}`, `${a} < x < ${b}`];
           explanation = '「及」表示同時滿足兩個條件，找出重疊區域';
           numberLine = {
             solutions: [{
