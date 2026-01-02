@@ -260,6 +260,8 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval' }) => {
 
 // --- 主應用程式 ---
 const CompoundInequalityQuiz = () => {
+  // 模式狀態
+  const [mode, setMode] = useState('menu'); // 'menu', 'learn', 'quiz'
   // 遊戲狀態
   const [phase, setPhase] = useState('simplification'); // 'simplification' 或 'integer-solutions'
   const [level, setLevel] = useState(1);
@@ -270,6 +272,146 @@ const CompoundInequalityQuiz = () => {
   const [showDiagram, setShowDiagram] = useState(false);
   const [streak, setStreak] = useState(0);
   const inputRef = useRef(null);
+
+  // 8 種複合不等式情況
+  const EIGHT_CASES = [
+    {
+      id: 1,
+      title: '方向相同 (向右)',
+      subtitle: 'AND取大，OR取小',
+      examples: [
+        { label: 'AND (及)', latex: 'x > 2 \\text{ 及 } x > 5', result: 'x > 5', color: 'blue' },
+        { label: 'OR (或)', latex: 'x > 2 \\text{ 或 } x > 5', result: 'x > 2', color: 'red' }
+      ],
+      numberLines: [
+        { min: 0, max: 8, lines: [
+          { start: 2, direction: 'right', closed: false, color: '#3b82f6', y: 30 },
+          { start: 5, direction: 'right', closed: false, color: '#ef4444', y: 60 }
+        ]},
+      ]
+    },
+    {
+      id: 2,
+      title: '方向相同 (向左)',
+      subtitle: 'AND取小，OR取大',
+      examples: [
+        { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x < 5', result: 'x < 2', color: 'blue' },
+        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x < 5', result: 'x < 5', color: 'red' }
+      ],
+      numberLines: [
+        { min: 0, max: 8, lines: [
+          { start: 2, direction: 'left', closed: false, color: '#3b82f6', y: 30 },
+          { start: 5, direction: 'left', closed: false, color: '#ef4444', y: 60 }
+        ]},
+      ]
+    },
+    {
+      id: 3,
+      title: '方向相對 (重疊)',
+      subtitle: 'AND夾中間，OR全實數',
+      examples: [
+        { label: 'AND (及)', latex: 'x > 2 \\text{ 及 } x < 5', result: '2 < x < 5', color: 'blue' },
+        { label: 'OR (或)', latex: 'x > 2 \\text{ 或 } x < 5', result: '所有實數', color: 'red' }
+      ],
+      numberLines: [
+        { min: 0, max: 8, lines: [
+          { start: 2, direction: 'right', closed: false, color: '#3b82f6', y: 30 },
+          { start: 5, direction: 'left', closed: false, color: '#ef4444', y: 60 }
+        ]},
+      ]
+    },
+    {
+      id: 4,
+      title: '方向相反 (分離)',
+      subtitle: 'AND無解，OR分兩邊',
+      examples: [
+        { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x > 5', result: '無解', color: 'blue' },
+        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x > 5', result: 'x < 2 或 x > 5', color: 'red' }
+      ],
+      numberLines: [
+        { min: 0, max: 8, lines: [
+          { start: 2, direction: 'left', closed: false, color: '#3b82f6', y: 30 },
+          { start: 5, direction: 'right', closed: false, color: '#ef4444', y: 60 }
+        ]},
+      ]
+    }
+  ];
+
+  // 雙線數線 SVG 組件（用於教學模式）
+  const TwoLineNumberLine = ({ min, max, lines }) => {
+    const width = 400;
+    const height = 100;
+    const padding = 40;
+    const usableWidth = width - 2 * padding;
+    const scale = usableWidth / (max - min);
+    const axisY = 80;
+
+    const getX = (value) => padding + (value - min) * scale;
+
+    return (
+      <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-2">
+        {/* 數軸 */}
+        <line x1={padding} y1={axisY} x2={width - padding} y2={axisY} stroke="#374151" strokeWidth="2" />
+        
+        {/* 刻度 */}
+        {Array.from({ length: max - min + 1 }).map((_, i) => {
+          const value = min + i;
+          const x = getX(value);
+          return (
+            <g key={`tick-${value}`}>
+              <line x1={x} y1={axisY - 5} x2={x} y2={axisY + 5} stroke="#6b7280" strokeWidth="1.5" />
+              <text x={x} y={axisY + 18} textAnchor="middle" fontSize="11" fill="#374151">{value}</text>
+            </g>
+          );
+        })}
+
+        {/* 繪製兩條不等式線 */}
+        {lines.map((line, idx) => {
+          const x = getX(line.start);
+          const lineY = line.y;
+          const arrowEnd = line.direction === 'right' ? width - padding + 10 : padding - 10;
+          
+          return (
+            <g key={`line-${idx}`}>
+              {/* 不等式線 */}
+              <line 
+                x1={x} 
+                y1={lineY} 
+                x2={arrowEnd} 
+                y2={lineY} 
+                stroke={line.color} 
+                strokeWidth="3" 
+              />
+              {/* 箭頭 */}
+              {line.direction === 'right' ? (
+                <path d={`M ${arrowEnd - 8} ${lineY - 5} L ${arrowEnd} ${lineY} L ${arrowEnd - 8} ${lineY + 5}`} fill={line.color} />
+              ) : (
+                <path d={`M ${arrowEnd + 8} ${lineY - 5} L ${arrowEnd} ${lineY} L ${arrowEnd + 8} ${lineY + 5}`} fill={line.color} />
+              )}
+              {/* 邊界圓 */}
+              <circle 
+                cx={x} 
+                cy={lineY} 
+                r={5} 
+                fill={line.closed ? line.color : 'white'} 
+                stroke={line.color} 
+                strokeWidth="2" 
+              />
+              {/* 垂直連接線到數軸 */}
+              <line 
+                x1={x} 
+                y1={lineY + 8} 
+                x2={x} 
+                y2={axisY - 8} 
+                stroke={line.color} 
+                strokeWidth="2" 
+              />
+            </g>
+          );
+        })}
+      </svg>
+    );
+  };
 
   // 題目資料庫
   const QUESTIONS = {
@@ -528,25 +670,149 @@ const CompoundInequalityQuiz = () => {
     setStreak(0);
   };
 
-  if (!currentQuestion) {
-    return <div className="text-center mt-10">載入中...</div>;
-  }
+  // 菜單視圖
+  const MenuView = () => (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+          <HomeIcon size={20} />
+          <span className="text-sm">返回首頁</span>
+        </Link>
+        <span className="font-bold text-slate-700">複合不等式學習</span>
+        <div className="w-24"></div>
+      </div>
+      <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-blue-600 mb-2">📐 複合不等式</h1>
+          <p className="text-slate-500">掌握 AND/OR 圖解法</p>
+        </div>
+      
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl px-4">
+          <button 
+            onClick={() => setMode('learn')}
+            className="p-6 bg-white border-2 border-blue-100 hover:border-blue-500 rounded-xl shadow-sm hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center justify-center mb-3 text-blue-500 group-hover:scale-110 transition-transform">
+              <BookOpen size={48} />
+            </div>
+            <h3 className="text-xl font-bold text-slate-700">教學模式</h3>
+            <p className="text-sm text-slate-500 mt-2">圖解 8 種情況</p>
+          </button>
 
-  return (
-    <>
+          <button 
+            onClick={() => { setMode('quiz'); setScore(0); selectRandomQuestion(); }}
+            className="p-6 bg-white border-2 border-green-100 hover:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center justify-center mb-3 text-green-500 group-hover:scale-110 transition-transform">
+              <Trophy size={48} />
+            </div>
+            <h3 className="text-xl font-bold text-slate-700">測驗模式</h3>
+            <p className="text-sm text-slate-500 mt-2">化簡與整數解</p>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // 教學視圖
+  const LearnView = () => (
+    <div className="min-h-screen bg-slate-100">
+      <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+          <HomeIcon size={20} />
+          <span className="text-sm">返回首頁</span>
+        </Link>
+        <span className="font-bold text-slate-700">複合不等式 - 教學模式</span>
+        <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
+          <RotateCcw size={16} /> 返回目錄
+        </button>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        {/* 口訣記憶 */}
+        <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-slate-100">
+          <h2 className="text-lg font-bold text-slate-700 mb-4">口訣記憶</h2>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600 mb-2">AND (及)</div>
+              <p className="text-sm text-slate-600">只看兩線 <span className="text-red-500 font-bold underline">重疊</span> 位</p>
+              <p className="text-xs text-slate-400 mt-1">(找 Intersection)</p>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-red-500 mb-2">OR (或)</div>
+              <p className="text-sm text-slate-600">看上面 <span className="text-blue-500 font-bold underline">有蓋</span> 範圍</p>
+              <p className="text-xs text-slate-400 mt-1">(找 Union)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* 圖解範例 (8種情況) */}
+        <h2 className="text-lg font-bold text-slate-700 mb-4">圖解範例 (8種情況)：</h2>
+        
+        <div className="space-y-4">
+          {EIGHT_CASES.map((caseItem) => (
+            <div key={caseItem.id} className="bg-white rounded-xl shadow-sm p-5 border border-slate-100">
+              <h3 className="font-bold text-slate-800 mb-1">{caseItem.title}</h3>
+              <p className="text-sm text-slate-500 mb-3">{caseItem.subtitle}</p>
+              
+              {/* 數線圖 */}
+              <div className="bg-slate-50 rounded-lg p-3 mb-4">
+                <TwoLineNumberLine {...caseItem.numberLines[0]} />
+              </div>
+
+              {/* AND 和 OR 結果 */}
+              <div className="grid grid-cols-2 gap-4">
+                {caseItem.examples.map((ex, idx) => (
+                  <div key={idx} className={`p-3 rounded-lg ${ex.color === 'blue' ? 'bg-blue-50 border border-blue-200' : 'bg-red-50 border border-red-200'}`}>
+                    <div className={`text-xs font-bold mb-1 ${ex.color === 'blue' ? 'text-blue-600' : 'text-red-600'}`}>
+                      {ex.label}
+                    </div>
+                    <div className="text-sm text-slate-700">
+                      <Latex math={ex.latex} /> 
+                    </div>
+                    <div className={`text-sm font-bold mt-1 ${ex.color === 'blue' ? 'text-blue-800' : 'text-red-800'}`}>
+                      → {ex.result}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 進入測驗按鈕 */}
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => { setMode('quiz'); setScore(0); selectRandomQuestion(); }}
+            className="px-8 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-lg hover:from-blue-600 hover:to-indigo-700 transition shadow-lg"
+          >
+            開始測驗 <ArrowRight size={18} className="inline ml-2" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // 測驗視圖
+  const QuizView = () => {
+    if (!currentQuestion) {
+      return <div className="text-center mt-10">載入中...</div>;
+    }
+
+    return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         {/* 頂部導航 */}
         <div className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
           <div className="max-w-4xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
-            <Link 
-              to="/" 
+            <button 
+              onClick={() => setMode('menu')}
               className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition font-medium text-sm md:text-base"
             >
-              <HomeIcon size={20} />
-              <span className="hidden sm:inline">回首頁</span>
-            </Link>
+              <RotateCcw size={20} />
+              <span className="hidden sm:inline">返回目錄</span>
+            </button>
             <h1 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-              複合不等式學習
+              複合不等式測驗
             </h1>
             <div className="flex items-center gap-3">
               <div className="text-right">
@@ -598,19 +864,26 @@ const CompoundInequalityQuiz = () => {
             </div>
 
             {/* 題目文本 */}
-            <div className="bg-slate-50 rounded-lg p-5 mb-6 border-l-4 border-blue-500">
+            <div className="bg-slate-50 rounded-lg p-5 mb-4 border-l-4 border-blue-500">
               <h2 className="text-lg md:text-2xl font-bold text-slate-800 mb-2">
                 <Latex math={currentQuestion.text} block={false} />
               </h2>
             </div>
 
-            {/* 數線圖表（僅在答案錯誤或提交後顯示） */}
-            {showDiagram && (
-              <div className="bg-blue-50 rounded-lg p-6 mb-6 border border-blue-200 animate-in fade-in">
-                <h3 className="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wider">數線圖表</h3>
-                <NumberLine {...currentQuestion.numberLine} />
+            {/* 提示區域 - 放在公式下方 */}
+            <div className="bg-amber-50 rounded-lg p-4 mb-6 border border-amber-200">
+              <div className="text-sm text-amber-800 flex items-start gap-2">
+                <BookOpen size={16} className="mt-0.5 text-amber-600" />
+                <div>
+                  <strong>提示：</strong>
+                  {phase === 'simplification' ? (
+                    <span>「且」表示兩個條件同時成立，「或」表示至少一個條件成立</span>
+                  ) : (
+                    <span>找出區間內的所有整數，用逗號分隔</span>
+                  )}
+                </div>
               </div>
-            )}
+            </div>
 
             {/* 輸入區域 */}
             <div className="mb-6">
@@ -629,8 +902,16 @@ const CompoundInequalityQuiz = () => {
               />
             </div>
 
+            {/* 數線圖表（僅在答案錯誤後顯示） */}
+            {showDiagram && (
+              <div className="bg-blue-50 rounded-lg p-6 mb-6 border border-blue-200 animate-in fade-in">
+                <h3 className="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wider">數線圖表</h3>
+                <NumberLine {...currentQuestion.numberLine} />
+              </div>
+            )}
+
             {/* 反饋區域 */}
-            <div className="flex flex-col gap-4 mb-6 min-h-[120px]">
+            <div className="flex flex-col gap-4 mb-6 min-h-[80px]">
               {feedback === 'idle' && (
                 <button
                   onClick={checkAnswer}
@@ -648,12 +929,6 @@ const CompoundInequalityQuiz = () => {
                     <span className="text-2xl font-bold text-green-600">答對了！</span>
                   </div>
                   <p className="text-green-700 font-medium">{currentQuestion.explanation}</p>
-                  <div className="bg-blue-50 rounded-lg p-4 mt-4 border-l-4 border-blue-500">
-                    <div className="text-sm text-blue-700 mb-1">正確答案：</div>
-                    <div className="text-xl font-bold text-blue-900">
-                      <Latex math={currentQuestion.answer} />
-                    </div>
-                  </div>
                 </div>
               )}
 
@@ -689,44 +964,17 @@ const CompoundInequalityQuiz = () => {
               </button>
             )}
           </div>
-
-          {/* 幫助提示 */}
-          <div className="bg-white rounded-xl shadow-md p-6 border border-slate-100 max-w-2xl mx-auto">
-            <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2 text-lg">
-              <BookOpen size={20} className="text-blue-500" />
-              複合不等式提示
-            </h3>
-            <ul className="space-y-2 text-slate-700 text-sm md:text-base">
-              <li className="flex gap-2">
-                <span className="text-blue-500 font-bold">•</span>
-                <span><strong>且（AND）</strong>：同時滿足兩個條件，答案通常是一個區間</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-blue-500 font-bold">•</span>
-                <span><strong>或（OR）</strong>：滿足至少一個條件，答案可能是多個分離區間</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-blue-500 font-bold">•</span>
-                <span><strong>≤、≥</strong>：邊界點包括在內（實心圓）</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-blue-500 font-bold">•</span>
-                <span><strong>&lt;、&gt;</strong>：邊界點不包括在內（空心圓）</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-blue-500 font-bold">•</span>
-                <span>整數解：只列出區間內的整數，用逗號分隔</span>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        {/* 頁腳 */}
-        <div className="mt-12 bg-white border-t border-slate-200 py-4 text-center text-sm text-slate-500">
-          <p>複合不等式是高中數學的重要概念 | 遊數得計 © 2025</p>
         </div>
       </div>
+    );
+  };
+
+  // 主渲染
+  return (
+    <>
+      {mode === 'menu' && <MenuView />}
+      {mode === 'learn' && <LearnView />}
+      {mode === 'quiz' && <QuizView />}
     </>
   );
 };
