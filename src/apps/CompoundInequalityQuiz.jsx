@@ -39,10 +39,38 @@ const Latex = ({ math, block = false }) => {
     if (isLoaded && window.katex && containerRef.current && math) {
       try {
         containerRef.current.innerHTML = '';
-        window.katex.render(math, containerRef.current, {
-          displayMode: block,
-          throwOnError: false,
-          output: 'html',
+        
+        // 處理混合文本和公式：$..$ 表示 inline，$$...$$ 表示 display
+        const parts = math.split(/(\$\$.*?\$\$|\$.*?\$)/g);
+        
+        parts.forEach(part => {
+          if (part.startsWith('$$') && part.endsWith('$$')) {
+            // Display 公式
+            const latex = part.slice(2, -2);
+            const span = document.createElement('div');
+            span.style.margin = '10px 0';
+            try {
+              window.katex.render(latex, span, { displayMode: true, throwOnError: false });
+            } catch (e) {
+              span.textContent = part;
+            }
+            containerRef.current.appendChild(span);
+          } else if (part.startsWith('$') && part.endsWith('$')) {
+            // Inline 公式
+            const latex = part.slice(1, -1);
+            const span = document.createElement('span');
+            try {
+              window.katex.render(latex, span, { displayMode: false, throwOnError: false });
+            } catch (e) {
+              span.textContent = part;
+            }
+            containerRef.current.appendChild(span);
+          } else if (part.trim()) {
+            // 普通文本
+            const textSpan = document.createElement('span');
+            textSpan.textContent = part;
+            containerRef.current.appendChild(textSpan);
+          }
         });
       } catch (e) {
         console.error("KaTeX render error:", e);
