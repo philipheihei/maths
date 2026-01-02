@@ -445,6 +445,19 @@ export default function StatisticsApp() {
   const [highlight, setHighlight] = useState(null);
   const inputRef = useRef(null);
 
+  // 確保輸入框在測驗模式且無反饋時保持焦點
+  useEffect(() => {
+    if (mode === 'quiz' && (!feedback || feedback.type === 'hint') && inputRef.current) {
+      // 延遲設置焦點以避免干擾初始渲染
+      const timer = setTimeout(() => {
+        if (inputRef.current && document.activeElement !== inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [mode, feedback]);
+
   const topics = [
     { id: 'mean', label: '平均數 (Mean)', layers: ['stem', 'bar', 'table'] },
     { id: 'median', label: '中位數 (Median)', layers: ['box', 'stem', 'bar', 'table'] },
