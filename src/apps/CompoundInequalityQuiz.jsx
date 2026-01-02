@@ -93,11 +93,11 @@ const Latex = ({ math, block = false }) => {
 };
 
 // --- NumberLine SVG 組件 ---
-const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval' }) => {
+const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMultiLine = false }) => {
   const width = 600;
-  const height = 120;
+  const height = showMultiLine ? 180 : 120;
   const padding = 60;
-  const lineY = height / 2;
+  const lineY = showMultiLine ? 140 : height / 2;
   const usableWidth = width - 2 * padding;
   const scale = usableWidth / (max - min);
 
@@ -110,6 +110,86 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval' }) => {
       if (sol.type === 'interval') {
         const x1 = getX(sol.start);
         const x2 = getX(sol.end);
+        
+        // 多線模式（用於顯示 AND/OR）
+        if (showMultiLine && sol.lines) {
+          return (
+            <g key={`interval-${idx}`}>
+              {sol.lines.map((line, lineIdx) => {
+                const lineY_offset = 60 + lineIdx * 35;
+                const lineStartX = line.direction === 'right' ? getX(line.start) : padding;
+                const lineEndX = line.direction === 'right' ? width - padding : getX(line.start);
+                const color = line.color || '#3b82f6';
+                
+                return (
+                  <g key={`line-${lineIdx}`}>
+                    {/* 線段 */}
+                    <line
+                      x1={lineStartX}
+                      y1={lineY_offset}
+                      x2={lineEndX}
+                      y2={lineY_offset}
+                      stroke={color}
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                    
+                    {/* 起點圓點 */}
+                    <circle
+                      cx={line.closed ? lineStartX : getX(line.start)}
+                      cy={lineY_offset}
+                      r="5"
+                      fill={line.closed ? color : 'white'}
+                      stroke={color}
+                      strokeWidth="2"
+                    />
+                    
+                    {/* 終點箭頭 */}
+                    {line.direction === 'right' && (
+                      <>
+                        <polygon
+                          points={`${lineEndX},${lineY_offset} ${lineEndX - 8},${lineY_offset - 6} ${lineEndX - 8},${lineY_offset + 6}`}
+                          fill={color}
+                        />
+                      </>
+                    )}
+                    {line.direction === 'left' && (
+                      <>
+                        <polygon
+                          points={`${lineStartX},${lineY_offset} ${lineStartX + 8},${lineY_offset - 6} ${lineStartX + 8},${lineY_offset + 6}`}
+                          fill={color}
+                        />
+                      </>
+                    )}
+                    
+                    {/* 虛線連接到主數線 */}
+                    <line
+                      x1={getX(line.start)}
+                      y1={lineY_offset}
+                      x2={getX(line.start)}
+                      y2={lineY}
+                      stroke={color}
+                      strokeWidth="1"
+                      strokeDasharray="4,4"
+                      opacity="0.5"
+                    />
+                    
+                    {/* 在主數線上的標記 */}
+                    <circle
+                      cx={getX(line.start)}
+                      cy={lineY}
+                      r="4"
+                      fill={color}
+                      opacity="0.7"
+                    />
+                  </g>
+                );
+              })}
+            </g>
+          );
+        }
+        
+        // 原始單線模式
         return (
           <g key={`interval-${idx}`}>
             <rect
@@ -478,7 +558,19 @@ const CompoundInequalityQuiz = () => {
         answer: '2 < x < 5',
         alternatives: ['x < 5 及 x > 2', 'x > 2 及 x < 5'],
         explanation: '「及」表示同時滿足兩個條件',
-        numberLine: { solutions: [{ type: 'interval', start: 2, end: 5, startClosed: false, endClosed: false }] },
+        numberLine: { 
+          solutions: [{ 
+            type: 'interval', 
+            start: 2, 
+            end: 5, 
+            startClosed: false, 
+            endClosed: false,
+            lines: [
+              { start: 2, direction: 'right', closed: false, color: '#3b82f6' },
+              { start: 5, direction: 'left', closed: false, color: '#ef4444' }
+            ]
+          }] 
+        },
         stage2: {
           id: 201,
           text: '求滿足 $2 < x < 5$ 的整數',
@@ -1029,7 +1121,10 @@ const CompoundInequalityQuiz = () => {
                   {(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine) && (
                     <div className="bg-white rounded-lg p-4 border border-slate-200 mb-3">
                       <div className="text-xs text-slate-700 font-bold mb-2">解的數線圖表：</div>
-                      <NumberLine {...(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine)} />
+                      <NumberLine 
+                        {...(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine)} 
+                        showMultiLine={true}
+                      />
                     </div>
                   )}
                   <p className="text-slate-700 mt-3 text-sm">{questionStage === 1 ? currentQuestion.explanation : stage2Question.explanation}</p>
