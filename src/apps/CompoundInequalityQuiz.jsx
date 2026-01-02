@@ -1,585 +1,734 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, HelpCircle, CheckCircle, XCircle, RefreshCcw, Calculator, BookOpen } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { 
+  ChevronRight, Check, X, Trophy, BookOpen, ArrowRight, Home as HomeIcon, RotateCcw
+} from 'lucide-react';
 
-// --- 數學邏輯與輔助函數 ---
-
-const generateQuestion = () => {
-  // 隨機生成 8 種情況的題目
-  const types = ['AND', 'OR'];
-  const dirs = ['RR', 'LL', 'RL_OVERLAP', 'RL_GAP']; 
-  // RR: x>a, x>b; LL: x<a, x<b; RL_OVERLAP: x>a, x<b (overlap); RL_GAP: x<a, x>b (gap)
-  
-  const type = types[Math.floor(Math.random() * types.length)];
-  const dir = dirs[Math.floor(Math.random() * dirs.length)];
-  
-  let val1 = Math.floor(Math.random() * 10) - 5; // -5 to 4
-  let val2 = val1 + (Math.floor(Math.random() * 3) + 2); // val2 always > val1 to simplify logic logic
-
-  // 交換 val1 val2 讓題目更有變化，但保持 a < b 的邏輯關係用於生成答案
-  const a = val1; 
-  const b = val2;
-
-  let q = { type, dir, a, b, ineq1: {}, ineq2: {}, answer: '', ansType: '', range: null };
-
-  // 設定符號 (隨機 >= 或 >)
-  const eq1 = Math.random() > 0.5;
-  const eq2 = Math.random() > 0.5;
-  const sym1 = eq1 ? '≥' : '>';
-  const sym2 = eq2 ? '≥' : '>';
-  const sym1Rev = eq1 ? '≤' : '<';
-  const sym2Rev = eq2 ? '≤' : '<';
-
-  // 根據方向構建題目
-  if (dir === 'RR') {
-    q.ineq1 = { val: a, op: sym1, rawOp: eq1?'>=':'>' };
-    q.ineq2 = { val: b, op: sym2, rawOp: eq2?'>=':'>' };
-    
-    if (type === 'AND') {
-        // x>a AND x>b -> x>b
-        q.answer = `x ${sym2} ${b}`;
-        q.ansType = 'GT'; // Greater Than
-        q.limitVal = b;
-        q.limitInc = eq2;
-    } else {
-        // x>a OR x>b -> x>a
-        q.answer = `x ${sym1} ${a}`;
-        q.ansType = 'GT';
-        q.limitVal = a;
-        q.limitInc = eq1;
+// --- KaTeX 加載與渲染組件 ---
+const loadKatex = () => {
+  return new Promise((resolve, reject) => {
+    if (window.katex) {
+      resolve();
+      return;
     }
-  } else if (dir === 'LL') {
-    q.ineq1 = { val: a, op: sym1Rev, rawOp: eq1?'<=':'<' };
-    q.ineq2 = { val: b, op: sym2Rev, rawOp: eq2?'<=':'<' };
 
-    if (type === 'AND') {
-        // x<a AND x<b -> x<a
-        q.answer = `x ${sym1Rev} ${a}`;
-        q.ansType = 'LT';
-        q.limitVal = a;
-        q.limitInc = eq1;
-    } else {
-        // x<a OR x<b -> x<b
-        q.answer = `x ${sym2Rev} ${b}`;
-        q.ansType = 'LT';
-        q.limitVal = b;
-        q.limitInc = eq2;
+    if (!document.querySelector('link[href*="katex.min.css"]')) {
+      const link = document.createElement('link');
+      link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css";
+      link.rel = "stylesheet";
+      document.head.appendChild(link);
     }
-  } else if (dir === 'RL_OVERLAP') {
-    // x > a, x < b (Intersection exists)
-    q.ineq1 = { val: a, op: sym1, rawOp: eq1?'>=':'>' };
-    q.ineq2 = { val: b, op: sym2Rev, rawOp: eq2?'<=':'<' };
 
-    if (type === 'AND') {
-        // a < x < b
-        q.answer = `${a} ${eq1?'≤':'<'} x ${eq2?'≤':'<'} ${b}`;
-        q.ansType = 'BETWEEN';
-        q.minVal = a; q.minInc = eq1;
-        q.maxVal = b; q.maxInc = eq2;
-    } else {
-        q.answer = "所有實數";
-        q.ansType = 'ALL';
-    }
-  } else if (dir === 'RL_GAP') {
-     // x < a, x > b (Gap exists)
-    q.ineq1 = { val: a, op: sym1Rev, rawOp: eq1?'<=':'<' };
-    q.ineq2 = { val: b, op: sym2, rawOp: eq2?'>=':'>' };
-
-    if (type === 'AND') {
-        q.answer = "無解";
-        q.ansType = 'NONE';
-    } else {
-        // x < a OR x > b
-        q.answer = `x ${sym1Rev} ${a} 或 x ${sym2} ${b}`;
-        q.ansType = 'SPLIT';
-        q.leftVal = a; q.leftInc = eq1;
-        q.rightVal = b; q.rightInc = eq2;
-    }
-  }
-  
-  return q;
+    const script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js";
+    script.onload = () => resolve();
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
 };
 
-// --- 組件: 數線繪圖 (SVG) ---
-const NumberLine = ({ q, showResult = false, width = 300, height = 120 }) => {
-  const range = 14; // -7 to 7 approx centered
-  const center = (q.a + q.b) / 2;
-  const scale = (width - 40) / range;
-  const toX = (val) => (val - (center - range/2)) * scale + 20;
+const Latex = ({ math, block = false }) => {
+  const containerRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const y1 = 30; // Line 1 height
-  const y2 = 60; // Line 2 height
-  const yResult = 90; // Result height
+  useEffect(() => {
+    loadKatex().then(() => setIsLoaded(true));
+  }, []);
 
-  const drawArrow = (val, op, y, color) => {
-    const x = toX(val);
-    const isRight = op.includes('>') || op.includes('≥');
-    const isClosed = op.includes('=');
-    const endX = isRight ? width - 10 : 10;
-    
-    return (
-      <g>
-        <line x1={x} y1={y} x2={endX} y2={y} stroke={color} strokeWidth="2" markerEnd="url(#arrowhead)" />
-        <circle cx={x} cy={y} r="4" fill={isClosed ? color : "white"} stroke={color} strokeWidth="2" />
-      </g>
-    );
-  };
-
-  // Logic to draw the "Result" highlight
-  const drawResult = () => {
-    if (!showResult) return null;
-    const color = "#10B981"; // Green for correct/result
-
-    if (q.ansType === 'GT') {
-        return drawArrow(q.limitVal, q.limitInc ? '>=' : '>', yResult, color);
+  useEffect(() => {
+    if (isLoaded && window.katex && containerRef.current) {
+      try {
+        window.katex.render(math, containerRef.current, {
+          displayMode: block,
+          throwOnError: false,
+          output: 'html',
+        });
+      } catch (e) {
+        console.error("KaTeX render error:", e);
+        containerRef.current.innerText = math;
+      }
     }
-    if (q.ansType === 'LT') {
-        return drawArrow(q.limitVal, q.limitInc ? '<=' : '<', yResult, color);
-    }
-    if (q.ansType === 'BETWEEN') {
+  }, [math, block, isLoaded]);
+
+  return <span ref={containerRef} className={block ? "block text-center my-2" : "inline-block"} />;
+};
+
+// --- NumberLine SVG 組件 ---
+const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval' }) => {
+  const width = 600;
+  const height = 120;
+  const padding = 60;
+  const lineY = height / 2;
+  const usableWidth = width - 2 * padding;
+  const scale = usableWidth / (max - min);
+
+  const getX = (value) => padding + (value - min) * scale;
+
+  const renderSolutionRegion = () => {
+    if (!solutions || solutions.length === 0) return null;
+
+    return solutions.map((sol, idx) => {
+      if (sol.type === 'interval') {
+        const x1 = getX(sol.start);
+        const x2 = getX(sol.end);
         return (
-            <g>
-                <line x1={toX(q.minVal)} y1={yResult} x2={toX(q.maxVal)} y2={yResult} stroke={color} strokeWidth="4" />
-                <circle cx={toX(q.minVal)} cy={yResult} r="4" fill={q.minInc ? color : "white"} stroke={color} strokeWidth="2" />
-                <circle cx={toX(q.maxVal)} cy={yResult} r="4" fill={q.maxInc ? color : "white"} stroke={color} strokeWidth="2" />
-            </g>
+          <g key={`interval-${idx}`}>
+            <rect
+              x={Math.min(x1, x2)}
+              y={lineY - 8}
+              width={Math.abs(x2 - x1)}
+              height={16}
+              fill="#22c55e"
+              opacity="0.3"
+            />
+            <line
+              x1={Math.min(x1, x2)}
+              y1={lineY}
+              x2={Math.max(x1, x2)}
+              y2={lineY}
+              stroke="#22c55e"
+              strokeWidth="4"
+            />
+            <circle
+              cx={x1}
+              cy={lineY}
+              r={sol.startClosed ? 5 : 4}
+              fill={sol.startClosed ? '#22c55e' : 'none'}
+              stroke="#22c55e"
+              strokeWidth="2"
+            />
+            <circle
+              cx={x2}
+              cy={lineY}
+              r={sol.endClosed ? 5 : 4}
+              fill={sol.endClosed ? '#22c55e' : 'none'}
+              stroke="#22c55e"
+              strokeWidth="2"
+            />
+            {/* 垂直連接線 */}
+            <line x1={x1} y1={lineY + 10} x2={x1} y2={lineY + 20} stroke="#22c55e" strokeWidth="1.5" />
+            <line x1={x2} y1={lineY + 10} x2={x2} y2={lineY + 20} stroke="#22c55e" strokeWidth="1.5" />
+          </g>
         );
-    }
-    if (q.ansType === 'SPLIT') {
+      } else if (sol.type === 'union') {
+        const components = [];
+        for (const comp of sol.intervals) {
+          const x1 = getX(comp.start);
+          const x2 = getX(comp.end);
+          components.push(
+            <g key={`union-${idx}-${comp.start}`}>
+              <rect
+                x={Math.min(x1, x2)}
+                y={lineY - 8}
+                width={Math.abs(x2 - x1)}
+                height={16}
+                fill="#3b82f6"
+                opacity="0.3"
+              />
+              <line
+                x1={Math.min(x1, x2)}
+                y1={lineY}
+                x2={Math.max(x1, x2)}
+                y2={lineY}
+                stroke="#3b82f6"
+                strokeWidth="4"
+              />
+              <circle
+                cx={x1}
+                cy={lineY}
+                r={comp.startClosed ? 5 : 4}
+                fill={comp.startClosed ? '#3b82f6' : 'none'}
+                stroke="#3b82f6"
+                strokeWidth="2"
+              />
+              <circle
+                cx={x2}
+                cy={lineY}
+                r={comp.endClosed ? 5 : 4}
+                fill={comp.endClosed ? '#3b82f6' : 'none'}
+                stroke="#3b82f6"
+                strokeWidth="2"
+              />
+              {/* 垂直連接線 */}
+              <line x1={x1} y1={lineY + 10} x2={x1} y2={lineY + 20} stroke="#3b82f6" strokeWidth="1.5" />
+              <line x1={x2} y1={lineY + 10} x2={x2} y2={lineY + 20} stroke="#3b82f6" strokeWidth="1.5" />
+            </g>
+          );
+        }
+        return components;
+      } else if (sol.type === 'empty') {
         return (
-            <g>
-                {drawArrow(q.leftVal, q.leftInc?'<=':'<', yResult, color)}
-                {drawArrow(q.rightVal, q.rightInc?'>=':'>', yResult, color)}
-            </g>
+          <text
+            key={`empty-${idx}`}
+            x={width / 2}
+            y={lineY + 35}
+            textAnchor="middle"
+            fill="#ef4444"
+            fontSize="16"
+            fontWeight="bold"
+          >
+            無解
+          </text>
         );
-    }
-    if (q.ansType === 'ALL') {
-        return <text x={width/2} y={yResult + 5} textAnchor="middle" fill={color} fontSize="12">所有實數 (全覆蓋)</text>;
-    }
-    if (q.ansType === 'NONE') {
-        return <text x={width/2} y={yResult + 5} textAnchor="middle" fill="#EF4444" fontSize="12">無解 (無重疊)</text>;
-    }
-    return null;
+      } else if (sol.type === 'all') {
+        return (
+          <g key={`all-${idx}`}>
+            <line
+              x1={padding}
+              y1={lineY}
+              x2={width - padding}
+              y2={lineY}
+              stroke="#10b981"
+              strokeWidth="3"
+            />
+            <text
+              x={width / 2}
+              y={lineY + 35}
+              textAnchor="middle"
+              fill="#10b981"
+              fontSize="16"
+              fontWeight="bold"
+            >
+              所有實數
+            </text>
+          </g>
+        );
+      }
+      return null;
+    });
   };
 
   return (
-    <svg width={width} height={height} className="mx-auto border bg-white rounded-lg shadow-sm">
-      <defs>
-        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-          <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280" />
-        </marker>
-      </defs>
-      
-      {/* Base Line */}
-      <line x1="10" y1={height - 20} x2={width-10} y2={height - 20} stroke="#374151" strokeWidth="1" />
-      {/* Ticks */}
-      {[q.a, q.b].map((val, i) => (
-          <g key={i}>
-            <line x1={toX(val)} y1={height - 25} x2={toX(val)} y2={height - 15} stroke="#374151" />
-            <text x={toX(val)} y={height - 2} textAnchor="middle" fontSize="10">{val}</text>
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-4">
+      {/* 數線 */}
+      <line
+        x1={padding}
+        y1={lineY}
+        x2={width - padding}
+        y2={lineY}
+        stroke="#374151"
+        strokeWidth="2"
+      />
+
+      {/* 刻度和標籤 */}
+      {Array.from({ length: max - min + 1 }).map((_, i) => {
+        const value = min + i;
+        const x = getX(value);
+        return (
+          <g key={`tick-${value}`}>
+            <line
+              x1={x}
+              y1={lineY - 8}
+              x2={x}
+              y2={lineY + 8}
+              stroke="#6b7280"
+              strokeWidth="2"
+            />
+            <text
+              x={x}
+              y={lineY + 25}
+              textAnchor="middle"
+              fontSize="14"
+              fill="#374151"
+              fontWeight="500"
+            >
+              {value}
+            </text>
           </g>
-      ))}
+        );
+      })}
 
-      {/* Inequality 1 (Blue) */}
-      {drawArrow(q.ineq1.val, q.ineq1.op, y1, "#3B82F6")}
-      
-      {/* Inequality 2 (Red) */}
-      {drawArrow(q.ineq2.val, q.ineq2.op, y2, "#EF4444")}
+      {/* 箭頭指示 */}
+      <path
+        d={`M ${getX(max)} ${lineY} L ${getX(max) + 12} ${lineY - 8}`}
+        stroke="#374151"
+        strokeWidth="2"
+        fill="none"
+      />
+      <path
+        d={`M ${getX(max)} ${lineY} L ${getX(max) + 12} ${lineY + 8}`}
+        stroke="#374151"
+        strokeWidth="2"
+        fill="none"
+      />
 
-      {/* Result Layer */}
-      {drawResult()}
+      {/* 解區間 */}
+      {renderSolutionRegion()}
     </svg>
   );
 };
 
-// --- 鍵盤組件 ---
-const Keypad = ({ onInput, onDelete, onSubmit, mode = 'full' }) => {
-  const baseBtn = "p-3 rounded-lg font-bold shadow active:scale-95 transition-all text-lg";
-  const numBtn = `${baseBtn} bg-white text-gray-700 hover:bg-gray-50 border border-gray-200`;
-  const opBtn = `${baseBtn} bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200`;
-  const actionBtn = `${baseBtn} text-white`;
+// --- 主應用程式 ---
+const CompoundInequalityQuiz = () => {
+  // 遊戲狀態
+  const [phase, setPhase] = useState('simplification'); // 'simplification' 或 'integer-solutions'
+  const [level, setLevel] = useState(1);
+  const [score, setScore] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [feedback, setFeedback] = useState('idle'); // 'idle', 'correct', 'wrong'
+  const [showDiagram, setShowDiagram] = useState(false);
+  const [streak, setStreak] = useState(0);
+  const inputRef = useRef(null);
 
-  return (
-    <div className="bg-gray-100 p-2 rounded-xl mt-4">
-      <div className="grid grid-cols-5 gap-2">
-        {/* Row 1 */}
-        <button className={numBtn} onClick={() => onInput('7')}>7</button>
-        <button className={numBtn} onClick={() => onInput('8')}>8</button>
-        <button className={numBtn} onClick={() => onInput('9')}>9</button>
-        <button className={opBtn} onClick={() => onInput('>')}>&gt;</button>
-        <button className={opBtn} onClick={() => onInput('<')}>&lt;</button>
+  // 題目資料庫
+  const QUESTIONS = {
+    simplification: [
+      {
+        id: 1,
+        text: '化簡：$x > 2$ 且 $x < 5$',
+        type: 'and',
+        answer: '2 < x < 5',
+        alternatives: ['x < 5 且 x > 2', 'x > 2 及 x < 5'],
+        explanation: '「且」表示同時滿足兩個條件',
+        numberLine: { solutions: [{ type: 'interval', start: 2, end: 5, startClosed: false, endClosed: false }] }
+      },
+      {
+        id: 2,
+        text: '化簡：$x \\leq -1$ 且 $x \\geq -3$',
+        type: 'and',
+        answer: '-3 ≤ x ≤ -1',
+        alternatives: ['-3 ≤ x ≤ -1', 'x ≥ -3 且 x ≤ -1'],
+        explanation: '兩個不等式同時成立的範圍',
+        numberLine: { solutions: [{ type: 'interval', start: -3, end: -1, startClosed: true, endClosed: true }] }
+      },
+      {
+        id: 3,
+        text: '化簡：$x > 0$ 或 $x < -2$',
+        type: 'or',
+        answer: 'x < -2 或 x > 0',
+        alternatives: ['x > 0 或 x < -2', 'x < -2 或 x > 0'],
+        explanation: '「或」表示滿足至少其中一個條件',
+        numberLine: { 
+          solutions: [{ 
+            type: 'union', 
+            intervals: [
+              { start: -5, end: -2, startClosed: false, endClosed: false },
+              { start: 0, end: 5, startClosed: false, endClosed: false }
+            ]
+          }]
+        }
+      },
+      {
+        id: 4,
+        text: '化簡：$x \\geq 3$ 且 $x < 1$',
+        type: 'contradiction',
+        answer: '無解',
+        alternatives: ['無解', '空集', '∅'],
+        explanation: '沒有數既大於等於3又小於1',
+        numberLine: { solutions: [{ type: 'empty' }] }
+      },
+      {
+        id: 5,
+        text: '化簡：$x \\geq -2$ 且 $x \\leq 4$',
+        type: 'and',
+        answer: '-2 ≤ x ≤ 4',
+        alternatives: ['-2 ≤ x ≤ 4', 'x ≥ -2 且 x ≤ 4'],
+        explanation: '同時滿足兩個邊界條件',
+        numberLine: { solutions: [{ type: 'interval', start: -2, end: 4, startClosed: true, endClosed: true }] }
+      },
+      {
+        id: 6,
+        text: '化簡：$x < 1$ 或 $x > 1$',
+        type: 'or',
+        answer: 'x ≠ 1',
+        alternatives: ['x ≠ 1', 'x ∈ ℝ \\ {1}', '所有實數除了1'],
+        explanation: '除了1以外的所有實數',
+        numberLine: { solutions: [{ type: 'all' }] }
+      },
+      {
+        id: 7,
+        text: '化簡：$-3 < x$ 且 $x < 2$',
+        type: 'and',
+        answer: '-3 < x < 2',
+        alternatives: ['x > -3 且 x < 2', '-3 < x < 2'],
+        explanation: '介於-3和2之間的數',
+        numberLine: { solutions: [{ type: 'interval', start: -3, end: 2, startClosed: false, endClosed: false }] }
+      },
+      {
+        id: 8,
+        text: '化簡：$x \\leq -4$ 或 $x \\geq -1$',
+        type: 'or',
+        answer: 'x ≤ -4 或 x ≥ -1',
+        alternatives: ['x ≤ -4 或 x ≥ -1', 'x ≥ -1 或 x ≤ -4'],
+        explanation: '兩個分離區間的並集',
+        numberLine: { 
+          solutions: [{ 
+            type: 'union', 
+            intervals: [
+              { start: -5, end: -4, startClosed: true, endClosed: true },
+              { start: -1, end: 5, startClosed: true, endClosed: true }
+            ]
+          }]
+        }
+      }
+    ],
+    'integer-solutions': [
+      {
+        id: 101,
+        text: '求滿足 $1 < x < 4$ 的整數',
+        type: 'interval-integer',
+        answer: '2, 3',
+        alternatives: ['2, 3', '2和3', 'x = 2 或 x = 3'],
+        explanation: '介於1和4之間的整數只有2和3',
+        numberLine: { solutions: [{ type: 'interval', start: 1, end: 4, startClosed: false, endClosed: false }] }
+      },
+      {
+        id: 102,
+        text: '求滿足 $-2 \\leq x < 3$ 的整數',
+        type: 'interval-integer',
+        answer: '-2, -1, 0, 1, 2',
+        alternatives: ['-2, -1, 0, 1, 2', 'x ∈ {-2, -1, 0, 1, 2}'],
+        explanation: '包括-2但不包括3的整數',
+        numberLine: { solutions: [{ type: 'interval', start: -2, end: 3, startClosed: true, endClosed: false }] }
+      },
+      {
+        id: 103,
+        text: '求滿足 $x < -1$ 或 $x > 2$ 的整數（-3到4範圍內）',
+        type: 'union-integer',
+        answer: '-3, -2, 3, 4',
+        alternatives: ['-3, -2, 3, 4', 'x ∈ {-3, -2, 3, 4}'],
+        explanation: '兩個分離區間內的整數',
+        numberLine: { 
+          solutions: [{ 
+            type: 'union', 
+            intervals: [
+              { start: -3, end: -1, startClosed: true, endClosed: false },
+              { start: 2, end: 4, startClosed: false, endClosed: true }
+            ]
+          }]
+        }
+      },
+      {
+        id: 104,
+        text: '求滿足 $-1 < x \\leq 3$ 的整數',
+        type: 'interval-integer',
+        answer: '0, 1, 2, 3',
+        alternatives: ['0, 1, 2, 3', 'x ∈ {0, 1, 2, 3}'],
+        explanation: '不包括-1但包括3的整數',
+        numberLine: { solutions: [{ type: 'interval', start: -1, end: 3, startClosed: false, endClosed: true }] }
+      },
+      {
+        id: 105,
+        text: '求滿足 $0 < x < 2$ 的整數',
+        type: 'interval-integer',
+        answer: '1',
+        alternatives: ['1', 'x = 1'],
+        explanation: '介於0和2之間的整數只有1',
+        numberLine: { solutions: [{ type: 'interval', start: 0, end: 2, startClosed: false, endClosed: false }] }
+      },
+      {
+        id: 106,
+        text: '求滿足 $x \\leq -3$ 或 $x \\geq 2$ 的整數（-4到3範圍內）',
+        type: 'union-integer',
+        answer: '-4, -3, 2, 3',
+        alternatives: ['-4, -3, 2, 3', 'x ∈ {-4, -3, 2, 3}'],
+        explanation: '兩個邊界包括的整數',
+        numberLine: { 
+          solutions: [{ 
+            type: 'union', 
+            intervals: [
+              { start: -4, end: -3, startClosed: true, endClosed: true },
+              { start: 2, end: 3, startClosed: true, endClosed: true }
+            ]
+          }]
+        }
+      },
+      {
+        id: 107,
+        text: '求滿足 $-3 < x < 0$ 的整數',
+        type: 'interval-integer',
+        answer: '-2, -1',
+        alternatives: ['-2, -1', 'x ∈ {-2, -1}'],
+        explanation: '介於-3和0之間的整數',
+        numberLine: { solutions: [{ type: 'interval', start: -3, end: 0, startClosed: false, endClosed: false }] }
+      },
+      {
+        id: 108,
+        text: '求滿足 $-5 \\leq x \\leq -2$ 的整數',
+        type: 'interval-integer',
+        answer: '-5, -4, -3, -2',
+        alternatives: ['-5, -4, -3, -2', 'x ∈ {-5, -4, -3, -2}'],
+        explanation: '兩個邊界都包括的整數',
+        numberLine: { solutions: [{ type: 'interval', start: -5, end: -2, startClosed: true, endClosed: true }] }
+      }
+    ]
+  };
 
-        {/* Row 2 */}
-        <button className={numBtn} onClick={() => onInput('4')}>4</button>
-        <button className={numBtn} onClick={() => onInput('5')}>5</button>
-        <button className={numBtn} onClick={() => onInput('6')}>6</button>
-        <button className={opBtn} onClick={() => onInput('≥')}>≥</button>
-        <button className={opBtn} onClick={() => onInput('≤')}>≤</button>
+  const currentQuestions = QUESTIONS[phase];
 
-        {/* Row 3 */}
-        <button className={numBtn} onClick={() => onInput('1')}>1</button>
-        <button className={numBtn} onClick={() => onInput('2')}>2</button>
-        <button className={numBtn} onClick={() => onInput('3')}>3</button>
-        <button className={numBtn} onClick={() => onInput('x')}>x</button>
-        {mode === 'full' ? (
-           <button className={`${opBtn} text-sm`} onClick={() => onInput('或')}>或</button>
-        ) : (
-           <button className={`${opBtn} text-sm opacity-50 cursor-not-allowed`}>-</button>
-        )}
-
-        {/* Row 4 */}
-        <button className={numBtn} onClick={() => onInput('0')}>0</button>
-        <button className={numBtn} onClick={() => onInput('.')}>.</button>
-        <button className={numBtn} onClick={() => onInput('-')}>(-)</button>
-        {mode === 'full' ? (
-            <button className={`${opBtn} text-sm`} onClick={() => onInput('及')}>及</button>
-        ) : (
-             <button className={`${opBtn} text-sm opacity-50 cursor-not-allowed`}>-</button>
-        )}
-        
-        {/* Special Keys */}
-        {mode === 'full' && (
-             <button className={`${opBtn} text-xs col-span-1 leading-tight`} onClick={() => onInput('無解')}>無解</button>
-        )}
-        {mode !== 'full' && <div />}
-
-        
-      </div>
-      
-      <div className="grid grid-cols-5 gap-2 mt-2">
-          {mode === 'full' && (
-            <button className={`${opBtn} col-span-2 text-xs`} onClick={() => onInput('所有實數')}>所有實數</button>
-          )}
-          {mode !== 'full' && <div className="col-span-2"/>}
-          
-          <button className={`${actionBtn} bg-red-500 hover:bg-red-600 col-span-1`} onClick={onDelete}>⌫</button>
-          <button className={`${actionBtn} bg-green-600 hover:bg-green-700 col-span-2`} onClick={onSubmit}>
-            確定
-          </button>
-      </div>
-    </div>
-  );
-};
-
-// --- 主程式 ---
-
-export default function CompoundInequalityApp() {
-  const [page, setPage] = useState('teach'); // 'teach' or 'quiz'
-  const [scores, setScores] = useState({ teach: 0, quiz: 0 }); // Just holding generic scores logic
-  const [quizScore, setQuizScore] = useState(0);
-  
-  // Quiz State
-  const [q, setQ] = useState(null);
-  const [input, setInput] = useState('');
-  const [phase, setPhase] = useState(1); // 1: Simplify, 2: Integer
-  const [status, setStatus] = useState('idle'); // idle, correct, wrong
-  const [showHint, setShowHint] = useState(false);
-  const [history, setHistory] = useState([]);
-
+  // 初始化第一題
   useEffect(() => {
-    newQuestion();
-  }, []);
+    selectRandomQuestion();
+  }, [phase]);
 
-  const newQuestion = () => {
-    setQ(generateQuestion());
-    setInput('');
-    setPhase(1);
-    setStatus('idle');
-    setShowHint(false);
+  const selectRandomQuestion = () => {
+    const randomQuestion = currentQuestions[Math.floor(Math.random() * currentQuestions.length)];
+    setCurrentQuestion(randomQuestion);
+    setUserAnswer('');
+    setFeedback('idle');
+    setShowDiagram(false);
   };
 
-  const handleInput = (char) => setInput(prev => prev + char);
-  const handleDelete = () => setInput(prev => prev.slice(0, -1));
-
-  // 標準化答案字串以進行比較 (去除空格)
-  const normalize = (str) => str.replace(/\s/g, '').replace('和', '及');
-
-  const checkPhase1 = () => {
-    const userAns = normalize(input);
-    const correctAns = normalize(q.answer);
-    
-    // 簡單的字串比對，實際生產環境可能需要更強大的解析器
-    // 允許 "x<3或x>5" 和 "x>5或x<3"
-    let isCorrect = userAns === correctAns;
-    
-    // 特殊情況處理：SPLIT類型的順序
-    if (q.ansType === 'SPLIT') {
-        const altAns = normalize(`x${q.rightInc?'>=':'>'}${q.rightVal}或x${q.leftInc?'<=':'<'}${q.leftVal}`);
-        if (userAns === altAns) isCorrect = true;
-    }
-    // 特殊情況：BETWEEN
-    if (q.ansType === 'BETWEEN') {
-        // user might type a<x and x<b or a<x<b
-        // 這裡簡化要求學生輸入 a<x<b 格式
+  // 驗證答案
+  const checkAnswer = () => {
+    if (!userAnswer.trim()) {
+      alert('請輸入答案');
+      return;
     }
 
-    if (isCorrect) {
-      setStatus('correct');
-      // Delay to next phase
-      setTimeout(() => {
-        setPhase(2);
-        setInput('');
-        setStatus('idle');
-      }, 1500);
+    const userNormalized = userAnswer
+      .trim()
+      .replace(/\s+/g, '')
+      .replace(/且|及|和/g, '且')
+      .replace(/或/g, '或')
+      .toLowerCase();
+
+    const correctNormalized = currentQuestion.answer
+      .trim()
+      .replace(/\s+/g, '')
+      .replace(/且|及|和/g, '且')
+      .replace(/或/g, '或')
+      .toLowerCase();
+
+    const validAnswers = [correctNormalized, ...currentQuestion.alternatives.map(a => 
+      a.trim()
+        .replace(/\s+/g, '')
+        .replace(/且|及|和/g, '且')
+        .replace(/或/g, '或')
+        .toLowerCase()
+    )];
+
+    if (validAnswers.includes(userNormalized)) {
+      setFeedback('correct');
+      setScore(score + 1);
+      setStreak(streak + 1);
     } else {
-      setStatus('wrong');
-      // Even if wrong, show result and move to phase 2 after user acknowledges? 
-      // Requirement: "即使1. 答錯，也會提供正確答案讓學生在同一頁答承上題"
+      setFeedback('wrong');
+      setShowDiagram(true);
+      setStreak(0);
     }
   };
 
-  const getIntegerAnswer = () => {
-      // 根據題目類型計算最大/最小整數
-      // 簡單規則：求最接近邊界的整數
-      // 如果是 GT (x > a): 最小整數。
-      // 如果是 LT (x < a): 最大整數。
-      // 如果是 BETWEEN (a < x < b): 寫出所有的整數 (太多了，簡化為最大或最小)
-      // 題目設計：我們固定問 "滿足不等式的 最小整數 (若 x>...) 或 最大整數 (若 x<...)"
-      
-      if (q.ansType === 'GT') {
-          return { type: 'min', val: q.limitInc ? q.limitVal : q.limitVal + 1 };
-      }
-      if (q.ansType === 'LT') {
-          return { type: 'max', val: q.limitInc ? q.limitVal : q.limitVal - 1 };
-      }
-      if (q.ansType === 'BETWEEN') {
-          // 問最大和最小
-          return { 
-             type: 'range', 
-             min: q.minInc ? q.minVal : q.minVal + 1,
-             max: q.maxInc ? q.maxVal : q.maxVal - 1
-          };
-      }
-      if (q.ansType === 'SPLIT') {
-         // This is tricky. usually ask positive min or similar. 
-         // For simplicity in this app, we might skip Phase 2 for SPLIT/ALL/NONE or ask specific logic
-         return { type: 'none' };
-      }
-      return { type: 'none' }; // ALL or NONE
+  const nextQuestion = () => {
+    selectRandomQuestion();
   };
 
-  const intAns = q ? getIntegerAnswer() : { type: 'none' };
-
-  const checkPhase2 = () => {
-      if (intAns.type === 'none') {
-          // Skip or auto correct
-          setQuizScore(s => s + 10);
-          newQuestion();
-          return;
-      }
-      
-      const val = parseInt(input);
-      let isCorrect = false;
-
-      if (intAns.type === 'min' && val === intAns.val) isCorrect = true;
-      if (intAns.type === 'max' && val === intAns.val) isCorrect = true;
-      if (intAns.type === 'range') {
-          // 這裡簡化，假設題目只問最小
-           if (val === intAns.min) isCorrect = true;
-      }
-
-      if (isCorrect) {
-          setQuizScore(s => s + 10);
-          // animation
-          setStatus('correct');
-          setTimeout(newQuestion, 1000);
-      } else {
-          setStatus('wrong');
-      }
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && feedback === 'idle') {
+      checkAnswer();
+    } else if ((e.key === 'Enter' || e.key === ' ') && feedback !== 'idle') {
+      nextQuestion();
+    }
   };
 
-  const getPhase2QuestionText = () => {
-      if (intAns.type === 'min') return `承上題，滿足該不等式的 最小整數 是什麼？`;
-      if (intAns.type === 'max') return `承上題，滿足該不等式的 最大整數 是什麼？`;
-      if (intAns.type === 'range') return `承上題，滿足該不等式的 最小整數 是什麼？`;
-      return "承上題，此情況無特定最大/最小整數，按確定跳過。";
+  const switchPhase = (newPhase) => {
+    setPhase(newPhase);
+    setScore(0);
+    setStreak(0);
   };
+
+  if (!currentQuestion) {
+    return <div className="text-center mt-10">載入中...</div>;
+  }
 
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen shadow-lg flex flex-col font-sans">
-      {/* Header Tabs */}
-      <div className="flex bg-slate-800 text-white">
-        <button 
-            className={`flex-1 p-4 font-bold ${page==='teach'?'bg-slate-700 border-b-4 border-blue-400':''}`}
-            onClick={() => setPage('teach')}
-        >
-            <BookOpen className="inline mr-2 w-5 h-5"/> 教學
-        </button>
-        <button 
-            className={`flex-1 p-4 font-bold ${page==='quiz'?'bg-slate-700 border-b-4 border-green-400':''}`}
-            onClick={() => setPage('quiz')}
-        >
-            <Calculator className="inline mr-2 w-5 h-5"/> 測驗 
-            <span className="ml-2 bg-green-600 text-xs px-2 py-0.5 rounded-full">{quizScore}分</span>
-        </button>
-      </div>
-
-      {/* --- TEACHING PAGE --- */}
-      {page === 'teach' && (
-        <div className="p-4 overflow-y-auto">
-          <h2 className="text-xl font-bold mb-4 text-slate-800">複合不等式圖解法</h2>
-          
-          <div className="bg-blue-50 p-4 rounded-lg mb-6 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-2 text-lg">口訣記憶</h3>
-            <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                    <span className="block text-2xl font-black text-red-500 mb-1">AND (及)</span>
-                    <p className="text-sm text-gray-700">只看兩線 <span className="font-bold text-red-600 border-b-2 border-red-600">重疊</span> 位</p>
-                    <div className="mt-2 text-xs text-gray-500">(找 Intersection)</div>
-                </div>
-                <div className="text-center">
-                    <span className="block text-2xl font-black text-blue-500 mb-1">OR (或)</span>
-                    <p className="text-sm text-gray-700">看上面 <span className="font-bold text-blue-600 border-b-2 border-blue-600">有蓋</span> 範圍</p>
-                    <div className="mt-2 text-xs text-gray-500">(找 Union)</div>
-                </div>
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        {/* 頂部導航 */}
+        <div className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
+          <div className="max-w-4xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
+            <Link 
+              to="/" 
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition font-medium text-sm md:text-base"
+            >
+              <HomeIcon size={20} />
+              <span className="hidden sm:inline">回首頁</span>
+            </Link>
+            <h1 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+              複合不等式學習
+            </h1>
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <div className="text-xs text-slate-500 uppercase tracking-wider">累積分數</div>
+                <div className="text-2xl font-bold text-indigo-600">{score}</div>
+              </div>
             </div>
-          </div>
-
-          <h3 className="font-bold text-gray-800 mb-2">圖解範例 (8種情況)：</h3>
-          <div className="space-y-6">
-              {[
-                  { title: "方向相同 (向右)", desc: "AND取大，OR取小", q: { a:2, b:5, ineq1:{val:2, op:'>'}, ineq2:{val:5, op:'>'}, ansType:'GT', limitVal:5, limitInc:false } },
-                  { title: "方向相對 (重疊)", desc: "AND夾中間，OR全實數", q: { a:2, b:5, ineq1:{val:2, op:'>'}, ineq2:{val:5, op:'<'}, ansType:'BETWEEN', minVal:2, maxVal:5 } },
-                  { title: "方向相反 (分離)", desc: "AND無解，OR分兩邊", q: { a:2, b:5, ineq1:{val:2, op:'<'}, ineq2:{val:5, op:'>'}, ansType:'NONE' } } 
-              ].map((item, idx) => (
-                  <div key={idx} className="border rounded p-2">
-                      <div className="font-bold text-sm mb-1">{item.title}</div>
-                      <div className="text-xs text-gray-500 mb-2">{item.desc}</div>
-                      {/* Using the NumberLine component for static teaching display */}
-                      <NumberLine q={item.q} showResult={true} height={80} width={280} />
-                  </div>
-              ))}
-          </div>
-          
-          <div className="mt-8 bg-yellow-50 p-4 rounded border border-yellow-200">
-              <h3 className="font-bold text-yellow-800">整數解小貼士</h3>
-              <ul className="list-disc pl-5 text-sm text-gray-700 space-y-2 mt-2">
-                  <li><strong>x &gt; 3.5</strong> : 最小整數是 4</li>
-                  <li><strong>x &ge; 3</strong> : 最小整數是 3</li>
-                  <li><strong>x &lt; 5</strong> : 最大整數是 4</li>
-              </ul>
           </div>
         </div>
-      )}
 
-      {/* --- QUIZ PAGE --- */}
-      {page === 'quiz' && q && (
-        <div className="flex-1 flex flex-col p-4 bg-gray-50">
-          
-          {/* Question Display */}
-          <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-200 mb-4 text-center relative">
-            <div className="text-gray-500 text-sm mb-1">化簡以下不等式:</div>
-            <div className="text-2xl font-bold text-slate-800 tracking-wide font-mono">
-                {`x ${q.ineq1.op} ${q.ineq1.val}`} 
-                <span className={`mx-3 ${q.type==='AND'?'text-red-500':'text-blue-500'}`}>
-                    {q.type === 'AND' ? '及' : '或'}
-                </span>
-                {`x ${q.ineq2.op} ${q.ineq2.val}`}
-            </div>
-            
-            <button 
-                onClick={() => setShowHint(!showHint)}
-                className="absolute top-2 right-2 text-gray-400 hover:text-blue-500"
+        {/* 主內容區域 */}
+        <div className="max-w-4xl mx-auto px-4 py-6 md:py-8">
+
+          {/* 階段選擇 */}
+          <div className="flex gap-3 mb-6 flex-wrap">
+            <button
+              onClick={() => switchPhase('simplification')}
+              className={`px-4 py-2 rounded-lg font-bold transition ${
+                phase === 'simplification'
+                  ? 'bg-blue-500 text-white shadow-lg'
+                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+              }`}
             >
-                <HelpCircle size={20} />
+              階段 1: 化簡不等式
             </button>
+            <button
+              onClick={() => switchPhase('integer-solutions')}
+              className={`px-4 py-2 rounded-lg font-bold transition ${
+                phase === 'integer-solutions'
+                  ? 'bg-indigo-500 text-white shadow-lg'
+                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
+              }`}
+            >
+              階段 2: 求整數解
+            </button>
+          </div>
+
+          {/* 題目卡片 */}
+          <div className="bg-white rounded-xl shadow-md p-6 md:p-8 mb-6 border border-slate-100">
             
-            {showHint && (
-                <div className="mt-3 text-xs text-blue-600 bg-blue-50 p-2 rounded">
-                    提示：畫圖分析。<br/>
-                    {q.type==='AND' ? '「及」看兩線重疊位' : '「或」看線覆蓋範圍'}
+            {/* 題號 */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-bold rounded-full">
+                題 {currentQuestion.id}
+              </span>
+              <span className="text-xs text-slate-500 font-medium">
+                {phase === 'simplification' ? '化簡不等式' : '求整數解'}
+              </span>
+            </div>
+
+            {/* 題目文本 */}
+            <div className="bg-slate-50 rounded-lg p-5 mb-6 border-l-4 border-blue-500">
+              <h2 className="text-lg md:text-2xl font-bold text-slate-800 mb-2">
+                <Latex math={currentQuestion.text} block={false} />
+              </h2>
+            </div>
+
+            {/* 數線圖表（僅在答案錯誤或提交後顯示） */}
+            {showDiagram && (
+              <div className="bg-blue-50 rounded-lg p-6 mb-6 border border-blue-200 animate-in fade-in">
+                <h3 className="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wider">數線圖表</h3>
+                <NumberLine {...currentQuestion.numberLine} />
+              </div>
+            )}
+
+            {/* 輸入區域 */}
+            <div className="mb-6">
+              <label className="block text-sm font-bold text-slate-700 mb-3 uppercase tracking-wider">
+                你的答案
+              </label>
+              <input
+                ref={inputRef}
+                type="text"
+                value={userAnswer}
+                onChange={(e) => setUserAnswer(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="輸入你的答案..."
+                disabled={feedback !== 'idle'}
+                className="w-full px-4 py-3 text-lg border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition disabled:bg-slate-100 disabled:text-slate-500"
+              />
+            </div>
+
+            {/* 反饋區域 */}
+            <div className="flex flex-col gap-4 mb-6 min-h-[120px]">
+              {feedback === 'idle' && (
+                <button
+                  onClick={checkAnswer}
+                  className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition active:scale-95 flex items-center justify-center gap-2 text-lg"
+                >
+                  <Check size={20} />
+                  提交答案
+                </button>
+              )}
+
+              {feedback === 'correct' && (
+                <div className="bg-green-50 border-2 border-green-500 rounded-lg p-5 animate-in fade-in zoom-in">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Check className="text-green-500" size={28} />
+                    <span className="text-2xl font-bold text-green-600">答對了！</span>
+                  </div>
+                  <p className="text-green-700 font-medium">{currentQuestion.explanation}</p>
+                  <div className="bg-blue-50 rounded-lg p-4 mt-4 border-l-4 border-blue-500">
+                    <div className="text-sm text-blue-700 mb-1">正確答案：</div>
+                    <div className="text-xl font-bold text-blue-900">
+                      <Latex math={currentQuestion.answer} />
+                    </div>
+                  </div>
                 </div>
+              )}
+
+              {feedback === 'wrong' && (
+                <div className="bg-red-50 border-2 border-red-500 rounded-lg p-5 animate-in fade-in zoom-in">
+                  <div className="flex items-center gap-3 mb-3">
+                    <X className="text-red-500" size={28} />
+                    <span className="text-2xl font-bold text-red-600">再接再厲</span>
+                  </div>
+                  <div className="bg-white rounded-lg p-4 border border-red-200 mb-3">
+                    <div className="text-xs text-red-600 font-bold mb-1">你的答案：</div>
+                    <div className="text-lg text-red-700 font-mono">{userAnswer}</div>
+                  </div>
+                  <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                    <div className="text-xs text-green-700 font-bold mb-1">正確答案：</div>
+                    <div className="text-lg font-bold text-green-900">
+                      <Latex math={currentQuestion.answer} />
+                    </div>
+                  </div>
+                  <p className="text-slate-700 mt-3 text-sm">{currentQuestion.explanation}</p>
+                </div>
+              )}
+            </div>
+
+            {/* 下一題按鈕 */}
+            {feedback !== 'idle' && (
+              <button
+                onClick={nextQuestion}
+                className="w-full bg-slate-600 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-lg transition active:scale-95 flex items-center justify-center gap-2 text-lg"
+              >
+                <ArrowRight size={20} />
+                下一題
+              </button>
             )}
           </div>
 
-          {/* Visualization Area (Shows on Error or Success) */}
-          {(status !== 'idle' || phase === 2) && (
-              <div className="mb-4 animate-fade-in">
-                 <div className="text-xs text-center text-gray-500 mb-1">圖解分析</div>
-                 <NumberLine q={q} showResult={true} />
-              </div>
-          )}
-
-          {/* Interaction Area */}
-          <div className="flex-1">
-              
-              {/* Phase 1: Simplify */}
-              {phase === 1 && (
-                <>
-                    <div className={`p-3 rounded-lg border-2 text-xl font-mono min-h-[3.5rem] flex items-center justify-center bg-white 
-                        ${status==='wrong' ? 'border-red-400 bg-red-50' : status==='correct' ? 'border-green-400 bg-green-50' : 'border-blue-300'}`}>
-                        {input || <span className="text-gray-300">請輸入答案...</span>}
-                    </div>
-
-                    {status === 'wrong' && (
-                        <div className="mt-2 text-center">
-                            <p className="text-red-500 font-bold">答案錯誤</p>
-                            <p className="text-gray-600 text-sm">正確答案: {q.answer}</p>
-                            <button onClick={() => { setPhase(2); setInput(''); setStatus('idle'); }} className="mt-2 text-sm bg-gray-200 px-3 py-1 rounded">
-                                下一步 (找整數)
-                            </button>
-                        </div>
-                    )}
-                    
-                    {status !== 'wrong' && (
-                        <Keypad 
-                            onInput={handleInput} 
-                            onDelete={handleDelete} 
-                            onSubmit={checkPhase1} 
-                            mode="full"
-                        />
-                    )}
-                </>
-              )}
-
-              {/* Phase 2: Integer */}
-              {phase === 2 && (
-                  <div className="animate-slide-up">
-                      <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200 mb-3 text-sm text-yellow-800 font-medium">
-                          {getPhase2QuestionText()}
-                      </div>
-                      
-                      {intAns.type !== 'none' ? (
-                        <>
-                            <div className={`p-3 rounded-lg border-2 text-xl font-mono text-center bg-white mb-2
-                                ${status==='wrong' ? 'border-red-400' : status==='correct' ? 'border-green-400' : 'border-yellow-400'}`}>
-                                {input || '?'}
-                            </div>
-                            
-                            {status === 'wrong' && (
-                                <div className="text-center mb-2">
-                                    <span className="text-red-500 text-sm">不正確。正確答案是 {intAns.type==='range' ? intAns.min : intAns.val}</span>
-                                    <div className="text-xs text-gray-500">
-                                        {q.limitInc ? '包含等號，取本身' : '不含等號，取下一個整數'}
-                                    </div>
-                                    <button onClick={newQuestion} className="mt-2 bg-slate-800 text-white px-4 py-1 rounded text-sm">
-                                        下一題 <ArrowRight className="inline w-3 h-3"/>
-                                    </button>
-                                </div>
-                            )}
-
-                            {status !== 'wrong' && (
-                                <Keypad 
-                                    onInput={handleInput} 
-                                    onDelete={handleDelete} 
-                                    onSubmit={checkPhase2} 
-                                    mode="number" 
-                                />
-                            )}
-                        </>
-                      ) : (
-                          <div className="text-center">
-                              <p className="text-gray-500 mb-4">此題無特定整數解。</p>
-                              <button onClick={newQuestion} className="bg-blue-600 text-white px-6 py-2 rounded-lg">
-                                  下一題
-                              </button>
-                          </div>
-                      )}
-                  </div>
-              )}
-
+          {/* 幫助提示 */}
+          <div className="bg-white rounded-xl shadow-md p-6 border border-slate-100 max-w-2xl mx-auto">
+            <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2 text-lg">
+              <BookOpen size={20} className="text-blue-500" />
+              複合不等式提示
+            </h3>
+            <ul className="space-y-2 text-slate-700 text-sm md:text-base">
+              <li className="flex gap-2">
+                <span className="text-blue-500 font-bold">•</span>
+                <span><strong>且（AND）</strong>：同時滿足兩個條件，答案通常是一個區間</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-blue-500 font-bold">•</span>
+                <span><strong>或（OR）</strong>：滿足至少一個條件，答案可能是多個分離區間</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-blue-500 font-bold">•</span>
+                <span><strong>≤、≥</strong>：邊界點包括在內（實心圓）</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-blue-500 font-bold">•</span>
+                <span><strong>&lt;、&gt;</strong>：邊界點不包括在內（空心圓）</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-blue-500 font-bold">•</span>
+                <span>整數解：只列出區間內的整數，用逗號分隔</span>
+              </li>
+            </ul>
           </div>
+
         </div>
-      )}
-    </div>
+
+        {/* 頁腳 */}
+        <div className="mt-12 bg-white border-t border-slate-200 py-4 text-center text-sm text-slate-500">
+          <p>複合不等式是高中數學的重要概念 | 遊數得計 © 2025</p>
+        </div>
+      </div>
+    </>
   );
-}
+};
+
+export default CompoundInequalityQuiz;

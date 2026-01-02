@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, ArrowRight, BookOpen, Award } from 'lucide-react';
+import { 
+  Calculator, ArrowRight, BookOpen, Award, 
+  Variable, ChartColumnBig, EqualNot, Radius, TriangleRight 
+} from 'lucide-react';
 
 const Home = () => {
   const [activeFilter, setActiveFilter] = useState('全部');
@@ -10,7 +13,7 @@ const Home = () => {
       id: 'angle-quiz',
       title: '角的標記',
       description: '學習如何正確標記和命名角度 (使用三個英文字母)',
-      icon: Calculator,
+      icon: TriangleRight,
       color: 'bg-blue-500',
       hoverColor: 'hover:bg-blue-600',
       path: '/angle-quiz',
@@ -25,7 +28,7 @@ const Home = () => {
       id: 'circle-theorems',
       title: '高中DSE圓形定理',
       description: 'DSE 圓形幾何互動模型：不同核心定理動態演示，可拖動點觀察數值變化',
-      icon: Calculator,
+      icon: Radius,
       color: 'bg-purple-500',
       hoverColor: 'hover:bg-purple-600',
       path: '/circle-theorems',
@@ -41,7 +44,7 @@ const Home = () => {
       id: 'identity',  
       title: '恆等式展開/因式分解',  
       description: '恆等式展開與因式分解練習',  
-      icon: Calculator,  
+      icon: Variable,  
       color: 'bg-indigo-500',
       hoverColor: 'hover:bg-indigo-600',  
       path: '/identity-quiz',  
@@ -57,7 +60,7 @@ const Home = () => {
       id: 'index-laws',
       title: '指數定律',
       description: 'F3 CH2 指數定律：同底相乘、相除、冪的乘方及負指數',
-      icon: Calculator,
+      icon: Variable,
       color: 'bg-emerald-500',
       hoverColor: 'hover:bg-emerald-600',
       path: '/index-laws',
@@ -73,7 +76,7 @@ const Home = () => {
       id: 'simultaneous-eq',
       title: '聯立方程特訓',
       description: '熟習聯立方程應用題設式',
-      icon: Calculator,
+      icon: Variable,
       color: 'bg-purple-500',
       hoverColor: 'hover:bg-purple-600',
       path: '/simultaneous-eq-quiz',
@@ -89,7 +92,7 @@ const Home = () => {
       id: 'dispersion-quiz',
       title: '高中統計特訓',
       description: '學習如何在不同圖表得出以下集中趨勢的量度：平均數、中位數、眾數、四分位數間距、分佈域、標準差、方差',
-      icon: Calculator,
+      icon: ChartColumnBig,
       color: 'bg-teal-500',
       hoverColor: 'hover:bg-teal-600',
       path: '/dispersion-quiz',
@@ -105,7 +108,7 @@ const Home = () => {
       id: 'inequality-quiz',
       title: '基礎不等式',
       description: 'F2 CH8 不等式：文字轉換、數線圖形判讀、不等式基本概念',
-      icon: Calculator,
+      icon: EqualNot,
       color: 'bg-red-500',
       hoverColor: 'hover:bg-red-600',
       path: '/inequality-quiz',
@@ -121,7 +124,7 @@ const Home = () => {
       id: 'compound-inequality-quiz',
       title: '複合不等式',
       description: 'F5 CH17 複合不等式：AND/OR圖解法、整數解判斷',
-      icon: Calculator,
+      icon: EqualNot,
       color: 'bg-teal-500',
       hoverColor: 'hover:bg-teal-600',
       path: '/compound-inequality-quiz',
@@ -130,7 +133,8 @@ const Home = () => {
         { level: 'F5', chapter: 'CH17', subject: '複合不等式' }
       ],
       category: '高中',
-      topics: ['複合不等式', '圖解法', '整數解']
+      topics: ['複合不等式', '圖解法', '整數解'],
+      inDevelopment: true
     }
   ];
 
