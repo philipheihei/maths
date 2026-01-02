@@ -1396,33 +1396,28 @@ const CompoundInequalityQuiz = () => {
               </h2>
             </div>
 
-            {/* 提示區域 - 放在公式下方 */}
-            <div className="bg-amber-50 rounded-lg p-4 mb-6 border border-amber-200">
-              <div className="flex items-start justify-between gap-3">
-                <div className="text-sm text-amber-800 flex items-start gap-2 flex-1">
-                  <BookOpen size={16} className="mt-0.5 text-amber-600" />
+            {/* 提示區域 */}
+            {showHint && (
+              <div className="bg-amber-50 rounded-lg p-4 mb-6 border border-amber-200">
+                <div className="flex items-start gap-2 text-sm text-amber-900">
+                  <BookOpen size={16} className="mt-0.5 text-amber-600 flex-shrink-0" />
                   <div>
-                    <strong>提示：</strong>
-                    {questionStage === 1 && phase === 'simplification' ? (
-                      <span>「及」表示兩個條件同時成立，「或」表示至少一個條件成立</span>
-                    ) : (
-                      <span>找出區間內的所有整數，用逗號分隔</span>
-                    )}
+                    <p className="font-bold mb-1">繪圖提示：</p>
+                    <p>你需要畫圖去尋找答案，需留意「及」/「或」是看畫圖的多少條線。</p>
                   </div>
                 </div>
-                <button
-                  onClick={() => setShowHint(!showHint)}
-                  className="px-3 py-1 bg-amber-200 hover:bg-amber-300 text-amber-900 font-bold rounded text-xs whitespace-nowrap transition"
-                >
-                  {showHint ? '隱藏' : '更多'} 提示
-                </button>
               </div>
-              {showHint && (
-                <div className="mt-3 pt-3 border-t border-amber-300 text-sm text-amber-900">
-                  <p className="font-bold mb-1">繪圖提示：</p>
-                  <p>你需要畫圖去尋找答案，需留意「及」/「或」是看畫圖的多少條線。</p>
-                </div>
-              )}
+            )}
+
+            {/* 提示按鈕 */}
+            <div className="mb-6 flex justify-center">
+              <button
+                onClick={() => setShowHint(!showHint)}
+                className="px-4 py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold rounded-lg text-sm transition flex items-center gap-2 border border-amber-300"
+              >
+                <BookOpen size={16} />
+                {showHint ? '隱藏提示' : '顯示提示'}
+              </button>
             </div>
 
             {/* 輸入區域 */}
