@@ -185,6 +185,16 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
         // 原始單線模式
         return (
           <g key={`interval-${idx}`}>
+            {/* 高亮區域背景 */}
+            <rect
+              x={Math.min(x1, x2)}
+              y={lineY - 15}
+              width={Math.abs(x2 - x1)}
+              height={30}
+              fill="#22c55e"
+              opacity="0.2"
+              rx="4"
+            />
             <rect
               x={Math.min(x1, x2)}
               y={lineY - 8}
@@ -296,6 +306,16 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
           const x2 = getX(comp.end);
           components.push(
             <g key={`union-${idx}-${comp.start}`}>
+              {/* 高亮區域背景 */}
+              <rect
+                x={Math.min(x1, x2)}
+                y={lineY - 15}
+                width={Math.abs(x2 - x1)}
+                height={30}
+                fill="#3b82f6"
+                opacity="0.2"
+                rx="4"
+              />
               <rect
                 x={Math.min(x1, x2)}
                 y={lineY - 8}
@@ -419,6 +439,16 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
         // 原始單線模式
         return (
           <g key={`all-${idx}`}>
+            {/* 高亮整條數線背景 */}
+            <rect
+              x={padding}
+              y={lineY - 15}
+              width={width - 2 * padding}
+              height={30}
+              fill="#10b981"
+              opacity="0.2"
+              rx="4"
+            />
             <line
               x1={padding}
               y1={lineY}
@@ -1635,7 +1665,7 @@ const CompoundInequalityQuiz = () => {
         </div>
 
         {/* 圖解範例 (8種情況) */}
-        <h2 className="text-lg font-bold text-slate-700 mb-4">圖解範例 (8種情況)：</h2>
+        <h2 className="text-lg font-bold text-slate-700 mb-4">不同情況圖解範例 (可按不等式區域開啟視覺效果展示 )：</h2>
         
         <div className="space-y-4">
           {EIGHT_CASES.map((caseItem) => (
