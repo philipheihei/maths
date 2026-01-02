@@ -817,10 +817,11 @@ const CompoundInequalityQuiz = () => {
       // 生成 stage2 整數解題目（根據答案方向自動生成）
       let stage2 = null;
       
-      // 判斷答案的方向
+      // 判斷答案類型
+      const isUnion = answer.includes('或');
+      const isInterval = /^-?\d+\s*[<>≤≥]\s*x\s*[<>≤≥]\s*-?\d+$/.test(answer.replace(/\s+/g, ' ').trim());
       const hasGreater = answer.includes('>') || answer.includes('≥');
       const hasLess = answer.includes('<') || answer.includes('≤');
-      const isUnion = answer.includes('或');
       
       // 提取答案中的數字
       const numbers = answer.match(/-?\d+/g)?.map(Number) || [];
@@ -829,7 +830,7 @@ const CompoundInequalityQuiz = () => {
         // 隨機選擇問題類型
         const questionTypes = [];
         
-        if (hasGreater && hasLess && isUnion) {
+        if (isUnion && hasGreater && hasLess) {
           // union 類型（如 x < -2 或 x >= 2）：問最大負整數/最小正整數
           const latexAnswer = answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]));
           
@@ -924,8 +925,8 @@ const CompoundInequalityQuiz = () => {
               explanation: `符合條件的正整數有：${positiveIntegers.join(', ')}`
             });
           }
-        } else if (hasGreater && hasLess) {
-          // a < x < b 類型：問整數個數或列出所有整數
+        } else if (isInterval) {
+          // a < x < b 區間類型：問整數個數或列出所有整數
           const minBoundary = Math.min(...numbers);
           const maxBoundary = Math.max(...numbers);
           const integers = [];
