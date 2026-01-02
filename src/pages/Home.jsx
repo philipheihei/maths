@@ -116,6 +116,21 @@ const Home = () => {
       category: '初中',
       topics: ['不等式', '文字翻譯', '數線表示'],
       inDevelopment: true
+    },
+    {
+      id: 'compound-inequality-quiz',
+      title: '複合不等式',
+      description: 'F5 CH17 複合不等式：AND/OR圖解法、整數解判斷',
+      icon: Calculator,
+      color: 'bg-teal-500',
+      hoverColor: 'hover:bg-teal-600',
+      path: '/compound-inequality-quiz',
+      level: 'F5',
+      badges: [
+        { level: 'F5', chapter: 'CH17', subject: '複合不等式' }
+      ],
+      category: '高中',
+      topics: ['複合不等式', '圖解法', '整數解']
     }
   ];
 
