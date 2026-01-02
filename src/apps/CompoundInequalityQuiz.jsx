@@ -163,16 +163,16 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       </>
                     )}
                     
-                    {/* 虛線連接到主數線 */}
+                    {/* 虛線連接到主數線（停在圓圈上方） */}
                     <line
                       x1={startX}
-                      y1={lineY_offset}
+                      y1={lineY_offset - 5}
                       x2={startX}
-                      y2={lineY}
+                      y2={lineY + 8}
                       stroke={color}
                       strokeWidth="1"
-                      strokeDasharray="4,4"
-                      opacity="0.5"
+                      strokeDasharray="3,3"
+                      opacity="0.6"
                     />
                     
                     {/* 在主數線上的標記 */}
@@ -589,7 +589,19 @@ const CompoundInequalityQuiz = () => {
         answer: '-3 ≤ x ≤ -1',
         alternatives: ['-3 ≤ x ≤ -1', 'x ≥ -3 及 x ≤ -1'],
         explanation: '兩個不等式同時成立的範圍',
-        numberLine: { solutions: [{ type: 'interval', start: -3, end: -1, startClosed: true, endClosed: true }] },
+        numberLine: { 
+          solutions: [{ 
+            type: 'interval', 
+            start: -3, 
+            end: -1, 
+            startClosed: true, 
+            endClosed: true,
+            lines: [
+              { start: -1, direction: 'left', closed: true, color: '#3b82f6' },
+              { start: -3, direction: 'right', closed: true, color: '#ef4444' }
+            ]
+          }] 
+        },
         stage2: {
           id: 202,
           text: '求滿足 $-3 \\leq x \\leq -1$ 的整數',
@@ -613,6 +625,10 @@ const CompoundInequalityQuiz = () => {
             intervals: [
               { start: -5, end: -2, startClosed: false, endClosed: false },
               { start: 0, end: 5, startClosed: false, endClosed: false }
+            ],
+            lines: [
+              { start: -2, direction: 'left', closed: false, color: '#3b82f6' },
+              { start: 0, direction: 'right', closed: false, color: '#ef4444' }
             ]
           }]
         }
@@ -624,7 +640,15 @@ const CompoundInequalityQuiz = () => {
         answer: '無解',
         alternatives: ['無解', '空集', '∅'],
         explanation: '沒有數既大於等於3又小於1',
-        numberLine: { solutions: [{ type: 'empty' }] }
+        numberLine: { 
+          solutions: [{ 
+            type: 'empty',
+            lines: [
+              { start: 3, direction: 'right', closed: true, color: '#3b82f6' },
+              { start: 1, direction: 'left', closed: false, color: '#ef4444' }
+            ]
+          }] 
+        }
       },
       {
         id: 5,
@@ -633,7 +657,19 @@ const CompoundInequalityQuiz = () => {
         answer: '-2 ≤ x ≤ 4',
         alternatives: ['-2 ≤ x ≤ 4', 'x ≥ -2 及 x ≤ 4'],
         explanation: '同時滿足兩個邊界條件',
-        numberLine: { solutions: [{ type: 'interval', start: -2, end: 4, startClosed: true, endClosed: true }] }
+        numberLine: { 
+          solutions: [{ 
+            type: 'interval', 
+            start: -2, 
+            end: 4, 
+            startClosed: true, 
+            endClosed: true,
+            lines: [
+              { start: -2, direction: 'right', closed: true, color: '#3b82f6' },
+              { start: 4, direction: 'left', closed: true, color: '#ef4444' }
+            ]
+          }] 
+        }
       },
       {
         id: 6,
@@ -642,7 +678,15 @@ const CompoundInequalityQuiz = () => {
         answer: 'x ≠ 1',
         alternatives: ['x ≠ 1', 'x ∈ ℝ \\ {1}', '所有實數除了1'],
         explanation: '除了1以外的所有實數',
-        numberLine: { solutions: [{ type: 'all' }] }
+        numberLine: { 
+          solutions: [{ 
+            type: 'all',
+            lines: [
+              { start: 1, direction: 'left', closed: false, color: '#3b82f6' },
+              { start: 1, direction: 'right', closed: false, color: '#ef4444' }
+            ]
+          }] 
+        }
       },
       {
         id: 7,
@@ -651,7 +695,19 @@ const CompoundInequalityQuiz = () => {
         answer: '-3 < x < 2',
         alternatives: ['x > -3 及 x < 2', '-3 < x < 2'],
         explanation: '介於-3和2之間的數',
-        numberLine: { solutions: [{ type: 'interval', start: -3, end: 2, startClosed: false, endClosed: false }] }
+        numberLine: { 
+          solutions: [{ 
+            type: 'interval', 
+            start: -3, 
+            end: 2, 
+            startClosed: false, 
+            endClosed: false,
+            lines: [
+              { start: -3, direction: 'right', closed: false, color: '#3b82f6' },
+              { start: 2, direction: 'left', closed: false, color: '#ef4444' }
+            ]
+          }] 
+        }
       },
       {
         id: 8,
@@ -666,6 +722,10 @@ const CompoundInequalityQuiz = () => {
             intervals: [
               { start: -5, end: -4, startClosed: true, endClosed: true },
               { start: -1, end: 5, startClosed: true, endClosed: true }
+            ],
+            lines: [
+              { start: -4, direction: 'left', closed: true, color: '#3b82f6' },
+              { start: -1, direction: 'right', closed: true, color: '#ef4444' }
             ]
           }]
         }
