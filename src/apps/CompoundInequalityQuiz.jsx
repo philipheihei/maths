@@ -820,6 +820,7 @@ const CompoundInequalityQuiz = () => {
       // 判斷答案的方向
       const hasGreater = answer.includes('>') || answer.includes('≥');
       const hasLess = answer.includes('<') || answer.includes('≤');
+      const isUnion = answer.includes('或');
       
       // 提取答案中的數字
       const numbers = answer.match(/-?\d+/g)?.map(Number) || [];
@@ -828,7 +829,52 @@ const CompoundInequalityQuiz = () => {
         // 隨機選擇問題類型
         const questionTypes = [];
         
-        if (hasGreater && !hasLess) {
+        if (hasGreater && hasLess && isUnion) {
+          // union 類型（如 x < -2 或 x >= 2）：問最大負整數/最小正整數
+          const latexAnswer = answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]));
+          
+          // 分析兩個區間
+          const parts = answer.split('或').map(p => p.trim());
+          let maxNegative = null;
+          let minPositive = null;
+          
+          parts.forEach(part => {
+            const num = parseInt(part.match(/-?\d+/)?.[0]);
+            if (isNaN(num)) return;
+            
+            if (part.includes('<')) {
+              // x < num 或 x <= num
+              const boundary = part.includes('≤') ? num : num - 1;
+              if (boundary < 0 && (maxNegative === null || boundary > maxNegative)) {
+                maxNegative = boundary;
+              }
+            } else if (part.includes('>')) {
+              // x > num 或 x >= num
+              const boundary = part.includes('≥') ? num : num + 1;
+              if (boundary > 0 && (minPositive === null || boundary < minPositive)) {
+                minPositive = boundary;
+              }
+            }
+          });
+          
+          if (maxNegative !== null) {
+            questionTypes.push({
+              text: `求滿足 $${latexAnswer}$ 的最大負整數`,
+              answer: String(maxNegative),
+              alternatives: [`${maxNegative}`, `x = ${maxNegative}`],
+              explanation: `滿足條件的最大負整數是 ${maxNegative}`
+            });
+          }
+          
+          if (minPositive !== null) {
+            questionTypes.push({
+              text: `求滿足 $${latexAnswer}$ 的最小正整數`,
+              answer: String(minPositive),
+              alternatives: [`${minPositive}`, `x = ${minPositive}`],
+              explanation: `滿足條件的最小正整數是 ${minPositive}`
+            });
+          }
+        } else if (hasGreater && !hasLess) {
           // x > a 類型：問最小整數或列出負整數
           const boundary = Math.max(...numbers);
           const minInteger = answer.includes('≥') ? boundary : boundary + 1;
