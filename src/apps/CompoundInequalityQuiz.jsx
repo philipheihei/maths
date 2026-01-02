@@ -371,24 +371,26 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
 };
 
 // --- 虛擬鍵盤組件 ---
-const Keypad = ({ onInput, onDelete, onClear }) => {
+const Keypad = ({ onInput, onDelete, onClear, onSubmit }) => {
   const buttons = [
     ['7', '8', '9', '>', '<'],
     ['4', '5', '6', '≥', '≤'],
     ['1', '2', '3', 'x', '或'],
-    ['0', '.', '(-)', '及', '無解'],
+    ['0', '.', '-', '及', '無解'],
   ];
 
   const handleButtonClick = (value) => {
     if (value === '無解') {
       onClear();
       onInput('無解');
-    } else if (value === '所有實數') {
-      onClear();
-      onInput('所有實數');
     } else {
       onInput(value);
     }
+  };
+
+  const handleAllRealNumbers = () => {
+    onClear();
+    onInput('所有實數');
   };
 
   return (
@@ -413,7 +415,7 @@ const Keypad = ({ onInput, onDelete, onClear }) => {
       </div>
       <div className="grid grid-cols-3 gap-2">
         <button
-          onClick={onClear}
+          onClick={handleAllRealNumbers}
           onMouseDown={(e) => e.preventDefault()}
           className="py-3 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold rounded-lg transition active:scale-95 border border-blue-300 text-sm"
         >
@@ -427,11 +429,12 @@ const Keypad = ({ onInput, onDelete, onClear }) => {
           ⌫ 刪除
         </button>
         <button
-          onClick={() => {}}
+          onClick={onSubmit}
           onMouseDown={(e) => e.preventDefault()}
-          className="py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition active:scale-95"
+          className="py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold rounded-lg transition active:scale-95 flex items-center justify-center gap-1"
         >
-          確定
+          <Check size={18} />
+          提交答案
         </button>
       </div>
     </div>
@@ -1521,23 +1524,13 @@ const CompoundInequalityQuiz = () => {
               <Keypad
                 onInput={(char) => setUserAnswer(prev => prev + char)}
                 onDelete={() => setUserAnswer(prev => prev.slice(0, -1))}
+                onSubmit={checkAnswer}
                 onClear={() => setUserAnswer('')}
               />
             )}
 
             {/* 反饋區域 */}
             <div className="flex flex-col gap-4 mb-6 min-h-[80px]">
-              {feedback === 'idle' && (
-                <button
-                  onClick={checkAnswer}
-                  onMouseDown={(e) => e.preventDefault()}
-                  className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition active:scale-95 flex items-center justify-center gap-2 text-lg"
-                >
-                  <Check size={20} />
-                  提交答案
-                </button>
-              )}
-
               {feedback === 'correct' && (
                 <div className="bg-green-50 border-2 border-green-500 rounded-lg p-5 animate-in fade-in zoom-in">
                   <div className="flex items-center gap-3 mb-2">
