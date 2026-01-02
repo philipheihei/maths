@@ -131,7 +131,7 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       x2={lineEndX}
                       y2={lineY_offset}
                       stroke={color}
-                      strokeWidth="4"
+                      strokeWidth="2"
                       strokeLinecap="round"
                     />
                     
@@ -145,7 +145,7 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       strokeWidth="2"
                     />
                     
-                    {/* 終點箭頭 */}
+                    {/* 終點箭頭（方向相反） */}
                     {line.direction === 'right' && (
                       <>
                         <polygon
@@ -163,15 +163,15 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       </>
                     )}
                     
-                    {/* 實線連接到主數線（停在圓圈上方） */}
+                    {/* 實線連接到主數線（粗度與主線一致，停在圓圈上方） */}
                     <line
                       x1={startX}
                       y1={lineY_offset - 5}
                       x2={startX}
                       y2={lineY + 8}
                       stroke={color}
-                      strokeWidth="1.5"
-                      opacity="0.7"
+                      strokeWidth="2"
+                      opacity="0.8"
                     />
                     
                     {/* 在主數線上的標記 */}
@@ -1205,11 +1205,15 @@ const CompoundInequalityQuiz = () => {
       setFeedback('idle');
       setShowDiagram(false);
       setShowHint(false);
+      // 延遲後聚焦輸入框
+      setTimeout(() => inputRef.current?.focus(), 100);
     } else {
       // 回到第一階段，選擇新題目
       setQuestionStage(1);
       setStage2Question(null);
       selectRandomQuestion();
+      // 延遲後聚焦輸入框
+      setTimeout(() => inputRef.current?.focus(), 100);
     }
   };
 
@@ -1440,8 +1444,11 @@ const CompoundInequalityQuiz = () => {
                 onChange={(e) => setUserAnswer(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="輸入你的答案..."
-                disabled={feedback !== 'idle'}
-                className="w-full px-4 py-3 text-lg border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition disabled:bg-slate-100 disabled:text-slate-500"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+                className="w-full px-4 py-3 text-lg border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
               />
             </div>
 
