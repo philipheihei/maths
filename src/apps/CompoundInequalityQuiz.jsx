@@ -370,6 +370,74 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
   );
 };
 
+// --- 虛擬鍵盤組件 ---
+const Keypad = ({ onInput, onDelete, onClear }) => {
+  const buttons = [
+    ['7', '8', '9', '>', '<'],
+    ['4', '5', '6', '≥', '≤'],
+    ['1', '2', '3', 'x', '或'],
+    ['0', '.', '(-)', '及', '無解'],
+  ];
+
+  const handleButtonClick = (value) => {
+    if (value === '無解') {
+      onClear();
+      onInput('無解');
+    } else if (value === '所有實數') {
+      onClear();
+      onInput('所有實數');
+    } else {
+      onInput(value);
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-4 mb-6">
+      <div className="grid grid-cols-5 gap-2 mb-2">
+        {buttons.map((row, rowIndex) => (
+          row.map((btn, colIndex) => (
+            <button
+              key={`${rowIndex}-${colIndex}`}
+              onClick={() => handleButtonClick(btn)}
+              onMouseDown={(e) => e.preventDefault()}
+              className={`py-3 rounded-lg font-bold text-lg transition active:scale-95 ${
+                ['>', '<', '≥', '≤', 'x', '或', '及', '無解'].includes(btn)
+                  ? 'bg-indigo-100 hover:bg-indigo-200 text-indigo-700 border border-indigo-300'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300'
+              }`}
+            >
+              {btn}
+            </button>
+          ))
+        ))}
+      </div>
+      <div className="grid grid-cols-3 gap-2">
+        <button
+          onClick={onClear}
+          onMouseDown={(e) => e.preventDefault()}
+          className="py-3 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold rounded-lg transition active:scale-95 border border-blue-300 text-sm"
+        >
+          所有實數
+        </button>
+        <button
+          onClick={onDelete}
+          onMouseDown={(e) => e.preventDefault()}
+          className="py-3 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-lg transition active:scale-95 border border-red-300"
+        >
+          ⌫ 刪除
+        </button>
+        <button
+          onClick={() => {}}
+          onMouseDown={(e) => e.preventDefault()}
+          className="py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-lg transition active:scale-95"
+        >
+          確定
+        </button>
+      </div>
+    </div>
+  );
+};
+
 // --- 主應用程式 ---
 const CompoundInequalityQuiz = () => {
   // 模式狀態
@@ -1447,6 +1515,15 @@ const CompoundInequalityQuiz = () => {
                 className="w-full px-4 py-3 text-lg border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
               />
             </div>
+
+            {/* 虛擬鍵盤 - 僅在答題時顯示 */}
+            {feedback === 'idle' && (
+              <Keypad
+                onInput={(char) => setUserAnswer(prev => prev + char)}
+                onDelete={() => setUserAnswer(prev => prev.slice(0, -1))}
+                onClear={() => setUserAnswer('')}
+              />
+            )}
 
             {/* 反饋區域 */}
             <div className="flex flex-col gap-4 mb-6 min-h-[80px]">
