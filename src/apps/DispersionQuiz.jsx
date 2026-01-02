@@ -743,19 +743,16 @@ export default function StatisticsApp() {
                 ref={inputRef}
                 type="text" 
                 inputMode="decimal"
-                value={userAnswer}
-                onChange={handleInputChange}
-                onBlur={(e) => {
-                  // 防止在不必要时失去焦点
-                  setTimeout(() => {
-                    if (inputRef.current && !feedback) {
-                      inputRef.current.focus();
-                    }
-                  }, 0);
-                }}
+                defaultValue={userAnswer}
+                key={`quiz-input-${currentChart}-${currentMeasure?.id}`}
                 placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
                 className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
-                onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setUserAnswer(inputRef.current.value);
+                    checkAnswer();
+                  }
+                }}
               />
               <div className="flex gap-2 w-full md:w-auto">
                 <button 
@@ -765,7 +762,12 @@ export default function StatisticsApp() {
                   <HelpCircle size={18} /> 提示
                 </button>
                 <button 
-                  onClick={checkAnswer}
+                  onClick={() => {
+                    if (inputRef.current) {
+                      setUserAnswer(inputRef.current.value);
+                      setTimeout(() => checkAnswer(), 0);
+                    }
+                  }}
                   className="flex-1 md:flex-none px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
                 >
                   提交答案
