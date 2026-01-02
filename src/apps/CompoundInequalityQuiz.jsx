@@ -814,38 +814,114 @@ const CompoundInequalityQuiz = () => {
         }
       }
       
-      // 生成 stage2 整數解題目
+      // 生成 stage2 整數解題目（根據答案方向自動生成）
       let stage2 = null;
-      if (['and-overlap', 'and-same-right', 'and-same-left'].includes(type)) {
-        const integers = [];
-        const rangeStart = type === 'and-overlap' ? a : (type === 'and-same-right' ? b : -5);
-        const rangeEnd = type === 'and-overlap' ? b : (type === 'and-same-right' ? 5 : a);
+      
+      // 判斷答案的方向
+      const hasGreater = answer.includes('>') || answer.includes('≥');
+      const hasLess = answer.includes('<') || answer.includes('≤');
+      
+      // 提取答案中的數字
+      const numbers = answer.match(/-?\d+/g)?.map(Number) || [];
+      
+      if (answer !== '無解' && answer !== '所有實數' && numbers.length > 0) {
+        // 隨機選擇問題類型
+        const questionTypes = [];
         
-        for (let i = Math.ceil(rangeStart); i <= Math.floor(rangeEnd); i++) {
-          const checkStart = type === 'and-overlap' ? a : (type === 'and-same-right' ? b : rangeStart);
-          const checkEnd = type === 'and-overlap' ? b : (type === 'and-same-right' ? rangeEnd : a);
-          const startSym = type === 'and-overlap' ? sym1 : (type === 'and-same-right' ? sym2 : { closed: false });
-          const endSym = type === 'and-overlap' ? sym2 : (type === 'and-same-right' ? { closed: false } : sym1);
+        if (hasGreater && !hasLess) {
+          // x > a 類型：問最小整數或列出負整數
+          const boundary = Math.max(...numbers);
+          const minInteger = answer.includes('≥') ? boundary : boundary + 1;
           
-          const passStart = startSym.closed ? i >= checkStart : i > checkStart;
-          const passEnd = endSym.closed ? i <= checkEnd : i < checkEnd;
+          questionTypes.push({
+            text: `求 $${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))}$ 的最小整數`,
+            answer: String(minInteger),
+            alternatives: [`${minInteger}`, `x = ${minInteger}`],
+            explanation: `滿足條件的最小整數是 ${minInteger}`
+          });
           
-          if (passStart && passEnd) {
-            integers.push(i);
+          // 列出負整數（如果有）
+          const negativeIntegers = [];
+          for (let i = minInteger; i < 0; i++) {
+            negativeIntegers.push(i);
+          }
+          if (negativeIntegers.length > 0 && negativeIntegers.length <= 10) {
+            questionTypes.push({
+              text: `列出符合 $${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))}$ 的所有負整數`,
+              answer: negativeIntegers.join(', '),
+              alternatives: [negativeIntegers.join(','), `{${negativeIntegers.join(', ')}}`],
+              explanation: `符合條件的負整數有：${negativeIntegers.join(', ')}`
+            });
+          }
+        } else if (hasLess && !hasGreater) {
+          // x < b 類型：問最大整數或列出正整數
+          const boundary = Math.min(...numbers);
+          const maxInteger = answer.includes('≤') ? boundary : boundary - 1;
+          
+          questionTypes.push({
+            text: `求 $${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))}$ 的最大整數`,
+            answer: String(maxInteger),
+            alternatives: [`${maxInteger}`, `x = ${maxInteger}`],
+            explanation: `滿足條件的最大整數是 ${maxInteger}`
+          });
+          
+          // 列出正整數（如果有）
+          const positiveIntegers = [];
+          for (let i = 1; i <= maxInteger; i++) {
+            positiveIntegers.push(i);
+          }
+          if (positiveIntegers.length > 0 && positiveIntegers.length <= 10) {
+            questionTypes.push({
+              text: `列出符合 $${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))}$ 的所有正整數`,
+              answer: positiveIntegers.join(', '),
+              alternatives: [positiveIntegers.join(','), `{${positiveIntegers.join(', ')}}`],
+              explanation: `符合條件的正整數有：${positiveIntegers.join(', ')}`
+            });
+          }
+        } else if (hasGreater && hasLess) {
+          // a < x < b 類型：問整數個數或列出所有整數
+          const minBoundary = Math.min(...numbers);
+          const maxBoundary = Math.max(...numbers);
+          const integers = [];
+          
+          for (let i = minBoundary; i <= maxBoundary; i++) {
+            const passMin = answer.includes('≥') ? i >= minBoundary : i > minBoundary;
+            const passMax = answer.includes('≤') ? i <= maxBoundary : i < maxBoundary;
+            if (passMin && passMax) {
+              integers.push(i);
+            }
+          }
+          
+          if (integers.length > 0 && integers.length <= 12) {
+            // 問有多少個整數
+            const latexAnswer = answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]));
+            questionTypes.push({
+              text: `有多少個整數同時滿足 $${latexAnswer}$？`,
+              answer: String(integers.length),
+              alternatives: [`${integers.length}`, `${integers.length}個`, `${integers.length} 個`],
+              explanation: `滿足條件的整數有 ${integers.length} 個：${integers.join(', ')}`
+            });
+            
+            // 列出所有整數
+            questionTypes.push({
+              text: `求滿足 $${latexAnswer}$ 的所有整數`,
+              answer: integers.join(', '),
+              alternatives: [integers.join(','), `{${integers.join(', ')}}`],
+              explanation: `在範圍內的整數有 ${integers.length} 個：${integers.join(', ')}`
+            });
           }
         }
         
-        if (integers.length > 0 && integers.length <= 12) {
+        // 隨機選擇一個問題類型
+        if (questionTypes.length > 0) {
+          const selected = questionTypes[getRandomInt(0, questionTypes.length - 1)];
           stage2 = {
             id: questionId + 10000,
-            text: `求滿足 $${answer.replace(/[<>≤≥]/g, m => {
-              const map = {'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'};
-              return map[m] || m;
-            })}$ 的整數`,
-            type: 'interval-integer',
-            answer: integers.join(', '),
-            alternatives: [integers.join(','), `x ∈ {${integers.join(', ')}}`],
-            explanation: `在範圍內的整數有 ${integers.length} 個`,
+            text: selected.text,
+            type: 'integer-solution',
+            answer: selected.answer,
+            alternatives: selected.alternatives,
+            explanation: selected.explanation,
             numberLine: numberLine
           };
         }
@@ -1325,12 +1401,12 @@ const CompoundInequalityQuiz = () => {
     ]
   };
 
-  const currentQuestions = QUESTIONS[phase];
+  const currentQuestions = QUESTIONS['simplification'];
 
   // 初始化第一題
   useEffect(() => {
     selectRandomQuestion();
-  }, [phase]);
+  }, []);
 
   const selectRandomQuestion = () => {
     // 70% 使用自動生成，30% 使用固定題目
@@ -1338,11 +1414,11 @@ const CompoundInequalityQuiz = () => {
     
     let newQuestion;
     if (useGenerated) {
-      newQuestion = generateQuestion(phase);
+      newQuestion = generateQuestion('simplification');
       // 確保不與最近 3 題重複
       let attempts = 0;
       while (usedQuestionIds.slice(-3).includes(newQuestion.id) && attempts < 10) {
-        newQuestion = generateQuestion(phase);
+        newQuestion = generateQuestion('simplification');
         attempts++;
       }
     } else {
@@ -1431,12 +1507,6 @@ const CompoundInequalityQuiz = () => {
     } else if ((e.key === 'Enter' || e.key === ' ') && feedback !== 'idle') {
       nextQuestion();
     }
-  };
-
-  const switchPhase = (newPhase) => {
-    setPhase(newPhase);
-    setScore(0);
-    setStreak(0);
   };
 
   // 教學視圖
@@ -1561,46 +1631,19 @@ const CompoundInequalityQuiz = () => {
         {/* 主內容區域 */}
         <div className="max-w-4xl mx-auto px-4 py-6 md:py-8">
 
-          {/* 階段選擇 */}
-          <div className="flex gap-3 mb-6 flex-wrap">
-            <button
-              onClick={() => switchPhase('simplification')}
-              className={`px-4 py-2 rounded-lg font-bold transition ${
-                phase === 'simplification'
-                  ? 'bg-blue-500 text-white shadow-lg'
-                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
-              }`}
-            >
-              階段 1: 化簡不等式
-            </button>
-            <button
-              onClick={() => switchPhase('integer-solutions')}
-              className={`px-4 py-2 rounded-lg font-bold transition ${
-                phase === 'integer-solutions'
-                  ? 'bg-indigo-500 text-white shadow-lg'
-                  : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
-              }`}
-            >
-              階段 2: 求整數解
-            </button>
-          </div>
-
           {/* 題目卡片 */}
           <div className="bg-white rounded-xl shadow-md p-6 md:p-8 mb-6 border border-slate-100">
-            {/* 題目階段指示 */}
-            {stage2Question && (
-              <div className="flex items-center gap-2 mb-4 px-3 py-2 bg-purple-50 rounded-lg border border-purple-200">
-                <span className="text-xs font-bold text-purple-700">第 {questionStage} 階段</span>
-              </div>
-            )}
+            {/* 題目階段指示 (a) 或 (b) */}
+            <div className="flex items-center gap-2 mb-4 px-3 py-2 bg-purple-50 rounded-lg border border-purple-200">
+              <span className="text-sm font-bold text-purple-700">
+                {questionStage === 1 ? '(a) 化簡不等式' : '(b) 求整數解'}
+              </span>
+            </div>
             
             {/* 題號 */}
             <div className="flex items-center gap-2 mb-4">
               <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-bold rounded-full">
-                題 {questionStage === 1 ? currentQuestion.id : stage2Question.id}
-              </span>
-              <span className="text-xs text-slate-500 font-medium">
-                {questionStage === 1 ? (phase === 'simplification' ? '化簡不等式' : '求整數解') : '求整數解'}
+                題 {currentQuestion.id}
               </span>
             </div>
 
