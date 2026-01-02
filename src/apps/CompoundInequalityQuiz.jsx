@@ -117,8 +117,9 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
             <g key={`interval-${idx}`}>
               {sol.lines.map((line, lineIdx) => {
                 const lineY_offset = 60 + lineIdx * 35;
-                const lineStartX = line.direction === 'right' ? getX(line.start) : padding;
-                const lineEndX = line.direction === 'right' ? width - padding : getX(line.start);
+                const startX = getX(line.start);
+                const lineStartX = line.direction === 'right' ? startX : padding;
+                const lineEndX = line.direction === 'right' ? width - padding : startX;
                 const color = line.color || '#3b82f6';
                 
                 return (
@@ -136,7 +137,7 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                     
                     {/* 起點圓點 */}
                     <circle
-                      cx={line.closed ? lineStartX : getX(line.start)}
+                      cx={startX}
                       cy={lineY_offset}
                       r="5"
                       fill={line.closed ? color : 'white'}
@@ -164,9 +165,9 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                     
                     {/* 虛線連接到主數線 */}
                     <line
-                      x1={getX(line.start)}
+                      x1={startX}
                       y1={lineY_offset}
-                      x2={getX(line.start)}
+                      x2={startX}
                       y2={lineY}
                       stroke={color}
                       strokeWidth="1"
@@ -176,7 +177,7 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                     
                     {/* 在主數線上的標記 */}
                     <circle
-                      cx={getX(line.start)}
+                      cx={startX}
                       cy={lineY}
                       r="4"
                       fill={color}
