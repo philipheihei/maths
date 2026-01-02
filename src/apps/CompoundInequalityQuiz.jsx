@@ -611,6 +611,25 @@ const CompoundInequalityQuiz = () => {
     const getRandomSymbol = () => Math.random() > 0.5 ? { text: '>', sym: '>', closed: false } : { text: '\\geq', sym: '≥', closed: true };
     const getRandomSymbolLess = () => Math.random() > 0.5 ? { text: '<', sym: '<', closed: false } : { text: '\\leq', sym: '≤', closed: true };
     
+    // 計算合適的數線範圍
+    const calculateRange = (a, b) => {
+      const numbers = [a, b].filter(n => n !== undefined);
+      const minNum = Math.min(...numbers);
+      const maxNum = Math.max(...numbers);
+      
+      // 如果數字在 -5 到 5 範圍內，使用默認範圍
+      if (minNum >= -5 && maxNum <= 5) {
+        return { min: -5, max: 5 };
+      }
+      
+      // 否則動態調整範圍，留一些空間
+      const padding = 2;
+      return {
+        min: Math.floor(minNum - padding),
+        max: Math.ceil(maxNum + padding)
+      };
+    };
+    
     const questionId = Date.now() + getRandomInt(1, 9999);
 
     if (phaseType === 'simplification') {
@@ -637,7 +656,9 @@ const CompoundInequalityQuiz = () => {
           answer = `${a} < x < ${b}`;
           alternatives = [`x ${sym1.sym} ${a} 及 x ${sym2.sym} ${b}`, `x > ${a} 及 x < ${b}`, `${a} < x < ${b}`];
           explanation = '「及」表示同時滿足兩個條件，找出重疊區域';
+          const range1 = calculateRange(a, b);
           numberLine = {
+            ...range1,
             solutions: [{
               type: 'interval',
               start: a,
@@ -661,11 +682,13 @@ const CompoundInequalityQuiz = () => {
           answer = `x ${sym2.sym} ${b}`;
           alternatives = [`x ${sym1.sym} ${a} 及 x ${sym2.sym} ${b}`];
           explanation = '同方向向右，AND 取較大值';
+          const range2 = calculateRange(a, b);
           numberLine = {
+            ...range2,
             solutions: [{
               type: 'interval',
               start: b,
-              end: 5,
+              end: range2.max,
               startClosed: sym2.closed,
               endClosed: false,
               lines: [
@@ -685,10 +708,12 @@ const CompoundInequalityQuiz = () => {
           answer = `x ${sym1.sym} ${a}`;
           alternatives = [`x ${sym1.sym} ${a} 及 x ${sym2.sym} ${b}`];
           explanation = '同方向向左，AND 取較小值';
+          const range3 = calculateRange(a, b);
           numberLine = {
+            ...range3,
             solutions: [{
               type: 'interval',
-              start: -5,
+              start: range3.min,
               end: a,
               startClosed: false,
               endClosed: sym1.closed,
@@ -709,7 +734,9 @@ const CompoundInequalityQuiz = () => {
           answer = '無解';
           alternatives = ['空集', '∅'];
           explanation = '沒有數既小於較小值又大於較大值';
+          const range4 = calculateRange(a, b);
           numberLine = {
+            ...range4,
             solutions: [{
               type: 'empty',
               lines: [
@@ -729,7 +756,9 @@ const CompoundInequalityQuiz = () => {
           answer = '所有實數';
           alternatives = ['全部實數', 'ℝ'];
           explanation = '「或」表示至少滿足一個條件，覆蓋全部實數';
+          const range5 = calculateRange(a, b);
           numberLine = {
+            ...range5,
             solutions: [{
               type: 'all',
               lines: [
@@ -749,11 +778,13 @@ const CompoundInequalityQuiz = () => {
           answer = `x ${sym1.sym} ${a}`;
           alternatives = [`x ${sym1.sym} ${a} 或 x ${sym2.sym} ${b}`];
           explanation = '同方向向右，OR 取較小值';
+          const range6 = calculateRange(a, b);
           numberLine = {
+            ...range6,
             solutions: [{
               type: 'interval',
               start: a,
-              end: 5,
+              end: range6.max,
               startClosed: sym1.closed,
               endClosed: false,
               lines: [
@@ -773,10 +804,12 @@ const CompoundInequalityQuiz = () => {
           answer = `x ${sym2.sym} ${b}`;
           alternatives = [`x ${sym1.sym} ${a} 或 x ${sym2.sym} ${b}`];
           explanation = '同方向向左，OR 取較大值';
+          const range7 = calculateRange(a, b);
           numberLine = {
+            ...range7,
             solutions: [{
               type: 'interval',
-              start: -5,
+              start: range7.min,
               end: b,
               startClosed: false,
               endClosed: sym2.closed,
@@ -797,12 +830,14 @@ const CompoundInequalityQuiz = () => {
           answer = `x ${sym1.sym} ${a} 或 x ${sym2.sym} ${b}`;
           alternatives = [`x ${sym2.sym} ${b} 或 x ${sym1.sym} ${a}`];
           explanation = '兩個分離區間的並集';
+          const range8 = calculateRange(a, b);
           numberLine = {
+            ...range8,
             solutions: [{
               type: 'union',
               intervals: [
-                { start: -5, end: a, startClosed: false, endClosed: sym1.closed },
-                { start: b, end: 5, startClosed: sym2.closed, endClosed: false }
+                { start: range8.min, end: a, startClosed: false, endClosed: sym1.closed },
+                { start: b, end: range8.max, startClosed: sym2.closed, endClosed: false }
               ],
               lines: [
                 { start: a, direction: 'left', closed: sym1.closed, color: '#3b82f6' },
@@ -969,7 +1004,7 @@ const CompoundInequalityQuiz = () => {
             answer: selected.answer,
             alternatives: selected.alternatives,
             explanation: selected.explanation,
-            numberLine: numberLine
+            numberLine: { ...numberLine, showMultiLine: true } // 繼承 stage1 的範圍
           };
         }
       }
@@ -1771,7 +1806,18 @@ const CompoundInequalityQuiz = () => {
                     <Check className="text-green-500" size={28} />
                     <span className="text-2xl font-bold text-green-600">答對了！</span>
                   </div>
-                  <p className="text-green-700 font-medium">{questionStage === 1 ? currentQuestion.explanation : stage2Question.explanation}</p>
+                  <p className="text-green-700 font-medium mb-3">{questionStage === 1 ? currentQuestion.explanation : stage2Question.explanation}</p>
+                  
+                  {/* 答對時也顯示數線圖表 */}
+                  {(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine) && (
+                    <div className="bg-white rounded-lg p-4 border border-green-200 mt-3">
+                      <div className="text-xs text-green-700 font-bold mb-2">解的數線圖表：</div>
+                      <NumberLine 
+                        {...(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine)} 
+                        showMultiLine={true}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
