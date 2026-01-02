@@ -170,19 +170,10 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       x1={startX}
                       y1={lineY_offset + circleRadius}
                       x2={startX}
-                      y2={lineY - 4}
+                      y2={lineY}
                       stroke={color}
                       strokeWidth="4"
-                      opacity="0.8"
-                    />
-                    
-                    {/* 在主數線上的標記 */}
-                    <circle
-                      cx={startX}
-                      cy={lineY}
-                      r="4"
-                      fill={color}
-                      opacity="0.7"
+                      opacity="1"
                     />
                   </g>
                 );
