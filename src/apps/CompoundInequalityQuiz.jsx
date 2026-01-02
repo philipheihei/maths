@@ -223,6 +223,73 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
           </g>
         );
       } else if (sol.type === 'union') {
+        // 多線模式（用於顯示 AND/OR）
+        if (showMultiLine && sol.lines) {
+          return (
+            <g key={`union-${idx}`}>
+              {sol.lines.map((line, lineIdx) => {
+                const lineY_offset = 60 + lineIdx * 35;
+                const startX = getX(line.start);
+                const circleRadius = 5;
+                const lineStartX = line.direction === 'right' ? startX + circleRadius : padding - scale * 0.5;
+                const lineEndX = line.direction === 'right' ? width - padding + scale * 0.5 : startX - circleRadius;
+                const color = line.color || '#3b82f6';
+                
+                return (
+                  <g key={`line-${lineIdx}`}>
+                    {/* 線段 */}
+                    <line
+                      x1={lineStartX}
+                      y1={lineY_offset}
+                      x2={lineEndX}
+                      y2={lineY_offset}
+                      stroke={color}
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                    
+                    {/* 起點圓點 */}
+                    <circle
+                      cx={startX}
+                      cy={lineY_offset}
+                      r="5"
+                      fill={line.closed ? color : 'white'}
+                      stroke={color}
+                      strokeWidth="2"
+                    />
+                    
+                    {/* 終點箭頭 */}
+                    {line.direction === 'right' && (
+                      <polygon
+                        points={`${lineEndX},${lineY_offset} ${lineEndX - 8},${lineY_offset - 6} ${lineEndX - 8},${lineY_offset + 6}`}
+                        fill={color}
+                      />
+                    )}
+                    {line.direction === 'left' && (
+                      <polygon
+                        points={`${lineStartX},${lineY_offset} ${lineStartX + 8},${lineY_offset - 6} ${lineStartX + 8},${lineY_offset + 6}`}
+                        fill={color}
+                      />
+                    )}
+                    
+                    {/* 實線連接到主數線 */}
+                    <line
+                      x1={startX}
+                      y1={lineY_offset + circleRadius}
+                      x2={startX}
+                      y2={lineY}
+                      stroke={color}
+                      strokeWidth="4"
+                      opacity="1"
+                    />
+                  </g>
+                );
+              })}
+            </g>
+          );
+        }
+        
+        // 原始單線模式
         const components = [];
         for (const comp of sol.intervals) {
           const x1 = getX(comp.start);
@@ -283,6 +350,73 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
           </text>
         );
       } else if (sol.type === 'all') {
+        // 多線模式（用於顯示 AND/OR）
+        if (showMultiLine && sol.lines) {
+          return (
+            <g key={`all-${idx}`}>
+              {sol.lines.map((line, lineIdx) => {
+                const lineY_offset = 60 + lineIdx * 35;
+                const startX = getX(line.start);
+                const circleRadius = 5;
+                const lineStartX = line.direction === 'right' ? startX + circleRadius : padding - scale * 0.5;
+                const lineEndX = line.direction === 'right' ? width - padding + scale * 0.5 : startX - circleRadius;
+                const color = line.color || '#3b82f6';
+                
+                return (
+                  <g key={`line-${lineIdx}`}>
+                    {/* 線段 */}
+                    <line
+                      x1={lineStartX}
+                      y1={lineY_offset}
+                      x2={lineEndX}
+                      y2={lineY_offset}
+                      stroke={color}
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                    
+                    {/* 起點圓點 */}
+                    <circle
+                      cx={startX}
+                      cy={lineY_offset}
+                      r="5"
+                      fill={line.closed ? color : 'white'}
+                      stroke={color}
+                      strokeWidth="2"
+                    />
+                    
+                    {/* 終點箭頭 */}
+                    {line.direction === 'right' && (
+                      <polygon
+                        points={`${lineEndX},${lineY_offset} ${lineEndX - 8},${lineY_offset - 6} ${lineEndX - 8},${lineY_offset + 6}`}
+                        fill={color}
+                      />
+                    )}
+                    {line.direction === 'left' && (
+                      <polygon
+                        points={`${lineStartX},${lineY_offset} ${lineStartX + 8},${lineY_offset - 6} ${lineStartX + 8},${lineY_offset + 6}`}
+                        fill={color}
+                      />
+                    )}
+                    
+                    {/* 實線連接到主數線 */}
+                    <line
+                      x1={startX}
+                      y1={lineY_offset + circleRadius}
+                      x2={startX}
+                      y2={lineY}
+                      stroke={color}
+                      strokeWidth="4"
+                      opacity="1"
+                    />
+                  </g>
+                );
+              })}
+            </g>
+          );
+        }
+        
+        // 原始單線模式
         return (
           <g key={`all-${idx}`}>
             <line
