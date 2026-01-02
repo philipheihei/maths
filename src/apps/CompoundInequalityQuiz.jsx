@@ -312,11 +312,11 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
 
   return (
     <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-4">
-      {/* 數線 */}
+      {/* 數線（延伸至左右各半格） */}
       <line
-        x1={padding}
+        x1={padding - scale * 0.5}
         y1={lineY}
-        x2={width - padding}
+        x2={width - padding + scale * 0.5}
         y2={lineY}
         stroke="#374151"
         strokeWidth="2"
@@ -350,19 +350,29 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
         );
       })}
 
-      {/* 箭頭指示 */}
-      <path
-        d={`M ${getX(max)} ${lineY} L ${getX(max) + 12} ${lineY - 8}`}
-        stroke="#374151"
-        strokeWidth="2"
-        fill="none"
+      {/* 左側箭頭 */}
+      <polygon
+        points={`${padding - scale * 0.5},${lineY} ${padding - scale * 0.5 + 10},${lineY - 6} ${padding - scale * 0.5 + 10},${lineY + 6}`}
+        fill="#374151"
       />
-      <path
-        d={`M ${getX(max)} ${lineY} L ${getX(max) + 12} ${lineY + 8}`}
-        stroke="#374151"
-        strokeWidth="2"
-        fill="none"
+
+      {/* 右側箭頭 */}
+      <polygon
+        points={`${width - padding + scale * 0.5},${lineY} ${width - padding + scale * 0.5 - 10},${lineY - 6} ${width - padding + scale * 0.5 - 10},${lineY + 6}`}
+        fill="#374151"
       />
+
+      {/* x 標籤（在右側箭頭旁） */}
+      <text
+        x={width - padding + scale * 0.5 + 15}
+        y={lineY + 5}
+        fontSize="16"
+        fill="#374151"
+        fontWeight="500"
+        fontStyle="italic"
+      >
+        x
+      </text>
 
       {/* 解區間 */}
       {renderSolutionRegion()}
