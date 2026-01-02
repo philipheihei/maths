@@ -32,12 +32,13 @@ const Latex = ({ math, block = false }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    loadKatex().then(() => setIsLoaded(true));
+    loadKatex().then(() => setIsLoaded(true)).catch(e => console.error("KaTeX load error:", e));
   }, []);
 
   useEffect(() => {
-    if (isLoaded && window.katex && containerRef.current) {
+    if (isLoaded && window.katex && containerRef.current && math) {
       try {
+        containerRef.current.innerHTML = '';
         window.katex.render(math, containerRef.current, {
           displayMode: block,
           throwOnError: false,
@@ -272,6 +273,8 @@ const CompoundInequalityQuiz = () => {
   const [showDiagram, setShowDiagram] = useState(false);
   const [streak, setStreak] = useState(0);
   const [learnHighlight, setLearnHighlight] = useState(null); // 教學模式高亮
+  const [questionStage, setQuestionStage] = useState(1); // 題目階段：1 或 2
+  const [stage2Question, setStage2Question] = useState(null); // 第二階段題目
   const inputRef = useRef(null);
 
   // 8 種複合不等式情況
@@ -431,21 +434,39 @@ const CompoundInequalityQuiz = () => {
     simplification: [
       {
         id: 1,
-        text: '化簡：$x > 2$ 且 $x < 5$',
+        text: '化簡：$x > 2$ 及 $x < 5$',
         type: 'and',
         answer: '2 < x < 5',
-        alternatives: ['x < 5 且 x > 2', 'x > 2 及 x < 5'],
-        explanation: '「且」表示同時滿足兩個條件',
-        numberLine: { solutions: [{ type: 'interval', start: 2, end: 5, startClosed: false, endClosed: false }] }
+        alternatives: ['x < 5 及 x > 2', 'x > 2 及 x < 5'],
+        explanation: '「及」表示同時滿足兩個條件',
+        numberLine: { solutions: [{ type: 'interval', start: 2, end: 5, startClosed: false, endClosed: false }] },
+        stage2: {
+          id: 201,
+          text: '求滿足 $2 < x < 5$ 的整數',
+          type: 'interval-integer',
+          answer: '3, 4',
+          alternatives: ['3, 4', '3和4', 'x = 3 或 x = 4'],
+          explanation: '介於2和5之間的整數有3和4',
+          numberLine: { solutions: [{ type: 'interval', start: 2, end: 5, startClosed: false, endClosed: false }] }
+        }
       },
       {
         id: 2,
-        text: '化簡：$x \\leq -1$ 且 $x \\geq -3$',
+        text: '化簡：$x \\leq -1$ 及 $x \\geq -3$',
         type: 'and',
         answer: '-3 ≤ x ≤ -1',
-        alternatives: ['-3 ≤ x ≤ -1', 'x ≥ -3 且 x ≤ -1'],
+        alternatives: ['-3 ≤ x ≤ -1', 'x ≥ -3 及 x ≤ -1'],
         explanation: '兩個不等式同時成立的範圍',
-        numberLine: { solutions: [{ type: 'interval', start: -3, end: -1, startClosed: true, endClosed: true }] }
+        numberLine: { solutions: [{ type: 'interval', start: -3, end: -1, startClosed: true, endClosed: true }] },
+        stage2: {
+          id: 202,
+          text: '求滿足 $-3 \\leq x \\leq -1$ 的整數',
+          type: 'interval-integer',
+          answer: '-3, -2, -1',
+          alternatives: ['-3, -2, -1', 'x ∈ {-3, -2, -1}'],
+          explanation: '從-3到-1的所有整數共3個',
+          numberLine: { solutions: [{ type: 'interval', start: -3, end: -1, startClosed: true, endClosed: true }] }
+        }
       },
       {
         id: 3,
@@ -466,7 +487,7 @@ const CompoundInequalityQuiz = () => {
       },
       {
         id: 4,
-        text: '化簡：$x \\geq 3$ 且 $x < 1$',
+        text: '化簡：$x \\geq 3$ 及 $x < 1$',
         type: 'contradiction',
         answer: '無解',
         alternatives: ['無解', '空集', '∅'],
@@ -475,10 +496,10 @@ const CompoundInequalityQuiz = () => {
       },
       {
         id: 5,
-        text: '化簡：$x \\geq -2$ 且 $x \\leq 4$',
+        text: '化簡：$x \\geq -2$ 及 $x \\leq 4$',
         type: 'and',
         answer: '-2 ≤ x ≤ 4',
-        alternatives: ['-2 ≤ x ≤ 4', 'x ≥ -2 且 x ≤ 4'],
+        alternatives: ['-2 ≤ x ≤ 4', 'x ≥ -2 及 x ≤ 4'],
         explanation: '同時滿足兩個邊界條件',
         numberLine: { solutions: [{ type: 'interval', start: -2, end: 4, startClosed: true, endClosed: true }] }
       },
@@ -493,10 +514,10 @@ const CompoundInequalityQuiz = () => {
       },
       {
         id: 7,
-        text: '化簡：$-3 < x$ 且 $x < 2$',
+        text: '化簡：$-3 < x$ 及 $x < 2$',
         type: 'and',
         answer: '-3 < x < 2',
-        alternatives: ['x > -3 且 x < 2', '-3 < x < 2'],
+        alternatives: ['x > -3 及 x < 2', '-3 < x < 2'],
         explanation: '介於-3和2之間的數',
         numberLine: { solutions: [{ type: 'interval', start: -3, end: 2, startClosed: false, endClosed: false }] }
       },
@@ -632,24 +653,27 @@ const CompoundInequalityQuiz = () => {
       return;
     }
 
+    // 根據當前階段選擇正確答案
+    const currentQuestionToCheck = questionStage === 1 ? currentQuestion : stage2Question;
+
     const userNormalized = userAnswer
       .trim()
       .replace(/\s+/g, '')
-      .replace(/且|及|和/g, '且')
+      .replace(/且|及|和/g, '及')
       .replace(/或/g, '或')
       .toLowerCase();
 
-    const correctNormalized = currentQuestion.answer
+    const correctNormalized = currentQuestionToCheck.answer
       .trim()
       .replace(/\s+/g, '')
-      .replace(/且|及|和/g, '且')
+      .replace(/且|及|和/g, '及')
       .replace(/或/g, '或')
       .toLowerCase();
 
-    const validAnswers = [correctNormalized, ...currentQuestion.alternatives.map(a => 
+    const validAnswers = [correctNormalized, ...currentQuestionToCheck.alternatives.map(a => 
       a.trim()
         .replace(/\s+/g, '')
-        .replace(/且|及|和/g, '且')
+        .replace(/且|及|和/g, '及')
         .replace(/或/g, '或')
         .toLowerCase()
     )];
@@ -666,7 +690,20 @@ const CompoundInequalityQuiz = () => {
   };
 
   const nextQuestion = () => {
-    selectRandomQuestion();
+    // 如果當前是第一階段且題目有第二階段
+    if (questionStage === 1 && currentQuestion.stage2) {
+      // 切換到第二階段
+      setQuestionStage(2);
+      setStage2Question(currentQuestion.stage2);
+      setUserAnswer('');
+      setFeedback('idle');
+      setShowDiagram(false);
+    } else {
+      // 回到第一階段，選擇新題目
+      setQuestionStage(1);
+      setStage2Question(null);
+      selectRandomQuestion();
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -877,21 +914,27 @@ const CompoundInequalityQuiz = () => {
 
           {/* 題目卡片 */}
           <div className="bg-white rounded-xl shadow-md p-6 md:p-8 mb-6 border border-slate-100">
+            {/* 題目階段指示 */}
+            {stage2Question && (
+              <div className="flex items-center gap-2 mb-4 px-3 py-2 bg-purple-50 rounded-lg border border-purple-200">
+                <span className="text-xs font-bold text-purple-700">第 {questionStage} 階段</span>
+              </div>
+            )}
             
             {/* 題號 */}
             <div className="flex items-center gap-2 mb-4">
               <span className="inline-block px-3 py-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-sm font-bold rounded-full">
-                題 {currentQuestion.id}
+                題 {questionStage === 1 ? currentQuestion.id : stage2Question.id}
               </span>
               <span className="text-xs text-slate-500 font-medium">
-                {phase === 'simplification' ? '化簡不等式' : '求整數解'}
+                {questionStage === 1 ? (phase === 'simplification' ? '化簡不等式' : '求整數解') : '求整數解'}
               </span>
             </div>
 
             {/* 題目文本 */}
             <div className="bg-slate-50 rounded-lg p-5 mb-4 border-l-4 border-blue-500">
               <h2 className="text-lg md:text-2xl font-bold text-slate-800 mb-2">
-                <Latex math={currentQuestion.text} block={false} />
+                <Latex math={questionStage === 1 ? currentQuestion.text : stage2Question.text} block={false} />
               </h2>
             </div>
 
@@ -901,8 +944,8 @@ const CompoundInequalityQuiz = () => {
                 <BookOpen size={16} className="mt-0.5 text-amber-600" />
                 <div>
                   <strong>提示：</strong>
-                  {phase === 'simplification' ? (
-                    <span>「且」表示兩個條件同時成立，「或」表示至少一個條件成立</span>
+                  {questionStage === 1 && phase === 'simplification' ? (
+                    <span>「及」表示兩個條件同時成立，「或」表示至少一個條件成立</span>
                   ) : (
                     <span>找出區間內的所有整數，用逗號分隔</span>
                   )}
@@ -953,7 +996,7 @@ const CompoundInequalityQuiz = () => {
                     <Check className="text-green-500" size={28} />
                     <span className="text-2xl font-bold text-green-600">答對了！</span>
                   </div>
-                  <p className="text-green-700 font-medium">{currentQuestion.explanation}</p>
+                  <p className="text-green-700 font-medium">{questionStage === 1 ? currentQuestion.explanation : stage2Question.explanation}</p>
                 </div>
               )}
 
@@ -967,13 +1010,20 @@ const CompoundInequalityQuiz = () => {
                     <div className="text-xs text-red-600 font-bold mb-1">你的答案：</div>
                     <div className="text-lg text-red-700 font-mono">{userAnswer}</div>
                   </div>
-                  <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                  <div className="bg-green-50 rounded-lg p-4 border-l-4 border-green-500 mb-3">
                     <div className="text-xs text-green-700 font-bold mb-1">正確答案：</div>
                     <div className="text-lg font-bold text-green-900">
-                      <Latex math={currentQuestion.answer} />
+                      <Latex math={questionStage === 1 ? currentQuestion.answer : stage2Question.answer} />
                     </div>
                   </div>
-                  <p className="text-slate-700 mt-3 text-sm">{currentQuestion.explanation}</p>
+                  {/* 添加數線圖表 */}
+                  {(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine) && (
+                    <div className="bg-white rounded-lg p-4 border border-slate-200 mb-3">
+                      <div className="text-xs text-slate-700 font-bold mb-2">解的數線圖表：</div>
+                      <NumberLine {...(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine)} />
+                    </div>
+                  )}
+                  <p className="text-slate-700 mt-3 text-sm">{questionStage === 1 ? currentQuestion.explanation : stage2Question.explanation}</p>
                 </div>
               )}
             </div>
