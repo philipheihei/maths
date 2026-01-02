@@ -445,19 +445,6 @@ export default function StatisticsApp() {
   const [highlight, setHighlight] = useState(null);
   const inputRef = useRef(null);
 
-  // 確保輸入框在測驗模式且無反饋時保持焦點
-  useEffect(() => {
-    if (mode === 'quiz' && (!feedback || feedback.type === 'hint') && inputRef.current) {
-      // 延遲設置焦點以避免干擾初始渲染
-      const timer = setTimeout(() => {
-        if (inputRef.current && document.activeElement !== inputRef.current) {
-          inputRef.current.focus();
-        }
-      }, 50);
-      return () => clearTimeout(timer);
-    }
-  }, [mode, feedback]);
-
   // 使用 useCallback 優化輸入處理，避免不必要的重新渲染
   const handleInputChange = useCallback((e) => {
     setUserAnswer(e.target.value);
@@ -758,6 +745,14 @@ export default function StatisticsApp() {
                 inputMode="decimal"
                 value={userAnswer}
                 onChange={handleInputChange}
+                onBlur={(e) => {
+                  // 防止在不必要时失去焦点
+                  setTimeout(() => {
+                    if (inputRef.current && !feedback) {
+                      inputRef.current.focus();
+                    }
+                  }, 0);
+                }}
                 placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
                 className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
                 onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
