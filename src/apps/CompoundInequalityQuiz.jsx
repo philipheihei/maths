@@ -118,8 +118,10 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
               {sol.lines.map((line, lineIdx) => {
                 const lineY_offset = 60 + lineIdx * 35;
                 const startX = getX(line.start);
-                const lineStartX = line.direction === 'right' ? startX : padding;
-                const lineEndX = line.direction === 'right' ? width - padding : startX;
+                // 水平線不穿過圓圈：向右從圓圈右側開始，向左在圓圈左側結束
+                const circleRadius = 5;
+                const lineStartX = line.direction === 'right' ? startX + circleRadius : padding;
+                const lineEndX = line.direction === 'right' ? width - padding : startX - circleRadius;
                 const color = line.color || '#3b82f6';
                 
                 return (
@@ -163,12 +165,12 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       </>
                     )}
                     
-                    {/* 實線連接到主數線（粗度與主線一致，停在圓圈上方） */}
+                    {/* 實線連接到主數線（從圓圈下方開始，不穿過圓圈） */}
                     <line
                       x1={startX}
-                      y1={lineY_offset - 5}
+                      y1={lineY_offset + circleRadius}
                       x2={startX}
-                      y2={lineY + 8}
+                      y2={lineY - 4}
                       stroke={color}
                       strokeWidth="4"
                       opacity="0.8"
@@ -1457,6 +1459,7 @@ const CompoundInequalityQuiz = () => {
               {feedback === 'idle' && (
                 <button
                   onClick={checkAnswer}
+                  onMouseDown={(e) => e.preventDefault()}
                   className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition active:scale-95 flex items-center justify-center gap-2 text-lg"
                 >
                   <Check size={20} />
@@ -1509,6 +1512,7 @@ const CompoundInequalityQuiz = () => {
             {feedback !== 'idle' && (
               <button
                 onClick={nextQuestion}
+                onMouseDown={(e) => e.preventDefault()}
                 className="w-full bg-slate-600 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-lg transition active:scale-95 flex items-center justify-center gap-2 text-lg"
               >
                 <ArrowRight size={20} />
