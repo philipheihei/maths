@@ -262,7 +262,7 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval' }) => {
 // --- 主應用程式 ---
 const CompoundInequalityQuiz = () => {
   // 模式狀態
-  const [mode, setMode] = useState('menu'); // 'menu', 'learn', 'quiz'
+  const [mode, setMode] = useState('learn'); // 'learn' 或 'quiz' - 移除 'menu'
   // 遊戲狀態
   const [phase, setPhase] = useState('simplification'); // 'simplification' 或 'integer-solutions'
   const [level, setLevel] = useState(1);
@@ -275,6 +275,7 @@ const CompoundInequalityQuiz = () => {
   const [learnHighlight, setLearnHighlight] = useState(null); // 教學模式高亮
   const [questionStage, setQuestionStage] = useState(1); // 題目階段：1 或 2
   const [stage2Question, setStage2Question] = useState(null); // 第二階段題目
+  const [showHint, setShowHint] = useState(false); // 提示按鈕狀態
   const inputRef = useRef(null);
 
   // 8 種複合不等式情況
@@ -644,6 +645,7 @@ const CompoundInequalityQuiz = () => {
     setUserAnswer('');
     setFeedback('idle');
     setShowDiagram(false);
+    setShowHint(false);
   };
 
   // 驗證答案
@@ -698,6 +700,7 @@ const CompoundInequalityQuiz = () => {
       setUserAnswer('');
       setFeedback('idle');
       setShowDiagram(false);
+      setShowHint(false);
     } else {
       // 回到第一階段，選擇新題目
       setQuestionStage(1);
@@ -720,50 +723,6 @@ const CompoundInequalityQuiz = () => {
     setStreak(0);
   };
 
-  // 菜單視圖
-  const MenuView = () => (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
-        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
-          <HomeIcon size={20} />
-          <span className="text-sm">返回首頁</span>
-        </Link>
-        <span className="font-bold text-slate-700">複合不等式學習</span>
-        <div className="w-24"></div>
-      </div>
-      <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-blue-600 mb-2">📐 複合不等式</h1>
-          <p className="text-slate-500">掌握 AND/OR 圖解法</p>
-        </div>
-      
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl px-4">
-          <button 
-            onClick={() => setMode('learn')}
-            className="p-6 bg-white border-2 border-blue-100 hover:border-blue-500 rounded-xl shadow-sm hover:shadow-md transition-all group"
-          >
-            <div className="flex items-center justify-center mb-3 text-blue-500 group-hover:scale-110 transition-transform">
-              <BookOpen size={48} />
-            </div>
-            <h3 className="text-xl font-bold text-slate-700">教學模式</h3>
-            <p className="text-sm text-slate-500 mt-2">圖解 8 種情況</p>
-          </button>
-
-          <button 
-            onClick={() => { setMode('quiz'); setScore(0); selectRandomQuestion(); }}
-            className="p-6 bg-white border-2 border-green-100 hover:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all group"
-          >
-            <div className="flex items-center justify-center mb-3 text-green-500 group-hover:scale-110 transition-transform">
-              <Trophy size={48} />
-            </div>
-            <h3 className="text-xl font-bold text-slate-700">測驗模式</h3>
-            <p className="text-sm text-slate-500 mt-2">化簡與整數解</p>
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
   // 教學視圖
   const LearnView = () => (
     <div className="min-h-screen bg-slate-100">
@@ -773,9 +732,7 @@ const CompoundInequalityQuiz = () => {
           <span className="text-sm">返回首頁</span>
         </Link>
         <span className="font-bold text-slate-700">複合不等式 - 教學模式</span>
-        <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2">
-          <RotateCcw size={16} /> 返回目錄
-        </button>
+        <div className="w-24"></div>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 py-6">
@@ -867,11 +824,11 @@ const CompoundInequalityQuiz = () => {
         <div className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
           <div className="max-w-4xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
             <button 
-              onClick={() => setMode('menu')}
+              onClick={() => setMode('learn')}
               className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition font-medium text-sm md:text-base"
             >
               <RotateCcw size={20} />
-              <span className="hidden sm:inline">返回目錄</span>
+              <span className="hidden sm:inline">返回教學模式</span>
             </button>
             <h1 className="text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
               複合不等式測驗
@@ -940,17 +897,31 @@ const CompoundInequalityQuiz = () => {
 
             {/* 提示區域 - 放在公式下方 */}
             <div className="bg-amber-50 rounded-lg p-4 mb-6 border border-amber-200">
-              <div className="text-sm text-amber-800 flex items-start gap-2">
-                <BookOpen size={16} className="mt-0.5 text-amber-600" />
-                <div>
-                  <strong>提示：</strong>
-                  {questionStage === 1 && phase === 'simplification' ? (
-                    <span>「及」表示兩個條件同時成立，「或」表示至少一個條件成立</span>
-                  ) : (
-                    <span>找出區間內的所有整數，用逗號分隔</span>
-                  )}
+              <div className="flex items-start justify-between gap-3">
+                <div className="text-sm text-amber-800 flex items-start gap-2 flex-1">
+                  <BookOpen size={16} className="mt-0.5 text-amber-600" />
+                  <div>
+                    <strong>提示：</strong>
+                    {questionStage === 1 && phase === 'simplification' ? (
+                      <span>「及」表示兩個條件同時成立，「或」表示至少一個條件成立</span>
+                    ) : (
+                      <span>找出區間內的所有整數，用逗號分隔</span>
+                    )}
+                  </div>
                 </div>
+                <button
+                  onClick={() => setShowHint(!showHint)}
+                  className="px-3 py-1 bg-amber-200 hover:bg-amber-300 text-amber-900 font-bold rounded text-xs whitespace-nowrap transition"
+                >
+                  {showHint ? '隱藏' : '更多'} 提示
+                </button>
               </div>
+              {showHint && (
+                <div className="mt-3 pt-3 border-t border-amber-300 text-sm text-amber-900">
+                  <p className="font-bold mb-1">繪圖提示：</p>
+                  <p>你需要畫圖去尋找答案，需留意「及」/「或」是看畫圖的多少條線。</p>
+                </div>
+              )}
             </div>
 
             {/* 輸入區域 */}
@@ -1047,7 +1018,6 @@ const CompoundInequalityQuiz = () => {
   // 主渲染
   return (
     <>
-      {mode === 'menu' && <MenuView />}
       {mode === 'learn' && <LearnView />}
       {mode === 'quiz' && <QuizView />}
     </>
