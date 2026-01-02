@@ -131,7 +131,7 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       x2={lineEndX}
                       y2={lineY_offset}
                       stroke={color}
-                      strokeWidth="2"
+                      strokeWidth="4"
                       strokeLinecap="round"
                     />
                     
@@ -170,7 +170,7 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       x2={startX}
                       y2={lineY + 8}
                       stroke={color}
-                      strokeWidth="2"
+                      strokeWidth="4"
                       opacity="0.8"
                     />
                     
