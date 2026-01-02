@@ -163,16 +163,15 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                       </>
                     )}
                     
-                    {/* 虛線連接到主數線（停在圓圈上方） */}
+                    {/* 實線連接到主數線（停在圓圈上方） */}
                     <line
                       x1={startX}
                       y1={lineY_offset - 5}
                       x2={startX}
                       y2={lineY + 8}
                       stroke={color}
-                      strokeWidth="1"
-                      strokeDasharray="3,3"
-                      opacity="0.6"
+                      strokeWidth="1.5"
+                      opacity="0.7"
                     />
                     
                     {/* 在主數線上的標記 */}
@@ -1131,14 +1130,6 @@ const CompoundInequalityQuiz = () => {
                 className="w-full px-4 py-3 text-lg border-2 border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition disabled:bg-slate-100 disabled:text-slate-500"
               />
             </div>
-
-            {/* 數線圖表（僅在答案錯誤後顯示） */}
-            {showDiagram && (
-              <div className="bg-blue-50 rounded-lg p-6 mb-6 border border-blue-200 animate-in fade-in">
-                <h3 className="text-sm font-bold text-blue-900 mb-2 uppercase tracking-wider">數線圖表</h3>
-                <NumberLine {...currentQuestion.numberLine} />
-              </div>
-            )}
 
             {/* 反饋區域 */}
             <div className="flex flex-col gap-4 mb-6 min-h-[80px]">
