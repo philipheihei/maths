@@ -1431,6 +1431,14 @@ const CompoundInequalityQuiz = () => {
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
                 onKeyPress={handleKeyPress}
+                onBlur={(e) => {
+                  // 如果失去焦點不是因為點擊按鈕，立即重新聚焦
+                  setTimeout(() => {
+                    if (document.activeElement.tagName !== 'BUTTON' && feedback === 'idle') {
+                      e.target.focus();
+                    }
+                  }, 0);
+                }}
                 placeholder="輸入你的答案..."
                 autoComplete="off"
                 autoCorrect="off"
