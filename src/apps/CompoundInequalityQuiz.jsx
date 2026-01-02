@@ -733,7 +733,12 @@ const CompoundInequalityQuiz = () => {
           sym2 = getRandomSymbol();
           answer = '無解';
           alternatives = ['空集', '∅'];
-          explanation = '沒有數既小於較小值又大於較大值';
+          
+          // 動態生成解釋文字
+          const sym1Text = sym1.sym === '<' ? '小於' : '小於或等於';
+          const sym2Text = sym2.sym === '>' ? '大於' : '大於或等於';
+          explanation = `沒有數既${sym1Text} ${a} 又${sym2Text} ${b}`;
+          
           const range4 = calculateRange(a, b);
           numberLine = {
             ...range4,
@@ -997,6 +1002,14 @@ const CompoundInequalityQuiz = () => {
         // 隨機選擇一個問題類型
         if (questionTypes.length > 0) {
           const selected = questionTypes[getRandomInt(0, questionTypes.length - 1)];
+          
+          // 為 stage2 創建簡化的數線（只顯示答案的單一數線，不顯示 stage1 的兩條線）
+          const stage2NumberLine = {
+            min: numberLine.min,
+            max: numberLine.max,
+            solutions: numberLine.solutions
+          };
+          
           stage2 = {
             id: questionId + 10000,
             text: selected.text,
@@ -1004,7 +1017,7 @@ const CompoundInequalityQuiz = () => {
             answer: selected.answer,
             alternatives: selected.alternatives,
             explanation: selected.explanation,
-            numberLine: { ...numberLine, showMultiLine: true } // 繼承 stage1 的範圍
+            numberLine: stage2NumberLine
           };
         }
       }
@@ -1814,7 +1827,7 @@ const CompoundInequalityQuiz = () => {
                       <div className="text-xs text-green-700 font-bold mb-2">解的數線圖表：</div>
                       <NumberLine 
                         {...(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine)} 
-                        showMultiLine={true}
+                        showMultiLine={questionStage === 1}
                       />
                     </div>
                   )}
@@ -1843,7 +1856,7 @@ const CompoundInequalityQuiz = () => {
                       <div className="text-xs text-slate-700 font-bold mb-2">解的數線圖表：</div>
                       <NumberLine 
                         {...(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine)} 
-                        showMultiLine={true}
+                        showMultiLine={questionStage === 1}
                       />
                     </div>
                   )}
