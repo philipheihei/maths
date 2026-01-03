@@ -250,20 +250,17 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                 const rectWidth = line.direction === 'right'
                   ? (width - padding + scale * 0.5) - startX
                   : startX - (padding - scale * 0.5);
-                // 遮罩從箭頭線延伸到主數線
-                const rectY = lineY_offset - 16;
-                const rectHeight = lineY - lineY_offset + 24;
                 
                 return (
                   <g key={`line-${lineIdx}`}>
-                    {/* 高亮遮罩：各自覆蓋對應箭頭區域，延伸到主數線 */}
+                    {/* 高亮遮罩：各自覆蓋對應箭頭區域 */}
                     <rect
                       x={rectX}
-                      y={rectY}
+                      y={lineY_offset - 16}
                       width={rectWidth}
-                      height={rectHeight}
+                      height={32}
                       fill={color}
-                      opacity="0.15"
+                      opacity="0.18"
                       rx="6"
                     />
                     {/* 線段 */}
