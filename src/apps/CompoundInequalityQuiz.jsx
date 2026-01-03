@@ -245,21 +245,25 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                 const lineStartX = line.direction === 'right' ? startX + circleRadius : padding - scale * 0.5;
                 const lineEndX = line.direction === 'right' ? width - padding + scale * 0.5 : startX - circleRadius;
                 const color = line.color || '#3b82f6';
+                // 計算遮罩區域：向右箭頭覆蓋從起點到右邊界，向左箭頭覆蓋從左邊界到起點
                 const rectX = line.direction === 'right' ? startX : padding - scale * 0.5;
                 const rectWidth = line.direction === 'right'
                   ? (width - padding + scale * 0.5) - startX
                   : startX - (padding - scale * 0.5);
+                // 遮罩從箭頭線延伸到主數線
+                const rectY = lineY_offset - 16;
+                const rectHeight = lineY - lineY_offset + 24;
                 
                 return (
                   <g key={`line-${lineIdx}`}>
-                    {/* 高亮遮罩：各自覆蓋對應箭頭區域 */}
+                    {/* 高亮遮罩：各自覆蓋對應箭頭區域，延伸到主數線 */}
                     <rect
                       x={rectX}
-                      y={lineY_offset - 16}
+                      y={rectY}
                       width={rectWidth}
-                      height={32}
-                      fill={sol.highlightColor || '#f59e0b'}
-                      opacity="0.18"
+                      height={rectHeight}
+                      fill={color}
+                      opacity="0.15"
                       rx="6"
                     />
                     {/* 線段 */}
@@ -1166,10 +1170,7 @@ const CompoundInequalityQuiz = () => {
       subtitle: 'AND無解，OR分兩邊',
       examples: [
         { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x > 5', result: '無解', color: 'blue', highlight: { start: 0, end: 0, color: '#3b82f6' } },
-        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x > 5', result: 'x < 2 或 x > 5', color: 'red', highlights: [
-          { start: 0, end: 2, color: '#ef4444' },
-          { start: 5, end: 8, color: '#ef4444' }
-        ] }
+        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x > 5', result: 'x < 2 或 x > 5', color: 'red', highlight: { start: 0, end: 8, color: '#ef4444' } }
       ],
       numberLines: [
         { min: 0, max: 8, lines: [
@@ -1181,7 +1182,7 @@ const CompoundInequalityQuiz = () => {
   ];
 
   // 雙線數線 SVG 組件（用於教學模式）
-  const TwoLineNumberLine = ({ min, max, lines, highlightRegions }) => {
+  const TwoLineNumberLine = ({ min, max, lines, highlightRegion }) => {
     const width = 400;
     const height = 140;
     const padding = 40;
@@ -1194,17 +1195,16 @@ const CompoundInequalityQuiz = () => {
     return (
       <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-2">
         {/* 高亮區域 */}
-        {highlightRegions && highlightRegions.map((region, idx) => (
+        {highlightRegion && (
           <rect
-            key={`highlight-${idx}`}
-            x={getX(region.start)}
-            y={region.lineY - 15}
-            width={Math.abs(getX(region.end) - getX(region.start))}
+            x={getX(highlightRegion.start)}
+            y={highlightRegion.lineY - 15}
+            width={Math.abs(getX(highlightRegion.end) - getX(highlightRegion.start))}
             height={30}
-            fill={region.color}
+            fill={highlightRegion.color}
             opacity="0.2"
           />
-        ))}
+        )}
 
         {/* 數軸 */}
         <line x1={padding} y1={axisY} x2={width - padding} y2={axisY} stroke="#374151" strokeWidth="2" />
@@ -1694,7 +1694,7 @@ const CompoundInequalityQuiz = () => {
               <div className="bg-slate-50 rounded-lg p-3 mb-4">
                 <TwoLineNumberLine 
                   {...caseItem.numberLines[0]} 
-                  highlightRegions={learnHighlight?.caseId === caseItem.id ? learnHighlight.regions : null}
+                  highlightRegion={learnHighlight?.caseId === caseItem.id ? learnHighlight.region : null}
                 />
               </div>
 
@@ -1704,12 +1704,9 @@ const CompoundInequalityQuiz = () => {
                   <div 
                     key={idx} 
                     onClick={() => {
-                      const regions = ex.highlights 
-                        ? ex.highlights.map(h => ({ ...h, lineY: 50 }))
-                        : ex.highlight ? [{ ...ex.highlight, lineY: 50 }] : null;
                       setLearnHighlight({
                         caseId: caseItem.id,
-                        regions: regions
+                        region: { ...ex.highlight, lineY: 50 }
                       });
                     }}
                     className={`p-4 rounded-lg cursor-pointer transition-all ${ex.color === 'blue' ? 'bg-blue-50 border border-blue-200 hover:shadow-md' : 'bg-red-50 border border-red-200 hover:shadow-md'} ${learnHighlight?.caseId === caseItem.id && ((ex.color === 'blue' && learnHighlight.region.color === '#3b82f6') || (ex.color === 'red' && learnHighlight.region.color === '#ef4444')) ? 'ring-2 ring-offset-1 ring-yellow-400' : ''}`}
