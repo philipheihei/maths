@@ -121,8 +121,8 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                 y={lineY - 55}
                 width={Math.abs(x2 - x1)}
                 height={32}
-                fill={(sol.highlightColor || '#fde68a')}
-                opacity="0.28"
+                fill={(sol.highlightColor || '#f59e0b')}
+                opacity="0.45"
                 rx="6"
               />
 
@@ -1051,7 +1051,8 @@ const CompoundInequalityQuiz = () => {
       const b = a + getRandomInt(3, 7);
       const sym1 = getRandomSymbol();
       const sym2 = getRandomSymbolLess();
-      
+
+      const range = calculateRange(a, b);
       const integers = [];
       for (let i = a; i <= b; i++) {
         const passStart = sym1.closed ? i >= a : i > a;
@@ -1060,7 +1061,7 @@ const CompoundInequalityQuiz = () => {
           integers.push(i);
         }
       }
-      
+
       return {
         id: questionId,
         text: `求滿足 $${a} ${sym1.sym} x ${sym2.sym} ${b}$ 的整數`,
@@ -1069,6 +1070,8 @@ const CompoundInequalityQuiz = () => {
         alternatives: [integers.join(','), `x ∈ {${integers.join(', ')}}`],
         explanation: `在範圍內的整數共 ${integers.length} 個`,
         numberLine: {
+          min: range.min,
+          max: range.max,
           solutions: [{
             type: 'interval',
             start: a,
@@ -1710,6 +1713,9 @@ const CompoundInequalityQuiz = () => {
       return <div className="text-center mt-10">載入中...</div>;
     }
 
+    const activeNumberLine = questionStage === 1 ? currentQuestion.numberLine : stage2Question?.numberLine;
+    const useMultiLine = Boolean(activeNumberLine?.solutions?.some(sol => sol.lines && sol.lines.length > 0));
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         {/* 頂部導航 */}
@@ -1838,7 +1844,7 @@ const CompoundInequalityQuiz = () => {
                       <div className="text-xs text-green-700 font-bold mb-2">解的數線圖表：</div>
                       <NumberLine 
                         {...(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine)} 
-                        showMultiLine={questionStage === 1}
+                        showMultiLine={useMultiLine}
                       />
                     </div>
                   )}
@@ -1867,7 +1873,7 @@ const CompoundInequalityQuiz = () => {
                       <div className="text-xs text-slate-700 font-bold mb-2">解的數線圖表：</div>
                       <NumberLine 
                         {...(questionStage === 1 ? currentQuestion.numberLine : stage2Question.numberLine)} 
-                        showMultiLine={questionStage === 1}
+                        showMultiLine={useMultiLine}
                       />
                     </div>
                   )}
