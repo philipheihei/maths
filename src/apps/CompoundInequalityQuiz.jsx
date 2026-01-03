@@ -363,8 +363,23 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
       } else if (sol.type === 'all') {
         // 多線模式（用於顯示 AND/OR）
         if (showMultiLine && sol.lines) {
+          const xStart = padding - scale * 0.5;
+          const xEnd = width - padding + scale * 0.5;
+          const minLineY = 60;
+          const maxLineY = 60 + (sol.lines.length - 1) * 35;
+          const highlightHeight = (maxLineY - minLineY) + 32; // cover both arrow lines with some padding
+
           return (
             <g key={`all-${idx}`}>
+              <rect
+                x={xStart}
+                y={minLineY - 16}
+                width={xEnd - xStart}
+                height={highlightHeight}
+                fill={sol.highlightColor || '#f59e0b'}
+                opacity="0.2"
+                rx="8"
+              />
               {sol.lines.map((line, lineIdx) => {
                 const lineY_offset = 60 + lineIdx * 35;
                 const startX = getX(line.start);
