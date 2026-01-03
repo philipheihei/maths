@@ -115,6 +115,17 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
         if (showMultiLine && sol.lines) {
           return (
             <g key={`interval-${idx}`}>
+              {/* 高亮正確解範圍 */}
+              <rect
+                x={Math.min(x1, x2)}
+                y={lineY - 55}
+                width={Math.abs(x2 - x1)}
+                height={32}
+                fill={(sol.highlightColor || '#fde68a')}
+                opacity="0.28"
+                rx="6"
+              />
+
               {sol.lines.map((line, lineIdx) => {
                 const lineY_offset = 60 + lineIdx * 35;
                 const startX = getX(line.start);
