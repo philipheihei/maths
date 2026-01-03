@@ -1191,18 +1191,6 @@ const CompoundInequalityQuiz = () => {
 
     return (
       <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-2">
-        {/* 高亮區域 */}
-        {highlightRegion && (
-          <rect
-            x={getX(highlightRegion.start)}
-            y={highlightRegion.lineY - 15}
-            width={Math.abs(getX(highlightRegion.end) - getX(highlightRegion.start))}
-            height={30}
-            fill={highlightRegion.color}
-            opacity="0.2"
-          />
-        )}
-
         {/* 數軸 */}
         <line x1={padding} y1={axisY} x2={width - padding} y2={axisY} stroke="#374151" strokeWidth="2" />
         
@@ -1224,8 +1212,25 @@ const CompoundInequalityQuiz = () => {
           const lineY = line.y + 20;
           const arrowEnd = line.direction === 'right' ? width - padding + 10 : padding - 10;
           
+          // 計算高亮遮罩（如果該線被高亮）
+          const isHighlighted = highlightRegion && highlightRegion.color === line.color;
+          const rectX = line.direction === 'right' ? x : padding;
+          const rectWidth = line.direction === 'right' ? (width - padding) - x : x - padding;
+          
           return (
             <g key={`line-${idx}`}>
+              {/* 高亮遮罩：僅為被選中顏色的線渲染 */}
+              {isHighlighted && (
+                <rect
+                  x={rectX}
+                  y={lineY - 15}
+                  width={rectWidth}
+                  height={30}
+                  fill={line.color}
+                  opacity="0.2"
+                  rx="4"
+                />
+              )}
               {/* 不等式線 - 全實線 */}
               <line 
                 x1={x} 
