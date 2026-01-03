@@ -245,9 +245,23 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
                 const lineStartX = line.direction === 'right' ? startX + circleRadius : padding - scale * 0.5;
                 const lineEndX = line.direction === 'right' ? width - padding + scale * 0.5 : startX - circleRadius;
                 const color = line.color || '#3b82f6';
+                const rectX = line.direction === 'right' ? startX : padding - scale * 0.5;
+                const rectWidth = line.direction === 'right'
+                  ? (width - padding + scale * 0.5) - startX
+                  : startX - (padding - scale * 0.5);
                 
                 return (
                   <g key={`line-${lineIdx}`}>
+                    {/* 高亮遮罩：各自覆蓋對應箭頭區域 */}
+                    <rect
+                      x={rectX}
+                      y={lineY_offset - 16}
+                      width={rectWidth}
+                      height={32}
+                      fill={sol.highlightColor || '#f59e0b'}
+                      opacity="0.18"
+                      rx="6"
+                    />
                     {/* 線段 */}
                     <line
                       x1={lineStartX}
