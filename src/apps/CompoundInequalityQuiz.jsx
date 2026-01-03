@@ -1166,8 +1166,11 @@ const CompoundInequalityQuiz = () => {
       title: '方向相反 (分離)',
       subtitle: 'AND無解，OR分兩邊',
       examples: [
-        { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x > 5', result: '無解', color: 'blue', highlight: { start: 0, end: 0, color: '#3b82f6' } },
-        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x > 5', result: 'x < 2 或 x > 5', color: 'red', highlight: { start: 0, end: 8, color: '#ef4444' } }
+        { label: 'AND (及)', latex: 'x < 2 \\text{ 及 } x > 5', result: '無解', color: 'blue', highlight: null },
+        { label: 'OR (或)', latex: 'x < 2 \\text{ 或 } x > 5', result: 'x < 2 或 x > 5', color: 'red', highlights: [
+          { start: 0, end: 2, color: '#3b82f6', lineY: 50 },
+          { start: 5, end: 8, color: '#ef4444', lineY: 50 }
+        ]}
       ],
       numberLines: [
         { min: 0, max: 8, lines: [
@@ -1179,7 +1182,7 @@ const CompoundInequalityQuiz = () => {
   ];
 
   // 雙線數線 SVG 組件（用於教學模式）
-  const TwoLineNumberLine = ({ min, max, lines, highlightRegion }) => {
+  const TwoLineNumberLine = ({ min, max, lines, highlightRegion, highlightRegions }) => {
     const width = 400;
     const height = 140;
     const padding = 40;
@@ -1191,6 +1194,31 @@ const CompoundInequalityQuiz = () => {
 
     return (
       <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-2">
+        {/* 高亮區域（單一） */}
+        {highlightRegion && (
+          <rect
+            x={getX(highlightRegion.start)}
+            y={highlightRegion.lineY - 15}
+            width={Math.abs(getX(highlightRegion.end) - getX(highlightRegion.start))}
+            height={30}
+            fill={highlightRegion.color}
+            opacity="0.2"
+          />
+        )}
+
+        {/* 高亮區域（多個） */}
+        {highlightRegions && highlightRegions.map((region, idx) => (
+          <rect
+            key={`highlight-${idx}`}
+            x={getX(region.start)}
+            y={region.lineY - 15}
+            width={Math.abs(getX(region.end) - getX(region.start))}
+            height={30}
+            fill={region.color}
+            opacity="0.2"
+          />
+        ))}
+
         {/* 數軸 */}
         <line x1={padding} y1={axisY} x2={width - padding} y2={axisY} stroke="#374151" strokeWidth="2" />
         
@@ -1212,25 +1240,8 @@ const CompoundInequalityQuiz = () => {
           const lineY = line.y + 20;
           const arrowEnd = line.direction === 'right' ? width - padding + 10 : padding - 10;
           
-          // 計算高亮遮罩（如果該線被高亮）
-          const isHighlighted = highlightRegion && highlightRegion.color === line.color;
-          const rectX = line.direction === 'right' ? x : padding;
-          const rectWidth = line.direction === 'right' ? (width - padding) - x : x - padding;
-          
           return (
             <g key={`line-${idx}`}>
-              {/* 高亮遮罩：僅為被選中顏色的線渲染 */}
-              {isHighlighted && (
-                <rect
-                  x={rectX}
-                  y={lineY - 15}
-                  width={rectWidth}
-                  height={30}
-                  fill={line.color}
-                  opacity="0.2"
-                  rx="4"
-                />
-              )}
               {/* 不等式線 - 全實線 */}
               <line 
                 x1={x} 
@@ -1696,7 +1707,8 @@ const CompoundInequalityQuiz = () => {
               <div className="bg-slate-50 rounded-lg p-3 mb-4">
                 <TwoLineNumberLine 
                   {...caseItem.numberLines[0]} 
-                  highlightRegion={learnHighlight?.caseId === caseItem.id ? learnHighlight.region : null}
+                  highlightRegion={learnHighlight?.caseId === caseItem.id && learnHighlight.region ? learnHighlight.region : null}
+                  highlightRegions={learnHighlight?.caseId === caseItem.id && learnHighlight.regions ? learnHighlight.regions : null}
                 />
               </div>
 
@@ -1706,10 +1718,19 @@ const CompoundInequalityQuiz = () => {
                   <div 
                     key={idx} 
                     onClick={() => {
-                      setLearnHighlight({
-                        caseId: caseItem.id,
-                        region: { ...ex.highlight, lineY: 50 }
-                      });
+                      if (ex.highlights) {
+                        setLearnHighlight({
+                          caseId: caseItem.id,
+                          regions: ex.highlights
+                        });
+                      } else if (ex.highlight) {
+                        setLearnHighlight({
+                          caseId: caseItem.id,
+                          region: ex.highlight
+                        });
+                      } else {
+                        setLearnHighlight(null);
+                      }
                     }}
                     className={`p-4 rounded-lg cursor-pointer transition-all ${ex.color === 'blue' ? 'bg-blue-50 border border-blue-200 hover:shadow-md' : 'bg-red-50 border border-red-200 hover:shadow-md'} ${learnHighlight?.caseId === caseItem.id && ((ex.color === 'blue' && learnHighlight.region.color === '#3b82f6') || (ex.color === 'red' && learnHighlight.region.color === '#ef4444')) ? 'ring-2 ring-offset-1 ring-yellow-400' : ''}`}
                   >
