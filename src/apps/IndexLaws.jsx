@@ -548,15 +548,23 @@ export default function IndexLaws() {
               </div>
               {level === 1 && !feedback.correct && (
                 <div className="mt-2 space-y-3">
-                  <div className="p-4 bg-white/60 rounded-xl border border-red-100/50 text-center">
-                    <div className="text-sm font-bold text-red-600 mb-2">正確步驟：</div>
-                    <div className="space-y-2">
-                      {problem.steps && problem.steps.map((step, idx) => (
-                        <div key={idx} className="text-lg font-bold text-slate-800">
-                          {idx > 0 && <span className="text-red-500 mr-2">=</span>}
-                          <Latex>{step}</Latex>
-                        </div>
-                      ))}
+                  <div className="p-4 bg-white/60 rounded-xl border border-red-100/50">
+                    <div className="text-sm font-bold text-red-600 mb-3">正確步驟：</div>
+                    <div className="flex gap-3">
+                      <div className="flex flex-col items-center pt-1">
+                        {problem.steps && problem.steps.map((step, idx) => (
+                          <div key={idx} className="h-[2.5em] flex items-center text-red-500 font-bold text-lg">
+                            {idx > 0 ? '=' : ''}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex-1 flex flex-col">
+                        {problem.steps && problem.steps.map((step, idx) => (
+                          <div key={idx} className="text-lg font-bold text-slate-800 h-[2.5em] flex items-center">
+                            <Latex>{step}</Latex>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                   <div className="p-3 bg-white/60 rounded-xl border border-red-100/50">
