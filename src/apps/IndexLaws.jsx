@@ -138,7 +138,7 @@ export default function IndexLaws() {
     const lawIdx = getRandomInt(0, 3);
     const law = LAWS[lawIdx];
     const base = 'x';
-    let qLatex = '', ans = '';
+    let qLatex = '', ans = '', steps = [];
 
     const n1 = getRandomNonZero(-5, 9);
     const n2 = getRandomNonZero(-5, 9);
@@ -150,27 +150,46 @@ export default function IndexLaws() {
         qLatex = `${base}^{${n1}} \\times ${base}^{${n2}}`;
         finalExp = n1 + n2;
         ans = formatPositiveIndex(base, finalExp);
+        steps = [
+          `${base}^{${n1}} \\times ${base}^{${n2}}`,
+          `${base}^{${n1}+${n2}}`,
+          `${base}^{${finalExp}}`
+        ];
         break;
       case 'div':
         qLatex = `\\frac{${base}^{${n1}}}{${base}^{${n2}}}`;
         finalExp = n1 - n2;
         ans = formatPositiveIndex(base, finalExp);
+        steps = [
+          `\\frac{${base}^{${n1}}}{${base}^{${n2}}}`,
+          `${base}^{${n1}-${n2}}`,
+          `${base}^{${finalExp}}`
+        ];
         break;
       case 'power':
         qLatex = `(${base}^{${n1}})^{${n2}}`;
         finalExp = n1 * n2;
         ans = formatPositiveIndex(base, finalExp);
+        steps = [
+          `(${base}^{${n1}})^{${n2}}`,
+          `${base}^{${n1} \\times ${n2}}`,
+          `${base}^{${finalExp}}`
+        ];
         break;
       case 'neg':
         const negVal = -1 * Math.abs(n1);
         qLatex = `${base}^{${negVal}}`;
         ans = `1/${base}^${Math.abs(negVal)}`;
+        steps = [
+          `${base}^{${negVal}}`,
+          `\\frac{1}{${base}^{${Math.abs(negVal)}}}`
+        ];
         break;
       default:
         break;
     }
 
-    setProblem({ level: 1, law, qLatex, ans });
+    setProblem({ level: 1, law, qLatex, ans, steps });
     resetState();
   };
 
@@ -528,9 +547,23 @@ export default function IndexLaws() {
                 <p className="font-bold text-lg">{feedback.msg}</p>
               </div>
               {level === 1 && !feedback.correct && (
-                <div className="mt-2 p-4 bg-white/60 rounded-xl border border-red-100/50 text-center">
-                  <div className="text-3xl font-bold text-slate-800 my-2">
-                    <Latex>{toLatex(problem.ans)}</Latex>
+                <div className="mt-2 space-y-3">
+                  <div className="p-4 bg-white/60 rounded-xl border border-red-100/50 text-center">
+                    <div className="text-sm font-bold text-red-600 mb-2">正確步驟：</div>
+                    <div className="space-y-2">
+                      {problem.steps && problem.steps.map((step, idx) => (
+                        <div key={idx} className="text-lg font-bold text-slate-800">
+                          {idx > 0 && <span className="text-red-500 mr-2">=</span>}
+                          <Latex>{step}</Latex>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="p-3 bg-white/60 rounded-xl border border-red-100/50">
+                    <div className="text-xs font-bold text-red-600 mb-1">最終答案：</div>
+                    <div className="text-2xl font-bold text-slate-800">
+                      <Latex>{toLatex(problem.ans)}</Latex>
+                    </div>
                   </div>
                 </div>
               )}
