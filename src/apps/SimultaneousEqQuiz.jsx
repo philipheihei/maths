@@ -571,19 +571,13 @@ export default function SimultaneousEqQuiz() {
     const escapedKeywords = segment.keywords.map(escapeRegExp);
     const parts = segment.text.split(new RegExp(`(${escapedKeywords.join('|')})`, 'g'));
     
-    const inputValues = {};
-    let keywordIndex = 0;
-    parts.forEach((_, i) => {
-        if (i % 2 === 1) {
-            inputValues[keywordIndex] = lv1Inputs[`${segIdx}-${i}`] || "";
-            keywordIndex++;
-        }
-    });
-
     if (segment.previewOrder) {
-        return segment.previewOrder
-            .map(idx => inputValues[idx] || "")
-            .join("");
+        // Use previewOrder to reorder parts
+        const reordered = [];
+        segment.previewOrder.forEach((idx) => {
+            reordered.push(parts[idx]);
+        });
+        return reordered.join("");
     }
 
     return parts.map((part, i) => {
