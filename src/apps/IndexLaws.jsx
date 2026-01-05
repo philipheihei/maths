@@ -501,31 +501,31 @@ export default function IndexLaws() {
           ) : (
             <>
               <div onClick={() => !hasChecked && setActiveField('step1')} 
-                className={`p-4 rounded-xl border-2 transition-all ${activeField === 'step1' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
+                className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step1' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm font-bold text-indigo-500">步驟 1：拆括號</span>
                   <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
                 </div>
-                <div className="min-h-[3.5em] text-3xl flex items-center">
+                <div className="min-h-[3em] text-3xl flex items-center">
                   {userInputs.step1 ? <Latex>{toLatex(userInputs.step1)}</Latex> : <span className="text-slate-300 text-sm">輸入...</span>}
                 </div>
               </div>
 
               <div onClick={() => !hasChecked && setActiveField('step2')} 
-                className={`p-4 rounded-xl border-2 transition-all ${activeField === 'step2' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
+                className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step2' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm font-bold text-slate-600">步驟 2：負指數轉正指數</span>
                   <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
                 </div>
-                <div className="min-h-[3.5em] text-3xl flex items-center">
+                <div className="min-h-[3em] text-3xl flex items-center">
                   {userInputs.step2 ? <Latex>{toLatex(userInputs.step2)}</Latex> : <span className="text-slate-300 text-sm">輸入...</span>}
                 </div>
               </div>
 
               <div onClick={() => !hasChecked && setActiveField('step3')} 
-                className={`p-4 rounded-xl border-2 transition-all ${activeField === 'step3' && !hasChecked ? 'border-emerald-500 bg-white shadow-md' : 'border-slate-200 bg-slate-50'}`}
+                className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step3' && !hasChecked ? 'border-emerald-500 bg-white shadow-md' : 'border-slate-200 bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-xs font-bold text-emerald-600">步驟 3：指數約簡（正指數）</span>
