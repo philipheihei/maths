@@ -530,7 +530,7 @@ export default function IndexLaws() {
               {level === 1 && !feedback.correct && (
                 <div className="mt-2 p-4 bg-white/60 rounded-xl border border-red-100/50 text-center">
                   <div className="text-3xl font-bold text-slate-800 my-2">
-                    <Latex>{problem.ans}</Latex>
+                    <Latex>{toLatex(problem.ans)}</Latex>
                   </div>
                 </div>
               )}
