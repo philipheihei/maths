@@ -64,7 +64,8 @@ const toLatex = (input) => {
     }
   }
 
-  latex = latex.replace(/\^([a-zA-Z0-9-]+)/g, '^{$1}');
+  // Handle exponents: match ^(multi-digit) or ^single-char/number
+  latex = latex.replace(/\^(\([^)]*\)|[a-zA-Z0-9-]+)/g, '^{$1}');
   latex = latex.replace(/\*/g, '\\times ');
 
   return latex;
