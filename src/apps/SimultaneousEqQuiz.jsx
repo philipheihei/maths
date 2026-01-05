@@ -150,9 +150,9 @@ const QUESTIONS = [
         borderColor: "border-red-400" 
       },
       { 
-        text: "共得 84 分 (贏取一場球賽得 3 分及和得 1 分)。", 
+        text: "共得 84 分 (贏取一場球賽得3分及和得1分)。", 
         keywords: ["共得", "84", "贏取一場球賽得3分", "及", "和得1分"], 
-        previewOrder: [2, 1, 3, 4, 5],
+        previewOrder: [5, 9, 1, 3],
         valid: ["84=3x+y", "3x+y=84"], 
         color: "text-green-600", 
         borderColor: "border-green-400" 
