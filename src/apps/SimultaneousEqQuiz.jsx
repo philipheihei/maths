@@ -125,7 +125,7 @@ const QUESTIONS = [
       { 
         text: "若17名男生和4名女生離開,人數相等。", 
         keywords: ["17名男生", "4名女生離開", "人數相等"], 
-        previewOrder: [1, 3, 2],
+        previewOrder: [1, 5, 3],
         valid: ["x-17=y-4", "y-4=x-17"], 
         color: "text-green-600", 
         borderColor: "border-green-400" 
@@ -207,7 +207,7 @@ const QUESTIONS = [
       { 
         text: "佩玲將她其中的12個送給志偉,他們將擁有相同數目。", 
         keywords: ["佩玲", "12個送給志偉", "相同"], 
-        previewOrder: [1, 3, 2],
+        previewOrder: [1, 5, 3],
         valid: ["x-12=y+12", "y+12=x-12"], 
         color: "text-green-600", 
         borderColor: "border-green-400" 
@@ -572,12 +572,15 @@ export default function SimultaneousEqQuiz() {
     const parts = segment.text.split(new RegExp(`(${escapedKeywords.join('|')})`, 'g'));
     
     if (segment.previewOrder) {
-        // Use previewOrder to reorder parts
-        const reordered = [];
-        segment.previewOrder.forEach((idx) => {
-            reordered.push(parts[idx]);
-        });
-        return reordered.join("");
+        // Use previewOrder to select and reorder parts, replacing keywords with inputs
+        return segment.previewOrder.map(idx => {
+            if (idx % 2 === 1) {
+                // Keyword position - use the input value
+                return lv1Inputs[`${segIdx}-${idx}`] || "";
+            }
+            // Text position - return as-is
+            return parts[idx] || "";
+        }).join("");
     }
 
     return parts.map((part, i) => {
