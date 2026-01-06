@@ -361,6 +361,66 @@ const NumberLine = ({ min = -5, max = 5, solutions, type = 'interval', showMulti
         }
         return components;
       } else if (sol.type === 'empty') {
+        // 無解：仍顯示兩條不等式箭頭，讓學生看到沒有重疊區域；不需要 shaded rect
+        if (showMultiLine && sol.lines) {
+          return (
+            <g key={`empty-${idx}`}>
+              {sol.lines.map((line, lineIdx) => {
+                const lineY_offset = 60 + lineIdx * 35;
+                const startX = getX(line.start);
+                const circleRadius = 5;
+                const lineStartX = line.direction === 'right' ? startX + circleRadius : padding - scale * 0.5;
+                const lineEndX = line.direction === 'right' ? width - padding + scale * 0.5 : startX - circleRadius;
+                const color = line.color || '#3b82f6';
+
+                return (
+                  <g key={`line-${lineIdx}`}>
+                    <line
+                      x1={lineStartX}
+                      y1={lineY_offset}
+                      x2={lineEndX}
+                      y2={lineY_offset}
+                      stroke={color}
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                    <circle
+                      cx={startX}
+                      cy={lineY_offset}
+                      r="5"
+                      fill={line.closed ? color : 'white'}
+                      stroke={color}
+                      strokeWidth="2"
+                    />
+                    {line.direction === 'right' && (
+                      <polygon
+                        points={`${lineEndX},${lineY_offset} ${lineEndX - 8},${lineY_offset - 6} ${lineEndX - 8},${lineY_offset + 6}`}
+                        fill={color}
+                      />
+                    )}
+                    {line.direction === 'left' && (
+                      <polygon
+                        points={`${lineStartX},${lineY_offset} ${lineStartX + 8},${lineY_offset - 6} ${lineStartX + 8},${lineY_offset + 6}`}
+                        fill={color}
+                      />
+                    )}
+                    <line
+                      x1={startX}
+                      y1={lineY_offset + circleRadius}
+                      x2={startX}
+                      y2={lineY}
+                      stroke={color}
+                      strokeWidth="4"
+                      opacity="1"
+                    />
+                  </g>
+                );
+              })}
+            </g>
+          );
+        }
+
+        // 備用：沒有 lines 時顯示文字
         return (
           <text
             key={`empty-${idx}`}
@@ -1358,7 +1418,7 @@ const CompoundInequalityQuiz = () => {
           answer: '3, 4',
           alternatives: ['3, 4', '3和4', 'x = 3 或 x = 4'],
           explanation: '介於2和5之間的整數有3和4',
-          numberLine: { solutions: [{ type: 'interval', start: 2, end: 5, startClosed: false, endClosed: false }] }
+          numberLine: { solutions: [{ type: 'interval', start: 2, end: 5, startClosed: false, endClosed: false, highlightColor: '#93c5fd', lines: [ { start: 2, direction: 'right', closed: false, color: '#3b82f6' }, { start: 5, direction: 'left', closed: false, color: '#ef4444' } ] }] }
         }
       },
       {
@@ -1388,7 +1448,7 @@ const CompoundInequalityQuiz = () => {
           answer: '-3, -2, -1',
           alternatives: ['-3, -2, -1', 'x ∈ {-3, -2, -1}'],
           explanation: '從-3到-1的所有整數共3個',
-          numberLine: { solutions: [{ type: 'interval', start: -3, end: -1, startClosed: true, endClosed: true }] }
+          numberLine: { solutions: [{ type: 'interval', start: -3, end: -1, startClosed: true, endClosed: true, highlightColor: '#93c5fd', lines: [ { start: -3, direction: 'right', closed: true, color: '#3b82f6' }, { start: -1, direction: 'left', closed: true, color: '#ef4444' } ] }] }
         }
       },
       {
@@ -1518,7 +1578,7 @@ const CompoundInequalityQuiz = () => {
         answer: '2, 3',
         alternatives: ['2, 3', '2和3', 'x = 2 或 x = 3'],
         explanation: '介於1和4之間的整數只有2和3',
-        numberLine: { solutions: [{ type: 'interval', start: 1, end: 4, startClosed: false, endClosed: false }] }
+        numberLine: { solutions: [{ type: 'interval', start: 1, end: 4, startClosed: false, endClosed: false, highlightColor: '#93c5fd', lines: [ { start: 1, direction: 'right', closed: false, color: '#3b82f6' }, { start: 4, direction: 'left', closed: false, color: '#ef4444' } ] }] }
       },
       {
         id: 102,
@@ -1527,7 +1587,7 @@ const CompoundInequalityQuiz = () => {
         answer: '-2, -1, 0, 1, 2',
         alternatives: ['-2, -1, 0, 1, 2', 'x ∈ {-2, -1, 0, 1, 2}'],
         explanation: '包括-2但不包括3的整數',
-        numberLine: { solutions: [{ type: 'interval', start: -2, end: 3, startClosed: true, endClosed: false }] }
+        numberLine: { solutions: [{ type: 'interval', start: -2, end: 3, startClosed: true, endClosed: false, highlightColor: '#93c5fd', lines: [ { start: -2, direction: 'right', closed: true, color: '#3b82f6' }, { start: 3, direction: 'left', closed: false, color: '#ef4444' } ] }] }
       },
       {
         id: 103,
@@ -1553,7 +1613,7 @@ const CompoundInequalityQuiz = () => {
         answer: '0, 1, 2, 3',
         alternatives: ['0, 1, 2, 3', 'x ∈ {0, 1, 2, 3}'],
         explanation: '不包括-1但包括3的整數',
-        numberLine: { solutions: [{ type: 'interval', start: -1, end: 3, startClosed: false, endClosed: true }] }
+        numberLine: { solutions: [{ type: 'interval', start: -1, end: 3, startClosed: false, endClosed: true, highlightColor: '#93c5fd', lines: [ { start: -1, direction: 'right', closed: false, color: '#3b82f6' }, { start: 3, direction: 'left', closed: true, color: '#ef4444' } ] }] }
       },
       {
         id: 105,
@@ -1562,7 +1622,7 @@ const CompoundInequalityQuiz = () => {
         answer: '1',
         alternatives: ['1', 'x = 1'],
         explanation: '介於0和2之間的整數只有1',
-        numberLine: { solutions: [{ type: 'interval', start: 0, end: 2, startClosed: false, endClosed: false }] }
+        numberLine: { solutions: [{ type: 'interval', start: 0, end: 2, startClosed: false, endClosed: false, highlightColor: '#93c5fd', lines: [ { start: 0, direction: 'right', closed: false, color: '#3b82f6' }, { start: 2, direction: 'left', closed: false, color: '#ef4444' } ] }] }
       },
       {
         id: 106,
@@ -1588,7 +1648,7 @@ const CompoundInequalityQuiz = () => {
         answer: '-2, -1',
         alternatives: ['-2, -1', 'x ∈ {-2, -1}'],
         explanation: '介於-3和0之間的整數',
-        numberLine: { solutions: [{ type: 'interval', start: -3, end: 0, startClosed: false, endClosed: false }] }
+        numberLine: { solutions: [{ type: 'interval', start: -3, end: 0, startClosed: false, endClosed: false, highlightColor: '#93c5fd', lines: [ { start: -3, direction: 'right', closed: false, color: '#3b82f6' }, { start: 0, direction: 'left', closed: false, color: '#ef4444' } ] }] }
       },
       {
         id: 108,
@@ -1597,7 +1657,7 @@ const CompoundInequalityQuiz = () => {
         answer: '-5, -4, -3, -2',
         alternatives: ['-5, -4, -3, -2', 'x ∈ {-5, -4, -3, -2}'],
         explanation: '兩個邊界都包括的整數',
-        numberLine: { solutions: [{ type: 'interval', start: -5, end: -2, startClosed: true, endClosed: true }] }
+        numberLine: { solutions: [{ type: 'interval', start: -5, end: -2, startClosed: true, endClosed: true, highlightColor: '#93c5fd', lines: [ { start: -5, direction: 'right', closed: true, color: '#3b82f6' }, { start: -2, direction: 'left', closed: true, color: '#ef4444' } ] }] }
       }
     ]
   };
