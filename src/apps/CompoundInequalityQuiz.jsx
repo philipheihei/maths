@@ -959,12 +959,15 @@ const CompoundInequalityQuiz = () => {
           // x > a 類型：問最小整數或列出負整數
           const boundary = Math.max(...numbers);
           const minInteger = answer.includes('≥') ? boundary : boundary + 1;
+          const hasEqual = answer.includes('≥');
           
           questionTypes.push({
             text: `求 $${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))}$ 的最小整數`,
             answer: String(minInteger),
             alternatives: [`${minInteger}`, `x = ${minInteger}`],
-            explanation: `滿足條件的最小整數是 ${minInteger}`
+            explanation: hasEqual 
+              ? `滿足條件的最小整數是 ${minInteger}`
+              : `滿足條件的最小整數是 ${minInteger}，${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))} 不包括 ${boundary}。`
           });
           
           // 列出負整數（如果有）
@@ -984,12 +987,15 @@ const CompoundInequalityQuiz = () => {
           // x < b 類型：問最大整數或列出正整數
           const boundary = Math.min(...numbers);
           const maxInteger = answer.includes('≤') ? boundary : boundary - 1;
+          const hasEqual = answer.includes('≤');
           
           questionTypes.push({
             text: `求 $${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))}$ 的最大整數`,
             answer: String(maxInteger),
             alternatives: [`${maxInteger}`, `x = ${maxInteger}`],
-            explanation: `滿足條件的最大整數是 ${maxInteger}`
+            explanation: hasEqual 
+              ? `滿足條件的最大整數是 ${maxInteger}`
+              : `滿足條件的最大整數是 ${maxInteger}，${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))} 不包括 ${boundary}。`
           });
           
           // 列出正整數（如果有）
@@ -1047,7 +1053,11 @@ const CompoundInequalityQuiz = () => {
           const stage2NumberLine = {
             min: numberLine.min,
             max: numberLine.max,
-            solutions: numberLine.solutions
+            solutions: numberLine.solutions.map(sol => {
+              // 移除 lines 屬性，避免顯示多條不等式線
+              const { lines, ...rest } = sol;
+              return rest;
+            })
           };
           
           stage2 = {
