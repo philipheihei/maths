@@ -1048,11 +1048,33 @@ const CompoundInequalityQuiz = () => {
         // 隨機選擇一個問題類型
         if (questionTypes.length > 0) {
           const selected = questionTypes[getRandomInt(0, questionTypes.length - 1)];
-          
+
+          // 判斷是否為單一不等式，並計算邊界與方向
+          const isSingleIneq = (hasGreater && !hasLess) || (hasLess && !hasGreater);
+          const singleBoundary = hasGreater && !hasLess
+            ? Math.max(...numbers)
+            : (hasLess && !hasGreater ? Math.min(...numbers) : null);
+          const singleDirection = hasGreater && !hasLess ? 'right' : (hasLess && !hasGreater ? 'left' : null);
+
+          // 調整顯示範圍：當邊界在 5 或 -5 的邊緣時，將整個視窗平移，讓箭頭不貼邊
+          let adjustedMin = numberLine.min;
+          let adjustedMax = numberLine.max;
+          if (isSingleIneq && singleBoundary !== null) {
+            const shift = 3; // 視覺上讓箭頭起點更靠中間
+            if (singleDirection === 'right' && singleBoundary === numberLine.max && numberLine.max === 5) {
+              adjustedMin += shift;
+              adjustedMax += shift; // 例如 -5..5 -> -2..8
+            }
+            if (singleDirection === 'left' && singleBoundary === numberLine.min && numberLine.min === -5) {
+              adjustedMin -= shift;
+              adjustedMax -= shift; // 例如 -5..5 -> -8..2
+            }
+          }
+
           // 為 stage2 創建數線
           const stage2NumberLine = {
-            min: numberLine.min,
-            max: numberLine.max,
+            min: adjustedMin,
+            max: adjustedMax,
             solutions: numberLine.solutions.map(sol => {
               // 判斷是否為區間類型（同時有 > 和 <）
               const isIntervalType = hasGreater && hasLess && !isUnion;
@@ -1066,7 +1088,7 @@ const CompoundInequalityQuiz = () => {
                 
                 if (hasGreater && !hasLess) {
                   // x > a 或 x ≥ a
-                  const boundary = Math.max(...numbers);
+                  const boundary = singleBoundary;
                   singleLine = {
                     start: boundary,
                     direction: 'right',
@@ -1075,7 +1097,7 @@ const CompoundInequalityQuiz = () => {
                   };
                 } else if (hasLess && !hasGreater) {
                   // x < b 或 x ≤ b
-                  const boundary = Math.min(...numbers);
+                  const boundary = singleBoundary;
                   singleLine = {
                     start: boundary,
                     direction: 'left',
