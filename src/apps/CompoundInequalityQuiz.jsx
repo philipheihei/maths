@@ -1049,14 +1049,37 @@ const CompoundInequalityQuiz = () => {
         if (questionTypes.length > 0) {
           const selected = questionTypes[getRandomInt(0, questionTypes.length - 1)];
           
-          // 為 stage2 創建簡化的數線（只顯示答案的單一數線，不顯示 stage1 的兩條線）
+          // 為 stage2 創建簡化的數線，為單一不等式添加單條箭頭線
           const stage2NumberLine = {
             min: numberLine.min,
             max: numberLine.max,
             solutions: numberLine.solutions.map(sol => {
-              // 移除 lines 屬性，避免顯示多條不等式線
+              // 為單一不等式問題創建單條箭頭線
+              let singleLine = null;
+              
+              if (hasGreater && !hasLess) {
+                // x > a 或 x ≥ a
+                const boundary = Math.max(...numbers);
+                singleLine = {
+                  start: boundary,
+                  direction: 'right',
+                  closed: answer.includes('≥'),
+                  color: '#3b82f6'
+                };
+              } else if (hasLess && !hasGreater) {
+                // x < b 或 x ≤ b
+                const boundary = Math.min(...numbers);
+                singleLine = {
+                  start: boundary,
+                  direction: 'left',
+                  closed: answer.includes('≤'),
+                  color: '#ef4444'
+                };
+              }
+              
+              // 移除原有的 lines（複合不等式的兩條線），添加單條線
               const { lines, ...rest } = sol;
-              return rest;
+              return singleLine ? { ...rest, lines: [singleLine] } : rest;
             })
           };
           
