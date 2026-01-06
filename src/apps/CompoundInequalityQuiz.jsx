@@ -980,7 +980,7 @@ const CompoundInequalityQuiz = () => {
               text: `列出符合 $${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))}$ 的所有負整數`,
               answer: negativeIntegers.join(', '),
               alternatives: [negativeIntegers.join(','), `{${negativeIntegers.join(', ')}}`],
-              explanation: `符合條件的負整數有：${negativeIntegers.join(', ')}`
+              explanation: `符合條件的負整數有：${negativeIntegers.join(', ')}； 0 不是正數也不是負數`
             });
           }
         } else if (hasLess && !hasGreater) {
@@ -1008,7 +1008,7 @@ const CompoundInequalityQuiz = () => {
               text: `列出符合 $${answer.replace(/[<>≤≥]/g, m => ({'<': '<', '>': '>', '≤': '\\leq', '≥': '\\geq'}[m]))}$ 的所有正整數`,
               answer: positiveIntegers.join(', '),
               alternatives: [positiveIntegers.join(','), `{${positiveIntegers.join(', ')}}`],
-              explanation: `符合條件的正整數有：${positiveIntegers.join(', ')}`
+              explanation: `符合條件的正整數有：${positiveIntegers.join(', ')}； 0 不是正數也不是負數`
             });
           }
         } else if (isInterval) {
