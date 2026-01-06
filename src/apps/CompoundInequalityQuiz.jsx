@@ -1080,8 +1080,26 @@ const CompoundInequalityQuiz = () => {
               const isIntervalType = hasGreater && hasLess && !isUnion;
               
               if (isIntervalType) {
-                // 區間類型（如 -3 ≤ x ≤ -1）：保留原有的兩條線
-                return sol;
+                // 區間類型（如 -3 ≤ x ≤ -1）：確保有兩條不等式箭頭線
+                if (sol.lines && sol.lines.length >= 2) {
+                  return sol;
+                }
+                const intervalLines = [
+                  {
+                    start: sol.start,
+                    direction: 'right',
+                    closed: !!sol.startClosed,
+                    color: '#3b82f6'
+                  },
+                  {
+                    start: sol.end,
+                    direction: 'left',
+                    closed: !!sol.endClosed,
+                    color: '#ef4444'
+                  }
+                ];
+                const { lines, ...restSol } = sol;
+                return { ...restSol, lines: intervalLines };
               } else {
                 // 單向不等式：創建單條箭頭線
                 let singleLine = null;
