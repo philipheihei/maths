@@ -9,6 +9,7 @@ import IndexLaws from './apps/IndexLaws';
 import DispersionQuiz from './apps/DispersionQuiz';
 import InequalityQuiz from './apps/InequalityQuiz';
 import CompoundInequalityQuiz from './apps/CompoundInequalityQuiz';
+import VariationQuiz from './apps/VariationQuiz';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/dispersion-quiz" element={<DispersionQuiz />} />
         <Route path="/inequality-quiz" element={<InequalityQuiz />} />
         <Route path="/compound-inequality-quiz" element={<CompoundInequalityQuiz />} />
+        <Route path="/variation-quiz" element={<VariationQuiz />} />
       </Routes>
     </Router>
   );

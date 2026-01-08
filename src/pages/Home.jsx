@@ -134,6 +134,22 @@ const Home = () => {
       category: '高中',
       topics: ['複合不等式', '圖解法', '整數解'],
       inDevelopment: true
+    },
+    {
+      id: 'variation-quiz',
+      title: '變分訓練',
+      description: 'F4 CH6 變分：正變、反變、聯變、部分變公式特訓',
+      icon: Calculator,
+      color: 'bg-amber-500',
+      hoverColor: 'hover:bg-amber-600',
+      path: '/variation-quiz',
+      level: 'F4',
+      badges: [
+        { level: 'F4', chapter: 'CH6', subject: '變分' }
+      ],
+      category: '高中',
+      topics: ['正變', '反變', '聯變', '部分變'],
+      inDevelopment: false
     }
   ];
 
