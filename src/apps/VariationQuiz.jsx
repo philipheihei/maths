@@ -324,7 +324,7 @@ const VariationQuiz = () => {
                     <MathDisplay latex="z = k \textcolor{#ca8a04}{x} \textcolor{#ca8a04}{y}" className="text-lg font-bold" />
                   </div>
                   <div className="text-sm text-slate-600 mt-1">
-                    <span className="font-bold">字眼：</span>"且"
+                    <span className="font-bold">字眼：</span>"且"、"及"
                   </div>
                 </div>
 
