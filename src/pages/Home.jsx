@@ -137,15 +137,15 @@ const Home = () => {
     },
     {
       id: 'variation-quiz',
-      title: '變分訓練',
-      description: 'F4 CH6 變分：正變、反變、聯變、部分變公式特訓',
+      title: '變分設式',
+      description: 'F5 CH11 變分：正變、反變、聯變、部分變公式特訓',
       icon: Calculator,
       color: 'bg-amber-500',
       hoverColor: 'hover:bg-amber-600',
       path: '/variation-quiz',
-      level: 'F4',
+      level: 'F5',
       badges: [
-        { level: 'F4', chapter: 'CH6', subject: '變分' }
+        { level: 'F5', chapter: 'CH11', subject: '變分' }
       ],
       category: '高中',
       topics: ['正變', '反變', '聯變', '部分變'],
