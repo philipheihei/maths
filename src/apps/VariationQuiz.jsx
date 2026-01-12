@@ -55,7 +55,7 @@ const QUESTIONS_DATA = [
   { id: 25, text: "$y$ 隨 $x$ 的平方根正變。", formula: "y = k \\sqrt{x}", vars: ["y", "x"] }
 ];
 
-const MathDisplay = ({ latex, className = "" }) => {
+const MathDisplay = ({ latex, className = "", inline = false }) => {
   const containerRef = useRef(null);
   useEffect(() => {
     if (containerRef.current && window.katex) {
@@ -63,14 +63,16 @@ const MathDisplay = ({ latex, className = "" }) => {
         containerRef.current.innerHTML = '';
         window.katex.render(latex, containerRef.current, {
           throwOnError: false,
-          displayMode: true,
+          displayMode: !inline,
         });
       } catch (e) {
         containerRef.current.innerText = latex;
       }
     }
-  }, [latex]);
-  return <div ref={containerRef} className={`${className} pointer-events-none`} />;
+  }, [latex, inline]);
+  
+  const Component = inline ? 'span' : 'div';
+  return <Component ref={containerRef} className={`${className} pointer-events-none`} />;
 };
 
 const shuffleArray = (array) => {
@@ -406,7 +408,7 @@ const VariationQuiz = () => {
                 <div className={`flex-1 text-xl md:text-2xl text-left leading-relaxed font-serif ${THEME.textMain}`}>
                     {currentQuestion.text.split(/(\$[^\$]+\$)/g).map((part, i) => {
                     if (part.startsWith('$') && part.endsWith('$')) {
-                        return <span key={i} className="inline-block mx-1"><MathDisplay latex={part.replace(/\$/g, '')} className="inline" /></span>;
+                        return <span key={i} className="inline-block mx-1"><MathDisplay latex={part.replace(/\$/g, '')} inline={true} /></span>;
                     }
                     return <span key={i}>{part}</span>
                     })}
@@ -478,12 +480,12 @@ const VariationQuiz = () => {
         <div className="max-w-2xl mx-auto">
             <div className="grid grid-cols-5 gap-2 mb-2">
                 {displayVars.map((v, i) => v ? (
-                   <button key={v} onClick={() => handleKeyClick(v)} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.accent} border-blue-200 font-serif italic`}><MathDisplay latex={v} /></button>
+                   <button key={v} onClick={() => handleKeyClick(v)} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.accent} border-blue-200 font-serif italic`}><MathDisplay latex={v} inline={true} /></button>
                 ) : ( <div key={i} className="invisible"></div> ))}
                 <div className="col-span-2 grid grid-cols-3 gap-1">
                    <button onClick={() => handleKeyClick('k')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText} italic`}>k</button>
-                   <button onClick={() => handleKeyClick('k_1')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="k_1" /></button>
-                   <button onClick={() => handleKeyClick('k_2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="k_2" /></button>
+                   <button onClick={() => handleKeyClick('k_1')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="k_1" inline={true} /></button>
+                   <button onClick={() => handleKeyClick('k_2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="k_2" inline={true} /></button>
                 </div>
             </div>
             <div className="grid grid-cols-5 gap-2">
@@ -493,9 +495,9 @@ const VariationQuiz = () => {
                 <button onClick={() => handleKeyClick('/')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText} flex flex-col text-xs leading-none`}><span>◻</span><span className="border-t border-current w-3 my-0.5"></span><span>◻</span></button>
                 {[1,2,3,'(',')'].map(k => <button key={k} onClick={() => handleKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}
                 <button onClick={() => handleKeyClick('0')} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>0</button>
-                <button onClick={() => handleKeyClick('^2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^2" /></button>
-                <button onClick={() => handleKeyClick('sqrt(')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="\sqrt{\square}" /></button>
-                <button onClick={() => handleKeyClick('^3')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^3" /></button>
+                <button onClick={() => handleKeyClick('^2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^2" inline={true} /></button>
+                <button onClick={() => handleKeyClick('sqrt(')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="\sqrt{\square}" inline={true} /></button>
+                <button onClick={() => handleKeyClick('^3')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^3" inline={true} /></button>
                 <button onClick={checkAnswer} disabled={!inputValue} className={`${KEY_BASE_CLASS} ${THEME.actionBg} ${THEME.actionText}`}><CornerDownLeft className="w-6 h-6" /></button>
             </div>
         </div>
