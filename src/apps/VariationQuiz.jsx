@@ -60,6 +60,7 @@ const MathDisplay = ({ latex, className = "" }) => {
   useEffect(() => {
     if (containerRef.current && window.katex) {
       try {
+        containerRef.current.innerHTML = '';
         window.katex.render(latex, containerRef.current, {
           throwOnError: false,
           displayMode: true,

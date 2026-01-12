@@ -49,6 +49,7 @@ const Fraction = ({ numerator, denominator }) => {
   useEffect(() => {
     if (katexLoaded && containerRef.current && window.katex) {
       try {
+        containerRef.current.innerHTML = '';
         const latex = `\\frac{${numerator}}{${denominator}}`;
         window.katex.render(latex, containerRef.current, {
           throwOnError: false,
@@ -75,6 +76,7 @@ const KaTeXValue = ({ value }) => {
   useEffect(() => {
     if (katexLoaded && containerRef.current && window.katex) {
       try {
+        containerRef.current.innerHTML = '';
         // 用 text style 确保大小与分数一致
         const latex = `\\textstyle ${String(value)}`;
         window.katex.render(latex, containerRef.current, {
@@ -102,6 +104,7 @@ const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
   useEffect(() => {
     if (katexLoaded && containerRef.current && window.katex) {
       try {
+        containerRef.current.innerHTML = '';
         // 使用 \cfrac 或简单的 / 格式，允许分子换行
         const latex = `${numerator} / ${denominator}`;
         window.katex.render(latex, containerRef.current, {

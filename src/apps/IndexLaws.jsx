@@ -33,6 +33,7 @@ const Latex = ({ children, block = false, className = '' }) => {
   useEffect(() => {
     if (isKatexLoaded && containerRef.current && children) {
       try {
+        containerRef.current.innerHTML = '';
         window.katex.render(children, containerRef.current, {
           throwOnError: false,
           displayMode: block,

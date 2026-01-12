@@ -41,6 +41,7 @@ const Latex = ({ math, block = false }) => {
   useEffect(() => {
     if (isLoaded && window.katex && containerRef.current) {
       try {
+        containerRef.current.innerHTML = '';
         window.katex.render(math, containerRef.current, {
           displayMode: block,
           throwOnError: false,
