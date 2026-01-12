@@ -483,7 +483,7 @@ const VariationQuiz = () => {
                    <button key={v} onClick={() => handleKeyClick(v)} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.accent} border-blue-200 font-serif italic`}><MathDisplay latex={v} inline={true} /></button>
                 ) : ( <div key={i} className="invisible"></div> ))}
                 <div className="col-span-2 grid grid-cols-3 gap-1">
-                   <button onClick={() => handleKeyClick('k')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText} italic`}>k</button>
+                   <button onClick={() => handleKeyClick('k')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="k" inline={true} /></button>
                    <button onClick={() => handleKeyClick('k_1')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="k_1" inline={true} /></button>
                    <button onClick={() => handleKeyClick('k_2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="k_2" inline={true} /></button>
                 </div>

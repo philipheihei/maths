@@ -1036,9 +1036,16 @@ const CompoundInequalityQuiz = () => {
           const maxBoundary = Math.max(...numbers);
           const integers = [];
           
+          // 解析答案格式，分別判斷左右邊界符號
+          const answerParts = answer.split('x');
+          const leftPart = answerParts[0] || '';
+          const rightPart = answerParts[1] || '';
+          const hasLeftEqual = leftPart.includes('≤') || leftPart.includes('≥');
+          const hasRightEqual = rightPart.includes('≤') || rightPart.includes('≥');
+          
           for (let i = minBoundary; i <= maxBoundary; i++) {
-            const passMin = answer.includes('≥') ? i >= minBoundary : i > minBoundary;
-            const passMax = answer.includes('≤') ? i <= maxBoundary : i < maxBoundary;
+            const passMin = hasLeftEqual ? i >= minBoundary : i > minBoundary;
+            const passMax = hasRightEqual ? i <= maxBoundary : i < maxBoundary;
             if (passMin && passMax) {
               integers.push(i);
             }
