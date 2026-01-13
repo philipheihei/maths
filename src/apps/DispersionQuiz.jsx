@@ -446,7 +446,6 @@ export default function StatisticsApp() {
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [highlight, setHighlight] = useState(null);
-  const inputRef = useRef(null);
 
   // 使用 useCallback 優化輸入處理，避免不必要的重新渲染
   const handleInputChange = useCallback((e) => {
@@ -743,7 +742,6 @@ export default function StatisticsApp() {
           {!feedback || feedback.type === 'hint' ? (
             <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
               <input 
-                ref={inputRef}
                 type="text" 
                 inputMode="decimal"
                 value={userAnswer}
@@ -753,10 +751,10 @@ export default function StatisticsApp() {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
-                    e.stopPropagation();
                     checkAnswer();
                   }
                 }}
+                autoComplete="off"
               />
               <div className="flex gap-2 w-full md:w-auto">
                 <button 
@@ -779,6 +777,11 @@ export default function StatisticsApp() {
                 {feedback.type === 'correct' ? <CheckCircle /> : <XCircle />}
                 {feedback.msg}
               </div>
+              {feedback.type === 'correct' && (
+                <div className="text-sm mb-2">
+                  正確答案：<span className="font-bold">{formatAnswer(getCorrectAnswer())}</span>
+                </div>
+              )}
               {feedback.detail && (
                 <pre className="text-sm font-mono whitespace-pre-wrap bg-white/50 p-3 rounded mb-4">
                   {feedback.detail}
