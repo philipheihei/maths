@@ -752,6 +752,8 @@ export default function StatisticsApp() {
                 className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
+                    e.preventDefault();
+                    e.stopPropagation();
                     checkAnswer();
                   }
                 }}
