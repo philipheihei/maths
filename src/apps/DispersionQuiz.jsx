@@ -746,13 +746,12 @@ export default function StatisticsApp() {
                 ref={inputRef}
                 type="text" 
                 inputMode="decimal"
-                defaultValue={userAnswer}
-                key={`quiz-input-${currentChart}-${currentMeasure?.id}`}
+                value={userAnswer}
+                onChange={handleInputChange}
                 placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
                 className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    setUserAnswer(inputRef.current.value);
                     checkAnswer();
                   }
                 }}
@@ -765,12 +764,7 @@ export default function StatisticsApp() {
                   <HelpCircle size={18} /> 提示
                 </button>
                 <button 
-                  onClick={() => {
-                    if (inputRef.current) {
-                      setUserAnswer(inputRef.current.value);
-                      setTimeout(() => checkAnswer(), 0);
-                    }
-                  }}
+                  onClick={checkAnswer}
                   className="flex-1 md:flex-none px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
                 >
                   提交答案
