@@ -436,6 +436,15 @@ const FrequencyTable = ({ data, highlight }) => {
 
 // --- 主應用邏輯 ---
 
+// 將圖表組件完全獨立並 memoized，避免輸入時重新渲染
+const ChartDisplay = React.memo(({ chartType, data, highlight }) => {
+  if (chartType === 'box') return <BoxPlot data={data} highlight={highlight} />;
+  if (chartType === 'stem') return <StemLeafPlot data={data} highlight={highlight} />;
+  if (chartType === 'bar') return <BarChart data={data} highlight={highlight} />;
+  if (chartType === 'table') return <FrequencyTable data={data} highlight={highlight} />;
+  return null;
+});
+
 export default function StatisticsApp() {
   const [mode, setMode] = useState('menu'); // menu, quiz, learn
   const [currentChart, setCurrentChart] = useState(null); // box, stem, bar, table
@@ -653,15 +662,6 @@ export default function StatisticsApp() {
 
   // --- Views ---
 
-  // 使用 useMemo 緩存圖表渲染，避免輸入時不必要的重新渲染
-  const chartElement = useMemo(() => {
-    if (currentChart === 'box') return <BoxPlot data={data} highlight={highlight} />;
-    if (currentChart === 'stem') return <StemLeafPlot data={data} highlight={highlight} />;
-    if (currentChart === 'bar') return <BarChart data={data} highlight={highlight} />;
-    if (currentChart === 'table') return <FrequencyTable data={data} highlight={highlight} />;
-    return null;
-  }, [currentChart, data, highlight]);
-
   const MenuView = () => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
@@ -733,7 +733,7 @@ export default function StatisticsApp() {
         
         <div className="p-6 flex flex-col items-center justify-center min-h-[300px] bg-slate-50/50">
           <div className="w-full max-w-lg">
-            {chartElement}
+            <ChartDisplay chartType={currentChart} data={data} highlight={highlight} />
           </div>
         </div>
 
