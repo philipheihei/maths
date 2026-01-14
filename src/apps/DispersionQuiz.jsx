@@ -593,8 +593,8 @@ export default function StatisticsApp() {
     }
     // 整數不顯示小數
     if (Number.isInteger(val)) return val.toString();
-    // 移除尾隨零 (32.50 -> 32.5)
-    return parseFloat(val.toFixed(2)).toString();
+    // 使用3位有效數字
+    return formatToSignificantFigures(val, 3);
   };
 
   // 格式化為指定有效數字
