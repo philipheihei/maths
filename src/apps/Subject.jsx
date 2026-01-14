@@ -10,9 +10,27 @@ const toLatex = (input) => {
 
   // Handle fractions: convert / to \frac{}{}
   if (latex.includes('/')) {
-    const parts = latex.split('/');
-    if (parts.length === 2) {
-      latex = `\\frac{${parts[0]}}{${parts[1]}}`;
+    // Check if there's an = sign
+    const eqIndex = latex.indexOf('=');
+    
+    if (eqIndex !== -1) {
+      // Split at = sign
+      const leftSide = latex.substring(0, eqIndex + 1);
+      const rightSide = latex.substring(eqIndex + 1);
+      
+      // Only process the right side for fractions
+      if (rightSide.includes('/')) {
+        const parts = rightSide.split('/');
+        if (parts.length === 2) {
+          latex = leftSide + `\\frac{${parts[0]}}{${parts[1]}}`;
+        }
+      }
+    } else {
+      // No = sign, process normally
+      const parts = latex.split('/');
+      if (parts.length === 2) {
+        latex = `\\frac{${parts[0]}}{${parts[1]}}`;
+      }
     }
   }
 
@@ -225,9 +243,15 @@ const Keyboard = ({ onKeyPress, problem }) => {
   const usedVars = new Set();
   
   if (problem) {
-    const problemText = (problem.text + problem.subject).toLowerCase();
+    // Remove LaTeX commands to avoid false matches (e.g., 'a' in '\frac')
+    const cleanText = (problem.text + problem.subject)
+      .replace(/\\[a-zA-Z]+/g, '') // Remove LaTeX commands like \frac, \text, etc.
+      .toLowerCase();
+    
     allVars.forEach(v => {
-      if (problemText.includes(v)) {
+      // Check if variable appears as standalone character (not part of word)
+      const regex = new RegExp(`[^a-z]${v}[^a-z]|^${v}[^a-z]|[^a-z]${v}$|^${v}$`);
+      if (regex.test(cleanText)) {
         usedVars.add(v);
       }
     });
@@ -503,44 +527,62 @@ const PracticePage = ({ score, setScore }) => {
 
   const currentStepData = () => {
     if (!problem) return {};
+    
+    let stepData = {};
     switch (currentQIndex) {
-      case 1: return { 
-        q: "有分數嗎?", 
-        affirmative: "有分數",
-        check: problem.steps.hasFraction, 
-        expected: problem.steps.step1Eq,
-        hint: "請進行交叉相乘或去分母 (Multiply)"
-      };
-      case 2: return { 
-        q: "有括號嗎?", 
-        affirmative: "有括號",
-        check: problem.steps.hasBracket, 
-        expected: problem.steps.step2Eq,
-        hint: "請拆括號 (Expand)"
-      };
-      case 3: return { 
-        q: "需要移項嗎?", 
-        affirmative: "需移項",
-        check: problem.steps.hasMove, 
-        expected: problem.steps.step3Eq,
-        hint: `將主項 ${problem.subject} 移至一邊，其他移至另一邊`
-      };
-      case 4: return { 
-        q: `有重複出現的主項 (${problem.subject}) 嗎?`, 
-        affirmative: "有重複出現的主項",
-        check: problem.steps.hasFactor, 
-        expected: problem.steps.step4Eq,
-        hint: "提取公因式 (Factorize)"
-      };
-      case 5: return { 
-        q: `主項 (${problem.subject}) 旁邊有其他代數或數字嗎?`, 
-        affirmative: `主項 (${problem.subject}) 旁邊有其他代數或數字`,
-        check: problem.steps.hasDivide, 
-        expected: problem.steps.step5Eq,
-        hint: "除過對面 (Divide)"
-      };
-      default: return {};
+      case 1: 
+        stepData = { 
+          q: "有分數嗎?", 
+          affirmative: "有分數",
+          check: problem.steps.hasFraction, 
+          expected: problem.steps.step1Eq,
+          hint: "請進行交叉相乘或去分母 (Multiply)"
+        };
+        break;
+      case 2: 
+        stepData = { 
+          q: "有括號嗎?", 
+          affirmative: "有括號",
+          check: problem.steps.hasBracket, 
+          expected: problem.steps.step2Eq,
+          hint: "請拆括號 (Expand)"
+        };
+        break;
+      case 3: 
+        stepData = { 
+          q: "需要移項嗎?", 
+          affirmative: "需移項",
+          check: problem.steps.hasMove, 
+          expected: problem.steps.step3Eq,
+          hint: `將主項 ${problem.subject} 移至一邊，其他移至另一邊`
+        };
+        break;
+      case 4: 
+        stepData = { 
+          q: `有重複出現的主項 (${problem.subject}) 嗎?`, 
+          affirmative: "有重複出現的主項",
+          check: problem.steps.hasFactor, 
+          expected: problem.steps.step4Eq,
+          hint: "提取公因式 (Factorize)"
+        };
+        break;
+      case 5: 
+        stepData = { 
+          q: `主項 (${problem.subject}) 旁邊有其他代數或數字嗎?`, 
+          affirmative: `主項 (${problem.subject}) 旁邊有其他代數或數字`,
+          check: problem.steps.hasDivide, 
+          expected: problem.steps.step5Eq,
+          hint: "除過對面 (Divide)"
+        };
+        break;
+      default: 
+        stepData = {};
     }
+    
+    // Debug log
+    console.log(`Step ${currentQIndex}:`, stepData);
+    
+    return stepData;
   };
 
   const handleYesNo = (answer) => {
