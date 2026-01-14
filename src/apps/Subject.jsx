@@ -179,7 +179,7 @@ const Keyboard = ({ onKeyPress, problem }) => {
   const varRow = allVars.filter(v => usedVars.has(v)).slice(0, 4);
   
   const rows = [
-    ['7', '8', '9', '÷', 'DEL', 'AC'],
+    ['7', '8', '9', 'FRAC', 'DEL', 'AC'],
     ['4', '5', '6', '×', '(', ')'],
     ['1', '2', '3', '-', ...varRow.slice(0, 2)],
     ['0', '.', '=', '+', ...varRow.slice(2, 4)]
@@ -193,7 +193,7 @@ const Keyboard = ({ onKeyPress, problem }) => {
             <button
               key={key}
               onClick={() => {
-                if (key === '÷') {
+                if (key === 'FRAC') {
                   onKeyPress('\\frac{}{}');
                 } else if (key === '×') {
                   onKeyPress('*');
@@ -207,7 +207,13 @@ const Keyboard = ({ onKeyPress, problem }) => {
               }}
               className={['DEL', 'AC'].includes(key) ? "bg-red-100 text-red-800 border-red-200" + btnClass.replace('bg-white', '') : btnClass}
             >
-              {key}
+              {key === 'FRAC' ? (
+                <span className="flex flex-col items-center text-xs leading-none">
+                  <span>a</span>
+                  <span className="border-t border-gray-400 w-full"></span>
+                  <span>b</span>
+                </span>
+              ) : key}
             </button>
           ))}
         </React.Fragment>
