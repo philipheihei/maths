@@ -10,21 +10,32 @@ const toLatex = (input) => {
 
   // Handle fractions: convert / to \frac{}{}
   if (latex.includes('/')) {
-    // Check if there's an = sign
     const eqIndex = latex.indexOf('=');
     
     if (eqIndex !== -1) {
-      // Split at = sign
-      const leftSide = latex.substring(0, eqIndex + 1);
+      // Has equation - process both sides
+      const leftSide = latex.substring(0, eqIndex);
       const rightSide = latex.substring(eqIndex + 1);
       
-      // Only process the right side for fractions
+      // Process left side
+      let processedLeft = leftSide;
+      if (leftSide.includes('/')) {
+        const parts = leftSide.split('/');
+        if (parts.length === 2) {
+          processedLeft = `\\frac{${parts[0]}}{${parts[1]}}`;
+        }
+      }
+      
+      // Process right side
+      let processedRight = rightSide;
       if (rightSide.includes('/')) {
         const parts = rightSide.split('/');
         if (parts.length === 2) {
-          latex = leftSide + `\\frac{${parts[0]}}{${parts[1]}}`;
+          processedRight = `\\frac{${parts[0]}}{${parts[1]}}`;
         }
       }
+      
+      return processedLeft + '=' + processedRight;
     } else {
       // No = sign, process normally
       const parts = latex.split('/');
@@ -244,7 +255,7 @@ const Keyboard = ({ onKeyPress, problem }) => {
   
   if (problem) {
     // Remove LaTeX commands to avoid false matches (e.g., 'a' in '\frac')
-    const cleanText = (problem.text + problem.subject)
+    const cleanText = (problem.text + ' ' + problem.subject)
       .replace(/\\[a-zA-Z]+/g, '') // Remove LaTeX commands like \frac, \text, etc.
       .toLowerCase();
     
