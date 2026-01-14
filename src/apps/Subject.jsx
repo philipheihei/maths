@@ -435,7 +435,7 @@ const LearnPage = ({ setTab }) => {
 };
 
 // Practice Page
-const PracticePage = () => {
+const PracticePage = ({ score, setScore }) => {
   const [problem, setProblem] = useState(null);
   const [currentQIndex, setCurrentQIndex] = useState(1);
   const [history, setHistory] = useState([]);
@@ -443,7 +443,6 @@ const PracticePage = () => {
   const [feedback, setFeedback] = useState(null);
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [completed, setCompleted] = useState(false);
-  const [score, setScore] = useState(0);
 
   useEffect(() => {
     loadNewProblem();
@@ -648,15 +647,10 @@ const PracticePage = () => {
 
       {!completed && (
         <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-100 animate-slide-up">
-           <div className="flex justify-between items-center mb-4">
-             <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-               <span className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">{currentQIndex}</span>
-               {showKeyboard ? currentStepData().affirmative : currentStepData().q}
-             </h3>
-             <div className="bg-yellow-100 text-yellow-800 font-bold px-4 py-2 rounded-full text-sm">
-               分數: {score}
-             </div>
-           </div>
+           <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+             <span className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">{currentQIndex}</span>
+             {showKeyboard ? currentStepData().affirmative : currentStepData().q}
+           </h3>
 
            {!showKeyboard ? (
              <div className="flex gap-4">
@@ -735,6 +729,7 @@ const PracticePage = () => {
 // --- MAIN APP SHELL ---
 const App = () => {
   const [tab, setTab] = useState('learn'); // 'learn' | 'practice'
+  const [score, setScore] = useState(0);
 
   // Load KaTeX globally once on component mount
   useEffect(() => {
@@ -754,7 +749,7 @@ const App = () => {
               <Calculator className="w-6 h-6" />
               <span>主項變換大師</span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               <button 
                 onClick={() => setTab('learn')}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${tab === 'learn' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-100'}`}
@@ -767,13 +762,18 @@ const App = () => {
               >
                 實戰 (Practice)
               </button>
+              {tab === 'practice' && (
+                <div className="bg-yellow-100 text-yellow-800 font-bold px-4 py-2 rounded-full text-sm">
+                  分數: {score}
+                </div>
+              )}
             </div>
           </div>
         </div>
       </nav>
 
       <main className="p-4">
-        {tab === 'learn' ? <LearnPage setTab={setTab} /> : <PracticePage />}
+        {tab === 'learn' ? <LearnPage setTab={setTab} /> : <PracticePage score={score} setScore={setScore} />}
       </main>
 
       <style>{`
