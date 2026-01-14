@@ -10,6 +10,7 @@ import DispersionQuiz from './apps/DispersionQuiz';
 import InequalityQuiz from './apps/InequalityQuiz';
 import CompoundInequalityQuiz from './apps/CompoundInequalityQuiz';
 import VariationQuiz from './apps/VariationQuiz';
+import Subject from './apps/Subject';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/inequality-quiz" element={<InequalityQuiz />} />
         <Route path="/compound-inequality-quiz" element={<CompoundInequalityQuiz />} />
         <Route path="/variation-quiz" element={<VariationQuiz />} />
+        <Route path="/subject" element={<Subject />} />
       </Routes>
     </Router>
   );

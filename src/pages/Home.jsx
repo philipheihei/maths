@@ -150,6 +150,22 @@ const Home = () => {
       category: '高中',
       topics: ['正變', '反變', '聯變', '部分變'],
       inDevelopment: false
+    },
+    {
+      id: 'subject',
+      title: '主項變換',
+      description: 'F2 CH5 主項變換：學習「乘、拆、移、抽、除」五步曲',
+      icon: Calculator,
+      color: 'bg-cyan-500',
+      hoverColor: 'hover:bg-cyan-600',
+      path: '/subject',
+      level: 'F2',
+      badges: [
+        { level: 'F2', chapter: 'CH5', subject: '主項變換' }
+      ],
+      category: '初中',
+      topics: ['主項變換', '公式變換', '代數'],
+      inDevelopment: false
     }
   ];
 
