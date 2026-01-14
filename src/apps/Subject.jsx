@@ -159,15 +159,30 @@ const checkAnswer = (input, expected) => {
 
 // --- COMPONENTS ---
 
-const Keyboard = ({ onKeyPress }) => {
+const Keyboard = ({ onKeyPress, problem }) => {
   const btnClass = "bg-white border border-gray-300 rounded-lg p-3 shadow-sm active:bg-blue-100 hover:bg-gray-50 text-lg font-medium flex justify-center items-center transition-colors select-none";
   
+  // Extract variables from problem
+  const allVars = ['x', 'y', 'a', 'b', 'h', 'k', 'm', 'n'];
+  const usedVars = new Set();
+  
+  if (problem) {
+    const problemText = (problem.text + problem.subject).toLowerCase();
+    allVars.forEach(v => {
+      if (problemText.includes(v)) {
+        usedVars.add(v);
+      }
+    });
+  }
+  
+  // Build rows dynamically - max 4 variables
+  const varRow = allVars.filter(v => usedVars.has(v)).slice(0, 4);
+  
   const rows = [
-    ['7', '8', '9', '/', '(', ')'],
-    ['4', '5', '6', '*', 'x', 'y'],
-    ['1', '2', '3', '-', 'a', 'b'],
-    ['0', '.', '=', '+', 'h', 'k'],
-    ['^', '\\frac{}{}', 'DEL', 'CLR', 'm', 'n']
+    ['7', '8', '9', '÷', 'DEL', 'AC'],
+    ['4', '5', '6', '×', '(', ')'],
+    ['1', '2', '3', '-', ...varRow.slice(0, 2)],
+    ['0', '.', '=', '+', ...varRow.slice(2, 4)]
   ];
 
   return (
@@ -177,10 +192,22 @@ const Keyboard = ({ onKeyPress }) => {
           {row.map((key) => (
             <button
               key={key}
-              onClick={() => onKeyPress(key)}
-              className={key === 'DEL' || key === 'CLR' ? "col-span-1 bg-red-100 text-red-800 border-red-200" + btnClass.replace('bg-white', '') : btnClass}
+              onClick={() => {
+                if (key === '÷') {
+                  onKeyPress('\\frac{}{}');
+                } else if (key === '×') {
+                  onKeyPress('*');
+                } else if (key === 'DEL') {
+                  onKeyPress('DEL');
+                } else if (key === 'AC') {
+                  onKeyPress('CLR');
+                } else {
+                  onKeyPress(key);
+                }
+              }}
+              className={['DEL', 'AC'].includes(key) ? "bg-red-100 text-red-800 border-red-200" + btnClass.replace('bg-white', '') : btnClass}
             >
-              {key === '\\frac{}{}' ? <span className="text-sm">Score</span> : key}
+              {key}
             </button>
           ))}
         </React.Fragment>
@@ -642,7 +669,7 @@ const PracticePage = () => {
                    else if (key === 'DEL') setInputVal(prev => prev.slice(0, -1));
                    else if (key === '\\frac{}{}') setInputVal(prev => prev + "\\frac{}{}");
                    else setInputVal(prev => prev + key);
-               }} />
+               }} problem={problem} />
              </div>
            )}
 
