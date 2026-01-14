@@ -3,6 +3,22 @@ import { BookOpen, Calculator, Check, X, RefreshCw, ChevronRight, HelpCircle, Ar
 import { Link } from 'react-router-dom';
 import { loadKatexOnce } from '../utils/katexLoader';
 
+// --- Input to LaTeX Converter ---
+const toLatex = (input) => {
+  if (!input) return '';
+  let latex = input;
+
+  // Handle fractions: convert / to \frac{}{}
+  if (latex.includes('/')) {
+    const parts = latex.split('/');
+    if (parts.length === 2) {
+      latex = `\\frac{${parts[0]}}{${parts[1]}}`;
+    }
+  }
+
+  return latex;
+};
+
 // --- Math Rendering Helper ---
 const Latex = ({ children, block = false }) => {
   const containerRef = useRef(null);
@@ -179,7 +195,7 @@ const Keyboard = ({ onKeyPress, problem }) => {
   const varRow = allVars.filter(v => usedVars.has(v)).slice(0, 4);
   
   const rows = [
-    ['7', '8', '9', 'FRAC', 'DEL', 'AC'],
+    ['7', '8', '9', '/', 'DEL', 'AC'],
     ['4', '5', '6', '×', '(', ')'],
     ['1', '2', '3', '-', ...varRow.slice(0, 2)],
     ['0', '.', '=', '+', ...varRow.slice(2, 4)]
@@ -193,9 +209,7 @@ const Keyboard = ({ onKeyPress, problem }) => {
             <button
               key={key}
               onClick={() => {
-                if (key === 'FRAC') {
-                  onKeyPress('\\frac{}{}');
-                } else if (key === '×') {
+                if (key === '×') {
                   onKeyPress('*');
                 } else if (key === 'DEL') {
                   onKeyPress('DEL');
@@ -207,11 +221,11 @@ const Keyboard = ({ onKeyPress, problem }) => {
               }}
               className={['DEL', 'AC'].includes(key) ? "bg-red-100 text-red-800 border-red-200" + btnClass.replace('bg-white', '') : btnClass}
             >
-              {key === 'FRAC' ? (
+              {key === '/' ? (
                 <span className="flex flex-col items-center text-xs leading-none">
-                  <span>a</span>
+                  <span>◻</span>
                   <span className="border-t border-gray-400 w-full"></span>
-                  <span>b</span>
+                  <span>◻</span>
                 </span>
               ) : key}
             </button>
@@ -667,7 +681,7 @@ const PracticePage = () => {
                </div>
                
                <div className="w-full bg-gray-50 border-2 border-blue-200 rounded-xl p-4 min-h-[60px] flex items-center text-xl relative focus-within:ring-2 ring-blue-400">
-                 {inputVal ? <Latex>{inputVal}</Latex> : <span className="text-gray-400">點擊下方鍵盤輸入...</span>}
+                 {inputVal ? <Latex>{toLatex(inputVal)}</Latex> : <span className="text-gray-400">點擊下方鍵盤輸入...</span>}
                  <div className="absolute right-3 top-3 animate-pulse w-0.5 h-6 bg-blue-500"></div>
                </div>
 
@@ -681,7 +695,6 @@ const PracticePage = () => {
                <Keyboard onKeyPress={(key) => {
                    if (key === 'CLR') setInputVal("");
                    else if (key === 'DEL') setInputVal(prev => prev.slice(0, -1));
-                   else if (key === '\\frac{}{}') setInputVal(prev => prev + "\\frac{}{}");
                    else setInputVal(prev => prev + key);
                }} problem={problem} />
              </div>

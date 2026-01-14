@@ -99,7 +99,9 @@ const VariationQuiz = () => {
   const boxHeight = "min-h-[100px]";
 
   useEffect(() => {
-    loadKatexOnce();
+    loadKatexOnce().then(() => {
+      setIsLoaded(true);
+    });
     setQuestionSequence(shuffleArray(QUESTIONS_DATA));
   }, []);
 
