@@ -156,19 +156,61 @@ const normalizeMath = (str) => {
   if (!str) return "";
   return str.replace(/\s+/g, '')
             .replace(/\\cdot/g, '')
-            .replace(/\\times/g, '');
+            .replace(/\\times/g, '')
+            .replace(/\*/g, '');
+};
+
+// Sort terms in an expression to handle commutative property
+const sortTerms = (expr) => {
+  // Split by + and - while keeping the operators
+  const terms = [];
+  let currentTerm = '';
+  let currentSign = '+';
+  
+  for (let i = 0; i < expr.length; i++) {
+    const char = expr[i];
+    if ((char === '+' || char === '-') && i > 0) {
+      terms.push(currentSign + currentTerm);
+      currentSign = char;
+      currentTerm = '';
+    } else if (char !== '+' && char !== '-') {
+      currentTerm += char;
+    } else if (i === 0 && char === '-') {
+      currentSign = '-';
+    }
+  }
+  if (currentTerm) {
+    terms.push(currentSign + currentTerm);
+  }
+  
+  return terms.sort().join('').replace(/^\+/, '');
 };
 
 const checkAnswer = (input, expected) => {
   if (!expected) return true;
+  
   const cleanInput = normalizeMath(input);
   const cleanExpected = normalizeMath(expected);
+  
+  // Direct match
   if (cleanInput === cleanExpected) return true;
+  
+  // Check if it's an equation (has =)
   const partsIn = cleanInput.split('=');
   const partsEx = cleanExpected.split('=');
+  
   if (partsIn.length === 2 && partsEx.length === 2) {
-    if (partsIn[0] === partsEx[1] && partsIn[1] === partsEx[0]) return true;
+    // Try direct comparison with sorted terms
+    const sortedIn = [sortTerms(partsIn[0]), sortTerms(partsIn[1])];
+    const sortedEx = [sortTerms(partsEx[0]), sortTerms(partsEx[1])];
+    
+    // Check both orientations (a=b or b=a)
+    if ((sortedIn[0] === sortedEx[0] && sortedIn[1] === sortedEx[1]) ||
+        (sortedIn[0] === sortedEx[1] && sortedIn[1] === sortedEx[0])) {
+      return true;
+    }
   }
+  
   return false;
 };
 
