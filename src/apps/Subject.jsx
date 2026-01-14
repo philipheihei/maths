@@ -246,16 +246,25 @@ const checkAnswer = (input, expected) => {
 
 // --- COMPONENTS ---
 
-const Keyboard = ({ onKeyPress, problem }) => {
+const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
   const btnClass = "bg-white border border-gray-300 rounded-lg p-3 shadow-sm active:bg-blue-100 hover:bg-gray-50 text-lg font-medium flex justify-center items-center transition-colors select-none";
   
-  // Extract variables from problem
+  // Extract variables from problem and current equation
   const allVars = ['x', 'y', 'a', 'b', 'h', 'k', 'm', 'n'];
   const usedVars = new Set();
   
+  // Combine problem text and current equation for comprehensive variable extraction
+  let extractionText = '';
   if (problem) {
+    extractionText = problem.text + ' ' + problem.subject;
+  }
+  if (currentEquation) {
+    extractionText += ' ' + currentEquation;
+  }
+  
+  if (extractionText) {
     // Remove LaTeX commands to avoid false matches (e.g., 'a' in '\frac')
-    const cleanText = (problem.text + ' ' + problem.subject)
+    const cleanText = extractionText
       .replace(/\\[a-zA-Z]+/g, '') // Remove LaTeX commands like \frac, \text, etc.
       .toLowerCase();
     
@@ -785,7 +794,7 @@ const PracticePage = ({ score, setScore }) => {
                    if (key === 'CLR') setInputVal("");
                    else if (key === 'DEL') setInputVal(prev => prev.slice(0, -1));
                    else setInputVal(prev => prev + key);
-               }} problem={problem} />
+               }} problem={problem} currentEquation={getCurrentEquation()} />
              </div>
            )}
 
