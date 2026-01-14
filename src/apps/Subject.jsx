@@ -1,34 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BookOpen, Calculator, Check, X, RefreshCw, ChevronRight, HelpCircle, ArrowRight, Info, Lightbulb, FileText } from 'lucide-react';
-
-// --- KaTeX Style Injection ---
-const KatexStyle = () => (
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
-    xintegrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC"
-    crossOrigin="anonymous"
-  />
-);
+import { BookOpen, Calculator, Check, X, RefreshCw, ChevronRight, HelpCircle, ArrowRight, Info, Lightbulb, FileText, Home as HomeIcon } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { loadKatexOnce } from '../utils/katexLoader';
 
 // --- Math Rendering Helper ---
 const Latex = ({ children, block = false }) => {
   const containerRef = useRef(null);
   const [isKatexReady, setIsKatexReady] = useState(false);
 
-  // Check for Katex availability
+  // Load KaTeX once globally
   useEffect(() => {
-    if (window.katex) {
+    loadKatexOnce().then(() => {
       setIsKatexReady(true);
-    } else {
-      const interval = setInterval(() => {
-        if (window.katex) {
-          setIsKatexReady(true);
-          clearInterval(interval);
-        }
-      }, 100);
-      return () => clearInterval(interval);
-    }
+    }).catch((err) => {
+      console.error("KaTeX loading failed:", err);
+      setIsKatexReady(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -694,32 +681,21 @@ const PracticePage = () => {
 // --- MAIN APP SHELL ---
 const App = () => {
   const [tab, setTab] = useState('learn'); // 'learn' | 'practice'
-  const [katexLoaded, setKatexLoaded] = useState(false);
 
-  // Load Katex Globally once
+  // Load KaTeX globally once on component mount
   useEffect(() => {
-    if (!window.katex) {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js';
-        script.integrity = "sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja";
-        script.crossOrigin = "anonymous";
-        script.async = true;
-        script.onload = () => {
-            setKatexLoaded(true);
-        };
-        document.body.appendChild(script);
-    } else {
-        setKatexLoaded(true);
-    }
+    loadKatexOnce();
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
-      <KatexStyle />
-      
       <nav className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-3xl mx-auto px-4">
           <div className="flex justify-between items-center h-16">
+            <Link to="/" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
+              <HomeIcon className="w-5 h-5 text-gray-600" />
+              <span className="text-sm text-gray-600">返回</span>
+            </Link>
             <div className="flex items-center gap-2 font-bold text-xl text-blue-600">
               <Calculator className="w-6 h-6" />
               <span>主項變換大師</span>

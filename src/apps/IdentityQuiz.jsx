@@ -1,41 +1,15 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Lightbulb, Check, X, Trophy, GraduationCap, ArrowRight, Delete, Home as HomeIcon } from 'lucide-react';
+import { loadKatexOnce } from '../utils/katexLoader';
 
-// --- KaTeX 加載與渲染組件 (替代 react-katex) ---
-
-// 1. 動態加載 Script 和 CSS
-const loadKatex = () => {
-  return new Promise((resolve, reject) => {
-    if (window.katex) {
-      resolve();
-      return;
-    }
-
-    // 加載 CSS
-    if (!document.querySelector('link[href*="katex.min.css"]')) {
-      const link = document.createElement('link');
-      link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css";
-      link.rel = "stylesheet";
-      document.head.appendChild(link);
-    }
-
-    // 加載 JS
-    const script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js";
-    script.onload = () => resolve();
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-};
-
-// 2. 自定義 LaTeX 組件
+// 自定義 LaTeX 組件
 const Latex = ({ math, block = false }) => {
   const containerRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    loadKatex().then(() => setIsLoaded(true));
+    loadKatexOnce().then(() => setIsLoaded(true)).catch(e => console.error("KaTeX load error:", e));
   }, []);
 
   useEffect(() => {

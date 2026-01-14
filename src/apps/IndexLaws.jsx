@@ -1,26 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, CheckCircle, XCircle, HelpCircle, Calculator, ChevronRight, Eraser, Delete, ArrowRight, Check, Trophy, Home as HomeIcon } from 'lucide-react';
+import { loadKatexOnce } from '../utils/katexLoader';
 
 // --- KaTeX Loader & Component ---
 const useKatex = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (window.katex) {
+    loadKatexOnce().then(() => {
       setIsLoaded(true);
-      return;
-    }
-
-    const link = document.createElement('link');
-    link.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js';
-    script.onload = () => setIsLoaded(true);
-    document.head.appendChild(script);
+    }).catch(e => {
+      console.error("KaTeX loading failed:", e);
+      setIsLoaded(false);
+    });
   }, []);
 
   return isLoaded;

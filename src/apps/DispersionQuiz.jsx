@@ -15,27 +15,9 @@ import {
   TrendingUp,
   Home as HomeIcon
 } from 'lucide-react';
+import { loadKatexOnce } from '../utils/katexLoader';
 
 // --- KaTeX 加載與渲染組件 ---
-const loadKatex = () => {
-  return new Promise((resolve, reject) => {
-    if (window.katex) {
-      resolve();
-      return;
-    }
-    if (!document.querySelector('link[href*="katex.min.css"]')) {
-      const link = document.createElement('link');
-      link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css";
-      link.rel = "stylesheet";
-      document.head.appendChild(link);
-    }
-    const script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js";
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("KaTeX 載入失敗"));
-    document.head.appendChild(script);
-  });
-};
 
 // KaTeX 分數元件
 const Fraction = ({ numerator, denominator }) => {
@@ -43,7 +25,7 @@ const Fraction = ({ numerator, denominator }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    loadKatex().then(() => setKatexLoaded(true));
+    loadKatexOnce().then(() => setKatexLoaded(true)).catch(e => console.error("KaTeX load error:", e));
   }, []);
 
   useEffect(() => {
@@ -70,7 +52,7 @@ const KaTeXValue = ({ value }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    loadKatex().then(() => setKatexLoaded(true));
+    loadKatexOnce().then(() => setKatexLoaded(true)).catch(e => console.error("KaTeX load error:", e));
   }, []);
 
   useEffect(() => {
@@ -98,7 +80,7 @@ const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    loadKatex().then(() => setKatexLoaded(true));
+    loadKatexOnce().then(() => setKatexLoaded(true)).catch(e => console.error("KaTeX load error:", e));
   }, []);
 
   useEffect(() => {

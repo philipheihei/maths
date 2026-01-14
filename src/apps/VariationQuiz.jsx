@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { RefreshCw, Check, X, ArrowRight, Calculator, Delete, RotateCcw, CornerDownLeft, Trophy, BookOpen, XCircle, Home as HomeIcon } from 'lucide-react';
+import { loadKatexOnce } from '../utils/katexLoader';
 
 // --- STYLES & CONFIG ---
 const THEME = {
@@ -98,24 +99,8 @@ const VariationQuiz = () => {
   const boxHeight = "min-h-[100px]";
 
   useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css";
-    link.crossOrigin = "anonymous";
-    document.head.appendChild(link);
-
-    const script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js";
-    script.async = true;
-    script.onload = () => setIsLoaded(true);
-    document.head.appendChild(script);
-
+    loadKatexOnce();
     setQuestionSequence(shuffleArray(QUESTIONS_DATA));
-    
-    return () => {
-      document.head.removeChild(link);
-      document.head.removeChild(script);
-    }
   }, []);
 
   const currentQuestion = questionSequence[currentQIndex];
