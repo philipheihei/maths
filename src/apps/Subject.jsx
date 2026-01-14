@@ -423,6 +423,7 @@ const PracticePage = () => {
   const [feedback, setFeedback] = useState(null);
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     loadNewProblem();
@@ -436,6 +437,7 @@ const PracticePage = () => {
     setFeedback(null);
     setCompleted(false);
     setShowKeyboard(false);
+    setScore(0);
   };
 
   const currentStepData = () => {
@@ -523,6 +525,7 @@ const PracticePage = () => {
 
     if (isCorrect) {
       setFeedback({ type: 'success', msg: '正確！' });
+      setScore(prev => prev + 1);
       setHistory(prev => {
         const newHist = [...prev];
         newHist[newHist.length - 1].done = true;
@@ -625,10 +628,15 @@ const PracticePage = () => {
 
       {!completed && (
         <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-100 animate-slide-up">
-           <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-             <span className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">{currentQIndex}</span>
-             {showKeyboard ? currentStepData().affirmative : currentStepData().q}
-           </h3>
+           <div className="flex justify-between items-center mb-4">
+             <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+               <span className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">{currentQIndex}</span>
+               {showKeyboard ? currentStepData().affirmative : currentStepData().q}
+             </h3>
+             <div className="bg-yellow-100 text-yellow-800 font-bold px-4 py-2 rounded-full text-sm">
+               分數: {score}
+             </div>
+           </div>
 
            {!showKeyboard ? (
              <div className="flex gap-4">
@@ -721,7 +729,7 @@ const App = () => {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center gap-2 hover:opacity-70 transition-opacity">
               <HomeIcon className="w-5 h-5 text-gray-600" />
-              <span className="text-sm text-gray-600">返回</span>
+              <span className="text-sm text-gray-600">返回主頁</span>
             </Link>
             <div className="flex items-center gap-2 font-bold text-xl text-blue-600">
               <Calculator className="w-6 h-6" />
