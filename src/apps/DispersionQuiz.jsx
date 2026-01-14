@@ -434,6 +434,52 @@ const FrequencyTable = ({ data, highlight }) => {
   );
 };
 
+// --- 虛擬鍵盤組件 ---
+const Keypad = ({ value, onChange }) => {
+  const handleKeyClick = (key) => {
+    if (key === 'DEL') {
+      onChange(value.slice(0, -1));
+    } else {
+      // 防止多個小數點
+      if (key === '.' && value.includes('.')) return;
+      onChange(value + key);
+    }
+  };
+
+  const buttons = [
+    ['7', '8', '9'],
+    ['4', '5', '6'],
+    ['1', '2', '3'],
+    ['.', '0', 'DEL']
+  ];
+
+  return (
+    <div className="bg-slate-100 p-4 rounded-lg border border-slate-300 w-full max-w-xs mx-auto">
+      <div className="grid grid-cols-3 gap-2">
+        {buttons.map((row, rowIdx) => (
+          <div key={rowIdx} className="contents">
+            {row.map((key) => (
+              <button
+                key={key}
+                onClick={() => handleKeyClick(key)}
+                className={`p-4 rounded font-bold text-lg transition-colors ${
+                  key === 'DEL'
+                    ? 'bg-red-500 hover:bg-red-600 text-white'
+                    : key === '.'
+                    ? 'bg-slate-400 hover:bg-slate-500 text-white'
+                    : 'bg-blue-500 hover:bg-blue-600 text-white'
+                }`}
+              >
+                {key === 'DEL' ? '⌫' : key}
+              </button>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 // --- 主應用邏輯 ---
 
 // 將圖表組件完全獨立並 memoized，避免輸入時重新渲染
@@ -740,36 +786,45 @@ export default function StatisticsApp() {
         {/* Input Area */}
         <div className="p-4 bg-white border-t border-slate-100">
           {!feedback || feedback.type === 'hint' ? (
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
-              <input 
-                type="text" 
-                inputMode="decimal"
-                value={userAnswer}
-                onChange={handleInputChange}
-                placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
-                className="w-full md:w-64 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    checkAnswer();
-                  }
-                }}
-                autoComplete="off"
-              />
-              <div className="flex gap-2 w-full md:w-auto">
+            <div className="flex flex-col gap-4 items-center justify-center">
+              <div className="flex flex-col md:flex-row gap-4 items-center justify-center w-full md:w-auto">
+                <div className="relative w-full md:w-64">
+                  <input 
+                    type="text" 
+                    inputMode="decimal"
+                    value={userAnswer}
+                    onChange={handleInputChange}
+                    placeholder={currentMeasure?.id === 'mode' ? '輸入眾數（多個用逗號分隔，如：58,67,89）' : '輸入你的答案...'}
+                    className="w-full p-3 pr-14 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        checkAnswer();
+                      }
+                    }}
+                    autoComplete="off"
+                  />
+                  <button 
+                    onClick={checkAnswer}
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded transition-colors flex items-center justify-center"
+                    title="提交答案"
+                  >
+                    ✓
+                  </button>
+                </div>
                 <button 
                   onClick={showHint}
                   className="flex-1 md:flex-none px-6 py-3 bg-amber-100 text-amber-700 font-bold rounded-lg hover:bg-amber-200 transition-colors flex items-center justify-center gap-2"
                 >
                   <HelpCircle size={18} /> 提示
                 </button>
-                <button 
-                  onClick={checkAnswer}
-                  className="flex-1 md:flex-none px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
-                >
-                  提交答案
-                </button>
               </div>
+              
+              {/* 虛擬數字鍵盤 */}
+              <Keypad 
+                value={userAnswer}
+                onChange={setUserAnswer}
+              />
             </div>
           ) : (
             <div className={`p-4 rounded-lg flex flex-col items-center text-center ${feedback.type === 'correct' ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
