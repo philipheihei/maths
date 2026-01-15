@@ -260,101 +260,57 @@ const sortTerms = (expr) => {
 const checkAnswer = (input, expected, problem = null, currentStep = null) => {
   if (!expected) return true;
   
-  const cleanInput = normalizeMath(input);
-  const cleanExpected = normalizeMath(expected);
+  // Convert both to LaTeX for visual comparison (not string comparison)
+  const inputLatex = toLatex(input);
+  const expectedLatex = toLatex(expected);
   
-  // Direct match
-  if (cleanInput === cleanExpected) return true;
+  // Normalize both LaTeX for comparison (remove spaces, brackets and formatting)
+  const normalizeLatex = (latex) => {
+    return latex
+      .replace(/\s+/g, '')
+      .replace(/\\frac/g, 'FRAC')  // Preserve frac structure
+      .replace(/[{}()]/g, '')       // Remove all brackets
+      .replace(/\\\(/g, '')
+      .replace(/\\\)/g, '')
+      .replace(/\\text\{[^}]*\}/g, '')  // Remove text commands
+      .toLowerCase();
+  };
+  
+  const normalizedInput = normalizeLatex(inputLatex);
+  const normalizedExpected = normalizeLatex(expectedLatex);
+  
+  console.log('Input:', input, '→ LaTeX:', inputLatex, '→ Normalized:', normalizedInput);
+  console.log('Expected:', expected, '→ LaTeX:', expectedLatex, '→ Normalized:', normalizedExpected);
+  
+  // Direct visual match
+  if (normalizedInput === normalizedExpected) return true;
   
   // Check if it's an equation (has =)
-  const partsIn = cleanInput.split('=');
-  const partsEx = cleanExpected.split('=');
-  
-  if (partsIn.length === 2 && partsEx.length === 2) {
-    // Try direct comparison with sorted terms
-    const sortedIn = [sortTerms(partsIn[0]), sortTerms(partsIn[1])];
-    const sortedEx = [sortTerms(partsEx[0]), sortTerms(partsEx[1])];
+  if (inputLatex.includes('=') && expectedLatex.includes('=')) {
+    const partsIn = normalizedInput.split('=');
+    const partsEx = normalizedExpected.split('=');
     
-    // Check both orientations (a=b or b=a) - 主項在左或右都接受
-    if ((sortedIn[0] === sortedEx[0] && sortedIn[1] === sortedEx[1]) ||
-        (sortedIn[0] === sortedEx[1] && sortedIn[1] === sortedEx[0])) {
-      return true;
-    }
-    
-    // Additional check: allow reversed equation (subject on right side)
-    // Example: both "y=(k-7x)/5" and "(k-7x)/5=y" are correct
-    const reversedInput = partsIn[1] + '=' + partsIn[0];
-    if (normalizeMath(reversedInput) === cleanExpected) {
-      return true;
-    }
-    
-    // NEW: Check for equivalent fractions without parentheses
-    // Example: "2a-mn/m" should be accepted as "2a-mn/m" even if expected is "(2a-mn)/m"
-    // by normalizing fraction positions
-    const normalizedInput = normalizeFractionNotation(cleanInput);
-    const normalizedExpected = normalizeFractionNotation(cleanExpected);
-    
-    if (normalizedInput === normalizedExpected) return true;
-    
-    // Special case for step 4 (Factor): allow simplified form
-    // Example: accept "-y=h-4n" when expected is "y(4-5)=h-4n"
-    if (currentStep === 4 && problem && problem.steps.step4EqSimplified) {
-      const cleanSimplified = normalizeMath(problem.steps.step4EqSimplified);
-      if (cleanInput === cleanSimplified) return true;
+    if (partsIn.length === 2 && partsEx.length === 2) {
+      const [inLeft, inRight] = partsIn;
+      const [exLeft, exRight] = partsEx;
       
-      // Also check reversed
-      const partsSimp = cleanSimplified.split('=');
-      if (partsSimp.length === 2) {
-        const reversedSimp = partsSimp[1] + '=' + partsSimp[0];
-        if (cleanInput === normalizeMath(reversedSimp)) return true;
+      // Check both orientations (left=right or right=left)
+      // Also trim any whitespace
+      const match1 = inLeft.trim() === exLeft.trim() && inRight.trim() === exRight.trim();
+      const match2 = inLeft.trim() === exRight.trim() && inRight.trim() === exLeft.trim();
+      
+      console.log('Parts comparison:', {
+        inLeft, inRight, exLeft, exRight,
+        match1, match2
+      });
+      
+      if (match1 || match2) {
+        return true;
       }
     }
   }
   
   return false;
-};
-
-// Helper function to normalize fraction notation for comparison
-const normalizeFractionNotation = (expr) => {
-  // Convert "a/b" to "(a)/b" for consistent comparison
-  // This helps match "2a-mn/m" with "(2a-mn)/m"
-  
-  if (!expr.includes('/')) return expr;
-  
-  // Split by equation sign if present
-  const eqIndex = expr.indexOf('=');
-  let left = expr;
-  let right = '';
-  
-  if (eqIndex !== -1) {
-    left = expr.substring(0, eqIndex);
-    right = expr.substring(eqIndex + 1);
-  }
-  
-  // Process fractions in each part
-  left = normalizeFractionInPart(left);
-  if (right) {
-    right = normalizeFractionInPart(right);
-  }
-  
-  return eqIndex !== -1 ? left + '=' + right : left;
-};
-
-const normalizeFractionInPart = (part) => {
-  const slashIndex = part.lastIndexOf('/');
-  if (slashIndex === -1) return part;
-  
-  // Get numerator and denominator
-  let numerator = part.substring(0, slashIndex);
-  let denominator = part.substring(slashIndex + 1);
-  
-  // If numerator has operators (+ or -) and is not wrapped in parentheses, wrap it
-  if ((numerator.includes('+') || numerator.includes('-')) && 
-      !numerator.startsWith('(') && !numerator.endsWith(')')) {
-    numerator = '(' + numerator + ')';
-  }
-  
-  return numerator + '/' + denominator;
 };
 
 
