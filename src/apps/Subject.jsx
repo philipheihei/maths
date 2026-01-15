@@ -449,7 +449,7 @@ const LearnPage = ({ setTab }) => {
     { num: 2, title: '拆 (Expand)', desc: '拆括號', formula: 'A(x+B) = C \\rightarrow Ax + AB = C', detail: '若有括號，將外面的數乘入括號內每一項。' },
     { num: 3, title: '移 (Move)', desc: '移項', formula: 'Ax + B = C \\rightarrow Ax = C - B', detail: '將含有主項(Subject)的項移至一邊，其他移至另一邊。緊記「過界變號」。' },
     { num: 4, title: '抽 (Factor)', desc: '提取公因式', formula: 'Ax + Bx = C \\rightarrow x(A+B) = C', detail: '若主項在多於一項出現，將主項抽出來，使其只出現一次。' },
-    { num: 5, title: '除 (Divide)', desc: '除係數', formula: 'x(A) = B \\rightarrow x = \\frac{B}{A}', detail: '將主項旁邊的係數或括號除到對面，令主項單獨存在。' },
+    { num: 5, title: '除 (Divide)', desc: '除係數', formula: 'Ax = B \\rightarrow x = \\frac{B}{A}', detail: '將主項旁邊的係數或括號除到對面，令主項單獨存在。' },
   ];
 
   const example1 = [
@@ -464,7 +464,7 @@ const LearnPage = ({ setTab }) => {
     { math: '\\text{令 } h \\text{ 成為公式 } \\frac{5}{h+k} = \\frac{k}{h-3} \\text{ 的主項}', action: '題目', explain: '目標：找 h = ?' },
     { math: '5(h-3) = k(h+k)', action: '乘', explain: 'Step 1: 交叉相乘 (Cross Multiply)' },
     { math: '5h - 15 = kh + k^2', action: '拆', explain: 'Step 2: 拆括號 (Expand)' },
-    { math: '5h - kh = k^2 + 15', action: '移', explain: 'Step 3: 將含 h 的項移左，其他移右' },
+    { math: '5h - kh = k^2 + 15', action: '移', explain: 'Step 3: 將有 h 的項移一邊，其他移另一邊' },
     { math: 'h(5 - k) = k^2 + 15', action: '抽', explain: 'Step 4: 提取公因式 h' },
     { math: 'h = \\frac{k^2 + 15}{5 - k}', action: '除', explain: 'Step 5: 將 (5-k) 除到對面' }
   ];
