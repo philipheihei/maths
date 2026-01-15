@@ -166,22 +166,6 @@ const Home = () => {
       category: '初中',
       topics: ['主項變換', '公式變換', '代數'],
       inDevelopment: false
-    },
-    {
-      id: 'make-subject-quiz',
-      title: '令 y 成為主項',
-      description: 'F2 CH5 主項變換練習：代數式化簡、設 y 為主項，強調答案必須化簡',
-      icon: Calculator,
-      color: 'bg-pink-500',
-      hoverColor: 'hover:bg-pink-600',
-      path: '/make-subject-quiz',
-      level: 'F2',
-      badges: [
-        { level: 'F2', chapter: 'CH5', subject: '主項變換' }
-      ],
-      category: '初中',
-      topics: ['主項變換', '化簡', '公式變換'],
-      inDevelopment: false
     }
   ];
 
