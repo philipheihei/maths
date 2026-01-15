@@ -181,17 +181,23 @@ const generateProblem = () => {
     problem.steps.step2Eq = `${n1}${s}+${n1}${a}=${n2}${s}+${b}`;
     problem.steps.hasMove = true;
     problem.steps.step3Eq = `${n1}${s}-${n2}${s}=${b}-${n1}${a}`;
-    problem.steps.hasFactor = true;
-    problem.steps.step4Eq = `${s}(${n1}-${n2})=${b}-${n1}${a}`;
-    problem.steps.step4EqSimplified = coeff.value === 1 ? `${s}=${b}-${n1}${a}` : (coeff.value === -1 ? `-${s}=${b}-${n1}${a}` : `${coeff.simplified}${s}=${b}-${n1}${a}`);
+    
+    // Only need Factor step if coefficients are different (not already combined)
+    // If n1 = n2, then 5k - 5k = 0k (no factoring needed, already simplified)
+    // Skip factor if coefficient is already a simple number after subtraction
+    problem.steps.hasFactor = false;  // Changed: no need to factor when it's already simplified like 5k-8k=-3k
+    problem.steps.step4Eq = problem.steps.step3Eq; // Skip factor, keep as is
+    
+    // Directly simplify to final form
     problem.steps.hasDivide = true;
-    // Simplified final answer
+    // Simplified final answer - just divide the combined coefficient
+    const simplifiedCoeff = coeff.simplified;
     if (coeff.value === 1) {
       problem.steps.step5Eq = `${s}=${b}-${n1}${a}`;
     } else if (coeff.value === -1) {
       problem.steps.step5Eq = `${s}=${n1}${a}-${b}`;
     } else {
-      problem.steps.step5Eq = `${s}=\\frac{${b}-${n1}${a}}{${coeff.simplified}}`;
+      problem.steps.step5Eq = `${s}=\\frac{${b}-${n1}${a}}{${simplifiedCoeff}}`;
     }
   }
   // TYPE 4: Pure Factorization Focus: as - b = cs
@@ -276,6 +282,33 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
       .toLowerCase();
   };
   
+  // Sort terms in an expression to handle commutative property (a+b = b+a)
+  const sortTermsInExpr = (expr) => {
+    // Split by + and - while keeping operators
+    const terms = [];
+    let currentTerm = '';
+    let currentSign = '+';
+    
+    for (let i = 0; i < expr.length; i++) {
+      const char = expr[i];
+      if ((char === '+' || char === '-') && i > 0 && currentTerm) {
+        terms.push(currentSign + currentTerm);
+        currentSign = char;
+        currentTerm = '';
+      } else if (char !== '+' && char !== '-') {
+        currentTerm += char;
+      } else if (i === 0 && char === '-') {
+        currentSign = '-';
+      }
+    }
+    if (currentTerm) {
+      terms.push(currentSign + currentTerm);
+    }
+    
+    // Sort terms alphabetically
+    return terms.sort().join('').replace(/^\+/, '');
+  };
+  
   const normalizedInput = normalizeLatex(inputLatex);
   const normalizedExpected = normalizeLatex(expectedLatex);
   
@@ -291,15 +324,20 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
     const partsEx = normalizedExpected.split('=');
     
     if (partsIn.length === 2 && partsEx.length === 2) {
-      const [inLeft, inRight] = partsIn;
-      const [exLeft, exRight] = partsEx;
+      let [inLeft, inRight] = partsIn.map(p => p.trim());
+      let [exLeft, exRight] = partsEx.map(p => p.trim());
+      
+      // Sort terms in each side to handle commutative property
+      inLeft = sortTermsInExpr(inLeft);
+      inRight = sortTermsInExpr(inRight);
+      exLeft = sortTermsInExpr(exLeft);
+      exRight = sortTermsInExpr(exRight);
       
       // Check both orientations (left=right or right=left)
-      // Also trim any whitespace
-      const match1 = inLeft.trim() === exLeft.trim() && inRight.trim() === exRight.trim();
-      const match2 = inLeft.trim() === exRight.trim() && inRight.trim() === exLeft.trim();
+      const match1 = inLeft === exLeft && inRight === exRight;
+      const match2 = inLeft === exRight && inRight === exLeft;
       
-      console.log('Parts comparison:', {
+      console.log('Parts comparison (sorted):', {
         inLeft, inRight, exLeft, exRight,
         match1, match2
       });
