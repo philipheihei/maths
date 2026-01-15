@@ -83,6 +83,12 @@ const Latex = ({ children, block = false }) => {
   return <span ref={containerRef} className={`${block ? "block my-2" : "inline"}`} />;
 };
 
+// --- Simplification Helper ---
+const simplifyCoefficient = (n1, n2) => {
+  const result = n1 - n2;
+  return { original: `${n1}-${n2}`, simplified: result.toString(), value: result };
+};
+
 // --- Problem Generator Logic ---
 const generateProblem = () => {
   const types = ['fraction_simple', 'cross_mult', 'bracket_simple', 'factor_simple']; 
@@ -148,6 +154,7 @@ const generateProblem = () => {
   }
   // TYPE 3: Brackets & Factorization: n1(s + a) = n2 s + b
   else if (type === 'bracket_simple') {
+    const coeff = simplifyCoefficient(n1, n2);
     problem.text = `${n1}(${s} + ${a}) = ${n2}${s} + ${b}`;
     problem.subject = s;
     problem.steps.hasFraction = false;
@@ -158,11 +165,20 @@ const generateProblem = () => {
     problem.steps.step3Eq = `${n1}${s}-${n2}${s}=${b}-${n1}${a}`;
     problem.steps.hasFactor = true;
     problem.steps.step4Eq = `${s}(${n1}-${n2})=${b}-${n1}${a}`;
+    problem.steps.step4EqSimplified = coeff.value === 1 ? `${s}=${b}-${n1}${a}` : (coeff.value === -1 ? `-${s}=${b}-${n1}${a}` : `${coeff.simplified}${s}=${b}-${n1}${a}`);
     problem.steps.hasDivide = true;
-    problem.steps.step5Eq = `${s}=\\frac{${b}-${n1}${a}}{${n1}-${n2}}`;
+    // Simplified final answer
+    if (coeff.value === 1) {
+      problem.steps.step5Eq = `${s}=${b}-${n1}${a}`;
+    } else if (coeff.value === -1) {
+      problem.steps.step5Eq = `${s}=${n1}${a}-${b}`;
+    } else {
+      problem.steps.step5Eq = `${s}=\\frac{${b}-${n1}${a}}{${coeff.simplified}}`;
+    }
   }
   // TYPE 4: Pure Factorization Focus: as - b = cs
   else if (type === 'factor_simple') {
+    const coeff = simplifyCoefficient(a, n1);
     problem.text = `${a}${s} - ${b} = ${n1}${s}`;
     problem.subject = s;
     problem.steps.hasFraction = false;
@@ -173,8 +189,16 @@ const generateProblem = () => {
     problem.steps.step3Eq = `${a}${s}-${n1}${s}=${b}`;
     problem.steps.hasFactor = true;
     problem.steps.step4Eq = `${s}(${a}-${n1})=${b}`;
+    problem.steps.step4EqSimplified = coeff.value === 1 ? `${s}=${b}` : (coeff.value === -1 ? `-${s}=${b}` : `${coeff.simplified}${s}=${b}`);
     problem.steps.hasDivide = true;
-    problem.steps.step5Eq = `${s}=\\frac{${b}}{${a}-${n1}}`;
+    // Simplified final answer
+    if (coeff.value === 1) {
+      problem.steps.step5Eq = `${s}=${b}`;
+    } else if (coeff.value === -1) {
+      problem.steps.step5Eq = `${s}=-${b}`;
+    } else {
+      problem.steps.step5Eq = `${s}=\\frac{${b}}{${coeff.simplified}}`;
+    }
   }
 
   return problem;
@@ -215,7 +239,7 @@ const sortTerms = (expr) => {
   return terms.sort().join('').replace(/^\+/, '');
 };
 
-const checkAnswer = (input, expected) => {
+const checkAnswer = (input, expected, problem = null, currentStep = null) => {
   if (!expected) return true;
   
   const cleanInput = normalizeMath(input);
@@ -244,6 +268,20 @@ const checkAnswer = (input, expected) => {
     const reversedInput = partsIn[1] + '=' + partsIn[0];
     if (normalizeMath(reversedInput) === cleanExpected) {
       return true;
+    }
+    
+    // Special case for step 4 (Factor): allow simplified form
+    // Example: accept "-y=h-4n" when expected is "y(4-5)=h-4n"
+    if (currentStep === 4 && problem && problem.steps.step4EqSimplified) {
+      const cleanSimplified = normalizeMath(problem.steps.step4EqSimplified);
+      if (cleanInput === cleanSimplified) return true;
+      
+      // Also check reversed
+      const partsSimp = cleanSimplified.split('=');
+      if (partsSimp.length === 2) {
+        const reversedSimp = partsSimp[1] + '=' + partsSimp[0];
+        if (cleanInput === normalizeMath(reversedSimp)) return true;
+      }
     }
   }
   
@@ -651,7 +689,7 @@ const PracticePage = ({ score, setScore }) => {
 
   const handleEquationSubmit = () => {
     const { expected } = currentStepData();
-    const isCorrect = checkAnswer(inputVal, expected);
+    const isCorrect = checkAnswer(inputVal, expected, problem, currentQIndex);
 
     if (isCorrect) {
       setFeedback({ type: 'success', msg: '正確！' });
