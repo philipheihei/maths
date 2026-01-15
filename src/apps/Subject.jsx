@@ -860,7 +860,7 @@ const PracticePage = ({ score, setScore }) => {
             </div>
             {h.equation && (
                <div className="pl-9 text-lg text-gray-800">
-                 <Latex>{h.equation}</Latex>
+                 <Latex>{h.equation.includes('\\') ? h.equation : toLatex(h.equation)}</Latex>
                </div>
             )}
             {!h.equation && h.done && (
