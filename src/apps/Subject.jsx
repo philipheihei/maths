@@ -20,32 +20,50 @@ const toLatex = (input) => {
       // Process left side
       let processedLeft = leftSide;
       if (leftSide.includes('/')) {
-        const parts = leftSide.split('/');
-        if (parts.length === 2) {
-          processedLeft = `\\frac{${parts[0]}}{${parts[1]}}`;
-        }
+        processedLeft = processFraction(leftSide);
       }
       
       // Process right side
       let processedRight = rightSide;
       if (rightSide.includes('/')) {
-        const parts = rightSide.split('/');
-        if (parts.length === 2) {
-          processedRight = `\\frac{${parts[0]}}{${parts[1]}}`;
-        }
+        processedRight = processFraction(rightSide);
       }
       
       return processedLeft + '=' + processedRight;
     } else {
       // No = sign, process normally
-      const parts = latex.split('/');
-      if (parts.length === 2) {
-        latex = `\\frac{${parts[0]}}{${parts[1]}}`;
-      }
+      latex = processFraction(latex);
     }
   }
 
   return latex;
+};
+
+// Helper function to process fractions intelligently
+const processFraction = (expr) => {
+  const slashIndex = expr.lastIndexOf('/');
+  if (slashIndex === -1) return expr;
+  
+  // Find numerator (everything up to the /)
+  let numerator = expr.substring(0, slashIndex).trim();
+  let denominator = expr.substring(slashIndex + 1).trim();
+  
+  // Handle cases where numerator has multiple terms like "2a-mn"
+  // Check if numerator has operators but no parentheses
+  if (numerator.includes('-') || numerator.includes('+')) {
+    // If it contains operators, wrap it in braces for LaTeX
+    if (!numerator.startsWith('(') && !numerator.startsWith('{')) {
+      numerator = `{${numerator}}`;
+    }
+  }
+  
+  // If denominator has operators, also wrap it
+  if ((denominator.includes('-') || denominator.includes('+')) && 
+      !denominator.startsWith('(') && !denominator.startsWith('{')) {
+    denominator = `{${denominator}}`;
+  }
+  
+  return `\\frac${numerator}${denominator}`;
 };
 
 // --- Math Rendering Helper ---
@@ -270,6 +288,14 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
       return true;
     }
     
+    // NEW: Check for equivalent fractions without parentheses
+    // Example: "2a-mn/m" should be accepted as "2a-mn/m" even if expected is "(2a-mn)/m"
+    // by normalizing fraction positions
+    const normalizedInput = normalizeFractionNotation(cleanInput);
+    const normalizedExpected = normalizeFractionNotation(cleanExpected);
+    
+    if (normalizedInput === normalizedExpected) return true;
+    
     // Special case for step 4 (Factor): allow simplified form
     // Example: accept "-y=h-4n" when expected is "y(4-5)=h-4n"
     if (currentStep === 4 && problem && problem.steps.step4EqSimplified) {
@@ -286,6 +312,49 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
   }
   
   return false;
+};
+
+// Helper function to normalize fraction notation for comparison
+const normalizeFractionNotation = (expr) => {
+  // Convert "a/b" to "(a)/b" for consistent comparison
+  // This helps match "2a-mn/m" with "(2a-mn)/m"
+  
+  if (!expr.includes('/')) return expr;
+  
+  // Split by equation sign if present
+  const eqIndex = expr.indexOf('=');
+  let left = expr;
+  let right = '';
+  
+  if (eqIndex !== -1) {
+    left = expr.substring(0, eqIndex);
+    right = expr.substring(eqIndex + 1);
+  }
+  
+  // Process fractions in each part
+  left = normalizeFractionInPart(left);
+  if (right) {
+    right = normalizeFractionInPart(right);
+  }
+  
+  return eqIndex !== -1 ? left + '=' + right : left;
+};
+
+const normalizeFractionInPart = (part) => {
+  const slashIndex = part.lastIndexOf('/');
+  if (slashIndex === -1) return part;
+  
+  // Get numerator and denominator
+  let numerator = part.substring(0, slashIndex);
+  let denominator = part.substring(slashIndex + 1);
+  
+  // If numerator has operators (+ or -) and is not wrapped in parentheses, wrap it
+  if ((numerator.includes('+') || numerator.includes('-')) && 
+      !numerator.startsWith('(') && !numerator.endsWith(')')) {
+    numerator = '(' + numerator + ')';
+  }
+  
+  return numerator + '/' + denominator;
 };
 
 
