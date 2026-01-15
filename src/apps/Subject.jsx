@@ -313,10 +313,11 @@ const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
       .replace(/\\[a-zA-Z]+/g, '') // Remove LaTeX commands like \frac, \text, etc.
       .toLowerCase();
     
+    // Split by non-letter characters to extract standalone variables
+    const tokens = cleanText.split(/[^a-z]+/);
     allVars.forEach(v => {
-      // Check if variable appears as standalone character (not part of word)
-      const regex = new RegExp(`[^a-z]${v}[^a-z]|^${v}[^a-z]|[^a-z]${v}$|^${v}$`);
-      if (regex.test(cleanText)) {
+      // Check if variable appears as a standalone token
+      if (tokens.includes(v)) {
         usedVars.add(v);
       }
     });
