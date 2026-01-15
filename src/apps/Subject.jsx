@@ -233,9 +233,16 @@ const checkAnswer = (input, expected) => {
     const sortedIn = [sortTerms(partsIn[0]), sortTerms(partsIn[1])];
     const sortedEx = [sortTerms(partsEx[0]), sortTerms(partsEx[1])];
     
-    // Check both orientations (a=b or b=a)
+    // Check both orientations (a=b or b=a) - 主項在左或右都接受
     if ((sortedIn[0] === sortedEx[0] && sortedIn[1] === sortedEx[1]) ||
         (sortedIn[0] === sortedEx[1] && sortedIn[1] === sortedEx[0])) {
+      return true;
+    }
+    
+    // Additional check: allow reversed equation (subject on right side)
+    // Example: both "y=(k-7x)/5" and "(k-7x)/5=y" are correct
+    const reversedInput = partsIn[1] + '=' + partsIn[0];
+    if (normalizeMath(reversedInput) === cleanExpected) {
       return true;
     }
   }
