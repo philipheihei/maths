@@ -574,6 +574,7 @@ const PracticePage = ({ score, setScore }) => {
   const [feedback, setFeedback] = useState(null);
   const [showKeyboard, setShowKeyboard] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [isAnswering, setIsAnswering] = useState(false);
 
   useEffect(() => {
     loadNewProblem();
@@ -588,6 +589,7 @@ const PracticePage = ({ score, setScore }) => {
     setCompleted(false);
     setShowKeyboard(false);
     setScore(0);
+    setIsAnswering(false);
   };
 
   const currentStepData = () => {
@@ -651,6 +653,10 @@ const PracticePage = ({ score, setScore }) => {
   };
 
   const handleYesNo = (answer) => {
+    // Prevent multiple rapid clicks
+    if (isAnswering || feedback) return;
+    setIsAnswering(true);
+    
     const { check, expected } = currentStepData();
     const correct = (answer === (check ? 'yes' : 'no'));
 
@@ -658,9 +664,13 @@ const PracticePage = ({ score, setScore }) => {
       if (answer === 'yes') {
         setHistory(prev => [...prev, { step: currentQIndex, type: 'yesno', answer, correct: true, done: false }]);
         setShowKeyboard(true);
+        setIsAnswering(false);
       } else {
         setHistory(prev => [...prev, { step: currentQIndex, type: 'yesno', answer, correct: true, done: true, equation: null }]); 
-        nextStep(expected); 
+        setTimeout(() => {
+          nextStep(expected);
+          setIsAnswering(false);
+        }, 500);
       }
     } else {
       if (check) {
@@ -675,6 +685,7 @@ const PracticePage = ({ score, setScore }) => {
         setFeedback({ type: 'error', msg: errorMsg });
         setHistory(prev => [...prev, { step: currentQIndex, type: 'yesno', answer, correct: false, forced: true, done: false }]);
         setShowKeyboard(true);
+        setIsAnswering(false);
       } else {
         // User said Yes, but actually No
         setFeedback({ type: 'error', msg: '不對，其實沒有。直接下一步。' });
@@ -682,6 +693,7 @@ const PracticePage = ({ score, setScore }) => {
         setTimeout(() => {
             setFeedback(null);
             nextStep(expected);
+            setIsAnswering(false);
         }, 1500);
       }
     }
@@ -805,13 +817,23 @@ const PracticePage = ({ score, setScore }) => {
              <div className="flex gap-4">
                <button 
                  onClick={() => handleYesNo('yes')}
-                 className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
+                 disabled={isAnswering || feedback}
+                 className={`flex-1 font-bold py-3 rounded-xl transition-all shadow-md ${
+                   isAnswering || feedback 
+                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                     : 'bg-blue-600 hover:bg-blue-700 text-white active:scale-95'
+                 }`}
                >
                  有 (Yes)
                </button>
                <button 
                  onClick={() => handleYesNo('no')}
-                 className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition-all shadow-md active:scale-95"
+                 disabled={isAnswering || feedback}
+                 className={`flex-1 font-bold py-3 rounded-xl transition-all shadow-md ${
+                   isAnswering || feedback 
+                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                     : 'bg-gray-100 hover:bg-gray-200 text-gray-700 active:scale-95'
+                 }`}
                >
                  沒有 (No)
                </button>
@@ -830,7 +852,12 @@ const PracticePage = ({ score, setScore }) => {
 
                <button 
                  onClick={handleEquationSubmit}
-                 className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2"
+                 disabled={feedback || isAnswering}
+                 className={`w-full font-bold py-3 rounded-xl shadow-md transition-colors flex justify-center items-center gap-2 ${
+                   feedback || isAnswering
+                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                     : 'bg-green-600 hover:bg-green-700 text-white'
+                 }`}
                >
                  確認 (Check) <Check size={20}/>
                </button>
