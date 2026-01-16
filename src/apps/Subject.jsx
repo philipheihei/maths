@@ -124,6 +124,7 @@ const generateProblem = () => {
     id: Date.now(),
     text: "", 
     subject: "",
+    allVariables: [], // Track all variables explicitly
     steps: {
       hasFraction: false, step1Eq: null,
       hasBracket: false, step2Eq: null,
@@ -143,6 +144,7 @@ const generateProblem = () => {
   if (type === 'fraction_simple') {
     problem.text = `\\frac{${n1}${s} + ${a}}{${n2}} = ${b}`;
     problem.subject = s;
+    problem.allVariables = [s, a, b];
     problem.steps.hasFraction = true;
     problem.steps.step1Eq = `${n1}${s}+${a}=${n2}${b}`;
     problem.steps.hasBracket = false;
@@ -159,6 +161,7 @@ const generateProblem = () => {
     const C = getVar([s, a, b]);
     problem.text = `\\frac{${n1}}{${s} + ${a}} = \\frac{${C}}{${b}}`;
     problem.subject = s;
+    problem.allVariables = [s, a, b, C];
     problem.steps.hasFraction = true;
     problem.steps.step1Eq = `${n1}${b}=${C}(${s}+${a})`;
     problem.steps.hasBracket = true;
@@ -175,6 +178,7 @@ const generateProblem = () => {
     const coeff = simplifyCoefficient(n1, n2);
     problem.text = `${n1}(${s} + ${a}) = ${n2}${s} + ${b}`;
     problem.subject = s;
+    problem.allVariables = [s, a, b];
     problem.steps.hasFraction = false;
     problem.steps.step1Eq = problem.text;
     problem.steps.hasBracket = true;
@@ -205,6 +209,7 @@ const generateProblem = () => {
     const coeff = simplifyCoefficient(a, n1);
     problem.text = `${a}${s} - ${b} = ${n1}${s}`;
     problem.subject = s;
+    problem.allVariables = [s, a, b];
     problem.steps.hasFraction = false;
     problem.steps.step1Eq = problem.text;
     problem.steps.hasBracket = false;
@@ -361,7 +366,7 @@ const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
   const allVars = ['x', 'y', 'a', 'b', 'h', 'k', 'm', 'n'];
   const usedVars = new Set();
   
-  // Combine problem text and current equation for comprehensive variable extraction
+  // Collect all text to analyze
   let extractionText = '';
   if (problem) {
     extractionText = problem.text + ' ' + problem.subject;
@@ -371,52 +376,78 @@ const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
   }
   
   if (extractionText) {
-    // Remove LaTeX commands to avoid false matches (e.g., 'a' in '\frac')
-    const cleanText = extractionText
-      .replace(/\\[a-zA-Z]+/g, '') // Remove LaTeX commands like \frac, \text, etc.
-      .toLowerCase();
+    // Remove LaTeX commands carefully, preserving the variables inside them
+    let cleanedText = extractionText;
     
-    // Split by non-letter characters to extract standalone variables
-    const tokens = cleanText.split(/[^a-z]+/);
+    // Remove LaTeX command names (like \frac, \text) but keep the content
+    cleanedText = cleanedText.replace(/\\[a-zA-Z]+\{/g, ''); // Remove \frac{ etc
+    cleanedText = cleanedText.replace(/\}/g, ' '); // Replace } with space
+    cleanedText = cleanedText.replace(/\\/g, ' '); // Remove remaining backslashes
+    cleanedText = cleanedText.toLowerCase();
+    
+    // Extract each variable by checking if it appears in the text
     allVars.forEach(v => {
-      // Check if variable appears as a standalone token
-      if (tokens.includes(v)) {
+      // Look for the variable as a standalone character or next to numbers/symbols
+      // Match cases like: 'x', '2x', 'x+', 'x-', etc
+      if (cleanedText.includes(v)) {
         usedVars.add(v);
       }
     });
+    
+    // Backup: Also use problem.allVariables if available (explicit variable list)
+    if (problem && problem.allVariables && Array.isArray(problem.allVariables)) {
+      problem.allVariables.forEach(v => {
+        if (allVars.includes(v)) {
+          usedVars.add(v);
+        }
+      });
+    }
+    
+    // Debug log to help identify issues
+    console.log('Problem:', problem?.text);
+    console.log('Problem Variables:', problem?.allVariables);
+    console.log('Extraction Text:', extractionText);
+    console.log('Cleaned Text:', cleanedText);
+    console.log('Used Variables:', Array.from(usedVars));
   }
   
-  // Build rows dynamically - max 4 variables
-  const varRow = allVars.filter(v => usedVars.has(v)).slice(0, 4);
+  // Build rows dynamically - show ALL used variables (increase from 4 to 6 if needed)
+  const varRow = allVars.filter(v => usedVars.has(v));
   
   const rows = [
     ['7', '8', '9', '/', 'DEL', 'AC'],
     ['4', '5', '6', '×', '(', ')'],
-    ['1', '2', '3', '-', ...varRow.slice(0, 2)],
-    ['0', '.', '=', '+', ...varRow.slice(2, 4)]
+    ['1', '2', '3', '-', varRow[0] || 'EMPTY_0', varRow[1] || 'EMPTY_1'],
+    ['0', '.', '=', '+', varRow[2] || 'EMPTY_2', varRow[3] || 'EMPTY_3']
   ];
 
   return (
     <div className="grid grid-cols-6 gap-2 p-2 bg-gray-100 rounded-xl mt-4">
       {rows.map((row, rIdx) => (
         <React.Fragment key={rIdx}>
-          {row.map((key) => (
-            <button
-              key={key}
-              onClick={() => {
-                if (key === '×') {
-                  onKeyPress('*');
-                } else if (key === 'DEL') {
-                  onKeyPress('DEL');
-                } else if (key === 'AC') {
-                  onKeyPress('CLR');
-                } else {
-                  onKeyPress(key);
+          {row.map((key, colIdx) => {
+            const isEmptySlot = key.startsWith('EMPTY_');
+            return (
+              <button
+                key={`${rIdx}-${colIdx}`}
+                onClick={() => {
+                  if (key === '×') {
+                    onKeyPress('*');
+                  } else if (key === 'DEL') {
+                    onKeyPress('DEL');
+                  } else if (key === 'AC') {
+                    onKeyPress('CLR');
+                  } else if (!isEmptySlot) {
+                    onKeyPress(key);
+                  }
+                }}
+                disabled={isEmptySlot}
+                className={
+                  isEmptySlot ? 'bg-gray-50 border-0 cursor-default opacity-0' :
+                  ['DEL', 'AC'].includes(key) ? "bg-red-100 text-red-800 border-red-200" + btnClass.replace('bg-white', '') : btnClass
                 }
-              }}
-              className={['DEL', 'AC'].includes(key) ? "bg-red-100 text-red-800 border-red-200" + btnClass.replace('bg-white', '') : btnClass}
-            >
-              {key === '/' ? (
+              >
+              {isEmptySlot ? '' : key === '/' ? (
                 <span className="flex flex-col items-center text-xs leading-none">
                   <span>◻</span>
                   <span className="border-t border-gray-400 w-full"></span>
@@ -424,7 +455,8 @@ const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
                 </span>
               ) : key}
             </button>
-          ))}
+            );
+          })}
         </React.Fragment>
       ))}
     </div>
