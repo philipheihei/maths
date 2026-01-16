@@ -1001,6 +1001,8 @@ export default function StatisticsApp() {
         // 數據分成上下兩部分（以中位數為界）
         // - 下半部分（中位數前）的數字加黃色highlight
         // - 上半部分（中位數後）的數字加綠色highlight
+        // - 無論數據量單雙都顯示Q1、中位數、Q3的分隔線
+        
         let lowerHalf = sorted.slice(0, mid);
         let upperHalf = n % 2 === 0 ? sorted.slice(mid) : sorted.slice(mid + 1);
         
@@ -1018,37 +1020,40 @@ export default function StatisticsApp() {
         // 如果數據量是單數，中位數需要有紅色highlight及"中位數"標記
         if (n % 2 !== 0) {
           highlightIndices.push(mid); // 中位數位置加紅色highlight
-          dividerIndices.push({ afterIndex: mid, label: '中位數' }); // 添加中位數標記
         }
         
-        // 可選：添加分隔线来显示Q1和Q3
+        // 計算Q1和Q3位置並添加分隔線標記
         const lowerLen = lowerHalf.length;
         const upperLen = upperHalf.length;
         const lowerMid = Math.floor(lowerLen / 2);
         const upperMid = Math.floor(upperLen / 2);
         
-        // Q1 位置（下半部分的中位數）
+        // Q1 位置（下半部分的中位數）- 無論奇偶都添加
         if (lowerLen % 2 === 0) {
-          // 偶數個：Q1 在兩個數中間，加分隔线
+          // 偶數個：Q1 在兩個數中間
           dividerIndices.push({ afterIndex: lowerMid - 1, label: 'Q₁' });
         } else {
-          // 奇數個：Q1 直接是某個數，可以高亮它（但已經用黃色了）
-          // highlightIndices.push(lowerMid);
+          // 奇數個：Q1 直接是某個數（該數後面加分隔線）
+          dividerIndices.push({ afterIndex: lowerMid, label: 'Q₁' });
         }
         
-        // 中位數位置（用于显示）- 只在偶數個時添加
+        // 中位數位置 - 無論奇偶都添加
         if (n % 2 === 0) {
+          // 偶數個：中位數在兩個數中間
           dividerIndices.push({ afterIndex: mid - 1, label: '中位數' });
+        } else {
+          // 奇數個：中位數已經有紅色highlight，分隔線在中位數後面
+          dividerIndices.push({ afterIndex: mid, label: '中位數' });
         }
         
-        // Q3 位置（上半部分的中位數）
+        // Q3 位置（上半部分的中位數）- 無論奇偶都添加
         const upperStartIndexForQ = n % 2 === 0 ? mid : mid + 1;
         if (upperLen % 2 === 0) {
-          // 偶數個：Q3 在兩個數中間，加分隔线
+          // 偶數個：Q3 在兩個數中間
           dividerIndices.push({ afterIndex: upperStartIndexForQ + upperMid - 1, label: 'Q₃' });
         } else {
-          // 奇數個：Q3 直接是某個數，可以高亮它（但已經用綠色了）
-          // highlightIndices.push(upperStartIndexForQ + upperMid);
+          // 奇數個：Q3 直接是某個數（該數後面加分隔線）
+          dividerIndices.push({ afterIndex: upperStartIndexForQ + upperMid, label: 'Q₃' });
         }
       }
       
