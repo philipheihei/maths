@@ -1245,7 +1245,9 @@ export default function StatisticsApp() {
                             <p>
                               先找中位數，<b>中位數 = {formatAnswer(MathUtils.median(learnData))}</b><br/>
                               <br/>
-                              四分位數間距 = 上四分位數 - 下四分位數。<br/>
+                              然後以中位數標記的左右分成兩部份，再在上半部份找出中間的數字 (即Q<sub>3</sub>)；在下半部份找出中間的數字（即Q<sub>1</sub>)。<br/>
+                              <br/>
+                              四分位數間距 = 上四分位數(Q<sub>3</sub>) - 下四分位數(Q<sub>1</sub>)。<br/>
                               排序後的數據：{[...learnData].sort((a,b) => a-b).join(', ')}<br/>
                               <code>上四分位數 (Q<sub>3</sub>) = {formatAnswer(MathUtils.quartiles(learnData).q3)}，下四分位數 (Q<sub>1</sub>) = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
                               <b>四分位數間距 = Q<sub>3</sub> - Q<sub>1</sub> = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
