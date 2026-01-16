@@ -747,6 +747,24 @@ export default function StatisticsApp() {
       </div>
     <div className="max-w-4xl mx-auto p-4">
 
+      {/* Score Display */}
+      <div className="bg-white rounded-xl shadow-lg p-4 mb-6">
+        <div className="flex justify-between items-center">
+          <div className="text-lg">
+            <span className="text-slate-600">題目數：</span>
+            <span className="font-bold text-blue-600">
+              {totalQuestions}
+            </span>
+          </div>
+          <div className="text-lg">
+            <span className="text-slate-600">得分：</span>
+            <span className="font-bold text-green-600">
+              {score} / {totalQuestions > 0 ? totalQuestions : '-'}
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* Question Card */}
       <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden mb-6">
         <div className="bg-blue-50 p-4 border-b border-blue-100 flex items-center justify-between">
