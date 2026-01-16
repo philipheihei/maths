@@ -1318,11 +1318,11 @@ export default function StatisticsApp() {
                           )}
                           {selectedStat === 'stdDev' && (
                             <p>
-                              <b>使用 CASIO fx-50FH II 計算機 SD 模式：</b><br/>
+                              <b>使用計算機 SD 模式計算標準差：</b><br/>
                               <span className="text-slate-600 text-sm">
-                                1. 按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">MODE</kbd> → 選擇 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2 (SD)</kbd><br/>
-                                2. 逐個輸入數據，每個數後按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">M+</kbd> 或 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">DATA</kbd><br/>
-                                3. 輸入完畢後，按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">SHIFT</kbd> + <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2</kbd> (Ïσn) 得到標準差<br/>
+                                1. 按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">MODE</kbd> → 選擇 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">4 (SD)</kbd><br/>
+                                2. 逐個輸入數據，每個數後按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">M+</kbd> 來儲存<br/>
+                                3. 輸入完畢後，按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">SHIFT</kbd> <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2</kbd> <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2</kbd> (σn) 得到標準差<br/>
                               </span>
                               <br/>
                               數據：{learnData.join(', ')}<br/>
