@@ -273,7 +273,10 @@ const BoxPlot = ({ data, highlight }) => {
   );
 };
 
-const StemLeafPlot = ({ data, highlight, highlightIndices = [] }) => {
+const StemLeafPlot = ({ data, highlight, highlightIndices = [], dividerIndices = [] }) => {
+  // dividerIndices: 分隔线位置，格式为 [{afterIndex: number, label: string}]
+  // afterIndex 表示在第几个数之后加分隔线（基于排序后的索引）
+  
   // 先將數據排序並記錄位置
   const sortedData = [...data].sort((a, b) => a - b);
   
@@ -287,6 +290,11 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [] }) => {
   });
   
   const sortedStems = Object.keys(stems).sort((a,b)=>a-b);
+  
+  // 检查某个位置后是否需要分隔线
+  const getDividerAfter = (sortedIndex) => {
+    return dividerIndices.find(d => d.afterIndex === sortedIndex);
+  };
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center">
@@ -303,12 +311,23 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [] }) => {
             <tr key={stem} className="hover:bg-slate-50">
               <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">{stem}</td>
               <td className="pl-2 text-left">
-                <span className="text-lg flex">
+                <span className="text-lg flex items-center">
                   {stems[stem].map((item, i) => {
                     const isHighlighted = highlightIndices.includes(item.sortedIndex);
+                    const divider = getDividerAfter(item.sortedIndex);
                     return (
-                      <span key={i} className={`inline-block w-6 text-center transition-colors ${isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
-                        {item.leaf}
+                      <span key={i} className="inline-flex items-center">
+                        <span className={`inline-block w-6 text-center transition-colors ${isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
+                          {item.leaf}
+                        </span>
+                        {divider && (
+                          <span className="relative inline-flex items-center mx-0.5">
+                            <span className="w-0.5 h-8 bg-red-500"></span>
+                            <span className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-red-600 text-xs font-bold whitespace-nowrap">
+                              {divider.label}
+                            </span>
+                          </span>
+                        )}
                       </span>
                     );
                   })}
@@ -938,13 +957,17 @@ export default function StatisticsApp() {
       
       // 計算需要高亮的位置索引（基於排序後的位置）
       let highlightIndices = [];
+      let dividerIndices = []; // 分隔线位置
+      
+      const n = learnData.length;
+      const sorted = [...learnData].sort((a, b) => a - b);
+      const mid = Math.floor(n / 2);
+      
       if (selectedChart === 'stem' && learnHighlight === 'median') {
         // 中位數：高亮中間的一個或兩個數的位置
-        const n = learnData.length;
-        const mid = Math.floor(n / 2);
         if (n % 2 === 0) {
-          // 偶數個：高亮第 mid-1 和第 mid 個位置（排序後）
-          highlightIndices = [mid - 1, mid];
+          // 偶數個：在中間兩個數之間加分隔线
+          dividerIndices.push({ afterIndex: mid - 1, label: '中位數' });
         } else {
           // 奇數個：高亮第 mid 個位置
           highlightIndices = [mid];
@@ -953,7 +976,6 @@ export default function StatisticsApp() {
         // 眾數：高亮所有眾數的位置
         const modes = MathUtils.mode(learnData);
         if (modes.length > 0) {
-          const sorted = [...learnData].sort((a, b) => a - b);
           sorted.forEach((val, idx) => {
             if (modes.includes(val)) {
               highlightIndices.push(idx);
@@ -964,24 +986,44 @@ export default function StatisticsApp() {
         // 分佈域：高亮最小值和最大值的位置
         highlightIndices = [0, learnData.length - 1];
       } else if (selectedChart === 'stem' && learnHighlight === 'iqr') {
-        // 四分位數間距：高亮 Q1 和 Q3 的位置
-        const n = learnData.length;
-        const sorted = [...learnData].sort((a, b) => a - b);
-        const mid = Math.floor(n / 2);
-        
+        // 四分位數間距：用分隔线标示 Q1 和 Q3
         let lowerHalf = sorted.slice(0, mid);
         let upperHalf = n % 2 === 0 ? sorted.slice(mid) : sorted.slice(mid + 1);
         
-        // 計算 Q1 和 Q3 的位置
-        const q1Index = Math.floor(lowerHalf.length / 2);
-        const q3Index = mid + Math.floor(upperHalf.length / 2) + (n % 2 === 1 ? 1 : 0);
+        const lowerLen = lowerHalf.length;
+        const upperLen = upperHalf.length;
+        const lowerMid = Math.floor(lowerLen / 2);
+        const upperMid = Math.floor(upperLen / 2);
         
-        // 轉換回原始排序後的數據中的位置
-        highlightIndices = [q1Index, q3Index];
+        // Q1 位置
+        if (lowerLen % 2 === 0) {
+          // 偶數個：Q1 在兩個數中間，加分隔线
+          dividerIndices.push({ afterIndex: lowerMid - 1, label: 'Q₁' });
+        } else {
+          // 奇數個：Q1 直接是某個數，高亮它
+          highlightIndices.push(lowerMid);
+        }
+        
+        // 中位數位置（用于显示）
+        if (n % 2 === 0) {
+          dividerIndices.push({ afterIndex: mid - 1, label: '中位數' });
+        } else {
+          highlightIndices.push(mid);
+        }
+        
+        // Q3 位置
+        const upperStartIndex = n % 2 === 0 ? mid : mid + 1;
+        if (upperLen % 2 === 0) {
+          // 偶數個：Q3 在兩個數中間，加分隔线
+          dividerIndices.push({ afterIndex: upperStartIndex + upperMid - 1, label: 'Q₃' });
+        } else {
+          // 奇數個：Q3 直接是某個數，高亮它
+          highlightIndices.push(upperStartIndex + upperMid);
+        }
       }
       
       if (selectedChart === 'box') return <BoxPlot data={learnData} highlight={learnHighlight} />;
-      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} highlightIndices={highlightIndices} />;
+      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} highlightIndices={highlightIndices} dividerIndices={dividerIndices} />;
       if (selectedChart === 'bar') return <BarChart data={learnData} highlight={learnHighlight} />;
       if (selectedChart === 'table') return <FrequencyTable data={learnData} highlight={learnHighlight} />;
       return null;
@@ -1201,9 +1243,11 @@ export default function StatisticsApp() {
                           )}
                           {selectedStat === 'iqr' && selectedChart !== 'box' && (
                             <p>
+                              先找中位數，<b>中位數 = {formatAnswer(MathUtils.median(learnData))}</b><br/>
+                              <br/>
                               四分位數間距 = 上四分位數 - 下四分位數。<br/>
                               排序後的數據：{[...learnData].sort((a,b) => a-b).join(', ')}<br/>
-                              <code>上四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q3)}，下四分位數 = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
+                              <code>上四分位數 (Q<sub>3</sub>) = {formatAnswer(MathUtils.quartiles(learnData).q3)}，下四分位數 (Q<sub>1</sub>) = {formatAnswer(MathUtils.quartiles(learnData).q1)}</code><br/>
                               <b>四分位數間距 = Q<sub>3</sub> - Q<sub>1</sub> = {formatAnswer(MathUtils.quartiles(learnData).q3)} - {formatAnswer(MathUtils.quartiles(learnData).q1)} = {formatAnswer(MathUtils.iqr(learnData))}</b>
                             </p>
                           )}
