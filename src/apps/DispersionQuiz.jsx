@@ -1015,8 +1015,11 @@ export default function StatisticsApp() {
           highlightColors[upperStartIndex + idx] = 'green';
         });
         
-        // 如果數據量是雙數，中位數較前的數字已經加了黃色highlight，後的加綠色
-        // 如果數據量是單數，中位數不需要加highlight（不做任何操作）
+        // 如果數據量是單數，中位數需要有紅色highlight及"中位數"標記
+        if (n % 2 !== 0) {
+          highlightIndices.push(mid); // 中位數位置加紅色highlight
+          dividerIndices.push({ afterIndex: mid, label: '中位數' }); // 添加中位數標記
+        }
         
         // 可選：添加分隔线来显示Q1和Q3
         const lowerLen = lowerHalf.length;
@@ -1033,7 +1036,7 @@ export default function StatisticsApp() {
           // highlightIndices.push(lowerMid);
         }
         
-        // 中位數位置（用于显示）
+        // 中位數位置（用于显示）- 只在偶數個時添加
         if (n % 2 === 0) {
           dividerIndices.push({ afterIndex: mid - 1, label: '中位數' });
         }
