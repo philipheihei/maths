@@ -273,9 +273,10 @@ const BoxPlot = ({ data, highlight }) => {
   );
 };
 
-const StemLeafPlot = ({ data, highlight, highlightIndices = [], dividerIndices = [] }) => {
+const StemLeafPlot = ({ data, highlight, highlightIndices = [], highlightColors = {}, dividerIndices = [] }) => {
   // dividerIndices: 分隔线位置，格式为 [{afterIndex: number, label: string}]
   // afterIndex 表示在第几个数之后加分隔线（基于排序后的索引）
+  // highlightColors: { sortedIndex: 'yellow' | 'green' } 用于IQR的颜色编码
   
   // 先將數據排序並記錄位置
   const sortedData = [...data].sort((a, b) => a - b);
@@ -294,6 +295,14 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [], dividerIndices =
   // 检查某个位置后是否需要分隔线
   const getDividerAfter = (sortedIndex) => {
     return dividerIndices.find(d => d.afterIndex === sortedIndex);
+  };
+  
+  // 获取highlight的背景色
+  const getHighlightColor = (sortedIndex) => {
+    const color = highlightColors[sortedIndex];
+    if (color === 'yellow') return 'bg-yellow-200';
+    if (color === 'green') return 'bg-green-200';
+    return 'bg-red-100'; // 默认为红色
   };
 
   return (
@@ -315,9 +324,10 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [], dividerIndices =
                   {stems[stem].map((item, i) => {
                     const isHighlighted = highlightIndices.includes(item.sortedIndex);
                     const divider = getDividerAfter(item.sortedIndex);
+                    const hasColor = highlightColors[item.sortedIndex];
                     return (
                       <span key={i} className="inline-flex items-center">
-                        <span className={`inline-block w-6 text-center transition-colors ${isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
+                        <span className={`inline-block w-6 text-center transition-colors ${hasColor ? `text-slate-800 font-bold ${getHighlightColor(item.sortedIndex)} rounded` : isHighlighted ? 'text-red-600 font-bold bg-red-100 rounded' : highlight === 'data' ? 'text-blue-600 font-bold' : ''}`}>
                           {item.leaf}
                         </span>
                         {divider && (
@@ -958,6 +968,7 @@ export default function StatisticsApp() {
       // 計算需要高亮的位置索引（基於排序後的位置）
       let highlightIndices = [];
       let dividerIndices = []; // 分隔线位置
+      let highlightColors = {}; // 用於IQR的顏色编码
       
       const n = learnData.length;
       const sorted = [...learnData].sort((a, b) => a - b);
@@ -986,44 +997,60 @@ export default function StatisticsApp() {
         // 分佈域：高亮最小值和最大值的位置
         highlightIndices = [0, learnData.length - 1];
       } else if (selectedChart === 'stem' && learnHighlight === 'iqr') {
-        // 四分位數間距：用分隔线标示 Q1 和 Q3
+        // 四分位數間距：
+        // 數據分成上下兩部分（以中位數為界）
+        // - 下半部分（中位數前）的數字加黃色highlight
+        // - 上半部分（中位數後）的數字加綠色highlight
         let lowerHalf = sorted.slice(0, mid);
         let upperHalf = n % 2 === 0 ? sorted.slice(mid) : sorted.slice(mid + 1);
         
+        // 對下半部分中位數前的所有數字加黃色
+        lowerHalf.forEach((val, idx) => {
+          highlightColors[idx] = 'yellow';
+        });
+        
+        // 對上半部分（中位數後）的所有數字加綠色
+        const upperStartIndex = n % 2 === 0 ? mid : mid + 1;
+        upperHalf.forEach((val, idx) => {
+          highlightColors[upperStartIndex + idx] = 'green';
+        });
+        
+        // 如果數據量是雙數，中位數較前的數字已經加了黃色highlight，後的加綠色
+        // 如果數據量是單數，中位數不需要加highlight（不做任何操作）
+        
+        // 可選：添加分隔线来显示Q1和Q3
         const lowerLen = lowerHalf.length;
         const upperLen = upperHalf.length;
         const lowerMid = Math.floor(lowerLen / 2);
         const upperMid = Math.floor(upperLen / 2);
         
-        // Q1 位置
+        // Q1 位置（下半部分的中位數）
         if (lowerLen % 2 === 0) {
           // 偶數個：Q1 在兩個數中間，加分隔线
           dividerIndices.push({ afterIndex: lowerMid - 1, label: 'Q₁' });
         } else {
-          // 奇數個：Q1 直接是某個數，高亮它
-          highlightIndices.push(lowerMid);
+          // 奇數個：Q1 直接是某個數，可以高亮它（但已經用黃色了）
+          // highlightIndices.push(lowerMid);
         }
         
         // 中位數位置（用于显示）
         if (n % 2 === 0) {
           dividerIndices.push({ afterIndex: mid - 1, label: '中位數' });
-        } else {
-          highlightIndices.push(mid);
         }
         
-        // Q3 位置
-        const upperStartIndex = n % 2 === 0 ? mid : mid + 1;
+        // Q3 位置（上半部分的中位數）
+        const upperStartIndexForQ = n % 2 === 0 ? mid : mid + 1;
         if (upperLen % 2 === 0) {
           // 偶數個：Q3 在兩個數中間，加分隔线
-          dividerIndices.push({ afterIndex: upperStartIndex + upperMid - 1, label: 'Q₃' });
+          dividerIndices.push({ afterIndex: upperStartIndexForQ + upperMid - 1, label: 'Q₃' });
         } else {
-          // 奇數個：Q3 直接是某個數，高亮它
-          highlightIndices.push(upperStartIndex + upperMid);
+          // 奇數個：Q3 直接是某個數，可以高亮它（但已經用綠色了）
+          // highlightIndices.push(upperStartIndexForQ + upperMid);
         }
       }
       
       if (selectedChart === 'box') return <BoxPlot data={learnData} highlight={learnHighlight} />;
-      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} highlightIndices={highlightIndices} dividerIndices={dividerIndices} />;
+      if (selectedChart === 'stem') return <StemLeafPlot data={learnData} highlight={learnHighlight} highlightIndices={highlightIndices} highlightColors={highlightColors} dividerIndices={dividerIndices} />;
       if (selectedChart === 'bar') return <BarChart data={learnData} highlight={learnHighlight} />;
       if (selectedChart === 'table') return <FrequencyTable data={learnData} highlight={learnHighlight} />;
       return null;
