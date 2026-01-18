@@ -640,13 +640,13 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <label className="block text-sm font-medium text-gray-600 mb-2">旋轉方向</label>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => setRotationClockwise(false)}
+                    onClick={() => { setRotationClockwise(false); handleReset(); }}
                     className={`flex-1 py-2 rounded-lg font-medium ${!rotationClockwise ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                   >
                     ↺ 逆時針
                   </button>
                   <button
-                    onClick={() => setRotationClockwise(true)}
+                    onClick={() => { setRotationClockwise(true); handleReset(); }}
                     className={`flex-1 py-2 rounded-lg font-medium ${rotationClockwise ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                   >
                     ↻ 順時針
@@ -659,7 +659,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   {[90, 180, 270].map(angle => (
                     <button
                       key={angle}
-                      onClick={() => setRotationAngle(angle)}
+                      onClick={() => { setRotationAngle(angle); handleReset(); }}
                       className={`flex-1 py-2 rounded-lg font-medium ${rotationAngle === angle ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                     >
                       {angle}°
@@ -717,21 +717,24 @@ const TeachingPage = ({ onGoToQuiz }) => {
 
           {/* Formula Card */}
           <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
-            <h4 className="font-bold text-amber-800 mb-2">公式</h4>
+            <h4 className="font-bold text-amber-800 mb-2">教學</h4>
             {transformType === 'translation' && (
-              <p className="text-amber-700 font-mono">(x, y) → (x + dx, y + dy)</p>
+              <div className="text-amber-700 font-mono text-sm space-y-1">
+                <p>x 坐標左右移，y 坐標上下移</p>
+                <p>向上/向右加 (+)</p>
+                <p>向下/向左減 (-)</p>
+              </div>
             )}
             {transformType === 'rotation' && (
-              <div className="text-amber-700 font-mono text-sm space-y-1">
-                <p>繞原點逆時針旋轉 90°: (x, y) → (-y, x)</p>
-                <p>繞原點旋轉 180°: (x, y) → (-x, -y)</p>
-                <p>繞原點順時針旋轉 90°: (x, y) → (y, -x)</p>
-              </div>
+              <p className="text-amber-700 font-mono text-sm">
+                每移 90° (x, y) 數字調轉，正負睇象限。
+              </p>
             )}
             {transformType === 'reflection' && (
               <div className="text-amber-700 font-mono text-sm space-y-1">
-                <p>對 x 軸反射: (x, y) → (x, -y)</p>
-                <p>對 y 軸反射: (x, y) → (-x, y)</p>
+                <p>對 x 軸反射 → 上下反轉 → y轉正負號</p>
+                <p>對 y 軸反射 → 左右反轉 → x轉正負號</p>
+                <hr className="border-amber-200 my-2"/>
                 <p>對 x = k 反射: (x, y) → (2k - x, y)</p>
                 <p>對 y = k 反射: (x, y) → (x, 2k - y)</p>
               </div>
