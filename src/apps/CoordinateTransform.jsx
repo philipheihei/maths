@@ -89,17 +89,40 @@ const CoordinateGrid = ({ children, size = SVG_SIZE }) => {
 const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progress = 1, showPath = false }) => {
   const fromSVG = toSVG(from.x, from.y);
   const toSVG_coords = toSVG(to.x, to.y);
+  const midSVG = toSVG(to.x, from.y); // Intermediate point after horizontal movement
   
-  // Interpolate position based on progress
-  const currentX = fromSVG.x + (toSVG_coords.x - fromSVG.x) * progress;
-  const currentY = fromSVG.y + (toSVG_coords.y - fromSVG.y) * progress;
+  // Two-step animation: horizontal first (0-0.5), then vertical (0.5-1)
+  let currentX, currentY;
+  if (progress <= 0.5) {
+    // First half: horizontal movement
+    const horizontalProgress = progress * 2;
+    currentX = fromSVG.x + (midSVG.x - fromSVG.x) * horizontalProgress;
+    currentY = fromSVG.y;
+  } else {
+    // Second half: vertical movement
+    const verticalProgress = (progress - 0.5) * 2;
+    currentX = midSVG.x;
+    currentY = midSVG.y + (toSVG_coords.y - midSVG.y) * verticalProgress;
+  }
   
   return (
     <g>
-      {/* Path line */}
+      {/* Path lines - horizontal then vertical */}
       {showPath && progress > 0 && (
-        <line x1={fromSVG.x} y1={fromSVG.y} x2={currentX} y2={currentY}
-          stroke={color} strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
+        <>
+          {/* Horizontal path */}
+          <line x1={fromSVG.x} y1={fromSVG.y} x2={progress <= 0.5 ? currentX : midSVG.x} y2={fromSVG.y}
+            stroke={color} strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
+          {/* Vertical path */}
+          {progress > 0.5 && (
+            <line x1={midSVG.x} y1={midSVG.y} x2={currentX} y2={currentY}
+              stroke={color} strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
+          )}
+          {/* Intermediate point indicator at corner */}
+          {progress > 0.5 && (
+            <circle cx={midSVG.x} cy={midSVG.y} r="3" fill={color} opacity="0.7" />
+          )}
+        </>
       )}
       
       {/* Original point */}
@@ -147,24 +170,30 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
 
   return (
     <g>
-      {/* Rotation arc */}
+      {/* Rotation arc - green dotted line connecting P and P' along the circular path */}
       {progress > 0 && radius > 5 && (
         <path d={arcPath} fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" />
       )}
       
-      {/* Radius line from origin to point */}
+      {/* Radius line from origin to original point (light) */}
       <line x1={CENTER} y1={CENTER} x2={fromSVG.x} y2={fromSVG.y}
-        stroke={color} strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
+        stroke={color} strokeWidth="1" strokeDasharray="3,3" opacity="0.3" />
       
       {/* Original point */}
       <circle cx={fromSVG.x} cy={fromSVG.y} r="6" fill={color} opacity="0.5" />
       <text x={fromSVG.x + 12} y={fromSVG.y - 10} fontSize="14" fontWeight="bold" fill={color}>{label}</text>
       <text x={fromSVG.x + 12} y={fromSVG.y + 5} fontSize="10" fill="#666">({from.x}, {from.y})</text>
       
-      {/* Current radius line */}
-      {progress > 0 && (
+      {/* Current radius line (only when animating) */}
+      {progress > 0 && progress < 1 && (
         <line x1={CENTER} y1={CENTER} x2={currentSVG.x} y2={currentSVG.y}
-          stroke="#ef4444" strokeWidth="1" strokeDasharray="3,3" />
+          stroke="#10b981" strokeWidth="1" strokeDasharray="3,3" opacity="0.5" />
+      )}
+      
+      {/* Final radius line (when complete) */}
+      {progress === 1 && (
+        <line x1={CENTER} y1={CENTER} x2={currentSVG.x} y2={currentSVG.y}
+          stroke="#ef4444" strokeWidth="1" strokeDasharray="3,3" opacity="0.3" />
       )}
       
       {/* Moving/Final point */}
@@ -467,7 +496,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
       if (translationDelta.dx < 0) dirs.push(`向左平移 ${Math.abs(translationDelta.dx)} 單位`);
       if (translationDelta.dy > 0) dirs.push(`向上平移 ${translationDelta.dy} 單位`);
       if (translationDelta.dy < 0) dirs.push(`向下平移 ${Math.abs(translationDelta.dy)} 單位`);
-      return `${label}(${demoPoint.x}, ${demoPoint.y}) ${dirs.join('，')}至 ${labelPrime}(${target.x}, ${target.y})。`;
+      return `${label}(${demoPoint.x}, ${demoPoint.y}) ${dirs.join('，然後')}至 ${labelPrime}(${target.x}, ${target.y})。`;
     } else if (transformType === 'rotation') {
       const direction = rotationClockwise ? '順時針' : '逆時針';
       return `${label}(${demoPoint.x}, ${demoPoint.y}) 繞原點 O ${direction}方向旋轉 ${rotationAngle}° 至 ${labelPrime}(${target.x}, ${target.y})。`;
@@ -777,8 +806,20 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       if (dx < 0) dirs.push(`向左平移 ${Math.abs(dx)} 單位`);
       if (dy > 0) dirs.push(`向上平移 ${dy} 單位`);
       if (dy < 0) dirs.push(`向下平移 ${Math.abs(dy)} 單位`);
-      description = `${label}(${from.x}, ${from.y}) ${dirs.join('，')}至 ${label}'。求 ${label}' 的坐標。`;
-      explanation = `${dirs.join('，')}：\n(${from.x}, ${from.y}) → (${from.x} + ${dx >= 0 ? dx : `(${dx})`}, ${from.y} + ${dy >= 0 ? dy : `(${dy})`}) = (${to.x}, ${to.y})`;
+      description = `${label}(${from.x}, ${from.y}) ${dirs.join('，然後')}至 ${label}'。求 ${label}' 的坐標。`;
+      
+      // Build step-by-step explanation
+      let explainSteps = [];
+      if (dx !== 0) {
+        const midX = from.x + dx;
+        explainSteps.push(`先${dirs[0]}：(${from.x}, ${from.y}) → (${midX}, ${from.y})`);
+      }
+      if (dy !== 0) {
+        const startPoint = dx !== 0 ? `(${from.x + dx}, ${from.y})` : `(${from.x}, ${from.y})`;
+        const dyDir = dirs.length > 1 ? dirs[1] : dirs[0];
+        explainSteps.push(`${dx !== 0 ? '然後' : ''}${dyDir}：${startPoint} → (${to.x}, ${to.y})`);
+      }
+      explanation = explainSteps.join('\n');
       
       return { type, from, to, label, description, explanation, dx, dy };
     }

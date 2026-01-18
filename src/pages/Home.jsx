@@ -181,7 +181,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['坐標轉換', '平移', '旋轉', '反射'],
-      inDevelopment: false
+      inDevelopment: true
     }
   ];
 
