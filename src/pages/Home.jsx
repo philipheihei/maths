@@ -166,6 +166,22 @@ const Home = () => {
       category: '初中',
       topics: ['主項變換', '公式變換', '代數'],
       inDevelopment: false
+    },
+    {
+      id: 'coordinate-transform',
+      title: '坐標轉換',
+      description: 'F1 CH10 坐標簡介：學習直角坐標的平移、旋轉、反射轉換',
+      icon: Calculator,
+      color: 'bg-orange-500',
+      hoverColor: 'hover:bg-orange-600',
+      path: '/coordinate-transform',
+      level: 'F1',
+      badges: [
+        { level: 'F1', chapter: 'CH10', subject: '坐標簡介' }
+      ],
+      category: '初中',
+      topics: ['坐標轉換', '平移', '旋轉', '反射'],
+      inDevelopment: false
     }
   ];
 
