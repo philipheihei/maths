@@ -160,7 +160,7 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   // Arc path for rotation visualization
   const radius = Math.sqrt(from.x * from.x + from.y * from.y) * UNIT;
   const startAngle = Math.atan2(-from.y, from.x); // SVG y is inverted
-  const currentAngle = startAngle + angleRad;
+  const currentAngle = startAngle - angleRad;
   
   const arcPath = radius > 5 ? `
     M ${CENTER + radius * Math.cos(startAngle)} ${CENTER + radius * Math.sin(startAngle)}
