@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';  // ✅ 改成 pages
-import AngleQuiz from './apps/AngleQuiz';  // ✅ 改成 apps
-import CircleTheorems from './apps/CircleTheorems';  // ✅ 改成 apps
-import IdentityQuiz from './apps/IdentityQuiz';  // ✅ 改成 apps
+import Home from './pages/Home';
+import AngleQuiz from './apps/AngleQuiz';
+import CircleTheorems from './apps/CircleTheorems';
+import IdentityQuiz from './apps/IdentityQuiz';
 import SimultaneousEqQuiz from './apps/SimultaneousEqQuiz';
 import IndexLaws from './apps/IndexLaws';
 import DispersionQuiz from './apps/DispersionQuiz';
 import InequalityQuiz from './apps/InequalityQuiz';
 import CompoundInequalityQuiz from './apps/CompoundInequalityQuiz';
 import VariationQuiz from './apps/VariationQuiz';
-import Subject from './apps/Subject';
+import Subject from './apps/Subject/index';
 
 function App() {
   return (

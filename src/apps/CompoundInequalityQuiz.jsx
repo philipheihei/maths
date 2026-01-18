@@ -599,7 +599,7 @@ const Keypad = ({ onInput, onDelete, onClear, onSubmit }) => {
     ['7', '8', '9', '>', '<'],
     ['4', '5', '6', '≥', '≤'],
     ['1', '2', '3', 'x', '或'],
-    ['0', '.', '-', '及', '無解'],
+    ['0', ',', '-', '及', '無解'],
   ];
 
   const handleButtonClick = (value) => {
