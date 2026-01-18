@@ -326,6 +326,13 @@ const CoordinateInput = ({ value, onChange, onSubmit, disabled = false }) => {
   const yRef = useRef(null);
   const [activeField, setActiveField] = useState('x');
 
+  // Reset to X field when answer is cleared (new question)
+  useEffect(() => {
+    if (value.x === '' && value.y === '') {
+      setActiveField('x');
+    }
+  }, [value]);
+
   const handleKeyInput = (key) => {
     if (activeField === 'x') {
       const newX = value.x + key;

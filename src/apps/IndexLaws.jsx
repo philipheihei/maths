@@ -311,7 +311,7 @@ export default function IndexLaws() {
       if (isCorrect) {
         setFeedback({ correct: true, msg: '全對！滿分' });
       } else if (stepCredit) {
-        setFeedback({ correct: false, msg: '最終答案不正確，但去括號步驟正確！' });
+        setFeedback({ correct: false, msg: '最終答案不正確，但拆括號步驟正確！' });
       } else {
         setFeedback({ correct: false, msg: '正確答案是:' });
       }
