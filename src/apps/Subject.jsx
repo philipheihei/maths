@@ -189,8 +189,15 @@ const generateProblem = () => {
     
     // Enable Factor step - 讓用戶自己合併同類項
     problem.steps.hasFactor = true;
-    // Step4: 提取公因數的形式，用戶需要計算 (n1-n2)
-    problem.steps.step4Eq = `${s}(${n1}-${n2})=${b}-${n1}${a}`;
+    // Step4: 用戶需要自己計算並簡化系數 (n1-n2)
+    const coeffDiff = n1 - n2;
+    if (coeffDiff === 1) {
+      problem.steps.step4Eq = `${s}=${b}-${n1}${a}`;
+    } else if (coeffDiff === -1) {
+      problem.steps.step4Eq = `-${s}=${b}-${n1}${a}`;
+    } else {
+      problem.steps.step4Eq = `${coeffDiff}${s}=${b}-${n1}${a}`;
+    }
     
     // Step5: 最終答案
     problem.steps.hasDivide = true;
@@ -219,8 +226,15 @@ const generateProblem = () => {
     
     // Enable Factor step - 讓用戶自己合併同類項
     problem.steps.hasFactor = true;
-    // Step4: 提取公因數的形式，用戶需要計算 (a-n1)
-    problem.steps.step4Eq = `${s}(${a}-${n1})=${b}`;
+    // Step4: 用戶需要自己計算並簡化系數 (a-n1)
+    const coeffDiff = a - n1;
+    if (coeffDiff === 1) {
+      problem.steps.step4Eq = `${s}=${b}`;
+    } else if (coeffDiff === -1) {
+      problem.steps.step4Eq = `-${s}=${b}`;
+    } else {
+      problem.steps.step4Eq = `${coeffDiff}${s}=${b}`;
+    }
     problem.steps.step4EqSimplified = coeff.value === 1 ? `${s}=${b}` : (coeff.value === -1 ? `-${s}=${b}` : `${coeff.simplified}${s}=${b}`);
     problem.steps.hasDivide = true;
     // Simplified final answer
