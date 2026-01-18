@@ -184,17 +184,16 @@ const generateProblem = () => {
     problem.steps.hasBracket = true;
     problem.steps.step2Eq = `${n1}${s}+${n1}${a}=${n2}${s}+${b}`;
     problem.steps.hasMove = true;
+    // Step3: 保留未簡化形式，讓用戶在抽步驟合併
     problem.steps.step3Eq = `${n1}${s}-${n2}${s}=${b}-${n1}${a}`;
     
-    // Only need Factor step if coefficients are different (not already combined)
-    // If n1 = n2, then 5k - 5k = 0k (no factoring needed, already simplified)
-    // Skip factor if coefficient is already a simple number after subtraction
-    problem.steps.hasFactor = false;  // Changed: no need to factor when it's already simplified like 5k-8k=-3k
-    problem.steps.step4Eq = problem.steps.step3Eq; // Skip factor, keep as is
+    // Enable Factor step - 讓用戶自己合併同類項
+    problem.steps.hasFactor = true;
+    // Step4: 提取公因數的形式，用戶需要計算 (n1-n2)
+    problem.steps.step4Eq = `${s}(${n1}-${n2})=${b}-${n1}${a}`;
     
-    // Directly simplify to final form
+    // Step5: 最終答案
     problem.steps.hasDivide = true;
-    // Simplified final answer - just divide the combined coefficient
     const simplifiedCoeff = coeff.simplified;
     if (coeff.value === 1) {
       problem.steps.step5Eq = `${s}=${b}-${n1}${a}`;
@@ -215,8 +214,12 @@ const generateProblem = () => {
     problem.steps.hasBracket = false;
     problem.steps.step2Eq = problem.text;
     problem.steps.hasMove = true;
+    // Step3: 保留未簡化形式
     problem.steps.step3Eq = `${a}${s}-${n1}${s}=${b}`;
+    
+    // Enable Factor step - 讓用戶自己合併同類項
     problem.steps.hasFactor = true;
+    // Step4: 提取公因數的形式，用戶需要計算 (a-n1)
     problem.steps.step4Eq = `${s}(${a}-${n1})=${b}`;
     problem.steps.step4EqSimplified = coeff.value === 1 ? `${s}=${b}` : (coeff.value === -1 ? `-${s}=${b}` : `${coeff.simplified}${s}=${b}`);
     problem.steps.hasDivide = true;
