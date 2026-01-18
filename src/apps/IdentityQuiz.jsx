@@ -110,6 +110,68 @@ const IdentityQuiz = () => {
     return `${coeff}${vars}`;
   };
 
+  // 計算最大公因數
+  const gcd = (a, b) => {
+    return b === 0 ? a : gcd(b, a % b);
+  };
+
+  // 提取多個數的最大公因數
+  const getCommonFactor = (coefficients) => {
+    if (coefficients.length === 0) return 1;
+    return coefficients.reduce((acc, val) => gcd(acc, Math.abs(val)));
+  };
+
+  // 從因式分解題目中提取公因數
+  const extractCommonFactorForFactoring = (A2Str, _2ABStr, B2Str, identityType) => {
+    // 解析係數
+    const parseCoeff = (str) => {
+      const match = str.match(/^(\d+)/);
+      return match ? parseInt(match[1]) : 1;
+    };
+
+    const coeff1 = parseCoeff(A2Str);
+    const coeff2 = parseCoeff(_2ABStr);
+    const coeff3 = parseCoeff(B2Str);
+
+    const commonFactor = getCommonFactor([coeff1, coeff2, coeff3]);
+
+    if (commonFactor > 1) {
+      // 提取公因數後的係數
+      const reduced1 = coeff1 / commonFactor;
+      const reduced2 = coeff2 / commonFactor;
+      const reduced3 = coeff3 / commonFactor;
+
+      // 重建字符串
+      const reduceStr = (str, factor) => {
+        const match = str.match(/^(\d+)(.*)$/);
+        if (match) {
+          const newCoeff = parseInt(match[1]) / factor;
+          return newCoeff === 1 ? match[2] : `${newCoeff}${match[2]}`;
+        }
+        return str;
+      };
+
+      const reducedA2 = reduceStr(A2Str, commonFactor);
+      const reduced2AB = reduceStr(_2ABStr, commonFactor);
+      const reducedB2 = reduceStr(B2Str, commonFactor);
+
+      // 根據恆等式類型決定中間符號
+      let middleSign = '+';
+      if (identityType === IDENTITIES.MINUS_SQ) {
+        middleSign = '-'; // (a-b)^2 使用減號
+      }
+
+      return {
+        hasCommonFactor: true,
+        factor: commonFactor,
+        questionInside: `${reducedA2}${middleSign}${reduced2AB}+${reducedB2}`,
+        coefficients: { reduced1, reduced2, reduced3 }
+      };
+    }
+
+    return { hasCommonFactor: false, factor: 1 };
+  };
+
   const generateQuestion = () => {
     let termA, termB;
     do {
@@ -144,8 +206,15 @@ const IdentityQuiz = () => {
         const baseAnswer = `${A2}+${_2AB}+${B2}`;
         validAnswers = [baseAnswer, `(${baseAnswer})`];
       } else {
-        questionText = `${A2}+${_2AB}+${B2}`;
-        validAnswers = [`(${A}+${B})^2`, `(${B}+${A})^2`, `(${A}+${B})(${A}+${B})`, `(${B}+${A})(${B}+${A})`];
+        // 因式分解模式：檢查公因數
+        const factorInfo = extractCommonFactorForFactoring(A2, _2AB, B2, type);
+        if (factorInfo.hasCommonFactor) {
+          questionText = `${factorInfo.factor}(${factorInfo.questionInside})`;
+          validAnswers = [`${factorInfo.factor}(${A}+${B})^2`, `${factorInfo.factor}(${B}+${A})^2`, `${factorInfo.factor}(${A}+${B})(${A}+${B})`, `${factorInfo.factor}(${B}+${A})(${B}+${A})`];
+        } else {
+          questionText = `${A2}+${_2AB}+${B2}`;
+          validAnswers = [`(${A}+${B})^2`, `(${B}+${A})^2`, `(${A}+${B})(${A}+${B})`, `(${B}+${A})(${B}+${A})`];
+        }
       }
     } else if (type === IDENTITIES.MINUS_SQ) {
       hintText = `(a - b)^2 = a^2 - 2ab + b^2`;
@@ -154,8 +223,15 @@ const IdentityQuiz = () => {
         const baseAnswer = `${A2}-${_2AB}+${B2}`;
         validAnswers = [baseAnswer, `(${baseAnswer})`];
       } else {
-        questionText = `${A2}-${_2AB}+${B2}`;
-        validAnswers = [`(${A}-${B})^2`, `(${A}-${B})(${A}-${B})`];
+        // 因式分解模式：檢查公因數
+        const factorInfo = extractCommonFactorForFactoring(A2, _2AB, B2, type);
+        if (factorInfo.hasCommonFactor) {
+          questionText = `${factorInfo.factor}(${factorInfo.questionInside})`;
+          validAnswers = [`${factorInfo.factor}(${A}-${B})^2`, `${factorInfo.factor}(${A}-${B})(${A}-${B})`];
+        } else {
+          questionText = `${A2}-${_2AB}+${B2}`;
+          validAnswers = [`(${A}-${B})^2`, `(${A}-${B})(${A}-${B})`];
+        }
       }
     } else {
       hintText = `(a + b)(a - b) = a^2 - b^2`;
@@ -164,18 +240,57 @@ const IdentityQuiz = () => {
         const baseAnswer = `${A2}-${B2}`;
         validAnswers = [baseAnswer, `(${baseAnswer})`];
       } else {
-        questionText = `${A2}-${B2}`;
-        validAnswers = [
-          `(${A}+${B})(${A}-${B})`, 
-          `(${A}-${B})(${A}+${B})`, 
-          `(${B}+${A})(${A}-${B})`, 
-          `(${A}-${B})(${B}+${A})`,
-          `(${A}+${B})(-${B}+${A})`, 
-          `(-${B}+${A})(${A}+${B})`, 
-          `(${B}+${A})(-${B}+${A})`, 
-          `(-${B}+${A})(${B}+${A})` 
-        ];
+        // 因式分解模式：檢查公因數
+        const coeffA2 = A2.match(/^(\d+)/) ? parseInt(A2.match(/^(\d+)/)[1]) : 1;
+        const coeffB2 = B2.match(/^(\d+)/) ? parseInt(B2.match(/^(\d+)/)[1]) : 1;
+        const commonFactor = getCommonFactor([coeffA2, coeffB2]);
+
+        let questionText_DIFF_SQ, validAnswers_DIFF_SQ, commonFactorValue = 1;
+        if (commonFactor > 1) {
+          const reducedA2 = coeffA2 / commonFactor === 1 
+            ? A2.replace(/^\d+/, '') 
+            : A2.replace(/^\d+/, String(coeffA2 / commonFactor));
+          const reducedB2 = coeffB2 / commonFactor === 1 
+            ? B2.replace(/^\d+/, '') 
+            : B2.replace(/^\d+/, String(coeffB2 / commonFactor));
+          
+          questionText_DIFF_SQ = `${commonFactor}(${reducedA2}-${reducedB2})`;
+          validAnswers_DIFF_SQ = [
+            `${commonFactor}(${A}+${B})(${A}-${B})`, 
+            `${commonFactor}(${A}-${B})(${A}+${B})`, 
+            `${commonFactor}(${B}+${A})(${A}-${B})`, 
+            `${commonFactor}(${A}-${B})(${B}+${A})`
+          ];
+          commonFactorValue = commonFactor;
+        } else {
+          questionText_DIFF_SQ = `${A2}-${B2}`;
+          validAnswers_DIFF_SQ = [
+            `(${A}+${B})(${A}-${B})`, 
+            `(${A}-${B})(${A}+${B})`, 
+            `(${B}+${A})(${A}-${B})`, 
+            `(${A}-${B})(${B}+${A})`,
+            `(${A}+${B})(-${B}+${A})`, 
+            `(-${B}+${A})(${A}+${B})`, 
+            `(${B}+${A})(-${B}+${A})`, 
+            `(-${B}+${A})(${B}+${A})` 
+          ];
+        }
+        questionText = questionText_DIFF_SQ;
+        validAnswers = validAnswers_DIFF_SQ;
+        var diffSqCommonFactor = commonFactorValue;
       }
+    }
+
+    // 用於因式分解題的公因數信息
+    let factoringCommonInfo = { hasCommonFactor: false, factor: 1, insideExpression: '' };
+    
+    if (mode === 'factor' && type !== IDENTITIES.DIFF_SQ) {
+      factoringCommonInfo = extractCommonFactorForFactoring(A2, _2AB, B2, type);
+    } else if (mode === 'factor' && type === IDENTITIES.DIFF_SQ) {
+      factoringCommonInfo = { 
+        hasCommonFactor: diffSqCommonFactor > 1, 
+        factor: diffSqCommonFactor 
+      };
     }
 
     return {
@@ -190,6 +305,8 @@ const IdentityQuiz = () => {
       A2_str: A2,
       B2_str: B2,
       _2AB_str: _2AB,
+      factoringCommonFactor: factoringCommonInfo.factor,
+      hasFactoringCommonFactor: factoringCommonInfo.hasCommonFactor
     };
   };
 
@@ -225,12 +342,19 @@ const IdentityQuiz = () => {
             steps.push({ label: '最終答案 (展開)', math: finalAnswer }); 
         }
     } else {
+        // 因式分解模式
         if (identityType === IDENTITIES.DIFF_SQ) {
             step1_math = `(${A})^2 - (${B})^2`;
             step1_label = '識別 a^2 - b^2 結構';
             
             steps.push({ label: step1_label, math: step1_math });
-            steps.push({ label: '最終答案 (因式分解)', math: finalAnswer }); 
+            
+            // 如果有公因數，加上公因數提取步驟
+            if (q.hasFactoringCommonFactor && q.factoringCommonFactor > 1) {
+              steps.push({ label: '提取公因數', math: finalAnswer });
+            } else {
+              steps.push({ label: '最終答案 (因式分解)', math: finalAnswer }); 
+            }
         } else { 
             const middleTermSign = identityType === IDENTITIES.PLUS_SQ ? '+' : '-';
             
@@ -238,7 +362,13 @@ const IdentityQuiz = () => {
             step1_label = `識別 a^2 ${middleTermSign} 2ab + b^2 結構`; 
             
             steps.push({ label: step1_label, math: step1_math });
-            steps.push({ label: '最終答案 (因式分解)', math: finalAnswer }); 
+            
+            // 如果有公因數，加上公因數提取步驟
+            if (q.hasFactoringCommonFactor && q.factoringCommonFactor > 1) {
+              steps.push({ label: '提取公因數', math: finalAnswer });
+            } else {
+              steps.push({ label: '最終答案 (因式分解)', math: finalAnswer }); 
+            }
         }
     }
     
