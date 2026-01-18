@@ -490,23 +490,40 @@ const TeachingPage = ({ onGoToQuiz }) => {
 
   const getTransformDescription = () => {
     const target = getTargetPoint();
+    const showTarget = progress === 1; // Only show target coordinates after animation completes
+    
     if (transformType === 'translation') {
       const dirs = [];
       if (translationDelta.dx > 0) dirs.push(`向右平移 ${translationDelta.dx} 單位`);
       if (translationDelta.dx < 0) dirs.push(`向左平移 ${Math.abs(translationDelta.dx)} 單位`);
       if (translationDelta.dy > 0) dirs.push(`向上平移 ${translationDelta.dy} 單位`);
       if (translationDelta.dy < 0) dirs.push(`向下平移 ${Math.abs(translationDelta.dy)} 單位`);
-      return `${label}(${demoPoint.x}, ${demoPoint.y}) ${dirs.join('，然後')}至 ${labelPrime}(${target.x}, ${target.y})。`;
+      
+      if (showTarget) {
+        return `${label}(${demoPoint.x}, ${demoPoint.y}) ${dirs.join('，然後')}至 ${labelPrime}(${target.x}, ${target.y})。`;
+      } else {
+        return `${label}(${demoPoint.x}, ${demoPoint.y}) ${dirs.join('，然後')}`;
+      }
     } else if (transformType === 'rotation') {
       const direction = rotationClockwise ? '順時針' : '逆時針';
-      return `${label}(${demoPoint.x}, ${demoPoint.y}) 繞原點 O ${direction}方向旋轉 ${rotationAngle}° 至 ${labelPrime}(${target.x}, ${target.y})。`;
+      
+      if (showTarget) {
+        return `${label}(${demoPoint.x}, ${demoPoint.y}) 繞原點 O ${direction}方向旋轉 ${rotationAngle}° 至 ${labelPrime}(${target.x}, ${target.y})。`;
+      } else {
+        return `${label}(${demoPoint.x}, ${demoPoint.y}) 繞原點 O ${direction}方向旋轉 ${rotationAngle}°`;
+      }
     } else {
       let axisStr = '';
       if (reflectionAxis === 'x') axisStr = 'x 軸';
       else if (reflectionAxis === 'y') axisStr = 'y 軸';
       else if (reflectionAxis === 'x=') axisStr = `直線 x = ${reflectionValue}`;
       else if (reflectionAxis === 'y=') axisStr = `直線 y = ${reflectionValue}`;
-      return `${labelPrime}(${target.x}, ${target.y}) 為 ${label}(${demoPoint.x}, ${demoPoint.y}) 對 ${axisStr} 的反射影像。`;
+      
+      if (showTarget) {
+        return `${labelPrime}(${target.x}, ${target.y}) 為 ${label}(${demoPoint.x}, ${demoPoint.y}) 對 ${axisStr} 的反射影像。`;
+      } else {
+        return `對 ${axisStr} 進行反射，原點為 ${label}(${demoPoint.x}, ${demoPoint.y})`;
+      }
     }
   };
 
