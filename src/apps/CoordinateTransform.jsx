@@ -520,9 +520,9 @@ const TeachingPage = ({ onGoToQuiz }) => {
       else if (reflectionAxis === 'y=') axisStr = `直線 y = ${reflectionValue}`;
       
       if (showTarget) {
-        return `${labelPrime}(${target.x}, ${target.y}) 為 ${label}(${demoPoint.x}, ${demoPoint.y}) 對 ${axisStr} 的反射影像。`;
+        return `點 ${label} 的坐標為(${demoPoint.x}, ${demoPoint.y})。${label} 對 ${axisStr} 作反射至點 ${labelPrime}，${labelPrime} 的坐標為(${target.x}, ${target.y})。`;
       } else {
-        return `對 ${axisStr} 進行反射，原點為 ${label}(${demoPoint.x}, ${demoPoint.y})`;
+        return `點 ${label} 的坐標為(${demoPoint.x}, ${demoPoint.y})。${label} 對 ${axisStr} 作反射至點 ${labelPrime}。`;
       }
     }
   };
