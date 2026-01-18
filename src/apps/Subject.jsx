@@ -189,6 +189,8 @@ const generateProblem = () => {
     
     // Enable Factor step - 讓用戶自己合併同類項
     problem.steps.hasFactor = true;
+    console.log('bracket_simple: hasFactor set to TRUE'); // Debug log
+    
     // Step4: 用戶需要自己計算並簡化系數 (n1-n2)
     const coeffDiff = n1 - n2;
     if (coeffDiff === 1) {
@@ -198,6 +200,8 @@ const generateProblem = () => {
     } else {
       problem.steps.step4Eq = `${coeffDiff}${s}=${b}-${n1}${a}`;
     }
+    
+    console.log('bracket_simple step4Eq:', problem.steps.step4Eq); // Debug log
     
     // Step5: 最終答案
     problem.steps.hasDivide = true;
