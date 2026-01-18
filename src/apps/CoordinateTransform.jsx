@@ -924,7 +924,7 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       else if (axis === 'x=') axisStr = `直線 x = ${axisValue}`;
       else axisStr = `直線 y = ${axisValue}`;
       
-      description = `${label}'(?, ?) 為 ${label}(${from.x}, ${from.y}) 對 ${axisStr} 的反射影像。求 ${label}' 的坐標。`;
+      description = `${label}' 為 ${label}(${from.x}, ${from.y}) 對 ${axisStr} 的反射影像。求 ${label}' 的坐標。`;
       
       let formula = '';
       if (axis === 'x') {
