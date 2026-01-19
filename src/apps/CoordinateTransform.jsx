@@ -320,12 +320,12 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
           )}
           {axis === 'y=' && (
             <>
-              {/* Arrow from reflection line to original point */}
+              {/* Arrow from original point to reflection line */}
               <line 
-                x1={toSVG(from.x, axisValue).x} 
-                y1={toSVG(from.x, axisValue).y} 
-                x2={fromSVG.x} 
-                y2={fromSVG.y}
+                x1={fromSVG.x} 
+                y1={fromSVG.y} 
+                x2={toSVG(from.x, axisValue).x} 
+                y2={toSVG(from.x, axisValue).y}
                 stroke="#ef4444" 
                 strokeWidth="2" 
                 markerEnd="url(#redArrow)"
@@ -340,10 +340,10 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
                 strokeWidth="2" 
                 markerEnd="url(#redArrow)"
               />
-              {/* Distance label from line to original point */}
+              {/* Distance label from original point to line */}
               <text 
-                x={fromSVG.x + 10} 
-                y={(toSVG(from.x, axisValue).y + fromSVG.y) / 2} 
+                x={fromSVG.x - 15} 
+                y={(fromSVG.y + toSVG(from.x, axisValue).y) / 2} 
                 fontSize="11" 
                 fontWeight="bold" 
                 fill="#ef4444"
@@ -352,7 +352,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               </text>
               {/* Distance label from line to reflected point */}
               <text 
-                x={toSVG_coords.x + 10} 
+                x={toSVG_coords.x - 15} 
                 y={(toSVG(to.x, axisValue).y + toSVG_coords.y) / 2} 
                 fontSize="11" 
                 fontWeight="bold" 
