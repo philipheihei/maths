@@ -69,7 +69,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['指數運算', '負指數'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'simultaneous-eq',
@@ -101,7 +101,7 @@ const Home = () => {
       ],
       category: '高中',
       topics: ['平均數', '中位數', '標準差', '四分位數'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'inequality-quiz',
@@ -165,7 +165,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['主項變換', '公式變換', '代數'],
-      inDevelopment: false
+      inDevelopment: true
     },
     {
       id: 'coordinate-transform',
