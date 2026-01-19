@@ -145,6 +145,13 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
   
   return (
     <g>
+      {/* Green arrow marker for translation path */}
+      <defs>
+        <marker id="greenArrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#10b981" />
+        </marker>
+      </defs>
+      
       {/* Path lines - horizontal then vertical */}
       {showPath && progress > 0 && (
         <>
@@ -162,6 +169,19 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
           )}
         </>
       )}
+      
+      {/* Static arrow from P to P' (always visible) */}
+      <line 
+        x1={fromSVG.x} 
+        y1={fromSVG.y} 
+        x2={toSVG_coords.x} 
+        y2={toSVG_coords.y}
+        stroke="#10b981" 
+        strokeWidth="2" 
+        strokeDasharray="5,5" 
+        opacity="0.4"
+        markerEnd="url(#greenArrow)"
+      />
       
       {/* Original point */}
       <circle 
@@ -255,9 +275,25 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
 
   return (
     <g>
+      {/* Green arrow marker for rotation path */}
+      <defs>
+        <marker id="greenArrowRotation" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#10b981" />
+        </marker>
+      </defs>
+      
       {/* Rotation arc - green dotted line connecting P and P' along the circular path */}
       {progress > 0 && radius > 5 && (
         <path d={arcPath} fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" />
+      )}
+      
+      {/* Static arrow arc from P to P' (always visible) */}
+      {radius > 5 && (
+        <path d={`
+          M ${CENTER + radius * Math.cos(startAngle)} ${CENTER + radius * Math.sin(startAngle)}
+          A ${radius} ${radius} 0 ${Math.abs(angle) > 180 ? 1 : 0} ${clockwise ? 1 : 0} 
+            ${CENTER + radius * Math.cos(startAngle - (clockwise ? -1 : 1) * (angle * Math.PI / 180))} ${CENTER + radius * Math.sin(startAngle - (clockwise ? -1 : 1) * (angle * Math.PI / 180))}
+        `} fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" opacity="0.4" markerEnd="url(#greenArrowRotation)" />
       )}
       
       {/* Radius line from origin to original point (light) */}
@@ -391,6 +427,10 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
         <marker id="redArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
           <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444" />
         </marker>
+        {/* Green arrow marker for reflection path */}
+        <marker id="greenArrowReflection" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#10b981" />
+        </marker>
       </defs>
       
       {/* Reflection axis line */}
@@ -402,6 +442,19 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
         <line x1={fromSVG.x} y1={fromSVG.y} x2={currentX} y2={currentY}
           stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" opacity="0.7" />
       )}
+      
+      {/* Static arrow from P to P' (always visible) */}
+      <line 
+        x1={fromSVG.x} 
+        y1={fromSVG.y} 
+        x2={toSVG_coords.x} 
+        y2={toSVG_coords.y}
+        stroke="#10b981" 
+        strokeWidth="2" 
+        strokeDasharray="5,5" 
+        opacity="0.4"
+        markerEnd="url(#greenArrowReflection)"
+      />
       
       {/* Distance arrows for x=k and y=k (after animation completes) */}
       {progress === 1 && (axis === 'x=' || axis === 'y=') && (
