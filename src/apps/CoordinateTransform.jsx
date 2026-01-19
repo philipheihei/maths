@@ -254,6 +254,13 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
 
   return (
     <g>
+      {/* Red arrowhead marker */}
+      <defs>
+        <marker id="redArrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#ef4444" />
+        </marker>
+      </defs>
+      
       {/* Reflection axis line */}
       <line x1={lineStart.x} y1={lineStart.y} x2={lineEnd.x} y2={lineEnd.y}
         stroke="#8b5cf6" strokeWidth="3" strokeDasharray="8,4" />
@@ -262,6 +269,100 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
       {progress > 0 && (
         <line x1={fromSVG.x} y1={fromSVG.y} x2={currentX} y2={currentY}
           stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" opacity="0.7" />
+      )}
+      
+      {/* Distance arrows for x=k and y=k (after animation completes) */}
+      {progress === 1 && (axis === 'x=' || axis === 'y=') && (
+        <>
+          {axis === 'x=' && (
+            <>
+              {/* Arrow from reflection line to original point */}
+              <line 
+                x1={toSVG(axisValue, from.y).x} 
+                y1={toSVG(axisValue, from.y).y} 
+                x2={fromSVG.x} 
+                y2={fromSVG.y}
+                stroke="#ef4444" 
+                strokeWidth="2" 
+                markerEnd="url(#redArrow)"
+              />
+              {/* Arrow from reflection line to reflected point */}
+              <line 
+                x1={toSVG(axisValue, to.y).x} 
+                y1={toSVG(axisValue, to.y).y} 
+                x2={toSVG_coords.x} 
+                y2={toSVG_coords.y}
+                stroke="#ef4444" 
+                strokeWidth="2" 
+                markerEnd="url(#redArrow)"
+              />
+              {/* Distance label from line to original point */}
+              <text 
+                x={(toSVG(axisValue, from.y).x + fromSVG.x) / 2} 
+                y={fromSVG.y - 8} 
+                fontSize="11" 
+                fontWeight="bold" 
+                fill="#ef4444"
+              >
+                {Math.abs(from.x - axisValue)}k
+              </text>
+              {/* Distance label from line to reflected point */}
+              <text 
+                x={(toSVG(axisValue, to.y).x + toSVG_coords.x) / 2} 
+                y={toSVG_coords.y - 8} 
+                fontSize="11" 
+                fontWeight="bold" 
+                fill="#ef4444"
+              >
+                {Math.abs(to.x - axisValue)}k
+              </text>
+            </>
+          )}
+          {axis === 'y=' && (
+            <>
+              {/* Arrow from reflection line to original point */}
+              <line 
+                x1={toSVG(from.x, axisValue).x} 
+                y1={toSVG(from.x, axisValue).y} 
+                x2={fromSVG.x} 
+                y2={fromSVG.y}
+                stroke="#ef4444" 
+                strokeWidth="2" 
+                markerEnd="url(#redArrow)"
+              />
+              {/* Arrow from reflection line to reflected point */}
+              <line 
+                x1={toSVG(to.x, axisValue).x} 
+                y1={toSVG(to.x, axisValue).y} 
+                x2={toSVG_coords.x} 
+                y2={toSVG_coords.y}
+                stroke="#ef4444" 
+                strokeWidth="2" 
+                markerEnd="url(#redArrow)"
+              />
+              {/* Distance label from line to original point */}
+              <text 
+                x={fromSVG.x + 10} 
+                y={(toSVG(from.x, axisValue).y + fromSVG.y) / 2} 
+                fontSize="11" 
+                fontWeight="bold" 
+                fill="#ef4444"
+              >
+                {Math.abs(from.y - axisValue)}k
+              </text>
+              {/* Distance label from line to reflected point */}
+              <text 
+                x={toSVG_coords.x + 10} 
+                y={(toSVG(to.x, axisValue).y + toSVG_coords.y) / 2} 
+                fontSize="11" 
+                fontWeight="bold" 
+                fill="#ef4444"
+              >
+                {Math.abs(to.y - axisValue)}k
+              </text>
+            </>
+          )}
+        </>
       )}
       
       {/* Original point */}
@@ -633,7 +734,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-2">
-                  水平移動 (dx): {translationDelta.dx > 0 ? `右 ${translationDelta.dx}` : translationDelta.dx < 0 ? `左 ${Math.abs(translationDelta.dx)}` : '0'}
+                  水平移動: {translationDelta.dx > 0 ? `向右平移 ${translationDelta.dx} 單位` : translationDelta.dx < 0 ? `向左平移 ${Math.abs(translationDelta.dx)} 單位` : '沒有移動'}
                 </label>
                 <input
                   type="range"
@@ -646,7 +747,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-600 mb-2">
-                  垂直移動 (dy): {translationDelta.dy > 0 ? `上 ${translationDelta.dy}` : translationDelta.dy < 0 ? `下 ${Math.abs(translationDelta.dy)}` : '0'}
+                  垂直移動: {translationDelta.dy > 0 ? `向上平移 ${translationDelta.dy} 單位` : translationDelta.dy < 0 ? `向下平移 ${Math.abs(translationDelta.dy)} 單位` : '沒有移動'}
                 </label>
                 <input
                   type="range"
@@ -737,7 +838,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
 
           {/* Description */}
           <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 mt-4">
-            <h4 className="font-bold text-blue-800 mb-2">句式說明</h4>
+            <h4 className="font-bold text-blue-800 mb-2">題目描述</h4>
             <p className="text-blue-700">{getTransformDescription()}</p>
           </div>
 
@@ -1233,7 +1334,7 @@ const CoordinateTransform = () => {
                   page === 'learn' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-100'
                 }`}
               >
-                學習
+                教學
               </button>
               <button
                 onClick={() => setPage('quiz')}
