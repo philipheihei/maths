@@ -147,46 +147,9 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
       {/* Path lines - horizontal then vertical */}
       {showPath && progress > 0 && (
         <>
-          {/* Horizontal path */}, onDragPoint }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const fromSVG = toSVG(from.x, from.y);
-  const angleRad = (clockwise ? -1 : 1) * (angle * Math.PI / 180) * progress;
-  
-  const handleMouseDown = (e) => {
-    if (onDragPoint) {
-      setIsDragging(true);
-      e.preventDefault();
-    }
-  };
-  
-  const handleMouseMove = (e) => {
-    if (!isDragging || !onDragPoint) return;
-    const svg = e.currentTarget.ownerSVGElement;
-    const pt = svg.createSVGPoint();
-    pt.x = e.clientX;
-    pt.y = e.clientY;
-    const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
-    const gridCoords = toGrid(svgP.x, svgP.y);
-    if (gridCoords.x >= -GRID_SIZE && gridCoords.x <= GRID_SIZE && 
-        gridCoords.y >= -GRID_SIZE && gridCoords.y <= GRID_SIZE) {
-      onDragPoint(gridCoords);
-    }
-  };
-  
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-  
-  useEffect(() => {
-    if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-      return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-      };
-    }
-  }, [isDragging])5" />
+          {/* Horizontal path */}
+          <line x1={fromSVG.x} y1={fromSVG.y} x2={currentX} y2={currentY}
+            stroke={color} strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
           {/* Vertical path */}
           {progress > 0.5 && (
             <line x1={midSVG.x} y1={midSVG.y} x2={currentX} y2={currentY}
@@ -227,21 +190,49 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
       )}
     </g>
   );
-        cx={fromSVG.x} 
-        cy={fromSVG.y} 
-        r="6" 
-        fill={color} 
-        opacity="0.5"
-        onMouseDown={handleMouseDown}
-        style={{ cursor: onDragPoint ? 'grab' : 'default' }}
-        className={isDragging ? 'cursor-grabbing' : ''}
-     
 };
 
 // ============= ROTATION ANIMATION COMPONENT =============
-const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', progress = 1, clockwise = true }) => {
+const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', progress = 1, clockwise = true, onDragPoint }) => {
+  const [isDragging, setIsDragging] = useState(false);
   const fromSVG = toSVG(from.x, from.y);
   const angleRad = (clockwise ? -1 : 1) * (angle * Math.PI / 180) * progress;
+  
+  const handleMouseDown = (e) => {
+    if (onDragPoint) {
+      setIsDragging(true);
+      e.preventDefault();
+    }
+  };
+  
+  const handleMouseMove = (e) => {
+    if (!isDragging || !onDragPoint) return;
+    const svg = e.currentTarget.ownerSVGElement;
+    const pt = svg.createSVGPoint();
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+    const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const gridCoords = toGrid(svgP.x, svgP.y);
+    if (gridCoords.x >= -GRID_SIZE && gridCoords.x <= GRID_SIZE && 
+        gridCoords.y >= -GRID_SIZE && gridCoords.y <= GRID_SIZE) {
+      onDragPoint(gridCoords);
+    }
+  };
+  
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+  
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging]);
   
   // Calculate rotated position
   const rotatedX = from.x * Math.cos(angleRad) - from.y * Math.sin(angleRad);
@@ -272,7 +263,16 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
         stroke={color} strokeWidth="1" strokeDasharray="3,3" opacity="0.3" />
       
       {/* Original point */}
-      <circle cx={fromSVG.x} cy={fromSVG.y} r="6" fill={color} opacity="0.5" />
+      <circle 
+        cx={fromSVG.x} 
+        cy={fromSVG.y} 
+        r="6" 
+        fill={color} 
+        opacity="0.5"
+        onMouseDown={handleMouseDown}
+        style={{ cursor: onDragPoint ? 'grab' : 'default' }}
+        className={isDragging ? 'cursor-grabbing' : ''}
+      />
       <text x={fromSVG.x + 12} y={fromSVG.y - 10} fontSize="14" fontWeight="bold" fill={color}>{label}</text>
       <text x={fromSVG.x + 12} y={fromSVG.y + 5} fontSize="12" fill="#666">({from.x}, {from.y})</text>
       
@@ -300,7 +300,16 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
           )}
         </>
       )}
-      , onDragPoint }) => {
+
+      {/* Origin point */}
+      <circle cx={CENTER} cy={CENTER} r="4" fill="#333" />
+      <text x={CENTER - 15} y={CENTER + 20} fontSize="12" fontWeight="bold" fill="#333">O</text>
+    </g>
+  );
+};
+
+// ============= REFLECTION ANIMATION COMPONENT =============
+const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color = '#3b82f6', progress = 1, onDragPoint }) => {
   const [isDragging, setIsDragging] = useState(false);
   const fromSVG = toSVG(from.x, from.y);
   
@@ -338,16 +347,7 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
         window.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [isDragging]
-      <circle cx={CENTER} cy={CENTER} r="4" fill="#333" />
-      <text x={CENTER - 15} y={CENTER + 20} fontSize="12" fontWeight="bold" fill="#333">O</text>
-    </g>
-  );
-};
-
-// ============= REFLECTION ANIMATION COMPONENT =============
-const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color = '#3b82f6', progress = 1 }) => {
-  const fromSVG = toSVG(from.x, from.y);
+  }, [isDragging]);
   
   // Calculate reflected position
   let to;
@@ -845,8 +845,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 label={label}
                 labelPrime={labelPrime}
                 progress={progress}
-                onDragPoint={setDemoPointrime}
-                progress={progress}
+                onDragPoint={setDemoPoint}
               />
             )}
           </CoordinateGrid>
