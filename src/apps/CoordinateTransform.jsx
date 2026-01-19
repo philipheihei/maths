@@ -304,7 +304,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
                 fontWeight="bold" 
                 fill="#ef4444"
               >
-                {from.x > axisValue ? '+' : '-'}{Math.abs(from.x - axisValue)}
+                {(from.x - axisValue) >= 0 ? '+' : ''}{from.x - axisValue}
               </text>
               {/* Distance label from line to reflected point */}
               <text 
@@ -314,7 +314,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
                 fontWeight="bold" 
                 fill="#ef4444"
               >
-                {to.x > axisValue ? '+' : '-'}{Math.abs(to.x - axisValue)}
+                {(to.x - axisValue) >= 0 ? '+' : ''}{to.x - axisValue}
               </text>
             </>
           )}
@@ -348,7 +348,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
                 fontWeight="bold" 
                 fill="#ef4444"
               >
-                {from.y > axisValue ? '-' : '+'}{Math.abs(from.y - axisValue)}
+                {(axisValue - from.y) >= 0 ? '+' : ''}{axisValue - from.y}
               </text>
               {/* Distance label from line to reflected point */}
               <text 
@@ -358,7 +358,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
                 fontWeight="bold" 
                 fill="#ef4444"
               >
-                {to.y > axisValue ? '-' : '+'}{Math.abs(to.y - axisValue)}
+                {(to.y - axisValue) >= 0 ? '+' : ''}{to.y - axisValue}
               </text>
             </>
           )}
