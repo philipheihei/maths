@@ -99,9 +99,10 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
     }
   };
   
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     if (!isDragging || !onDragPoint) return;
-    const svg = e.currentTarget.ownerSVGElement;
+    const svg = document.querySelector('svg');
+    if (!svg) return;
     const pt = svg.createSVGPoint();
     pt.x = e.clientX;
     pt.y = e.clientY;
@@ -111,11 +112,11 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
         gridCoords.y >= -GRID_SIZE && gridCoords.y <= GRID_SIZE) {
       onDragPoint(gridCoords);
     }
-  };
+  }, [isDragging, onDragPoint]);
   
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
   
   useEffect(() => {
     if (isDragging) {
@@ -126,7 +127,7 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
         window.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [isDragging]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
   
   // Two-step animation: horizontal first (0-0.5), then vertical (0.5-1)
   let currentX, currentY;
@@ -149,11 +150,11 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
         <>
           {/* Horizontal path */}
           <line x1={fromSVG.x} y1={fromSVG.y} x2={currentX} y2={currentY}
-            stroke={color} strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
+            stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" opacity="0.7" />
           {/* Vertical path */}
           {progress > 0.5 && (
             <line x1={midSVG.x} y1={midSVG.y} x2={currentX} y2={currentY}
-              stroke={color} strokeWidth="2" strokeDasharray="5,5" opacity="0.5" />
+              stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" opacity="0.7" />
           )}
           {/* Intermediate point indicator at corner */}
           {progress > 0.5 && (
@@ -205,9 +206,10 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
     }
   };
   
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     if (!isDragging || !onDragPoint) return;
-    const svg = e.currentTarget.ownerSVGElement;
+    const svg = document.querySelector('svg');
+    if (!svg) return;
     const pt = svg.createSVGPoint();
     pt.x = e.clientX;
     pt.y = e.clientY;
@@ -217,11 +219,11 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
         gridCoords.y >= -GRID_SIZE && gridCoords.y <= GRID_SIZE) {
       onDragPoint(gridCoords);
     }
-  };
+  }, [isDragging, onDragPoint]);
   
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
   
   useEffect(() => {
     if (isDragging) {
@@ -232,7 +234,7 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
         window.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [isDragging]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
   
   // Calculate rotated position
   const rotatedX = from.x * Math.cos(angleRad) - from.y * Math.sin(angleRad);
@@ -320,9 +322,10 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
     }
   };
   
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     if (!isDragging || !onDragPoint) return;
-    const svg = e.currentTarget.ownerSVGElement;
+    const svg = document.querySelector('svg');
+    if (!svg) return;
     const pt = svg.createSVGPoint();
     pt.x = e.clientX;
     pt.y = e.clientY;
@@ -332,11 +335,11 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
         gridCoords.y >= -GRID_SIZE && gridCoords.y <= GRID_SIZE) {
       onDragPoint(gridCoords);
     }
-  };
+  }, [isDragging, onDragPoint]);
   
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
   
   useEffect(() => {
     if (isDragging) {
@@ -347,7 +350,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
         window.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [isDragging]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
   
   // Calculate reflected position
   let to;
