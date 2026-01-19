@@ -128,7 +128,7 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
       {/* Original point */}
       <circle cx={fromSVG.x} cy={fromSVG.y} r="6" fill={color} opacity="0.5" />
       <text x={fromSVG.x + 12} y={fromSVG.y - 10} fontSize="14" fontWeight="bold" fill={color}>{label}</text>
-      <text x={fromSVG.x + 12} y={fromSVG.y + 5} fontSize="10" fill="#666">({from.x}, {from.y})</text>
+      <text x={fromSVG.x + 12} y={fromSVG.y + 5} fontSize="12" fill="#666">({from.x}, {from.y})</text>
       
       {/* Moving/Final point */}
       {progress > 0 && (
@@ -137,7 +137,7 @@ const AnimatedPoint = ({ from, to, label, labelPrime, color = '#3b82f6', progres
           {progress === 1 && (
             <>
               <text x={currentX + 12} y={currentY - 10} fontSize="14" fontWeight="bold" fill="#ef4444">{labelPrime}</text>
-              <text x={currentX + 12} y={currentY + 5} fontSize="10" fill="#666">({to.x}, {to.y})</text>
+              <text x={currentX + 12} y={currentY + 5} fontSize="12" fill="#666">({to.x}, {to.y})</text>
             </>
           )}
         </>
@@ -182,7 +182,7 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
       {/* Original point */}
       <circle cx={fromSVG.x} cy={fromSVG.y} r="6" fill={color} opacity="0.5" />
       <text x={fromSVG.x + 12} y={fromSVG.y - 10} fontSize="14" fontWeight="bold" fill={color}>{label}</text>
-      <text x={fromSVG.x + 12} y={fromSVG.y + 5} fontSize="10" fill="#666">({from.x}, {from.y})</text>
+      <text x={fromSVG.x + 12} y={fromSVG.y + 5} fontSize="12" fill="#666">({from.x}, {from.y})</text>
       
       {/* Current radius line (only when animating) */}
       {progress > 0 && progress < 1 && (
@@ -203,7 +203,7 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
           {progress === 1 && (
             <>
               <text x={currentSVG.x + 12} y={currentSVG.y - 10} fontSize="14" fontWeight="bold" fill="#ef4444">{labelPrime}</text>
-              <text x={currentSVG.x + 12} y={currentSVG.y + 5} fontSize="10" fill="#666">({toCoords.x}, {toCoords.y})</text>
+              <text x={currentSVG.x + 12} y={currentSVG.y + 5} fontSize="12" fill="#666">({toCoords.x}, {toCoords.y})</text>
             </>
           )}
         </>
@@ -267,7 +267,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
       {/* Original point */}
       <circle cx={fromSVG.x} cy={fromSVG.y} r="6" fill={color} opacity="0.5" />
       <text x={fromSVG.x + 12} y={fromSVG.y - 10} fontSize="14" fontWeight="bold" fill={color}>{label}</text>
-      <text x={fromSVG.x + 12} y={fromSVG.y + 5} fontSize="10" fill="#666">({from.x}, {from.y})</text>
+      <text x={fromSVG.x + 12} y={fromSVG.y + 5} fontSize="12" fill="#666">({from.x}, {from.y})</text>
       
       {/* Moving/Final point */}
       {progress > 0 && (
@@ -276,7 +276,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
           {progress === 1 && (
             <>
               <text x={currentX + 12} y={currentY - 10} fontSize="14" fontWeight="bold" fill="#ef4444">{labelPrime}</text>
-              <text x={currentX + 12} y={currentY + 5} fontSize="10" fill="#666">({to.x}, {to.y})</text>
+              <text x={currentX + 12} y={currentY + 5} fontSize="12" fill="#666">({to.x}, {to.y})</text>
             </>
           )}
         </>
@@ -547,25 +547,27 @@ const TeachingPage = ({ onGoToQuiz }) => {
 
       {/* Transform Type Selector */}
       <div className="bg-white rounded-xl shadow-sm border p-4">
-        <h3 className="font-bold text-gray-700 mb-3">選擇轉換類型</h3>
-        <div className="flex flex-wrap gap-2">
-          {[
-            { id: 'translation', label: '平移', icon: '↔️' },
-            { id: 'rotation', label: '旋轉', icon: '🔄' },
-            { id: 'reflection', label: '反射', icon: '🪞' }
-          ].map(type => (
-            <button
-              key={type.id}
-              onClick={() => { setTransformType(type.id); handleReset(); }}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                transformType === type.id
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              {type.icon} {type.label}
-            </button>
-          ))}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <h3 className="font-bold text-gray-700">選擇轉換類型</h3>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { id: 'translation', label: '平移', icon: '↔️' },
+              { id: 'rotation', label: '旋轉', icon: '🔄' },
+              { id: 'reflection', label: '反射', icon: '🪞' }
+            ].map(type => (
+              <button
+                key={type.id}
+                onClick={() => { setTransformType(type.id); handleReset(); }}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  transformType === type.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {type.icon} {type.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
