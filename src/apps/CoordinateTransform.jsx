@@ -752,9 +752,16 @@ const TeachingPage = ({ onGoToQuiz }) => {
               </div>
             )}
             {transformType === 'rotation' && (
-              <p className="text-amber-700 font-mono text-sm">
-                每移 90° (x, y) 數字調轉，正負睇象限。
-              </p>
+              <div className="text-amber-700 font-mono text-sm space-y-2">
+                <p>每移 90° (x, y) 數字調轉，正負睇象限。</p>
+                {progress === 1 && (
+                  <div className="mt-4 pt-4 border-t border-amber-200 space-y-2">
+                    <p className="font-bold">步驟說明：</p>
+                    <p>步驟1: 每旋轉90°，(x, y) 數字調轉，所以轉{rotationAngle}°會數字調轉{rotationAngle / 90}次，結果為({getTargetPoint().x}, {getTargetPoint().y})</p>
+                    <p>步驟2: 每旋轉90°，會移過一個象限。留意P' 的象限 x坐標為{getTargetPoint().x >= 0 ? '+ve' : '-ve'}，y坐標為{getTargetPoint().y >= 0 ? '+ve' : '-ve'}。所以結果為({getTargetPoint().x}, {getTargetPoint().y})</p>
+                  </div>
+                )}
+              </div>
             )}
             {transformType === 'reflection' && (
               <div className="text-amber-700 font-mono text-sm space-y-1">
@@ -812,6 +819,29 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
     
     // Generate point within valid range for transformation
     let from, to, description, explanation;
+    
+    // Helper function to generate rotation steps
+    const generateRotationSteps = (fromPoint, angle, clockwise, toPoint) => {
+      const direction = clockwise ? '順時針' : '逆時針';
+      const rotationTimes = angle / 90;
+      
+      // Step 1: Count rotations
+      let step1 = `步驟1: 每旋轉90°，(x, y) 數字調轉，所以轉${angle}°會數字調轉${rotationTimes}次，結果為(${toPoint.x}, ${toPoint.y})`;
+      
+      // Step 2: Determine quadrant and signs
+      let quadrant = '';
+      let xSign = toPoint.x >= 0 ? '+ve' : '-ve';
+      let ySign = toPoint.y >= 0 ? '+ve' : '-ve';
+      
+      if (toPoint.x > 0 && toPoint.y > 0) quadrant = '第一';
+      else if (toPoint.x < 0 && toPoint.y > 0) quadrant = '第二';
+      else if (toPoint.x < 0 && toPoint.y < 0) quadrant = '第三';
+      else if (toPoint.x > 0 && toPoint.y < 0) quadrant = '第四';
+      
+      let step2 = `步驟2: 每旋轉90°，會移過一個象限。留意P' 在${quadrant}象限，x坐標為${xSign}，y坐標為${ySign}。所以結果為(${toPoint.x > 0 ? '' : '-'}${Math.abs(toPoint.x)}, ${toPoint.y > 0 ? '' : '-'}${Math.abs(toPoint.y)})`;
+      
+      return `${step1}\n${step2}`;
+    };
     
     if (type === 'translation') {
       const dx = Math.floor(Math.random() * 9) - 4; // -4 to 4
@@ -895,7 +925,10 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       }
       explanation = `繞原點${direction}旋轉 ${angle}°：\n${formula} = (${to.x}, ${to.y})`;
       
-      return { type, from, to, label, description, explanation, angle, clockwise };
+      // Generate rotation steps explanation
+      const rotationSteps = generateRotationSteps(from, angle, clockwise, to);
+      
+      return { type, from, to, label, description, explanation, angle, clockwise, rotationSteps };
     }
     
     if (type === 'reflection') {
@@ -996,10 +1029,11 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       setScore(s => s + 1);
       setFeedback({ type: 'correct', message: '答對了！' });
     } else {
+      const rotationSteps = question.rotationSteps ? `\n\n${question.rotationSteps}` : '';
       setFeedback({ 
         type: 'wrong', 
         message: `答錯了！正確答案是 (${question.to.x}, ${question.to.y})`,
-        explanation: question.explanation
+        explanation: question.explanation + rotationSteps
       });
     }
     setShowAnimation(true);
