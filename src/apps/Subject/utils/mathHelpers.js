@@ -125,51 +125,134 @@ export const sortTerms = (expr) => {
 /**
  * Check if user's answer matches expected answer (visual comparison)
  * 檢查用戶答案是否匹配預期答案（視覺比較）
+ * 
+ * 支持多種等價形式:
+ * - 項序不同: a+b = b+a
+ * - 等式兩邊對調: x=a+b 等於 a+b=x
+ * - 分數表達: a/b 等於 \frac{a}{b}
+ * - 係數1省略: 1x 等於 x
  */
 export const checkAnswer = (input, expected, problem = null, currentStep = null) => {
   if (!expected) return true;
   
-  // Convert both to LaTeX for visual comparison (not string comparison)
+  // Convert both to LaTeX for visual comparison
   const inputLatex = toLatex(input);
   const expectedLatex = toLatex(expected);
   
-  // Normalize both LaTeX for comparison (remove spaces, brackets and formatting)
+  /**
+   * 標準化 LaTeX 表達式
+   * 移除格式差異，保留數學結構
+   */
   const normalizeLatex = (latex) => {
-    return latex
+    let result = latex
       .replace(/\s+/g, '')
-      .replace(/\\frac/g, 'FRAC')  // Preserve frac structure
-      .replace(/[{}()]/g, '')       // Remove all brackets
-      .replace(/\\\(/g, '')
-      .replace(/\\\)/g, '')
-      .replace(/\\text\{[^}]*\}/g, '')  // Remove text commands
+      .replace(/\\cdot/g, '')
+      .replace(/\\times/g, '')
+      .replace(/\*/g, '')
       .toLowerCase();
+    
+    // 處理 \frac{a}{b} 格式，轉換為統一的 (a)/(b) 格式
+    result = result.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, '($1)/($2)');
+    result = result.replace(/\\frac([^{])([^{])/g, '($1)/($2)');
+    
+    // 移除多餘的括號和空格
+    result = result.replace(/[{}]/g, '');
+    
+    return result;
   };
   
-  // Sort terms in an expression to handle commutative property (a+b = b+a)
-  const sortTermsInExpr = (expr) => {
-    // Split by + and - while keeping operators
+  /**
+   * 解析表達式為項的列表
+   * 例: "2a-3b+c" → ["+2a", "-3b", "+c"]
+   * 支持分數項: 保持 (...)/(...)格式完整
+   */
+  const parseTerms = (expr) => {
     const terms = [];
     let currentTerm = '';
     let currentSign = '+';
+    let parenDepth = 0;
     
     for (let i = 0; i < expr.length; i++) {
       const char = expr[i];
-      if ((char === '+' || char === '-') && i > 0 && currentTerm) {
-        terms.push(currentSign + currentTerm);
+      
+      // 追蹤括號深度
+      if (char === '(') parenDepth++;
+      if (char === ')') parenDepth--;
+      
+      // 只有在括號外才識別為項分隔符
+      if ((char === '+' || char === '-') && i > 0 && parenDepth === 0 && currentTerm.length > 0) {
+        // 確保完成分數項
+        if (!currentTerm.includes('/') || currentTerm.split('/').length === 2) {
+          terms.push(currentSign + normalizeCoeff(currentTerm));
+          currentSign = char;
+          currentTerm = '';
+          continue;
+        }
+      }
+      
+      if (char === '+' && i === 0) {
+        currentSign = '+';
+      } else if (char === '-' && i === 0) {
+        currentSign = '-';
+      } else if (char !== '+' && char !== '-' || parenDepth > 0 || i === 0) {
+        currentTerm += char;
+      } else if (char === '-' || char === '+') {
+        terms.push(currentSign + normalizeCoeff(currentTerm));
         currentSign = char;
         currentTerm = '';
-      } else if (char !== '+' && char !== '-') {
-        currentTerm += char;
-      } else if (i === 0 && char === '-') {
-        currentSign = '-';
       }
     }
+    
     if (currentTerm) {
-      terms.push(currentSign + currentTerm);
+      terms.push(currentSign + normalizeCoeff(currentTerm));
     }
     
-    // Sort terms alphabetically
-    return terms.sort().join('').replace(/^\+/, '');
+    return terms;
+  };
+  
+  /**
+   * 標準化係數
+   * 1x → x, -1x → -x
+   */
+  const normalizeCoeff = (term) => {
+    // 移除開頭的 1 係數（但保留 -1）
+    let result = term.replace(/^1([a-z])/, '$1');
+    // 處理 -1 係數
+    result = result.replace(/^-1([a-z])/, '-$1');
+    return result;
+  };
+  
+  /**
+   * 排序並連接項（處理交換律）
+   */
+  const sortAndJoinTerms = (expr) => {
+    const terms = parseTerms(expr);
+    // 對項進行排序（忽略符號）
+    terms.sort((a, b) => {
+      const aClean = a.replace(/^[+-]/, '');
+      const bClean = b.replace(/^[+-]/, '');
+      return aClean.localeCompare(bClean);
+    });
+    
+    // 連接項，處理開頭的 +
+    let result = terms.join('');
+    if (result.startsWith('+')) result = result.slice(1);
+    return result;
+  };
+  
+  /**
+   * 比較兩個表達式是否等價
+   */
+  const compareExpressions = (expr1, expr2) => {
+    // 直接比較
+    if (expr1 === expr2) return true;
+    
+    // 排序項後比較
+    const sorted1 = sortAndJoinTerms(expr1);
+    const sorted2 = sortAndJoinTerms(expr2);
+    if (sorted1 === sorted2) return true;
+    
+    return false;
   };
   
   const normalizedInput = normalizeLatex(inputLatex);
@@ -178,36 +261,41 @@ export const checkAnswer = (input, expected, problem = null, currentStep = null)
   console.log('Input:', input, '→ LaTeX:', inputLatex, '→ Normalized:', normalizedInput);
   console.log('Expected:', expected, '→ LaTeX:', expectedLatex, '→ Normalized:', normalizedExpected);
   
-  // Direct visual match
+  // 直接匹配
   if (normalizedInput === normalizedExpected) return true;
   
-  // Check if it's an equation (has =)
-  if (inputLatex.includes('=') && expectedLatex.includes('=')) {
+  // 檢查等式（有 = 的情況）
+  if (normalizedInput.includes('=') && normalizedExpected.includes('=')) {
     const partsIn = normalizedInput.split('=');
     const partsEx = normalizedExpected.split('=');
     
     if (partsIn.length === 2 && partsEx.length === 2) {
-      let [inLeft, inRight] = partsIn.map(p => p.trim());
-      let [exLeft, exRight] = partsEx.map(p => p.trim());
+      const [inLeft, inRight] = partsIn.map(p => p.trim());
+      const [exLeft, exRight] = partsEx.map(p => p.trim());
       
-      // Sort terms in each side to handle commutative property
-      inLeft = sortTermsInExpr(inLeft);
-      inRight = sortTermsInExpr(inRight);
-      exLeft = sortTermsInExpr(exLeft);
-      exRight = sortTermsInExpr(exRight);
+      // 檢查兩種方向（正常和對調）
+      const match1 = compareExpressions(inLeft, exLeft) && compareExpressions(inRight, exRight);
+      const match2 = compareExpressions(inLeft, exRight) && compareExpressions(inRight, exLeft);
       
-      // Check both orientations (left=right or right=left)
-      const match1 = inLeft === exLeft && inRight === exRight;
-      const match2 = inLeft === exRight && inRight === exLeft;
-      
-      console.log('Parts comparison (sorted):', {
+      console.log('Equation comparison:', {
         inLeft, inRight, exLeft, exRight,
+        sortedInLeft: sortAndJoinTerms(inLeft),
+        sortedInRight: sortAndJoinTerms(inRight),
+        sortedExLeft: sortAndJoinTerms(exLeft),
+        sortedExRight: sortAndJoinTerms(exRight),
         match1, match2
       });
       
       if (match1 || match2) {
         return true;
       }
+    }
+  }
+  
+  // 對非等式表達式進行項排序比較
+  if (!normalizedInput.includes('=') && !normalizedExpected.includes('=')) {
+    if (compareExpressions(normalizedInput, normalizedExpected)) {
+      return true;
     }
   }
   
