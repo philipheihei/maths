@@ -12,6 +12,7 @@ import CompoundInequalityQuiz from './apps/CompoundInequalityQuiz';
 import VariationQuiz from './apps/VariationQuiz';
 import Subject from './apps/Subject/index';
 import CoordinateTransform from './apps/CoordinateTransform';
+import AlgebraicFractionsQuiz from './apps/AlgebraicFractionsQuiz';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/variation-quiz" element={<VariationQuiz />} />
         <Route path="/subject" element={<Subject />} />
         <Route path="/coordinate-transform" element={<CoordinateTransform />} />
+        <Route path="/algebraic-fractions" element={<AlgebraicFractionsQuiz />} />
       </Routes>
     </Router>
   );

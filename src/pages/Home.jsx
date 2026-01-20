@@ -182,6 +182,22 @@ const Home = () => {
       category: '初中',
       topics: ['坐標轉換', '平移', '旋轉', '反射'],
       inDevelopment: true
+    },
+    {
+      id: 'algebraic-fractions',
+      title: '代數分式',
+      description: 'F4 CH4 續多項式：代數分式四則混算、通分母、展開分子、化簡',
+      icon: Calculator,
+      color: 'bg-rose-500',
+      hoverColor: 'hover:bg-rose-600',
+      path: '/algebraic-fractions',
+      level: 'F4',
+      badges: [
+        { level: 'F4', chapter: 'CH4', subject: '續多項式' }
+      ],
+      category: '高中',
+      topics: ['代數分式', '通分母', '因式分解', '化簡'],
+      inDevelopment: false
     }
   ];
 
