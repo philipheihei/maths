@@ -176,7 +176,8 @@ export default function AlgebraicFractionsQuiz() {
   const [feedback, setFeedback] = useState(null); // 'correct' | 'partial' | 'incorrect'
   const [earnedPoints, setEarnedPoints] = useState(0);
   const [showTips, setShowTips] = useState(false);
-  const [activeInput, setActiveInput] = useState('step1'); 
+  const [activeInput, setActiveInput] = useState('step1');
+  const [usedExpandedDenom, setUsedExpandedDenom] = useState(false); // Track if user expanded denominator 
   
   const katexLoaded = useKatex();
 
@@ -231,6 +232,7 @@ export default function AlgebraicFractionsQuiz() {
     setFeedback(null);
     setEarnedPoints(0);
     setActiveInput('step1');
+    setUsedExpandedDenom(false);
   };
 
   useEffect(() => {
@@ -300,8 +302,59 @@ export default function AlgebraicFractionsQuiz() {
     const expectedDenom1 = normalize(`${d1Str}${d2Str}`);
     const expectedDenom2 = normalize(`${d2Str}${d1Str}`);
 
-    // Helper to check any string against valid denominators
-    const isValidDenom = (uDen) => (uDen === expectedDenom1) || (uDen === expectedDenom2);
+    // --- Calculate expanded polynomial denominator ---
+    // (d1.a*v + d1.b)(d2.a*v + d2.b) = (d1.a*d2.a)v² + (d1.a*d2.b + d1.b*d2.a)v + (d1.b*d2.b)
+    const coeff_v2 = d1.a * d2.a;
+    const coeff_v1 = d1.a * d2.b + d1.b * d2.a;
+    const coeff_c = d1.b * d2.b;
+
+    // Build expanded polynomial string (format: Av² + Bv + C)
+    const buildExpandedDenom = () => {
+        let result = "";
+        // v² term
+        if (coeff_v2 === 1) result += `${v}^2`;
+        else result += `${coeff_v2}${v}^2`;
+        // v term
+        if (coeff_v1 > 0) result += `+${coeff_v1 === 1 ? '' : coeff_v1}${v}`;
+        else if (coeff_v1 < 0) result += `${coeff_v1 === -1 ? '-' : coeff_v1}${v}`;
+        // constant term
+        if (coeff_c > 0) result += `+${coeff_c}`;
+        else if (coeff_c < 0) result += `${coeff_c}`;
+        return result;
+    };
+    const expandedDenom = normalize(buildExpandedDenom());
+    // Also allow C + Bv + Av² format
+    const buildExpandedDenomReverse = () => {
+        let result = "";
+        // constant first
+        result += `${coeff_c}`;
+        // v term
+        if (coeff_v1 > 0) result += `+${coeff_v1 === 1 ? '' : coeff_v1}${v}`;
+        else if (coeff_v1 < 0) result += `${coeff_v1 === -1 ? '-' : coeff_v1}${v}`;
+        // v² term
+        if (coeff_v2 > 0) result += `+${coeff_v2 === 1 ? '' : coeff_v2}${v}^2`;
+        else if (coeff_v2 < 0) result += `${coeff_v2 === -1 ? '-' : coeff_v2}${v}^2`;
+        return result;
+    };
+    const expandedDenomReverse = normalize(buildExpandedDenomReverse());
+
+    // Track if user used expanded form
+    let detectedExpandedDenom = false;
+
+    // Helper to check any string against valid denominators (factored or expanded)
+    const isValidDenom = (uDen) => {
+        // Check factored form first
+        if (uDen === expectedDenom1 || uDen === expectedDenom2) {
+            return true;
+        }
+        // Check expanded polynomial form (normalize ^ to ^2 etc)
+        const uDenNorm = uDen.replace(/\^\(?2\)?/g, '^2');
+        if (uDenNorm === expandedDenom || uDenNorm === expandedDenomReverse) {
+            detectedExpandedDenom = true;
+            return true;
+        }
+        return false;
+    };
 
     // --- 2. Validation Logic for Answer (3 Points) ---
     const validateFinalAnswer = () => {
@@ -475,6 +528,7 @@ export default function AlgebraicFractionsQuiz() {
     setScore(s => s + pts);
     setEarnedPoints(pts);
     setFeedback(newFeedback);
+    setUsedExpandedDenom(detectedExpandedDenom);
   };
 
   const renderSolution = () => {
@@ -659,6 +713,11 @@ export default function AlgebraicFractionsQuiz() {
                         <div>
                             <div className="font-bold text-lg">正確！ (Correct) +3分</div>
                             <div className="text-sm opacity-90">做得好！繼續挑戰下一題。</div>
+                            {usedExpandedDenom && (
+                                <div className="text-xs mt-1 text-blue-600 bg-blue-50 px-2 py-1 rounded inline-block">
+                                    💡 小提示：分母可以保留括號形式，毋須展開多項式喔！
+                                </div>
+                            )}
                         </div>
                     </div>
                 ) : feedback === 'partial' ? (
