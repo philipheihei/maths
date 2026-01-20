@@ -293,8 +293,10 @@ export default function AlgebraicFractionsQuiz() {
 
     // --- 1. Prepare Expected Strings for Denominator ---
     // Denominator is always (D1)(D2) or (D2)(D1)
-    const d1Str = `(${d1.a === 1 ? '' : d1.a}${v}${d1.b >= 0 ? '+' : ''}${d1.b})`;
-    const d2Str = `(${d2.a === 1 ? '' : d2.a}${v}${d2.b >= 0 ? '+' : ''}${d2.b})`;
+    const d1Bare = `${d1.a === 1 ? '' : d1.a}${v}${d1.b >= 0 ? '+' : ''}${d1.b}`;
+    const d2Bare = `${d2.a === 1 ? '' : d2.a}${v}${d2.b >= 0 ? '+' : ''}${d2.b}`;
+    const d1Str = `(${d1Bare})`;
+    const d2Str = `(${d2Bare})`;
     const expectedDenom1 = normalize(`${d1Str}${d2Str}`);
     const expectedDenom2 = normalize(`${d2Str}${d1Str}`);
 
@@ -413,14 +415,16 @@ export default function AlgebraicFractionsQuiz() {
         // Expected: num1(d2_str) op num2(d1_str)
         const op = isAddition ? '+' : '-';
         
-        // Generate options for term: if coeff is 1, accept both "1(...)" and "(...)"
-        const getTermOptions = (n, poly) => {
-            if (n === 1) return [`1${poly}`, `${poly}`];
-            return [`${n}${poly}`];
+        // Generate options for term:
+        // - If coeff is 1: accept paren + bare, with optional leading 1
+        // - If coeff > 1: require parentheses for clarity
+        const getTermOptions = (n, polyPar, polyBare) => {
+            if (n === 1) return [`1${polyPar}`, `${polyPar}`, `${polyBare}`];
+            return [`${n}${polyPar}`];
         };
 
-        const t1Options = getTermOptions(num1, d2Str);
-        const t2Options = getTermOptions(num2, d1Str);
+        const t1Options = getTermOptions(num1, d2Str, d2Bare);
+        const t2Options = getTermOptions(num2, d1Str, d1Bare);
 
         const expectedNums = [];
         t1Options.forEach(t1 => {
