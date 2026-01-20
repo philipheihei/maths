@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Lightbulb, RefreshCw, CheckCircle, Delete, ArrowRight, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { X, Lightbulb, RefreshCw, CheckCircle, Delete, ArrowRight, AlertTriangle, Home as HomeIcon } from 'lucide-react';
 import { loadKatexOnce } from '../utils/katexLoader';
 
 // --- KaTeX Helper Hook (使用共享 katexLoader) ---
@@ -596,6 +597,10 @@ export default function AlgebraicFractionsQuiz() {
     <div className="min-h-screen bg-gray-50 text-gray-900 font-sans pb-[32rem] md:pb-10">
       {/* Header */}
       <header className="bg-white p-4 shadow-sm sticky top-0 z-10 flex items-center justify-center relative">
+        <Link to="/" className="flex items-center gap-1 text-gray-600 hover:text-blue-600 transition-colors">
+          <HomeIcon size={20} />
+          <span className="text-sm font-semibold">返回主頁</span>
+        </Link>
         {/* Centered Title */}
         <h1 className="font-bold text-xl text-gray-800 absolute left-1/2 transform -translate-x-1/2 w-full text-center">
             DSE代數分式
