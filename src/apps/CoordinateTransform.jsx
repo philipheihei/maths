@@ -869,8 +869,13 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <p>對 x 軸反射 → 上下反轉 → y轉正負號</p>
                 <p>對 y 軸反射 → 左右反轉 → x轉正負號</p>
                 <hr className="border-amber-200 my-2"/>
-                <p>對 x = k 反射: (x, y) → (2k - x, y)</p>
-                <p>對 y = k 反射: (x, y) → (x, 2k - y)</p>
+                <p>對 x = k 反射：即 x 的數值改變</p>
+                <p className="pl-4">x 向右移到 k，再向右移相同距離</p>
+                <p className="pl-4">(x, y) → (x + 2(k-x), y)</p>
+                <hr className="border-amber-200 my-2"/>
+                <p>對 y = k 反射：即 y 的數值改變</p>
+                <p className="pl-4">y 向上移到 k，再向上移相同距離</p>
+                <p className="pl-4">(x, y) → (x, y + 2(k-y))</p>
               </div>
             )}
           </div>
@@ -926,20 +931,29 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       const direction = clockwise ? '順時針' : '逆時針';
       const rotationTimes = angle / 90;
       
+      // Normalize -0 to 0
+      const normalizedX = toPoint.x === 0 ? 0 : toPoint.x;
+      const normalizedY = toPoint.y === 0 ? 0 : toPoint.y;
+      
       // Step 1: Count rotations
-      let step1 = `步驟1: 每旋轉90°，(x, y) 數字調轉，所以轉${angle}°會數字調轉${rotationTimes}次，結果為(${toPoint.x}, ${toPoint.y})`;
+      let step1 = `步驟1: 每旋轉90°，(x, y) 數字調轉，所以轉${angle}°會數字調轉${rotationTimes}次，結果為(${normalizedX}, ${normalizedY})`;
       
       // Step 2: Determine quadrant and signs
       let quadrant = '';
-      let xSign = toPoint.x >= 0 ? '+ve' : '-ve';
-      let ySign = toPoint.y >= 0 ? '+ve' : '-ve';
+      let xSign = normalizedX > 0 ? '+ve' : normalizedX < 0 ? '-ve' : '0';
+      let ySign = normalizedY > 0 ? '+ve' : normalizedY < 0 ? '-ve' : '0';
       
-      if (toPoint.x > 0 && toPoint.y > 0) quadrant = '第一';
-      else if (toPoint.x < 0 && toPoint.y > 0) quadrant = '第二';
-      else if (toPoint.x < 0 && toPoint.y < 0) quadrant = '第三';
-      else if (toPoint.x > 0 && toPoint.y < 0) quadrant = '第四';
+      if (normalizedX > 0 && normalizedY > 0) quadrant = '第一';
+      else if (normalizedX < 0 && normalizedY > 0) quadrant = '第二';
+      else if (normalizedX < 0 && normalizedY < 0) quadrant = '第三';
+      else if (normalizedX > 0 && normalizedY < 0) quadrant = '第四';
+      else if (normalizedX === 0 && normalizedY > 0) quadrant = '正y軸上';
+      else if (normalizedX === 0 && normalizedY < 0) quadrant = '負y軸上';
+      else if (normalizedY === 0 && normalizedX > 0) quadrant = '正x軸上';
+      else if (normalizedY === 0 && normalizedX < 0) quadrant = '負x軸上';
+      else quadrant = '原點';
       
-      let step2 = `步驟2: 每旋轉90°，會移過一個象限。留意P' 在${quadrant}象限，x坐標為${xSign}，y坐標為${ySign}。所以結果為(${toPoint.x > 0 ? '' : '-'}${Math.abs(toPoint.x)}, ${toPoint.y > 0 ? '' : '-'}${Math.abs(toPoint.y)})`;
+      let step2 = `步驟2: 每旋轉90°，會移過一個象限。留意P' 在${quadrant}，x坐標為${xSign}，y坐標為${ySign}。所以結果為(${normalizedX}, ${normalizedY})`;
       
       return `${step1}\n${step2}`;
     };
@@ -1015,16 +1029,19 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       }
       
       let formula = '';
+      // Normalize -0 to 0 for display
+      const normalizeZero = (val) => val === 0 ? 0 : val;
+      
       if (!clockwise) {
-        if (angle === 90) formula = `(x, y) → (-y, x)\n(${from.x}, ${from.y}) → (${-from.y}, ${from.x})`;
-        else if (angle === 180) formula = `(x, y) → (-x, -y)\n(${from.x}, ${from.y}) → (${-from.x}, ${-from.y})`;
-        else if (angle === 270) formula = `(x, y) → (y, -x)\n(${from.x}, ${from.y}) → (${from.y}, ${-from.x})`;
+        if (angle === 90) formula = `(x, y) → (-y, x)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.y)}, ${normalizeZero(from.x)})`;
+        else if (angle === 180) formula = `(x, y) → (-x, -y)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.x)}, ${normalizeZero(-from.y)})`;
+        else if (angle === 270) formula = `(x, y) → (y, -x)\n(${from.x}, ${from.y}) → (${normalizeZero(from.y)}, ${normalizeZero(-from.x)})`;
       } else {
-        if (angle === 90) formula = `(x, y) → (y, -x)\n(${from.x}, ${from.y}) → (${from.y}, ${-from.x})`;
-        else if (angle === 180) formula = `(x, y) → (-x, -y)\n(${from.x}, ${from.y}) → (${-from.x}, ${-from.y})`;
-        else if (angle === 270) formula = `(x, y) → (-y, x)\n(${from.x}, ${from.y}) → (${-from.y}, ${from.x})`;
+        if (angle === 90) formula = `(x, y) → (y, -x)\n(${from.x}, ${from.y}) → (${normalizeZero(from.y)}, ${normalizeZero(-from.x)})`;
+        else if (angle === 180) formula = `(x, y) → (-x, -y)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.x)}, ${normalizeZero(-from.y)})`;
+        else if (angle === 270) formula = `(x, y) → (-y, x)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.y)}, ${normalizeZero(from.x)})`;
       }
-      explanation = `繞原點${direction}旋轉 ${angle}°：\n${formula} = (${to.x}, ${to.y})`;
+      explanation = `繞原點${direction}旋轉 ${angle}°：\n${formula} = (${normalizeZero(to.x)}, ${normalizeZero(to.y)})`;
       
       // Generate rotation steps explanation
       const rotationSteps = generateRotationSteps(from, angle, clockwise, to);
@@ -1067,14 +1084,17 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       else if (axis === 'x=') axisStr = `直線 x = ${axisValue}`;
       else axisStr = `直線 y = ${axisValue}`;
       
-      description = `${label}' 為 ${label}(${from.x}, ${from.y}) 對 ${axisStr} 的反射影像。求 ${label}' 的坐標。`;
+      // Normalize -0 to 0 for display
+      const normalizeZero = (val) => val === 0 ? 0 : val;
       
-      let formula = '';
       if (axis === 'x') {
-        formula = `對 x 軸反射: (x, y) → (x, -y)\n(${from.x}, ${from.y}) → (${from.x}, ${-from.y})`;
+        formula = `對 x 軸反射: (x, y) → (x, -y)\n(${from.x}, ${from.y}) → (${normalizeZero(from.x)}, ${normalizeZero(-from.y)})`;
       } else if (axis === 'y') {
-        formula = `對 y 軸反射: (x, y) → (-x, y)\n(${from.x}, ${from.y}) → (${-from.x}, ${from.y})`;
+        formula = `對 y 軸反射: (x, y) → (-x, y)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.x)}, ${normalizeZero(from.y)})`;
       } else if (axis === 'x=') {
+        formula = `對 x = ${axisValue} 反射: (x, y) → (2×${axisValue} - x, y)\n(${from.x}, ${from.y}) → (${normalizeZero(2*axisValue - from.x)}, ${from.y}) = (${normalizeZero(to.x)}, ${normalizeZero(to.y)})`;
+      } else {
+        formula = `對 y = ${axisValue} 反射: (x, y) → (x, 2×${axisValue} - y)\n(${from.x}, ${from.y}) → (${from.x}, ${normalizeZero(2*axisValue - from.y)}) = (${normalizeZero(to.x)}, ${normalizeZero(to.y)
         formula = `對 x = ${axisValue} 反射: (x, y) → (2×${axisValue} - x, y)\n(${from.x}, ${from.y}) → (${2*axisValue} - ${from.x}, ${from.y}) = (${to.x}, ${to.y})`;
       } else {
         formula = `對 y = ${axisValue} 反射: (x, y) → (x, 2×${axisValue} - y)\n(${from.x}, ${from.y}) → (${from.x}, ${2*axisValue} - ${from.y}) = (${to.x}, ${to.y})`;
