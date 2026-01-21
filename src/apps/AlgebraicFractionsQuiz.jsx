@@ -211,7 +211,7 @@ export default function AlgebraicFractionsQuiz() {
     const vars = ['x', 'y', 'z', 'a', 'b', 'm', 'n', 'k'];
     const v = vars[Math.floor(Math.random() * vars.length)];
 
-    const d1 = generateBinomial(v);
+    let d1 = generateBinomial(v);
     let d2 = generateBinomial(v);
     
     // Ensure denominators are not identical
@@ -222,6 +222,28 @@ export default function AlgebraicFractionsQuiz() {
     const num1 = Math.floor(Math.random() * 9) + 1;
     const num2 = Math.floor(Math.random() * 9) + 1;
     const isAddition = Math.random() > 0.5;
+
+    // Randomize display style of denominators: variable-first (ax±b) or constant-first (b±ax)
+    const formatDisplay = (a, b, variable, constantFirst = false) => {
+      const varTerm = `${a === 1 ? '' : a}${variable}`;
+      const constTerm = `${Math.abs(b)}`;
+      const sign = b >= 0 ? '+' : '-';
+      if (!constantFirst) {
+        // ax ± b
+        return `${varTerm} ${sign} ${constTerm}`;
+      }
+      // constant-first: b ± ax
+      // Use plus/minus between constant and variable term to reflect b sign on the constant only
+      // For teaching clarity, keep '+' between terms when b is negative by carrying the '-' on the constant
+      // Examples: b=3 -> 3 + 2x; b=-3 -> -3 + 2x
+      const constPrefix = b >= 0 ? `${constTerm}` : `-${constTerm}`;
+      return `${constPrefix} + ${varTerm}`;
+    };
+
+    const d1ConstFirst = Math.random() < 0.5;
+    const d2ConstFirst = Math.random() < 0.5;
+    d1 = { ...d1, display: formatDisplay(d1.a, d1.b, v, d1ConstFirst) };
+    d2 = { ...d2, display: formatDisplay(d2.a, d2.b, v, d2ConstFirst) };
 
     let q = { num1, num2, d1, d2, isAddition, variable: v, id: Date.now() };
 
@@ -343,17 +365,38 @@ export default function AlgebraicFractionsQuiz() {
 
     // Helper to check any string against valid denominators (factored or expanded)
     const isValidDenom = (uDen) => {
-        // Check factored form first
-        if (uDen === expectedDenom1 || uDen === expectedDenom2) {
-            return true;
-        }
-        // Check expanded polynomial form (normalize ^ to ^2 etc)
-        const uDenNorm = uDen.replace(/\^\(?2\)?/g, '^2');
-        if (uDenNorm === expandedDenom || uDenNorm === expandedDenomReverse) {
-            detectedExpandedDenom = true;
-            return true;
-        }
-        return false;
+      // Accept factored forms in either term order: (ax+b)(cx+d) or (b+ax)(d+cx)
+      const ax = (a, v) => (a === 1 ? `${v}` : `${a}${v}`);
+      const factorForms = (a, b) => {
+        const signB = b >= 0 ? '+' : '';
+        const vf = `(${ax(a, v)}${signB}${b})`;     // variable-first e.g. 2x+3 or x-3
+        const cf = `(${b}${signB}${ax(a, v)})`;     // constant-first e.g. 3+2x or -3+x
+        return [normalize(vf), normalize(cf)];
+      };
+
+      const d1Forms = factorForms(d1.a, d1.b);
+      const d2Forms = factorForms(d2.a, d2.b);
+
+      // Build all accepted factored combinations
+      const acceptedFactored = new Set();
+      d1Forms.forEach(f1 => {
+        d2Forms.forEach(f2 => {
+          acceptedFactored.add(normalize(`${f1}${f2}`));
+          acceptedFactored.add(normalize(`${f2}${f1}`)); // swapped factors
+        });
+      });
+
+      if (acceptedFactored.has(uDen)) {
+        return true;
+      }
+
+      // Check expanded polynomial form (normalize ^ to ^2 etc)
+      const uDenNorm = uDen.replace(/\^\(?2\)?/g, '^2');
+      if (uDenNorm === expandedDenom || uDenNorm === expandedDenomReverse) {
+        detectedExpandedDenom = true;
+        return true;
+      }
+      return false;
     };
 
     // --- 2. Validation Logic for Answer (3 Points) ---
@@ -680,7 +723,8 @@ export default function AlgebraicFractionsQuiz() {
         </div>
       </header>
 
-      <main className="max-w-xl mx-auto p-4 flex flex-col gap-4">
+      <div className="max-w-5xl mx-auto p-4 md:grid md:grid-cols-2 md:gap-4">
+      <main className="flex flex-col gap-4 md:pr-2">
         
         {/* Question Card */}
         {question && (
@@ -745,19 +789,15 @@ export default function AlgebraicFractionsQuiz() {
 
       </main>
 
-      {/* Realistic Keypad Layout */}
-      {/* Fixed on Mobile: bottom-0, fixed.
-          Relative on Desktop: md:relative, md:bg-transparent.
-          This ensures desktop users can scroll past the content naturally.
-      */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-3 z-30 pb-safe md:relative md:shadow-none md:bg-transparent md:border-none md:pb-0 md:mt-8">
+        {/* Keypad: fixed at bottom on mobile; right-side column on desktop */}
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-3 z-30 pb-safe md:relative md:shadow-none md:bg-transparent md:border-none md:pb-0 md:mt-0 md:pl-2">
         
         {/* Drag handle for mobile only */}
         <div className="flex justify-center mb-2 md:hidden">
             <div className="w-12 h-1.5 bg-gray-200 rounded-full"></div>
         </div>
         
-        <div className="grid grid-cols-4 gap-2 max-w-xl mx-auto">
+        <div className="grid grid-cols-4 gap-2 md:max-w-none">
             {/* Row 1 */}
             <Button variant="keyFunction" onClick={() => handleKeyPad('(')}>(</Button>
             <Button variant="keyFunction" onClick={() => handleKeyPad(')')}>)</Button>
@@ -796,6 +836,7 @@ export default function AlgebraicFractionsQuiz() {
                <ArrowRight />
             </Button>
         </div>
+      </div>
       </div>
 
       {/* Tips Modal */}
