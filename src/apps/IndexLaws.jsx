@@ -280,29 +280,35 @@ export default function IndexLaws() {
       const part2B = e3 * k;
       const step1Str = `ab^${e1}a^${part2A}b^${part2B}`;
       
-      // Step 2: 合併同底數
-      const finalA = 1 + part2A;
-      const finalB = e1 + part2B;
-      
+      // Step 2: 負指數轉正指數（重新組織，還未合併）
       const step2NumParts = [];
       const step2DenParts = [];
       
-      if (finalA >= 0) step2NumParts.push(formatExpTerm('a', finalA));
-      else step2DenParts.push(formatExpTerm('a', Math.abs(finalA)));
+      step2NumParts.push('a');
+      step2NumParts.push(formatExpTerm('b', e1));
+      step2NumParts.push(formatExpTerm('b', part2B));
+      step2DenParts.push(formatExpTerm('a', Math.abs(part2A)));
       
-      if (finalB >= 0) step2NumParts.push(formatExpTerm('b', finalB));
-      else step2DenParts.push(formatExpTerm('b', Math.abs(finalB)));
+      const step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
       
-      if (step2NumParts.length === 0) step2NumParts.push('1');
-      if (step2DenParts.length === 0) step2DenParts.push('1');
-      const step2Str = step2DenParts[0] === '1' 
-        ? step2NumParts.join('')
-        : `${step2NumParts.join('')}/${step2DenParts.join('')}`;
+      // Step 3: 合併同底數
+      const finalA = 1 + part2A;
+      const finalB = e1 + part2B;
       
-      // Step 3: 負指數轉正指數
-      const step3Str = step2DenParts.length > 0 && step2DenParts[0] !== '1' 
-        ? `${step2NumParts.join('')}/${step2DenParts.join('')}`
-        : step2NumParts.join('');
+      const step3NumParts = [];
+      const step3DenParts = [];
+      
+      if (finalA >= 0) step3NumParts.push(formatExpTerm('a', finalA));
+      else step3DenParts.push(formatExpTerm('a', Math.abs(finalA)));
+      
+      if (finalB >= 0) step3NumParts.push(formatExpTerm('b', finalB));
+      else step3DenParts.push(formatExpTerm('b', Math.abs(finalB)));
+      
+      if (step3NumParts.length === 0) step3NumParts.push('1');
+      if (step3DenParts.length === 0) step3DenParts.push('1');
+      const step3Str = step3DenParts[0] === '1' 
+        ? step3NumParts.join('')
+        : `${step3NumParts.join('')}/${step3DenParts.join('')}`;
       
       const finalAnsStr = step3Str;
       
