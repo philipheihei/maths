@@ -293,8 +293,10 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
       .toLowerCase();
   };
   
-  // Sort terms in an expression to handle commutative property (a+b = b+a)
+  // Sort and normalize terms in an expression to handle commutative property (a+b = b+a)
   const sortTermsInExpr = (expr) => {
+    if (!expr) return '';
+    
     // Split by + and - while keeping operators
     const terms = [];
     let currentTerm = '';
@@ -303,7 +305,7 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
     for (let i = 0; i < expr.length; i++) {
       const char = expr[i];
       if ((char === '+' || char === '-') && i > 0 && currentTerm) {
-        terms.push(currentSign + currentTerm);
+        terms.push({ sign: currentSign, term: currentTerm.trim() });
         currentSign = char;
         currentTerm = '';
       } else if (char !== '+' && char !== '-') {
@@ -312,12 +314,24 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
         currentSign = '-';
       }
     }
-    if (currentTerm) {
-      terms.push(currentSign + currentTerm);
+    if (currentTerm.trim()) {
+      terms.push({ sign: currentSign, term: currentTerm.trim() });
     }
     
-    // Sort terms alphabetically
-    return terms.sort().join('').replace(/^\+/, '');
+    // Sort terms by their content (ignore sign for sorting)
+    terms.sort((a, b) => a.term.localeCompare(b.term));
+    
+    // Reconstruct expression
+    let result = '';
+    terms.forEach((t, idx) => {
+      if (idx === 0) {
+        result += (t.sign === '-' ? '-' : '') + t.term;
+      } else {
+        result += t.sign + t.term;
+      }
+    });
+    
+    return result;
   };
   
   const normalizedInput = normalizeLatex(inputLatex);
@@ -372,7 +386,16 @@ const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
   const allVars = ['x', 'y', 'a', 'b', 'h', 'k', 'm', 'n'];
   const usedVars = new Set();
   
-  // Collect all text to analyze
+  // Priority 1: Use explicit variable list from problem
+  if (problem && problem.allVariables && Array.isArray(problem.allVariables)) {
+    problem.allVariables.forEach(v => {
+      if (allVars.includes(v)) {
+        usedVars.add(v);
+      }
+    });
+  }
+  
+  // Priority 2: Extract from text if explicit list not available or incomplete
   let extractionText = '';
   if (problem) {
     extractionText = problem.text + ' ' + problem.subject;
@@ -381,40 +404,34 @@ const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
     extractionText += ' ' + currentEquation;
   }
   
-  if (extractionText) {
-    // Remove LaTeX commands carefully, preserving the variables inside them
+  if (extractionText && usedVars.size < 2) {
+    // More robust LaTeX cleaning
     let cleanedText = extractionText;
     
-    // Remove LaTeX command names (like \frac, \text) but keep the content
-    cleanedText = cleanedText.replace(/\\[a-zA-Z]+\{/g, ''); // Remove \frac{ etc
-    cleanedText = cleanedText.replace(/\}/g, ' '); // Replace } with space
-    cleanedText = cleanedText.replace(/\\/g, ' '); // Remove remaining backslashes
+    // Step 1: Remove \text{...} commands completely (they don't contain variables)
+    cleanedText = cleanedText.replace(/\\text\{[^}]*\}/g, ' ');
+    
+    // Step 2: Remove \frac and other commands but keep content
+    cleanedText = cleanedText.replace(/\\frac/g, '');
+    cleanedText = cleanedText.replace(/\\left|\\right/g, '');
+    
+    // Step 3: Remove braces but preserve content
+    cleanedText = cleanedText.replace(/[{}]/g, ' ');
+    
+    // Step 4: Remove remaining backslashes
+    cleanedText = cleanedText.replace(/\\/g, ' ');
+    
+    // Step 5: Normalize to lowercase
     cleanedText = cleanedText.toLowerCase();
     
-    // Extract each variable by checking if it appears in the text
+    // Extract variables using word boundary detection
     allVars.forEach(v => {
-      // Look for the variable as a standalone character or next to numbers/symbols
-      // Match cases like: 'x', '2x', 'x+', 'x-', etc
-      if (cleanedText.includes(v)) {
+      // Use regex to find variable as standalone or with numbers/operators
+      const pattern = new RegExp(`[^a-z]${v}[^a-z]|^${v}[^a-z]|[^a-z]${v}$|^${v}$`, 'g');
+      if (pattern.test(cleanedText) || cleanedText.includes(v)) {
         usedVars.add(v);
       }
     });
-    
-    // Backup: Also use problem.allVariables if available (explicit variable list)
-    if (problem && problem.allVariables && Array.isArray(problem.allVariables)) {
-      problem.allVariables.forEach(v => {
-        if (allVars.includes(v)) {
-          usedVars.add(v);
-        }
-      });
-    }
-    
-    // Debug log to help identify issues
-    console.log('Problem:', problem?.text);
-    console.log('Problem Variables:', problem?.allVariables);
-    console.log('Extraction Text:', extractionText);
-    console.log('Cleaned Text:', cleanedText);
-    console.log('Used Variables:', Array.from(usedVars));
   }
   
   // Build rows dynamically - show ALL used variables (increase from 4 to 6 if needed)
