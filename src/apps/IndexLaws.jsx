@@ -356,7 +356,16 @@ export default function IndexLaws() {
         level: 2,
         qLatex,
         expectations: {
-          step1: ·n^e2)^k1 / (m^e3)^k2
+          step1: step1Str,
+          step1Keywords: [`x^${denX}`, `y^${denY}`],
+          step2: step2Str,
+          step3: step3Str,
+          finalAns: step3Str,
+        },
+      });
+    }
+    
+    // 題型3: (m^e1·n^e2)^k1 / (m^e3)^k2
     else if (typeIdx === 3) {
       const e1 = getRandomInt(3, 5);
       const e2 = getRandomInt(-2, -1);
@@ -407,13 +416,12 @@ export default function IndexLaws() {
           step1Keywords: [`m^${numM}`, `n^${numN}`],
           step2: step2Str,
           step3: step3Str,
-          finalAns: step3
-      setProblem({
-        level: 2,
-        qLatex,
-        expectations: {
-          step1: step1Str,
-          step1Keywords:·n^e3)^k
+          finalAns: step3Str,
+        },
+      });
+    }
+    
+    // 題型4: m^e1 / (m^e2·n^e3)^k
     else {
       const e1 = getRandomInt(7, 11);
       const e2 = getRandomInt(2, 4);
@@ -465,15 +473,7 @@ export default function IndexLaws() {
           step1Keywords: [`m^${denM}`, `n^${denN}`],
           step2: step2Str,
           step3: step3Str,
-          finalAns: step3
-        level: 2,
-        qLatex,
-        expectations: {
-          step1: step1Str,
-          step1Keywords: [`m^${denM}`, `n^${denN}`],
-          step2: step2Str,
-          step3: finalAnsStr,
-          finalAns: finalAnsStr,
+          finalAns: step3Str,
         },
       });
     }
