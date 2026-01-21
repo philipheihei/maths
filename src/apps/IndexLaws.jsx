@@ -294,10 +294,12 @@ export default function IndexLaws() {
       else step2DenParts.push(formatExpTerm('b', Math.abs(finalB)));
       
       if (step2NumParts.length === 0) step2NumParts.push('1');
-      const step2Str = step2NumParts.join('');
+      if (step2DenParts.length === 0) step2DenParts.push('1');
+      const step2Str = step2DenParts[0] === '1' 
+        ? step2NumParts.join('')
+        : `${step2NumParts.join('')}/${step2DenParts.join('')}`;
       
       // Step 3: 負指數轉正指數
-      if (step2DenParts.length === 0) step2DenParts.push('1');
       const step3Str = step2DenParts.length > 0 && step2DenParts[0] !== '1' 
         ? `${step2NumParts.join('')}/${step2DenParts.join('')}`
         : step2NumParts.join('');
