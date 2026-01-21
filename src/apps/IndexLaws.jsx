@@ -561,7 +561,7 @@ export default function IndexLaws() {
 
   const Keypad = () => {
     const keys = [
-      [problem.variables[0], problem.variables[1], '(', ')'],
+      [problem.variables?.[0] || 'x', problem.variables?.[1] || 'y', '(', ')'],
       ['7', '8', '9', '^'],
       ['4', '5', '6', '/'],
       ['1', '2', '3', '-'],
