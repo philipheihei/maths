@@ -58,7 +58,7 @@ const Home = () => {
     {
       id: 'index-laws',
       title: '指數定律',
-      description: 'F3 CH2 指數定律：同底相乘、相除、冪的乘方及負指數',
+      description: '指數定律：同底相乘、相除、冪的乘方及負指數',
       icon: Calculator,
       color: 'bg-emerald-500',
       hoverColor: 'hover:bg-emerald-600',
@@ -106,7 +106,7 @@ const Home = () => {
     {
       id: 'inequality-quiz',
       title: '基礎不等式',
-      description: 'F2 CH8 不等式：文字轉換、數線圖形判讀、不等式基本概念',
+      description: '不等式：文字轉換、數線圖形判讀、不等式基本概念',
       icon: Calculator,
       color: 'bg-red-500',
       hoverColor: 'hover:bg-red-600',
@@ -122,7 +122,7 @@ const Home = () => {
     {
       id: 'compound-inequality-quiz',
       title: '複合不等式',
-      description: 'F5 CH17 複合不等式：AND/OR圖解法、整數解判斷',
+      description: '複合不等式：AND/OR圖解法、整數解判斷',
       icon: Calculator,
       color: 'bg-teal-500',
       hoverColor: 'hover:bg-teal-600',
@@ -138,7 +138,7 @@ const Home = () => {
     {
       id: 'variation-quiz',
       title: '變分設式',
-      description: 'F5 CH11 變分：正變、反變、聯變、部分變公式特訓',
+      description: '變分：正變、反變、聯變、部分變公式特訓',
       icon: Calculator,
       color: 'bg-amber-500',
       hoverColor: 'hover:bg-amber-600',
@@ -154,7 +154,7 @@ const Home = () => {
     {
       id: 'subject',
       title: '主項變換',
-      description: 'F2 CH5 主項變換：學習「乘、拆、移、抽、除」五步曲',
+      description: '主項變換：學習「乘、拆、移、抽、除」五步曲',
       icon: Calculator,
       color: 'bg-cyan-500',
       hoverColor: 'hover:bg-cyan-600',
@@ -170,7 +170,7 @@ const Home = () => {
     {
       id: 'coordinate-transform',
       title: '坐標轉換',
-      description: 'F1 CH10 坐標簡介：學習直角坐標的平移、旋轉、反射轉換',
+      description: '坐標簡介：學習直角坐標的平移、旋轉、反射轉換',
       icon: Calculator,
       color: 'bg-orange-500',
       hoverColor: 'hover:bg-orange-600',
@@ -186,7 +186,7 @@ const Home = () => {
     {
       id: 'algebraic-fractions',
       title: '代數分式',
-      description: 'F4 CH4 續多項式：代數分式四則混算、通分母、展開分子、化簡',
+      description: '續多項式：代數分式四則混算、通分母、展開分子、化簡',
       icon: Calculator,
       color: 'bg-rose-500',
       hoverColor: 'hover:bg-rose-600',
