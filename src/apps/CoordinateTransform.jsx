@@ -300,7 +300,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               <text 
                 x={(toSVG(axisValue, from.y).x + fromSVG.x) / 2} 
                 y={fromSVG.y - 8} 
-                fontSize="11" 
+                fontSize="13" 
                 fontWeight="bold" 
                 fill="#ef4444"
               >
@@ -310,7 +310,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               <text 
                 x={(toSVG(axisValue, to.y).x + toSVG_coords.x) / 2} 
                 y={toSVG_coords.y - 8} 
-                fontSize="11" 
+                fontSize="13" 
                 fontWeight="bold" 
                 fill="#ef4444"
               >
@@ -344,7 +344,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               <text 
                 x={fromSVG.x - 15} 
                 y={(fromSVG.y + toSVG(from.x, axisValue).y) / 2} 
-                fontSize="11" 
+                fontSize="13" 
                 fontWeight="bold" 
                 fill="#ef4444"
               >
@@ -354,7 +354,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               <text 
                 x={toSVG_coords.x - 15} 
                 y={(toSVG(to.x, axisValue).y + toSVG_coords.y) / 2} 
-                fontSize="11" 
+                fontSize="13" 
                 fontWeight="bold" 
                 fill="#ef4444"
               >
@@ -871,11 +871,9 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <hr className="border-amber-200 my-2"/>
                 <p>對 x = k 反射：即 x 的數值改變</p>
                 <p className="pl-4">x 向右移到 k，再向右移相同距離</p>
-                <p className="pl-4">(x, y) → (x + 2(k-x), y)</p>
                 <hr className="border-amber-200 my-2"/>
                 <p>對 y = k 反射：即 y 的數值改變</p>
                 <p className="pl-4">y 向上移到 k，再向上移相同距離</p>
-                <p className="pl-4">(x, y) → (x, y + 2(k-y))</p>
               </div>
             )}
           </div>
