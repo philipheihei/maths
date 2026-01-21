@@ -174,8 +174,8 @@ const generateProblem = () => {
     problem.steps.step5Eq = `${s}=\\frac{${n1}${b}-${C}${a}}{${C}}`;
   }
   // TYPE 3: Brackets & Factorization: n1(s + a) = n2 s + b
+  // 兩個主項系數都是數字 → 可以化簡 (仍算作抽的步驟)
   else if (type === 'bracket_simple') {
-    const coeff = simplifyCoefficient(n1, n2);
     problem.text = `${n1}(${s} + ${a}) = ${n2}${s} + ${b}`;
     problem.subject = s;
     problem.allVariables = [s, a, b];
@@ -184,29 +184,35 @@ const generateProblem = () => {
     problem.steps.hasBracket = true;
     problem.steps.step2Eq = `${n1}${s}+${n1}${a}=${n2}${s}+${b}`;
     problem.steps.hasMove = true;
+    // Step3: 保留未簡化形式 (2個主項)
     problem.steps.step3Eq = `${n1}${s}-${n2}${s}=${b}-${n1}${a}`;
     
-    // Only need Factor step if coefficients are different (not already combined)
-    // If n1 = n2, then 5k - 5k = 0k (no factoring needed, already simplified)
-    // Skip factor if coefficient is already a simple number after subtraction
-    problem.steps.hasFactor = false;  // Changed: no need to factor when it's already simplified like 5k-8k=-3k
-    problem.steps.step4Eq = problem.steps.step3Eq; // Skip factor, keep as is
+    // 有2個主項 → 需要抽 (Factor step)
+    // 兩個係數都是數字 → 用戶需要合併同類項
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'numeric'; // 可以化簡
+    const coeffDiff = n1 - n2;
+    if (coeffDiff === 1) {
+      problem.steps.step4Eq = `${s}=${b}-${n1}${a}`;
+    } else if (coeffDiff === -1) {
+      problem.steps.step4Eq = `-${s}=${b}-${n1}${a}`;
+    } else {
+      problem.steps.step4Eq = `${coeffDiff}${s}=${b}-${n1}${a}`;
+    }
     
-    // Directly simplify to final form
-    problem.steps.hasDivide = true;
-    // Simplified final answer - just divide the combined coefficient
-    const simplifiedCoeff = coeff.simplified;
-    if (coeff.value === 1) {
+    // Step5: 最終答案
+    problem.steps.hasDivide = (coeffDiff !== 1);
+    if (coeffDiff === 1) {
       problem.steps.step5Eq = `${s}=${b}-${n1}${a}`;
-    } else if (coeff.value === -1) {
+    } else if (coeffDiff === -1) {
       problem.steps.step5Eq = `${s}=${n1}${a}-${b}`;
     } else {
-      problem.steps.step5Eq = `${s}=\\frac{${b}-${n1}${a}}{${simplifiedCoeff}}`;
+      problem.steps.step5Eq = `${s}=\\frac{${b}-${n1}${a}}{${coeffDiff}}`;
     }
   }
-  // TYPE 4: Pure Factorization Focus: as - b = cs
+  // TYPE 4: Algebraic Factorization: a*s - b = n1*s (a is a variable!)
+  // 其中一個主項系數是代數 → 只可以抽，不可以化簡
   else if (type === 'factor_simple') {
-    const coeff = simplifyCoefficient(a, n1);
     problem.text = `${a}${s} - ${b} = ${n1}${s}`;
     problem.subject = s;
     problem.allVariables = [s, a, b];
@@ -215,19 +221,19 @@ const generateProblem = () => {
     problem.steps.hasBracket = false;
     problem.steps.step2Eq = problem.text;
     problem.steps.hasMove = true;
+    // Step3: 保留未簡化形式 (2個主項: a*s 和 n1*s)
     problem.steps.step3Eq = `${a}${s}-${n1}${s}=${b}`;
+    
+    // 有2個主項 → 需要抽 (Factor step)
+    // 其中一個係數是代數(a) → 只可以因式分解，不可以化簡
+    // 答案是 s(a - n1) = b
     problem.steps.hasFactor = true;
+    problem.steps.factorType = 'algebraic'; // 只可以抽
     problem.steps.step4Eq = `${s}(${a}-${n1})=${b}`;
-    problem.steps.step4EqSimplified = coeff.value === 1 ? `${s}=${b}` : (coeff.value === -1 ? `-${s}=${b}` : `${coeff.simplified}${s}=${b}`);
+    
+    // Step5: 除過對面
     problem.steps.hasDivide = true;
-    // Simplified final answer
-    if (coeff.value === 1) {
-      problem.steps.step5Eq = `${s}=${b}`;
-    } else if (coeff.value === -1) {
-      problem.steps.step5Eq = `${s}=-${b}`;
-    } else {
-      problem.steps.step5Eq = `${s}=\\frac{${b}}{${coeff.simplified}}`;
-    }
+    problem.steps.step5Eq = `${s}=\\frac{${b}}{${a}-${n1}}`;
   }
 
   return problem;
@@ -726,7 +732,9 @@ const PracticePage = ({ score, setScore }) => {
           affirmative: "有重複出現的主項",
           check: problem.steps.hasFactor, 
           expected: problem.steps.step4Eq,
-          hint: "提取公因式 (Factorize)"
+          hint: problem.steps.factorType === 'numeric' 
+            ? `合併同類項 (Combine like terms): 計算 ${problem.subject} 的係數` 
+            : `提取公因式 ${problem.subject} (Factor out ${problem.subject})`
         };
         break;
       case 5: 

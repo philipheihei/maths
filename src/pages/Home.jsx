@@ -69,7 +69,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['指數運算', '負指數'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'simultaneous-eq',
@@ -101,7 +101,7 @@ const Home = () => {
       ],
       category: '高中',
       topics: ['平均數', '中位數', '標準差', '四分位數'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'inequality-quiz',
@@ -165,6 +165,38 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['主項變換', '公式變換', '代數'],
+      inDevelopment: true
+    },
+    {
+      id: 'coordinate-transform',
+      title: '坐標轉換',
+      description: 'F1 CH10 坐標簡介：學習直角坐標的平移、旋轉、反射轉換',
+      icon: Calculator,
+      color: 'bg-orange-500',
+      hoverColor: 'hover:bg-orange-600',
+      path: '/coordinate-transform',
+      level: 'F1',
+      badges: [
+        { level: 'F1', chapter: 'CH10', subject: '坐標簡介' }
+      ],
+      category: '初中',
+      topics: ['坐標轉換', '平移', '旋轉', '反射'],
+      inDevelopment: true
+    },
+    {
+      id: 'algebraic-fractions',
+      title: '代數分式',
+      description: 'F4 CH4 續多項式：代數分式四則混算、通分母、展開分子、化簡',
+      icon: Calculator,
+      color: 'bg-rose-500',
+      hoverColor: 'hover:bg-rose-600',
+      path: '/algebraic-fractions',
+      level: 'F4',
+      badges: [
+        { level: 'F4', chapter: 'CH4', subject: '續多項式' }
+      ],
+      category: '高中',
+      topics: ['代數分式', '通分母', '因式分解', '化簡'],
       inDevelopment: false
     }
   ];
