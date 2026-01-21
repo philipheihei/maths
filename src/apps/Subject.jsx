@@ -890,8 +890,13 @@ const PracticePage = ({ score, setScore }) => {
 
         setFeedback({ type: 'error', msg: errorMsg });
         setHistory(prev => [...prev, { step: currentQIndex, type: 'yesno', answer, correct: false, forced: true, done: false }]);
-        setShowKeyboard(true);
-        setIsAnswering(false);
+        
+        // Clear feedback after showing error, then enable input
+        setTimeout(() => {
+          setFeedback(null);
+          setShowKeyboard(true);
+          setIsAnswering(false);
+        }, 1500);
       } else {
         // User said Yes, but actually No
         setFeedback({ type: 'error', msg: '不對，其實沒有。直接下一步。' });
