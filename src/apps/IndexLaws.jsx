@@ -73,6 +73,12 @@ const getRandomNonZero = (min, max) => {
   return val;
 };
 
+// 格式化指數項（如果指數為1則omit）
+const formatExpTerm = (base, exp) => {
+  if (exp === 1) return base;
+  return `${base}^${exp}`;
+};
+
 // --- 題目資料 ---
 const LAWS = [
   { id: 'mult', title: '同底相乘', rule: 'a^m \\times a^n = a^{m+n}', desc: '底數相同，指數相加' },
@@ -209,17 +215,17 @@ export default function IndexLaws() {
       const step2NumParts = [];
       const step2DenParts = [];
       
-      if (step1X >= 0) step2NumParts.push(`x^${step1X}`);
-      else step2DenParts.push(`x^${Math.abs(step1X)}`);
+      if (step1X >= 0) step2NumParts.push(formatExpTerm('x', step1X));
+      else step2DenParts.push(formatExpTerm('x', Math.abs(step1X)));
       
-      if (step1Y >= 0) step2NumParts.push(`y^${step1Y}`);
-      else step2DenParts.push(`y^${Math.abs(step1Y)}`);
+      if (step1Y >= 0) step2NumParts.push(formatExpTerm('y', step1Y));
+      else step2DenParts.push(formatExpTerm('y', Math.abs(step1Y)));
       
-      if (c >= 0) step2DenParts.push(`x^${c}`);
-      else step2NumParts.push(`x^${Math.abs(c)}`);
+      if (c >= 0) step2DenParts.push(formatExpTerm('x', c));
+      else step2NumParts.push(formatExpTerm('x', Math.abs(c)));
       
-      if (d >= 0) step2DenParts.push(`y^${d}`);
-      else step2NumParts.push(`y^${Math.abs(d)}`);
+      if (d >= 0) step2DenParts.push(formatExpTerm('y', d));
+      else step2NumParts.push(formatExpTerm('y', Math.abs(d)));
       
       if (step2NumParts.length === 0) step2NumParts.push('1');
       if (step2DenParts.length === 0) step2DenParts.push('1');
@@ -232,10 +238,10 @@ export default function IndexLaws() {
       const numStrParts = [];
       const denStrParts = [];
 
-      if (finalX > 0) numStrParts.push(`x^${finalX}`);
-      if (finalX < 0) denStrParts.push(`x^${Math.abs(finalX)}`);
-      if (finalY > 0) numStrParts.push(`y^${finalY}`);
-      if (finalY < 0) denStrParts.push(`y^${Math.abs(finalY)}`);
+      if (finalX > 0) numStrParts.push(formatExpTerm('x', finalX));
+      if (finalX < 0) denStrParts.push(formatExpTerm('x', Math.abs(finalX)));
+      if (finalY > 0) numStrParts.push(formatExpTerm('y', finalY));
+      if (finalY < 0) denStrParts.push(formatExpTerm('y', Math.abs(finalY)));
 
       let finalAnsStr = '';
       if (numStrParts.length === 0) numStrParts.push('1');
@@ -249,6 +255,7 @@ export default function IndexLaws() {
       setProblem({
         level: 2,
         qLatex,
+        variables: ['x', 'y'],
         expectations: {
           step1: step1Str,
           step1Keywords: [`x^${step1X}`, `y^${step1Y}`],
@@ -280,11 +287,11 @@ export default function IndexLaws() {
       const step2NumParts = [];
       const step2DenParts = [];
       
-      if (finalA >= 0) step2NumParts.push(`a^${finalA}`);
-      else step2DenParts.push(`a^${Math.abs(finalA)}`);
+      if (finalA >= 0) step2NumParts.push(formatExpTerm('a', finalA));
+      else step2DenParts.push(formatExpTerm('a', Math.abs(finalA)));
       
-      if (finalB >= 0) step2NumParts.push(`b^${finalB}`);
-      else step2DenParts.push(`b^${Math.abs(finalB)}`);
+      if (finalB >= 0) step2NumParts.push(formatExpTerm('b', finalB));
+      else step2DenParts.push(formatExpTerm('b', Math.abs(finalB)));
       
       if (step2NumParts.length === 0) step2NumParts.push('1');
       const step2Str = step2NumParts.join('');
@@ -300,9 +307,8 @@ export default function IndexLaws() {
       setProblem({
         level: 2,
         qLatex,
+        variables: ['a', 'b'],
         expectations: {
-          step1: step1Str,
-          step1Keywords: [`a^${part2A}`, `b^${part2B}`],
           step2: step2Str,
           step3: finalAnsStr,
           finalAns: finalAnsStr,
@@ -341,9 +347,9 @@ export default function IndexLaws() {
       const step3NumParts = [];
       const step3DenParts = [];
       
-      if (finalX > 0) step3NumParts.push(`x^${finalX}`);
-      if (finalY >= 0) step3NumParts.push(`y^${finalY}`);
-      else step3DenParts.push(`y^${Math.abs(finalY)}`);
+      if (finalX > 0) step3NumParts.push(formatExpTerm('x', finalX));
+      if (finalY >= 0) step3NumParts.push(formatExpTerm('y', finalY));
+      else step3DenParts.push(formatExpTerm('y', Math.abs(finalY)));
       
       if (step3NumParts.length === 0) step3NumParts.push('1');
       if (step3DenParts.length === 0) step3DenParts.push('1');
@@ -355,6 +361,7 @@ export default function IndexLaws() {
       setProblem({
         level: 2,
         qLatex,
+        variables: ['x', 'y'],
         expectations: {
           step1: step1Str,
           step1Keywords: [`x^${denX}`, `y^${denY}`],
@@ -385,10 +392,10 @@ export default function IndexLaws() {
       const step2NumParts = [];
       const step2DenParts = [];
       
-      step2NumParts.push(`m^${numM}`);
-      if (denM < 0) step2NumParts.push(`m^${Math.abs(denM)}`);
-      step2DenParts.push(`n^${Math.abs(numN)}`);
-      if (denM > 0) step2DenParts.push(`m^${denM}`);
+      step2NumParts.push(formatExpTerm('m', numM));
+      if (denM < 0) step2NumParts.push(formatExpTerm('m', Math.abs(denM)));
+      step2DenParts.push(formatExpTerm('n', Math.abs(numN)));
+      if (denM > 0) step2DenParts.push(formatExpTerm('m', denM));
       
       const step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
       
@@ -399,10 +406,10 @@ export default function IndexLaws() {
       const step3NumParts = [];
       const step3DenParts = [];
       
-      if (finalM > 0) step3NumParts.push(`m^${finalM}`);
-      else if (finalM < 0) step3DenParts.push(`m^${Math.abs(finalM)}`);
+      if (finalM > 0) step3NumParts.push(formatExpTerm('m', finalM));
+      else if (finalM < 0) step3DenParts.push(formatExpTerm('m', Math.abs(finalM)));
       
-      step3DenParts.push(`n^${Math.abs(finalN)}`);
+      step3DenParts.push(formatExpTerm('n', Math.abs(finalN)));
       
       if (step3NumParts.length === 0) step3NumParts.push('1');
       
@@ -411,6 +418,7 @@ export default function IndexLaws() {
       setProblem({
         level: 2,
         qLatex,
+        variables: ['m', 'n'],
         expectations: {
           step1: step1Str,
           step1Keywords: [`m^${numM}`, `n^${numN}`],
@@ -439,10 +447,10 @@ export default function IndexLaws() {
       const step2NumParts = [];
       const step2DenParts = [];
       
-      step2NumParts.push(`m^${e1}`);
-      if (denN < 0) step2NumParts.push(`n^${Math.abs(denN)}`);
-      step2DenParts.push(`m^${denM}`);
-      if (denN > 0) step2DenParts.push(`n^${denN}`);
+      step2NumParts.push(formatExpTerm('m', e1));
+      if (denN < 0) step2NumParts.push(formatExpTerm('n', Math.abs(denN)));
+      step2DenParts.push(formatExpTerm('m', denM));
+      if (denN > 0) step2DenParts.push(formatExpTerm('n', denN));
       
       const step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
       
@@ -453,10 +461,10 @@ export default function IndexLaws() {
       const step3NumParts = [];
       const step3DenParts = [];
       
-      if (finalN > 0) step3NumParts.push(`n^${finalN}`);
+      if (finalN > 0) step3NumParts.push(formatExpTerm('n', finalN));
       
-      if (finalM > 0) step3DenParts.push(`m^${finalM}`);
-      else if (finalM < 0) step3NumParts.push(`m^${Math.abs(finalM)}`);
+      if (finalM > 0) step3DenParts.push(formatExpTerm('m', finalM));
+      else if (finalM < 0) step3NumParts.push(formatExpTerm('m', Math.abs(finalM)));
       
       if (step3NumParts.length === 0) step3NumParts.push('1');
       if (step3DenParts.length === 0) step3DenParts.push('1');
@@ -468,6 +476,7 @@ export default function IndexLaws() {
       setProblem({
         level: 2,
         qLatex,
+        variables: ['m', 'n'],
         expectations: {
           step1: step1Str,
           step1Keywords: [`m^${denM}`, `n^${denN}`],
@@ -552,7 +561,7 @@ export default function IndexLaws() {
 
   const Keypad = () => {
     const keys = [
-      ['x', 'y', '(', ')'],
+      [problem.variables[0], problem.variables[1], '(', ')'],
       ['7', '8', '9', '^'],
       ['4', '5', '6', '/'],
       ['1', '2', '3', '-'],
