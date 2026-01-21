@@ -710,6 +710,12 @@ export default function StatisticsApp() {
     } else if (currentMeasure.id === 'median') {
       setHighlight('median');
       hintMsg = "提示：將數據由小至大排列，找出正中間的數。";
+    } else if (currentMeasure.id === 'stdDev') {
+      setHighlight('data');
+      hintMsg = "提示：使用計算機MODE 4，先SHIFT 9 1 清除數據，再輸入每個數據後以M+ 儲存。完成輸入數據後按 SHIFT 2 2 得出標準差。";
+    } else if (currentMeasure.id === 'variance') {
+      setHighlight('data');
+      hintMsg = "提示：方差 = (標準差)²\n使用計算機MODE 4，先SHIFT 9 1 清除數據，再輸入每個數據後以M+ 儲存。完成輸入數據後按 SHIFT 2 2 得出標準差。再將標準差答案平方就是方差了。";
     } else {
       setHighlight('data');
       hintMsg = "提示：仔細觀察數據分佈。";
