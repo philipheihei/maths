@@ -343,17 +343,38 @@ export default function AlgebraicFractionsQuiz() {
 
     // Helper to check any string against valid denominators (factored or expanded)
     const isValidDenom = (uDen) => {
-        // Check factored form first
-        if (uDen === expectedDenom1 || uDen === expectedDenom2) {
-            return true;
-        }
-        // Check expanded polynomial form (normalize ^ to ^2 etc)
-        const uDenNorm = uDen.replace(/\^\(?2\)?/g, '^2');
-        if (uDenNorm === expandedDenom || uDenNorm === expandedDenomReverse) {
-            detectedExpandedDenom = true;
-            return true;
-        }
-        return false;
+      // Accept factored forms in either term order: (ax+b)(cx+d) or (b+ax)(d+cx)
+      const ax = (a, v) => (a === 1 ? `${v}` : `${a}${v}`);
+      const factorForms = (a, b) => {
+        const signB = b >= 0 ? '+' : '';
+        const vf = `(${ax(a, v)}${signB}${b})`;     // variable-first e.g. 2x+3 or x-3
+        const cf = `(${b}${signB}${ax(a, v)})`;     // constant-first e.g. 3+2x or -3+x
+        return [normalize(vf), normalize(cf)];
+      };
+
+      const d1Forms = factorForms(d1.a, d1.b);
+      const d2Forms = factorForms(d2.a, d2.b);
+
+      // Build all accepted factored combinations
+      const acceptedFactored = new Set();
+      d1Forms.forEach(f1 => {
+        d2Forms.forEach(f2 => {
+          acceptedFactored.add(normalize(`${f1}${f2}`));
+          acceptedFactored.add(normalize(`${f2}${f1}`)); // swapped factors
+        });
+      });
+
+      if (acceptedFactored.has(uDen)) {
+        return true;
+      }
+
+      // Check expanded polynomial form (normalize ^ to ^2 etc)
+      const uDenNorm = uDen.replace(/\^\(?2\)?/g, '^2');
+      if (uDenNorm === expandedDenom || uDenNorm === expandedDenomReverse) {
+        detectedExpandedDenom = true;
+        return true;
+      }
+      return false;
     };
 
     // --- 2. Validation Logic for Answer (3 Points) ---
