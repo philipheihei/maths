@@ -276,12 +276,12 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
         <>
           {axis === 'x=' && (
             <>
-              {/* Arrow from reflection line to original point */}
+              {/* Arrow from original point to reflection line */}
               <line 
-                x1={toSVG(axisValue, from.y).x} 
-                y1={toSVG(axisValue, from.y).y} 
-                x2={fromSVG.x} 
-                y2={fromSVG.y}
+                x1={fromSVG.x} 
+                y1={fromSVG.y} 
+                x2={toSVG(axisValue, from.y).x} 
+                y2={toSVG(axisValue, from.y).y}
                 stroke="#ef4444" 
                 strokeWidth="2" 
                 markerEnd="url(#redArrow)"
