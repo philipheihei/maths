@@ -888,7 +888,7 @@ export default function StatisticsApp() {
 
           {/* Hint Display */}
           {feedback?.type === 'hint' && (
-             <div className="mt-4 p-3 bg-amber-50 text-amber-800 text-sm rounded border border-amber-200 flex items-start gap-2 animate-fadeIn">
+             <div className="mt-4 p-3 bg-amber-50 text-amber-800 text-sm rounded border border-amber-200 flex items-start gap-2 animate-fadeIn whitespace-pre-line">
                <div className="mt-1"><HelpCircle size={14} /></div>
                <div>{feedback.msg}</div>
              </div>
