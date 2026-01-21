@@ -224,30 +224,28 @@ export default function AlgebraicFractionsQuiz() {
     const num2 = Math.floor(Math.random() * 9) + 1;
     const isAddition = Math.random() > 0.5;
 
-    // Format display: randomly choose between variable-first (ax±b) or constant-first (b±ax)
+    // Format display: randomly choose between variable-first (ax±b) or constant-first (b+ax)
     // Note: a is always positive, b can be positive or negative
+    // Constant-first format only used when b > 0 to avoid "-3 + 2x" format
     const formatDisplay = (a, b, variable, constantFirst = false) => {
       const varTerm = `${a === 1 ? '' : a}${variable}`;
       const constTerm = `${Math.abs(b)}`;
       
-      if (!constantFirst) {
+      if (!constantFirst || b <= 0) {
         // Variable-first format: ax ± b
+        // Also used when b <= 0 to avoid negative constant-first format
         const sign = b >= 0 ? '+' : '-';
         return `${varTerm} ${sign} ${constTerm}`;
       } else {
-        // Constant-first format: b ± ax
-        // Examples: b=3, a=2 -> "3 + 2x"
-        //          b=-3, a=2 -> "-3 + 2x"
-        if (b >= 0) {
-          return `${b} + ${varTerm}`;
-        } else {
-          return `${b} + ${varTerm}`;
-        }
+        // Constant-first format: b + ax (only when b > 0)
+        // Example: b=3, a=2 -> "3 + 2x"
+        return `${b} + ${varTerm}`;
       }
     };
 
-    const d1ConstFirst = Math.random() < 0.5;
-    const d2ConstFirst = Math.random() < 0.5;
+    // Only use constant-first format when b > 0
+    const d1ConstFirst = d1.b > 0 && Math.random() < 0.5;
+    const d2ConstFirst = d2.b > 0 && Math.random() < 0.5;
     d1 = { ...d1, display: formatDisplay(d1.a, d1.b, v, d1ConstFirst) };
     d2 = { ...d2, display: formatDisplay(d2.a, d2.b, v, d2ConstFirst) };
 
