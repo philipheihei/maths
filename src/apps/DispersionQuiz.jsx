@@ -481,7 +481,7 @@ const Keypad = ({ value, onChange }) => {
                     : 'bg-blue-500 hover:bg-blue-600 text-white'
                 }`}
               >
-                {key === 'DEL' ? '⌫' : key}
+                {key}
               </button>
             ))}
           </div>
