@@ -109,7 +109,14 @@ const simplifyCoefficient = (n1, n2) => {
 
 // --- Problem Generator Logic ---
 const generateProblem = () => {
-  const types = ['fraction_simple', 'cross_mult', 'bracket_simple', 'factor_simple']; 
+  const types = [
+    'fraction_simple',    // (n1*s + a)/n2 = b
+    'cross_mult',         // n1/(s+a) = C/b
+    'bracket_simple',     // n1(s + a) = n2*s + b
+    'factor_simple',      // a*s - b = n1*s
+    'double_bracket',     // n1(s + a) = n2(s + b) - 新增：兩邊都有括號
+    'fraction_both_sides' // (n1*s + a)/n2 = (C*s + b)/d - 新增：兩邊都有分數
+  ]; 
   const type = types[Math.floor(Math.random() * types.length)];
   
   const vars = ['x', 'y', 'a', 'b', 'h', 'k', 'm', 'n'];
@@ -119,6 +126,15 @@ const generateProblem = () => {
   };
   
   const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  
+  // Helper to get a different random int
+  const randIntExcept = (min, max, except) => {
+    let num;
+    do {
+      num = randInt(min, max);
+    } while (num === except);
+    return num;
+  };
 
   let problem = {
     id: Date.now(),
@@ -138,7 +154,7 @@ const generateProblem = () => {
   const a = getVar([s]); 
   const b = getVar([s, a]); 
   const n1 = randInt(2, 9);
-  const n2 = randInt(2, 9);
+  const n2 = randIntExcept(2, 9, n1); // 確保 n2 ≠ n1
 
   // TYPE 1: Simple Fraction: (as + n1)/n2 = a
   if (type === 'fraction_simple') {
@@ -234,6 +250,75 @@ const generateProblem = () => {
     // Step5: 除過對面
     problem.steps.hasDivide = true;
     problem.steps.step5Eq = `${s}=\\frac{${b}}{${a}-${n1}}`;
+  }
+  // TYPE 5: Double Brackets: n1(s + a) = n2(s + b)
+  // 兩邊都有括號 → 需要拆兩次
+  else if (type === 'double_bracket') {
+    const c = getVar([s, a, b]);
+    problem.text = `${n1}(${s} + ${a}) = ${n2}(${s} + ${c})`;
+    problem.subject = s;
+    problem.allVariables = [s, a, c];
+    problem.steps.hasFraction = false;
+    problem.steps.step1Eq = problem.text;
+    problem.steps.hasBracket = true;
+    problem.steps.step2Eq = `${n1}${s}+${n1}${a}=${n2}${s}+${n2}${c}`;
+    problem.steps.hasMove = true;
+    problem.steps.step3Eq = `${n1}${s}-${n2}${s}=${n2}${c}-${n1}${a}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'numeric';
+    const coeffDiff = n1 - n2;
+    if (coeffDiff === 1) {
+      problem.steps.step4Eq = `${s}=${n2}${c}-${n1}${a}`;
+    } else if (coeffDiff === -1) {
+      problem.steps.step4Eq = `-${s}=${n2}${c}-${n1}${a}`;
+    } else {
+      problem.steps.step4Eq = `${coeffDiff}${s}=${n2}${c}-${n1}${a}`;
+    }
+    
+    problem.steps.hasDivide = (coeffDiff !== 1);
+    if (coeffDiff === 1) {
+      problem.steps.step5Eq = `${s}=${n2}${c}-${n1}${a}`;
+    } else if (coeffDiff === -1) {
+      problem.steps.step5Eq = `${s}=${n1}${a}-${n2}${c}`;
+    } else {
+      problem.steps.step5Eq = `${s}=\\frac{${n2}${c}-${n1}${a}}{${coeffDiff}}`;
+    }
+  }
+  // TYPE 6: Fraction on Both Sides: (n1*s + a)/n2 = (C*s + b)/d
+  // 兩邊都有分數 → 交叉相乘後會有兩個主項
+  else if (type === 'fraction_both_sides') {
+    const C = getVar([s, a, b]);
+    const d = getVar([s, a, b, C]);
+    const n3 = randInt(2, 5);
+    
+    // 確保係數差不為 0 或 1 (避免過於簡單)
+    let coeffDiff;
+    let d_val, n1_val, n2_val, n3_val;
+    do {
+      d_val = randInt(2, 5);
+      n1_val = n1;
+      n2_val = n2;
+      n3_val = randInt(2, 5);
+      coeffDiff = d_val * n1_val - n2_val * n3_val;
+    } while (coeffDiff === 0 || coeffDiff === 1 || coeffDiff === -1);
+    
+    problem.text = `\\frac{${n1}${s} + ${a}}{${n2}} = \\frac{${n3}${s} + ${b}}{${d_val}}`;
+    problem.subject = s;
+    problem.allVariables = [s, a, b, d];
+    problem.steps.hasFraction = true;
+    problem.steps.step1Eq = `${d_val}(${n1}${s}+${a})=${n2}(${n3}${s}+${b})`;
+    problem.steps.hasBracket = true;
+    problem.steps.step2Eq = `${d_val * n1}${s}+${d_val}${a}=${n2 * n3}${s}+${n2}${b}`;
+    problem.steps.hasMove = true;
+    problem.steps.step3Eq = `${d_val * n1}${s}-${n2 * n3}${s}=${n2}${b}-${d_val}${a}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'numeric';
+    problem.steps.step4Eq = `${coeffDiff}${s}=${n2}${b}-${d_val}${a}`;
+    
+    problem.steps.hasDivide = true;
+    problem.steps.step5Eq = `${s}=\\frac{${n2}${b}-${d_val}${a}}{${coeffDiff}}`;
   }
 
   return problem;
