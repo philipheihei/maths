@@ -358,7 +358,7 @@ export default function IndexLaws() {
                       'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
                 >
                   {k === '/' ? <FractionIcon /> : 
-                   k === 'DEL' ? <Delete size={20} className="mx-auto"/> : 
+                   k === 'DEL' ? 'DEL' : 
                    k === 'CLR' ? <Eraser size={20} className="mx-auto"/> : k}
                 </button>
               ))}
