@@ -1087,6 +1087,7 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       // Normalize -0 to 0 for display
       const normalizeZero = (val) => val === 0 ? 0 : val;
       
+      let formula = '';
       if (axis === 'x') {
         formula = `對 x 軸反射: (x, y) → (x, -y)\n(${from.x}, ${from.y}) → (${normalizeZero(from.x)}, ${normalizeZero(-from.y)})`;
       } else if (axis === 'y') {
@@ -1094,10 +1095,7 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       } else if (axis === 'x=') {
         formula = `對 x = ${axisValue} 反射: (x, y) → (2×${axisValue} - x, y)\n(${from.x}, ${from.y}) → (${normalizeZero(2*axisValue - from.x)}, ${from.y}) = (${normalizeZero(to.x)}, ${normalizeZero(to.y)})`;
       } else {
-        formula = `對 y = ${axisValue} 反射: (x, y) → (x, 2×${axisValue} - y)\n(${from.x}, ${from.y}) → (${from.x}, ${normalizeZero(2*axisValue - from.y)}) = (${normalizeZero(to.x)}, ${normalizeZero(to.y)
-        formula = `對 x = ${axisValue} 反射: (x, y) → (2×${axisValue} - x, y)\n(${from.x}, ${from.y}) → (${2*axisValue} - ${from.x}, ${from.y}) = (${to.x}, ${to.y})`;
-      } else {
-        formula = `對 y = ${axisValue} 反射: (x, y) → (x, 2×${axisValue} - y)\n(${from.x}, ${from.y}) → (${from.x}, ${2*axisValue} - ${from.y}) = (${to.x}, ${to.y})`;
+        formula = `對 y = ${axisValue} 反射: (x, y) → (x, 2×${axisValue} - y)\n(${from.x}, ${from.y}) → (${from.x}, ${normalizeZero(2*axisValue - from.y)}) = (${normalizeZero(to.x)}, ${normalizeZero(to.y)})`;
       }
       explanation = formula;
       
