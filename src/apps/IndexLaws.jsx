@@ -309,6 +309,8 @@ export default function IndexLaws() {
         qLatex,
         variables: ['a', 'b'],
         expectations: {
+          step1: step1Str,
+          step1Keywords: [`a^${part2A}`, `b^${part2B}`],
           step2: step2Str,
           step3: finalAnsStr,
           finalAns: finalAnsStr,
