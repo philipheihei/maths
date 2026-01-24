@@ -249,8 +249,8 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   const targetAngle = Math.atan2(-rotatedY, rotatedX);
   
   // Shorten arc to leave gap between arrow head and P'
-  // Arrow length (~10px) + P' radius (7px) + minimal gap (~1-2px) ≈ 16px
-  const totalShortenPixels = 16;
+  // Arrow length (~10px) + very small gap ≈ 12px to hug the perimeter closely
+  const totalShortenPixels = 12;
   const shortenAngle = totalShortenPixels / radius;
   
   // Arc endpoint: move back from target angle by shortenAngle
