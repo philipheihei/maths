@@ -246,8 +246,8 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   const startAngle = Math.atan2(-from.y, from.x); // SVG y is inverted
   const currentAngle = startAngle - angleRad;
   
-  // Shorten the arc by stopping before reaching P' (reduce by about 10 pixels worth of angle)
-  const shortenAmount = 10 / radius; // angle reduction to shorten arc by ~10 pixels
+  // Shorten the arc by stopping before reaching P' (reduce by about 18 pixels worth of angle)
+  const shortenAmount = 18 / radius; // angle reduction to shorten arc by ~18 pixels
   const adjustedCurrentAngle = currentAngle + (clockwise ? shortenAmount : -shortenAmount);
   
   const arcPath = radius > 5 ? `
