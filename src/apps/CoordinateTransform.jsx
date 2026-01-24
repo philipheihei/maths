@@ -808,7 +808,62 @@ const TeachingPage = ({ onGoToQuiz }) => {
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
           >
-            {/* Draggable point P - only show when animation is not playing */}
+            {/* Preview lines for rotation (when not playing) */}
+            {progress === 0 && !isPlaying && transformType === 'rotation' && (
+              <>
+                {/* Origin point O */}
+                <circle cx={CENTER} cy={CENTER} r="4" fill="#333" />
+                <text x={CENTER - 15} y={CENTER + 20} fontSize="12" fontWeight="bold" fill="#333">O</text>
+                
+                {/* Line from O to P */}
+                <line 
+                  x1={CENTER} 
+                  y1={CENTER} 
+                  x2={toSVG(demoPoint.x, demoPoint.y).x} 
+                  y2={toSVG(demoPoint.x, demoPoint.y).y}
+                  stroke="#3b82f6" 
+                  strokeWidth="2" 
+                  strokeDasharray="5,5" 
+                  opacity="0.5" 
+                />
+              </>
+            )}
+            
+            {/* Preview line for reflection (when not playing) */}
+            {progress === 0 && !isPlaying && transformType === 'reflection' && (
+              <>
+                {/* Reflection axis line */}
+                {(() => {
+                  let lineStart, lineEnd;
+                  if (reflectionAxis === 'x') {
+                    lineStart = toSVG(-GRID_SIZE, 0);
+                    lineEnd = toSVG(GRID_SIZE, 0);
+                  } else if (reflectionAxis === 'y') {
+                    lineStart = toSVG(0, -GRID_SIZE);
+                    lineEnd = toSVG(0, GRID_SIZE);
+                  } else if (reflectionAxis === 'x=') {
+                    lineStart = toSVG(reflectionValue, -GRID_SIZE);
+                    lineEnd = toSVG(reflectionValue, GRID_SIZE);
+                  } else if (reflectionAxis === 'y=') {
+                    lineStart = toSVG(-GRID_SIZE, reflectionValue);
+                    lineEnd = toSVG(GRID_SIZE, reflectionValue);
+                  }
+                  return (
+                    <line 
+                      x1={lineStart.x} 
+                      y1={lineStart.y} 
+                      x2={lineEnd.x} 
+                      y2={lineEnd.y}
+                      stroke="#8b5cf6" 
+                      strokeWidth="3" 
+                      strokeDasharray="8,4" 
+                    />
+                  );
+                })()}
+              </>
+            )}
+
+            {/* Draggable point P - show when animation is not playing */}
             {progress === 0 && !isPlaying && (
               <DraggablePoint
                 point={demoPoint}
@@ -889,7 +944,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   min="-6"
                   max="6"
                   value={translationDelta.dx}
-                  onChange={(e) => setTranslationDelta({ ...translationDelta, dx: parseInt(e.target.value) })}
+                  onChange={(e) => {
+                    setTranslationDelta({ ...translationDelta, dx: parseInt(e.target.value) });
+                    setProgress(0);
+                    setIsPlaying(false);
+                  }}
                   className="w-full"
                 />
               </div>
@@ -902,7 +961,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   min="-6"
                   max="6"
                   value={translationDelta.dy}
-                  onChange={(e) => setTranslationDelta({ ...translationDelta, dy: parseInt(e.target.value) })}
+                  onChange={(e) => {
+                    setTranslationDelta({ ...translationDelta, dy: parseInt(e.target.value) });
+                    setProgress(0);
+                    setIsPlaying(false);
+                  }}
                   className="w-full"
                 />
               </div>
@@ -915,13 +978,21 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <label className="block text-sm font-medium text-gray-600 mb-2">旋轉方向</label>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => { setRotationClockwise(false); handleReset(); }}
+                    onClick={() => { 
+                      setRotationClockwise(false); 
+                      setProgress(0);
+                      setIsPlaying(false);
+                    }}
                     className={`flex-1 py-2 rounded-lg font-medium ${!rotationClockwise ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                   >
                     ↺ 逆時針
                   </button>
                   <button
-                    onClick={() => { setRotationClockwise(true); handleReset(); }}
+                    onClick={() => { 
+                      setRotationClockwise(true); 
+                      setProgress(0);
+                      setIsPlaying(false);
+                    }}
                     className={`flex-1 py-2 rounded-lg font-medium ${rotationClockwise ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                   >
                     ↻ 順時針
@@ -934,7 +1005,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   {[90, 180, 270].map(angle => (
                     <button
                       key={angle}
-                      onClick={() => { setRotationAngle(angle); handleReset(); }}
+                      onClick={() => { 
+                        setRotationAngle(angle); 
+                        setProgress(0);
+                        setIsPlaying(false);
+                      }}
                       className={`flex-1 py-2 rounded-lg font-medium ${rotationAngle === angle ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                     >
                       {angle}°
@@ -958,7 +1033,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   ].map(axis => (
                     <button
                       key={axis.id}
-                      onClick={() => setReflectionAxis(axis.id)}
+                      onClick={() => {
+                        setReflectionAxis(axis.id);
+                        setProgress(0);
+                        setIsPlaying(false);
+                      }}
                       className={`py-2 rounded-lg font-medium ${reflectionAxis === axis.id ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                     >
                       {axis.label}
@@ -976,7 +1055,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     min="-5"
                     max="5"
                     value={reflectionValue}
-                    onChange={(e) => setReflectionValue(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setReflectionValue(parseInt(e.target.value));
+                      setProgress(0);
+                      setIsPlaying(false);
+                    }}
                     className="w-full"
                   />
                 </div>
