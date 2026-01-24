@@ -22,7 +22,7 @@ const toGrid = (svgX, svgY) => ({
 });
 
 // ============= COORDINATE GRID COMPONENT =============
-const CoordinateGrid = ({ children, size = SVG_SIZE }) => {
+const CoordinateGrid = ({ children, size = SVG_SIZE, onMouseMove, onMouseUp, onMouseLeave }) => {
   const gridLines = [];
   
   // Generate grid lines
@@ -58,8 +58,17 @@ const CoordinateGrid = ({ children, size = SVG_SIZE }) => {
   }
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`} 
-      className="bg-white rounded-xl border border-gray-200 shadow-sm">
+    <svg 
+      width={size} 
+      height={size} 
+      viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`} 
+      className="bg-white rounded-xl border border-gray-200 shadow-sm"
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseLeave}
+      onTouchMove={onMouseMove}
+      onTouchEnd={onMouseUp}
+    >
       {/* Grid lines */}
       {gridLines}
       
@@ -82,6 +91,81 @@ const CoordinateGrid = ({ children, size = SVG_SIZE }) => {
       {/* Children (points, lines, etc.) */}
       {children}
     </svg>
+  );
+};
+
+// ============= DRAGGABLE POINT COMPONENT =============
+const DraggablePoint = ({ point, onDragStart, isDragging, label = 'P', color = '#3b82f6' }) => {
+  const svgCoords = toSVG(point.x, point.y);
+  
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onDragStart();
+  };
+
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onDragStart();
+  };
+
+  return (
+    <g>
+      {/* Larger invisible hit area for easier dragging */}
+      <circle
+        cx={svgCoords.x}
+        cy={svgCoords.y}
+        r="15"
+        fill="transparent"
+        style={{ cursor: 'grab' }}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+      />
+      {/* Visible draggable point */}
+      <circle
+        cx={svgCoords.x}
+        cy={svgCoords.y}
+        r={isDragging ? 10 : 8}
+        fill={isDragging ? '#2563eb' : color}
+        stroke="white"
+        strokeWidth="2"
+        style={{ cursor: 'grab', pointerEvents: 'none' }}
+        className="transition-all duration-150"
+      />
+      <text 
+        x={svgCoords.x + 12} 
+        y={svgCoords.y - 10} 
+        fontSize="14" 
+        fontWeight="bold" 
+        fill={color}
+        style={{ pointerEvents: 'none' }}
+      >
+        {label}
+      </text>
+      <text 
+        x={svgCoords.x + 12} 
+        y={svgCoords.y + 5} 
+        fontSize="12" 
+        fill="#666"
+        style={{ pointerEvents: 'none' }}
+      >
+        ({point.x}, {point.y})
+      </text>
+      {/* Drag hint */}
+      {!isDragging && (
+        <text
+          x={svgCoords.x}
+          y={svgCoords.y + 26}
+          fontSize="9"
+          fill="#999"
+          textAnchor="middle"
+          style={{ pointerEvents: 'none' }}
+        >
+          拖拽移動
+        </text>
+      )}
+    </g>
   );
 };
 
@@ -535,9 +619,53 @@ const TeachingPage = ({ onGoToQuiz }) => {
   const [reflectionAxis, setReflectionAxis] = useState('y');
   const [reflectionValue, setReflectionValue] = useState(0);
 
-  const demoPoint = { x: 2, y: 3 };
+  // Draggable demo point
+  const [demoPoint, setDemoPoint] = useState({ x: 2, y: 3 });
+  const [isDragging, setIsDragging] = useState(false);
+  
   const label = 'P';
   const labelPrime = "P'";
+
+  // Handle drag start
+  const handleDragStart = () => {
+    setIsDragging(true);
+    setProgress(0); // Reset animation when dragging
+    setIsPlaying(false);
+  };
+
+  // Handle mouse/touch move during drag
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    
+    const svg = e.currentTarget;
+    const rect = svg.getBoundingClientRect();
+    
+    // Get position (support both mouse and touch)
+    let clientX, clientY;
+    if (e.touches) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    
+    // Convert to SVG coordinates
+    const svgX = ((clientX - rect.left) / rect.width) * SVG_SIZE;
+    const svgY = ((clientY - rect.top) / rect.height) * SVG_SIZE;
+    
+    // Convert to grid coordinates and clamp to valid range
+    const gridCoords = toGrid(svgX, svgY);
+    const clampedX = Math.max(-GRID_SIZE + 1, Math.min(GRID_SIZE - 1, gridCoords.x));
+    const clampedY = Math.max(-GRID_SIZE + 1, Math.min(GRID_SIZE - 1, gridCoords.y));
+    
+    setDemoPoint({ x: clampedX, y: clampedY });
+  };
+
+  // Handle drag end
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   // Animation effect
   useEffect(() => {
@@ -675,8 +803,23 @@ const TeachingPage = ({ onGoToQuiz }) => {
       <div className="grid md:grid-cols-2 gap-6">
         {/* SVG Visualization */}
         <div className="bg-white rounded-xl shadow-sm border p-4">
-          <CoordinateGrid>
-            {transformType === 'translation' && (
+          <CoordinateGrid
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          >
+            {/* Draggable point P - only show when animation is not playing */}
+            {progress === 0 && !isPlaying && (
+              <DraggablePoint
+                point={demoPoint}
+                onDragStart={handleDragStart}
+                isDragging={isDragging}
+                label={label}
+              />
+            )}
+            
+            {/* Animation components - show when animation has started */}
+            {(progress > 0 || isPlaying) && transformType === 'translation' && (
               <AnimatedPoint
                 from={demoPoint}
                 to={getTargetPoint()}
@@ -686,7 +829,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 showPath={true}
               />
             )}
-            {transformType === 'rotation' && (
+            {(progress > 0 || isPlaying) && transformType === 'rotation' && (
               <RotationPoint
                 from={demoPoint}
                 angle={rotationAngle}
@@ -696,7 +839,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 clockwise={rotationClockwise}
               />
             )}
-            {transformType === 'reflection' && (
+            {(progress > 0 || isPlaying) && transformType === 'reflection' && (
               <ReflectionPoint
                 from={demoPoint}
                 axis={reflectionAxis}
@@ -707,6 +850,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
               />
             )}
           </CoordinateGrid>
+
+          {/* Drag instruction */}
+          <div className="text-center text-sm text-gray-500 mt-2">
+            💡 拖拽點 P 到任意格點位置
+          </div>
 
           {/* Play Controls */}
           <div className="flex justify-center gap-4 mt-4">
