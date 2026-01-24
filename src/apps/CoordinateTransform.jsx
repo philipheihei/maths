@@ -265,6 +265,14 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
       ${CENTER + radius * Math.cos(arcEndAngle)} ${CENTER + radius * Math.sin(arcEndAngle)}
   ` : '';
 
+  // Label position for P': push outward along radial to avoid overlapping the arc arrow
+  const labelOffsetPx = 14;
+  const radialVx = currentSVG.x - CENTER;
+  const radialVy = currentSVG.y - CENTER;
+  const radialLen = Math.hypot(radialVx, radialVy) || 1;
+  const labelX = currentSVG.x + (radialVx / radialLen) * labelOffsetPx;
+  const labelY = currentSVG.y + (radialVy / radialLen) * labelOffsetPx;
+
   return (
     <g>
       {/* Arrow marker definition for rotation arc */}
@@ -326,8 +334,8 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
           <circle cx={currentSVG.x} cy={currentSVG.y} r="7" fill="#ef4444" stroke="white" strokeWidth="2" />
           {progress === 1 && (
             <>
-              <text x={currentSVG.x + 12} y={currentSVG.y - 10} fontSize="14" fontWeight="bold" fill="#ef4444">{labelPrime}</text>
-              <text x={currentSVG.x + 12} y={currentSVG.y + 5} fontSize="12" fill="#666">({toCoords.x}, {toCoords.y})</text>
+              <text x={labelX} y={labelY - 10} fontSize="14" fontWeight="bold" fill="#ef4444">{labelPrime}</text>
+              <text x={labelX} y={labelY + 5} fontSize="12" fill="#666">({toCoords.x}, {toCoords.y})</text>
             </>
           )}
         </>
