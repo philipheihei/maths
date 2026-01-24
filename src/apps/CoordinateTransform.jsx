@@ -266,7 +266,7 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   ` : '';
 
   // Label position for P': push outward along radial to avoid overlapping the arc arrow
-  const labelOffsetPx = 14;
+  const labelOffsetPx = 18;
   const radialVx = currentSVG.x - CENTER;
   const radialVy = currentSVG.y - CENTER;
   const radialLen = Math.hypot(radialVx, radialVy) || 1;
