@@ -246,10 +246,14 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   const startAngle = Math.atan2(-from.y, from.x); // SVG y is inverted
   const currentAngle = startAngle - angleRad;
   
+  // Shorten the arc by stopping before reaching P' (reduce by about 10 pixels worth of angle)
+  const shortenAmount = 10 / radius; // angle reduction to shorten arc by ~10 pixels
+  const adjustedCurrentAngle = currentAngle + (clockwise ? shortenAmount : -shortenAmount);
+  
   const arcPath = radius > 5 ? `
     M ${CENTER + radius * Math.cos(startAngle)} ${CENTER + radius * Math.sin(startAngle)}
     A ${radius} ${radius} 0 ${Math.abs(angle * progress) > 180 ? 1 : 0} ${clockwise ? 1 : 0} 
-      ${CENTER + radius * Math.cos(currentAngle)} ${CENTER + radius * Math.sin(currentAngle)}
+      ${CENTER + radius * Math.cos(adjustedCurrentAngle)} ${CENTER + radius * Math.sin(adjustedCurrentAngle)}
   ` : '';
 
   return (
@@ -258,17 +262,17 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
       <defs>
         <marker 
           id="rotationArrow" 
-          markerWidth="12" 
-          markerHeight="12" 
-          refX="10" 
-          refY="6" 
+          markerWidth="10" 
+          markerHeight="10" 
+          refX="9" 
+          refY="5" 
           orient="auto"
         >
           <path 
-            d="M 2,2 L 10,6 L 2,10" 
+            d="M 2,2 L 9,5 L 2,8" 
             fill="none" 
             stroke="#10b981" 
-            strokeWidth="2" 
+            strokeWidth="1.5" 
             strokeLinejoin="round"
           />
         </marker>
