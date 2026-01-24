@@ -416,31 +416,49 @@ const FrequencyTable = ({ data, highlight }) => {
   });
 
   return (
-    <div className="w-full overflow-hidden bg-white rounded-lg shadow-sm border border-slate-200">
+    <div className="w-full overflow-x-auto bg-white rounded-lg shadow-sm border border-slate-200">
       <div className="p-2 bg-slate-50 border-b border-slate-200 font-bold text-center text-slate-700">頻數表 (Frequency Table)</div>
-      <table className="w-full text-sm text-center">
+      <table className="w-full text-sm text-center border-collapse">
         <thead className="bg-slate-100 text-slate-600">
           <tr>
-            <th className="p-2 border-r">數值 (x)</th>
-            <th className="p-2">頻數 (f)</th>
+            <th className="p-3 border-r border-b border-slate-300 font-bold">數值 (x)</th>
+            {keys.map((k, i) => {
+              const isMinMax = highlight === 'range' && (k === Math.min(...keys) || k === Math.max(...keys));
+              return (
+                <th 
+                  key={k} 
+                  className={`p-3 border-b border-slate-300 font-medium ${
+                    isMinMax ? 'bg-red-100 text-red-700 font-bold' : ''
+                  } ${i < keys.length - 1 ? 'border-r border-slate-200' : ''}`}
+                >
+                  {k}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
-          {keys.map((k, i) => {
-            const isMinMax = highlight === 'range' && (k === Math.min(...keys) || k === Math.max(...keys));
-            return (
-              <tr key={k} className={`border-b ${highlight === 'data' ? 'bg-blue-50' : ''}`}>
-                <td className={`p-2 border-r font-medium ${isMinMax ? 'bg-red-100 font-bold text-red-700' : ''}`}>{k}</td>
-                <td className={`p-2 ${highlight === 'mode' && freq[k] === Math.max(...Object.values(freq)) ? 'bg-red-100 font-bold' : ''}`}>{freq[k]}</td>
-              </tr>
-            );
-          })}
-          <tr className="bg-slate-50 font-bold">
-            <td className="p-2 border-r">總和</td>
-            <td className="p-2">{data.length}</td>
+          <tr className={highlight === 'data' ? 'bg-blue-50' : ''}>
+            <td className="p-3 border-r border-slate-300 font-bold bg-slate-50">頻數 (f)</td>
+            {keys.map((k, i) => {
+              const isMode = highlight === 'mode' && freq[k] === Math.max(...Object.values(freq));
+              return (
+                <td 
+                  key={k} 
+                  className={`p-3 ${
+                    isMode ? 'bg-red-100 font-bold text-red-700' : ''
+                  } ${i < keys.length - 1 ? 'border-r border-slate-200' : ''}`}
+                >
+                  {freq[k]}
+                </td>
+              );
+            })}
           </tr>
         </tbody>
       </table>
+      <div className="p-2 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-600">
+        總數據數量: <span className="font-bold">{data.length}</span>
+      </div>
     </div>
   );
 };
