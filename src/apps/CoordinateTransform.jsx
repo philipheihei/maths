@@ -254,9 +254,36 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
 
   return (
     <g>
-      {/* Rotation arc - green dotted line connecting P and P' along the circular path */}
+      {/* Arrow marker definition for rotation arc */}
+      <defs>
+        <marker 
+          id="rotationArrow" 
+          markerWidth="12" 
+          markerHeight="12" 
+          refX="10" 
+          refY="6" 
+          orient="auto"
+        >
+          <path 
+            d="M 2,2 L 10,6 L 2,10" 
+            fill="none" 
+            stroke="#10b981" 
+            strokeWidth="2" 
+            strokeLinejoin="round"
+          />
+        </marker>
+      </defs>
+      
+      {/* Rotation arc - green dotted line connecting P and P' along the circular path with arrow */}
       {progress > 0 && radius > 5 && (
-        <path d={arcPath} fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" />
+        <path 
+          d={arcPath} 
+          fill="none" 
+          stroke="#10b981" 
+          strokeWidth="2" 
+          strokeDasharray="5,5"
+          markerEnd="url(#rotationArrow)"
+        />
       )}
       
       {/* Radius line from origin to original point (light) */}
