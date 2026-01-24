@@ -421,7 +421,7 @@ const FrequencyTable = ({ data, highlight }) => {
       <table className="w-full text-sm text-center border-collapse">
         <thead className="bg-slate-100 text-slate-600">
           <tr>
-            <th className="p-3 border-r border-b border-slate-300 font-bold">數值 (x)</th>
+            <th className="p-3 border-r border-b border-slate-300 font-bold">數值</th>
             {keys.map((k, i) => {
               const isMinMax = highlight === 'range' && (k === Math.min(...keys) || k === Math.max(...keys));
               return (
@@ -439,7 +439,7 @@ const FrequencyTable = ({ data, highlight }) => {
         </thead>
         <tbody>
           <tr className={highlight === 'data' ? 'bg-blue-50' : ''}>
-            <td className="p-3 border-r border-slate-300 font-bold bg-slate-50">頻數 (f)</td>
+            <td className="p-3 border-r border-slate-300 font-bold bg-slate-50">頻數</td>
             {keys.map((k, i) => {
               const isMode = highlight === 'mode' && freq[k] === Math.max(...Object.values(freq));
               return (
@@ -456,9 +456,6 @@ const FrequencyTable = ({ data, highlight }) => {
           </tr>
         </tbody>
       </table>
-      <div className="p-2 bg-slate-50 border-t border-slate-200 text-center text-xs text-slate-600">
-        總數據數量: <span className="font-bold">{data.length}</span>
-      </div>
     </div>
   );
 };
