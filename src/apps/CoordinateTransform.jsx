@@ -255,7 +255,9 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   
   // Arc endpoint: move back from target angle by shortenAngle
   // Direction depends on clockwise rotation
-  const arcEndAngle = targetAngle + (clockwise ? shortenAngle : -shortenAngle);
+  // CCW: angle gets more negative due to SVG Y inversion, so add shortenAngle to stop earlier
+  // CW: angle gets more positive, so subtract to stop earlier
+  const arcEndAngle = targetAngle + (clockwise ? -shortenAngle : shortenAngle);
   
   const arcPath = radius > 5 ? `
     M ${CENTER + radius * Math.cos(startAngle)} ${CENTER + radius * Math.sin(startAngle)}
