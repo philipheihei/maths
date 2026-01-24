@@ -235,7 +235,7 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   const fromSVG = toSVG(from.x, from.y);
   const angleRad = (clockwise ? -1 : 1) * (angle * Math.PI / 180) * progress;
   
-  // Calculate rotated position
+  // Calculate rotated position (P' target position)
   const rotatedX = from.x * Math.cos(angleRad) - from.y * Math.sin(angleRad);
   const rotatedY = from.x * Math.sin(angleRad) + from.y * Math.cos(angleRad);
   const toCoords = { x: Math.round(rotatedX), y: Math.round(rotatedY) };
@@ -244,16 +244,23 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   // Arc path for rotation visualization
   const radius = Math.sqrt(from.x * from.x + from.y * from.y) * UNIT;
   const startAngle = Math.atan2(-from.y, from.x); // SVG y is inverted
-  const currentAngle = startAngle - angleRad;
   
-  // Shorten the arc by stopping before reaching P' (reduce by about 12 pixels to get close to P' without overlapping)
-  const shortenAmount = 12 / radius; // angle reduction to shorten arc by ~12 pixels
-  const adjustedCurrentAngle = currentAngle + (clockwise ? shortenAmount : -shortenAmount);
+  // Calculate target angle (P' position) - SVG y is inverted
+  const targetAngle = Math.atan2(-rotatedY, rotatedX);
+  
+  // Shorten arc to leave gap between arrow head and P'
+  // Arrow length (~10px) + gap (~4px) = ~14px total
+  const totalShortenPixels = 14;
+  const shortenAngle = totalShortenPixels / radius;
+  
+  // Arc endpoint: move back from target angle by shortenAngle
+  // Direction depends on clockwise rotation
+  const arcEndAngle = targetAngle + (clockwise ? shortenAngle : -shortenAngle);
   
   const arcPath = radius > 5 ? `
     M ${CENTER + radius * Math.cos(startAngle)} ${CENTER + radius * Math.sin(startAngle)}
     A ${radius} ${radius} 0 ${Math.abs(angle * progress) > 180 ? 1 : 0} ${clockwise ? 1 : 0} 
-      ${CENTER + radius * Math.cos(adjustedCurrentAngle)} ${CENTER + radius * Math.sin(adjustedCurrentAngle)}
+      ${CENTER + radius * Math.cos(arcEndAngle)} ${CENTER + radius * Math.sin(arcEndAngle)}
   ` : '';
 
   return (
