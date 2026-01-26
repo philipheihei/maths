@@ -39,31 +39,51 @@ const toLatex = (input) => {
   return latex;
 };
 
-// Helper function to process fractions intelligently
+// Helper function to process fractions intelligently - handles multiple fractions
 const processFraction = (expr) => {
-  const slashIndex = expr.lastIndexOf('/');
-  if (slashIndex === -1) return expr;
+  if (!expr.includes('/')) return expr;
   
-  // Find numerator (everything up to the /)
-  let numerator = expr.substring(0, slashIndex).trim();
-  let denominator = expr.substring(slashIndex + 1).trim();
+  let result = '';
+  let i = 0;
   
-  // Handle cases where numerator has multiple terms like "2a-mn"
-  // Check if numerator has operators but no parentheses
-  if (numerator.includes('-') || numerator.includes('+')) {
-    // If it contains operators, wrap it in braces for LaTeX
-    if (!numerator.startsWith('(') && !numerator.startsWith('{')) {
-      numerator = `{${numerator}}`;
+  while (i < expr.length) {
+    const slashIndex = expr.indexOf('/', i);
+    
+    if (slashIndex === -1) {
+      // No more slashes, append remaining text
+      result += expr.substring(i);
+      break;
     }
+    
+    // Find where numerator starts (walk backwards from slash)
+    let numStart = slashIndex - 1;
+    while (numStart > i && !/[(\+\-×\*=\s]/.test(expr[numStart])) {
+      numStart--;
+    }
+    // If we stopped at a delimiter, move forward one position
+    if (numStart > i || /[(\+\-×\*=\s]/.test(expr[numStart])) {
+      numStart++;
+    }
+    
+    // Find where denominator ends (walk forwards from slash)
+    let denomEnd = slashIndex + 1;
+    while (denomEnd < expr.length && !/[)\+\-×\*=\s]/.test(expr[denomEnd])) {
+      denomEnd++;
+    }
+    
+    // Extract parts
+    const before = expr.substring(i, numStart);
+    const numerator = expr.substring(numStart, slashIndex).trim();
+    const denominator = expr.substring(slashIndex + 1, denomEnd).trim();
+    
+    // Build LaTeX fraction
+    result += before + `\\frac{${numerator}}{${denominator}}`;
+    
+    // Continue from after denominator
+    i = denomEnd;
   }
   
-  // If denominator has operators, also wrap it
-  if ((denominator.includes('-') || denominator.includes('+')) && 
-      !denominator.startsWith('(') && !denominator.startsWith('{')) {
-    denominator = `{${denominator}}`;
-  }
-  
-  return `\\frac{${numerator}}{${denominator}}`;
+  return result;
 };
 
 // --- Math Rendering Helper ---
