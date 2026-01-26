@@ -1056,7 +1056,7 @@ const PracticePage = ({ score, setScore }) => {
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-6 sticky top-4 z-10">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <span className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Question</span>
+            <span className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">題目：</span>
             <h2 className="text-gray-500 mt-1 text-lg">
               令 <Latex>{problem.subject}</Latex> 成為公式 <Latex>{problem.text}</Latex> 的主項
             </h2>
@@ -1065,8 +1065,11 @@ const PracticePage = ({ score, setScore }) => {
             <RefreshCw size={20} />
           </button>
         </div>
-        <div className="text-3xl font-serif text-center py-4 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-           <Latex block>{getCurrentEquation()}</Latex>
+        <div className="relative">
+          <span className="absolute left-3 top-2 text-xs font-medium text-gray-500">現時步驟：</span>
+          <div className="text-3xl font-serif text-center py-4 pt-8 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+            <Latex block>{getCurrentEquation()}</Latex>
+          </div>
         </div>
       </div>
 
