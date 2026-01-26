@@ -67,14 +67,33 @@ const processFraction = (expr) => {
     
     // Find where denominator ends (walk forwards from slash)
     let denomEnd = slashIndex + 1;
-    while (denomEnd < expr.length && !/[)\+\-×\*=\s]/.test(expr[denomEnd])) {
+    
+    // Check if denominator starts with a parenthesis
+    if (expr[denomEnd] === '(') {
+      // Find matching closing parenthesis
+      let parenCount = 1;
       denomEnd++;
+      while (denomEnd < expr.length && parenCount > 0) {
+        if (expr[denomEnd] === '(') parenCount++;
+        if (expr[denomEnd] === ')') parenCount--;
+        denomEnd++;
+      }
+    } else {
+      // Regular denominator - stop at operators or spaces (but not inside the first term)
+      while (denomEnd < expr.length && !/[)\+\-×\*=\s]/.test(expr[denomEnd])) {
+        denomEnd++;
+      }
     }
     
     // Extract parts
     const before = expr.substring(i, numStart);
-    const numerator = expr.substring(numStart, slashIndex).trim();
-    const denominator = expr.substring(slashIndex + 1, denomEnd).trim();
+    let numerator = expr.substring(numStart, slashIndex).trim();
+    let denominator = expr.substring(slashIndex + 1, denomEnd).trim();
+    
+    // Remove outer parentheses from denominator if present
+    if (denominator.startsWith('(') && denominator.endsWith(')')) {
+      denominator = denominator.slice(1, -1);
+    }
     
     // Build LaTeX fraction
     result += before + `\\frac{${numerator}}{${denominator}}`;
