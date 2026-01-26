@@ -199,23 +199,21 @@ const generateProblem = () => {
   
   // Generate coprime coefficients (互質數字)
   let n1, n2, n3, C;
-  do {n1*s + a)/n2 = b (確保 n1, n2 互質)
+  do {
+    n1 = randInt(2, 9);
+    n2 = randIntExcept(2, 9, n1);
+    n3 = randIntExcept(2, 9, n1);
+    C = randIntExcept(2, 9, n1);
+  } while (!areCoprime(n1, n2, n3, C)); // 確保所有系數互質
+
+  // TYPE 1: Simple Fraction: (n1*s + a)/n2 = b
   if (type === 'fraction_simple') {
-    const coef1 = n1;
-    const coef2 = n2;
-    problem.text = `\\frac{${coef1}${s} + ${a}}{${coef2}} = ${b}`;
+    problem.text = `\\frac{${n1}${s} + ${a}}{${n2}} = ${b}`;
     problem.subject = s;
     problem.allVariables = [s, a, b];
     problem.steps.hasFraction = true;
-    problem.steps.step1Eq = `${coef1}${s}+${a}=${coef2}${b}`;
+    problem.steps.step1Eq = `${n1}${s}+${a}=${n2}${b}`;
     problem.steps.hasBracket = false;
-    problem.steps.step2Eq = problem.steps.step1Eq; 
-    problem.steps.hasMove = true;
-    problem.steps.step3Eq = `${coef1}${s}=${coef2}${b}-${a}`;
-    problem.steps.hasFactor = false;
-    problem.steps.step4Eq = problem.steps.step3Eq;
-    problem.steps.hasDivide = true;
-    problem.steps.step5Eq = `${s}=\\frac{${coef2}${b}-${a}}{${coef
     problem.steps.step2Eq = problem.steps.step1Eq; 
     problem.steps.hasMove = true;
     problem.steps.step3Eq = `${n1}${s}=${n2}${b}-${a}`;
