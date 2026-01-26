@@ -369,36 +369,36 @@ const generateProblem = () => {
     problem.steps.step5Eq = `${s}=\\frac{${n1}${C}-${n2}${a}}{${a}-${C}}`;
   }
   // TYPE 9: Fraction Add/Subtract (13-1): 分數加減通分母 - 挑戰題
-  // e.g., 3/h - 1/k = 2x (k是主項) → hk(3/h - 1/k) = 2hkx → 3k - h = 2hkx → k(3-2hx) = h → k = h/(3-2hx)
+  // e.g., 3/h - 1/k = 2 (k是主項) → hk(3/h - 1/k) = 2hk → 3k - h = 2hk → k(3-2h) = h → k = h/(3-2h)
   else if (type === 'fraction_add_subtract') {
-    const C = getVar([s, a, b]);
+    const rightNum = randInt(2, 5); // 右邊純數字
     
-    // 形式: n1/a - n2/b = Cs (其中 b 是主項)
-    problem.text = `\\frac{${n1}}{${a}} - \\frac{${n2}}{${b}} = ${C}${s}`;
+    // 形式: n1/a - n2/b = rightNum (其中 b 是主項)
+    problem.text = `\\frac{${n1}}{${a}} - \\frac{${n2}}{${b}} = ${rightNum}`;
     problem.subject = b; // b 是主項（例如 k）
-    problem.allVariables = [s, a, b, C];
+    problem.allVariables = [a, b];
     problem.isChallenge = true; // 標記為挑戰題
     
     problem.steps.hasFraction = true;
     // Step 1 (乘): 兩邊同乘 ab
-    problem.steps.step1Eq = `${a}${b}\\left(\\frac{${n1}}{${a}} - \\frac{${n2}}{${b}}\\right) = ${a}${b}${C}${s}`;
+    problem.steps.step1Eq = `${a}${b}\\left(\\frac{${n1}}{${a}} - \\frac{${n2}}{${b}}\\right) = ${rightNum}${a}${b}`;
     
     problem.steps.hasBracket = true;
-    // Step 2 (拆): 展開括號 - n1*b - n2*a = ab*C*s
-    problem.steps.step2Eq = `${n1}${b}-${n2}${a}=${a}${b}${C}${s}`;
+    // Step 2 (拆): 展開括號 - n1*b - n2*a = rightNum*ab
+    problem.steps.step2Eq = `${n1}${b}-${n2}${a}=${rightNum}${a}${b}`;
     
     problem.steps.hasMove = true;
-    // Step 3 (移): 將主項 b 移到左邊 - n1*b - ab*C*s = n2*a
-    problem.steps.step3Eq = `${n1}${b}-${a}${b}${C}${s}=${n2}${a}`;
+    // Step 3 (移): 將主項 b 移到左邊 - n1*b - rightNum*ab = n2*a
+    problem.steps.step3Eq = `${n1}${b}-${rightNum}${a}${b}=${n2}${a}`;
     
     problem.steps.hasFactor = true;
     problem.steps.factorType = 'algebraic';
-    // Step 4 (抽): 提取公因式 b - b(n1 - a*C*s) = n2*a
-    problem.steps.step4Eq = `${b}(${n1}-${a}${C}${s})=${n2}${a}`;
+    // Step 4 (抽): 提取公因式 b - b(n1 - rightNum*a) = n2*a
+    problem.steps.step4Eq = `${b}(${n1}-${rightNum}${a})=${n2}${a}`;
     
     problem.steps.hasDivide = true;
-    // Step 5 (除): b = (n2*a) / (n1 - a*C*s)
-    problem.steps.step5Eq = `${b}=\\frac{${n2}${a}}{${n1}-${a}${C}${s}}`;
+    // Step 5 (除): b = (n2*a) / (n1 - rightNum*a)
+    problem.steps.step5Eq = `${b}=\\frac{${n2}${a}}{${n1}-${rightNum}${a}}`;
   }
 
   return problem;
