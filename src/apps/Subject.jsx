@@ -429,24 +429,24 @@ const generateProblem = () => {
     problem.isChallenge = true; // 標記為挑戰題
     
     problem.steps.hasFraction = true;
-    // Step 1 (乘): 兩邊同乘 ab
-    problem.steps.step1Eq = `${a}${b}\\left(\\frac{${n1}}{${a}} - \\frac{${n2}}{${b}}\\right) = ${rightNum}${a}${b}`;
+    // Step 1 (乘): 兩邊同乘 ab - 保留括號形式（學生可能輸入展開或未展開的版本）
+    problem.steps.step1Eq = `${n1}${b}-${n2}${a}=${rightNum}${a}${b}`;
     
-    problem.steps.hasBracket = true;
-    // Step 2 (拆): 展開括號 - n1*b - n2*a = rightNum*ab
-    problem.steps.step2Eq = `${n1}${b}-${n2}${a}=${rightNum}${a}${b}`;
+    problem.steps.hasBracket = false; // 已在 step1 處理括號
+    // Step 2 跳過（已展開）
+    problem.steps.step2Eq = null;
     
     problem.steps.hasMove = true;
-    // Step 3 (移): 將主項 b 移到左邊 - n1*b - rightNum*ab = n2*a
+    // Step 2 (移): 將主項 b 移到左邊 - n1*b - rightNum*ab = n2*a
     problem.steps.step3Eq = `${n1}${b}-${rightNum}${a}${b}=${n2}${a}`;
     
     problem.steps.hasFactor = true;
     problem.steps.factorType = 'algebraic';
-    // Step 4 (抽): 提取公因式 b - b(n1 - rightNum*a) = n2*a
+    // Step 3 (抽): 提取公因式 b - b(n1 - rightNum*a) = n2*a
     problem.steps.step4Eq = `${b}(${n1}-${rightNum}${a})=${n2}${a}`;
     
     problem.steps.hasDivide = true;
-    // Step 5 (除): b = (n2*a) / (n1 - rightNum*a)
+    // Step 4 (除): b = (n2*a) / (n1 - rightNum*a)
     problem.steps.step5Eq = `${b}=\\frac{${n2}${a}}{${n1}-${rightNum}${a}}`;
   }
 
