@@ -63,7 +63,7 @@ const processFraction = (expr) => {
     denominator = `{${denominator}}`;
   }
   
-  return `\\frac${numerator}${denominator}`;
+  return `\\frac{${numerator}}{${denominator}}`;
 };
 
 // --- Math Rendering Helper ---
@@ -905,7 +905,7 @@ const PracticePage = ({ score, setScore }) => {
           affirmative: "需移項",
           check: problem.steps.hasMove, 
           expected: problem.steps.step3Eq,
-          hint: `將主項 ${problem.subject} 移至一邊，其他移至另一邊`
+          hint: `將有主項 ${problem.subject} 的項 移至一邊，沒${problem.subject} 的項移至另一邊`
         };
         break;
       case 4: 
@@ -1066,7 +1066,7 @@ const PracticePage = ({ score, setScore }) => {
           </button>
         </div>
         <div className="relative">
-          <span className="absolute left-3 top-2 text-xs font-medium text-gray-500">現時步驟：</span>
+          <span className="absolute left-3 top-2 text-base font-medium text-gray-500">現時步驟：</span>
           <div className="text-3xl font-serif text-center py-4 pt-8 bg-gray-50 rounded-xl border border-dashed border-gray-300">
             <Latex block>{getCurrentEquation()}</Latex>
           </div>
