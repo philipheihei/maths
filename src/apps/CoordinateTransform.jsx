@@ -1353,6 +1353,9 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       else if (axis === 'x=') axisStr = `直線 x = ${axisValue}`;
       else axisStr = `直線 y = ${axisValue}`;
       
+      // Generate description
+      description = `${label}(${from.x}, ${from.y}) 對 ${axisStr} 作反射至點 ${label}'。求 ${label}' 的坐標。`;
+      
       // Normalize -0 to 0 for display
       const normalizeZero = (val) => val === 0 ? 0 : val;
       
