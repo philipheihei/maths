@@ -115,7 +115,10 @@ const generateProblem = () => {
     'bracket_simple',     // n1(s + a) = n2*s + b
     'factor_simple',      // a*s - b = n1*s
     'double_bracket',     // n1(s + a) = n2(s + b) - 新增：兩邊都有括號
-    'fraction_both_sides' // (n1*s + a)/n2 = (C*s + b)/d - 新增：兩邊都有分數
+    'fraction_both_sides', // (n1*s + a)/n2 = (C*s + b)/d - 新增：兩邊都有分數
+    'fraction_simple_both_sides', // 24-2: (Ax+C)/B = ns - 簡單分數兩邊都有主項
+    'fraction_polynomial', // 23-1: 兩邊分數分子或分母多項式
+    'fraction_add_subtract' // 13-1: 分數加減通分母 - 挑戰題
   ]; 
   const type = types[Math.floor(Math.random() * types.length)];
   
@@ -319,6 +322,77 @@ const generateProblem = () => {
     
     problem.steps.hasDivide = true;
     problem.steps.step5Eq = `${s}=\\frac{${n2}${b}-${d_val}${a}}{${coeffDiff}}`;
+  }
+  // TYPE 7: Simple Fraction Both Sides (24-2): (Ax + C)/B = n*s
+  // 簡單分數，兩邊都有主項，但右邊沒有分數
+  else if (type === 'fraction_simple_both_sides') {
+    const C = getVar([s, a, b]);
+    problem.text = `\\frac{${n1}${s} + ${C}}{${n2}} = ${a}${s}`;
+    problem.subject = s;
+    problem.allVariables = [s, a, C];
+    problem.steps.hasFraction = true;
+    problem.steps.step1Eq = `${n1}${s}+${C}=${n2}${a}${s}`;
+    problem.steps.hasBracket = false;
+    problem.steps.step2Eq = problem.steps.step1Eq;
+    problem.steps.hasMove = true;
+    problem.steps.step3Eq = `${n1}${s}-${n2}${a}${s}=${-1}${C}`.replace('-1', '-').replace('=-', '=-');
+    problem.steps.step3Eq = `${n1}${s}-${n2}${a}${s}=-${C}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'algebraic';
+    problem.steps.step4Eq = `${s}(${n1}-${n2}${a})=-${C}`;
+    
+    problem.steps.hasDivide = true;
+    problem.steps.step5Eq = `${s}=\\frac{-${C}}{${n1}-${n2}${a}}`;
+  }
+  // TYPE 8: Fraction Polynomial (23-1): 兩邊分數分子或分母多項式
+  // e.g., a/(s+b) = C/(s+d) 或 (as+b)/C = d/(s+e)
+  else if (type === 'fraction_polynomial') {
+    const C = getVar([s, a, b]);
+    const d = getVar([s, a, b, C]);
+    
+    // 形式: a/(s+b) = C/(s+d)
+    problem.text = `\\frac{${a}}{${s} + ${n1}} = \\frac{${C}}{${s} + ${n2}}`;
+    problem.subject = s;
+    problem.allVariables = [s, a, C];
+    problem.steps.hasFraction = true;
+    problem.steps.step1Eq = `${a}(${s}+${n2})=${C}(${s}+${n1})`;
+    problem.steps.hasBracket = true;
+    problem.steps.step2Eq = `${a}${s}+${n2}${a}=${C}${s}+${n1}${C}`;
+    problem.steps.hasMove = true;
+    problem.steps.step3Eq = `${a}${s}-${C}${s}=${n1}${C}-${n2}${a}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'algebraic';
+    problem.steps.step4Eq = `${s}(${a}-${C})=${n1}${C}-${n2}${a}`;
+    
+    problem.steps.hasDivide = true;
+    problem.steps.step5Eq = `${s}=\\frac{${n1}${C}-${n2}${a}}{${a}-${C}}`;
+  }
+  // TYPE 9: Fraction Add/Subtract (13-1): 分數加減通分母 - 挑戰題
+  // e.g., hk(3/h - 1/k) = 2hk → 3k - h = 2hk
+  else if (type === 'fraction_add_subtract') {
+    const C = getVar([s, a, b]);
+    
+    // 形式: ab(n1/a - n2/b) = Cs  →  n1*b - n2*a = Cs
+    problem.text = `${a}${b}\\left(\\frac{${n1}}{${a}} - \\frac{${n2}}{${b}}\\right) = ${C}${s}`;
+    problem.subject = s;
+    problem.allVariables = [s, a, b, C];
+    problem.isChallenge = true; // 標記為挑戰題
+    
+    problem.steps.hasFraction = true;
+    // 通分後: n1*b - n2*a = Cs
+    problem.steps.step1Eq = `${n1}${b}-${n2}${a}=${C}${s}`;
+    problem.steps.hasBracket = false;
+    problem.steps.step2Eq = problem.steps.step1Eq;
+    problem.steps.hasMove = false;
+    problem.steps.step3Eq = problem.steps.step1Eq;
+    
+    problem.steps.hasFactor = false;
+    problem.steps.step4Eq = problem.steps.step3Eq;
+    
+    problem.steps.hasDivide = true;
+    problem.steps.step5Eq = `${s}=\\frac{${n1}${b}-${n2}${a}}{${C}}`;
   }
 
   return problem;
