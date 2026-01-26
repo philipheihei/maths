@@ -293,7 +293,6 @@ const generateProblem = () => {
   else if (type === 'fraction_both_sides') {
     const C = getVar([s, a, b]);
     const d = getVar([s, a, b, C]);
-    const n3 = randInt(2, 5);
     
     // 確保係數差不為 0 或 1 (避免過於簡單)
     let coeffDiff;
@@ -306,22 +305,22 @@ const generateProblem = () => {
       coeffDiff = d_val * n1_val - n2_val * n3_val;
     } while (coeffDiff === 0 || coeffDiff === 1 || coeffDiff === -1);
     
-    problem.text = `\\frac{${n1}${s} + ${a}}{${n2}} = \\frac{${n3}${s} + ${b}}{${d_val}}`;
+    problem.text = `\\frac{${n1_val}${s} + ${a}}{${n2_val}} = \\frac{${n3_val}${s} + ${b}}{${d_val}}`;
     problem.subject = s;
     problem.allVariables = [s, a, b, d];
     problem.steps.hasFraction = true;
-    problem.steps.step1Eq = `${d_val}(${n1}${s}+${a})=${n2}(${n3}${s}+${b})`;
+    problem.steps.step1Eq = `${d_val}(${n1_val}${s}+${a})=${n2_val}(${n3_val}${s}+${b})`;
     problem.steps.hasBracket = true;
-    problem.steps.step2Eq = `${d_val * n1}${s}+${d_val}${a}=${n2 * n3}${s}+${n2}${b}`;
+    problem.steps.step2Eq = `${d_val * n1_val}${s}+${d_val}${a}=${n2_val * n3_val}${s}+${n2_val}${b}`;
     problem.steps.hasMove = true;
-    problem.steps.step3Eq = `${d_val * n1}${s}-${n2 * n3}${s}=${n2}${b}-${d_val}${a}`;
+    problem.steps.step3Eq = `${d_val * n1_val}${s}-${n2_val * n3_val}${s}=${n2_val}${b}-${d_val}${a}`;
     
     problem.steps.hasFactor = true;
     problem.steps.factorType = 'numeric';
-    problem.steps.step4Eq = `${coeffDiff}${s}=${n2}${b}-${d_val}${a}`;
+    problem.steps.step4Eq = `${coeffDiff}${s}=${n2_val}${b}-${d_val}${a}`;
     
     problem.steps.hasDivide = true;
-    problem.steps.step5Eq = `${s}=\\frac{${n2}${b}-${d_val}${a}}{${coeffDiff}}`;
+    problem.steps.step5Eq = `${s}=\\frac{${n2_val}${b}-${d_val}${a}}{${coeffDiff}}`;
   }
   // TYPE 7: Simple Fraction Both Sides (24-2): (Ax + C)/B = n*s
   // 簡單分數，兩邊都有主項，但右邊沒有分數
