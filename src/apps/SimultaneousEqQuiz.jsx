@@ -26,11 +26,13 @@ const simplifyFraction = (num, den) => {
 };
 
 const formatAnswer = (num, den) => {
-  const simplified = simplifyFraction(num, den);
-  if (simplified.den === 1) {
-    return String(simplified.num);
+  const value = num / den;
+  // If it's an integer, show without decimal places
+  if (Number.isInteger(value)) {
+    return String(value);
   }
-  return `${simplified.num}/${simplified.den}`;
+  // Otherwise show with 2 decimal places
+  return value.toFixed(2);
 };
 
 const parseUserAnswer = (input) => {
@@ -944,9 +946,23 @@ export default function SimultaneousEqQuiz() {
   };
 
   const handleKeypadClear = () => {
-    if (!activeInput) return;
-    const { setter } = activeInput;
-    setter('');
+    // Clear all inputs for prog01 modes
+    if (mode === 'prog01-lv1') {
+      setXAnswer('');
+      setYAnswer('');
+    } else if (mode === 'prog01-lv2') {
+      if (prog01Step === 1) {
+        setEq1Inputs({ a: '', b: '', c: '' });
+        setEq2Inputs({ a: '', b: '', c: '' });
+      } else {
+        setXAnswer('');
+        setYAnswer('');
+      }
+    } else if (activeInput) {
+      // For other modes, just clear active input
+      const { setter } = activeInput;
+      setter('');
+    }
   };
 
   const handleKeypadTab = () => {
