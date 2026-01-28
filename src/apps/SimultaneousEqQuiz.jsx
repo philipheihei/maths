@@ -1,9 +1,217 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { BookOpen, Calculator, Lightbulb, Delete, CheckCircle, XCircle, Keyboard as KeyboardIcon, X, Trophy, Home as HomeIcon } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { BookOpen, Calculator, Lightbulb, Delete, CheckCircle, XCircle, Keyboard as KeyboardIcon, X, Trophy, Home as HomeIcon, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// --- 資料庫 (包含所有題目與邏輯) ---
-const QUESTIONS = [
+// ========== PROG01 工具函數 ==========
+const gcd = (a, b) => {
+  a = Math.abs(a);
+  b = Math.abs(b);
+  while (b) {
+    [a, b] = [b, a % b];
+  }
+  return a;
+};
+
+const simplifyFraction = (num, den) => {
+  if (den === 0) return { num: 0, den: 1 };
+  const g = gcd(num, den);
+  let sNum = num / g;
+  let sDen = den / g;
+  if (sDen < 0) {
+    sNum = -sNum;
+    sDen = -sDen;
+  }
+  return { num: sNum, den: sDen };
+};
+
+const formatAnswer = (num, den) => {
+  const simplified = simplifyFraction(num, den);
+  if (simplified.den === 1) {
+    return String(simplified.num);
+  }
+  return `${simplified.num}/${simplified.den}`;
+};
+
+const parseUserAnswer = (input) => {
+  if (!input || input.trim() === '') return null;
+  const trimmed = input.trim();
+  
+  if (trimmed.includes('/')) {
+    const parts = trimmed.split('/');
+    if (parts.length !== 2) return null;
+    const num = parseFloat(parts[0]);
+    const den = parseFloat(parts[1]);
+    if (isNaN(num) || isNaN(den) || den === 0) return null;
+    return num / den;
+  }
+  
+  const val = parseFloat(trimmed);
+  if (isNaN(val)) return null;
+  return val;
+};
+
+const compareAnswers = (userInput, correctNum, correctDen) => {
+  const userVal = parseUserAnswer(userInput);
+  if (userVal === null) return false;
+  const correctVal = correctNum / correctDen;
+  return Math.abs(userVal - correctVal) < 0.0001;
+};
+
+// ========== PROG01 題目生成器 ==========
+const generateProg01Lv1Question = () => {
+  const xNumerators = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const yNumerators = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const denominators = [1, 1, 1, 1, 2, 2, 3];
+  
+  const xNum = xNumerators[Math.floor(Math.random() * xNumerators.length)];
+  const xDen = denominators[Math.floor(Math.random() * denominators.length)];
+  const yNum = yNumerators[Math.floor(Math.random() * yNumerators.length)];
+  const yDen = denominators[Math.floor(Math.random() * denominators.length)];
+  
+  const xVal = xNum / xDen;
+  const yVal = yNum / yDen;
+  
+  let a, b, c, d, e, f;
+  let attempts = 0;
+  
+  do {
+    a = Math.floor(Math.random() * 9) + 1;
+    if (Math.random() < 0.3) a = -a;
+    b = Math.floor(Math.random() * 9) + 1;
+    if (Math.random() < 0.3) b = -b;
+    d = Math.floor(Math.random() * 9) + 1;
+    if (Math.random() < 0.3) d = -d;
+    e = Math.floor(Math.random() * 9) + 1;
+    if (Math.random() < 0.3) e = -e;
+    
+    c = a * xVal + b * yVal;
+    f = d * xVal + e * yVal;
+    
+    attempts++;
+  } while ((Math.abs(a * e - b * d) < 0.001 || !Number.isInteger(c) || !Number.isInteger(f)) && attempts < 100);
+  
+  if (!Number.isInteger(c) || !Number.isInteger(f)) {
+    const simpleX = Math.floor(Math.random() * 10) - 5;
+    const simpleY = Math.floor(Math.random() * 10) - 5;
+    a = Math.floor(Math.random() * 5) + 1;
+    b = Math.floor(Math.random() * 5) + 1;
+    d = Math.floor(Math.random() * 5) + 1;
+    e = Math.floor(Math.random() * 5) + 1;
+    if (Math.random() < 0.3) a = -a;
+    if (Math.random() < 0.3) b = -b;
+    if (Math.random() < 0.3) d = -d;
+    if (Math.random() < 0.3) e = -e;
+    c = a * simpleX + b * simpleY;
+    f = d * simpleX + e * simpleY;
+    
+    return {
+      a, b, c: Math.round(c), d, e, f: Math.round(f),
+      xNum: simpleX, xDen: 1,
+      yNum: simpleY, yDen: 1
+    };
+  }
+  
+  return {
+    a, b, c: Math.round(c), d, e, f: Math.round(f),
+    xNum, xDen,
+    yNum, yDen
+  };
+};
+
+const PROG01_LV2_TEMPLATES = [
+  {
+    id: 'A',
+    generate: () => {
+      const k = [1.2, 1.4, 1.5, 2, 0.5, 0.8, 2.5][Math.floor(Math.random() * 7)];
+      const total = [100, 120, 150, 180, 200, 240][Math.floor(Math.random() * 6)];
+      const y = total / (1 + k);
+      const x = k * y;
+      
+      if (!Number.isInteger(x) && !Number.isInteger(y * 10) / 10 === y) {
+        const simpleY = 50;
+        const simpleX = k * simpleY;
+        const simpleTotal = simpleX + simpleY;
+        
+        return {
+          eq1Display: `x + y = ${simpleTotal}`,
+          eq2Display: k === Math.floor(k) ? `x = ${k}y` : `x = ${k}y`,
+          eq1Standard: { a: 1, b: 1, c: simpleTotal },
+          eq2Standard: { a: 1, b: -k, c: 0 },
+          xVal: simpleX,
+          yVal: simpleY
+        };
+      }
+      
+      return {
+        eq1Display: `x + y = ${total}`,
+        eq2Display: k === Math.floor(k) ? `x = ${k}y` : `x = ${k}y`,
+        eq1Standard: { a: 1, b: 1, c: total },
+        eq2Standard: { a: 1, b: -k, c: 0 },
+        xVal: x,
+        yVal: y
+      };
+    }
+  },
+  {
+    id: 'B',
+    generate: () => {
+      const a1 = Math.floor(Math.random() * 4) + 2;
+      const b1 = Math.floor(Math.random() * 4) + 2;
+      const a2 = Math.floor(Math.random() * 5) + 5;
+      const b2 = Math.floor(Math.random() * 5) + 5;
+      
+      const c = (a1 * b2 + b1 * a2) * 3;
+      const n = c * a2 / (a1 * b2 + b1 * a2);
+      const m = (b2 / a2) * n;
+      
+      return {
+        eq1Display: `${a1}m + ${b1}n = ${c}`,
+        eq2Display: `${a2}m = ${b2}n`,
+        eq1Standard: { a: a1, b: b1, c: c },
+        eq2Standard: { a: a2, b: -b2, c: 0 },
+        xVal: m,
+        yVal: n,
+        varX: 'm',
+        varY: 'n'
+      };
+    }
+  },
+  {
+    id: 'C',
+    generate: () => {
+      const k = Math.floor(Math.random() * 3) + 2;
+      const offset = (Math.floor(Math.random() * 4) + 1) * 10;
+      
+      const coef = Math.floor(Math.random() * 2) + 2;
+      const c2 = offset * (1 + coef);
+      
+      const x = c2 / (coef * k - 1);
+      const y = k * x;
+      
+      return {
+        eq1Display: `${k}x = y`,
+        eq2Display: `${coef}(y − ${offset}) = x + ${offset}`,
+        eq1Standard: { a: k, b: -1, c: 0 },
+        eq2Standard: { a: -1, b: coef, c: c2 },
+        xVal: x,
+        yVal: y
+      };
+    }
+  }
+];
+
+const generateProg01Lv2Question = () => {
+  const template = PROG01_LV2_TEMPLATES[Math.floor(Math.random() * PROG01_LV2_TEMPLATES.length)];
+  const question = template.generate();
+  return {
+    ...question,
+    varX: question.varX || 'x',
+    varY: question.varY || 'y'
+  };
+};
+
+// ========== 應用題資料庫 ==========
+const WORD_PROBLEMS = [
   {
     id: 1,
     title: "遊覽船船票",
@@ -48,7 +256,7 @@ const QUESTIONS = [
       { 
         text: "一個橙子及一個蘋果的價錢分別為$2及$3,現花費了$46購買若干個橙子和蘋果。", 
         keywords: ["花費了$46", "購買", "橙子", "和", "蘋果"],
-        skipInputIndices: [0, 1], // 👈 跳過前兩個匹配（第一次的橙子和蘋果）
+        skipInputIndices: [0, 1],
         valid: ["2x+3y=46", "3y+2x=46"], 
         color: "text-green-600", 
         borderColor: "border-green-400" 
@@ -114,178 +322,6 @@ const QUESTIONS = [
       ["x=2y"],
       ["3x+5y=66"]
     ]
-  },
-  {
-    id: 6,
-    title: "夏令營人數",
-    text: "在某夏令營,男生人數與女生人數之比為7:6。若17名男生和4名女生離開該夏令營,則男生人數與女生人數相等。求在夏令營原本的女生人數。",
-    vars: "設 x 為男生人數,y 為女生人數。",
-    segments: [
-      { text: "男生人數與女生人數之比為7:6。", keywords: ["男生人數與女生人數之比", "為", "7:6"], valid: ["x/y=7/6", "6x=7y"], color: "text-red-600", borderColor: "border-red-400" },
-      { 
-        text: "若17名男生和4名女生離開,人數相等。", 
-        keywords: ["17名男生", "4名女生離開", "人數相等"], 
-        previewOrder: [1, 5, 3],
-        valid: ["x-17=y-4", "y-4=x-17"], 
-        color: "text-green-600", 
-        borderColor: "border-green-400" 
-      }
-    ],
-    answers: [
-      ["x/y=7/6", "6x=7y"],
-      ["x-17=y-4", "y-4=x-17"]
-    ]
-  },
-  {
-    id: 7,
-    title: "足球聯賽",
-    text: "在某足球聯賽，每一球隊贏取一場球賽得3分，和得1分，而輸得0分。該聯賽的冠軍隊作賽36場且共得84分。已知該冠軍隊沒有輸掉任何一場球賽，求該冠軍隊贏取球賽的場數。",
-    vars: "設 x 為贏場數,y 為和場數。",
-    segments: [
-      { 
-        text: "該冠軍隊作賽36場(已知該冠軍隊沒有輸掉任何一場球賽)。", 
-        keywords: ["作賽36場"], 
-        valid: ["x+y=36"], 
-        color: "text-red-600", 
-        borderColor: "border-red-400" 
-      },
-      { 
-        text: "共得 84 分 (贏取一場球賽得3分及和得1分)。", 
-        keywords: ["共得", "84", "贏取一場球賽得3分", "及", "和得1分"], 
-        previewOrder: [5, 7, 9, 1, 3],
-        valid: ["84=3x+y", "3x+y=84"], 
-        color: "text-green-600", 
-        borderColor: "border-green-400" 
-      }
-    ],
-    answers: [
-      ["x+y=36", "y+x=36"],
-      ["3x+y=84", "3x+1y=84"]
-    ]
-  },
-  {
-    id: 8,
-    title: "保安員人數",
-    text: "在設有6個展區的展覽中心內有132名保安員。各個展區均有相同人數的保安員。在每個展區內,女保安員均較男保安員多4名。求在該展覽中心內男保安員的人數。",
-    vars: "設 x 為每區男保安,y 為每區女保安。",
-    segments: [
-      { text: "在設有6個展區的展覽中心內有132名保安員。各個展區均有相同人數的保安員。", keywords: ["6個展區", "內有", "132名保安員"], valid: ["6(x+y)=132", "6x+6y=132"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "在每個展區內,女保安員均較男保安員多4名。", keywords: ["女", "較", "男", "多4名"], valid: ["y=x+4"], color: "text-green-600", borderColor: "border-green-400" }
-    ],
-    answers: [
-      ["6(x+y)=132", "6x+6y=132"],
-      ["y=x+4"]
-    ]
-  },
-  {
-    id: 9,
-    title: "梨與橙 (價錢)",
-    text: "7個梨和3個橙的價錢為$47,而5個梨和6個橙的價錢為$49。求一個梨的價錢。",
-    vars: "設 x 為梨價錢,y 為橙價錢。",
-    segments: [
-      { text: "7個梨和3個橙的價錢為$47。", keywords: ["7個梨", "和", "3個橙", "為", "47"], valid: ["7x+3y=47"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "而5個梨和6個橙的價錢為$49。", keywords: ["5個梨", "和", "6個橙", "為", "49"], valid: ["5x+6y=49"], color: "text-green-600", borderColor: "border-green-400" }
-    ],
-    answers: [
-      ["7x+3y=47"],
-      ["5x+6y=49"]
-    ]
-  },
-  {
-    id: 10,
-    title: "蘋果轉讓",
-    text: "佩玲擁有蘋果的數目為志偉擁有的4倍。若佩玲將她其中的12個蘋果送給志偉,他們將擁有相同數目的蘋果。求佩玲和志偉擁有蘋果的總數。",
-    vars: "設 x 為佩玲數目,y 為志偉數目。",
-    segments: [
-      { 
-        text: "佩玲擁有蘋果的數目為志偉擁有的4倍。", 
-        keywords: ["佩玲", "為", "志偉", "4倍"], 
-        valid: ["x=4y", "x=y*4"], 
-        color: "text-red-600", 
-        borderColor: "border-red-400" 
-      },
-      { 
-        text: "佩玲將她其中的12個送給志偉,他們將擁有相同數目。", 
-        keywords: ["佩玲", "12個送給志偉", "相同"], 
-        previewOrder: [1, 5, 3],
-        valid: ["x-12=y+12", "y+12=x-12"], 
-        color: "text-green-600", 
-        borderColor: "border-green-400" 
-      }
-    ],
-    answers: [
-      ["x=4y"],
-      ["x-12=y+12"]
-    ]
-  },
-  {
-    id: 11,
-    title: "劇院門票",
-    text: "某劇院只有兩類門票:正價及特惠票。正價及特惠票的票價分別為$126及$78。在某日,售出正價票的數目為售出特惠票的數目之5倍,且售出門票所得的總金額為$50976,求該日售出門票的總數。",
-    vars: "設 x 為正價數目,y 為特惠數目。",
-    segments: [
-      { text: "售出正價票的數目為售出特惠票的數目之5倍。", keywords: ["正價", "為", "特惠票", "5倍"], valid: ["x=5y"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "某劇院只有兩類門票:正價及特惠票。正價及特惠票的票價分別是$126及$78,且售出門票所得的總金額為$50976", keywords: ["總金額", "為", "50976"], valid: ["126x+78y=50976"], color: "text-green-600", borderColor: "border-green-400" }
-    ],
-    answers: [
-      ["x=5y"],
-      ["126x+78y=50976", "78y+126x=50976"]
-    ]
-  },
-  {
-    id: 12,
-    title: "遊樂場人數",
-    text: "在某遊樂場,成人人數與小童人數之比為13:6 。若9名成人和24名小童進入該遊樂場,則成人人數與小童人數之比為8:7 。求在該遊樂場原本的成人人數。",
-    vars: "設 x 為原本成人數,y 為原本小童數。",
-    segments: [
-      { text: "成人人數與小童人數之比為13:6。", keywords: ["成人人數與小童人數之比", "為", "13:6"], valid: ["x/y=13/6", "6x=13y"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "若9名成人和24名小童進入該遊樂場,則成人人數與小童人數之比為8:7。", keywords: ["成人人數與小童人數之比", "為", "8:7"], valid: ["(x+9)/(y+24)=8/7", "7(x+9)=8(y+24)"], color: "text-green-600", borderColor: "border-green-400" }
-    ],
-    answers: [
-      ["x/y=13/6", "6x=13y"],
-      ["(x+9)/(y+24)=8/7", "7(x+9)=8(y+24)"]
-    ]
-  },
-  {
-    id: 13,
-    title: "貼紙轉讓",
-    text: "某男生擁有的貼紙數目為某女生擁有的3倍。若該男生將他其中的20張貼紙送給該女生,則該女生擁有貼紙的數目為該男生擁有的2倍。求該男生和該女生擁有貼紙的總數。",
-    vars: "設 x 為男生數目,y 為女生數目。",
-    segments: [
-      { 
-        text: "某男生擁有的貼紙數目為某女生擁有的3倍。", 
-        keywords: ["男生", "為", "女生", "3倍"],
-        valid: ["x=3y", "3y=x"], 
-        color: "text-red-600", 
-        borderColor: "border-red-400" 
-      },
-      { 
-        text: "若該男生將他其中的20張貼紙送給該女生,則該女生擁有貼紙的數目為該男生擁有的2倍。", 
-        keywords: ["男生", "女生擁有貼紙的數目", "為", "男生", "2倍"], 
-        skipInputIndices: [0],
-        valid: ["y+20=2(x-20)"], 
-        color: "text-green-600", 
-        borderColor: "border-green-400" 
-      }
-    ],
-    answers: [
-      ["x=3y", "3y=x"],
-      ["y+20=2(x-20)", "y+20=2*(x-20)"]
-    ]
-  },
-  {
-    id: 14,
-    title: "兩數關係",
-    text: "設x及y為兩數。x與y之和為456,而7與x之積為y。求x。",
-    vars: "設 x, y 為兩數。",
-    segments: [
-      { text: "x與y之和為456。", keywords: ["x", "與y之和", "為", "456"], valid: ["x+y=456"], color: "text-red-600", borderColor: "border-red-400" },
-      { text: "7與x之積為y。", keywords: ["7", "與x之積", "為", "y"], valid: ["7x=y", "y=7x"], color: "text-green-600", borderColor: "border-green-400" }
-    ],
-    answers: [
-      ["x+y=456"],
-      ["7x=y", "7×x=y"]
-    ]
   }
 ];
 
@@ -303,11 +339,11 @@ const CHEATSHEET = [
   { key: "x 和 y 比例 6:5", val: "x/y = 6/5" }
 ];
 
+// ========== 工具函數 ==========
 const escapeRegExp = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
-// 將題目文字中的 x, y 以 Times New Roman 斜體顯示（僅題目文本，不影響算式渲染）
 const renderTextWithItalics = (text) => {
   if (!text) return null;
   const parts = text.split(/([xy])/g);
@@ -322,8 +358,24 @@ const renderTextWithItalics = (text) => {
   );
 };
 
-const MathRenderer = ({ expression }) => {
+// ========== 渲染組件 ==========
+const MathRenderer = ({ expression, size = 'normal' }) => {
   if (!expression) return <span className="text-gray-400 italic text-sm md:text-base">等待輸入...</span>;
+
+  const sizeClass = size === 'large' ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl';
+  
+  // Handle fraction display for Prog01
+  if (expression.includes('/') && !expression.includes('(') && !expression.includes('+') && !expression.includes('-') && !expression.includes('*')) {
+    const parts = expression.split('/');
+    if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+      return (
+        <span className={`inline-flex flex-col items-center ${sizeClass}`}>
+          <span className="border-b-2 border-current px-1">{parts[0]}</span>
+          <span>{parts[1]}</span>
+        </span>
+      );
+    }
+  }
 
   const tokens = expression.match(/(\(.*?\)|[=+\-*/]|[0-9a-zA-Z.]+)/g) || [];
 
@@ -345,7 +397,6 @@ const MathRenderer = ({ expression }) => {
   }
 
   const renderToken = (token) => {
-    // Process each character: italicize only English letters, keep digits as normal
     const parts = token.split('');
     return (
       <span>
@@ -359,10 +410,8 @@ const MathRenderer = ({ expression }) => {
     );
   };
 
-  
-
   return (
-    <div className="flex items-center flex-wrap gap-1 font-mono text-xl md:text-2xl text-gray-800">
+    <div className={`flex items-center flex-wrap gap-1 font-mono ${sizeClass} text-gray-800`}>
       {processedTokens.map((part, idx) => {
         if (typeof part === 'object' && part.type === 'frac') {
           return (
@@ -381,13 +430,93 @@ const MathRenderer = ({ expression }) => {
   );
 };
 
-const Keypad = ({ onInput, onDelete, onClear, onEnter, isVisible, toggleVisibility }) => {
-  const keys = [
-    '7', '8', '9', '/', '(', ')',
-    '4', '5', '6', '*', 'x', 'y',
-    '1', '2', '3', '+', '-', '=',
-    'AC', '0', 'DEL', 'Enter'
-  ];
+const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = false, inputs = {}, onInputChange, inputRefs, eqIndex }) => {
+  if (showPlaceholders) {
+    return (
+      <div className="flex items-center gap-1 text-xl md:text-2xl font-mono flex-wrap">
+        <input
+          ref={el => { if (inputRefs) inputRefs.current[`eq${eqIndex}-a`] = el; }}
+          type="text"
+          value={inputs.a || ''}
+          onChange={(e) => onInputChange && onInputChange('a', e.target.value)}
+          className="w-12 h-10 text-center border-2 border-blue-300 rounded bg-blue-50 focus:border-blue-500 focus:outline-none"
+          placeholder="?"
+        />
+        <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span>
+        <span className="mx-1">+</span>
+        <input
+          ref={el => { if (inputRefs) inputRefs.current[`eq${eqIndex}-b`] = el; }}
+          type="text"
+          value={inputs.b || ''}
+          onChange={(e) => onInputChange && onInputChange('b', e.target.value)}
+          className="w-12 h-10 text-center border-2 border-green-300 rounded bg-green-50 focus:border-green-500 focus:outline-none"
+          placeholder="?"
+        />
+        <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span>
+        <span className="mx-1">=</span>
+        <input
+          ref={el => { if (inputRefs) inputRefs.current[`eq${eqIndex}-c`] = el; }}
+          type="text"
+          value={inputs.c || ''}
+          onChange={(e) => onInputChange && onInputChange('c', e.target.value)}
+          className="w-14 h-10 text-center border-2 border-purple-300 rounded bg-purple-50 focus:border-purple-500 focus:outline-none"
+          placeholder="?"
+        />
+      </div>
+    );
+  }
+
+  const parts = [];
+  
+  if (a !== 0) {
+    if (a === 1) {
+      parts.push(<span key="x" className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span>);
+    } else if (a === -1) {
+      parts.push(<span key="x">−<span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span></span>);
+    } else {
+      parts.push(<span key="x">{a}<span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span></span>);
+    }
+  }
+  
+  if (b !== 0) {
+    const sign = b > 0 ? ' + ' : ' − ';
+    const absB = Math.abs(b);
+    if (a !== 0) {
+      parts.push(<span key="sign">{sign}</span>);
+    } else if (b < 0) {
+      parts.push(<span key="sign">−</span>);
+    }
+    if (absB === 1) {
+      parts.push(<span key="y" className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span>);
+    } else {
+      parts.push(<span key="y">{absB}<span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span></span>);
+    }
+  }
+  
+  parts.push(<span key="eq"> = {c}</span>);
+  
+  return (
+    <div className="text-xl md:text-2xl font-mono flex items-center">
+      {parts}
+    </div>
+  );
+};
+
+const Keypad = ({ onInput, onDelete, onClear, onEnter, isVisible, toggleVisibility, showFraction = false }) => {
+  const keys = showFraction 
+    ? [
+        '7', '8', '9', '/',
+        '4', '5', '6', '*',
+        '1', '2', '3', '+',
+        '±', '0', '.', '-',
+        'AC', 'DEL', 'Enter'
+      ]
+    : [
+        '7', '8', '9', '/', '(', ')',
+        '4', '5', '6', '*', 'x', 'y',
+        '1', '2', '3', '+', '-', '=',
+        'AC', '0', 'DEL', 'Enter'
+      ];
 
   if (!isVisible) return (
      <button 
@@ -399,30 +528,37 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, isVisible, toggleVisibili
      </button>
   );
 
+  const gridCols = showFraction ? 'grid-cols-4' : 'grid-cols-6';
+
   return (
-    <div className="fixed bottom-0 right-0 w-full md:w-96 md:bottom-4 md:right-4 bg-gray-100 p-2 border md:border-2 border-gray-300 md:rounded-xl shadow-2xl z-50 pb-6 md:pb-2 transition-all">
+    <div className={`fixed bottom-0 right-0 w-full ${showFraction ? 'md:w-80' : 'md:w-96'} md:bottom-4 md:right-4 bg-gray-100 p-2 md:p-3 border md:border-2 border-gray-300 md:rounded-xl shadow-2xl z-50 pb-6 md:pb-2 transition-all`}>
       <div className="flex justify-between items-center mb-2 px-1">
          <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Math Keypad</span>
          <button onClick={toggleVisibility} className="text-gray-400 hover:text-gray-600">
             <KeyboardIcon size={20}/>
          </button>
       </div>
-      <div className="grid grid-cols-6 gap-2">
-        {keys.map((k) => {
+      <div className={`grid ${gridCols} gap-2`}>
+        {keys.map((k, idx) => {
           if (k === 'Enter') return (
-            <button key={k} onClick={onEnter} className="col-span-2 bg-blue-600 text-white p-3 md:p-2 rounded-lg font-bold active:bg-blue-700 shadow hover:bg-blue-500 text-lg">提交</button>
+            <button key={`${k}-${idx}`} onClick={onEnter} className="col-span-2 bg-blue-600 text-white p-3 md:p-2 rounded-lg font-bold active:bg-blue-700 shadow hover:bg-blue-500 text-lg">
+              {showFraction ? '確定' : '提交'}
+            </button>
           );
           if (k === 'AC') return (
             <button key={k} onClick={onClear} className="bg-red-200 p-3 md:p-2 rounded-lg font-bold text-red-800 active:bg-red-300 shadow hover:bg-red-100">AC</button>
           );
           if (k === 'DEL') return (
             <button key={k} onClick={onDelete} className="bg-orange-200 p-3 md:p-2 rounded-lg font-bold text-orange-800 active:bg-orange-300 shadow hover:bg-orange-100">
-               DEL
+               <Delete size={20} className="mx-auto"/>
             </button>
+          );
+          if (k === '±') return (
+            <button key={k} onClick={() => onInput('±')} className="bg-gray-200 p-3 md:p-2 rounded-lg font-bold text-gray-700 active:bg-gray-300 shadow hover:bg-gray-100">±</button>
           );
           return (
             <button key={k} onClick={() => onInput(k)} className="bg-white p-3 md:p-2 rounded-lg shadow font-bold text-lg md:text-xl active:bg-gray-200 hover:bg-gray-50 text-gray-700">
-              {k}
+              {k === '*' ? '×' : k}
             </button>
           );
         })}
@@ -459,92 +595,115 @@ const CheatsheetModal = ({ isOpen, onClose }) => {
   );
 };
 
+// ========== 主組件 ==========
 export default function SimultaneousEqQuiz() {
-  const [level, setLevel] = useState(1);
+  // 模式選擇: null, 'prog01-lv1', 'prog01-lv2', 'word-lv1', 'word-lv2'
+  const [mode, setMode] = useState(null);
+  const [score, setScore] = useState({ x: 0, y: 0, total: 0 });
+  const [questionCount, setQuestionCount] = useState(0);
+  
+  // Prog01 states
+  const [prog01Question, setProg01Question] = useState(null);
+  const [prog01Step, setProg01Step] = useState(1); // For Prog01 LV2
+  const [xAnswer, setXAnswer] = useState('');
+  const [yAnswer, setYAnswer] = useState('');
+  const [eq1Inputs, setEq1Inputs] = useState({ a: '', b: '', c: '' });
+  const [eq2Inputs, setEq2Inputs] = useState({ a: '', b: '', c: '' });
+  
+  // Word problem states
   const [qIndex, setQIndex] = useState(0);
-  const [questionOrder, setQuestionOrder] = useState([]); 
-  const [score, setScore] = useState(0);
-  
+  const [questionOrder, setQuestionOrder] = useState([]);
   const [lv1Inputs, setLv1Inputs] = useState({});
-  const [activeInput, setActiveInput] = useState(null); 
   const [lv2Inputs, setLv2Inputs] = useState(["", ""]);
+  const [wordLv1Completed, setWordLv1Completed] = useState(false);
   
-  const [showNotes, setShowNotes] = useState(false);
   const [showKeypad, setShowKeypad] = useState(true);
+  const [activeInput, setActiveInput] = useState(null);
   const [feedback, setFeedback] = useState(null);
+  const [showNotes, setShowNotes] = useState(false);
+  const [showHint, setShowHint] = useState(false);
   const [highlightHint, setHighlightHint] = useState(false);
-  const [lv1Completed, setLv1Completed] = useState(false);
   const [inlineFeedback, setInlineFeedback] = useState(null);
-
-  useEffect(() => {
-    const indices = Array.from({ length: QUESTIONS.length }, (_, i) => i);
-    for (let i = indices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [indices[i], indices[j]] = [indices[j], indices[i]];
-    }
-    setQuestionOrder(indices);
-  }, []); 
-
-  const currentQ = questionOrder.length > 0 ? QUESTIONS[questionOrder[qIndex]] : QUESTIONS[0];
   
   const inputRefs = useRef({});
 
+  // Initialize word problem order
   useEffect(() => {
-    if (questionOrder.length > 0) {
-        resetState();
+    if (mode === 'word-lv1' || mode === 'word-lv2') {
+      const indices = Array.from({ length: WORD_PROBLEMS.length }, (_, i) => i);
+      for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+      }
+      setQuestionOrder(indices);
     }
-  }, [qIndex, level, questionOrder]);
+  }, [mode]);
 
-  const resetState = () => {
+  const generateProg01Question = useCallback(() => {
+    if (mode === 'prog01-lv1') {
+      setProg01Question(generateProg01Lv1Question());
+    } else if (mode === 'prog01-lv2') {
+      setProg01Question(generateProg01Lv2Question());
+      setProg01Step(1);
+    }
+    setXAnswer('');
+    setYAnswer('');
+    setEq1Inputs({ a: '', b: '', c: '' });
+    setEq2Inputs({ a: '', b: '', c: '' });
+    setFeedback(null);
+    setShowHint(false);
+    setActiveInput(null);
+  }, [mode]);
+
+  useEffect(() => {
+    if (mode && mode.startsWith('prog01')) {
+      generateProg01Question();
+    }
+  }, [mode, generateProg01Question]);
+
+  useEffect(() => {
+    if (mode && mode.startsWith('word') && questionOrder.length > 0) {
+      resetWordState();
+    }
+  }, [qIndex, mode, questionOrder]);
+
+  const resetWordState = () => {
     setLv1Inputs({});
     setLv2Inputs(["", ""]);
     setFeedback(null);
     setInlineFeedback(null);
-    setLv1Completed(false);
+    setWordLv1Completed(false);
     setHighlightHint(false);
     setActiveInput(null);
   };
 
-  const handleVirtualInput = (char) => {
+  const handleKeypadInput = (char) => {
     if (!activeInput) return;
     
-    let currentVal = "";
-    if (activeInput.type === 'lv1') {
-        currentVal = lv1Inputs[`${activeInput.index}-${activeInput.partIdx}`] || "";
-    } else {
-        currentVal = lv2Inputs[activeInput.index];
-    }
-
-    const newVal = currentVal + char;
-    handleInputChange(newVal, activeInput.type, activeInput.index, activeInput.partIdx);
+    const { field, setter, current } = activeInput;
     
-    let refKey = "";
-    if (activeInput.type === 'lv1') {
-        refKey = `lv1-${activeInput.index}-${activeInput.partIdx}`;
-    } else {
-        refKey = `lv2-${activeInput.index}`;
+    if (char === '±') {
+      if (current.startsWith('-')) {
+        setter(current.slice(1));
+      } else if (current !== '' && current !== '0') {
+        setter('-' + current);
+      }
+      return;
     }
-
-    if(inputRefs.current[refKey]) {
-        inputRefs.current[refKey].focus();
-    }
-  };
-  
-  const handleVirtualDelete = () => {
-    if (!activeInput) return;
-    let currentVal = "";
-    if (activeInput.type === 'lv1') {
-        currentVal = lv1Inputs[`${activeInput.index}-${activeInput.partIdx}`] || "";
-    } else {
-        currentVal = lv2Inputs[activeInput.index];
-    }
-    const newVal = currentVal.slice(0, -1);
-    handleInputChange(newVal, activeInput.type, activeInput.index, activeInput.partIdx);
+    
+    setter(current + char);
   };
 
-  const handleVirtualClear = () => {
+  const handleKeypadDelete = () => {
     if (!activeInput) return;
-    handleInputChange("", activeInput.type, activeInput.index, activeInput.partIdx);
+    const { setter, current } = activeInput;
+    setter(current.slice(0, -1));
+  };
+
+  const handleKeypadClear = () => {
+    if (!activeInput) return;
+    const { setter } = activeInput;
+    setter('');
   };
 
   const handleInputChange = (newVal, type, index, partIdx) => {
@@ -555,7 +714,7 @@ export default function SimultaneousEqQuiz() {
           ...prev,
           [`${index}-${partIdx}`]: newVal
       }));
-    } else {
+    } else if (type === 'lv2') {
       const newInputs = [...lv2Inputs];
       newInputs[index] = newVal;
       setLv2Inputs(newInputs);
@@ -567,18 +726,16 @@ export default function SimultaneousEqQuiz() {
   };
 
   const getCombinedLv1String = (segIdx) => {
+    const currentQ = WORD_PROBLEMS[questionOrder[qIndex]];
     const segment = currentQ.segments[segIdx];
     const escapedKeywords = segment.keywords.map(escapeRegExp);
     const parts = segment.text.split(new RegExp(`(${escapedKeywords.join('|')})`, 'g'));
     
     if (segment.previewOrder) {
-        // Use previewOrder to select and reorder parts, replacing keywords with inputs
         return segment.previewOrder.map(idx => {
             if (idx % 2 === 1) {
-                // Keyword position - use the input value
                 return lv1Inputs[`${segIdx}-${idx}`] || "";
             }
-            // Text position - return as-is
             return parts[idx] || "";
         }).join("");
     }
@@ -591,94 +748,595 @@ export default function SimultaneousEqQuiz() {
     }).join("");
   };
 
-  const checkAnswer = () => {
+  // Check Prog01 LV1 Answer
+  const checkProg01Lv1Answer = () => {
+    if (!prog01Question) return;
+    
+    const { xNum, xDen, yNum, yDen } = prog01Question;
+    const xCorrect = compareAnswers(xAnswer, xNum, xDen);
+    const yCorrect = compareAnswers(yAnswer, yNum, yDen);
+    
+    let pointsEarned = { x: 0, y: 0 };
+    if (xCorrect) pointsEarned.x = 1;
+    if (yCorrect) pointsEarned.y = 1;
+    
+    setScore(prev => ({
+      x: prev.x + pointsEarned.x,
+      y: prev.y + pointsEarned.y,
+      total: prev.total + pointsEarned.x + pointsEarned.y
+    }));
+    
+    setQuestionCount(prev => prev + 1);
+    
+    const correctXStr = formatAnswer(xNum, xDen);
+    const correctYStr = formatAnswer(yNum, yDen);
+    
+    if (xCorrect && yCorrect) {
+      setFeedback({
+        type: 'success',
+        message: '全對！做得好！ (+2 分)',
+        correctX: correctXStr,
+        correctY: correctYStr
+      });
+    } else {
+      setFeedback({
+        type: 'error',
+        message: `${pointsEarned.x + pointsEarned.y > 0 ? `答對 ${pointsEarned.x + pointsEarned.y} 個 (+${pointsEarned.x + pointsEarned.y} 分)` : '答錯了'}`,
+        correctX: correctXStr,
+        correctY: correctYStr,
+        xWrong: !xCorrect,
+        yWrong: !yCorrect
+      });
+    }
+  };
+
+  // Check Prog01 LV2 Step 1
+  const checkProg01Lv2Step1 = () => {
+    if (!prog01Question) return;
+    
+    const { eq1Standard, eq2Standard } = prog01Question;
+    
+    const eq1Correct = 
+      parseFloat(eq1Inputs.a) === eq1Standard.a &&
+      parseFloat(eq1Inputs.b) === eq1Standard.b &&
+      parseFloat(eq1Inputs.c) === eq1Standard.c;
+    
+    const eq2Correct = 
+      parseFloat(eq2Inputs.a) === eq2Standard.a &&
+      parseFloat(eq2Inputs.b) === eq2Standard.b &&
+      parseFloat(eq2Inputs.c) === eq2Standard.c;
+    
+    if (eq1Correct && eq2Correct) {
+      setFeedback({
+        type: 'success',
+        message: '轉換正確！現在求解 x 和 y。'
+      });
+      setTimeout(() => {
+        setProg01Step(2);
+        setFeedback(null);
+      }, 1500);
+    } else {
+      setFeedback({
+        type: 'error',
+        message: '轉換有誤，請再試一次。',
+        showCorrect: true,
+        eq1: eq1Standard,
+        eq2: eq2Standard
+      });
+    }
+  };
+
+  // Check Prog01 LV2 Step 2
+  const checkProg01Lv2Step2 = () => {
+    if (!prog01Question) return;
+    
+    const { xVal, yVal } = prog01Question;
+    
+    const xCorrect = Math.abs(parseUserAnswer(xAnswer) - xVal) < 0.01;
+    const yCorrect = Math.abs(parseUserAnswer(yAnswer) - yVal) < 0.01;
+    
+    let pointsEarned = { x: 0, y: 0 };
+    if (xCorrect) pointsEarned.x = 1;
+    if (yCorrect) pointsEarned.y = 1;
+    
+    setScore(prev => ({
+      x: prev.x + pointsEarned.x,
+      y: prev.y + pointsEarned.y,
+      total: prev.total + pointsEarned.x + pointsEarned.y
+    }));
+    
+    setQuestionCount(prev => prev + 1);
+    
+    const correctXStr = Number.isInteger(xVal) ? String(xVal) : xVal.toFixed(2);
+    const correctYStr = Number.isInteger(yVal) ? String(yVal) : yVal.toFixed(2);
+    
+    if (xCorrect && yCorrect) {
+      setFeedback({
+        type: 'success',
+        message: '全對！做得好！ (+2 分)',
+        correctX: correctXStr,
+        correctY: correctYStr
+      });
+    } else {
+      setFeedback({
+        type: 'error',
+        message: `${pointsEarned.x + pointsEarned.y > 0 ? `答對 ${pointsEarned.x + pointsEarned.y} 個 (+${pointsEarned.x + pointsEarned.y} 分)` : '答錯了'}`,
+        correctX: correctXStr,
+        correctY: correctYStr,
+        xWrong: !xCorrect,
+        yWrong: !yCorrect
+      });
+    }
+  };
+
+  // Check Word LV1 Answer
+  const checkWordLv1Answer = () => {
+    const currentQ = WORD_PROBLEMS[questionOrder[qIndex]];
     let allCorrect = true;
     let correctCount = 0;
     let correctAnswers = [];
 
-    if (level === 1) {
-        currentQ.segments.forEach((seg, idx) => {
-            const userVal = normalize(getCombinedLv1String(idx));
-            const validVals = seg.valid.map(normalize);
-            
-            if (validVals.includes(userVal)) {
-                correctCount++;
-            } else {
-                allCorrect = false;
-            }
-            correctAnswers.push({
-                label: idx === 0 ? "第一個方程" : "第二個方程",
-                value: seg.valid[0]
-            });
-        });
-
-        setScore(prev => prev + correctCount);
-
-        if (allCorrect) {
-            setInlineFeedback({ 
-                type: 'success', 
-                msg: `全對！做得好！ (+${correctCount} 分)`,
-                action: nextQuestion,
-                answers: []
-            });
-            setLv1Completed(true);
+    currentQ.segments.forEach((seg, idx) => {
+        const userVal = normalize(getCombinedLv1String(idx));
+        const validVals = seg.valid.map(normalize);
+        
+        if (validVals.includes(userVal)) {
+            correctCount++;
         } else {
-            setInlineFeedback({ 
-                type: 'error', 
-                msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)` : ''}`,
-                action: nextQuestion,
-                answers: correctAnswers
-            });
-        }
-    } else {
-        if (lv2Inputs.length < 2) {
             allCorrect = false;
-        } else {
-            lv2Inputs.forEach((input, idx) => {
-                const userVal = normalize(input || "");
-                if (currentQ.answers[idx]) {
-                    const validVals = currentQ.answers[idx].map(normalize);
-                    if (validVals.includes(userVal)) {
-                        correctCount++;
-                    } else {
-                        allCorrect = false;
-                    }
-                    correctAnswers.push({
-                        label: `方程 (${idx + 1})`,
-                        value: currentQ.answers[idx][0]
-                    });
-                }
-            });
         }
+        correctAnswers.push({
+            label: idx === 0 ? "第一個方程" : "第二個方程",
+            value: seg.valid[0]
+        });
+    });
 
-        setScore(prev => prev + correctCount);
+    setScore(prev => ({
+      ...prev,
+      total: prev.total + correctCount
+    }));
 
-        if (allCorrect) {
-            setInlineFeedback({ 
-                type: 'success', 
-                msg: `全對！做得好！ (+${correctCount} 分)`,
-                action: nextQuestion,
-                answers: []
-            });
-            setLv1Completed(true);
-        } else {
-            setInlineFeedback({ 
-                type: 'error', 
-                msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)` : ''}`,
-                action: nextQuestion,
-                answers: correctAnswers
-            });
-        }
+    if (allCorrect) {
+        setInlineFeedback({ 
+            type: 'success', 
+            msg: `全對！做得好！ (+${correctCount} 分)`,
+            action: nextWordQuestion,
+            answers: []
+        });
+        setWordLv1Completed(true);
+    } else {
+        setInlineFeedback({ 
+            type: 'error', 
+            msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)` : ''}`,
+            action: nextWordQuestion,
+            answers: correctAnswers
+        });
     }
   };
 
-  const nextQuestion = () => {
-    setQIndex(prev => (prev + 1) % QUESTIONS.length);
-    setFeedback(null); 
+  // Check Word LV2 Answer
+  const checkWordLv2Answer = () => {
+    const currentQ = WORD_PROBLEMS[questionOrder[qIndex]];
+    let allCorrect = true;
+    let correctCount = 0;
+    let correctAnswers = [];
+
+    if (lv2Inputs.length < 2) {
+        allCorrect = false;
+    } else {
+        lv2Inputs.forEach((input, idx) => {
+            const userVal = normalize(input || "");
+            if (currentQ.answers[idx]) {
+                const validVals = currentQ.answers[idx].map(normalize);
+                if (validVals.includes(userVal)) {
+                    correctCount++;
+                } else {
+                    allCorrect = false;
+                }
+                correctAnswers.push({
+                    label: `方程 (${idx + 1})`,
+                    value: currentQ.answers[idx][0]
+                });
+            }
+        });
+    }
+
+    setScore(prev => ({
+      ...prev,
+      total: prev.total + correctCount
+    }));
+
+    if (allCorrect) {
+        setInlineFeedback({ 
+            type: 'success', 
+            msg: `全對！做得好！ (+${correctCount} 分)`,
+            action: nextWordQuestion,
+            answers: []
+        });
+        setWordLv1Completed(true);
+    } else {
+        setInlineFeedback({ 
+            type: 'error', 
+            msg: `${correctCount > 0 ? `答對 ${correctCount} 個方程 (+${correctCount} 分)` : ''}`,
+            action: nextWordQuestion,
+            answers: correctAnswers
+        });
+    }
+  };
+
+  const handleSubmit = () => {
+    if (mode === 'prog01-lv1') {
+      checkProg01Lv1Answer();
+    } else if (mode === 'prog01-lv2') {
+      if (prog01Step === 1) {
+        checkProg01Lv2Step1();
+      } else {
+        checkProg01Lv2Step2();
+      }
+    } else if (mode === 'word-lv1') {
+      checkWordLv1Answer();
+    } else if (mode === 'word-lv2') {
+      checkWordLv2Answer();
+    }
+  };
+
+  const nextProg01Question = () => {
+    generateProg01Question();
+  };
+
+  const nextWordQuestion = () => {
+    setQIndex(prev => (prev + 1) % WORD_PROBLEMS.length);
+    setFeedback(null);
     setInlineFeedback(null);
   };
 
-  const renderLv1Segment = (segment, idx) => {
+  // ========== 渲染函數 ==========
+
+  // Mode Selection Screen
+  if (!mode) {
+    return (
+      <>
+        <Link 
+          to="/" 
+          className="fixed top-4 left-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
+        >
+          <HomeIcon size={18} />
+          <span className="font-medium">返回首頁</span>
+        </Link>
+
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full">
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-3 text-slate-800 flex items-center justify-center gap-3">
+              <Calculator className="text-blue-600" size={36} />
+              聯立方程訓練中心
+            </h1>
+            <p className="text-center text-gray-600 mb-8">選擇訓練模式</p>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <button
+                onClick={() => setMode('prog01-lv1')}
+                className="group p-6 bg-gradient-to-br from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-white"
+              >
+                <div className="text-sm font-bold mb-2 opacity-90">Prog 01 訓練</div>
+                <div className="text-2xl font-bold mb-2">LV1 標準形式</div>
+                <div className="text-sm opacity-80">求解 ax + by = c 形式的聯立方程</div>
+              </button>
+
+              <button
+                onClick={() => setMode('prog01-lv2')}
+                className="group p-6 bg-gradient-to-br from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-white"
+              >
+                <div className="text-sm font-bold mb-2 opacity-90">Prog 01 訓練</div>
+                <div className="text-2xl font-bold mb-2">LV2 轉換形式</div>
+                <div className="text-sm opacity-80">先轉換成標準形式，再求解</div>
+              </button>
+
+              <button
+                onClick={() => setMode('word-lv1')}
+                className="group p-6 bg-gradient-to-br from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-white"
+              >
+                <div className="text-sm font-bold mb-2 opacity-90">設式特訓</div>
+                <div className="text-2xl font-bold mb-2">LV1 填空模式</div>
+                <div className="text-sm opacity-80">從應用題文字中提取關鍵詞設式</div>
+              </button>
+
+              <button
+                onClick={() => setMode('word-lv2')}
+                className="group p-6 bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-white"
+              >
+                <div className="text-sm font-bold mb-2 opacity-90">設式特訓</div>
+                <div className="text-2xl font-bold mb-2">LV2 完整設式</div>
+                <div className="text-sm opacity-80">從應用題完整寫出兩條方程</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // Prog01 LV1 Render
+  const renderProg01Lv1 = () => {
+    if (!prog01Question) return null;
+    const { a, b, c, d, e, f } = prog01Question;
+    
+    return (
+      <div className="space-y-6">
+        <div className="bg-slate-50 p-6 rounded-xl border-2 border-slate-200">
+          <h3 className="text-lg font-bold text-slate-700 mb-4">解以下聯立方程：</h3>
+          <div className="space-y-3 ml-4">
+            <EquationDisplay a={a} b={b} c={c} />
+            <EquationDisplay a={d} b={e} c={f} />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div 
+            className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'x' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-gray-50'}`}
+            onClick={() => {
+              setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer });
+              inputRefs.current['x']?.focus();
+            }}
+          >
+            <label className="block text-sm font-bold text-gray-600 mb-2">
+              <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>x</span> =
+            </label>
+            <input
+              ref={el => inputRefs.current['x'] = el}
+              type="text"
+              value={xAnswer}
+              onChange={(e) => setXAnswer(e.target.value)}
+              onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer })}
+              className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-blue-500 ${feedback?.xWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+              placeholder="?"
+            />
+          </div>
+          
+          <div 
+            className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'y' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-gray-50'}`}
+            onClick={() => {
+              setActiveInput({ field: 'y', setter: setYAnswer, current: yAnswer });
+              inputRefs.current['y']?.focus();
+            }}
+          >
+            <label className="block text-sm font-bold text-gray-600 mb-2">
+              <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>y</span> =
+            </label>
+            <input
+              ref={el => inputRefs.current['y'] = el}
+              type="text"
+              value={yAnswer}
+              onChange={(e) => setYAnswer(e.target.value)}
+              onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer, current: yAnswer })}
+              className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-green-500 ${feedback?.yWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+              placeholder="?"
+            />
+          </div>
+        </div>
+
+        {feedback && (
+          <div className={`p-4 rounded-xl border-2 ${feedback.type === 'success' ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+            <p className={`font-bold text-lg ${feedback.type === 'success' ? 'text-green-700' : 'text-red-700'}`}>
+              {feedback.message}
+            </p>
+            {feedback.type === 'error' && (
+              <div className="mt-3 space-y-1 text-gray-700">
+                <p>正確答案：</p>
+                <p className="ml-4 font-mono">
+                  <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>x</span> = {feedback.correctX}
+                </p>
+                <p className="ml-4 font-mono">
+                  <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>y</span> = {feedback.correctY}
+                </p>
+              </div>
+            )}
+            <button
+              onClick={nextProg01Question}
+              className="mt-4 bg-slate-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-700 transition flex items-center gap-2"
+            >
+              下一題 <ChevronRight size={20} />
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Prog01 LV2 Render
+  const renderProg01Lv2 = () => {
+    if (!prog01Question) return null;
+    const { eq1Display, eq2Display, eq1Standard, eq2Standard, varX, varY } = prog01Question;
+
+    return (
+      <div className="space-y-6">
+        <div className="bg-amber-50 p-6 rounded-xl border-2 border-amber-200">
+          <h3 className="text-lg font-bold text-amber-800 mb-4">原題：</h3>
+          <div className="space-y-2 ml-4 text-xl font-mono">
+            <p>{eq1Display}</p>
+            <p>{eq2Display}</p>
+          </div>
+        </div>
+
+        {prog01Step === 1 ? (
+          <>
+            <div className="bg-blue-50 p-6 rounded-xl border-2 border-blue-200">
+              <h3 className="text-lg font-bold text-blue-800 mb-4 flex items-center gap-2">
+                <span className="bg-blue-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-sm">1</span>
+                將方程化為標準形式：
+              </h3>
+              
+              <div className="space-y-4 ml-4">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-gray-500 mr-2">方程 (1):</span>
+                  <EquationDisplay 
+                    showPlaceholders 
+                    varX={varX} 
+                    varY={varY}
+                    inputs={eq1Inputs}
+                    onInputChange={(key, val) => {
+                      setEq1Inputs(prev => ({ ...prev, [key]: val }));
+                      setActiveInput({ 
+                        field: `eq1-${key}`, 
+                        setter: (v) => setEq1Inputs(p => ({ ...p, [key]: v })),
+                        current: val
+                      });
+                    }}
+                    inputRefs={inputRefs}
+                    eqIndex={1}
+                  />
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-gray-500 mr-2">方程 (2):</span>
+                  <EquationDisplay 
+                    showPlaceholders 
+                    varX={varX} 
+                    varY={varY}
+                    inputs={eq2Inputs}
+                    onInputChange={(key, val) => {
+                      setEq2Inputs(prev => ({ ...prev, [key]: val }));
+                      setActiveInput({ 
+                        field: `eq2-${key}`, 
+                        setter: (v) => setEq2Inputs(p => ({ ...p, [key]: v })),
+                        current: val
+                      });
+                    }}
+                    inputRefs={inputRefs}
+                    eqIndex={2}
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowHint(!showHint)}
+                className="mt-4 text-amber-600 hover:text-amber-700 flex items-center gap-1 text-sm"
+              >
+                <Lightbulb size={16} className={showHint ? 'fill-current' : ''} />
+                {showHint ? '隱藏提示' : '顯示提示'}
+              </button>
+
+              {showHint && (
+                <div className="mt-2 p-3 bg-amber-100 rounded-lg text-sm text-amber-800">
+                  <p>提示：將所有含 {varX} 和 {varY} 的項移到等號左邊，常數移到右邊。</p>
+                  <p className="mt-1">標準形式：a{varX} + b{varY} = c</p>
+                </div>
+              )}
+            </div>
+
+            {feedback && feedback.type === 'error' && feedback.showCorrect && (
+              <div className="p-4 rounded-xl border-2 bg-red-50 border-red-200">
+                <p className="font-bold text-red-700">{feedback.message}</p>
+                <div className="mt-3 space-y-2 text-gray-700">
+                  <p>正確標準形式：</p>
+                  <div className="ml-4">
+                    <EquationDisplay a={feedback.eq1.a} b={feedback.eq1.b} c={feedback.eq1.c} varX={varX} varY={varY} />
+                    <EquationDisplay a={feedback.eq2.a} b={feedback.eq2.b} c={feedback.eq2.c} varX={varX} varY={varY} />
+                  </div>
+                </div>
+                <button
+                  onClick={nextProg01Question}
+                  className="mt-4 bg-slate-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-700 transition flex items-center gap-2"
+                >
+                  下一題 <ChevronRight size={20} />
+                </button>
+              </div>
+            )}
+
+            {feedback && feedback.type === 'success' && (
+              <div className="p-4 rounded-xl border-2 bg-green-50 border-green-200">
+                <p className="font-bold text-green-700">{feedback.message}</p>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="bg-green-50 p-6 rounded-xl border-2 border-green-200">
+              <h3 className="text-lg font-bold text-green-800 mb-4 flex items-center gap-2">
+                <span className="bg-green-600 text-white w-7 h-7 rounded-full flex items-center justify-center text-sm">2</span>
+                求解：
+              </h3>
+              
+              <div className="space-y-2 ml-4 mb-4 text-lg font-mono">
+                <EquationDisplay a={eq1Standard.a} b={eq1Standard.b} c={eq1Standard.c} varX={varX} varY={varY} />
+                <EquationDisplay a={eq2Standard.a} b={eq2Standard.b} c={eq2Standard.c} varX={varX} varY={varY} />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mt-4">
+                <div 
+                  className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'x' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white'}`}
+                  onClick={() => {
+                    setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer });
+                    inputRefs.current['x2']?.focus();
+                  }}
+                >
+                  <label className="block text-sm font-bold text-gray-600 mb-2">
+                    <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span> =
+                  </label>
+                  <input
+                    ref={el => inputRefs.current['x2'] = el}
+                    type="text"
+                    value={xAnswer}
+                    onChange={(e) => setXAnswer(e.target.value)}
+                    onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer })}
+                    className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-blue-500 ${feedback?.xWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+                    placeholder="?"
+                  />
+                </div>
+                
+                <div 
+                  className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'y' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'}`}
+                  onClick={() => {
+                    setActiveInput({ field: 'y', setter: setYAnswer, current: yAnswer });
+                    inputRefs.current['y2']?.focus();
+                  }}
+                >
+                  <label className="block text-sm font-bold text-gray-600 mb-2">
+                    <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span> =
+                  </label>
+                  <input
+                    ref={el => inputRefs.current['y2'] = el}
+                    type="text"
+                    value={yAnswer}
+                    onChange={(e) => setYAnswer(e.target.value)}
+                    onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer, current: yAnswer })}
+                    className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-green-500 ${feedback?.yWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+                    placeholder="?"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {feedback && (
+              <div className={`p-4 rounded-xl border-2 ${feedback.type === 'success' ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                <p className={`font-bold text-lg ${feedback.type === 'success' ? 'text-green-700' : 'text-red-700'}`}>
+                  {feedback.message}
+                </p>
+                {feedback.type === 'error' && (
+                  <div className="mt-3 space-y-1 text-gray-700">
+                    <p>正確答案：</p>
+                    <p className="ml-4 font-mono">
+                      <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span> = {feedback.correctX}
+                    </p>
+                    <p className="ml-4 font-mono">
+                      <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span> = {feedback.correctY}
+                    </p>
+                  </div>
+                )}
+                <button
+                  onClick={nextProg01Question}
+                  className="mt-4 bg-slate-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-700 transition flex items-center gap-2"
+                >
+                  下一題 <ChevronRight size={20} />
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    );
+  };
+
+  // Word Problem LV1 Render  const renderWordLv1Segment = (segment, idx) => {
+    const currentQ = WORD_PROBLEMS[questionOrder[qIndex]];
     const escapedKeywords = segment.keywords.map(escapeRegExp);
     const parts = segment.text.split(new RegExp(`(${escapedKeywords.join('|')})`, 'g'));
     const skipInputIndices = segment.skipInputIndices || [];
@@ -746,14 +1404,219 @@ export default function SimultaneousEqQuiz() {
     );
   };
 
+  const renderWordLv1 = () => {
+    if (questionOrder.length === 0) return null;
+    const currentQ = WORD_PROBLEMS[questionOrder[qIndex]];
+
+    return (
+      <div className="space-y-6">
+        <div className="bg-white p-4 mb-4 rounded-lg shadow-sm border border-gray-200">
+          <p className="text-gray-800 text-lg leading-relaxed font-serif">{renderTextWithItalics(currentQ.text)}</p>
+        </div>
+
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
+           <p className="text-blue-900 font-medium md:text-lg">
+             <span className="font-bold">題目：</span>{renderTextWithItalics(currentQ.vars)}
+           </p>
+        </div>
+
+        <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2 border-b pb-2">{currentQ.title}</h2>
+            {currentQ.segments.map((seg, idx) => renderWordLv1Segment(seg, idx))}
+            
+            {inlineFeedback && (
+                <div className={`p-4 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${inlineFeedback.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
+                    <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
+                         {inlineFeedback.type === 'success' ? <CheckCircle size={20}/> : <XCircle size={20}/>}
+                         {inlineFeedback.type === 'success' ? '答對了！' : '再試一次'}
+                    </h3>
+                    {inlineFeedback.msg && (
+                        <div className="mb-3 text-sm">
+                            {inlineFeedback.msg}
+                        </div>
+                    )}
+                    {inlineFeedback.answers && inlineFeedback.answers.length > 0 && (
+                        <div className="space-y-2 mb-3 pl-7">
+                            <p className="text-sm font-semibold">正確答案參考：</p>
+                            {inlineFeedback.answers.map((ans, idx) => (
+                                <div key={idx} className="text-sm">
+                                    <span className="font-semibold">{ans.label}: </span>
+                                    <span className="inline-block ml-2">
+                                        <MathRenderer expression={ans.value} />
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <div className="mt-3 flex gap-2">
+                        <button 
+                            onClick={inlineFeedback.action} 
+                            className="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
+                        >
+                            下一題
+                        </button>
+                        {inlineFeedback.type === 'error' && (
+                            <button onClick={() => setInlineFeedback(null)} className="text-sm underline opacity-70 hover:opacity-100 px-4 py-2">
+                                關閉提示
+                            </button>
+                        )}
+                    </div>
+                </div>
+            )}
+        </div>
+      </div>
+    );
+  };
+
+  // Word Problem LV2 Render
+  const renderWordLv2 = () => {
+    if (questionOrder.length === 0) return null;
+    const currentQ = WORD_PROBLEMS[questionOrder[qIndex]];
+
+    return (
+      <div className="space-y-6">
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">{currentQ.title}</h2>
+            <p className="text-lg md:text-xl text-gray-700 leading-loose font-serif">
+                {highlightHint ? (
+                    (() => {
+                        const allKeywords = currentQ.segments.flatMap(s => s.keywords);
+                        const escapedAllKeywords = allKeywords.map(escapeRegExp);
+                        const uniquePattern = [...new Set(escapedAllKeywords)].join('|');
+                        
+                        return currentQ.text.split(new RegExp(`(${uniquePattern})`, 'g')).map((part, i) => 
+                            allKeywords.includes(part) 
+                            ? <span key={i} className="bg-yellow-200 px-1 rounded">{part}</span> 
+                            : part
+                        );
+                    })()
+                ) : renderTextWithItalics(currentQ.text)}
+            </p>
+            <button 
+                onClick={() => setHighlightHint(!highlightHint)}
+                className="absolute top-6 right-6 text-amber-500 bg-amber-50 p-2 rounded-full hover:bg-amber-100 transition"
+            >
+                <Lightbulb size={24} className={highlightHint ? "fill-current" : ""}/>
+            </button>
+        </div>
+
+        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+           <p className="text-blue-900 font-medium md:text-lg">
+             <span className="font-bold">題目：</span>{renderTextWithItalics(currentQ.vars)}
+           </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+            {[0, 1].map((idx) => (
+                <div 
+                    key={idx}
+                    className={`
+                        p-4 rounded-xl border-2 transition-all cursor-text relative
+                        ${activeInput?.type === 'lv2' && activeInput?.index === idx ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200' : 'border-gray-200 bg-gray-50'}
+                    `}
+                    onClick={() => {
+                        setActiveInput({ type: 'lv2', index: idx });
+                        if(inputRefs.current[`lv2-${idx}`]) inputRefs.current[`lv2-${idx}`].focus();
+                    }}
+                >
+                    <span className="absolute -top-3 left-4 bg-white px-2 text-sm font-bold text-gray-500 border rounded">
+                        方程 ({idx + 1})
+                    </span>
+                    <div className="flex items-center mt-2">
+                        <input
+                            ref={el => inputRefs.current[`lv2-${idx}`] = el}
+                            type="text"
+                            value={lv2Inputs[idx]}
+                            onChange={(e) => handleInputChange(e.target.value, 'lv2', idx)}
+                            className="w-full bg-transparent text-xl md:text-2xl font-mono focus:outline-none"
+                            placeholder="..."
+                        />
+                    </div>
+                    <div className="mt-2 h-8 flex items-center justify-end text-gray-400">
+                         <MathRenderer expression={lv2Inputs[idx]} />
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        {inlineFeedback && (
+            <div className={`p-4 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${inlineFeedback.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
+                <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
+                     {inlineFeedback.type === 'success' ? <CheckCircle size={20}/> : <XCircle size={20}/>}
+                     {inlineFeedback.type === 'success' ? '答對了！' : '再試一次'}
+                </h3>
+                {inlineFeedback.msg && (
+                    <div className="mb-3 text-sm">
+                        {inlineFeedback.msg}
+                    </div>
+                )}
+                {inlineFeedback.answers && inlineFeedback.answers.length > 0 && (
+                    <div className="space-y-2 mb-3 pl-7">
+                        <p className="text-sm font-semibold">正確答案參考：</p>
+                        {inlineFeedback.answers.map((ans, idx) => (
+                            <div key={idx} className="text-sm">
+                                <span className="font-semibold">{ans.label}: </span>
+                                <span className="inline-block ml-2">
+                                    <MathRenderer expression={ans.value} />
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                <div className="mt-3 flex gap-2">
+                    <button 
+                        onClick={inlineFeedback.action} 
+                        className="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
+                    >
+                        下一題
+                    </button>
+                    {inlineFeedback.type === 'error' && (
+                        <button onClick={() => setInlineFeedback(null)} className="text-sm underline opacity-70 hover:opacity-100 px-4 py-2">
+                            關閉提示
+                        </button>
+                    )}
+                </div>
+            </div>
+        )}
+      </div>
+    );
+  };
+
+  // Main render with mode selected
+  const getModeTitle = () => {
+    if (mode === 'prog01-lv1') return 'Prog 01 訓練 - LV1';
+    if (mode === 'prog01-lv2') return 'Prog 01 訓練 - LV2';
+    if (mode === 'word-lv1') return '設式特訓 - LV1';
+    if (mode === 'word-lv2') return '設式特訓 - LV2';
+    return '';
+  };
+
+  const getModeSubtitle = () => {
+    if (mode === 'prog01-lv1') return '標準形式求解';
+    if (mode === 'prog01-lv2') return '轉換形式求解';
+    if (mode === 'word-lv1') return '填空模式';
+    if (mode === 'word-lv2') return '完整設式';
+    return '';
+  };
+
+  const showFractionKeypad = mode === 'prog01-lv1' || mode === 'prog01-lv2';
+
   return (
     <>
-      <Link 
-        to="/" 
+      <button 
+        onClick={() => setMode(null)}
         className="fixed top-4 left-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
       >
+        <ArrowLeft size={18} />
+        <span className="font-medium">返回選單</span>
+      </button>
+
+      <Link 
+        to="/" 
+        className="fixed top-4 left-28 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
+      >
         <HomeIcon size={18} />
-        <span className="font-medium">返回首頁</span>
+        <span className="font-medium">首頁</span>
       </Link>
 
       <div className="min-h-screen bg-gray-50 flex flex-col items-center">
@@ -763,218 +1626,82 @@ export default function SimultaneousEqQuiz() {
                 <div>
                 <h1 className="text-xl md:text-2xl font-bold flex items-center gap-2">
                     <Calculator className="text-blue-400"/> 
-                    <span>聯立方程特訓</span>
-                    <span className="text-sm bg-blue-600 px-2 py-0.5 rounded-full">LV{level}</span>
+                    <span>{getModeTitle()}</span>
                 </h1>
-                <div className="flex items-center gap-2 mt-1">
-                    <Trophy className="text-yellow-400" size={20}/>
-                    <span className="text-lg font-bold text-yellow-400">{score} 分</span>
+                <p className="text-slate-300 text-sm mt-1">{getModeSubtitle()}</p>
                 </div>
-                </div>
-                <div className="flex gap-2">
-                <button onClick={() => setLevel(level === 1 ? 2 : 1)} className="text-sm bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition border border-slate-600">
-                    切換模式
-                </button>
-                <button onClick={() => setShowNotes(true)} className="p-2 hover:bg-slate-700 rounded-lg transition text-blue-300">
-                    <BookOpen size={24}/>
-                </button>
+                <div className="flex gap-2 items-center">
+                  <div className="text-right">
+                    <div className="flex items-center gap-2 justify-end">
+                      <Trophy className="text-yellow-400" size={20}/>
+                      <span className="text-xl font-bold text-yellow-400">{score.total}</span>
+                      <span className="text-slate-400 text-xs">分</span>
+                    </div>
+                    {mode.startsWith('prog01') && (
+                      <div className="text-xs text-slate-400 mt-1">
+                        <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>x</span>: {score.x} | 
+                        <span className="italic ml-1" style={{ fontFamily: 'Times New Roman, serif' }}>y</span>: {score.y}
+                      </div>
+                    )}
+                  </div>
+                  {mode.startsWith('word') && (
+                    <button onClick={() => setShowNotes(true)} className="p-2 hover:bg-slate-700 rounded-lg transition text-blue-300">
+                      <BookOpen size={24}/>
+                    </button>
+                  )}
                 </div>
             </header>
 
             <main className="flex-1 overflow-y-auto p-4 md:p-8 pb-32 md:pb-8">
-                {currentQ && (
-                    <>
-                    <div className="bg-white p-4 mb-4 rounded-lg shadow-sm border border-gray-200">
-                        <p className="text-gray-800 text-lg leading-relaxed font-serif">{renderTextWithItalics(currentQ.text)}</p>
-                    </div>
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-sm text-gray-500">已完成: {questionCount} 題</span>
+                  {mode.startsWith('prog01') && (
+                    <button 
+                      onClick={generateProg01Question}
+                      className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                    >
+                      <RotateCcw size={14} /> 換一題
+                    </button>
+                  )}
+                </div>
 
-                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
-                       <p className="text-blue-900 font-medium md:text-lg">
-                         <span className="font-bold">題目：</span>{renderTextWithItalics(currentQ.vars)}
-                       </p>
-                    </div>
-
-                    {level === 1 && (
-                        <div className="space-y-6">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-2 border-b pb-2">{currentQ.title}</h2>
-                            {currentQ.segments.map((seg, idx) => renderLv1Segment(seg, idx))}
-                            
-                            {inlineFeedback && (
-                                <div className={`p-4 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${inlineFeedback.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
-                                    <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
-                                         {inlineFeedback.type === 'success' ? <CheckCircle size={20}/> : <XCircle size={20}/>}
-                                         {inlineFeedback.type === 'success' ? '答對了！' : '再試一次'}
-                                    </h3>
-                                    {inlineFeedback.msg && (
-                                        <div className="mb-3 text-sm">
-                                            {inlineFeedback.msg}
-                                        </div>
-                                    )}
-                                    {inlineFeedback.answers && inlineFeedback.answers.length > 0 && (
-                                        <div className="space-y-2 mb-3 pl-7">
-                                            <p className="text-sm font-semibold">正確答案參考：</p>
-                                            {inlineFeedback.answers.map((ans, idx) => (
-                                                <div key={idx} className="text-sm">
-                                                    <span className="font-semibold">{ans.label}: </span>
-                                                    <span className="inline-block ml-2">
-                                                        <MathRenderer expression={ans.value} />
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                    <div className="mt-3 flex gap-2">
-                                        <button 
-                                            onClick={inlineFeedback.action} 
-                                            className="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
-                                        >
-                                            下一題
-                                        </button>
-                                        {inlineFeedback.type === 'error' && (
-                                            <button onClick={() => setInlineFeedback(null)} className="text-sm underline opacity-70 hover:opacity-100 px-4 py-2">
-                                                關閉提示
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                    {level === 2 && (
-                        <div className="space-y-8">
-                            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative">
-                                <h2 className="text-2xl font-bold text-gray-800 mb-4">{currentQ.title}</h2>
-                                <p className="text-lg md:text-xl text-gray-700 leading-loose">
-                                    {highlightHint ? (
-                                        (() => {
-                                            const allKeywords = currentQ.segments.flatMap(s => s.keywords);
-                                            const escapedAllKeywords = allKeywords.map(escapeRegExp);
-                                            const uniquePattern = [...new Set(escapedAllKeywords)].join('|');
-                                            
-                                            return currentQ.text.split(new RegExp(`(${uniquePattern})`, 'g')).map((part, i) => 
-                                                allKeywords.includes(part) 
-                                                ? <span key={i} className="bg-yellow-200 px-1 rounded">{part}</span> 
-                                                : part
-                                            );
-                                        })()
-                                    ) : currentQ.text}
-                                </p>
-                                <button 
-                                    onClick={() => setHighlightHint(!highlightHint)}
-                                    className="absolute top-6 right-6 text-amber-500 bg-amber-50 p-2 rounded-full hover:bg-amber-100 transition"
-                                >
-                                    <Lightbulb size={24} className={highlightHint ? "fill-current" : ""}/>
-                                </button>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-6">
-                                {[0, 1].map((idx) => (
-                                    <div 
-                                        key={idx}
-                                        className={`
-                                            p-4 rounded-xl border-2 transition-all cursor-text relative
-                                            ${activeInput?.type === 'lv2' && activeInput?.index === idx ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200' : 'border-gray-200 bg-gray-50'}
-                                        `}
-                                        onClick={() => {
-                                            setActiveInput({ type: 'lv2', index: idx });
-                                            if(inputRefs.current[`lv2-${idx}`]) inputRefs.current[`lv2-${idx}`].focus();
-                                        }}
-                                    >
-                                        <span className="absolute -top-3 left-4 bg-white px-2 text-sm font-bold text-gray-500 border rounded">
-                                            方程 ({idx + 1})
-                                        </span>
-                                        <div className="flex items-center mt-2">
-                                            <input
-                                                ref={el => inputRefs.current[`lv2-${idx}`] = el}
-                                                type="text"
-                                                value={lv2Inputs[idx]}
-                                                onChange={(e) => handleInputChange(e.target.value, 'lv2', idx)}
-                                                className="w-full bg-transparent text-xl md:text-2xl font-mono focus:outline-none"
-                                                placeholder="..."
-                                            />
-                                        </div>
-                                        <div className="mt-2 h-8 flex items-center justify-end text-gray-400">
-                                             <MathRenderer expression={lv2Inputs[idx]} />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {inlineFeedback && (
-                                <div className={`p-4 rounded-xl border-2 animate-in fade-in slide-in-from-top-2 ${inlineFeedback.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'}`}>
-                                    <h3 className="font-bold text-lg mb-2 flex items-center gap-2">
-                                         {inlineFeedback.type === 'success' ? <CheckCircle size={20}/> : <XCircle size={20}/>}
-                                         {inlineFeedback.type === 'success' ? '答對了！' : '再試一次'}
-                                    </h3>
-                                    {inlineFeedback.msg && (
-                                        <div className="mb-3 text-sm">
-                                            {inlineFeedback.msg}
-                                        </div>
-                                    )}
-                                    {inlineFeedback.answers && inlineFeedback.answers.length > 0 && (
-                                        <div className="space-y-2 mb-3 pl-7">
-                                            <p className="text-sm font-semibold">正確答案參考：</p>
-                                            {inlineFeedback.answers.map((ans, idx) => (
-                                                <div key={idx} className="text-sm">
-                                                    <span className="font-semibold">{ans.label}: </span>
-                                                    <span className="inline-block ml-2">
-                                                        <MathRenderer expression={ans.value} />
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                    <div className="mt-3 flex gap-2">
-                                        <button 
-                                            onClick={inlineFeedback.action} 
-                                            className="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
-                                        >
-                                            下一題
-                                        </button>
-                                        {inlineFeedback.type === 'error' && (
-                                            <button onClick={() => setInlineFeedback(null)} className="text-sm underline opacity-70 hover:opacity-100 px-4 py-2">
-                                                關閉提示
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                    </>
-                )}
+                {mode === 'prog01-lv1' && renderProg01Lv1()}
+                {mode === 'prog01-lv2' && renderProg01Lv2()}
+                {mode === 'word-lv1' && renderWordLv1()}
+                {mode === 'word-lv2' && renderWordLv2()}
             </main>
 
             <div className="bg-gray-800 text-white p-2 md:px-8 text-center md:text-left z-20 flex justify-between items-center">
                 <div className="flex items-center gap-4">
-                    <span className="text-gray-400 text-sm">輸入值:</span>
-                    <div className="bg-gray-700 px-4 py-1 rounded-lg min-w-[100px]">
-                        <MathRenderer expression={
-                            activeInput 
-                            ? (activeInput.type === 'lv1' 
-                                ? lv1Inputs[`${activeInput.index}-${activeInput.partIdx}`] 
-                                : lv2Inputs[activeInput.index]) 
-                            : ""
-                        } />
-                    </div>
+                    <span className="text-gray-400 text-sm">
+                      {activeInput 
+                        ? `輸入: ${activeInput.field || activeInput.type}` 
+                        : '點擊輸入框作答'
+                      }
+                    </span>
                 </div>
-                <button onClick={checkAnswer} className="hidden md:block bg-green-600 hover:bg-green-500 px-6 py-2 rounded-lg font-bold shadow">
-                    檢查答案
+                <button 
+                  onClick={handleSubmit} 
+                  disabled={feedback !== null && feedback.type !== 'error'}
+                  className="hidden md:block bg-green-600 hover:bg-green-500 disabled:bg-gray-600 px-6 py-2 rounded-lg font-bold shadow transition"
+                >
+                  {mode === 'prog01-lv2' && prog01Step === 1 ? '檢查轉換' : '檢查答案'}
                 </button>
             </div>
             
             <Keypad 
                 isVisible={showKeypad}
                 toggleVisibility={() => setShowKeypad(!showKeypad)}
-                onInput={handleVirtualInput} 
-                onDelete={handleVirtualDelete} 
-                onClear={handleVirtualClear} 
-                onEnter={checkAnswer} 
+                onInput={handleKeypadInput} 
+                onDelete={handleKeypadDelete} 
+                onClear={handleKeypadClear} 
+                onEnter={handleSubmit}
+                showFraction={showFractionKeypad}
             />
             
             <CheatsheetModal isOpen={showNotes} onClose={() => setShowNotes(false)} />
         </div>
-        </div>
-    </>  );
+      </div>
+    </>
+  );
 }
