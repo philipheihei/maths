@@ -1372,7 +1372,12 @@ export default function SimultaneousEqQuiz() {
                     onFocus={(key) => {
                       setActiveInput({ 
                         field: `eq1-${key}`, 
-                        setter: (v) => setEq1Inputs(p => ({ ...p, [key]: v }))
+                        setter: (fnOrVal) => {
+                          setEq1Inputs(p => {
+                            const newVal = typeof fnOrVal === 'function' ? fnOrVal(p[key] || '') : fnOrVal;
+                            return { ...p, [key]: newVal };
+                          });
+                        }
                       });
                     }}
                     inputRefs={inputRefs}
@@ -1392,7 +1397,12 @@ export default function SimultaneousEqQuiz() {
                     onFocus={(key) => {
                       setActiveInput({ 
                         field: `eq2-${key}`, 
-                        setter: (v) => setEq2Inputs(p => ({ ...p, [key]: v }))
+                        setter: (fnOrVal) => {
+                          setEq2Inputs(p => {
+                            const newVal = typeof fnOrVal === 'function' ? fnOrVal(p[key] || '') : fnOrVal;
+                            return { ...p, [key]: newVal };
+                          });
+                        }
                       });
                     }}
                     inputRefs={inputRefs}
