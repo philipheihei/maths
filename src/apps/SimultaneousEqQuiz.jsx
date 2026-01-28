@@ -524,6 +524,8 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
         <input
           ref={el => { if (inputRefs) inputRefs.current[`eq${eqIndex}-a`] = el; }}
           type="text"
+          inputMode="none"
+          readOnly
           value={inputs.a || ''}
           onChange={(e) => onInputChange && onInputChange('a', e.target.value)}
           className="w-12 h-10 text-center border-2 border-blue-300 rounded bg-blue-50 focus:border-blue-500 focus:outline-none"
@@ -534,6 +536,8 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
         <input
           ref={el => { if (inputRefs) inputRefs.current[`eq${eqIndex}-b`] = el; }}
           type="text"
+          inputMode="none"
+          readOnly
           value={inputs.b || ''}
           onChange={(e) => onInputChange && onInputChange('b', e.target.value)}
           className="w-12 h-10 text-center border-2 border-green-300 rounded bg-green-50 focus:border-green-500 focus:outline-none"
@@ -544,6 +548,8 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
         <input
           ref={el => { if (inputRefs) inputRefs.current[`eq${eqIndex}-c`] = el; }}
           type="text"
+          inputMode="none"
+          readOnly
           value={inputs.c || ''}
           onChange={(e) => onInputChange && onInputChange('c', e.target.value)}
           className="w-14 h-10 text-center border-2 border-purple-300 rounded bg-purple-50 focus:border-purple-500 focus:outline-none"
