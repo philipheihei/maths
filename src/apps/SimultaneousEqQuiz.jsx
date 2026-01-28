@@ -555,10 +555,12 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) =
   const gridCols = showFraction ? 'grid-cols-4' : 'grid-cols-6';
 
   return (
-    <div className={`fixed bottom-0 right-0 w-full ${showFraction ? 'md:w-80' : 'md:w-96'} md:bottom-4 md:right-4 bg-gray-100 p-2 md:p-3 border md:border-2 border-gray-300 md:rounded-xl shadow-2xl z-50 pb-6 md:pb-2 transition-all`}>
-      <div className="flex justify-between items-center mb-2 px-1">
-         <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Math Keypad</span>
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-3 z-30 pb-safe md:relative md:shadow-none md:bg-transparent md:border-none md:pb-0 md:mt-4 md:pl-0">
+      {/* Drag handle for mobile only */}
+      <div className="flex justify-center mb-2 md:hidden">
+        <div className="w-12 h-1.5 bg-gray-200 rounded-full"></div>
       </div>
+      
       <div className={`grid ${gridCols} gap-2`}>
         {keys.map((k, idx) => {
           if (k === 'Enter') return (
