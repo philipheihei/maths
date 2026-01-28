@@ -1313,6 +1313,11 @@ export default function SimultaneousEqQuiz() {
   const renderProg01Lv2 = () => {
     if (!prog01Question) return null;
     const { eq1Standard, eq2Standard, varX, varY } = prog01Question;
+    
+    if (!eq1Standard || !eq2Standard) {
+      console.error('Missing eq1Standard or eq2Standard:', prog01Question);
+      return <div className="p-4 text-red-600">題目資料錯誤，請重新整理頁面</div>;
+    }
 
     return (
       <div className="space-y-6">
