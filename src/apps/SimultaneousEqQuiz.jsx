@@ -1335,7 +1335,8 @@ export default function SimultaneousEqQuiz() {
     );
   };
 
-  // Word Problem LV1 Render  const renderWordLv1Segment = (segment, idx) => {
+  // Word Problem LV1 Render
+  const renderWordLv1Segment = (segment, idx) => {
     const currentQ = WORD_PROBLEMS[questionOrder[qIndex]];
     const escapedKeywords = segment.keywords.map(escapeRegExp);
     const parts = segment.text.split(new RegExp(`(${escapedKeywords.join('|')})`, 'g'));
