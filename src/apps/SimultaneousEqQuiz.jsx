@@ -567,6 +567,10 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) =
     if (key === 'C') onClear();
     else if (key === 'Backspace') onDelete();
     else if (key === 'Enter') onEnter();
+    else if (key === 'Tab') {
+      // Tab functionality - move to next input
+      onEnter();
+    }
     else onInput(key);
   };
 
@@ -599,16 +603,16 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) =
           <KeyBtn val="+" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('+')} />
 
           {/* Row 4 (Special Keys) */}
-          <KeyBtn val="C" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} icon={<RotateCcw size={18} />} />
+          <KeyBtn val="AC" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} icon={<RotateCcw size={18} />} />
           <KeyBtn val={0} onClick={() => handleKeyPress('0')} />
-          <KeyBtn val="Del" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} icon={<Delete size={18} />} />
+          <KeyBtn val="DEL" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} icon={<Delete size={18} />} />
           
-          {/* Action Button with 3D effect */}
+          {/* Action Button with TAB effect */}
           <button 
-            onClick={() => handleKeyPress('Enter')}
+            onClick={() => handleKeyPress('Tab')}
             className="bg-teal-600 hover:bg-teal-700 text-white rounded-lg shadow-md border-b-4 border-teal-800 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center font-bold text-lg"
           >
-            確定
+            Next
           </button>
         </div>
       </div>
@@ -649,16 +653,16 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) =
         <KeyBtn val="=" className="bg-gray-200 text-gray-600" onClick={() => handleKeyPress('=')} />
 
         {/* Row 4 (Special Keys) */}
-        <KeyBtn val="C" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} icon={<RotateCcw size={18} />} />
+        <KeyBtn val="AC" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} icon={<RotateCcw size={18} />} />
         <KeyBtn val={0} onClick={() => handleKeyPress('0')} />
-        <KeyBtn val="Del" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} icon={<Delete size={18} />} />
+        <KeyBtn val="DEL" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} icon={<Delete size={18} />} />
         
-        {/* Action Button with 3D effect - spans 3 columns */}
+        {/* Action Button with TAB effect - spans 3 columns */}
         <button 
-          onClick={() => handleKeyPress('Enter')}
+          onClick={() => handleKeyPress('Tab')}
           className="col-span-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg shadow-md border-b-4 border-teal-800 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center font-bold text-lg"
         >
-          提交
+          Next
         </button>
       </div>
     </div>
@@ -1157,6 +1161,14 @@ export default function SimultaneousEqQuiz() {
     if (!prog01Question) return null;
     const { a, b, c, d, e, f } = prog01Question;
     
+    // Auto-focus first input on first render
+    useEffect(() => {
+      if (!activeInput && inputRefs.current['x']) {
+        setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer });
+        inputRefs.current['x'].focus();
+      }
+    }, [prog01Question]);
+    
     return (
       <div className="space-y-6">
         <div className="bg-slate-50 p-6 rounded-xl border-2 border-slate-200">
@@ -1240,6 +1252,18 @@ export default function SimultaneousEqQuiz() {
   const renderProg01Lv2 = () => {
     if (!prog01Question) return null;
     const { eq1Display, eq2Display, eq1Standard, eq2Standard, varX, varY } = prog01Question;
+
+    // Auto-focus first input on first render or step change
+    useEffect(() => {
+      if (prog01Step === 1 && !activeInput && inputRefs.current['eq1-a']) {
+        setActiveInput({ 
+          field: 'eq1-a', 
+          setter: (v) => setEq1Inputs(p => ({ ...p, a: v })),
+          current: eq1Inputs.a
+        });
+        inputRefs.current['eq1-a'].focus();
+      }
+    }, [prog01Step, prog01Question]);
 
     return (
       <div className="space-y-6">
@@ -1774,7 +1798,7 @@ export default function SimultaneousEqQuiz() {
                   disabled={feedback !== null && feedback.type !== 'error'}
                   className="hidden md:block bg-green-600 hover:bg-green-500 disabled:bg-gray-600 px-6 py-2 rounded-lg font-bold shadow transition"
                 >
-                  {mode === 'prog01-lv2' && prog01Step === 1 ? '檢查轉換' : '檢查答案'}
+                  {mode === 'prog01-lv2' && prog01Step === 1 ? '遞交答案' : '檢查答案'}
                 </button>
             </div>
             
