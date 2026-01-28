@@ -67,7 +67,7 @@ const Keypad = ({ onKeyPress, onDelete, onSubmit, disabled }) => {
             disabled={disabled}
             className="p-3 rounded-lg font-bold text-lg bg-red-100 text-red-800 border border-red-200 shadow-[0_2px_0_rgba(0,0,0,0.05)] active:shadow-none active:translate-y-[2px] transition-all touch-manipulation flex items-center justify-center hover:bg-red-200"
         >
-            <Delete size={24} />
+            DEL
         </button>
 
         {/* Row 2 */}

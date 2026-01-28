@@ -39,31 +39,53 @@ const toLatex = (input) => {
   return latex;
 };
 
-// Helper function to process fractions intelligently
+// Helper function to process fractions intelligently - handles multiple fractions
+// 從左到右掃描，智能識別分子和分母的邊界
 const processFraction = (expr) => {
-  const slashIndex = expr.lastIndexOf('/');
-  if (slashIndex === -1) return expr;
+  if (!expr.includes('/')) return expr;
   
-  // Find numerator (everything up to the /)
-  let numerator = expr.substring(0, slashIndex).trim();
-  let denominator = expr.substring(slashIndex + 1).trim();
+  let result = '';
+  let i = 0;
   
-  // Handle cases where numerator has multiple terms like "2a-mn"
-  // Check if numerator has operators but no parentheses
-  if (numerator.includes('-') || numerator.includes('+')) {
-    // If it contains operators, wrap it in braces for LaTeX
-    if (!numerator.startsWith('(') && !numerator.startsWith('{')) {
-      numerator = `{${numerator}}`;
+  while (i < expr.length) {
+    const slashIndex = expr.indexOf('/', i);
+    
+    if (slashIndex === -1) {
+      // No more slashes, append remaining text
+      result += expr.substring(i);
+      break;
     }
+    
+    // Find where numerator starts (walk backwards from slash)
+    let numStart = slashIndex - 1;
+    while (numStart > i && !/[(\+\-×\*=\s]/.test(expr[numStart])) {
+      numStart--;
+    }
+    // If we stopped at a delimiter, move forward one position
+    if (numStart > i || /[(\+\-×\*=\s]/.test(expr[numStart])) {
+      numStart++;
+    }
+    
+    // Find where denominator ends (walk forwards from slash)
+    // 分隔符包括：)、+、-、×、*、= 和空格
+    let denomEnd = slashIndex + 1;
+    while (denomEnd < expr.length && !/[)\+\-×\*=\s]/.test(expr[denomEnd])) {
+      denomEnd++;
+    }
+    
+    // Extract parts
+    const before = expr.substring(i, numStart);
+    const numerator = expr.substring(numStart, slashIndex).trim();
+    const denominator = expr.substring(slashIndex + 1, denomEnd).trim();
+    
+    // Build LaTeX fraction
+    result += before + `\\frac{${numerator}}{${denominator}}`;
+    
+    // Continue from after denominator
+    i = denomEnd;
   }
   
-  // If denominator has operators, also wrap it
-  if ((denominator.includes('-') || denominator.includes('+')) && 
-      !denominator.startsWith('(') && !denominator.startsWith('{')) {
-    denominator = `{${denominator}}`;
-  }
-  
-  return `\\frac${numerator}${denominator}`;
+  return result;
 };
 
 // --- Math Rendering Helper ---
@@ -107,9 +129,39 @@ const simplifyCoefficient = (n1, n2) => {
   return { original: `${n1}-${n2}`, simplified: result.toString(), value: result };
 };
 
+// --- GCD Helper Functions ---
+const gcd = (a, b) => {
+  a = Math.abs(a);
+  b = Math.abs(b);
+  while (b !== 0) {
+    const temp = b;
+    b = a % b;
+    a = temp;
+  }
+  return a;
+};
+
+const gcdMultiple = (...numbers) => {
+  return numbers.reduce((acc, num) => gcd(acc, num));
+};
+
+const areCoprime = (...numbers) => {
+  return gcdMultiple(...numbers) === 1;
+};
+
 // --- Problem Generator Logic ---
 const generateProblem = () => {
-  const types = ['fraction_simple', 'cross_mult', 'bracket_simple', 'factor_simple']; 
+  const types = [
+    'fraction_simple',    // (n1*s + a)/n2 = b
+    'cross_mult',         // n1/(s+a) = C/b
+    'bracket_simple',     // n1(s + a) = n2*s + b
+    'factor_simple',      // a*s - b = n1*s
+    'double_bracket',     // n1(s + a) = n2(s + b) - 新增：兩邊都有括號
+    'fraction_both_sides', // (n1*s + a)/n2 = (C*s + b)/d - 新增：兩邊都有分數
+    'fraction_simple_both_sides', // 24-2: (Ax+C)/B = ns - 簡單分數兩邊都有主項
+    'fraction_polynomial', // 23-1: 兩邊分數分子或分母多項式
+    'fraction_add_subtract' // 13-1: 分數加減通分母 - 挑戰題
+  ]; 
   const type = types[Math.floor(Math.random() * types.length)];
   
   const vars = ['x', 'y', 'a', 'b', 'h', 'k', 'm', 'n'];
@@ -119,6 +171,15 @@ const generateProblem = () => {
   };
   
   const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+  
+  // Helper to get a different random int
+  const randIntExcept = (min, max, except) => {
+    let num;
+    do {
+      num = randInt(min, max);
+    } while (num === except);
+    return num;
+  };
 
   let problem = {
     id: Date.now(),
@@ -137,10 +198,17 @@ const generateProblem = () => {
   const s = getVar(); 
   const a = getVar([s]); 
   const b = getVar([s, a]); 
-  const n1 = randInt(2, 9);
-  const n2 = randInt(2, 9);
+  
+  // Generate coprime coefficients (互質數字)
+  let n1, n2, n3, C;
+  do {
+    n1 = randInt(2, 9);
+    n2 = randIntExcept(2, 9, n1);
+    n3 = randIntExcept(2, 9, n1);
+    C = randIntExcept(2, 9, n1);
+  } while (!areCoprime(n1, n2, n3, C)); // 確保所有系數互質
 
-  // TYPE 1: Simple Fraction: (as + n1)/n2 = a
+  // TYPE 1: Simple Fraction: (n1*s + a)/n2 = b
   if (type === 'fraction_simple') {
     problem.text = `\\frac{${n1}${s} + ${a}}{${n2}} = ${b}`;
     problem.subject = s;
@@ -235,6 +303,152 @@ const generateProblem = () => {
     problem.steps.hasDivide = true;
     problem.steps.step5Eq = `${s}=\\frac{${b}}{${a}-${n1}}`;
   }
+  // TYPE 5: Double Brackets: n1(s + a) = n2(s + b)
+  // 兩邊都有括號 → 需要拆兩次
+  else if (type === 'double_bracket') {
+    const c = getVar([s, a, b]);
+    problem.text = `${n1}(${s} + ${a}) = ${n2}(${s} + ${c})`;
+    problem.subject = s;
+    problem.allVariables = [s, a, c];
+    problem.steps.hasFraction = false;
+    problem.steps.step1Eq = problem.text;
+    problem.steps.hasBracket = true;
+    problem.steps.step2Eq = `${n1}${s}+${n1}${a}=${n2}${s}+${n2}${c}`;
+    problem.steps.hasMove = true;
+    problem.steps.step3Eq = `${n1}${s}-${n2}${s}=${n2}${c}-${n1}${a}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'numeric';
+    const coeffDiff = n1 - n2;
+    if (coeffDiff === 1) {
+      problem.steps.step4Eq = `${s}=${n2}${c}-${n1}${a}`;
+    } else if (coeffDiff === -1) {
+      problem.steps.step4Eq = `-${s}=${n2}${c}-${n1}${a}`;
+    } else {
+      problem.steps.step4Eq = `${coeffDiff}${s}=${n2}${c}-${n1}${a}`;
+    }
+    
+    problem.steps.hasDivide = (coeffDiff !== 1);
+    if (coeffDiff === 1) {
+      problem.steps.step5Eq = `${s}=${n2}${c}-${n1}${a}`;
+    } else if (coeffDiff === -1) {
+      problem.steps.step5Eq = `${s}=${n1}${a}-${n2}${c}`;
+    } else {
+      problem.steps.step5Eq = `${s}=\\frac{${n2}${c}-${n1}${a}}{${coeffDiff}}`;
+    }
+  }
+  // TYPE 6: Fraction on Both Sides: (n1*s + a)/n2 = (C*s + b)/d
+  // 兩邊都有分數 → 交叉相乘後會有兩個主項
+  else if (type === 'fraction_both_sides') {
+    const C = getVar([s, a, b]);
+    const d = getVar([s, a, b, C]);
+    
+    // 確保係數差不為 0 或 1 (避免過於簡單)
+    let coeffDiff;
+    let d_val, n1_val, n2_val, n3_val;
+    do {
+      d_val = randInt(2, 5);
+      n1_val = n1;
+      n2_val = n2;
+      n3_val = randInt(2, 5);
+      coeffDiff = d_val * n1_val - n2_val * n3_val;
+    } while (coeffDiff === 0 || coeffDiff === 1 || coeffDiff === -1);
+    
+    problem.text = `\\frac{${n1_val}${s} + ${a}}{${n2_val}} = \\frac{${n3_val}${s} + ${b}}{${d_val}}`;
+    problem.subject = s;
+    problem.allVariables = [s, a, b, d];
+    problem.steps.hasFraction = true;
+    problem.steps.step1Eq = `${d_val}(${n1_val}${s}+${a})=${n2_val}(${n3_val}${s}+${b})`;
+    problem.steps.hasBracket = true;
+    problem.steps.step2Eq = `${d_val * n1_val}${s}+${d_val}${a}=${n2_val * n3_val}${s}+${n2_val}${b}`;
+    problem.steps.hasMove = true;
+    problem.steps.step3Eq = `${d_val * n1_val}${s}-${n2_val * n3_val}${s}=${n2_val}${b}-${d_val}${a}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'numeric';
+    problem.steps.step4Eq = `${coeffDiff}${s}=${n2_val}${b}-${d_val}${a}`;
+    
+    problem.steps.hasDivide = true;
+    problem.steps.step5Eq = `${s}=\\frac{${n2_val}${b}-${d_val}${a}}{${coeffDiff}}`;
+  }
+  // TYPE 7: Simple Fraction Both Sides (24-2): (Ax + C)/B = n*s
+  // 簡單分數，兩邊都有主項，但右邊沒有分數
+  else if (type === 'fraction_simple_both_sides') {
+    const C = getVar([s, a, b]);
+    problem.text = `\\frac{${n1}${s} + ${C}}{${n2}} = ${a}${s}`;
+    problem.subject = s;
+    problem.allVariables = [s, a, C];
+    problem.steps.hasFraction = true;
+    problem.steps.step1Eq = `${n1}${s}+${C}=${n2}${a}${s}`;
+    problem.steps.hasBracket = false;
+    problem.steps.step2Eq = problem.steps.step1Eq;
+    problem.steps.hasMove = true;
+    problem.steps.step3Eq = `${n1}${s}-${n2}${a}${s}=${-1}${C}`.replace('-1', '-').replace('=-', '=-');
+    problem.steps.step3Eq = `${n1}${s}-${n2}${a}${s}=-${C}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'algebraic';
+    problem.steps.step4Eq = `${s}(${n1}-${n2}${a})=-${C}`;
+    
+    problem.steps.hasDivide = true;
+    problem.steps.step5Eq = `${s}=\\frac{-${C}}{${n1}-${n2}${a}}`;
+  }
+  // TYPE 8: Fraction Polynomial (23-1): 兩邊分數分子或分母多項式
+  // e.g., a/(s+b) = C/(s+d) 或 (as+b)/C = d/(s+e)
+  else if (type === 'fraction_polynomial') {
+    const C = getVar([s, a, b]);
+    const d = getVar([s, a, b, C]);
+    
+    // 形式: a/(s+b) = C/(s+d)
+    problem.text = `\\frac{${a}}{${s} + ${n1}} = \\frac{${C}}{${s} + ${n2}}`;
+    problem.subject = s;
+    problem.allVariables = [s, a, C];
+    problem.steps.hasFraction = true;
+    problem.steps.step1Eq = `${a}(${s}+${n2})=${C}(${s}+${n1})`;
+    problem.steps.hasBracket = true;
+    problem.steps.step2Eq = `${a}${s}+${n2}${a}=${C}${s}+${n1}${C}`;
+    problem.steps.hasMove = true;
+    problem.steps.step3Eq = `${a}${s}-${C}${s}=${n1}${C}-${n2}${a}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'algebraic';
+    problem.steps.step4Eq = `${s}(${a}-${C})=${n1}${C}-${n2}${a}`;
+    
+    problem.steps.hasDivide = true;
+    problem.steps.step5Eq = `${s}=\\frac{${n1}${C}-${n2}${a}}{${a}-${C}}`;
+  }
+  // TYPE 9: Fraction Add/Subtract (13-1): 分數加減通分母 - 挑戰題
+  // e.g., 3/h - 1/k = 2 (k是主項) → hk(3/h - 1/k) = 2hk → 3k - h = 2hk → k(3-2h) = h → k = h/(3-2h)
+  else if (type === 'fraction_add_subtract') {
+    const rightNum = randInt(2, 5); // 右邊純數字
+    
+    // 形式: n1/a - n2/b = rightNum (其中 b 是主項)
+    problem.text = `\\frac{${n1}}{${a}} - \\frac{${n2}}{${b}} = ${rightNum}`;
+    problem.subject = b; // b 是主項（例如 k）
+    problem.allVariables = [a, b];
+    problem.isChallenge = true; // 標記為挑戰題
+    
+    problem.steps.hasFraction = true;
+    // Step 1 (乘): 兩邊同乘 ab - 保留括號形式（學生可能輸入展開或未展開的版本）
+    problem.steps.step1Eq = `${n1}${b}-${n2}${a}=${rightNum}${a}${b}`;
+    
+    problem.steps.hasBracket = false; // 已在 step1 處理括號
+    // Step 2 跳過（已展開）
+    problem.steps.step2Eq = null;
+    
+    problem.steps.hasMove = true;
+    // Step 2 (移): 將主項 b 移到左邊 - n1*b - rightNum*ab = n2*a
+    problem.steps.step3Eq = `${n1}${b}-${rightNum}${a}${b}=${n2}${a}`;
+    
+    problem.steps.hasFactor = true;
+    problem.steps.factorType = 'algebraic';
+    // Step 3 (抽): 提取公因式 b - b(n1 - rightNum*a) = n2*a
+    problem.steps.step4Eq = `${b}(${n1}-${rightNum}${a})=${n2}${a}`;
+    
+    problem.steps.hasDivide = true;
+    // Step 4 (除): b = (n2*a) / (n1 - rightNum*a)
+    problem.steps.step5Eq = `${b}=\\frac{${n2}${a}}{${n1}-${rightNum}${a}}`;
+  }
 
   return problem;
 };
@@ -293,8 +507,10 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
       .toLowerCase();
   };
   
-  // Sort terms in an expression to handle commutative property (a+b = b+a)
+  // Sort and normalize terms in an expression to handle commutative property (a+b = b+a)
   const sortTermsInExpr = (expr) => {
+    if (!expr) return '';
+    
     // Split by + and - while keeping operators
     const terms = [];
     let currentTerm = '';
@@ -303,7 +519,7 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
     for (let i = 0; i < expr.length; i++) {
       const char = expr[i];
       if ((char === '+' || char === '-') && i > 0 && currentTerm) {
-        terms.push(currentSign + currentTerm);
+        terms.push({ sign: currentSign, term: currentTerm.trim() });
         currentSign = char;
         currentTerm = '';
       } else if (char !== '+' && char !== '-') {
@@ -312,12 +528,24 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
         currentSign = '-';
       }
     }
-    if (currentTerm) {
-      terms.push(currentSign + currentTerm);
+    if (currentTerm.trim()) {
+      terms.push({ sign: currentSign, term: currentTerm.trim() });
     }
     
-    // Sort terms alphabetically
-    return terms.sort().join('').replace(/^\+/, '');
+    // Sort terms by their content (ignore sign for sorting)
+    terms.sort((a, b) => a.term.localeCompare(b.term));
+    
+    // Reconstruct expression
+    let result = '';
+    terms.forEach((t, idx) => {
+      if (idx === 0) {
+        result += (t.sign === '-' ? '-' : '') + t.term;
+      } else {
+        result += t.sign + t.term;
+      }
+    });
+    
+    return result;
   };
   
   const normalizedInput = normalizeLatex(inputLatex);
@@ -372,7 +600,16 @@ const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
   const allVars = ['x', 'y', 'a', 'b', 'h', 'k', 'm', 'n'];
   const usedVars = new Set();
   
-  // Collect all text to analyze
+  // Priority 1: Use explicit variable list from problem
+  if (problem && problem.allVariables && Array.isArray(problem.allVariables)) {
+    problem.allVariables.forEach(v => {
+      if (allVars.includes(v)) {
+        usedVars.add(v);
+      }
+    });
+  }
+  
+  // Priority 2: Extract from text if explicit list not available or incomplete
   let extractionText = '';
   if (problem) {
     extractionText = problem.text + ' ' + problem.subject;
@@ -381,40 +618,34 @@ const Keyboard = ({ onKeyPress, problem, currentEquation }) => {
     extractionText += ' ' + currentEquation;
   }
   
-  if (extractionText) {
-    // Remove LaTeX commands carefully, preserving the variables inside them
+  if (extractionText && usedVars.size < 2) {
+    // More robust LaTeX cleaning
     let cleanedText = extractionText;
     
-    // Remove LaTeX command names (like \frac, \text) but keep the content
-    cleanedText = cleanedText.replace(/\\[a-zA-Z]+\{/g, ''); // Remove \frac{ etc
-    cleanedText = cleanedText.replace(/\}/g, ' '); // Replace } with space
-    cleanedText = cleanedText.replace(/\\/g, ' '); // Remove remaining backslashes
+    // Step 1: Remove \text{...} commands completely (they don't contain variables)
+    cleanedText = cleanedText.replace(/\\text\{[^}]*\}/g, ' ');
+    
+    // Step 2: Remove \frac and other commands but keep content
+    cleanedText = cleanedText.replace(/\\frac/g, '');
+    cleanedText = cleanedText.replace(/\\left|\\right/g, '');
+    
+    // Step 3: Remove braces but preserve content
+    cleanedText = cleanedText.replace(/[{}]/g, ' ');
+    
+    // Step 4: Remove remaining backslashes
+    cleanedText = cleanedText.replace(/\\/g, ' ');
+    
+    // Step 5: Normalize to lowercase
     cleanedText = cleanedText.toLowerCase();
     
-    // Extract each variable by checking if it appears in the text
+    // Extract variables using word boundary detection
     allVars.forEach(v => {
-      // Look for the variable as a standalone character or next to numbers/symbols
-      // Match cases like: 'x', '2x', 'x+', 'x-', etc
-      if (cleanedText.includes(v)) {
+      // Use regex to find variable as standalone or with numbers/operators
+      const pattern = new RegExp(`[^a-z]${v}[^a-z]|^${v}[^a-z]|[^a-z]${v}$|^${v}$`, 'g');
+      if (pattern.test(cleanedText) || cleanedText.includes(v)) {
         usedVars.add(v);
       }
     });
-    
-    // Backup: Also use problem.allVariables if available (explicit variable list)
-    if (problem && problem.allVariables && Array.isArray(problem.allVariables)) {
-      problem.allVariables.forEach(v => {
-        if (allVars.includes(v)) {
-          usedVars.add(v);
-        }
-      });
-    }
-    
-    // Debug log to help identify issues
-    console.log('Problem:', problem?.text);
-    console.log('Problem Variables:', problem?.allVariables);
-    console.log('Extraction Text:', extractionText);
-    console.log('Cleaned Text:', cleanedText);
-    console.log('Used Variables:', Array.from(usedVars));
   }
   
   // Build rows dynamically - show ALL used variables (increase from 4 to 6 if needed)
@@ -723,7 +954,7 @@ const PracticePage = ({ score, setScore }) => {
           affirmative: "需移項",
           check: problem.steps.hasMove, 
           expected: problem.steps.step3Eq,
-          hint: `將主項 ${problem.subject} 移至一邊，其他移至另一邊`
+          hint: `將有主項 ${problem.subject} 的項 移至一邊，沒${problem.subject} 的項移至另一邊`
         };
         break;
       case 4: 
@@ -788,8 +1019,13 @@ const PracticePage = ({ score, setScore }) => {
 
         setFeedback({ type: 'error', msg: errorMsg });
         setHistory(prev => [...prev, { step: currentQIndex, type: 'yesno', answer, correct: false, forced: true, done: false }]);
-        setShowKeyboard(true);
-        setIsAnswering(false);
+        
+        // Clear feedback after showing error, then enable input
+        setTimeout(() => {
+          setFeedback(null);
+          setShowKeyboard(true);
+          setIsAnswering(false);
+        }, 1500);
       } else {
         // User said Yes, but actually No
         setFeedback({ type: 'error', msg: '不對，其實沒有。直接下一步。' });
@@ -869,7 +1105,7 @@ const PracticePage = ({ score, setScore }) => {
       <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-6 sticky top-4 z-10">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <span className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Question</span>
+            <span className="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">題目：</span>
             <h2 className="text-gray-500 mt-1 text-lg">
               令 <Latex>{problem.subject}</Latex> 成為公式 <Latex>{problem.text}</Latex> 的主項
             </h2>
@@ -878,8 +1114,11 @@ const PracticePage = ({ score, setScore }) => {
             <RefreshCw size={20} />
           </button>
         </div>
-        <div className="text-3xl font-serif text-center py-4 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-           <Latex block>{getCurrentEquation()}</Latex>
+        <div className="relative">
+          <span className="absolute left-3 top-2 text-base font-medium text-gray-500">現時步驟：</span>
+          <div className="text-3xl font-serif text-center py-4 pt-8 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+            <Latex block>{getCurrentEquation()}</Latex>
+          </div>
         </div>
       </div>
 

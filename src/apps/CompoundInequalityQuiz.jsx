@@ -649,7 +649,7 @@ const Keypad = ({ onInput, onDelete, onClear, onSubmit }) => {
           onMouseDown={(e) => e.preventDefault()}
           className="py-3 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-lg transition active:scale-95 border border-red-300"
         >
-          ⌫ 刪除
+          DEL
         </button>
         <button
           onClick={onSubmit}

@@ -10,7 +10,7 @@ import DispersionQuiz from './apps/DispersionQuiz';
 import InequalityQuiz from './apps/InequalityQuiz';
 import CompoundInequalityQuiz from './apps/CompoundInequalityQuiz';
 import VariationQuiz from './apps/VariationQuiz';
-import Subject from './apps/Subject/index';
+import Subject from './apps/Subject';
 import CoordinateTransform from './apps/CoordinateTransform';
 import AlgebraicFractionsQuiz from './apps/AlgebraicFractionsQuiz';
 import Prog01Quiz from './apps/Prog01Quiz';

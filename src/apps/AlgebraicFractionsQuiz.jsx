@@ -194,16 +194,17 @@ export default function AlgebraicFractionsQuiz() {
   };
 
   // Helper to generate a binomial like "3y+5" with coprime coefficients
+  // a is always positive (1-9), b can be positive or negative (-9 to 9, excluding 0)
+  // a and b must be coprime (gcd = 1)
   const generateBinomial = (v) => {
     let a, b;
     // Loop until we find a pair (a, b) that are coprime (gcd == 1) and b is not 0
     do {
-        a = Math.floor(Math.random() * 4) + 1; // 1 to 4
-        b = Math.floor(Math.random() * 19) - 9; // -9 to 9
+        a = Math.floor(Math.random() * 9) + 1; // a: 1 to 9 (always positive)
+        b = Math.floor(Math.random() * 19) - 9; // b: -9 to 9 (can be positive or negative, excluding 0)
     } while (b === 0 || gcd(a, b) !== 1);
 
-    const display = `${a === 1 ? '' : a}${v} ${b > 0 ? '+' : '-'} ${Math.abs(b)}`;
-    return { a, b, display };
+    return { a, b };
   };
 
   const generateQuestion = () => {
@@ -223,25 +224,28 @@ export default function AlgebraicFractionsQuiz() {
     const num2 = Math.floor(Math.random() * 9) + 1;
     const isAddition = Math.random() > 0.5;
 
-    // Randomize display style of denominators: variable-first (ax±b) or constant-first (b±ax)
+    // Format display: randomly choose between variable-first (ax±b) or constant-first (b+ax)
+    // Note: a is always positive, b can be positive or negative
+    // Constant-first format only used when b > 0 to avoid "-3 + 2x" format
     const formatDisplay = (a, b, variable, constantFirst = false) => {
       const varTerm = `${a === 1 ? '' : a}${variable}`;
       const constTerm = `${Math.abs(b)}`;
-      const sign = b >= 0 ? '+' : '-';
-      if (!constantFirst) {
-        // ax ± b
+      
+      if (!constantFirst || b <= 0) {
+        // Variable-first format: ax ± b
+        // Also used when b <= 0 to avoid negative constant-first format
+        const sign = b >= 0 ? '+' : '-';
         return `${varTerm} ${sign} ${constTerm}`;
+      } else {
+        // Constant-first format: b + ax (only when b > 0)
+        // Example: b=3, a=2 -> "3 + 2x"
+        return `${b} + ${varTerm}`;
       }
-      // constant-first: b ± ax
-      // Use plus/minus between constant and variable term to reflect b sign on the constant only
-      // For teaching clarity, keep '+' between terms when b is negative by carrying the '-' on the constant
-      // Examples: b=3 -> 3 + 2x; b=-3 -> -3 + 2x
-      const constPrefix = b >= 0 ? `${constTerm}` : `-${constTerm}`;
-      return `${constPrefix} + ${varTerm}`;
     };
 
-    const d1ConstFirst = Math.random() < 0.5;
-    const d2ConstFirst = Math.random() < 0.5;
+    // Only use constant-first format when b > 0
+    const d1ConstFirst = d1.b > 0 && Math.random() < 0.5;
+    const d2ConstFirst = d2.b > 0 && Math.random() < 0.5;
     d1 = { ...d1, display: formatDisplay(d1.a, d1.b, v, d1ConstFirst) };
     d2 = { ...d2, display: formatDisplay(d2.a, d2.b, v, d2ConstFirst) };
 

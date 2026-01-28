@@ -22,7 +22,7 @@ const toGrid = (svgX, svgY) => ({
 });
 
 // ============= COORDINATE GRID COMPONENT =============
-const CoordinateGrid = ({ children, size = SVG_SIZE }) => {
+const CoordinateGrid = ({ children, size = SVG_SIZE, onMouseMove, onMouseUp, onMouseLeave }) => {
   const gridLines = [];
   
   // Generate grid lines
@@ -58,8 +58,17 @@ const CoordinateGrid = ({ children, size = SVG_SIZE }) => {
   }
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`} 
-      className="bg-white rounded-xl border border-gray-200 shadow-sm">
+    <svg 
+      width={size} 
+      height={size} 
+      viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`} 
+      className="bg-white rounded-xl border border-gray-200 shadow-sm"
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseLeave}
+      onTouchMove={onMouseMove}
+      onTouchEnd={onMouseUp}
+    >
       {/* Grid lines */}
       {gridLines}
       
@@ -82,6 +91,81 @@ const CoordinateGrid = ({ children, size = SVG_SIZE }) => {
       {/* Children (points, lines, etc.) */}
       {children}
     </svg>
+  );
+};
+
+// ============= DRAGGABLE POINT COMPONENT =============
+const DraggablePoint = ({ point, onDragStart, isDragging, label = 'P', color = '#3b82f6' }) => {
+  const svgCoords = toSVG(point.x, point.y);
+  
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onDragStart();
+  };
+
+  const handleTouchStart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onDragStart();
+  };
+
+  return (
+    <g>
+      {/* Larger invisible hit area for easier dragging */}
+      <circle
+        cx={svgCoords.x}
+        cy={svgCoords.y}
+        r="15"
+        fill="transparent"
+        style={{ cursor: 'grab' }}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+      />
+      {/* Visible draggable point */}
+      <circle
+        cx={svgCoords.x}
+        cy={svgCoords.y}
+        r={isDragging ? 10 : 8}
+        fill={isDragging ? '#2563eb' : color}
+        stroke="white"
+        strokeWidth="2"
+        style={{ cursor: 'grab', pointerEvents: 'none' }}
+        className="transition-all duration-150"
+      />
+      <text 
+        x={svgCoords.x + 12} 
+        y={svgCoords.y - 10} 
+        fontSize="14" 
+        fontWeight="bold" 
+        fill={color}
+        style={{ pointerEvents: 'none' }}
+      >
+        {label}
+      </text>
+      <text 
+        x={svgCoords.x + 12} 
+        y={svgCoords.y + 5} 
+        fontSize="12" 
+        fill="#666"
+        style={{ pointerEvents: 'none' }}
+      >
+        ({point.x}, {point.y})
+      </text>
+      {/* Drag hint */}
+      {!isDragging && (
+        <text
+          x={svgCoords.x}
+          y={svgCoords.y + 26}
+          fontSize="9"
+          fill="#999"
+          textAnchor="middle"
+          style={{ pointerEvents: 'none' }}
+        >
+          拖拽移動
+        </text>
+      )}
+    </g>
   );
 };
 
@@ -151,7 +235,7 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   const fromSVG = toSVG(from.x, from.y);
   const angleRad = (clockwise ? -1 : 1) * (angle * Math.PI / 180) * progress;
   
-  // Calculate rotated position
+  // Calculate rotated position (P' target position)
   const rotatedX = from.x * Math.cos(angleRad) - from.y * Math.sin(angleRad);
   const rotatedY = from.x * Math.sin(angleRad) + from.y * Math.cos(angleRad);
   const toCoords = { x: Math.round(rotatedX), y: Math.round(rotatedY) };
@@ -160,19 +244,59 @@ const RotationPoint = ({ from, angle, label, labelPrime, color = '#3b82f6', prog
   // Arc path for rotation visualization
   const radius = Math.sqrt(from.x * from.x + from.y * from.y) * UNIT;
   const startAngle = Math.atan2(-from.y, from.x); // SVG y is inverted
-  const currentAngle = startAngle - angleRad;
+  
+  // Calculate target angle (P' position) - SVG y is inverted
+  const targetAngle = Math.atan2(-rotatedY, rotatedX);
+  
+  // Shorten arc to leave gap between arrow head and P'
+  // Arrow length (~10px) with minimal offset ≈ 9px to sit right at the perimeter edge
+  const totalShortenPixels = 9;
+  const shortenAngle = totalShortenPixels / radius;
+  
+  // Arc endpoint: move back from target angle by shortenAngle
+  // Direction depends on clockwise rotation
+  // CCW: angle gets more negative due to SVG Y inversion, so add shortenAngle to stop earlier
+  // CW: angle gets more positive, so subtract to stop earlier
+  const arcEndAngle = targetAngle + (clockwise ? -shortenAngle : shortenAngle);
   
   const arcPath = radius > 5 ? `
     M ${CENTER + radius * Math.cos(startAngle)} ${CENTER + radius * Math.sin(startAngle)}
     A ${radius} ${radius} 0 ${Math.abs(angle * progress) > 180 ? 1 : 0} ${clockwise ? 1 : 0} 
-      ${CENTER + radius * Math.cos(currentAngle)} ${CENTER + radius * Math.sin(currentAngle)}
+      ${CENTER + radius * Math.cos(arcEndAngle)} ${CENTER + radius * Math.sin(arcEndAngle)}
   ` : '';
 
   return (
     <g>
-      {/* Rotation arc - green dotted line connecting P and P' along the circular path */}
+      {/* Arrow marker definition for rotation arc */}
+      <defs>
+        <marker 
+          id="rotationArrow" 
+          markerWidth="10" 
+          markerHeight="10" 
+          refX="9" 
+          refY="5" 
+          orient="auto"
+        >
+          <path 
+            d="M 2,2 L 9,5 L 2,8" 
+            fill="none" 
+            stroke="#10b981" 
+            strokeWidth="1.5" 
+            strokeLinejoin="round"
+          />
+        </marker>
+      </defs>
+      
+      {/* Rotation arc - green dotted line connecting P and P' along the circular path with arrow */}
       {progress > 0 && radius > 5 && (
-        <path d={arcPath} fill="none" stroke="#10b981" strokeWidth="2" strokeDasharray="5,5" />
+        <path 
+          d={arcPath} 
+          fill="none" 
+          stroke="#10b981" 
+          strokeWidth="2" 
+          strokeDasharray="5,5"
+          markerEnd="url(#rotationArrow)"
+        />
       )}
       
       {/* Radius line from origin to original point (light) */}
@@ -276,12 +400,12 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
         <>
           {axis === 'x=' && (
             <>
-              {/* Arrow from reflection line to original point */}
+              {/* Arrow from original point to reflection line */}
               <line 
-                x1={toSVG(axisValue, from.y).x} 
-                y1={toSVG(axisValue, from.y).y} 
-                x2={fromSVG.x} 
-                y2={fromSVG.y}
+                x1={fromSVG.x} 
+                y1={fromSVG.y} 
+                x2={toSVG(axisValue, from.y).x} 
+                y2={toSVG(axisValue, from.y).y}
                 stroke="#ef4444" 
                 strokeWidth="2" 
                 markerEnd="url(#redArrow)"
@@ -300,7 +424,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               <text 
                 x={(toSVG(axisValue, from.y).x + fromSVG.x) / 2} 
                 y={fromSVG.y - 8} 
-                fontSize="11" 
+                fontSize="13" 
                 fontWeight="bold" 
                 fill="#ef4444"
               >
@@ -310,7 +434,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               <text 
                 x={(toSVG(axisValue, to.y).x + toSVG_coords.x) / 2} 
                 y={toSVG_coords.y - 8} 
-                fontSize="11" 
+                fontSize="13" 
                 fontWeight="bold" 
                 fill="#ef4444"
               >
@@ -344,7 +468,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               <text 
                 x={fromSVG.x - 15} 
                 y={(fromSVG.y + toSVG(from.x, axisValue).y) / 2} 
-                fontSize="11" 
+                fontSize="13" 
                 fontWeight="bold" 
                 fill="#ef4444"
               >
@@ -354,7 +478,7 @@ const ReflectionPoint = ({ from, axis, axisValue = 0, label, labelPrime, color =
               <text 
                 x={toSVG_coords.x - 15} 
                 y={(toSVG(to.x, axisValue).y + toSVG_coords.y) / 2} 
-                fontSize="11" 
+                fontSize="13" 
                 fontWeight="bold" 
                 fill="#ef4444"
               >
@@ -535,9 +659,53 @@ const TeachingPage = ({ onGoToQuiz }) => {
   const [reflectionAxis, setReflectionAxis] = useState('y');
   const [reflectionValue, setReflectionValue] = useState(0);
 
-  const demoPoint = { x: 2, y: 3 };
+  // Draggable demo point
+  const [demoPoint, setDemoPoint] = useState({ x: 2, y: 3 });
+  const [isDragging, setIsDragging] = useState(false);
+  
   const label = 'P';
   const labelPrime = "P'";
+
+  // Handle drag start
+  const handleDragStart = () => {
+    setIsDragging(true);
+    setProgress(0); // Reset animation when dragging
+    setIsPlaying(false);
+  };
+
+  // Handle mouse/touch move during drag
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    
+    const svg = e.currentTarget;
+    const rect = svg.getBoundingClientRect();
+    
+    // Get position (support both mouse and touch)
+    let clientX, clientY;
+    if (e.touches) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    
+    // Convert to SVG coordinates
+    const svgX = ((clientX - rect.left) / rect.width) * SVG_SIZE;
+    const svgY = ((clientY - rect.top) / rect.height) * SVG_SIZE;
+    
+    // Convert to grid coordinates and clamp to valid range
+    const gridCoords = toGrid(svgX, svgY);
+    const clampedX = Math.max(-GRID_SIZE + 1, Math.min(GRID_SIZE - 1, gridCoords.x));
+    const clampedY = Math.max(-GRID_SIZE + 1, Math.min(GRID_SIZE - 1, gridCoords.y));
+    
+    setDemoPoint({ x: clampedX, y: clampedY });
+  };
+
+  // Handle drag end
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   // Animation effect
   useEffect(() => {
@@ -675,8 +843,78 @@ const TeachingPage = ({ onGoToQuiz }) => {
       <div className="grid md:grid-cols-2 gap-6">
         {/* SVG Visualization */}
         <div className="bg-white rounded-xl shadow-sm border p-4">
-          <CoordinateGrid>
-            {transformType === 'translation' && (
+          <CoordinateGrid
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          >
+            {/* Preview lines for rotation (when not playing) */}
+            {progress === 0 && !isPlaying && transformType === 'rotation' && (
+              <>
+                {/* Origin point O */}
+                <circle cx={CENTER} cy={CENTER} r="4" fill="#333" />
+                <text x={CENTER - 15} y={CENTER + 20} fontSize="12" fontWeight="bold" fill="#333">O</text>
+                
+                {/* Line from O to P */}
+                <line 
+                  x1={CENTER} 
+                  y1={CENTER} 
+                  x2={toSVG(demoPoint.x, demoPoint.y).x} 
+                  y2={toSVG(demoPoint.x, demoPoint.y).y}
+                  stroke="#3b82f6" 
+                  strokeWidth="2" 
+                  strokeDasharray="5,5" 
+                  opacity="0.5" 
+                />
+              </>
+            )}
+            
+            {/* Preview line for reflection (when not playing) */}
+            {progress === 0 && !isPlaying && transformType === 'reflection' && (
+              <>
+                {/* Reflection axis line */}
+                {(() => {
+                  let lineStart, lineEnd;
+                  if (reflectionAxis === 'x') {
+                    lineStart = toSVG(-GRID_SIZE, 0);
+                    lineEnd = toSVG(GRID_SIZE, 0);
+                  } else if (reflectionAxis === 'y') {
+                    lineStart = toSVG(0, -GRID_SIZE);
+                    lineEnd = toSVG(0, GRID_SIZE);
+                  } else if (reflectionAxis === 'x=') {
+                    lineStart = toSVG(reflectionValue, -GRID_SIZE);
+                    lineEnd = toSVG(reflectionValue, GRID_SIZE);
+                  } else if (reflectionAxis === 'y=') {
+                    lineStart = toSVG(-GRID_SIZE, reflectionValue);
+                    lineEnd = toSVG(GRID_SIZE, reflectionValue);
+                  }
+                  return (
+                    <line 
+                      x1={lineStart.x} 
+                      y1={lineStart.y} 
+                      x2={lineEnd.x} 
+                      y2={lineEnd.y}
+                      stroke="#8b5cf6" 
+                      strokeWidth="3" 
+                      strokeDasharray="8,4" 
+                    />
+                  );
+                })()}
+              </>
+            )}
+
+            {/* Draggable point P - show when animation is not playing */}
+            {progress === 0 && !isPlaying && (
+              <DraggablePoint
+                point={demoPoint}
+                onDragStart={handleDragStart}
+                isDragging={isDragging}
+                label={label}
+              />
+            )}
+            
+            {/* Animation components - show when animation has started */}
+            {(progress > 0 || isPlaying) && transformType === 'translation' && (
               <AnimatedPoint
                 from={demoPoint}
                 to={getTargetPoint()}
@@ -686,7 +924,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 showPath={true}
               />
             )}
-            {transformType === 'rotation' && (
+            {(progress > 0 || isPlaying) && transformType === 'rotation' && (
               <RotationPoint
                 from={demoPoint}
                 angle={rotationAngle}
@@ -696,7 +934,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 clockwise={rotationClockwise}
               />
             )}
-            {transformType === 'reflection' && (
+            {(progress > 0 || isPlaying) && transformType === 'reflection' && (
               <ReflectionPoint
                 from={demoPoint}
                 axis={reflectionAxis}
@@ -707,6 +945,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
               />
             )}
           </CoordinateGrid>
+
+          {/* Drag instruction */}
+          <div className="text-center text-sm text-gray-500 mt-2">
+            💡 拖拽點 P 到任意格點位置
+          </div>
 
           {/* Play Controls */}
           <div className="flex justify-center gap-4 mt-4">
@@ -741,7 +984,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   min="-6"
                   max="6"
                   value={translationDelta.dx}
-                  onChange={(e) => setTranslationDelta({ ...translationDelta, dx: parseInt(e.target.value) })}
+                  onChange={(e) => {
+                    setTranslationDelta({ ...translationDelta, dx: parseInt(e.target.value) });
+                    setProgress(0);
+                    setIsPlaying(false);
+                  }}
                   className="w-full"
                 />
               </div>
@@ -754,7 +1001,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   min="-6"
                   max="6"
                   value={translationDelta.dy}
-                  onChange={(e) => setTranslationDelta({ ...translationDelta, dy: parseInt(e.target.value) })}
+                  onChange={(e) => {
+                    setTranslationDelta({ ...translationDelta, dy: parseInt(e.target.value) });
+                    setProgress(0);
+                    setIsPlaying(false);
+                  }}
                   className="w-full"
                 />
               </div>
@@ -767,13 +1018,21 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <label className="block text-sm font-medium text-gray-600 mb-2">旋轉方向</label>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => { setRotationClockwise(false); handleReset(); }}
+                    onClick={() => { 
+                      setRotationClockwise(false); 
+                      setProgress(0);
+                      setIsPlaying(false);
+                    }}
                     className={`flex-1 py-2 rounded-lg font-medium ${!rotationClockwise ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                   >
                     ↺ 逆時針
                   </button>
                   <button
-                    onClick={() => { setRotationClockwise(true); handleReset(); }}
+                    onClick={() => { 
+                      setRotationClockwise(true); 
+                      setProgress(0);
+                      setIsPlaying(false);
+                    }}
                     className={`flex-1 py-2 rounded-lg font-medium ${rotationClockwise ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                   >
                     ↻ 順時針
@@ -786,7 +1045,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   {[90, 180, 270].map(angle => (
                     <button
                       key={angle}
-                      onClick={() => { setRotationAngle(angle); handleReset(); }}
+                      onClick={() => { 
+                        setRotationAngle(angle); 
+                        setProgress(0);
+                        setIsPlaying(false);
+                      }}
                       className={`flex-1 py-2 rounded-lg font-medium ${rotationAngle === angle ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                     >
                       {angle}°
@@ -810,7 +1073,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   ].map(axis => (
                     <button
                       key={axis.id}
-                      onClick={() => setReflectionAxis(axis.id)}
+                      onClick={() => {
+                        setReflectionAxis(axis.id);
+                        setProgress(0);
+                        setIsPlaying(false);
+                      }}
                       className={`py-2 rounded-lg font-medium ${reflectionAxis === axis.id ? 'bg-blue-600 text-white' : 'bg-gray-100'}`}
                     >
                       {axis.label}
@@ -828,7 +1095,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     min="-5"
                     max="5"
                     value={reflectionValue}
-                    onChange={(e) => setReflectionValue(parseInt(e.target.value))}
+                    onChange={(e) => {
+                      setReflectionValue(parseInt(e.target.value));
+                      setProgress(0);
+                      setIsPlaying(false);
+                    }}
                     className="w-full"
                   />
                 </div>
@@ -869,8 +1140,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <p>對 x 軸反射 → 上下反轉 → y轉正負號</p>
                 <p>對 y 軸反射 → 左右反轉 → x轉正負號</p>
                 <hr className="border-amber-200 my-2"/>
-                <p>對 x = k 反射: (x, y) → (2k - x, y)</p>
-                <p>對 y = k 反射: (x, y) → (x, 2k - y)</p>
+                <p>對 x = k 反射：即 x 的數值改變</p>
+                <p className="pl-4">x 向右移到 k，再向右移相同距離</p>
+                <hr className="border-amber-200 my-2"/>
+                <p>對 y = k 反射：即 y 的數值改變</p>
+                <p className="pl-4">y 向上移到 k，再向上移相同距離</p>
               </div>
             )}
           </div>
@@ -926,20 +1200,29 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       const direction = clockwise ? '順時針' : '逆時針';
       const rotationTimes = angle / 90;
       
+      // Normalize -0 to 0
+      const normalizedX = toPoint.x === 0 ? 0 : toPoint.x;
+      const normalizedY = toPoint.y === 0 ? 0 : toPoint.y;
+      
       // Step 1: Count rotations
-      let step1 = `步驟1: 每旋轉90°，(x, y) 數字調轉，所以轉${angle}°會數字調轉${rotationTimes}次，結果為(${toPoint.x}, ${toPoint.y})`;
+      let step1 = `步驟1: 每旋轉90°，(x, y) 數字調轉，所以轉${angle}°會數字調轉${rotationTimes}次，結果為(${normalizedX}, ${normalizedY})`;
       
       // Step 2: Determine quadrant and signs
       let quadrant = '';
-      let xSign = toPoint.x >= 0 ? '+ve' : '-ve';
-      let ySign = toPoint.y >= 0 ? '+ve' : '-ve';
+      let xSign = normalizedX > 0 ? '+ve' : normalizedX < 0 ? '-ve' : '0';
+      let ySign = normalizedY > 0 ? '+ve' : normalizedY < 0 ? '-ve' : '0';
       
-      if (toPoint.x > 0 && toPoint.y > 0) quadrant = '第一';
-      else if (toPoint.x < 0 && toPoint.y > 0) quadrant = '第二';
-      else if (toPoint.x < 0 && toPoint.y < 0) quadrant = '第三';
-      else if (toPoint.x > 0 && toPoint.y < 0) quadrant = '第四';
+      if (normalizedX > 0 && normalizedY > 0) quadrant = '第一';
+      else if (normalizedX < 0 && normalizedY > 0) quadrant = '第二';
+      else if (normalizedX < 0 && normalizedY < 0) quadrant = '第三';
+      else if (normalizedX > 0 && normalizedY < 0) quadrant = '第四';
+      else if (normalizedX === 0 && normalizedY > 0) quadrant = '正y軸上';
+      else if (normalizedX === 0 && normalizedY < 0) quadrant = '負y軸上';
+      else if (normalizedY === 0 && normalizedX > 0) quadrant = '正x軸上';
+      else if (normalizedY === 0 && normalizedX < 0) quadrant = '負x軸上';
+      else quadrant = '原點';
       
-      let step2 = `步驟2: 每旋轉90°，會移過一個象限。留意P' 在${quadrant}象限，x坐標為${xSign}，y坐標為${ySign}。所以結果為(${toPoint.x > 0 ? '' : '-'}${Math.abs(toPoint.x)}, ${toPoint.y > 0 ? '' : '-'}${Math.abs(toPoint.y)})`;
+      let step2 = `步驟2: 每旋轉90°，會移過一個象限。留意P' 在${quadrant}，x坐標為${xSign}，y坐標為${ySign}。所以結果為(${normalizedX}, ${normalizedY})`;
       
       return `${step1}\n${step2}`;
     };
@@ -1015,16 +1298,19 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       }
       
       let formula = '';
+      // Normalize -0 to 0 for display
+      const normalizeZero = (val) => val === 0 ? 0 : val;
+      
       if (!clockwise) {
-        if (angle === 90) formula = `(x, y) → (-y, x)\n(${from.x}, ${from.y}) → (${-from.y}, ${from.x})`;
-        else if (angle === 180) formula = `(x, y) → (-x, -y)\n(${from.x}, ${from.y}) → (${-from.x}, ${-from.y})`;
-        else if (angle === 270) formula = `(x, y) → (y, -x)\n(${from.x}, ${from.y}) → (${from.y}, ${-from.x})`;
+        if (angle === 90) formula = `(x, y) → (-y, x)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.y)}, ${normalizeZero(from.x)})`;
+        else if (angle === 180) formula = `(x, y) → (-x, -y)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.x)}, ${normalizeZero(-from.y)})`;
+        else if (angle === 270) formula = `(x, y) → (y, -x)\n(${from.x}, ${from.y}) → (${normalizeZero(from.y)}, ${normalizeZero(-from.x)})`;
       } else {
-        if (angle === 90) formula = `(x, y) → (y, -x)\n(${from.x}, ${from.y}) → (${from.y}, ${-from.x})`;
-        else if (angle === 180) formula = `(x, y) → (-x, -y)\n(${from.x}, ${from.y}) → (${-from.x}, ${-from.y})`;
-        else if (angle === 270) formula = `(x, y) → (-y, x)\n(${from.x}, ${from.y}) → (${-from.y}, ${from.x})`;
+        if (angle === 90) formula = `(x, y) → (y, -x)\n(${from.x}, ${from.y}) → (${normalizeZero(from.y)}, ${normalizeZero(-from.x)})`;
+        else if (angle === 180) formula = `(x, y) → (-x, -y)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.x)}, ${normalizeZero(-from.y)})`;
+        else if (angle === 270) formula = `(x, y) → (-y, x)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.y)}, ${normalizeZero(from.x)})`;
       }
-      explanation = `繞原點${direction}旋轉 ${angle}°：\n${formula} = (${to.x}, ${to.y})`;
+      explanation = `繞原點${direction}旋轉 ${angle}°：\n${formula} = (${normalizeZero(to.x)}, ${normalizeZero(to.y)})`;
       
       // Generate rotation steps explanation
       const rotationSteps = generateRotationSteps(from, angle, clockwise, to);
@@ -1067,17 +1353,21 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       else if (axis === 'x=') axisStr = `直線 x = ${axisValue}`;
       else axisStr = `直線 y = ${axisValue}`;
       
-      description = `${label}' 為 ${label}(${from.x}, ${from.y}) 對 ${axisStr} 的反射影像。求 ${label}' 的坐標。`;
+      // Generate description
+      description = `${label}(${from.x}, ${from.y}) 對 ${axisStr} 作反射至點 ${label}'。求 ${label}' 的坐標。`;
+      
+      // Normalize -0 to 0 for display
+      const normalizeZero = (val) => val === 0 ? 0 : val;
       
       let formula = '';
       if (axis === 'x') {
-        formula = `對 x 軸反射: (x, y) → (x, -y)\n(${from.x}, ${from.y}) → (${from.x}, ${-from.y})`;
+        formula = `對 x 軸反射: (x, y) → (x, -y)\n(${from.x}, ${from.y}) → (${normalizeZero(from.x)}, ${normalizeZero(-from.y)})`;
       } else if (axis === 'y') {
-        formula = `對 y 軸反射: (x, y) → (-x, y)\n(${from.x}, ${from.y}) → (${-from.x}, ${from.y})`;
+        formula = `對 y 軸反射: (x, y) → (-x, y)\n(${from.x}, ${from.y}) → (${normalizeZero(-from.x)}, ${normalizeZero(from.y)})`;
       } else if (axis === 'x=') {
-        formula = `對 x = ${axisValue} 反射: (x, y) → (2×${axisValue} - x, y)\n(${from.x}, ${from.y}) → (${2*axisValue} - ${from.x}, ${from.y}) = (${to.x}, ${to.y})`;
+        formula = `對 x = ${axisValue} 反射: (x, y) → (2×${axisValue} - x, y)\n(${from.x}, ${from.y}) → (${normalizeZero(2*axisValue - from.x)}, ${from.y}) = (${normalizeZero(to.x)}, ${normalizeZero(to.y)})`;
       } else {
-        formula = `對 y = ${axisValue} 反射: (x, y) → (x, 2×${axisValue} - y)\n(${from.x}, ${from.y}) → (${from.x}, ${2*axisValue} - ${from.y}) = (${to.x}, ${to.y})`;
+        formula = `對 y = ${axisValue} 反射: (x, y) → (x, 2×${axisValue} - y)\n(${from.x}, ${from.y}) → (${from.x}, ${normalizeZero(2*axisValue - from.y)}) = (${normalizeZero(to.x)}, ${normalizeZero(to.y)})`;
       }
       explanation = formula;
       

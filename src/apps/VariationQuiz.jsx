@@ -477,7 +477,7 @@ const VariationQuiz = () => {
             </div>
             <div className="grid grid-cols-5 gap-2">
                 {[7,8,9,'+'].map(k => <button key={k} onClick={() => handleKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}
-                <button onClick={handleBackspace} className={`${KEY_BASE_CLASS} bg-red-50 text-red-500 border-red-100`}><Delete className="w-5 h-5" /></button>
+                <button onClick={handleBackspace} className={`${KEY_BASE_CLASS} bg-red-50 text-red-500 border-red-100`}>DEL</button>
                 {[4,5,6,'='].map(k => <button key={k} onClick={() => handleKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}
                 <button onClick={() => handleKeyClick('/')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText} flex flex-col text-xs leading-none`}><span>◻</span><span className="border-t border-current w-3 my-0.5"></span><span>◻</span></button>
                 {[1,2,3,'(',')'].map(k => <button key={k} onClick={() => handleKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}

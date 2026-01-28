@@ -417,7 +417,7 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, isVisible, toggleVisibili
           );
           if (k === 'DEL') return (
             <button key={k} onClick={onDelete} className="bg-orange-200 p-3 md:p-2 rounded-lg font-bold text-orange-800 active:bg-orange-300 shadow hover:bg-orange-100">
-               <Delete size={20} className="mx-auto"/>
+               DEL
             </button>
           );
           return (

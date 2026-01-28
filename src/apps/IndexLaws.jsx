@@ -73,6 +73,12 @@ const getRandomNonZero = (min, max) => {
   return val;
 };
 
+// 格式化指數項（如果指數為1則omit）
+const formatExpTerm = (base, exp) => {
+  if (exp === 1) return base;
+  return `${base}^${exp}`;
+};
+
 // --- 題目資料 ---
 const LAWS = [
   { id: 'mult', title: '同底相乘', rule: 'a^m \\times a^n = a^{m+n}', desc: '底數相同，指數相加' },
@@ -188,74 +194,309 @@ export default function IndexLaws() {
   };
 
   const generateProblemLV2 = () => {
-    const a = getRandomNonZero(-4, 4);
-    const b = getRandomNonZero(-4, 4);
-    const k = getRandomInt(2, 3) * (Math.random() > 0.5 ? -1 : 1);
-    const c = getRandomNonZero(-4, 4);
-    const d = getRandomNonZero(-4, 4);
+    const typeIdx = getRandomInt(0, 4); // 5種題型
+    
+    // 題型0: 原有題型 (x^a y^b)^k / (x^c y^d)
+    if (typeIdx === 0) {
+      const a = getRandomNonZero(-4, 4);
+      const b = getRandomNonZero(-4, 4);
+      const k = getRandomInt(2, 3) * (Math.random() > 0.5 ? -1 : 1);
+      const c = getRandomNonZero(-4, 4);
+      const d = getRandomNonZero(-4, 4);
 
-    const num = `(x^{${a}}y^{${b}})^{${k}}`;
-    const den = `x^{${c}}y^{${d}}`;
-    const qLatex = `\\frac{${num}}{${den}}`;
+      const num = `(x^{${a}}y^{${b}})^{${k}}`;
+      const den = `x^{${c}}y^{${d}}`;
+      const qLatex = `\\frac{${num}}{${den}}`;
 
-    // Step 1: 拆括號
-    const step1X = a * k;
-    const step1Y = b * k;
-    let step1Str = `x^${step1X}y^${step1Y}/x^${c}y^${d}`;
-    
-    // Step 2: 負指數轉正指數 (將分子分母中的負指數項移動)
-    const step2NumParts = [];
-    const step2DenParts = [];
-    
-    if (step1X >= 0) step2NumParts.push(`x^${step1X}`);
-    else step2DenParts.push(`x^${Math.abs(step1X)}`);
-    
-    if (step1Y >= 0) step2NumParts.push(`y^${step1Y}`);
-    else step2DenParts.push(`y^${Math.abs(step1Y)}`);
-    
-    if (c >= 0) step2DenParts.push(`x^${c}`);
-    else step2NumParts.push(`x^${Math.abs(c)}`);
-    
-    if (d >= 0) step2DenParts.push(`y^${d}`);
-    else step2NumParts.push(`y^${Math.abs(d)}`);
-    
-    if (step2NumParts.length === 0) step2NumParts.push('1');
-    if (step2DenParts.length === 0) step2DenParts.push('1');
-    
-    let step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
-    
-    // Step 3: 指數約簡（正指數）- 最終答案
-    const finalX = step1X - c;
-    const finalY = step1Y - d;
+      const step1X = a * k;
+      const step1Y = b * k;
+      let step1Str = `x^${step1X}y^${step1Y}/x^${c}y^${d}`;
+      
+      const step2NumParts = [];
+      const step2DenParts = [];
+      
+      if (step1X >= 0) step2NumParts.push(formatExpTerm('x', step1X));
+      else step2DenParts.push(formatExpTerm('x', Math.abs(step1X)));
+      
+      if (step1Y >= 0) step2NumParts.push(formatExpTerm('y', step1Y));
+      else step2DenParts.push(formatExpTerm('y', Math.abs(step1Y)));
+      
+      if (c >= 0) step2DenParts.push(formatExpTerm('x', c));
+      else step2NumParts.push(formatExpTerm('x', Math.abs(c)));
+      
+      if (d >= 0) step2DenParts.push(formatExpTerm('y', d));
+      else step2NumParts.push(formatExpTerm('y', Math.abs(d)));
+      
+      if (step2NumParts.length === 0) step2NumParts.push('1');
+      if (step2DenParts.length === 0) step2DenParts.push('1');
+      
+      let step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
+      
+      const finalX = step1X - c;
+      const finalY = step1Y - d;
 
-    const numStrParts = [];
-    const denStrParts = [];
+      const numStrParts = [];
+      const denStrParts = [];
 
-    if (finalX > 0) numStrParts.push(`x^${finalX}`);
-    if (finalX < 0) denStrParts.push(`x^${Math.abs(finalX)}`);
-    if (finalY > 0) numStrParts.push(`y^${finalY}`);
-    if (finalY < 0) denStrParts.push(`y^${Math.abs(finalY)}`);
+      if (finalX > 0) numStrParts.push(formatExpTerm('x', finalX));
+      if (finalX < 0) denStrParts.push(formatExpTerm('x', Math.abs(finalX)));
+      if (finalY > 0) numStrParts.push(formatExpTerm('y', finalY));
+      if (finalY < 0) denStrParts.push(formatExpTerm('y', Math.abs(finalY)));
 
-    let finalAnsStr = '';
-    if (numStrParts.length === 0) numStrParts.push('1');
+      let finalAnsStr = '';
+      if (numStrParts.length === 0) numStrParts.push('1');
 
-    if (denStrParts.length === 0) {
-      finalAnsStr = numStrParts.join('');
-    } else {
-      finalAnsStr = `${numStrParts.join('')}/${denStrParts.join('')}`;
+      if (denStrParts.length === 0) {
+        finalAnsStr = numStrParts.join('');
+      } else {
+        finalAnsStr = `${numStrParts.join('')}/${denStrParts.join('')}`;
+      }
+
+      setProblem({
+        level: 2,
+        qLatex,
+        variables: ['x', 'y'],
+        expectations: {
+          step1: step1Str,
+          step1Keywords: [`x^${step1X}`, `y^${step1Y}`],
+          step2: step2Str,
+          step3: finalAnsStr,
+          finalAns: finalAnsStr,
+        },
+      });
     }
-
-    setProblem({
-      level: 2,
-      qLatex,
-      expectations: {
-        step1: step1Str,
-        step1Keywords: [`x^${step1X}`, `y^${step1Y}`],
-        step2: step2Str,
-        step3: finalAnsStr,
-        finalAns: finalAnsStr,
-      },
-    });
+    
+    // 題型1: (a·b^e1)(a^e2·b^e3)^k - 乘法形式
+    else if (typeIdx === 1) {
+      const e1 = getRandomInt(2, 4);
+      const e2 = getRandomInt(-3, -1);
+      const e3 = getRandomInt(3, 5);
+      const k = getRandomInt(4, 6);
+      
+      const qLatex = `(ab^{${e1}})(a^{${e2}}b^{${e3}})^{${k}}`;
+      
+      // Step 1: 拆括號
+      const part2A = e2 * k;
+      const part2B = e3 * k;
+      const step1Str = `ab^${e1}a^${part2A}b^${part2B}`;
+      
+      // Step 2: 負指數轉正指數（重新組織，還未合併）
+      const step2NumParts = [];
+      const step2DenParts = [];
+      
+      step2NumParts.push('a');
+      step2NumParts.push(formatExpTerm('b', e1));
+      step2NumParts.push(formatExpTerm('b', part2B));
+      step2DenParts.push(formatExpTerm('a', Math.abs(part2A)));
+      
+      const step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
+      
+      // Step 3: 合併同底數
+      const finalA = 1 + part2A;
+      const finalB = e1 + part2B;
+      
+      const step3NumParts = [];
+      const step3DenParts = [];
+      
+      if (finalA >= 0) step3NumParts.push(formatExpTerm('a', finalA));
+      else step3DenParts.push(formatExpTerm('a', Math.abs(finalA)));
+      
+      if (finalB >= 0) step3NumParts.push(formatExpTerm('b', finalB));
+      else step3DenParts.push(formatExpTerm('b', Math.abs(finalB)));
+      
+      if (step3NumParts.length === 0) step3NumParts.push('1');
+      if (step3DenParts.length === 0) step3DenParts.push('1');
+      const step3Str = step3DenParts[0] === '1' 
+        ? step3NumParts.join('')
+        : `${step3NumParts.join('')}/${step3DenParts.join('')}`;
+      
+      const finalAnsStr = step3Str;
+      
+      setProblem({
+        level: 2,
+        qLatex,
+        variables: ['a', 'b'],
+        expectations: {
+          step1: step1Str,
+          step1Keywords: [`a^${part2A}`, `b^${part2B}`],
+          step2: step2Str,
+          step3: finalAnsStr,
+          finalAns: finalAnsStr,
+        },
+      });
+    }
+    
+    // 題型2: xy^e1 / (x^e2 · y^e3)^k
+    else if (typeIdx === 2) {
+      const e1 = getRandomInt(5, 9);
+      const e2 = getRandomInt(-3, -1);
+      const e3 = getRandomInt(2, 4);
+      const k = getRandomInt(3, 5);
+      
+      const qLatex = `\\frac{xy^{${e1}}}{(x^{${e2}}y^{${e3}})^{${k}}}`;
+      
+      // Step 1: 拆括號分母
+      const denX = e2 * k;
+      const denY = e3 * k;
+      const step1Str = `xy^${e1}/x^${denX}y^${denY}`;
+      
+      // Step 2: 負指數轉正指數 (x^denX是負數，移到分子)
+      const step2NumParts = [];
+      const step2DenParts = [`y^${denY}`];
+      
+      step2NumParts.push('x');
+      if (denX < 0) step2NumParts.push(`x^${Math.abs(denX)}`);
+      step2NumParts.push(`y^${e1}`);
+      
+      const step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
+      
+      // Step 3: 約簡
+      const finalX = 1 - denX;  // 1 - 負數 = 正數
+      const finalY = e1 - denY;
+      
+      const step3NumParts = [];
+      const step3DenParts = [];
+      
+      if (finalX > 0) step3NumParts.push(formatExpTerm('x', finalX));
+      if (finalY >= 0) step3NumParts.push(formatExpTerm('y', finalY));
+      else step3DenParts.push(formatExpTerm('y', Math.abs(finalY)));
+      
+      if (step3NumParts.length === 0) step3NumParts.push('1');
+      if (step3DenParts.length === 0) step3DenParts.push('1');
+      
+      const step3Str = step3DenParts[0] === '1' 
+        ? step3NumParts.join('')
+        : `${step3NumParts.join('')}/${step3DenParts.join('')}`;
+      
+      setProblem({
+        level: 2,
+        qLatex,
+        variables: ['x', 'y'],
+        expectations: {
+          step1: step1Str,
+          step1Keywords: [`x^${denX}`, `y^${denY}`],
+          step2: step2Str,
+          step3: step3Str,
+          finalAns: step3Str,
+        },
+      });
+    }
+    
+    // 題型3: (m^e1·n^e2)^k1 / (m^e3)^k2
+    else if (typeIdx === 3) {
+      const e1 = getRandomInt(3, 5);
+      const e2 = getRandomInt(-2, -1);
+      const k1 = getRandomInt(2, 4);
+      const e3 = getRandomInt(-3, -1);
+      const k2 = getRandomInt(4, 6);
+      
+      const qLatex = `\\frac{(m^{${e1}}n^{${e2}})^{${k1}}}{(m^{${e3}})^{${k2}}}`;
+      
+      // Step 1: 拆括號
+      const numM = e1 * k1;
+      const numN = e2 * k1;
+      const denM = e3 * k2;
+      const step1Str = `m^${numM}n^${numN}/m^${denM}`;
+      
+      // Step 2: 負指數轉正指數 (numN是負數移到分母，denM是負數移到分子)
+      const step2NumParts = [];
+      const step2DenParts = [];
+      
+      step2NumParts.push(formatExpTerm('m', numM));
+      if (denM < 0) step2NumParts.push(formatExpTerm('m', Math.abs(denM)));
+      step2DenParts.push(formatExpTerm('n', Math.abs(numN)));
+      if (denM > 0) step2DenParts.push(formatExpTerm('m', denM));
+      
+      const step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
+      
+      // Step 3: 約簡
+      const finalM = numM - denM;
+      const finalN = numN;  // 負數
+      
+      const step3NumParts = [];
+      const step3DenParts = [];
+      
+      if (finalM > 0) step3NumParts.push(formatExpTerm('m', finalM));
+      else if (finalM < 0) step3DenParts.push(formatExpTerm('m', Math.abs(finalM)));
+      
+      step3DenParts.push(formatExpTerm('n', Math.abs(finalN)));
+      
+      if (step3NumParts.length === 0) step3NumParts.push('1');
+      
+      const step3Str = `${step3NumParts.join('')}/${step3DenParts.join('')}`;
+      
+      setProblem({
+        level: 2,
+        qLatex,
+        variables: ['m', 'n'],
+        expectations: {
+          step1: step1Str,
+          step1Keywords: [`m^${numM}`, `n^${numN}`],
+          step2: step2Str,
+          step3: step3Str,
+          finalAns: step3Str,
+        },
+      });
+    }
+    
+    // 題型4: m^e1 / (m^e2·n^e3)^k
+    else {
+      const e1 = getRandomInt(7, 11);
+      const e2 = getRandomInt(2, 4);
+      const e3 = getRandomInt(-8, -5);
+      const k = getRandomInt(4, 6);
+      
+      const qLatex = `\\frac{m^{${e1}}}{(m^{${e2}}n^{${e3}})^{${k}}}`;
+      
+      // Step 1: 拆括號分母
+      const denM = e2 * k;
+      const denN = e3 * k;
+      const step1Str = `m^${e1}/m^${denM}n^${denN}`;
+      
+      // Step 2: 負指數轉正指數 (n^denN是負數，移到分子)
+      const step2NumParts = [];
+      const step2DenParts = [];
+      
+      step2NumParts.push(formatExpTerm('m', e1));
+      if (denN < 0) step2NumParts.push(formatExpTerm('n', Math.abs(denN)));
+      step2DenParts.push(formatExpTerm('m', denM));
+      if (denN > 0) step2DenParts.push(formatExpTerm('n', denN));
+      
+      const step2Str = `${step2NumParts.join('')}/${step2DenParts.join('')}`;
+      
+      // Step 3: 約簡
+      const finalM = e1 - denM;
+      const finalN = -denN;  // 負數變正數
+      
+      const step3NumParts = [];
+      const step3DenParts = [];
+      
+      if (finalN > 0) step3NumParts.push(formatExpTerm('n', finalN));
+      
+      if (finalM > 0) step3DenParts.push(formatExpTerm('m', finalM));
+      else if (finalM < 0) step3NumParts.push(formatExpTerm('m', Math.abs(finalM)));
+      
+      if (step3NumParts.length === 0) step3NumParts.push('1');
+      if (step3DenParts.length === 0) step3DenParts.push('1');
+      
+      const step3Str = step3DenParts[0] === '1'
+        ? step3NumParts.join('')
+        : `${step3NumParts.join('')}/${step3DenParts.join('')}`;
+      
+      setProblem({
+        level: 2,
+        qLatex,
+        variables: ['m', 'n'],
+        expectations: {
+          step1: step1Str,
+          step1Keywords: [`m^${denM}`, `n^${denN}`],
+          step2: step2Str,
+          step3: step3Str,
+          finalAns: step3Str,
+        },
+      });
+    }
+    
     resetState();
     setActiveField('step1');
   };
@@ -330,7 +571,7 @@ export default function IndexLaws() {
 
   const Keypad = () => {
     const keys = [
-      ['x', 'y', '(', ')'],
+      [problem.variables?.[0] || 'x', problem.variables?.[1] || 'y', '(', ')'],
       ['7', '8', '9', '^'],
       ['4', '5', '6', '/'],
       ['1', '2', '3', '-'],
@@ -358,7 +599,7 @@ export default function IndexLaws() {
                       'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'}`}
                 >
                   {k === '/' ? <FractionIcon /> : 
-                   k === 'DEL' ? <Delete size={20} className="mx-auto"/> : 
+                   k === 'DEL' ? 'DEL' : 
                    k === 'CLR' ? <Eraser size={20} className="mx-auto"/> : k}
                 </button>
               ))}
