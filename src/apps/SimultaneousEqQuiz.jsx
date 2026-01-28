@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BookOpen, Calculator, Lightbulb, Delete, CheckCircle, XCircle, Keyboard as KeyboardIcon, X, Trophy, Home as HomeIcon, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { loadKatexOnce } from '../utils/katexLoader';
 
 // ========== PROG01 工具函數 ==========
 const gcd = (a, b) => {
@@ -359,6 +360,42 @@ const renderTextWithItalics = (text) => {
 };
 
 // ========== 渲染組件 ==========
+const LaTeXEquationDisplay = ({ a, b, c, d, e, f }) => {
+  const [katexLoaded, setKatexLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    loadKatexOnce().then(() => setKatexLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    if (katexLoaded && containerRef.current && window.katex) {
+      const bSign = b >= 0 ? '+' : '';
+      const eSign = e >= 0 ? '+' : '';
+      const latex = `\\left\\{\\begin{array}{l} ${a}x ${bSign} ${Math.abs(b)}y = ${c} \\\\ ${d}x ${eSign} ${Math.abs(e)}y = ${f} \\end{array}\\right.`;
+      try {
+        window.katex.render(latex, containerRef.current, {
+          displayMode: true,
+          throwOnError: false
+        });
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+      }
+    }
+  }, [katexLoaded, a, b, c, d, e, f]);
+
+  if (!katexLoaded) {
+    return (
+      <div className="text-xl space-y-2 ml-4">
+        <div>{a}x {b >= 0 ? '+' : ''} {b}y = {c}</div>
+        <div>{d}x {e >= 0 ? '+' : ''} {e}y = {f}</div>
+      </div>
+    );
+  }
+
+  return <div ref={containerRef} className="text-2xl" />;
+};
+
 const MathRenderer = ({ expression, size = 'normal' }) => {
   if (!expression) return <span className="text-gray-400 italic text-sm md:text-base">等待輸入...</span>;
 
@@ -1063,10 +1100,7 @@ export default function SimultaneousEqQuiz() {
       <div className="space-y-6">
         <div className="bg-slate-50 p-6 rounded-xl border-2 border-slate-200">
           <h3 className="text-lg font-bold text-slate-700 mb-4">解以下聯立方程：</h3>
-          <div className="space-y-3 ml-4">
-            <EquationDisplay a={a} b={b} c={c} />
-            <EquationDisplay a={d} b={e} c={f} />
-          </div>
+          <LaTeXEquationDisplay a={a} b={b} c={c} d={d} e={e} f={f} />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -1637,12 +1671,6 @@ export default function SimultaneousEqQuiz() {
                       <span className="text-xl font-bold text-yellow-400">{score.total}</span>
                       <span className="text-slate-400 text-xs">分</span>
                     </div>
-                    {mode.startsWith('prog01') && (
-                      <div className="text-xs text-slate-400 mt-1">
-                        <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>x</span>: {score.x} | 
-                        <span className="italic ml-1" style={{ fontFamily: 'Times New Roman, serif' }}>y</span>: {score.y}
-                      </div>
-                    )}
                   </div>
                   {mode.startsWith('word') && (
                     <button onClick={() => setShowNotes(true)} className="p-2 hover:bg-slate-700 rounded-lg transition text-blue-300">
