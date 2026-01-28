@@ -13,6 +13,7 @@ import VariationQuiz from './apps/VariationQuiz';
 import Subject from './apps/Subject/index';
 import CoordinateTransform from './apps/CoordinateTransform';
 import AlgebraicFractionsQuiz from './apps/AlgebraicFractionsQuiz';
+import Prog01Quiz from './apps/Prog01Quiz';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/subject" element={<Subject />} />
         <Route path="/coordinate-transform" element={<CoordinateTransform />} />
         <Route path="/algebraic-fractions" element={<AlgebraicFractionsQuiz />} />
+        <Route path="/prog01-quiz" element={<Prog01Quiz />} />
       </Routes>
     </Router>
   );

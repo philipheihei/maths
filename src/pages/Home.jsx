@@ -88,6 +88,22 @@ const Home = () => {
       inDevelopment: true
     },
     {
+      id: 'prog01-quiz',
+      title: 'Prog 01 訓練',
+      description: '熟習 Prog01 聯立方程程式：隨機生成聯立二元一次方程，訓練求解 x 和 y',
+      icon: Calculator,
+      color: 'bg-violet-500',
+      hoverColor: 'hover:bg-violet-600',
+      path: '/prog01-quiz',
+      level: 'F2',
+      badges: [
+        { level: 'F2', chapter: 'CH9', subject: '二元一次方程' }
+      ],
+      category: '初中',
+      topics: ['聯立方程', 'Prog01', '方程求解'],
+      inDevelopment: false
+    },
+    {
       id: 'dispersion-quiz',
       title: '高中統計特訓',
       description: '學習如何在不同圖表得出以下集中趨勢的量度：平均數、中位數、眾數、四分位數間距、分佈域、標準差、方差',
