@@ -799,7 +799,7 @@ export default function SimultaneousEqQuiz() {
   // Auto-focus first input when prog01 question loads
   useEffect(() => {
     if (mode === 'prog01-lv1' && prog01Question && !activeInput && inputRefs.current['x']) {
-      setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer });
+      setActiveInput({ field: 'x', setter: setXAnswer });
       setTimeout(() => inputRefs.current['x']?.focus(), 0);
     }
   }, [prog01Question, mode]);
@@ -809,8 +809,7 @@ export default function SimultaneousEqQuiz() {
     if (mode === 'prog01-lv2' && prog01Step === 1 && prog01Question && !activeInput && inputRefs.current['eq1-a']) {
       setActiveInput({ 
         field: 'eq1-a', 
-        setter: (v) => setEq1Inputs(p => ({ ...p, a: v })),
-        current: eq1Inputs.a
+        setter: (v) => setEq1Inputs(p => ({ ...p, a: v }))
       });
       setTimeout(() => inputRefs.current['eq1-a']?.focus(), 0);
     }
@@ -829,24 +828,27 @@ export default function SimultaneousEqQuiz() {
   const handleKeypadInput = (char) => {
     if (!activeInput) return;
     
-    const { field, setter, current } = activeInput;
+    const { setter } = activeInput;
     
     if (char === '±') {
-      if (current.startsWith('-')) {
-        setter(current.slice(1));
-      } else if (current !== '' && current !== '0') {
-        setter('-' + current);
-      }
+      setter(prev => {
+        if (prev.startsWith('-')) {
+          return prev.slice(1);
+        } else if (prev !== '' && prev !== '0') {
+          return '-' + prev;
+        }
+        return prev;
+      });
       return;
     }
     
-    setter(current + char);
+    setter(prev => prev + char);
   };
 
   const handleKeypadDelete = () => {
     if (!activeInput) return;
-    const { setter, current } = activeInput;
-    setter(current.slice(0, -1));
+    const { setter } = activeInput;
+    setter(prev => prev.slice(0, -1));
   };
 
   const handleKeypadClear = () => {
@@ -1254,7 +1256,7 @@ export default function SimultaneousEqQuiz() {
               type="text"
               value={xAnswer}
               onChange={(e) => setXAnswer(e.target.value)}
-              onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer })}
+              onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer })}
               className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-blue-500 ${feedback?.xWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
               placeholder="?"
             />
@@ -1272,7 +1274,7 @@ export default function SimultaneousEqQuiz() {
               type="text"
               value={yAnswer}
               onChange={(e) => setYAnswer(e.target.value)}
-              onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer, current: yAnswer })}
+              onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer })}
               className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-green-500 ${feedback?.yWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
               placeholder="?"
             />
@@ -1339,8 +1341,7 @@ export default function SimultaneousEqQuiz() {
                       setEq1Inputs(prev => ({ ...prev, [key]: val }));
                       setActiveInput({ 
                         field: `eq1-${key}`, 
-                        setter: (v) => setEq1Inputs(p => ({ ...p, [key]: v })),
-                        current: val
+                        setter: (v) => setEq1Inputs(p => ({ ...p, [key]: v }))
                       });
                     }}
                     inputRefs={inputRefs}
@@ -1358,8 +1359,7 @@ export default function SimultaneousEqQuiz() {
                       setEq2Inputs(prev => ({ ...prev, [key]: val }));
                       setActiveInput({ 
                         field: `eq2-${key}`, 
-                        setter: (v) => setEq2Inputs(p => ({ ...p, [key]: v })),
-                        current: val
+                        setter: (v) => setEq2Inputs(p => ({ ...p, [key]: v }))
                       });
                     }}
                     inputRefs={inputRefs}
@@ -1435,7 +1435,7 @@ export default function SimultaneousEqQuiz() {
                     type="text"
                     value={xAnswer}
                     onChange={(e) => setXAnswer(e.target.value)}
-                    onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer })}
+                    onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer })}
                     className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-blue-500 ${feedback?.xWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
                     placeholder="?"
                   />
@@ -1453,7 +1453,7 @@ export default function SimultaneousEqQuiz() {
                     type="text"
                     value={yAnswer}
                     onChange={(e) => setYAnswer(e.target.value)}
-                    onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer, current: yAnswer })}
+                    onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer })}
                     className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-green-500 ${feedback?.yWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
                     placeholder="?"
                   />
