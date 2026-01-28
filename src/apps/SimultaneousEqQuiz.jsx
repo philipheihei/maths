@@ -506,10 +506,9 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, isVisible, toggleVisibili
   const keys = showFraction 
     ? [
         '7', '8', '9', '/',
-        '4', '5', '6', '*',
+        '4', '5', '6', '-',
         '1', '2', '3', '+',
-        '±', '0', '.', '-',
-        'AC', 'DEL', 'Enter'
+        'AC', '0', 'DEL', 'Enter'
       ]
     : [
         '7', '8', '9', '/', '(', ')',
@@ -550,7 +549,7 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, isVisible, toggleVisibili
           );
           if (k === 'DEL') return (
             <button key={k} onClick={onDelete} className="bg-orange-200 p-3 md:p-2 rounded-lg font-bold text-orange-800 active:bg-orange-300 shadow hover:bg-orange-100">
-               <Delete size={20} className="mx-auto"/>
+               DEL
             </button>
           );
           if (k === '±') return (
@@ -1614,7 +1613,7 @@ export default function SimultaneousEqQuiz() {
 
       <Link 
         to="/" 
-        className="fixed top-4 left-28 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
+        className="fixed top-4 right-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
       >
         <HomeIcon size={18} />
         <span className="font-medium">首頁</span>
