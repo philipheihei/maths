@@ -590,14 +590,14 @@ const KeyBtn = ({ val, onClick, className = "", icon }) => (
   </button>
 );
 
-const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) => {
+const Keypad = ({ onInput, onDelete, onClear, onEnter, onTab, showFraction = false }) => {
   const handleKeyPress = (key) => {
     if (key === 'C') onClear();
     else if (key === 'Backspace') onDelete();
     else if (key === 'Enter') onEnter();
     else if (key === 'Tab') {
       // Tab functionality - move to next input
-      onEnter();
+      if (onTab) onTab();
     }
     else onInput(key);
   };
@@ -631,9 +631,9 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) =
           <KeyBtn val="+" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('+')} />
 
           {/* Row 4 (Special Keys) */}
-          <KeyBtn val="AC" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} icon={<RotateCcw size={18} />} />
+          <KeyBtn val="AC" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} />
           <KeyBtn val={0} onClick={() => handleKeyPress('0')} />
-          <KeyBtn val="DEL" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} icon={<Delete size={18} />} />
+          <KeyBtn val="DEL" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} />
           
           {/* Action Button with TAB effect */}
           <button 
@@ -681,9 +681,9 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) =
         <KeyBtn val="=" className="bg-gray-200 text-gray-600" onClick={() => handleKeyPress('=')} />
 
         {/* Row 4 (Special Keys) */}
-        <KeyBtn val="AC" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} icon={<RotateCcw size={18} />} />
+        <KeyBtn val="AC" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} />
         <KeyBtn val={0} onClick={() => handleKeyPress('0')} />
-        <KeyBtn val="DEL" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} icon={<Delete size={18} />} />
+        <KeyBtn val="DEL" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} />
         
         {/* Action Button with TAB effect - spans 3 columns */}
         <button 
@@ -853,6 +853,31 @@ export default function SimultaneousEqQuiz() {
     if (!activeInput) return;
     const { setter } = activeInput;
     setter('');
+  };
+
+  const handleKeypadTab = () => {
+    // Move to next input field
+    const allInputKeys = Object.keys(inputRefs.current);
+    if (allInputKeys.length === 0) return;
+    
+    const currentField = activeInput?.field;
+    if (!currentField) {
+      // Focus first input if no active input
+      const firstKey = allInputKeys[0];
+      inputRefs.current[firstKey]?.focus();
+      return;
+    }
+    
+    // Find current index and move to next
+    const currentIndex = allInputKeys.indexOf(currentField);
+    if (currentIndex !== -1 && currentIndex < allInputKeys.length - 1) {
+      const nextKey = allInputKeys[currentIndex + 1];
+      inputRefs.current[nextKey]?.focus();
+    } else {
+      // Loop back to first input
+      const firstKey = allInputKeys[0];
+      inputRefs.current[firstKey]?.focus();
+    }
   };
 
   const handleInputChange = (newVal, type, index, partIdx) => {
@@ -1832,6 +1857,7 @@ export default function SimultaneousEqQuiz() {
                 onDelete={handleKeypadDelete} 
                 onClear={handleKeypadClear} 
                 onEnter={handleSubmit}
+                onTab={handleKeypadTab}
                 showFraction={showFractionKeypad}
             />
             
