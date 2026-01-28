@@ -452,46 +452,6 @@ const Prog01Lv2OriginalDisplay = ({ eq1, eq2, varX, varY }) => {
   return <div ref={containerRef} className="text-2xl ml-4" />;
 };
 
-// Display for Prog01 LV2 original equations with LaTeX
-const Prog01Lv2OriginalDisplay = ({ eq1, eq2, varX, varY }) => {
-  const [katexLoaded, setKatexLoaded] = useState(false);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    loadKatexOnce().then(() => setKatexLoaded(true));
-  }, []);
-
-  useEffect(() => {
-    if (katexLoaded && containerRef.current && window.katex) {
-      // Clean up display equations by removing spaces around operators
-      const cleanEq1 = eq1.replace(/\s+/g, '');
-      const cleanEq2 = eq2.replace(/\s+/g, '');
-      
-      const latex = `\\left\\{\\begin{array}{l} ${cleanEq1} \\\\ ${cleanEq2} \\end{array}\\right.`;
-      try {
-        window.katex.render(latex, containerRef.current, {
-          displayMode: true,
-          throwOnError: false
-        });
-      } catch (e) {
-        console.error('KaTeX render error:', e);
-        containerRef.current.innerHTML = `<div class="text-xl space-y-2"><div>${eq1}</div><div>${eq2}</div></div>`;
-      }
-    }
-  }, [katexLoaded, eq1, eq2]);
-
-  if (!katexLoaded) {
-    return (
-      <div className="text-xl space-y-2 ml-4 font-mono">
-        <div>{eq1}</div>
-        <div>{eq2}</div>
-      </div>
-    );
-  }
-
-  return <div ref={containerRef} className="text-2xl ml-4" />;
-};
-
 const LaTeXEquationDisplay = ({ a, b, c, d, e, f }) => {
   const [katexLoaded, setKatexLoaded] = useState(false);
   const containerRef = useRef(null);
