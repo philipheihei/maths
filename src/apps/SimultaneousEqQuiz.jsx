@@ -640,7 +640,7 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) =
             onClick={() => handleKeyPress('Tab')}
             className="bg-teal-600 hover:bg-teal-700 text-white rounded-lg shadow-md border-b-4 border-teal-800 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center font-bold text-lg"
           >
-            Next
+            next
           </button>
         </div>
       </div>
@@ -690,7 +690,7 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) =
           onClick={() => handleKeyPress('Tab')}
           className="col-span-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg shadow-md border-b-4 border-teal-800 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center font-bold text-lg"
         >
-          Next
+          next
         </button>
       </div>
     </div>
@@ -1291,16 +1291,13 @@ export default function SimultaneousEqQuiz() {
   // Prog01 LV2 Render
   const renderProg01Lv2 = () => {
     if (!prog01Question) return null;
-    const { eq1Display, eq2Display, eq1Standard, eq2Standard, varX, varY } = prog01Question;
+    const { eq1Standard, eq2Standard, varX, varY } = prog01Question;
 
     return (
       <div className="space-y-6">
         <div className="bg-amber-50 p-6 rounded-xl border-2 border-amber-200">
           <h3 className="text-lg font-bold text-amber-800 mb-4">原題：</h3>
-          <div className="space-y-2 ml-4 text-xl font-mono">
-            <p>{eq1Display}</p>
-            <p>{eq2Display}</p>
-          </div>
+          <LaTeXEquationDisplay a={eq1Standard.a} b={eq1Standard.b} c={eq1Standard.c} d={eq2Standard.a} e={eq2Standard.b} f={eq2Standard.c} />
         </div>
 
         {prog01Step === 1 ? (
@@ -1826,7 +1823,7 @@ export default function SimultaneousEqQuiz() {
                   disabled={feedback !== null && feedback.type !== 'error'}
                   className="hidden md:block bg-green-600 hover:bg-green-500 disabled:bg-gray-600 px-6 py-2 rounded-lg font-bold shadow transition"
                 >
-                  {mode === 'prog01-lv2' && prog01Step === 1 ? '遞交答案' : '檢查答案'}
+                  {mode && mode.startsWith('prog01') ? '遞交答案' : '檢查答案'}
                 </button>
             </div>
             
