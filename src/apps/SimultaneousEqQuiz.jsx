@@ -370,9 +370,7 @@ const LaTeXEquationDisplay = ({ a, b, c, d, e, f }) => {
 
   useEffect(() => {
     if (katexLoaded && containerRef.current && window.katex) {
-      const bSign = b >= 0 ? '+' : '';
-      const eSign = e >= 0 ? '+' : '';
-      const latex = `\\left\\{\\begin{array}{l} ${a}x ${bSign} ${Math.abs(b)}y = ${c} \\\\ ${d}x ${eSign} ${Math.abs(e)}y = ${f} \\end{array}\\right.`;
+      const latex = `\\left\\{\\begin{array}{l} ${a}x${b >= 0 ? '+' : ''} ${b}y = ${c} \\\\ ${d}x${e >= 0 ? '+' : ''} ${e}y = ${f} \\end{array}\\right.`;
       try {
         window.katex.render(latex, containerRef.current, {
           displayMode: true,
@@ -539,7 +537,7 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
   );
 };
 
-const Keypad = ({ onInput, onDelete, onClear, onEnter, isVisible, toggleVisibility, showFraction = false }) => {
+const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) => {
   const keys = showFraction 
     ? [
         '7', '8', '9', '/',
@@ -554,25 +552,12 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, isVisible, toggleVisibili
         'AC', '0', 'DEL', 'Enter'
       ];
 
-  if (!isVisible) return (
-     <button 
-       onClick={toggleVisibility}
-       className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg z-50 hover:bg-blue-700 transition"
-       title="開啟小鍵盤"
-     >
-       <KeyboardIcon size={24} />
-     </button>
-  );
-
   const gridCols = showFraction ? 'grid-cols-4' : 'grid-cols-6';
 
   return (
     <div className={`fixed bottom-0 right-0 w-full ${showFraction ? 'md:w-80' : 'md:w-96'} md:bottom-4 md:right-4 bg-gray-100 p-2 md:p-3 border md:border-2 border-gray-300 md:rounded-xl shadow-2xl z-50 pb-6 md:pb-2 transition-all`}>
       <div className="flex justify-between items-center mb-2 px-1">
          <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Math Keypad</span>
-         <button onClick={toggleVisibility} className="text-gray-400 hover:text-gray-600">
-            <KeyboardIcon size={20}/>
-         </button>
       </div>
       <div className={`grid ${gridCols} gap-2`}>
         {keys.map((k, idx) => {
@@ -653,7 +638,6 @@ export default function SimultaneousEqQuiz() {
   const [lv2Inputs, setLv2Inputs] = useState(["", ""]);
   const [wordLv1Completed, setWordLv1Completed] = useState(false);
   
-  const [showKeypad, setShowKeypad] = useState(true);
   const [activeInput, setActiveInput] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [showNotes, setShowNotes] = useState(false);
@@ -1718,8 +1702,6 @@ export default function SimultaneousEqQuiz() {
             </div>
             
             <Keypad 
-                isVisible={showKeypad}
-                toggleVisibility={() => setShowKeypad(!showKeypad)}
                 onInput={handleKeypadInput} 
                 onDelete={handleKeypadDelete} 
                 onClear={handleKeypadClear} 
