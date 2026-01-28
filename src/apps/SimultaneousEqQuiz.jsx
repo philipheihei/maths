@@ -204,19 +204,42 @@ const PROG01_LV2_TEMPLATES = [
     id: 'C',
     generate: () => {
       // 使用能产生整数答案的参数组合
+      // 公式: kx = y, coef(y - offset) = x + offset
+      // 代入: coef(kx - offset) = x + offset
+      // coef*k*x - coef*offset = x + offset
+      // x(coef*k - 1) = offset(1 + coef)
+      // x = offset(1 + coef) / (coef*k - 1)
+      // 需要確保 (coef*k - 1) 能整除 offset(1 + coef)
       const combinations = [
-        { k: 2, coef: 2, offset: 20 },  // x=60, y=120
-        { k: 3, coef: 2, offset: 20 },  // x=60, y=180
-        { k: 2, coef: 3, offset: 20 },  // x=40, y=80
-        { k: 3, coef: 3, offset: 30 },  // x=60, y=180
-        { k: 4, coef: 2, offset: 30 },  // x=90, y=360
-        { k: 2, coef: 2, offset: 30 }   // x=90, y=180
+        { k: 2, coef: 3, offset: 10 },  // x = 10(4)/5 = 8, y = 16
+        { k: 3, coef: 2, offset: 10 },  // x = 10(3)/5 = 6, y = 18
+        { k: 4, coef: 2, offset: 14 },  // x = 14(3)/7 = 6, y = 24
+        { k: 3, coef: 3, offset: 8 },   // x = 8(4)/8 = 4, y = 12
+        { k: 2, coef: 2, offset: 9 },   // x = 9(3)/3 = 9, y = 18
+        { k: 5, coef: 2, offset: 18 },  // x = 18(3)/9 = 6, y = 30
+        { k: 4, coef: 3, offset: 22 },  // x = 22(4)/11 = 8, y = 32
+        { k: 2, coef: 4, offset: 7 },   // x = 7(5)/7 = 5, y = 10
+        { k: 3, coef: 4, offset: 11 }   // x = 11(5)/11 = 5, y = 15
       ];
       
       const { k, coef, offset } = combinations[Math.floor(Math.random() * combinations.length)];
       const c2 = offset * (1 + coef);
-      const x = c2 / (coef * k - 1);
+      const divisor = coef * k - 1;
+      const x = c2 / divisor;
       const y = k * x;
+      
+      // 驗證答案是整數
+      if (!Number.isInteger(x) || !Number.isInteger(y)) {
+        // 備用方案：使用簡單的整數答案
+        return {
+          eq1Display: `2x = y`,
+          eq2Display: `3(y − 9) = x + 9`,
+          eq1Standard: { a: 2, b: -1, c: 0 },
+          eq2Standard: { a: -1, b: 3, c: 36 },
+          xVal: 9,
+          yVal: 18
+        };
+      }
       
       return {
         eq1Display: `${k}x = y`,
