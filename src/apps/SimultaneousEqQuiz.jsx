@@ -993,15 +993,35 @@ export default function SimultaneousEqQuiz() {
     
     const { eq1Standard, eq2Standard } = prog01Question;
     
+    // Helper function to check if user input matches expected value
+    const isCorrectCoefficient = (userInput, expected) => {
+      const trimmed = (userInput || '').trim();
+      const expectedVal = parseFloat(expected);
+      
+      // If expected is 1
+      if (expectedVal === 1) {
+        return trimmed === '1' || trimmed === '' || trimmed === '+' || trimmed === '+1';
+      }
+      
+      // If expected is -1
+      if (expectedVal === -1) {
+        return trimmed === '-1' || trimmed === '-';
+      }
+      
+      // For other values, parse and compare
+      const userVal = parseFloat(trimmed);
+      return !isNaN(userVal) && Math.abs(userVal - expectedVal) < 0.0001;
+    };
+    
     const eq1Correct = 
-      parseFloat(eq1Inputs.a) === eq1Standard.a &&
-      parseFloat(eq1Inputs.b) === eq1Standard.b &&
-      parseFloat(eq1Inputs.c) === eq1Standard.c;
+      isCorrectCoefficient(eq1Inputs.a, eq1Standard.a) &&
+      isCorrectCoefficient(eq1Inputs.b, eq1Standard.b) &&
+      isCorrectCoefficient(eq1Inputs.c, eq1Standard.c);
     
     const eq2Correct = 
-      parseFloat(eq2Inputs.a) === eq2Standard.a &&
-      parseFloat(eq2Inputs.b) === eq2Standard.b &&
-      parseFloat(eq2Inputs.c) === eq2Standard.c;
+      isCorrectCoefficient(eq2Inputs.a, eq2Standard.a) &&
+      isCorrectCoefficient(eq2Inputs.b, eq2Standard.b) &&
+      isCorrectCoefficient(eq2Inputs.c, eq2Standard.c);
     
     if (eq1Correct && eq2Correct) {
       setFeedback({
