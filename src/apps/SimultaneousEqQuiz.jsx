@@ -1456,6 +1456,8 @@ export default function SimultaneousEqQuiz() {
                   <input
                     ref={el => inputRefs.current['x2'] = el}
                     type="text"
+                    inputMode="none"
+                    readOnly
                     value={xAnswer}
                     onChange={(e) => setXAnswer(e.target.value)}
                     onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer })}
@@ -1474,6 +1476,8 @@ export default function SimultaneousEqQuiz() {
                   <input
                     ref={el => inputRefs.current['y2'] = el}
                     type="text"
+                    inputMode="none"
+                    readOnly
                     value={yAnswer}
                     onChange={(e) => setYAnswer(e.target.value)}
                     onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer })}
