@@ -517,7 +517,7 @@ const MathRenderer = ({ expression, size = 'normal' }) => {
   );
 };
 
-const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = false, inputs = {}, onInputChange, inputRefs, eqIndex }) => {
+const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = false, inputs = {}, onInputChange, onFocus, inputRefs, eqIndex }) => {
   if (showPlaceholders) {
     return (
       <div className="flex items-center gap-1 text-xl md:text-2xl font-mono flex-wrap">
@@ -527,6 +527,7 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
           inputMode="none"
           value={inputs.a || ''}
           onChange={(e) => onInputChange && onInputChange('a', e.target.value)}
+          onFocus={() => onFocus && onFocus('a')}
           className="w-12 h-10 text-center border-2 border-blue-300 rounded bg-blue-50 focus:border-blue-500 focus:outline-none"
           placeholder="?"
         />
@@ -538,6 +539,7 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
           inputMode="none"
           value={inputs.b || ''}
           onChange={(e) => onInputChange && onInputChange('b', e.target.value)}
+          onFocus={() => onFocus && onFocus('b')}
           className="w-12 h-10 text-center border-2 border-green-300 rounded bg-green-50 focus:border-green-500 focus:outline-none"
           placeholder="?"
         />
@@ -549,6 +551,7 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
           inputMode="none"
           value={inputs.c || ''}
           onChange={(e) => onInputChange && onInputChange('c', e.target.value)}
+          onFocus={() => onFocus && onFocus('c')}
           className="w-14 h-10 text-center border-2 border-purple-300 rounded bg-purple-50 focus:border-purple-500 focus:outline-none"
           placeholder="?"
         />
@@ -1365,6 +1368,8 @@ export default function SimultaneousEqQuiz() {
                     inputs={eq1Inputs}
                     onInputChange={(key, val) => {
                       setEq1Inputs(prev => ({ ...prev, [key]: val }));
+                    }}
+                    onFocus={(key) => {
                       setActiveInput({ 
                         field: `eq1-${key}`, 
                         setter: (v) => setEq1Inputs(p => ({ ...p, [key]: v }))
@@ -1383,6 +1388,8 @@ export default function SimultaneousEqQuiz() {
                     inputs={eq2Inputs}
                     onInputChange={(key, val) => {
                       setEq2Inputs(prev => ({ ...prev, [key]: val }));
+                    }}
+                    onFocus={(key) => {
                       setActiveInput({ 
                         field: `eq2-${key}`, 
                         setter: (v) => setEq2Inputs(p => ({ ...p, [key]: v }))
