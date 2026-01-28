@@ -60,14 +60,15 @@ const compareAnswers = (userInput, correctNum, correctDen) => {
 
 // ========== PROG01 題目生成器 ==========
 const generateProg01Lv1Question = () => {
-  const xNumerators = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const yNumerators = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const denominators = [1, 1, 1, 1, 2, 2, 3];
+  // 确保答案是整数：只使用整数值
+  const xNumerators = [-10, -8, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const yNumerators = [-10, -8, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const denominators = [1];  // 只使用1作为分母，确保答案是整数
   
   const xNum = xNumerators[Math.floor(Math.random() * xNumerators.length)];
-  const xDen = denominators[Math.floor(Math.random() * denominators.length)];
+  const xDen = 1;
   const yNum = yNumerators[Math.floor(Math.random() * yNumerators.length)];
-  const yDen = denominators[Math.floor(Math.random() * denominators.length)];
+  const yDen = 1;
   
   const xVal = xNum / xDen;
   const yVal = yNum / yDen;
@@ -137,55 +138,63 @@ const PROG01_LV2_TEMPLATES = [
   {
     id: 'A',
     generate: () => {
-      const k = [1.2, 1.4, 1.5, 2, 0.5, 0.8, 2.5][Math.floor(Math.random() * 7)];
-      const total = [100, 120, 150, 180, 200, 240][Math.floor(Math.random() * 6)];
+      // 使用能产生整数答案的k值和total组合
+      const combinations = [
+        { k: 2, total: 180 },     // x=120, y=60
+        { k: 3, total: 200 },     // x=150, y=50
+        { k: 1.5, total: 150 },   // x=90, y=60
+        { k: 0.5, total: 120 },   // x=40, y=80
+        { k: 2.5, total: 140 },   // x=100, y=40
+        { k: 1.4, total: 120 },   // x=70, y=50
+        { k: 0.8, total: 180 }    // x=80, y=100
+      ];
+      
+      const { k, total } = combinations[Math.floor(Math.random() * combinations.length)];
       const y = total / (1 + k);
       const x = k * y;
       
-      if (!Number.isInteger(x) && !Number.isInteger(y * 10) / 10 === y) {
-        const simpleY = 50;
-        const simpleX = k * simpleY;
-        const simpleTotal = simpleX + simpleY;
-        
-        return {
-          eq1Display: `x + y = ${simpleTotal}`,
-          eq2Display: k === Math.floor(k) ? `x = ${k}y` : `x = ${k}y`,
-          eq1Standard: { a: 1, b: 1, c: simpleTotal },
-          eq2Standard: { a: 1, b: -k, c: 0 },
-          xVal: simpleX,
-          yVal: simpleY
-        };
-      }
+      // 确保答案是整数（以防万一）
+      const finalX = Math.round(x);
+      const finalY = Math.round(y);
       
       return {
         eq1Display: `x + y = ${total}`,
         eq2Display: k === Math.floor(k) ? `x = ${k}y` : `x = ${k}y`,
         eq1Standard: { a: 1, b: 1, c: total },
         eq2Standard: { a: 1, b: -k, c: 0 },
-        xVal: x,
-        yVal: y
+        xVal: finalX,
+        yVal: finalY
       };
     }
   },
   {
     id: 'B',
     generate: () => {
-      const a1 = Math.floor(Math.random() * 4) + 2;
-      const b1 = Math.floor(Math.random() * 4) + 2;
-      const a2 = Math.floor(Math.random() * 5) + 5;
-      const b2 = Math.floor(Math.random() * 5) + 5;
+      // 使用能产生整数答案的参数组合
+      const n = Math.floor(Math.random() * 20) + 10;  // n: 10-29的整数
+      const a2 = Math.floor(Math.random() * 3) + 3;   // a2: 3-5
+      const b2 = Math.floor(Math.random() * 3) + 3;   // b2: 3-5
+      const m = (b2 * n) / a2;
       
-      const c = (a1 * b2 + b1 * a2) * 3;
-      const n = c * a2 / (a1 * b2 + b1 * a2);
-      const m = (b2 / a2) * n;
+      // 如果m不是整数，调整n使其成为整数
+      let finalN = n;
+      let finalM = m;
+      if (!Number.isInteger(m)) {
+        finalN = n * a2 / gcd(a2, b2);  // 调整n使m成为整数
+        finalM = (b2 * finalN) / a2;
+      }
+      
+      const a1 = Math.floor(Math.random() * 3) + 2;  // a1: 2-4
+      const b1 = Math.floor(Math.random() * 3) + 2;  // b1: 2-4
+      const c = a1 * finalM + b1 * finalN;
       
       return {
         eq1Display: `${a1}m + ${b1}n = ${c}`,
         eq2Display: `${a2}m = ${b2}n`,
         eq1Standard: { a: a1, b: b1, c: c },
         eq2Standard: { a: a2, b: -b2, c: 0 },
-        xVal: m,
-        yVal: n,
+        xVal: Math.round(finalM),
+        yVal: Math.round(finalN),
         varX: 'm',
         varY: 'n'
       };
@@ -194,12 +203,18 @@ const PROG01_LV2_TEMPLATES = [
   {
     id: 'C',
     generate: () => {
-      const k = Math.floor(Math.random() * 3) + 2;
-      const offset = (Math.floor(Math.random() * 4) + 1) * 10;
+      // 使用能产生整数答案的参数组合
+      const combinations = [
+        { k: 2, coef: 2, offset: 20 },  // x=60, y=120
+        { k: 3, coef: 2, offset: 20 },  // x=60, y=180
+        { k: 2, coef: 3, offset: 20 },  // x=40, y=80
+        { k: 3, coef: 3, offset: 30 },  // x=60, y=180
+        { k: 4, coef: 2, offset: 30 },  // x=90, y=360
+        { k: 2, coef: 2, offset: 30 }   // x=90, y=180
+      ];
       
-      const coef = Math.floor(Math.random() * 2) + 2;
+      const { k, coef, offset } = combinations[Math.floor(Math.random() * combinations.length)];
       const c2 = offset * (1 + coef);
-      
       const x = c2 / (coef * k - 1);
       const y = k * x;
       
@@ -208,8 +223,8 @@ const PROG01_LV2_TEMPLATES = [
         eq2Display: `${coef}(y − ${offset}) = x + ${offset}`,
         eq1Standard: { a: k, b: -1, c: 0 },
         eq2Standard: { a: -1, b: coef, c: c2 },
-        xVal: x,
-        yVal: y
+        xVal: Math.round(x),
+        yVal: Math.round(y)
       };
     }
   }
