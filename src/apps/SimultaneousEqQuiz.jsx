@@ -412,6 +412,86 @@ const renderTextWithItalics = (text) => {
 };
 
 // ========== 渲染組件 ==========
+// Display for Prog01 LV2 original equations with LaTeX
+const Prog01Lv2OriginalDisplay = ({ eq1, eq2, varX, varY }) => {
+  const [katexLoaded, setKatexLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    loadKatexOnce().then(() => setKatexLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    if (katexLoaded && containerRef.current && window.katex) {
+      // Clean up display equations by removing spaces around operators
+      const cleanEq1 = eq1.replace(/\s+/g, '');
+      const cleanEq2 = eq2.replace(/\s+/g, '');
+      
+      const latex = `\\left\\{\\begin{array}{l} ${cleanEq1} \\\\ ${cleanEq2} \\end{array}\\right.`;
+      try {
+        window.katex.render(latex, containerRef.current, {
+          displayMode: true,
+          throwOnError: false
+        });
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+        containerRef.current.innerHTML = `<div class="text-xl space-y-2"><div>${eq1}</div><div>${eq2}</div></div>`;
+      }
+    }
+  }, [katexLoaded, eq1, eq2]);
+
+  if (!katexLoaded) {
+    return (
+      <div className="text-xl space-y-2 ml-4 font-mono">
+        <div>{eq1}</div>
+        <div>{eq2}</div>
+      </div>
+    );
+  }
+
+  return <div ref={containerRef} className="text-2xl ml-4" />;
+};
+
+// Display for Prog01 LV2 original equations with LaTeX
+const Prog01Lv2OriginalDisplay = ({ eq1, eq2, varX, varY }) => {
+  const [katexLoaded, setKatexLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    loadKatexOnce().then(() => setKatexLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    if (katexLoaded && containerRef.current && window.katex) {
+      // Clean up display equations by removing spaces around operators
+      const cleanEq1 = eq1.replace(/\s+/g, '');
+      const cleanEq2 = eq2.replace(/\s+/g, '');
+      
+      const latex = `\\left\\{\\begin{array}{l} ${cleanEq1} \\\\ ${cleanEq2} \\end{array}\\right.`;
+      try {
+        window.katex.render(latex, containerRef.current, {
+          displayMode: true,
+          throwOnError: false
+        });
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+        containerRef.current.innerHTML = `<div class="text-xl space-y-2"><div>${eq1}</div><div>${eq2}</div></div>`;
+      }
+    }
+  }, [katexLoaded, eq1, eq2]);
+
+  if (!katexLoaded) {
+    return (
+      <div className="text-xl space-y-2 ml-4 font-mono">
+        <div>{eq1}</div>
+        <div>{eq2}</div>
+      </div>
+    );
+  }
+
+  return <div ref={containerRef} className="text-2xl ml-4" />;
+};
+
 const LaTeXEquationDisplay = ({ a, b, c, d, e, f }) => {
   const [katexLoaded, setKatexLoaded] = useState(false);
   const containerRef = useRef(null);
@@ -856,8 +936,16 @@ export default function SimultaneousEqQuiz() {
         setter: (v) => setEq1Inputs(p => ({ ...p, a: v }))
       });
       setTimeout(() => inputRefs.current['eq1-a']?.focus(), 0);
+    } else if (mode === 'prog01-lv2' && prog01Step === 2 && prog01Question && !feedback) {
+      // Auto-focus when entering step 2
+      const { varX } = prog01Question;
+      const firstInputKey = varX === 'x' ? 'x2' : 'm2';
+      if (inputRefs.current[firstInputKey] && !activeInput) {
+        setActiveInput({ field: varX, setter: setXAnswer });
+        setTimeout(() => inputRefs.current[firstInputKey]?.focus(), 100);
+      }
     }
-  }, [prog01Step, prog01Question, mode]);
+  }, [prog01Step, prog01Question, mode, feedback, activeInput]);
 
   const resetWordState = () => {
     setLv1Inputs({});
@@ -1054,6 +1142,10 @@ export default function SimultaneousEqQuiz() {
       setTimeout(() => {
         setProg01Step(2);
         setFeedback(null);
+        // Auto-focus first input in step 2
+        const firstInputKey = varX === 'x' ? 'x2' : 'm2';
+        setActiveInput({ field: varX, setter: setXAnswer });
+        setTimeout(() => inputRefs.current[firstInputKey]?.focus(), 100);
       }, 1500);
     } else {
       setFeedback({
@@ -1387,10 +1479,7 @@ export default function SimultaneousEqQuiz() {
       <div className="space-y-6">
         <div className="bg-amber-50 p-6 rounded-xl border-2 border-amber-200">
           <h3 className="text-lg font-bold text-amber-800 mb-4">原題：</h3>
-          <div className="space-y-2 ml-4 text-xl font-mono">
-            <p>{eq1Display}</p>
-            <p>{eq2Display}</p>
-          </div>
+          <Prog01Lv2OriginalDisplay eq1={eq1Display} eq2={eq2Display} varX={varX} varY={varY} />
         </div>
 
         {prog01Step === 1 ? (
