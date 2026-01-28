@@ -1244,13 +1244,10 @@ export default function SimultaneousEqQuiz() {
         <div className="grid grid-cols-2 gap-4">
           <div 
             className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'x' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-gray-50'}`}
-            onClick={() => {
-              setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer });
-              inputRefs.current['x']?.focus();
-            }}
+            onClick={() => inputRefs.current['x']?.focus()}
           >
-            <label className="block text-sm font-bold text-gray-600 mb-2">
-              <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>x</span> =
+            <label className="block text-lg font-bold text-gray-600 mb-2">
+              <span className="italic text-2xl" style={{ fontFamily: 'Times New Roman, serif' }}>x</span> =
             </label>
             <input
               ref={el => inputRefs.current['x'] = el}
@@ -1265,13 +1262,10 @@ export default function SimultaneousEqQuiz() {
           
           <div 
             className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'y' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-gray-50'}`}
-            onClick={() => {
-              setActiveInput({ field: 'y', setter: setYAnswer, current: yAnswer });
-              inputRefs.current['y']?.focus();
-            }}
+            onClick={() => inputRefs.current['y']?.focus()}
           >
-            <label className="block text-sm font-bold text-gray-600 mb-2">
-              <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>y</span> =
+            <label className="block text-lg font-bold text-gray-600 mb-2">
+              <span className="italic text-2xl" style={{ fontFamily: 'Times New Roman, serif' }}>y</span> =
             </label>
             <input
               ref={el => inputRefs.current['y'] = el}
@@ -1431,13 +1425,10 @@ export default function SimultaneousEqQuiz() {
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div 
                   className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'x' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white'}`}
-                  onClick={() => {
-                    setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer });
-                    inputRefs.current['x2']?.focus();
-                  }}
+                  onClick={() => inputRefs.current['x2']?.focus()}
                 >
-                  <label className="block text-sm font-bold text-gray-600 mb-2">
-                    <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span> =
+                  <label className="block text-lg font-bold text-gray-600 mb-2">
+                    <span className="italic text-2xl" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span> =
                   </label>
                   <input
                     ref={el => inputRefs.current['x2'] = el}
@@ -1452,13 +1443,10 @@ export default function SimultaneousEqQuiz() {
                 
                 <div 
                   className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'y' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'}`}
-                  onClick={() => {
-                    setActiveInput({ field: 'y', setter: setYAnswer, current: yAnswer });
-                    inputRefs.current['y2']?.focus();
-                  }}
+                  onClick={() => inputRefs.current['y2']?.focus()}
                 >
-                  <label className="block text-sm font-bold text-gray-600 mb-2">
-                    <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span> =
+                  <label className="block text-lg font-bold text-gray-600 mb-2">
+                    <span className="italic text-2xl" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span> =
                   </label>
                   <input
                     ref={el => inputRefs.current['y2'] = el}
@@ -1773,7 +1761,15 @@ export default function SimultaneousEqQuiz() {
   return (
     <>
       <button 
-        onClick={() => setMode(null)}
+        onClick={() => {
+          setMode(null);
+          setProg01Step(1);
+          setFeedback(null);
+          setXAnswer('');
+          setYAnswer('');
+          setEq1Inputs({ a: '', b: '', c: '' });
+          setEq2Inputs({ a: '', b: '', c: '' });
+        }}
         className="fixed top-4 left-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
       >
         <ArrowLeft size={18} />
