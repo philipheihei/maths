@@ -768,6 +768,26 @@ export default function SimultaneousEqQuiz() {
     }
   }, [qIndex, mode, questionOrder]);
 
+  // Auto-focus first input when prog01 question loads
+  useEffect(() => {
+    if (mode === 'prog01-lv1' && prog01Question && !activeInput && inputRefs.current['x']) {
+      setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer });
+      setTimeout(() => inputRefs.current['x']?.focus(), 0);
+    }
+  }, [prog01Question, mode]);
+
+  // Auto-focus first input when prog01 lv2 step changes
+  useEffect(() => {
+    if (mode === 'prog01-lv2' && prog01Step === 1 && prog01Question && !activeInput && inputRefs.current['eq1-a']) {
+      setActiveInput({ 
+        field: 'eq1-a', 
+        setter: (v) => setEq1Inputs(p => ({ ...p, a: v })),
+        current: eq1Inputs.a
+      });
+      setTimeout(() => inputRefs.current['eq1-a']?.focus(), 0);
+    }
+  }, [prog01Step, prog01Question, mode]);
+
   const resetWordState = () => {
     setLv1Inputs({});
     setLv2Inputs(["", ""]);
@@ -1161,14 +1181,6 @@ export default function SimultaneousEqQuiz() {
     if (!prog01Question) return null;
     const { a, b, c, d, e, f } = prog01Question;
     
-    // Auto-focus first input on first render
-    useEffect(() => {
-      if (!activeInput && inputRefs.current['x']) {
-        setActiveInput({ field: 'x', setter: setXAnswer, current: xAnswer });
-        inputRefs.current['x'].focus();
-      }
-    }, [prog01Question]);
-    
     return (
       <div className="space-y-6">
         <div className="bg-slate-50 p-6 rounded-xl border-2 border-slate-200">
@@ -1252,18 +1264,6 @@ export default function SimultaneousEqQuiz() {
   const renderProg01Lv2 = () => {
     if (!prog01Question) return null;
     const { eq1Display, eq2Display, eq1Standard, eq2Standard, varX, varY } = prog01Question;
-
-    // Auto-focus first input on first render or step change
-    useEffect(() => {
-      if (prog01Step === 1 && !activeInput && inputRefs.current['eq1-a']) {
-        setActiveInput({ 
-          field: 'eq1-a', 
-          setter: (v) => setEq1Inputs(p => ({ ...p, a: v })),
-          current: eq1Inputs.a
-        });
-        inputRefs.current['eq1-a'].focus();
-      }
-    }, [prog01Step, prog01Question]);
 
     return (
       <div className="space-y-6">
