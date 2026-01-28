@@ -370,7 +370,16 @@ const LaTeXEquationDisplay = ({ a, b, c, d, e, f }) => {
 
   useEffect(() => {
     if (katexLoaded && containerRef.current && window.katex) {
-      const latex = `\\left\\{\\begin{array}{l} ${a}x${b >= 0 ? '+' : ''} ${b}y = ${c} \\\\ ${d}x${e >= 0 ? '+' : ''} ${e}y = ${f} \\end{array}\\right.`;
+      // Format coefficient: omit 1, show -1 as just minus sign
+      const formatCoef = (coef) => {
+        if (coef === 1) return '';
+        if (coef === -1) return '-';
+        return coef;
+      };
+      
+      const bSign = b >= 0 ? '+' : '';
+      const eSign = e >= 0 ? '+' : '';
+      const latex = `\\left\\{\\begin{array}{l} ${formatCoef(a)}x${bSign} ${formatCoef(Math.abs(b))}y = ${c} \\\\ ${formatCoef(d)}x${eSign} ${formatCoef(Math.abs(e))}y = ${f} \\end{array}\\right.`;
       try {
         window.katex.render(latex, containerRef.current, {
           displayMode: true,
@@ -537,54 +546,120 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
   );
 };
 
+// ========== 鍵盤組件 ==========
+// Reusable Key Component
+const KeyBtn = ({ val, onClick, className = "", icon }) => (
+  <button 
+    onClick={onClick}
+    className={`
+      h-14 rounded-lg text-xl font-medium shadow-sm border border-gray-300 
+      active:bg-gray-200 transition-colors flex items-center justify-center
+      bg-white text-gray-800 hover:bg-gray-50
+      ${className}
+    `}
+  >
+    {icon ? icon : val}
+  </button>
+);
+
 const Keypad = ({ onInput, onDelete, onClear, onEnter, showFraction = false }) => {
-  const keys = showFraction 
-    ? [
-        '7', '8', '9', '/',
-        '4', '5', '6', '-',
-        '1', '2', '3', '+',
-        'AC', '0', 'DEL', 'Enter'
-      ]
-    : [
-        '7', '8', '9', '/', '(', ')',
-        '4', '5', '6', '*', 'x', 'y',
-        '1', '2', '3', '+', '-', '=',
-        'AC', '0', 'DEL', 'Enter'
-      ];
+  const handleKeyPress = (key) => {
+    if (key === 'C') onClear();
+    else if (key === 'Backspace') onDelete();
+    else if (key === 'Enter') onEnter();
+    else onInput(key);
+  };
 
-  const gridCols = showFraction ? 'grid-cols-4' : 'grid-cols-6';
+  if (showFraction) {
+    // Fraction Keypad (4 columns)
+    return (
+      <div className="fixed bottom-0 left-0 right-0 md:relative z-30">
+        {/* Drag handle for mobile only */}
+        <div className="flex justify-center pt-2 md:hidden bg-gray-100">
+          <div className="w-12 h-1.5 bg-gray-300 rounded-full"></div>
+        </div>
+        
+        <div className="bg-gray-100 p-2 pb-6 md:pb-2 grid grid-cols-4 gap-2 border-t border-gray-200 select-none shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+          {/* Row 1 */}
+          {[7, 8, 9].map(n => (
+            <KeyBtn key={n} val={n} onClick={() => handleKeyPress(n.toString())} />
+          ))}
+          <KeyBtn val="/" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('/')} />
 
+          {/* Row 2 */}
+          {[4, 5, 6].map(n => (
+            <KeyBtn key={n} val={n} onClick={() => handleKeyPress(n.toString())} />
+          ))}
+          <KeyBtn val="-" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('-')} />
+
+          {/* Row 3 */}
+          {[1, 2, 3].map(n => (
+            <KeyBtn key={n} val={n} onClick={() => handleKeyPress(n.toString())} />
+          ))}
+          <KeyBtn val="+" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('+')} />
+
+          {/* Row 4 (Special Keys) */}
+          <KeyBtn val="C" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} icon={<RotateCcw size={18} />} />
+          <KeyBtn val={0} onClick={() => handleKeyPress('0')} />
+          <KeyBtn val="Del" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} icon={<Delete size={18} />} />
+          
+          {/* Action Button with 3D effect */}
+          <button 
+            onClick={() => handleKeyPress('Enter')}
+            className="bg-teal-600 hover:bg-teal-700 text-white rounded-lg shadow-md border-b-4 border-teal-800 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center font-bold text-lg"
+          >
+            確定
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Algebraic Keypad (6 columns)
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-3 z-30 pb-safe md:relative md:shadow-none md:bg-transparent md:border-none md:pb-0 md:mt-4 md:pl-0">
+    <div className="fixed bottom-0 left-0 right-0 md:relative z-30">
       {/* Drag handle for mobile only */}
-      <div className="flex justify-center mb-2 md:hidden">
-        <div className="w-12 h-1.5 bg-gray-200 rounded-full"></div>
+      <div className="flex justify-center pt-2 md:hidden bg-gray-100">
+        <div className="w-12 h-1.5 bg-gray-300 rounded-full"></div>
       </div>
       
-      <div className={`grid ${gridCols} gap-2`}>
-        {keys.map((k, idx) => {
-          if (k === 'Enter') return (
-            <button key={`${k}-${idx}`} onClick={onEnter} className="col-span-2 bg-blue-600 text-white p-3 md:p-2 rounded-lg font-bold active:bg-blue-700 shadow hover:bg-blue-500 text-lg">
-              {showFraction ? '確定' : '提交'}
-            </button>
-          );
-          if (k === 'AC') return (
-            <button key={k} onClick={onClear} className="bg-red-200 p-3 md:p-2 rounded-lg font-bold text-red-800 active:bg-red-300 shadow hover:bg-red-100">AC</button>
-          );
-          if (k === 'DEL') return (
-            <button key={k} onClick={onDelete} className="bg-orange-200 p-3 md:p-2 rounded-lg font-bold text-orange-800 active:bg-orange-300 shadow hover:bg-orange-100">
-               DEL
-            </button>
-          );
-          if (k === '±') return (
-            <button key={k} onClick={() => onInput('±')} className="bg-gray-200 p-3 md:p-2 rounded-lg font-bold text-gray-700 active:bg-gray-300 shadow hover:bg-gray-100">±</button>
-          );
-          return (
-            <button key={k} onClick={() => onInput(k)} className="bg-white p-3 md:p-2 rounded-lg shadow font-bold text-lg md:text-xl active:bg-gray-200 hover:bg-gray-50 text-gray-700">
-              {k === '*' ? '×' : k}
-            </button>
-          );
-        })}
+      <div className="bg-gray-100 p-2 pb-6 md:pb-2 grid grid-cols-6 gap-2 border-t border-gray-200 select-none shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        {/* Row 1 */}
+        {[7, 8, 9].map(n => (
+          <KeyBtn key={n} val={n} onClick={() => handleKeyPress(n.toString())} />
+        ))}
+        <KeyBtn val="/" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('/')} />
+        <KeyBtn val="(" className="bg-gray-200 text-gray-600" onClick={() => handleKeyPress('(')} />
+        <KeyBtn val=")" className="bg-gray-200 text-gray-600" onClick={() => handleKeyPress(')')} />
+
+        {/* Row 2 */}
+        {[4, 5, 6].map(n => (
+          <KeyBtn key={n} val={n} onClick={() => handleKeyPress(n.toString())} />
+        ))}
+        <KeyBtn val="×" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('*')} />
+        <KeyBtn val="x" className="bg-blue-100 text-blue-700 border-blue-200 italic font-serif" onClick={() => handleKeyPress('x')} />
+        <KeyBtn val="y" className="bg-green-100 text-green-700 border-green-200 italic font-serif" onClick={() => handleKeyPress('y')} />
+
+        {/* Row 3 */}
+        {[1, 2, 3].map(n => (
+          <KeyBtn key={n} val={n} onClick={() => handleKeyPress(n.toString())} />
+        ))}
+        <KeyBtn val="+" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('+')} />
+        <KeyBtn val="-" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('-')} />
+        <KeyBtn val="=" className="bg-gray-200 text-gray-600" onClick={() => handleKeyPress('=')} />
+
+        {/* Row 4 (Special Keys) */}
+        <KeyBtn val="C" className="bg-red-100 text-red-600 border-red-200" onClick={() => handleKeyPress('C')} icon={<RotateCcw size={18} />} />
+        <KeyBtn val={0} onClick={() => handleKeyPress('0')} />
+        <KeyBtn val="Del" className="bg-amber-100 text-amber-700 border-amber-200" onClick={() => handleKeyPress('Backspace')} icon={<Delete size={18} />} />
+        
+        {/* Action Button with 3D effect - spans 3 columns */}
+        <button 
+          onClick={() => handleKeyPress('Enter')}
+          className="col-span-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg shadow-md border-b-4 border-teal-800 active:border-b-0 active:translate-y-1 transition-all flex items-center justify-center font-bold text-lg"
+        >
+          提交
+        </button>
       </div>
     </div>
   );
