@@ -388,12 +388,21 @@ const LaTeXEquationDisplay = ({ a, b, c, d, e, f }) => {
       const formatCoef = (coef) => {
         if (coef === 1) return '';
         if (coef === -1) return '-';
-        return coef;
+        return String(coef);
       };
       
-      const bSign = b >= 0 ? '+' : '';
-      const eSign = e >= 0 ? '+' : '';
-      const latex = `\\left\\{\\begin{array}{l} ${formatCoef(a)}x${bSign} ${formatCoef(Math.abs(b))}y = ${c} \\\\ ${formatCoef(d)}x${eSign} ${formatCoef(Math.abs(e))}y = ${f} \\end{array}\\right.`;
+      // Format term with proper sign
+      const formatTerm = (coef, variable) => {
+        if (coef === 0) return '';
+        if (coef === 1) return `+${variable}`;
+        if (coef === -1) return `-${variable}`;
+        if (coef > 0) return `+${coef}${variable}`;
+        return `${coef}${variable}`;
+      };
+      
+      const term1 = formatTerm(b, 'y');
+      const term2 = formatTerm(e, 'y');
+      const latex = `\\left\\{\\begin{array}{l} ${formatCoef(a)}x${term1} = ${c} \\\\ ${formatCoef(d)}x${term2} = ${f} \\end{array}\\right.`;
       try {
         window.katex.render(latex, containerRef.current, {
           displayMode: true,
@@ -406,10 +415,15 @@ const LaTeXEquationDisplay = ({ a, b, c, d, e, f }) => {
   }, [katexLoaded, a, b, c, d, e, f]);
 
   if (!katexLoaded) {
+    const formatTerm = (coef) => {
+      if (coef > 0) return ` + ${coef}`;
+      return ` ${coef}`;
+    };
+    
     return (
       <div className="text-xl space-y-2 ml-4">
-        <div>{a}x {b >= 0 ? '+' : ''} {b}y = {c}</div>
-        <div>{d}x {e >= 0 ? '+' : ''} {e}y = {f}</div>
+        <div>{a}x{formatTerm(b)}y = {c}</div>
+        <div>{d}x{formatTerm(e)}y = {f}</div>
       </div>
     );
   }
