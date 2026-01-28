@@ -1312,7 +1312,7 @@ export default function SimultaneousEqQuiz() {
   // Prog01 LV2 Render
   const renderProg01Lv2 = () => {
     if (!prog01Question) return null;
-    const { eq1Standard, eq2Standard, varX, varY } = prog01Question;
+    const { eq1Display, eq2Display, eq1Standard, eq2Standard, varX, varY } = prog01Question;
     
     if (!eq1Standard || !eq2Standard) {
       console.error('Missing eq1Standard or eq2Standard:', prog01Question);
@@ -1323,7 +1323,10 @@ export default function SimultaneousEqQuiz() {
       <div className="space-y-6">
         <div className="bg-amber-50 p-6 rounded-xl border-2 border-amber-200">
           <h3 className="text-lg font-bold text-amber-800 mb-4">原題：</h3>
-          <LaTeXEquationDisplay a={eq1Standard.a} b={eq1Standard.b} c={eq1Standard.c} d={eq2Standard.a} e={eq2Standard.b} f={eq2Standard.c} />
+          <div className="space-y-2 ml-4 text-xl font-mono">
+            <p>{eq1Display}</p>
+            <p>{eq2Display}</p>
+          </div>
         </div>
 
         {prog01Step === 1 ? (
