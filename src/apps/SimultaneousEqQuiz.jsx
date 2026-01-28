@@ -76,14 +76,22 @@ const generateProg01Lv1Question = () => {
   let attempts = 0;
   
   do {
+    // a 總是正數（第一個方程的 x 係數）
     a = Math.floor(Math.random() * 9) + 1;
-    if (Math.random() < 0.3) a = -a;
     b = Math.floor(Math.random() * 9) + 1;
-    if (Math.random() < 0.3) b = -b;
+    if (Math.random() < 0.5) b = -b;  // b 有 50% 機率是負
+    
+    // d 總是正數或負數，但確保多樣性
     d = Math.floor(Math.random() * 9) + 1;
-    if (Math.random() < 0.3) d = -d;
+    if (Math.random() < 0.6) d = -d;  // d 有 60% 機率是負
+    
+    // e 的符號與 b 相反的機率較高（製造多樣題目）
     e = Math.floor(Math.random() * 9) + 1;
-    if (Math.random() < 0.3) e = -e;
+    if (b > 0) {
+      if (Math.random() < 0.6) e = -e;  // 如果 b 是正，e 有 60% 機率是負
+    } else {
+      if (Math.random() < 0.4) e = -e;  // 如果 b 是負，e 有 40% 機率是負（增加多樣性）
+    }
     
     c = a * xVal + b * yVal;
     f = d * xVal + e * yVal;
@@ -94,14 +102,20 @@ const generateProg01Lv1Question = () => {
   if (!Number.isInteger(c) || !Number.isInteger(f)) {
     const simpleX = Math.floor(Math.random() * 10) - 5;
     const simpleY = Math.floor(Math.random() * 10) - 5;
-    a = Math.floor(Math.random() * 5) + 1;
+    a = Math.floor(Math.random() * 5) + 1;  // a 總是正
     b = Math.floor(Math.random() * 5) + 1;
+    if (Math.random() < 0.5) b = -b;
+    
     d = Math.floor(Math.random() * 5) + 1;
+    if (Math.random() < 0.6) d = -d;
+    
     e = Math.floor(Math.random() * 5) + 1;
-    if (Math.random() < 0.3) a = -a;
-    if (Math.random() < 0.3) b = -b;
-    if (Math.random() < 0.3) d = -d;
-    if (Math.random() < 0.3) e = -e;
+    if (b > 0) {
+      if (Math.random() < 0.6) e = -e;
+    } else {
+      if (Math.random() < 0.4) e = -e;
+    }
+    
     c = a * simpleX + b * simpleY;
     f = d * simpleX + e * simpleY;
     
