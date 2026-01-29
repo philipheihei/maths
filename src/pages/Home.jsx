@@ -198,6 +198,22 @@ const Home = () => {
       category: '高中',
       topics: ['代數分式', '通分母', '因式分解', '化簡'],
       inDevelopment: false
+    },
+    {
+      id: 'approximation-quiz',
+      title: '近似值特訓',
+      description: '近似值：有效數字、上捨入、下捨入、捨入至小數位/整數/有效數字',
+      icon: Calculator,
+      color: 'bg-orange-500',
+      hoverColor: 'hover:bg-orange-600',
+      path: '/approximation-quiz',
+      level: 'F1',
+      badges: [
+        { level: 'F1', chapter: 'CH1', subject: '基礎數論' }
+      ],
+      category: '初中',
+      topics: ['有效數字', '捨入', '近似值'],
+      inDevelopment: false
     }
   ];
 
