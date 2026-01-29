@@ -147,8 +147,22 @@ const formatResult = (result, target) => {
     return result.toFixed(target.value);
   }
   if (target.type === 'sig') {
-    // 對於有效數字，需要特殊處理
-    return result.toPrecision(target.value);
+    // 對於有效數字，不使用toPrecision避免科學記數法
+    // 根據結果决定小數位數
+    if (result === 0) return '0';
+    
+    // 如果是整數，直接返回
+    if (Math.floor(result) === result) {
+      return result.toString();
+    }
+    
+    // 如果有小數，找出需要保留的小數位數
+    const resultStr = result.toString();
+    if (resultStr.includes('e')) {
+      // 如果JavaScript自動轉換成科學記數法，手動處理
+      return result.toFixed(0);
+    }
+    return resultStr;
   }
   return result.toString();
 };
@@ -637,7 +651,7 @@ export default function ApproximationQuiz() {
                 <span className="inline-block bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-bold">題目</span>
               </div>
               <div className="text-center mb-8">
-                <h2 className="text-xl text-slate-600 mb-4">把</h2>
+                <h2 className="text-xl text-slate-600 mb-4">將</h2>
                 <div className="text-4xl font-bold text-slate-800 mb-4 font-mono">
                   {currentQuestion.number}
                 </div>
