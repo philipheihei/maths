@@ -245,32 +245,38 @@ const generateExplanation = (num, method, target, answer) => {
     if (isDecimalPlace) {
       const nextValue = parseInt(positionDigit) + 1;
       explanation += `上捨入 ---> 必定進位至${nextValue}。\n`;
-      explanation += `${positionDigit}之後的小數可以省略不寫`;
+      explanation += `${positionDigit}之後的小數可以省略不寫。`;
     } else if (isIntegerType) {
       const resultInt = Math.floor(answer);
-      explanation += `上捨 → 必定進位。所以保留${resultInt}，小數可以省略不寫`;
+      explanation += `上捨 → 必定進位。\n`;
+      explanation += `所以保留${resultInt}，小數可以省略不寫。`;
     } else if (isHigherIntegerPlace) {
       const nextValue = parseInt(positionDigit) + 1;
-      explanation += `上捨 → 必定進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+      explanation += `上捨 → 必定進位至${nextValue}。\n`;
+      explanation += `${positionDigit}之後的整數部份數字需補0，小數可以省略不寫。`;
     } else {
       // 有效數字 - 從答案中提取進位後的數字
       const answerStr = answer.toString().replace('.', '');
       const firstNonZeroAns = answerStr.search(/[1-9]/);
       const actualDigit = firstNonZeroAns !== -1 ? answerStr[firstNonZeroAns + target.value - 1] : positionDigit;
-      explanation += `上捨 → 必定進位至${actualDigit}。${actualDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+      explanation += `上捨 → 必定進位至${actualDigit}。\n`;
+      explanation += `${actualDigit}之後的整數部份數字需補0，小數可以省略不寫。`;
     }
   } else if (method === '下捨入') {
     if (isDecimalPlace) {
       explanation += `下捨入 ---> 不需進位。\n`;
-      explanation += `${positionDigit}之後的小數可以省略不寫`;
+      explanation += `${positionDigit}之後的小數可以省略不寫。`;
     } else if (isIntegerType) {
       const resultInt = Math.floor(answer);
-      explanation += `下捨 → 不需進位。所以保留${resultInt}，小數可以省略不寫`;
+      explanation += `下捨 → 不需進位。\n`;
+      explanation += `所以保留${resultInt}，小數可以省略不寫。`;
     } else if (isHigherIntegerPlace) {
-      explanation += `下捨 → 不需進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+      explanation += `下捨 → 不需進位。\n`;
+      explanation += `${positionDigit}之後的整數部份數字需補0，小數可以省略不寫。`;
     } else {
       // 有效數字
-      explanation += `下捨 → 不需進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+      explanation += `下捨 → 不需進位。\n`;
+      explanation += `${positionDigit}之後的整數部份數字需補0，小數可以省略不寫。`;
     }
   } else {
     // 捨入 (四捨五入)
@@ -279,32 +285,38 @@ const generateExplanation = (num, method, target, answer) => {
       if (isDecimalPlace) {
         const nextValue = parseInt(positionDigit) + 1;
         explanation += `捨入 ---> 後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。\n`;
-        explanation += `${positionDigit}之後的小數可以省略不寫`;
+        explanation += `${positionDigit}之後的小數可以省略不寫。`;
       } else if (isIntegerType) {
         const resultInt = Math.floor(answer);
-        explanation += `後面的數是 ${nextDigit}，五入 → 進位。所以保留${resultInt}，小數可以省略不寫`;
+        explanation += `後面的數是 ${nextDigit}，五入 → 進位。\n`;
+        explanation += `所以保留${resultInt}，小數可以省略不寫。`;
       } else if (isHigherIntegerPlace) {
         const nextValue = parseInt(positionDigit) + 1;
-        explanation += `後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+        explanation += `後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。\n`;
+        explanation += `${positionDigit}之後的整數部份數字需補0，小數可以省略不寫。`;
       } else {
         // 有效數字 - 從答案中提取進位後的數字
         const answerStr = answer.toString().replace('.', '');
         const firstNonZeroAns = answerStr.search(/[1-9]/);
         const actualDigit = firstNonZeroAns !== -1 ? answerStr[firstNonZeroAns + target.value - 1] : positionDigit;
-        explanation += `後面的數是 ${nextDigit}，五入 → 進位至${actualDigit}。${actualDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+        explanation += `後面的數是 ${nextDigit}，五入 → 進位至${actualDigit}。\n`;
+        explanation += `${actualDigit}之後的整數部份數字需補0，小數可以省略不寫。`;
       }
     } else {
       if (isDecimalPlace) {
         explanation += `捨入 ---> 後面的數是 ${nextDigit}，四捨 → 不用進位。\n`;
-        explanation += `${positionDigit}之後的小數可以省略不寫`;
+        explanation += `${positionDigit}之後的小數可以省略不寫。`;
       } else if (isIntegerType) {
         const resultInt = Math.floor(answer);
-        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。所以保留${resultInt}，小數可以省略不寫`;
+        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。\n`;
+        explanation += `所以保留${resultInt}，小數可以省略不寫。`;
       } else if (isHigherIntegerPlace) {
-        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。\n`;
+        explanation += `${positionDigit}之後的整數部份數字需補0，小數可以省略不寫。`;
       } else {
         // 有效數字
-        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。\n`;
+        explanation += `${positionDigit}之後的整數部份數字需補0，小數可以省略不寫。`;
       }
     }
   }
