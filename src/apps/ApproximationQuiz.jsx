@@ -497,7 +497,7 @@ const NotesSection = () => {
           <div className="flex items-start gap-4">
             <span className="text-blue-600 font-bold">c. 980</span>
             <span className="text-purple-600 text-sm">
-              (位值為8, <span className="text-red-600">下捨 → 不需進位</span>, 小數點後的數字忽略)
+              (位值為8, <span className="text-red-600">下捨 → 不需進位</span>, 8後的整數部份要補上0，小數點後的數字忽略)
             </span>
           </div>
         </div>
