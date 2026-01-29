@@ -253,9 +253,11 @@ const generateExplanation = (num, method, target, answer) => {
       const nextValue = parseInt(positionDigit) + 1;
       explanation += `上捨 → 必定進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
     } else {
-      // 有效數字
-      const nextValue = parseInt(positionDigit) + 1;
-      explanation += `上捨 → 必定進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+      // 有效數字 - 從答案中提取進位後的數字
+      const answerStr = answer.toString().replace('.', '');
+      const firstNonZeroAns = answerStr.search(/[1-9]/);
+      const actualDigit = firstNonZeroAns !== -1 ? answerStr[firstNonZeroAns + target.value - 1] : positionDigit;
+      explanation += `上捨 → 必定進位至${actualDigit}。${actualDigit}之後的整數部份數字需補0，小數可以省略不寫`;
     }
   } else if (method === '下捨入') {
     if (isDecimalPlace) {
@@ -285,9 +287,11 @@ const generateExplanation = (num, method, target, answer) => {
         const nextValue = parseInt(positionDigit) + 1;
         explanation += `後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
       } else {
-        // 有效數字
-        const nextValue = parseInt(positionDigit) + 1;
-        explanation += `後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+        // 有效數字 - 從答案中提取進位後的數字
+        const answerStr = answer.toString().replace('.', '');
+        const firstNonZeroAns = answerStr.search(/[1-9]/);
+        const actualDigit = firstNonZeroAns !== -1 ? answerStr[firstNonZeroAns + target.value - 1] : positionDigit;
+        explanation += `後面的數是 ${nextDigit}，五入 → 進位至${actualDigit}。${actualDigit}之後的整數部份數字需補0，小數可以省略不寫`;
       }
     } else {
       if (isDecimalPlace) {
