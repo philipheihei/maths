@@ -26,11 +26,13 @@ const simplifyFraction = (num, den) => {
 };
 
 const formatAnswer = (num, den) => {
-  const simplified = simplifyFraction(num, den);
-  if (simplified.den === 1) {
-    return String(simplified.num);
+  const value = num / den;
+  // If it's an integer, show without decimal places
+  if (Number.isInteger(value)) {
+    return String(value);
   }
-  return `${simplified.num}/${simplified.den}`;
+  // Otherwise show with 2 decimal places
+  return value.toFixed(2);
 };
 
 const parseUserAnswer = (input) => {
@@ -204,19 +206,42 @@ const PROG01_LV2_TEMPLATES = [
     id: 'C',
     generate: () => {
       // 使用能产生整数答案的参数组合
+      // 公式: kx = y, coef(y - offset) = x + offset
+      // 代入: coef(kx - offset) = x + offset
+      // coef*k*x - coef*offset = x + offset
+      // x(coef*k - 1) = offset(1 + coef)
+      // x = offset(1 + coef) / (coef*k - 1)
+      // 需要確保 (coef*k - 1) 能整除 offset(1 + coef)
       const combinations = [
-        { k: 2, coef: 2, offset: 20 },  // x=60, y=120
-        { k: 3, coef: 2, offset: 20 },  // x=60, y=180
-        { k: 2, coef: 3, offset: 20 },  // x=40, y=80
-        { k: 3, coef: 3, offset: 30 },  // x=60, y=180
-        { k: 4, coef: 2, offset: 30 },  // x=90, y=360
-        { k: 2, coef: 2, offset: 30 }   // x=90, y=180
+        { k: 2, coef: 3, offset: 10 },  // x = 10(4)/5 = 8, y = 16
+        { k: 3, coef: 2, offset: 10 },  // x = 10(3)/5 = 6, y = 18
+        { k: 4, coef: 2, offset: 14 },  // x = 14(3)/7 = 6, y = 24
+        { k: 3, coef: 3, offset: 8 },   // x = 8(4)/8 = 4, y = 12
+        { k: 2, coef: 2, offset: 9 },   // x = 9(3)/3 = 9, y = 18
+        { k: 5, coef: 2, offset: 18 },  // x = 18(3)/9 = 6, y = 30
+        { k: 4, coef: 3, offset: 22 },  // x = 22(4)/11 = 8, y = 32
+        { k: 2, coef: 4, offset: 7 },   // x = 7(5)/7 = 5, y = 10
+        { k: 3, coef: 4, offset: 11 }   // x = 11(5)/11 = 5, y = 15
       ];
       
       const { k, coef, offset } = combinations[Math.floor(Math.random() * combinations.length)];
       const c2 = offset * (1 + coef);
-      const x = c2 / (coef * k - 1);
+      const divisor = coef * k - 1;
+      const x = c2 / divisor;
       const y = k * x;
+      
+      // 驗證答案是整數
+      if (!Number.isInteger(x) || !Number.isInteger(y)) {
+        // 備用方案：使用簡單的整數答案
+        return {
+          eq1Display: `2x = y`,
+          eq2Display: `3(y − 9) = x + 9`,
+          eq1Standard: { a: 2, b: -1, c: 0 },
+          eq2Standard: { a: -1, b: 3, c: 36 },
+          xVal: 9,
+          yVal: 18
+        };
+      }
       
       return {
         eq1Display: `${k}x = y`,
@@ -389,6 +414,46 @@ const renderTextWithItalics = (text) => {
 };
 
 // ========== 渲染組件 ==========
+// Display for Prog01 LV2 original equations with LaTeX
+const Prog01Lv2OriginalDisplay = ({ eq1, eq2, varX, varY }) => {
+  const [katexLoaded, setKatexLoaded] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    loadKatexOnce().then(() => setKatexLoaded(true));
+  }, []);
+
+  useEffect(() => {
+    if (katexLoaded && containerRef.current && window.katex) {
+      // Clean up display equations by removing spaces around operators
+      const cleanEq1 = eq1.replace(/\s+/g, '');
+      const cleanEq2 = eq2.replace(/\s+/g, '');
+      
+      const latex = `\\left\\{\\begin{array}{l} ${cleanEq1} \\\\ ${cleanEq2} \\end{array}\\right.`;
+      try {
+        window.katex.render(latex, containerRef.current, {
+          displayMode: true,
+          throwOnError: false
+        });
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+        containerRef.current.innerHTML = `<div class="text-xl space-y-2"><div>${eq1}</div><div>${eq2}</div></div>`;
+      }
+    }
+  }, [katexLoaded, eq1, eq2]);
+
+  if (!katexLoaded) {
+    return (
+      <div className="text-xl space-y-2 ml-4 font-mono">
+        <div>{eq1}</div>
+        <div>{eq2}</div>
+      </div>
+    );
+  }
+
+  return <div ref={containerRef} className="text-2xl ml-4" />;
+};
+
 const LaTeXEquationDisplay = ({ a, b, c, d, e, f }) => {
   const [katexLoaded, setKatexLoaded] = useState(false);
   const containerRef = useRef(null);
@@ -833,8 +898,16 @@ export default function SimultaneousEqQuiz() {
         setter: (v) => setEq1Inputs(p => ({ ...p, a: v }))
       });
       setTimeout(() => inputRefs.current['eq1-a']?.focus(), 0);
+    } else if (mode === 'prog01-lv2' && prog01Step === 2 && prog01Question && !feedback) {
+      // Auto-focus when entering step 2
+      const { varX } = prog01Question;
+      const firstInputKey = varX === 'x' ? 'x2' : 'm2';
+      if (inputRefs.current[firstInputKey] && !activeInput) {
+        setActiveInput({ field: varX, setter: setXAnswer });
+        setTimeout(() => inputRefs.current[firstInputKey]?.focus(), 100);
+      }
     }
-  }, [prog01Step, prog01Question, mode]);
+  }, [prog01Step, prog01Question, mode, feedback, activeInput]);
 
   const resetWordState = () => {
     setLv1Inputs({});
@@ -873,9 +946,23 @@ export default function SimultaneousEqQuiz() {
   };
 
   const handleKeypadClear = () => {
-    if (!activeInput) return;
-    const { setter } = activeInput;
-    setter('');
+    // Clear all inputs for prog01 modes
+    if (mode === 'prog01-lv1') {
+      setXAnswer('');
+      setYAnswer('');
+    } else if (mode === 'prog01-lv2') {
+      if (prog01Step === 1) {
+        setEq1Inputs({ a: '', b: '', c: '' });
+        setEq2Inputs({ a: '', b: '', c: '' });
+      } else {
+        setXAnswer('');
+        setYAnswer('');
+      }
+    } else if (activeInput) {
+      // For other modes, just clear active input
+      const { setter } = activeInput;
+      setter('');
+    }
   };
 
   const handleKeypadTab = () => {
@@ -1031,6 +1118,10 @@ export default function SimultaneousEqQuiz() {
       setTimeout(() => {
         setProg01Step(2);
         setFeedback(null);
+        // Auto-focus first input in step 2
+        const firstInputKey = varX === 'x' ? 'x2' : 'm2';
+        setActiveInput({ field: varX, setter: setXAnswer });
+        setTimeout(() => inputRefs.current[firstInputKey]?.focus(), 100);
       }, 1500);
     } else {
       setFeedback({
@@ -1364,10 +1455,7 @@ export default function SimultaneousEqQuiz() {
       <div className="space-y-6">
         <div className="bg-amber-50 p-6 rounded-xl border-2 border-amber-200">
           <h3 className="text-lg font-bold text-amber-800 mb-4">原題：</h3>
-          <div className="space-y-2 ml-4 text-xl font-mono">
-            <p>{eq1Display}</p>
-            <p>{eq2Display}</p>
-          </div>
+          <Prog01Lv2OriginalDisplay eq1={eq1Display} eq2={eq2Display} varX={varX} varY={varY} />
         </div>
 
         {prog01Step === 1 ? (
