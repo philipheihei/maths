@@ -153,6 +153,66 @@ const formatResult = (result, target) => {
   return result.toString();
 };
 
+// 生成解釋說明
+const generateExplanation = (num, method, target, answer) => {
+  const numStr = num.toString();
+  let positionDigit = '';
+  let nextDigit = '';
+  let positionName = '';
+  
+  // 找出位值和下一位數字
+  if (target.type === 'integer') {
+    positionName = '個位';
+    const parts = numStr.split('.');
+    positionDigit = parts[0].slice(-1);
+    nextDigit = parts[1] ? parts[1][0] : '0';
+  } else if (target.type === 'tens') {
+    positionName = '十位';
+    const intPart = Math.floor(num).toString();
+    positionDigit = intPart.length >= 2 ? intPart.slice(-2, -1) : '0';
+    nextDigit = intPart.slice(-1);
+  } else if (target.type === 'hundreds') {
+    positionName = '百位';
+    const intPart = Math.floor(num).toString();
+    positionDigit = intPart.length >= 3 ? intPart.slice(-3, -2) : '0';
+    nextDigit = intPart.length >= 2 ? intPart.slice(-2, -1) : '0';
+  } else if (target.type === 'decimal') {
+    positionName = `第${target.value}位小數`;
+    const parts = numStr.split('.');
+    const decPart = parts[1] || '';
+    positionDigit = decPart[target.value - 1] || '0';
+    nextDigit = decPart[target.value] || '0';
+  } else if (target.type === 'sig') {
+    positionName = `第${target.value}位有效數字`;
+    // 找出有效數字
+    const cleanStr = numStr.replace('.', '');
+    const firstNonZero = cleanStr.search(/[1-9]/);
+    if (firstNonZero !== -1) {
+      positionDigit = cleanStr[firstNonZero + target.value - 1] || '0';
+      nextDigit = cleanStr[firstNonZero + target.value] || '0';
+    }
+  }
+  
+  // 生成解釋
+  let explanation = `位值為 ${positionDigit}`;
+  
+  if (method === '上捨入') {
+    explanation += `，上捨 → 必定進位`;
+  } else if (method === '下捨入') {
+    explanation += `，下捨 → 不需進位`;
+  } else {
+    // 捨入 (四捨五入)
+    const nextVal = parseInt(nextDigit);
+    if (nextVal >= 5) {
+      explanation += `，後面的數是 ${nextDigit}，五入 → 進位`;
+    } else {
+      explanation += `，後面的數是 ${nextDigit}，四捨 → 不用進位`;
+    }
+  }
+  
+  return explanation;
+};
+
 // 生成題目
 const generateQuestion = () => {
   const num = generateRandomNumber();
@@ -378,10 +438,17 @@ export default function ApproximationQuiz() {
       setScore(s => s + 1);
       setFeedback({ type: 'correct', message: '答對了！' });
     } else {
+      const explanation = generateExplanation(
+        currentQuestion.number,
+        currentQuestion.method,
+        currentQuestion.target,
+        currentQuestion.answer
+      );
       setFeedback({ 
         type: 'wrong', 
         message: '答錯了',
-        correctAnswer: currentQuestion.displayAnswer
+        correctAnswer: currentQuestion.displayAnswer,
+        explanation
       });
     }
     setQuestionCount(c => c + 1);
@@ -577,7 +644,7 @@ export default function ApproximationQuiz() {
                 <span className="inline-block bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-bold">題目</span>
               </div>
               <div className="text-center mb-8">
-                <h2 className="text-xl text-slate-600 mb-4">將以下數字</h2>
+                <h2 className="text-xl text-slate-600 mb-4">把</h2>
                 <div className="text-4xl font-bold text-slate-800 mb-4 font-mono">
                   {currentQuestion.number}
                 </div>
@@ -639,6 +706,11 @@ export default function ApproximationQuiz() {
                       <div className="text-slate-700 text-lg">
                         <span className="font-bold font-mono text-2xl">{feedback.correctAnswer}</span>
                       </div>
+                      {feedback.explanation && (
+                        <div className="mt-3 text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg">
+                          ({feedback.explanation})
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
