@@ -260,31 +260,31 @@ const NotesSection = () => {
         <div className="text-lg font-mono flex items-center gap-2">
           <span className="text-blue-600 font-bold">I.</span>
           <span className="relative">
-            8<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">1</span>
+            8<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">1</span>
           </span>
           <span>.</span>
           <span className="relative">
-            4<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">2</span>
+            4<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">2</span>
           </span>
           <span className="relative">
-            6<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">3</span>
+            6<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">3</span>
           </span>
         </div>
         
         <div className="text-lg font-mono flex items-center gap-2">
           <span className="text-blue-600 font-bold">II.</span>
           <span className="relative">
-            0<span className="absolute -top-4 left-0 text-xs text-red-600 font-bold">×</span>
+            0<span className="absolute -top-4 left-0 text-sm text-red-600 font-bold">×</span>
           </span>
           <span>.</span>
           <span className="relative">
-            0<span className="absolute -top-4 left-0 text-xs text-red-600 font-bold">×</span>
+            0<span className="absolute -top-4 left-0 text-sm text-red-600 font-bold">×</span>
           </span>
           <span className="relative">
-            5<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">1</span>
+            5<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">1</span>
           </span>
           <span className="relative">
-            8<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">2</span>
+            8<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">2</span>
           </span>
           <span className="text-red-600 text-sm ml-4">× 不是有效數字</span>
         </div>
@@ -292,17 +292,17 @@ const NotesSection = () => {
         <div className="text-lg font-mono flex items-center gap-2">
           <span className="text-blue-600 font-bold">III.</span>
           <span className="relative">
-            0<span className="absolute -top-4 left-0 text-xs text-red-600 font-bold">×</span>
+            0<span className="absolute -top-4 left-0 text-sm text-red-600 font-bold">×</span>
           </span>
           <span>.</span>
           <span className="relative">
-            6<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">1</span>
+            6<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">1</span>
           </span>
           <span className="relative">
-            0<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">2</span>
+            0<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">2</span>
           </span>
           <span className="relative">
-            8<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">3</span>
+            8<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">3</span>
           </span>
           <span className="text-green-600 text-sm ml-4">1 第一位有效數字</span>
         </div>
