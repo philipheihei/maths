@@ -60,6 +60,10 @@ const getValidTargets = (num) => {
   const intPart = Math.floor(Math.abs(num));
   const intDigits = intPart.toString().length;
   
+  // 獲取小數位數
+  const numStr = num.toString();
+  const decimalPlaces = numStr.includes('.') ? numStr.split('.')[1].length : 0;
+  
   return ROUNDING_TARGETS.filter(target => {
     // 有效數字目標：不能超過原數字的有效數字位數
     if (target.type === 'sig') {
@@ -72,6 +76,10 @@ const getValidTargets = (num) => {
     // 十位：整數部分需要至少2位
     if (target.type === 'tens') {
       return intDigits >= 2;
+    }
+    // 小數位：原數字的小數位數必須大於目標小數位數
+    if (target.type === 'decimal') {
+      return decimalPlaces > target.value;
     }
     return true;
   });
