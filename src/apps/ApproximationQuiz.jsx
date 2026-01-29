@@ -455,7 +455,7 @@ const NotesSection = () => {
 
       {/* 題目範例 */}
       <div className="bg-amber-50 border border-amber-200 p-4 rounded-lg">
-        <span className="text-blue-600 font-bold text-lg">e.g.</span>
+        <span className="text-black-600 font-bold text-lg">題目示例</span>
         <ol className="list-[lower-alpha] list-inside mt-2 space-y-2">
           <li>
             把 <span className="border-2 border-red-400 rounded-full px-1">9</span>

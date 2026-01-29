@@ -209,7 +209,7 @@ const Home = () => {
       path: '/approximation-quiz',
       level: 'F1',
       badges: [
-        { level: 'F1', chapter: 'CH1', subject: '基礎數論' }
+        { level: 'F1', chapter: 'CH13', subject: '近似值' }
       ],
       category: '初中',
       topics: ['有效數字', '捨入', '近似值'],
