@@ -218,17 +218,47 @@ const generateExplanation = (num, method, target, answer) => {
   // 生成解釋
   let explanation = `位值為 ${positionDigit}`;
   
+  // 判斷是小數位還是整數位
+  const isDecimalPlace = target.type === 'decimal';
+  const isIntegerPlace = target.type === 'integer' || target.type === 'tens' || target.type === 'hundreds';
+  
   if (method === '上捨入') {
-    explanation += `，上捨 → 必定進位`;
+    const nextValue = parseInt(positionDigit) + 1;
+    if (isDecimalPlace) {
+      explanation += `，上捨 → 必定進位至${nextValue}。${positionDigit}之後的小數可以省略不寫`;
+    } else if (isIntegerPlace) {
+      explanation += `，上捨 → 必定進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+    } else {
+      explanation += `，上捨 → 必定進位`;
+    }
   } else if (method === '下捨入') {
-    explanation += `，下捨 → 不需進位`;
+    if (isDecimalPlace) {
+      explanation += `，下捨 → 不需進位。${positionDigit}之後的小數可以省略不寫`;
+    } else if (isIntegerPlace) {
+      explanation += `，下捨 → 不需進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+    } else {
+      explanation += `，下捨 → 不需進位`;
+    }
   } else {
     // 捨入 (四捨五入)
     const nextVal = parseInt(nextDigit);
     if (nextVal >= 5) {
-      explanation += `，後面的數是 ${nextDigit}，五入 → 進位`;
+      const nextValue = parseInt(positionDigit) + 1;
+      if (isDecimalPlace) {
+        explanation += `，後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。${positionDigit}之後的小數可以省略不寫`;
+      } else if (isIntegerPlace) {
+        explanation += `，後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+      } else {
+        explanation += `，後面的數是 ${nextDigit}，五入 → 進位`;
+      }
     } else {
-      explanation += `，後面的數是 ${nextDigit}，四捨 → 不用進位`;
+      if (isDecimalPlace) {
+        explanation += `，後面的數是 ${nextDigit}，四捨 → 不用進位。${positionDigit}之後的小數可以省略不寫`;
+      } else if (isIntegerPlace) {
+        explanation += `，後面的數是 ${nextDigit}，四捨 → 不用進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
+      } else {
+        explanation += `，後面的數是 ${nextDigit}，四捨 → 不用進位`;
+      }
     }
   }
   
