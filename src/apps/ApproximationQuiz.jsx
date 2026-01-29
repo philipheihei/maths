@@ -244,28 +244,31 @@ const generateExplanation = (num, method, target, answer) => {
   if (method === '上捨入') {
     if (isDecimalPlace) {
       const nextValue = parseInt(positionDigit) + 1;
-      explanation += `上捨 → 必定進位至${nextValue}。${positionDigit}之後的小數可以省略不寫`;
+      explanation += `上捨入 ---> 必定進位至${nextValue}。\n`;
+      explanation += `${positionDigit}之後的小數可以省略不寫`;
     } else if (isIntegerType) {
-      explanation += `上捨 → 必定進位。\n`;
       const resultInt = Math.floor(answer);
-      explanation += `所以保留${resultInt}，小數可以省略不寫`;
+      explanation += `上捨 → 必定進位。所以保留${resultInt}，小數可以省略不寫`;
     } else if (isHigherIntegerPlace) {
       const nextValue = parseInt(positionDigit) + 1;
       explanation += `上捨 → 必定進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
     } else {
-      explanation += `上捨 → 必定進位`;
+      // 有效數字
+      const nextValue = parseInt(positionDigit) + 1;
+      explanation += `上捨 → 必定進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
     }
   } else if (method === '下捨入') {
     if (isDecimalPlace) {
-      explanation += `下捨 → 不需進位。${positionDigit}之後的小數可以省略不寫`;
+      explanation += `下捨入 ---> 不需進位。\n`;
+      explanation += `${positionDigit}之後的小數可以省略不寫`;
     } else if (isIntegerType) {
-      explanation += `下捨 → 不需進位。\n`;
       const resultInt = Math.floor(answer);
-      explanation += `所以保留${resultInt}，小數可以省略不寫`;
+      explanation += `下捨 → 不需進位。所以保留${resultInt}，小數可以省略不寫`;
     } else if (isHigherIntegerPlace) {
       explanation += `下捨 → 不需進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
     } else {
-      explanation += `下捨 → 不需進位`;
+      // 有效數字
+      explanation += `下捨 → 不需進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
     }
   } else {
     // 捨入 (四捨五入)
@@ -273,28 +276,31 @@ const generateExplanation = (num, method, target, answer) => {
     if (nextVal >= 5) {
       if (isDecimalPlace) {
         const nextValue = parseInt(positionDigit) + 1;
-        explanation += `後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。${positionDigit}之後的小數可以省略不寫`;
+        explanation += `捨入 ---> 後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。\n`;
+        explanation += `${positionDigit}之後的小數可以省略不寫`;
       } else if (isIntegerType) {
-        explanation += `後面的數是 ${nextDigit}，五入 → 進位。\n`;
         const resultInt = Math.floor(answer);
-        explanation += `所以保留${resultInt}，小數可以省略不寫`;
+        explanation += `後面的數是 ${nextDigit}，五入 → 進位。所以保留${resultInt}，小數可以省略不寫`;
       } else if (isHigherIntegerPlace) {
         const nextValue = parseInt(positionDigit) + 1;
         explanation += `後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
       } else {
-        explanation += `後面的數是 ${nextDigit}，五入 → 進位`;
+        // 有效數字
+        const nextValue = parseInt(positionDigit) + 1;
+        explanation += `後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
       }
     } else {
       if (isDecimalPlace) {
-        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。${positionDigit}之後的小數可以省略不寫`;
+        explanation += `捨入 ---> 後面的數是 ${nextDigit}，四捨 → 不用進位。\n`;
+        explanation += `${positionDigit}之後的小數可以省略不寫`;
       } else if (isIntegerType) {
-        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。\n`;
         const resultInt = Math.floor(answer);
-        explanation += `所以保留${resultInt}，小數可以省略不寫`;
+        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。所以保留${resultInt}，小數可以省略不寫`;
       } else if (isHigherIntegerPlace) {
         explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
       } else {
-        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位`;
+        // 有效數字
+        explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。${positionDigit}之後的整數部份數字需補0，小數可以省略不寫`;
       }
     }
   }
@@ -789,8 +795,8 @@ export default function ApproximationQuiz() {
                         <span className="font-bold font-mono text-2xl">{feedback.correctAnswer}</span>
                       </div>
                       {feedback.explanation && (
-                        <div className="mt-3 text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg">
-                          ({feedback.explanation})
+                        <div className="mt-3 text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg whitespace-pre-line">
+                          {feedback.explanation}
                         </div>
                       )}
                     </div>
