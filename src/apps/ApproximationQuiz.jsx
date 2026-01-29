@@ -185,15 +185,15 @@ const NotesSection = () => {
       <div className="space-y-4 bg-slate-50 p-4 rounded-lg">
         <div className="text-lg font-mono flex items-center gap-2">
           <span className="text-blue-600 font-bold">I.</span>
-          <span>8.</span>
           <span className="relative">
-            4<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">1</span>
+            8<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">1</span>
+          </span>
+          <span>.</span>
+          <span className="relative">
+            4<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">2</span>
           </span>
           <span className="relative">
-            6<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">2</span>
-          </span>
-          <span className="relative">
-            <span className="text-green-600 text-xs align-top">3</span>
+            6<span className="absolute -top-4 left-0 text-xs text-green-600 font-bold">3</span>
           </span>
         </div>
         
@@ -439,7 +439,7 @@ export default function ApproximationQuiz() {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl shadow-lg mb-4">
                 <Calculator className="w-10 h-10 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-slate-800 mb-2">近似值特訓</h1>
+              <h1 className="text-3xl font-bold text-slate-800 mb-2">近似值</h1>
               <p className="text-slate-500">學習捨入方法與有效數字</p>
             </div>
 
@@ -573,6 +573,9 @@ export default function ApproximationQuiz() {
           {/* 題目區域 */}
           {currentQuestion && (
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+              <div className="mb-2">
+                <span className="inline-block bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-bold">題目</span>
+              </div>
               <div className="text-center mb-8">
                 <h2 className="text-xl text-slate-600 mb-4">將以下數字</h2>
                 <div className="text-4xl font-bold text-slate-800 mb-4 font-mono">
@@ -629,8 +632,13 @@ export default function ApproximationQuiz() {
                     )}
                   </div>
                   {feedback.correctAnswer && (
-                    <div className="mt-2 text-slate-700">
-                      正確答案：<span className="font-bold font-mono text-xl">{feedback.correctAnswer}</span>
+                    <div className="mt-4 border-t border-slate-200 pt-4">
+                      <div className="mb-2">
+                        <span className="inline-block bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold">正確答案</span>
+                      </div>
+                      <div className="text-slate-700 text-lg">
+                        <span className="font-bold font-mono text-2xl">{feedback.correctAnswer}</span>
+                      </div>
                     </div>
                   )}
                 </div>

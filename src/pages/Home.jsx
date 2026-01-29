@@ -201,7 +201,7 @@ const Home = () => {
     },
     {
       id: 'approximation-quiz',
-      title: '近似值特訓',
+      title: '近似值',
       description: '近似值：有效數字、上捨入、下捨入、捨入至小數位/整數/有效數字',
       icon: Calculator,
       color: 'bg-orange-500',
