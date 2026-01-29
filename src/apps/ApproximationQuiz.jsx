@@ -627,13 +627,6 @@ export default function ApproximationQuiz() {
               >
                 <BookOpen size={20} />
               </button>
-              <button
-                onClick={resetQuiz}
-                className="p-2 hover:bg-slate-100 rounded-lg transition text-slate-600"
-                title="重新開始"
-              >
-                <RotateCcw size={20} />
-              </button>
             </div>
           </div>
 
