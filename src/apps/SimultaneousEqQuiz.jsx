@@ -849,7 +849,7 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
           </div>
           
           <h2 className="text-blue-900 font-bold text-lg md:text-xl text-center border-b-2 border-blue-500 pb-2 mb-4">
-            程式一：解聯立二元一次方程
+            Prog01：解聯立二元一次方程
           </h2>
           
           {/* Equation Box */}
@@ -866,44 +866,31 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             ⌨️ 特殊符號輸入方法
           </h3>
           
-          <div className="bg-gray-50 rounded-xl p-3 md:p-4 mb-6 space-y-2">
-            {[
-              { symbol: '?', keys: ['SHIFT', '3', '1'], alt: ['Prog', '1'], note: '輸入提示符' },
-              { symbol: '→', keys: ['SHIFT', '3', '2'], note: '儲存到變數' },
-              { symbol: ':', keys: ['SHIFT', '3', '3'], alt: ['Prog', '3'], note: '分隔指令' },
-              { symbol: '◢', keys: ['SHIFT', '3', '4'], note: '顯示結果並暫停' },
-              { symbol: 'A', keys: ['ALPHA', 'A'], alt: ['RCL', 'A'], note: '變數（其他字母同理）' },
-              { symbol: '┘', keys: ['a b/c'], note: '除號（分數鍵）' }
-            ].map((item, idx) => (
-              <div key={idx} className="flex flex-wrap items-center gap-2 py-2 border-b border-dashed border-gray-300 last:border-0">
-                <span className="w-8 text-center text-lg font-bold text-blue-900">{item.symbol}</span>
-                <div className="flex flex-wrap gap-1 flex-1">
-                  {item.keys.map((key, i) => (
-                    <span key={i} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${
-                      key === 'SHIFT' ? 'bg-yellow-500 text-black' :
-                      key === 'ALPHA' ? 'bg-red-600 text-white' :
-                      key === 'Prog' ? 'bg-blue-600 text-white' :
-                      key === 'RCL' ? 'bg-gray-600 text-white' :
-                      key === 'a b/c' ? 'bg-gray-700 text-white' :
-                      'bg-gray-800 text-white'
-                    }`}>{key}</span>
-                  ))}
-                  {item.alt && (
-                    <>
-                      <span className="text-gray-400 text-xs">或</span>
-                      {item.alt.map((key, i) => (
-                        <span key={i} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${
-                          key === 'Prog' ? 'bg-blue-600 text-white' :
-                          key === 'RCL' ? 'bg-gray-600 text-white' :
-                          'bg-gray-800 text-white'
-                        }`}>{key}</span>
-                      ))}
-                    </>
-                  )}
+          <div className="bg-gray-50 rounded-xl p-3 md:p-4 mb-6">
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { symbol: '?', keys: ['SHIFT', '3', '1'] },
+                { symbol: '→', keys: ['SHIFT', '3', '2'] },
+                { symbol: ':', keys: ['SHIFT', '3', '3'] },
+                { symbol: '◢', keys: ['SHIFT', '3', '4'] },
+                { symbol: 'A', keys: ['ALPHA', 'A'] },
+                { symbol: '┘', keys: ['a b/c'] }
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2 p-2 bg-white rounded border border-gray-200">
+                  <span className="w-8 text-center text-lg font-bold text-blue-900">{item.symbol}</span>
+                  <div className="flex flex-wrap gap-1">
+                    {item.keys.map((key, i) => (
+                      <span key={i} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${
+                        key === 'SHIFT' ? 'bg-yellow-500 text-black' :
+                        key === 'ALPHA' ? 'bg-red-600 text-white' :
+                        key === 'a b/c' ? 'bg-gray-700 text-white' :
+                        'bg-gray-800 text-white'
+                      }`}>{key}</span>
+                    ))}
+                  </div>
                 </div>
-                <span className="text-xs text-gray-500">{item.note}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           
           {/* Program Input Steps */}
