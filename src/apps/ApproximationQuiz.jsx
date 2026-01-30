@@ -940,7 +940,7 @@ export default function ApproximationQuiz() {
                         </span>
                       </div>
                       {feedback.explanation && (
-                        <div className="mt-3 text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg">
+                        <div className="mt-3 text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg whitespace-pre-line">
                           {renderHighlightedText(feedback.explanation)}
                         </div>
                       )}

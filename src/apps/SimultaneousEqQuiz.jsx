@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { BookOpen, Calculator, Lightbulb, Delete, CheckCircle, XCircle, Keyboard as KeyboardIcon, X, Trophy, Home as HomeIcon, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
+import { BookOpen, Calculator, Lightbulb, Delete, CheckCircle, XCircle, Keyboard as KeyboardIcon, X, Trophy, Home as HomeIcon, ChevronRight, RotateCcw, ArrowLeft, Cpu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { loadKatexOnce } from '../utils/katexLoader';
 
@@ -661,6 +661,11 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
 };
 
 // ========== 鍵盤組件 ==========
+// Fraction Icon Component (matches IndexLaws style)
+const FractionIcon = () => (
+  <span className="font-serif italic font-bold text-lg">a b/c</span>
+);
+
 // Reusable Key Component
 const KeyBtn = ({ val, onClick, className = "", icon }) => (
   <button 
@@ -676,7 +681,7 @@ const KeyBtn = ({ val, onClick, className = "", icon }) => (
   </button>
 );
 
-const Keypad = ({ onInput, onDelete, onClear, onEnter, onTab, showFraction = false }) => {
+const Keypad = ({ onInput, onDelete, onClear, onEnter, onTab, showFraction = false, mode = null }) => {
   const handleKeyPress = (key) => {
     if (key === 'C') onClear();
     else if (key === 'Backspace') onDelete();
@@ -702,7 +707,11 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, onTab, showFraction = fal
           {[7, 8, 9].map(n => (
             <KeyBtn key={n} val={n} onClick={() => handleKeyPress(n.toString())} />
           ))}
-          <KeyBtn val="/" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('/')} />
+          {mode === 'prog01-lv2' ? (
+            <KeyBtn val="." className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('.')} />
+          ) : (
+            <KeyBtn icon={<FractionIcon />} className="bg-gray-200 text-teal-700" onClick={() => handleKeyPress('/')} />
+          )}
 
           {/* Row 2 */}
           {[4, 5, 6].map(n => (
@@ -746,7 +755,7 @@ const Keypad = ({ onInput, onDelete, onClear, onEnter, onTab, showFraction = fal
         {[7, 8, 9].map(n => (
           <KeyBtn key={n} val={n} onClick={() => handleKeyPress(n.toString())} />
         ))}
-        <KeyBtn val="/" className="bg-gray-200 text-teal-700 font-bold" onClick={() => handleKeyPress('/')} />
+        <KeyBtn icon={<FractionIcon />} className="bg-gray-200 text-teal-700" onClick={() => handleKeyPress('/')} />
         <KeyBtn val="(" className="bg-gray-200 text-gray-600" onClick={() => handleKeyPress('(')} />
         <KeyBtn val=")" className="bg-gray-200 text-gray-600" onClick={() => handleKeyPress(')')} />
 
@@ -811,6 +820,270 @@ const CheatsheetModal = ({ isOpen, onClose }) => {
   );
 };
 
+// ========== 計算機程式 Modal ==========
+const CalculatorProgramModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+  
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-2 backdrop-blur-sm">
+      <div className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col">
+        {/* Header */}
+        <div className="bg-blue-950 text-white p-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Cpu size={24} className="text-blue-300" />
+            <span className="font-bold text-lg">計算機程式</span>
+          </div>
+          <button 
+            onClick={onClose}
+            className="p-2 hover:bg-blue-800 rounded-full transition"
+          >
+            <X size={20} />
+          </button>
+        </div>
+        
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto bg-white p-4 md:p-6">
+          {/* Calculator Model */}
+          <div className="bg-blue-900 text-white text-center py-2 px-4 rounded-lg mb-4 text-sm md:text-base">
+            📟 CASIO fx-50FH II 計算機程式
+          </div>
+          
+          <h2 className="text-blue-900 font-bold text-lg md:text-xl text-center border-b-2 border-blue-500 pb-2 mb-4">
+            程式一：解聯立二元一次方程
+          </h2>
+          
+          {/* Equation Box */}
+          <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl text-center mb-6 border-2 border-blue-400">
+            <p className="text-sm text-gray-600 mb-2">適用於解以下形式：</p>
+            <div className="text-lg md:text-xl font-bold text-blue-900">
+              B₁x + A₁y = C₁<br />
+              B₂x + A₂y = C₂
+            </div>
+          </div>
+          
+          {/* Symbol Input Methods */}
+          <h3 className="text-blue-900 font-bold text-base md:text-lg mb-3 border-l-4 border-blue-500 pl-3">
+            ⌨️ 特殊符號輸入方法
+          </h3>
+          
+          <div className="bg-gray-50 rounded-xl p-3 md:p-4 mb-6 space-y-2">
+            {[
+              { symbol: '?', keys: ['SHIFT', '3', '1'], alt: ['Prog', '1'], note: '輸入提示符' },
+              { symbol: '→', keys: ['SHIFT', '3', '2'], note: '儲存到變數' },
+              { symbol: ':', keys: ['SHIFT', '3', '3'], alt: ['Prog', '3'], note: '分隔指令' },
+              { symbol: '◢', keys: ['SHIFT', '3', '4'], note: '顯示結果並暫停' },
+              { symbol: 'A', keys: ['ALPHA', 'A'], alt: ['RCL', 'A'], note: '變數（其他字母同理）' },
+              { symbol: '┘', keys: ['a b/c'], note: '除號（分數鍵）' }
+            ].map((item, idx) => (
+              <div key={idx} className="flex flex-wrap items-center gap-2 py-2 border-b border-dashed border-gray-300 last:border-0">
+                <span className="w-8 text-center text-lg font-bold text-blue-900">{item.symbol}</span>
+                <div className="flex flex-wrap gap-1 flex-1">
+                  {item.keys.map((key, i) => (
+                    <span key={i} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${
+                      key === 'SHIFT' ? 'bg-yellow-500 text-black' :
+                      key === 'ALPHA' ? 'bg-red-600 text-white' :
+                      key === 'Prog' ? 'bg-blue-600 text-white' :
+                      key === 'RCL' ? 'bg-gray-600 text-white' :
+                      key === 'a b/c' ? 'bg-gray-700 text-white' :
+                      'bg-gray-800 text-white'
+                    }`}>{key}</span>
+                  ))}
+                  {item.alt && (
+                    <>
+                      <span className="text-gray-400 text-xs">或</span>
+                      {item.alt.map((key, i) => (
+                        <span key={i} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${
+                          key === 'Prog' ? 'bg-blue-600 text-white' :
+                          key === 'RCL' ? 'bg-gray-600 text-white' :
+                          'bg-gray-800 text-white'
+                        }`}>{key}</span>
+                      ))}
+                    </>
+                  )}
+                </div>
+                <span className="text-xs text-gray-500">{item.note}</span>
+              </div>
+            ))}
+          </div>
+          
+          {/* Program Input Steps */}
+          <h3 className="text-blue-900 font-bold text-base md:text-lg mb-3 border-l-4 border-blue-500 pl-3">
+            📝 輸入程式
+          </h3>
+          
+          {/* Step 1 */}
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg mb-3">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+              <strong>進入程式編輯模式</strong>
+            </div>
+            <div className="flex flex-wrap gap-1 items-center text-sm">
+              <span className="px-2 py-1 bg-purple-600 text-white rounded text-xs font-bold">MODE</span>
+              <span className="px-2 py-1 bg-purple-600 text-white rounded text-xs font-bold">MODE</span>
+              <span className="text-blue-900 font-bold">→</span>
+              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">6</span>
+              <span className="text-gray-500 text-xs">(PRGM)</span>
+              <span className="text-blue-900 font-bold">→</span>
+              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+              <span className="text-gray-500 text-xs">(EDIT)</span>
+              <span className="text-blue-900 font-bold">→</span>
+              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+              <span className="text-gray-500 text-xs">(Prog 1)</span>
+              <span className="text-blue-900 font-bold">→</span>
+              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+              <span className="text-gray-500 text-xs">(COMP)</span>
+            </div>
+          </div>
+          
+          {/* Step 2 - Code */}
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg mb-3">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+              <strong>輸入以下程式碼</strong>
+            </div>
+            <div className="bg-black rounded-lg p-3 font-mono text-green-400 text-sm overflow-x-auto">
+              <div>?→B : ?→A : ?→C :</div>
+              <div>B┘A→B : C┘A→C :</div>
+              <div>?→D : D : ?→A : ?→D :</div>
+              <div>(D－AC)┘(Ans－AB→A◢</div>
+              <div>C－Ans×B→B</div>
+              <div className="text-gray-500 text-right text-xs mt-2">（共 59 步）</div>
+            </div>
+          </div>
+          
+          {/* Step 3 */}
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg mb-6">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">3</span>
+              <strong>確認並離開</strong>
+            </div>
+            <p className="text-sm">
+              完成輸入後，檢查計算機是否顯示 <strong className="text-blue-900">059</strong>。<br />
+              如是，按 <span className="px-2 py-1 bg-red-600 text-white rounded text-xs font-bold">ON</span> 離開程式編輯模式。
+            </p>
+          </div>
+          
+          {/* Usage Method */}
+          <h3 className="text-blue-900 font-bold text-base md:text-lg mb-3 border-l-4 border-blue-500 pl-3">
+            🎯 使用方法
+          </h3>
+          
+          <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl mb-6 border-2 border-blue-400">
+            <p className="font-bold text-center mb-3">輸入順序：</p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="bg-blue-900 text-white">
+                    <th colSpan="3" className="p-2 border border-blue-700">第一條方程：B₁x + A₁y = C₁</th>
+                    <th colSpan="3" className="p-2 border border-blue-700">第二條方程：B₂x + A₂y = C₂</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-white">
+                    <td className="p-2 border text-center">B₁</td>
+                    <td className="p-2 border text-center">A₁</td>
+                    <td className="p-2 border text-center">C₁</td>
+                    <td className="p-2 border text-center">B₂</td>
+                    <td className="p-2 border text-center">A₂</td>
+                    <td className="p-2 border text-center">C₂</td>
+                  </tr>
+                  <tr className="bg-gray-50 text-xs text-gray-600">
+                    <td className="p-2 border text-center">x的係數</td>
+                    <td className="p-2 border text-center">y的係數</td>
+                    <td className="p-2 border text-center">常數</td>
+                    <td className="p-2 border text-center">x的係數</td>
+                    <td className="p-2 border text-center">y的係數</td>
+                    <td className="p-2 border text-center">常數</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-center mt-3 text-sm">
+              <strong>輸出：</strong>先顯示 <span className="text-red-600 font-bold">x</span>，按 EXE 後顯示 <span className="text-red-600 font-bold">y</span>
+            </p>
+          </div>
+          
+          {/* Example */}
+          <div className="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-xl mb-6 border-2 border-green-500">
+            <h4 className="text-green-700 font-bold mb-3">📌 範例：解聯立方程</h4>
+            
+            <div className="bg-white p-3 rounded-lg text-center mb-4 border border-green-400">
+              <div className="text-lg font-mono">
+                3x + 4y = 10<br />
+                x + 3y = 5
+              </div>
+            </div>
+            
+            <p className="font-bold text-sm mb-2">步驟一：執行程式</p>
+            <div className="bg-white p-2 rounded mb-3">
+              <span className="px-2 py-1 bg-blue-600 text-white rounded text-xs font-bold">Prog</span>
+              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold ml-1">1</span>
+              <span className="text-gray-500 text-xs ml-2">→ 計算機顯示「B?」</span>
+            </div>
+            
+            <p className="font-bold text-sm mb-2">步驟二：依次輸入係數</p>
+            <div className="bg-white p-2 rounded space-y-1 text-sm">
+              {[
+                { keys: ['3'], label: '（第一條方程 x 的係數 B₁ = 3）' },
+                { keys: ['4'], label: '（第一條方程 y 的係數 A₁ = 4）' },
+                { keys: ['1', '0'], label: '（第一條方程常數 C₁ = 10）' },
+                { keys: ['1'], label: '（第二條方程 x 的係數 B₂ = 1）' },
+                { keys: ['3'], label: '（第二條方程 y 的係數 A₂ = 3）' },
+                { keys: ['5'], label: '（第二條方程常數 C₂ = 5）' }
+              ].map((item, idx) => (
+                <div key={idx} className="flex flex-wrap items-center gap-1">
+                  {item.keys.map((k, i) => (
+                    <span key={i} className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">{k}</span>
+                  ))}
+                  <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span>
+                  <span className="text-gray-500 text-xs">{item.label}</span>
+                </div>
+              ))}
+            </div>
+            
+            <div className="bg-blue-100 p-3 rounded-lg mt-3 text-center border border-blue-300">
+              <p>計算機顯示 <span className="text-2xl font-bold text-blue-700">2</span> <span className="text-xs text-gray-500">（即 x = 2）</span></p>
+              <p className="mt-2">按 <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span> 後顯示 <span className="text-2xl font-bold text-blue-700">1</span> <span className="text-xs text-gray-500">（即 y = 1）</span></p>
+              <div className="mt-3 pt-3 border-t border-blue-300">
+                ✅ <strong>答案：x = 2，y = 1</strong>
+              </div>
+            </div>
+          </div>
+          
+          {/* Notes */}
+          <h3 className="text-blue-900 font-bold text-base md:text-lg mb-3 border-l-4 border-blue-500 pl-3">
+            📋 注意事項
+          </h3>
+          
+          <div className="bg-red-50 border-2 border-red-400 p-3 rounded-lg mb-3">
+            <div className="font-bold text-red-700 mb-2">⚠️ 注意</div>
+            <ul className="text-sm space-y-1 list-disc list-inside text-gray-700">
+              <li>輸入負數時要用 <span className="px-1 bg-gray-800 text-white rounded text-xs">(−)</span> 鍵（負號鍵），不是減號</li>
+              <li>係數為 1 時也要輸入 <span className="px-1 bg-gray-800 text-white rounded text-xs">1</span></li>
+              <li>注意輸入順序：先 x 係數，再 y 係數，最後常數</li>
+              <li>如方程要整理（如 4y + 3x = 10），先改寫成 3x + 4y = 10</li>
+            </ul>
+          </div>
+          
+          <div className="bg-yellow-50 border-2 border-yellow-400 p-3 rounded-lg">
+            <div className="font-bold text-yellow-700 mb-2">💡 提示</div>
+            <ul className="text-sm space-y-1 list-disc list-inside text-gray-700">
+              <li>如果顯示「Ma ERROR」，表示方程無解或有無限多解</li>
+              <li>要重新計算，只需按 <span className="px-1 bg-blue-600 text-white rounded text-xs">Prog</span> <span className="px-1 bg-gray-800 text-white rounded text-xs">1</span> 再次執行</li>
+              <li>程式會永久保存，關機後仍可使用</li>
+            </ul>
+          </div>
+          
+          {/* Footer */}
+          <div className="text-center text-gray-400 text-xs mt-6 pt-4 border-t">
+            📟 適用於 CASIO fx-50FH II 計算機
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ========== 主組件 ==========
 export default function SimultaneousEqQuiz() {
   // 模式選擇: null, 'prog01-lv1', 'prog01-lv2', 'word-lv1', 'word-lv2'
@@ -836,6 +1109,7 @@ export default function SimultaneousEqQuiz() {
   const [activeInput, setActiveInput] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [showNotes, setShowNotes] = useState(false);
+  const [showCalcProgram, setShowCalcProgram] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [highlightHint, setHighlightHint] = useState(false);
   const [inlineFeedback, setInlineFeedback] = useState(null);
@@ -922,7 +1196,54 @@ export default function SimultaneousEqQuiz() {
   const handleKeypadInput = (char) => {
     if (!activeInput) return;
     
+    // Handle word problem modes (lv1 and lv2)
+    if (activeInput.type === 'lv1') {
+      const key = `${activeInput.index}-${activeInput.partIdx}`;
+      if (char === '±') {
+        setLv1Inputs(prev => {
+          const current = prev[key] || '';
+          if (current.startsWith('-')) {
+            return { ...prev, [key]: current.slice(1) };
+          } else if (current !== '' && current !== '0') {
+            return { ...prev, [key]: '-' + current };
+          }
+          return prev;
+        });
+      } else {
+        setLv1Inputs(prev => ({
+          ...prev,
+          [key]: (prev[key] || '') + char
+        }));
+      }
+      return;
+    }
+    
+    if (activeInput.type === 'lv2') {
+      const idx = activeInput.index;
+      if (char === '±') {
+        setLv2Inputs(prev => {
+          const newInputs = [...prev];
+          const current = newInputs[idx] || '';
+          if (current.startsWith('-')) {
+            newInputs[idx] = current.slice(1);
+          } else if (current !== '' && current !== '0') {
+            newInputs[idx] = '-' + current;
+          }
+          return newInputs;
+        });
+      } else {
+        setLv2Inputs(prev => {
+          const newInputs = [...prev];
+          newInputs[idx] = (newInputs[idx] || '') + char;
+          return newInputs;
+        });
+      }
+      return;
+    }
+    
+    // Handle prog01 modes with setter function
     const { setter } = activeInput;
+    if (!setter) return;
     
     if (char === '±') {
       setter(prev => {
@@ -941,7 +1262,30 @@ export default function SimultaneousEqQuiz() {
 
   const handleKeypadDelete = () => {
     if (!activeInput) return;
+    
+    // Handle word problem modes (lv1 and lv2)
+    if (activeInput.type === 'lv1') {
+      const key = `${activeInput.index}-${activeInput.partIdx}`;
+      setLv1Inputs(prev => ({
+        ...prev,
+        [key]: (prev[key] || '').slice(0, -1)
+      }));
+      return;
+    }
+    
+    if (activeInput.type === 'lv2') {
+      const idx = activeInput.index;
+      setLv2Inputs(prev => {
+        const newInputs = [...prev];
+        newInputs[idx] = (newInputs[idx] || '').slice(0, -1);
+        return newInputs;
+      });
+      return;
+    }
+    
+    // Handle prog01 modes with setter function
     const { setter } = activeInput;
+    if (!setter) return;
     setter(prev => prev.slice(0, -1));
   };
 
@@ -1949,6 +2293,16 @@ export default function SimultaneousEqQuiz() {
                 <p className="text-slate-300 text-sm mt-1">{getModeSubtitle()}</p>
                 </div>
                 <div className="flex gap-2 items-center">
+                  {mode.startsWith('prog01') && (
+                    <button 
+                      onClick={() => setShowCalcProgram(true)} 
+                      className="p-2 hover:bg-slate-700 rounded-lg transition text-blue-300 flex items-center gap-1"
+                      title="計算機程式"
+                    >
+                      <Cpu size={20}/>
+                      <span className="hidden md:inline text-sm">計算機程式</span>
+                    </button>
+                  )}
                   <div className="text-right">
                     <div className="flex items-center gap-2 justify-end">
                       <Trophy className="text-yellow-400" size={20}/>
@@ -2008,9 +2362,11 @@ export default function SimultaneousEqQuiz() {
                 onEnter={handleSubmit}
                 onTab={handleKeypadTab}
                 showFraction={showFractionKeypad}
+                mode={mode}
             />
             
             <CheatsheetModal isOpen={showNotes} onClose={() => setShowNotes(false)} />
+            <CalculatorProgramModal isOpen={showCalcProgram} onClose={() => setShowCalcProgram(false)} />
         </div>
       </div>
     </>
