@@ -1454,7 +1454,7 @@ export default function SimultaneousEqQuiz() {
     return (
       <div className="space-y-6">
         <div className="bg-amber-50 p-6 rounded-xl border-2 border-amber-200">
-          <h3 className="text-lg font-bold text-amber-800 mb-4">原題：</h3>
+          <h3 className="text-lg font-bold text-amber-800 mb-4">解以下聯立方程：</h3>
           <Prog01Lv2OriginalDisplay eq1={eq1Display} eq2={eq2Display} varX={varX} varY={varY} />
         </div>
 

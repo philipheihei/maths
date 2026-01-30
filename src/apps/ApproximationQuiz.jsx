@@ -237,15 +237,15 @@ const generateExplanation = (num, method, target, answer) => {
     targetLabel = target.label;
   }
   
-  // 第一行：分析
-  explanation = `分析：${targetLabel} → 位值為${positionDigit}。\n`;
+  // 第一行：分析（使用##標記位值數字以便後續高亮）
+  explanation = `分析：${targetLabel} → 位值為##${positionDigit}##。\n`;
   
   // 第二行：捨入方法及結果
   if (method === '上捨入') {
     if (isDecimalPlace) {
       const nextValue = parseInt(positionDigit) + 1;
       explanation += `上捨入 ---> 必定進位至${nextValue}。\n`;
-      explanation += `${positionDigit}之後的小數可以省略不寫。`;
+      explanation += `##${positionDigit}##之後的小數可以省略不寫。`;
     } else if (isIntegerType) {
       const resultInt = Math.floor(answer);
       explanation += `上捨 → 必定進位。\n`;
@@ -265,7 +265,7 @@ const generateExplanation = (num, method, target, answer) => {
   } else if (method === '下捨入') {
     if (isDecimalPlace) {
       explanation += `下捨入 ---> 不需進位。\n`;
-      explanation += `${positionDigit}之後的小數可以省略不寫。`;
+      explanation += `##${positionDigit}##之後的小數可以省略不寫。`;
     } else if (isIntegerType) {
       const resultInt = Math.floor(answer);
       explanation += `下捨 → 不需進位。\n`;
@@ -285,7 +285,7 @@ const generateExplanation = (num, method, target, answer) => {
       if (isDecimalPlace) {
         const nextValue = parseInt(positionDigit) + 1;
         explanation += `捨入 ---> 後面的數是 ${nextDigit}，五入 → 進位至${nextValue}。\n`;
-        explanation += `${positionDigit}之後的小數可以省略不寫。`;
+        explanation += `##${positionDigit}##之後的小數可以省略不寫。`;
       } else if (isIntegerType) {
         const resultInt = Math.floor(answer);
         explanation += `後面的數是 ${nextDigit}，五入 → 進位。\n`;
@@ -305,7 +305,7 @@ const generateExplanation = (num, method, target, answer) => {
     } else {
       if (isDecimalPlace) {
         explanation += `捨入 ---> 後面的數是 ${nextDigit}，四捨 → 不用進位。\n`;
-        explanation += `${positionDigit}之後的小數可以省略不寫。`;
+        explanation += `##${positionDigit}##之後的小數可以省略不寫。`;
       } else if (isIntegerType) {
         const resultInt = Math.floor(answer);
         explanation += `後面的數是 ${nextDigit}，四捨 → 不用進位。\n`;
@@ -332,13 +332,137 @@ const generateQuestion = () => {
   const method = ROUNDING_METHODS[Math.floor(Math.random() * ROUNDING_METHODS.length)];
   const answer = performRounding(num, method, target);
   
+  // 找出位值的位置（用於高亮顯示）
+  let targetDigitIndex = -1;
+  let answerDigitIndex = -1;
+  const numStr = num.toString();
+  const answerStr = formatResult(answer, target);
+  
+  if (target.type === 'decimal') {
+    const parts = numStr.split('.');
+    if (parts[1]) {
+      // 小數點位置 + 目標小數位
+      targetDigitIndex = parts[0].length + 1 + (target.value - 1);
+      // 答案中的位置相同
+      answerDigitIndex = targetDigitIndex;
+    }
+  } else if (target.type === 'integer') {
+    // 個位：整數部分最後一位
+    const intPart = Math.floor(Math.abs(num)).toString();
+    targetDigitIndex = intPart.length - 1;
+    // 答案中的個位
+    const ansIntPart = Math.floor(Math.abs(answer)).toString();
+    answerDigitIndex = ansIntPart.length - 1;
+  } else if (target.type === 'tens') {
+    // 十位：整數部分倒數第二位
+    const intPart = Math.floor(Math.abs(num)).toString();
+    targetDigitIndex = intPart.length - 2;
+    // 答案中的十位
+    const ansIntPart = Math.floor(Math.abs(answer)).toString();
+    answerDigitIndex = ansIntPart.length - 2;
+  } else if (target.type === 'hundreds') {
+    // 百位：整數部分倒數第三位
+    const intPart = Math.floor(Math.abs(num)).toString();
+    targetDigitIndex = intPart.length - 3;
+    // 答案中的百位
+    const ansIntPart = Math.floor(Math.abs(answer)).toString();
+    answerDigitIndex = ansIntPart.length - 3;
+  } else if (target.type === 'sig') {
+    // 有效數字：找出第n位有效數字
+    const cleanStr = numStr.replace('.', '');
+    const firstNonZero = cleanStr.search(/[1-9]/);
+    if (firstNonZero !== -1) {
+      // 計算在原始字符串中的位置
+      const decimalPos = numStr.indexOf('.');
+      let count = 0;
+      for (let i = 0; i < numStr.length; i++) {
+        const char = numStr[i];
+        if (char !== '.' && char !== '0') {
+          count++;
+          if (count === target.value) {
+            targetDigitIndex = i;
+            break;
+          }
+        } else if (char === '0' && count > 0) {
+          count++;
+          if (count === target.value) {
+            targetDigitIndex = i;
+            break;
+          }
+        }
+      }
+      
+      // 答案中的位置
+      const ansCleanStr = answerStr.replace('.', '');
+      const ansFirstNonZero = ansCleanStr.search(/[1-9]/);
+      if (ansFirstNonZero !== -1) {
+        let ansCount = 0;
+        for (let i = 0; i < answerStr.length; i++) {
+          const char = answerStr[i];
+          if (char !== '.' && char !== '0') {
+            ansCount++;
+            if (ansCount === target.value) {
+              answerDigitIndex = i;
+              break;
+            }
+          } else if (char === '0' && ansCount > 0) {
+            ansCount++;
+            if (ansCount === target.value) {
+              answerDigitIndex = i;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+  
   return {
     number: num,
     method,
     target,
     answer,
-    displayAnswer: formatResult(answer, target)
+    displayAnswer: formatResult(answer, target),
+    targetDigitIndex,
+    answerDigitIndex
   };
+};
+
+// ========== 輔助函數：渲染帶高亮的數字 ==========
+const renderHighlightedNumber = (numStr, highlightIndex) => {
+  if (highlightIndex === -1) {
+    return <span>{numStr}</span>;
+  }
+  
+  const chars = numStr.split('');
+  return (
+    <span>
+      {chars.map((char, idx) => (
+        <span
+          key={idx}
+          className={idx === highlightIndex ? 'bg-yellow-300 px-1 rounded' : ''}
+        >
+          {char}
+        </span>
+      ))}
+    </span>
+  );
+};
+
+// 渲染帶高亮標記的解釋文本
+const renderHighlightedText = (text) => {
+  const parts = text.split('##');
+  return parts.map((part, idx) => {
+    // 奇數索引的是需要高亮的部分
+    if (idx % 2 === 1) {
+      return (
+        <span key={idx} className="bg-yellow-300 px-1 rounded font-bold">
+          {part}
+        </span>
+      );
+    }
+    return <span key={idx}>{part}</span>;
+  });
 };
 
 // ========== 筆記組件 ==========
@@ -750,7 +874,10 @@ export default function ApproximationQuiz() {
               <div className="text-center mb-8">
                 <h2 className="text-xl text-slate-600 mb-4">將</h2>
                 <div className="text-4xl font-bold text-slate-800 mb-4 font-mono">
-                  {currentQuestion.number}
+                  {feedback 
+                    ? renderHighlightedNumber(currentQuestion.number.toString(), currentQuestion.targetDigitIndex)
+                    : currentQuestion.number
+                  }
                 </div>
                 <div className="flex flex-wrap justify-center gap-2 text-lg">
                   <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold">
@@ -808,11 +935,13 @@ export default function ApproximationQuiz() {
                         <span className="inline-block bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold">正確答案</span>
                       </div>
                       <div className="text-slate-700 text-lg">
-                        <span className="font-bold font-mono text-2xl">{feedback.correctAnswer}</span>
+                        <span className="font-bold font-mono text-2xl">
+                          {renderHighlightedNumber(feedback.correctAnswer, currentQuestion.answerDigitIndex)}
+                        </span>
                       </div>
                       {feedback.explanation && (
-                        <div className="mt-3 text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg whitespace-pre-line">
-                          {feedback.explanation}
+                        <div className="mt-3 text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg">
+                          {renderHighlightedText(feedback.explanation)}
                         </div>
                       )}
                     </div>
