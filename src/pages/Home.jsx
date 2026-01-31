@@ -248,6 +248,23 @@ const Home = () => {
       category: '高中',
       topics: ['排列', '組合', '概率', 'nPr', 'nCr'],
       inDevelopment: true
+    },
+    {
+      id: 'factorization-quiz',
+      title: '因式分解',
+      description: '因式分解：提取公因式、併項法、二次多項式（十字相乘法/FMLA 01）',
+      icon: Calculator,
+      color: 'bg-violet-500',
+      hoverColor: 'hover:bg-violet-600',
+      path: '/factorization-quiz',
+      level: 'F2',
+      badges: [
+        { level: 'F2', chapter: 'CH4', subject: '多項式的因式分解' },
+        { level: 'F3', chapter: 'CH1', subject: '續多項式的因式分解' }
+      ],
+      category: '初中',
+      topics: ['提取公因式', '併項法', '二次多項式', '十字相乘法'],
+      inDevelopment: true
     }
   ];
 
