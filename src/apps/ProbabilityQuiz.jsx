@@ -625,8 +625,13 @@ const Task5 = ({ onComplete }) => {
         const numB = denA - numA; 
         const denB = denA;
         const com = gcd(numA, denA);
-        const fracA = `${numA/com}/${denA/com}`;
-        const formulaB = `1 - P(2男2女) = 1 - ${fracA}`;
+        const simpleNumA = numA / com;
+        const simpleDenA = denA / com;
+        const formulaB = (
+          <span className="flex items-center gap-1 flex-wrap">
+            1 - P(2男2女) = 1 - <Fraction num={simpleNumA} den={simpleDenA} />
+          </span>
+        );
         const hintB = `男生與女生人數不同，即不是「2男2女」。利用 1 - Part(a)答案。`;
 
         return {
@@ -656,8 +661,13 @@ const Task5 = ({ onComplete }) => {
         const numB = denA - numA;
         const denB = denA;
         const com = gcd(numA, denA);
-        const fracA = `${numA/com}/${denA/com}`;
-        const formulaB = `1 - P(4隻相同顏色) = 1 - ${fracA}`;
+        const simpleNumA = numA / com;
+        const simpleDenA = denA / com;
+        const formulaB = (
+          <span className="flex items-center gap-1 flex-wrap">
+            1 - P(4隻相同顏色) = 1 - <Fraction num={simpleNumA} den={simpleDenA} />
+          </span>
+        );
         const hintB = `直接計算比較複雜。「至少2隻不同」的相反是「全部相同顏色」。利用 1 - Part(a)答案。`;
 
         return {
@@ -759,7 +769,18 @@ const Task5 = ({ onComplete }) => {
         const numB = nCr(total, draw) - prob3G - prob4G;
         const denB = denA;
         
-        const formulaB = `1 - P(3綠) - P(4綠)`;
+        const com3 = gcd(prob3G, denB);
+        const com4 = gcd(prob4G, denB);
+        const simple3Num = prob3G / com3;
+        const simple3Den = denB / com3;
+        const simple4Num = prob4G / com4;
+        const simple4Den = denB / com4;
+        
+        const formulaB = (
+          <span className="flex items-center gap-1 flex-wrap">
+            1 - P(3綠) - P(4綠) = 1 - <Fraction num={simple3Num} den={simple3Den} /> - <Fraction num={simple4Num} den={simple4Den} />
+          </span>
+        );
         const hintB = `綠筆最多4枝。「不多於2枝」(0,1,2) 的相反是「3枝或4枝」。利用 1 減去這兩種情況的概率。`;
 
         return {
