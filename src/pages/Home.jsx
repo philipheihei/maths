@@ -242,7 +242,8 @@ const Home = () => {
       path: '/probability-quiz',
       level: 'F5',
       badges: [
-        { level: 'F5', chapter: 'CH15', subject: '排列與組合' }
+        { level: 'F5', chapter: 'CH15', subject: '排列與組合' },
+        { level: 'F5', chapter: 'CH16', subject: '續概率' }
       ],
       category: '高中',
       topics: ['排列', '組合', '概率', 'nPr', 'nCr'],
@@ -258,7 +259,8 @@ const Home = () => {
     if (activeFilter === '初中' || activeFilter === '高中') {
       return app.category === activeFilter;
     }
-    return app.level === activeFilter;
+    // 檢查 app.level 或 badges 中是否有匹配的年級
+    return app.level === activeFilter || app.badges.some(badge => badge.level === activeFilter);
   });
 
   return (
