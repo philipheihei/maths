@@ -849,15 +849,18 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
           </div>
           
           <h2 className="text-blue-900 font-bold text-lg md:text-xl text-center border-b-2 border-blue-500 pb-2 mb-4">
-            Prog01：解聯立二元一次方程
+            Prog 01：解聯立二元一次方程
           </h2>
           
           {/* Equation Box */}
           <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl text-center mb-6 border-2 border-blue-400">
-            <p className="text-sm text-gray-600 mb-2">適用於解以下形式：</p>
-            <div className="text-lg md:text-xl font-bold text-blue-900">
-              B₁x + A₁y = C₁<br />
-              B₂x + A₂y = C₂
+            <p className="text-sm text-gray-600 mb-2">適用於解以下題目：</p>
+            <div className="text-lg md:text-xl font-bold text-blue-900 flex items-center justify-center gap-3">
+              <span className="text-5xl leading-none">{`{`}</span>
+              <div className="text-left">
+                <div>Ax + By = C</div>
+                <div>Dx + Ey = F</div>
+              </div>
             </div>
           </div>
           
@@ -873,16 +876,18 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
                 { symbol: '→', keys: ['SHIFT', '3', '2'] },
                 { symbol: ':', keys: ['SHIFT', '3', '3'] },
                 { symbol: '◢', keys: ['SHIFT', '3', '4'] },
-                { symbol: 'A', keys: ['ALPHA', 'A'] },
-                { symbol: '┘', keys: ['a b/c'] }
+                { symbol: '⁻¹', keys: ['x⁻¹'] },
+                { symbol: '┘', keys: ['a b/c'] },
+                { symbol: 'A', keys: ['ALPHA', 'A'], symbolColor: 'text-red-600' }
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2 p-2 bg-white rounded border border-gray-200">
-                  <span className="w-8 text-center text-lg font-bold text-blue-900">{item.symbol}</span>
+                  <span className={`w-8 text-center text-lg font-bold ${item.symbolColor || 'text-blue-900'}`}>{item.symbol}</span>
                   <div className="flex flex-wrap gap-1">
                     {item.keys.map((key, i) => (
                       <span key={i} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${
                         key === 'SHIFT' ? 'bg-yellow-500 text-black' :
                         key === 'ALPHA' ? 'bg-red-600 text-white' :
+                        key === 'x⁻¹' ? 'bg-gray-700 text-white' :
                         key === 'a b/c' ? 'bg-gray-700 text-white' :
                         'bg-gray-800 text-white'
                       }`}>{key}</span>
@@ -929,12 +934,10 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
               <strong>輸入以下程式碼</strong>
             </div>
             <div className="bg-black rounded-lg p-3 font-mono text-green-400 text-sm overflow-x-auto">
-              <div>?→B : ?→A : ?→C :</div>
-              <div>B┘A→B : C┘A→C :</div>
-              <div>?→D : D : ?→A : ?→D :</div>
-              <div>(D－AC)┘(Ans－AB→A◢</div>
-              <div>C－Ans×B→B</div>
-              <div className="text-gray-500 text-right text-xs mt-2">（共 59 步）</div>
+              <div>?→A : ?→B : ?→C : ?→D : ?→X : ?→Y :</div>
+              <div>AX－DB→M : M⁻¹(CX－YB→X◢</div>
+              <div>M⁻¹(AY－DC→Y</div>
+              <div className="text-gray-500 text-right text-xs mt-2">（共 53 步）</div>
             </div>
           </div>
           
@@ -945,8 +948,9 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
               <strong>確認並離開</strong>
             </div>
             <p className="text-sm">
-              完成輸入後，檢查計算機是否顯示 <strong className="text-blue-900">059</strong>。<br />
+              完成輸入後，檢查計算機是否顯示 <strong className="text-blue-900">053</strong>。<br />
               如是，按 <span className="px-2 py-1 bg-red-600 text-white rounded text-xs font-bold">ON</span> 離開程式編輯模式。
+              <br />如否，請檢查是否輸入錯漏程式碼。
             </p>
           </div>
           
@@ -961,18 +965,18 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
               <table className="w-full text-sm border-collapse">
                 <thead>
                   <tr className="bg-blue-900 text-white">
-                    <th colSpan="3" className="p-2 border border-blue-700">第一條方程：B₁x + A₁y = C₁</th>
-                    <th colSpan="3" className="p-2 border border-blue-700">第二條方程：B₂x + A₂y = C₂</th>
+                    <th colSpan="3" className="p-2 border border-blue-700">第一條方程：Ax + By = C</th>
+                    <th colSpan="3" className="p-2 border border-blue-700">第二條方程：Dx + Ey = F</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="bg-white">
-                    <td className="p-2 border text-center">B₁</td>
-                    <td className="p-2 border text-center">A₁</td>
-                    <td className="p-2 border text-center">C₁</td>
-                    <td className="p-2 border text-center">B₂</td>
-                    <td className="p-2 border text-center">A₂</td>
-                    <td className="p-2 border text-center">C₂</td>
+                    <td className="p-2 border text-center">A</td>
+                    <td className="p-2 border text-center">B</td>
+                    <td className="p-2 border text-center">C</td>
+                    <td className="p-2 border text-center">D</td>
+                    <td className="p-2 border text-center">E</td>
+                    <td className="p-2 border text-center">F</td>
                   </tr>
                   <tr className="bg-gray-50 text-xs text-gray-600">
                     <td className="p-2 border text-center">x的係數</td>
@@ -995,9 +999,12 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             <h4 className="text-green-700 font-bold mb-3">📌 範例：解聯立方程</h4>
             
             <div className="bg-white p-3 rounded-lg text-center mb-4 border border-green-400">
-              <div className="text-lg font-mono">
-                3x + 4y = 10<br />
-                x + 3y = 5
+              <div className="text-lg font-mono flex items-center justify-center gap-3">
+                <span className="text-5xl leading-none">{`{`}</span>
+                <div className="text-left">
+                  <div>x + 2y = 10</div>
+                  <div>3x − 4y = −6</div>
+                </div>
               </div>
             </div>
             
@@ -1005,22 +1012,24 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             <div className="bg-white p-2 rounded mb-3">
               <span className="px-2 py-1 bg-blue-600 text-white rounded text-xs font-bold">Prog</span>
               <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold ml-1">1</span>
-              <span className="text-gray-500 text-xs ml-2">→ 計算機顯示「B?」</span>
+              <span className="text-gray-500 text-xs ml-2">→ 計算機顯示「A?」</span>
             </div>
             
             <p className="font-bold text-sm mb-2">步驟二：依次輸入係數</p>
             <div className="bg-white p-2 rounded space-y-1 text-sm">
               {[
-                { keys: ['3'], label: '（第一條方程 x 的係數 B₁ = 3）' },
-                { keys: ['4'], label: '（第一條方程 y 的係數 A₁ = 4）' },
-                { keys: ['1', '0'], label: '（第一條方程常數 C₁ = 10）' },
-                { keys: ['1'], label: '（第二條方程 x 的係數 B₂ = 1）' },
-                { keys: ['3'], label: '（第二條方程 y 的係數 A₂ = 3）' },
-                { keys: ['5'], label: '（第二條方程常數 C₂ = 5）' }
+                { keys: ['1'], label: '（第一條方程 x 的係數 A = 1）' },
+                { keys: ['2'], label: '（第一條方程 y 的係數 B = 2）' },
+                { keys: ['1', '0'], label: '（第一條方程常數 C = 10）' },
+                { keys: ['3'], label: '（第二條方程 x 的係數 D = 3）' },
+                { keys: ['(−)', '4'], label: '（第二條方程 y 的係數 E = −4）' },
+                { keys: ['(−)', '6'], label: '（第二條方程常數 F = −6）' }
               ].map((item, idx) => (
                 <div key={idx} className="flex flex-wrap items-center gap-1">
                   {item.keys.map((k, i) => (
-                    <span key={i} className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">{k}</span>
+                    <span key={i} className={`px-2 py-1 rounded text-xs font-bold ${
+                      k === '(−)' ? 'bg-red-600 text-white' : 'bg-gray-800 text-white'
+                    }`}>{k}</span>
                   ))}
                   <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span>
                   <span className="text-gray-500 text-xs">{item.label}</span>
@@ -1029,10 +1038,10 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             </div>
             
             <div className="bg-blue-100 p-3 rounded-lg mt-3 text-center border border-blue-300">
-              <p>計算機顯示 <span className="text-2xl font-bold text-blue-700">2</span> <span className="text-xs text-gray-500">（即 x = 2）</span></p>
-              <p className="mt-2">按 <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span> 後顯示 <span className="text-2xl font-bold text-blue-700">1</span> <span className="text-xs text-gray-500">（即 y = 1）</span></p>
+              <p>計算機顯示 <span className="text-2xl font-bold text-blue-700">2.8</span> <span className="text-sm text-gray-600 font-medium">（即 x = 2.8）</span></p>
+              <p className="mt-2">按 <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span> 後顯示 <span className="text-2xl font-bold text-blue-700">3.6</span> <span className="text-sm text-gray-600 font-medium">（即 y = 3.6）</span></p>
               <div className="mt-3 pt-3 border-t border-blue-300">
-                ✅ <strong>答案：x = 2，y = 1</strong>
+                ✅ <strong>答案：x = 2.8，y = 3.6</strong>
               </div>
             </div>
           </div>
@@ -1055,7 +1064,7 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
           <div className="bg-yellow-50 border-2 border-yellow-400 p-3 rounded-lg">
             <div className="font-bold text-yellow-700 mb-2">💡 提示</div>
             <ul className="text-sm space-y-1 list-disc list-inside text-gray-700">
-              <li>如果顯示「Ma ERROR」，表示方程無解或有無限多解</li>
+              <li>如果顯示「Math ERROR」，表示方程無解或有無限多解</li>
               <li>要重新計算，只需按 <span className="px-1 bg-blue-600 text-white rounded text-xs">Prog</span> <span className="px-1 bg-gray-800 text-white rounded text-xs">1</span> 再次執行</li>
               <li>程式會永久保存，關機後仍可使用</li>
             </ul>
