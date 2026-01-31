@@ -1027,10 +1027,6 @@ const ProbabilityQuiz = () => {
           {activeTab === 'task4' && <Task4 onComplete={(c) => handleTaskComplete('task4', c)} />}
           {activeTab === 'task5' && <Task5 onComplete={(c) => handleTaskComplete('task5', c)} />}
         </main>
-
-        <footer className="mt-12 text-center text-gray-400 text-sm">
-          <p>Designed for DSE Mathematics - Permutation & Combination Module</p>
-        </footer>
       </div>
     </div>
   );

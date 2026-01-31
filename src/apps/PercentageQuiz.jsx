@@ -220,17 +220,15 @@ const TeachingPage = ({ onStartQuiz }) => {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
             <h3 className="font-bold text-blue-700 mb-3">複利息公式</h3>
             <div className="bg-white rounded-lg p-4 text-center">
-              <div className="text-xl font-serif text-gray-800">
-                本金 × (1 + 年利率/結算頻率)<sup>期數</sup>
-              </div>
+              <Latex math="\text{本金} \times \left(1 + \frac{\text{年利率}}{\text{結算頻率}}\right)^{\text{期數}}" block />
             </div>
             <div className="mt-4 bg-blue-50 border border-blue-300 rounded-lg p-3">
               <p className="text-sm text-blue-800 mb-2">
                 <span className="font-bold">例子：</span>本金 $10,000，年利率 6%，半年一結，年期 3 年
               </p>
-              <p className="text-sm text-blue-900 font-mono">
-                本金 × (1 + 6%/2)<sup>6</sup> = 10,000 × (1.03)<sup>6</sup>
-              </p>
+              <div className="text-sm text-blue-900 my-2">
+                <Latex math="\text{本金} \times \left(1 + \frac{6\%}{2}\right)^{6} = 10{,}000 \times (1.03)^{6}" />
+              </div>
               <p className="text-xs text-blue-700 mt-2">
                 💡 期數 = 年期 × 每年結算次數 = 3 × 2 = 6
               </p>
@@ -251,22 +249,22 @@ const TeachingPage = ({ onStartQuiz }) => {
                 <tr className="bg-white">
                   <td className="border border-blue-200 px-3 py-2 text-center">一年一結</td>
                   <td className="border border-blue-200 px-3 py-2 text-center font-bold">1</td>
-                  <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="(1+6\%)^t" /></td>
+                  <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="\left(1+\frac{6\%}{1}\right)^{t} = (1+6\%)^{t}" /></td>
                 </tr>
                 <tr className="bg-gray-50">
                   <td className="border border-blue-200 px-3 py-2 text-center">半年一結</td>
                   <td className="border border-blue-200 px-3 py-2 text-center font-bold">2</td>
-                  <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="(1+3\%)^{2t}" /></td>
+                  <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="\left(1+\frac{6\%}{2}\right)^{2t} = (1+3\%)^{2t}" /></td>
                 </tr>
                 <tr className="bg-white">
                   <td className="border border-blue-200 px-3 py-2 text-center">一季一結</td>
                   <td className="border border-blue-200 px-3 py-2 text-center font-bold">4</td>
-                  <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="(1+1.5\%)^{4t}" /></td>
+                  <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="\left(1+\frac{6\%}{4}\right)^{4t} = (1+1.5\%)^{4t}" /></td>
                 </tr>
                 <tr className="bg-gray-50">
                   <td className="border border-blue-200 px-3 py-2 text-center">一月一結</td>
                   <td className="border border-blue-200 px-3 py-2 text-center font-bold">12</td>
-                  <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="(1+0.5\%)^{12t}" /></td>
+                  <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="\left(1+\frac{6\%}{12}\right)^{12t} = (1+0.5\%)^{12t}" /></td>
                 </tr>
               </tbody>
             </table>
@@ -344,7 +342,12 @@ const QuizPage = ({ onBackToTeaching }) => {
         type: 1,
         text: `某${item}的售價為 $${sellingPrice}。該${item}以其標價${discount.zh}售出。求該${item}的標價。`,
         answer: markedPrice,
-        hint: `售價 = 標價 × ${discount.rate}，所以標價 = 售價 ÷ ${discount.rate}`,
+        hintLatex: `\\begin{aligned}
+          \\text{售價} &= \\text{標價} \\times ${discount.rate} \\\\
+          \\text{標價} &= \\text{售價} \\div ${discount.rate} \\\\
+          &= \\$${sellingPrice} \\div ${discount.rate} \\\\
+          &= \\$${markedPrice}
+        \\end{aligned}`,
         unit: '$'
       };
     } else {
@@ -356,7 +359,11 @@ const QuizPage = ({ onBackToTeaching }) => {
         type: 1,
         text: `某${item}的標價為 $${markedPrice}。該${item}現以其標價${discount.zh}售出。求該${item}的售價。`,
         answer: sellingPrice,
-        hint: `售價 = 標價 × ${discount.rate}`,
+        hintLatex: `\\begin{aligned}
+          \\text{售價} &= \\text{標價} \\times ${discount.rate} \\\\
+          &= \\$${markedPrice} \\times ${discount.rate} \\\\
+          &= \\$${sellingPrice}
+        \\end{aligned}`,
         unit: '$'
       };
     }
@@ -385,7 +392,17 @@ const QuizPage = ({ onBackToTeaching }) => {
       type: 2,
       text: `某${item}以其標價${discountZh}售出。售出該${item}後，盈利為 $${profit} 且盈利百分率為 ${profitPercent}%。求該${item}的標價。`,
       answer: markedPrice,
-      hint: `成本 = 盈利 ÷ 盈利百分率 = $${profit} ÷ ${profitPercent}% = $${cost}，售價 = 成本 + 盈利 = $${sellingPrice}，標價 = 售價 ÷ ${discountRate}`,
+      hintLatex: `\\begin{aligned}
+        \\text{成本} &= \\text{盈利} \\div \\text{盈利百分率} \\\\
+        &= \\$${profit} \\div ${profitPercent}\\% \\\\
+        &= \\$${cost} \\\\
+        \\text{售價} &= \\text{成本} + \\text{盈利} \\\\
+        &= \\$${cost} + \\$${profit} \\\\
+        &= \\$${sellingPrice} \\\\
+        \\text{標價} \\times ${discountRate} &= \\text{售價} \\\\
+        \\text{標價} &= \\$${sellingPrice} \\div ${discountRate} \\\\
+        &= \\$${markedPrice}
+      \\end{aligned}`,
       unit: '$'
     };
   };
@@ -408,13 +425,20 @@ const QuizPage = ({ onBackToTeaching }) => {
       questionText = `某${item}的成本為 $${cost}。現售出該${item}且虧蝕百分率為 ${profitPercent}%。求該${item}的售價。`;
     }
 
+    const multiplier = isProfit ? (1 + profitPercent / 100) : (1 - profitPercent / 100);
+    const operator = isProfit ? '+' : '-';
+    const label = isProfit ? '盈利' : '虧蝕';
+
     return {
       type: 3,
       text: questionText,
       answer: sellingPrice,
-      hint: isProfit 
-        ? `售價 = 成本 × (1 + 盈利百分率) = $${cost} × ${1 + profitPercent / 100}` 
-        : `售價 = 成本 × (1 - 虧蝕百分率) = $${cost} × ${1 - profitPercent / 100}`,
+      hintLatex: `\\begin{aligned}
+        \\text{售價} &= \\text{成本} \\times (1 ${operator} \\text{${label}百分率}) \\\\
+        &= \\$${cost} \\times (1 ${operator} ${profitPercent}\\%) \\\\
+        &= \\$${cost} \\times ${multiplier} \\\\
+        &= \\$${sellingPrice}
+      \\end{aligned}`,
       unit: '$'
     };
   };
@@ -436,44 +460,66 @@ const QuizPage = ({ onBackToTeaching }) => {
       case 0: {
         // A的日薪為X，B較A高Y%，求B
         const answerSalary = Math.round(baseSalary * (1 + percentChange / 100));
+        const multiplier = 1 + percentChange / 100;
         return {
           type: 4,
           text: `${pair.name1}的日薪為 $${baseSalary}。${pair.name2}的日薪較${pair.name1}高 ${percentChange}%。求${pair.name2}的日薪。`,
           answer: answerSalary,
-          hint: `${pair.name2}的日薪 = ${pair.name1}的日薪 × (1 + ${percentChange}%)`,
+          hintLatex: `\\begin{aligned}
+            \\text{${pair.name2}的日薪} &= \\text{${pair.name1}的日薪} \\times (1 + ${percentChange}\\%) \\\\
+            &= \\$${baseSalary} \\times ${multiplier} \\\\
+            &= \\$${answerSalary}
+          \\end{aligned}`,
           unit: '$'
         };
       }
       case 1: {
         // B的日薪為X，B較A高Y%，求A
-        const otherSalary = Math.round(baseSalary / (1 + percentChange / 100));
+        const multiplier = 1 + percentChange / 100;
+        const otherSalary = Math.round(baseSalary / multiplier);
         return {
           type: 4,
           text: `${pair.name2}的日薪為 $${baseSalary}。${pair.name2}的日薪較${pair.name1}高 ${percentChange}%。求${pair.name1}的日薪。`,
           answer: otherSalary,
-          hint: `${pair.name2}的日薪 = ${pair.name1}的日薪 × (1 + ${percentChange}%)，所以${pair.name1}的日薪 = ${pair.name2}的日薪 ÷ (1 + ${percentChange}%)`,
+          hintLatex: `\\begin{aligned}
+            \\text{${pair.name2}的日薪} &= \\text{${pair.name1}的日薪} \\times (1 + ${percentChange}\\%) \\\\
+            \\text{${pair.name1}的日薪} &= \\text{${pair.name2}的日薪} \\div (1 + ${percentChange}\\%) \\\\
+            &= \\$${baseSalary} \\div ${multiplier} \\\\
+            &= \\$${otherSalary}
+          \\end{aligned}`,
           unit: '$'
         };
       }
       case 2: {
         // A的日薪為X，B較A低Y%，求B
         const answerSalary = Math.round(baseSalary * (1 - percentChange / 100));
+        const multiplier = 1 - percentChange / 100;
         return {
           type: 4,
           text: `${pair.name1}的日薪為 $${baseSalary}。${pair.name2}的日薪較${pair.name1}低 ${percentChange}%。求${pair.name2}的日薪。`,
           answer: answerSalary,
-          hint: `${pair.name2}的日薪 = ${pair.name1}的日薪 × (1 - ${percentChange}%)`,
+          hintLatex: `\\begin{aligned}
+            \\text{${pair.name2}的日薪} &= \\text{${pair.name1}的日薪} \\times (1 - ${percentChange}\\%) \\\\
+            &= \\$${baseSalary} \\times ${multiplier} \\\\
+            &= \\$${answerSalary}
+          \\end{aligned}`,
           unit: '$'
         };
       }
       default: {
         // B的日薪為X，B較A低Y%，求A
-        const otherSalary = Math.round(baseSalary / (1 - percentChange / 100));
+        const multiplier = 1 - percentChange / 100;
+        const otherSalary = Math.round(baseSalary / multiplier);
         return {
           type: 4,
           text: `${pair.name2}的日薪為 $${baseSalary}。${pair.name2}的日薪較${pair.name1}低 ${percentChange}%。求${pair.name1}的日薪。`,
           answer: otherSalary,
-          hint: `${pair.name2}的日薪 = ${pair.name1}的日薪 × (1 - ${percentChange}%)，所以${pair.name1}的日薪 = ${pair.name2}的日薪 ÷ (1 - ${percentChange}%)`,
+          hintLatex: `\\begin{aligned}
+            \\text{${pair.name2}的日薪} &= \\text{${pair.name1}的日薪} \\times (1 - ${percentChange}\\%) \\\\
+            \\text{${pair.name1}的日薪} &= \\text{${pair.name2}的日薪} \\div (1 - ${percentChange}\\%) \\\\
+            &= \\$${baseSalary} \\div ${multiplier} \\\\
+            &= \\$${otherSalary}
+          \\end{aligned}`,
           unit: '$'
         };
       }
@@ -484,12 +530,12 @@ const QuizPage = ({ onBackToTeaching }) => {
   // 複利息題目生成
   // =====================
   const generateCompoundQuestion = () => {
-    const principal = [10000, 20000, 30000, 40000, 50000, 60000, 80000, 100000][Math.floor(Math.random() * 8)];
+    const principal = (Math.floor(Math.random() * 100) + 1) * 1000; // 1000 到 100000，千位齊頭數
     const annualRate = [2, 3, 4, 5, 6, 7, 8][Math.floor(Math.random() * 7)];
     const years = [1, 2, 3, 4, 5, 6, 8, 10][Math.floor(Math.random() * 8)];
     
     const compoundingOptions = [
-      { zh: '一年', n: 1 },
+      { zh: '年', n: 1 },
       { zh: '半年', n: 2 },
       { zh: '一季', n: 4 },
       { zh: '一個月', n: 12 }
@@ -504,12 +550,26 @@ const QuizPage = ({ onBackToTeaching }) => {
     const roundedAmount = Math.round(amount);
     const interest = roundedAmount - principal;
 
+    // 根據結算頻率決定顯示格式
+    const rateDisplay = compounding.n === 1 
+      ? `${annualRate}\\%` 
+      : `\\frac{${annualRate}\\%}{${compounding.n}}`;
+    
+    const formulaDisplay = compounding.n === 1
+      ? `\\text{本利和} = \\$${principal.toLocaleString()} \\times (1 + ${annualRate}\\%)^{${years}}`
+      : `\\text{本利和} = \\$${principal.toLocaleString()} \\times \\left(1 + \\frac{${annualRate}\\%}{${compounding.n}}\\right)^{${compounding.n} \\times ${years}}`;
+
     if (askForInterest) {
       return {
         type: 'compound',
         text: `存款 $${principal.toLocaleString()}，年利率 ${annualRate}%，年期 ${years} 年，複利計算，每${compounding.zh}一結。求利息，準確至最接近的元。`,
         answer: interest,
-        hint: `本利和 = ${principal} × (1 + ${annualRate}%/${compounding.n})^(${compounding.n}×${years}) ≈ $${roundedAmount.toLocaleString()}，利息 = 本利和 - 本金`,
+        hintLatex: `\\begin{aligned}
+          ${formulaDisplay.replace(/\\/g, '\\\\')} &\\approx \\$${roundedAmount.toLocaleString()} \\\\
+          \\text{利息} &= \\text{本利和} - \\text{本金} \\\\
+          &= \\$${roundedAmount.toLocaleString()} - \\$${principal.toLocaleString()} \\\\
+          &= \\$${interest.toLocaleString()}
+        \\end{aligned}`,
         unit: '$',
         formula: {
           principal,
@@ -524,7 +584,9 @@ const QuizPage = ({ onBackToTeaching }) => {
         type: 'compound',
         text: `存款 $${principal.toLocaleString()}，年利率 ${annualRate}%，年期 ${years} 年，複利計算，每${compounding.zh}一結。求本利和，準確至最接近的元。`,
         answer: roundedAmount,
-        hint: `本利和 = ${principal} × (1 + ${annualRate}%/${compounding.n})^(${compounding.n}×${years})`,
+        hintLatex: `\\begin{aligned}
+          ${formulaDisplay.replace(/\\/g, '\\\\')} &\\approx \\$${roundedAmount.toLocaleString()}
+        \\end{aligned}`,
         unit: '$',
         formula: {
           principal,
@@ -575,7 +637,8 @@ const QuizPage = ({ onBackToTeaching }) => {
       setFeedback({ 
         type: 'incorrect', 
         msg: `答案是 ${currentQuestion.unit}${correctAnswer.toLocaleString()}`,
-        hint: currentQuestion.hint
+        hint: currentQuestion.hint,
+        hintLatex: currentQuestion.hintLatex
       });
     }
   };
@@ -690,19 +753,6 @@ const QuizPage = ({ onBackToTeaching }) => {
               {currentQuestion.text}
             </p>
 
-            {/* 複利息公式顯示 */}
-            {currentQuestion.formula && (
-              <div className="bg-blue-50 rounded-lg p-4 mb-4">
-                <p className="text-sm text-blue-700 mb-2">公式代入：</p>
-                <div className="text-center">
-                  <Latex 
-                    math={`A = ${currentQuestion.formula.principal} \\times \\left(1 + \\frac{${currentQuestion.formula.rate}\\%}{${currentQuestion.formula.n}}\\right)^{${currentQuestion.formula.n} \\times ${currentQuestion.formula.years}}`}
-                    block 
-                  />
-                </div>
-              </div>
-            )}
-
             {/* 輸入區 */}
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xl font-bold text-slate-600">{currentQuestion.unit}</span>
@@ -743,6 +793,15 @@ const QuizPage = ({ onBackToTeaching }) => {
                   <p className="text-red-600 text-sm mt-2 border-t border-red-200 pt-2">
                     💡 提示：{feedback.hint}
                   </p>
+                )}
+                {feedback.hintLatex && (
+                  <div className="text-sm mt-2 border-t border-red-200 pt-2">
+                    <div className="bg-white rounded-lg p-3">
+                      <div className="text-slate-800">
+                        <Latex math={feedback.hintLatex} block />
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             )}

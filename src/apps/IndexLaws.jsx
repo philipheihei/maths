@@ -118,7 +118,13 @@ export default function IndexLaws() {
 
   const clearInput = () => {
     if (hasChecked) return;
-    handleInput('', activeField);
+    // 清除所有輸入並重設到第一個欄位
+    if (level === 2) {
+      setUserInputs({});
+      setActiveField('step1');
+    } else {
+      handleInput('', activeField);
+    }
   };
 
   const backspace = () => {
@@ -600,7 +606,7 @@ export default function IndexLaws() {
                 >
                   {k === '/' ? <FractionIcon /> : 
                    k === 'DEL' ? 'DEL' : 
-                   k === 'CLR' ? <Eraser size={20} className="mx-auto"/> : k}
+                   k === 'CLR' ? <span className="font-bold">AC</span> : k}
                 </button>
               ))}
             </div>
