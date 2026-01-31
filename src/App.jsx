@@ -14,6 +14,8 @@ import Subject from './apps/Subject';
 import CoordinateTransform from './apps/CoordinateTransform';
 import AlgebraicFractionsQuiz from './apps/AlgebraicFractionsQuiz';
 import ApproximationQuiz from './apps/ApproximationQuiz';
+import PercentageQuiz from './apps/PercentageQuiz';
+import ProbabilityQuiz from './apps/ProbabilityQuiz';
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route path="/coordinate-transform" element={<CoordinateTransform />} />
         <Route path="/algebraic-fractions" element={<AlgebraicFractionsQuiz />} />
         <Route path="/approximation-quiz" element={<ApproximationQuiz />} />
+        <Route path="/percentage-quiz" element={<PercentageQuiz />} />
+        <Route path="/probability-quiz" element={<ProbabilityQuiz />} />
       </Routes>
     </Router>
   );

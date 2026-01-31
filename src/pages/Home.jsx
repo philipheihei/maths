@@ -214,6 +214,39 @@ const Home = () => {
       category: '初中',
       topics: ['有效數字', '捨入', '近似值'],
       inDevelopment: false
+    },
+    {
+      id: 'percentage-quiz',
+      title: '百分數應用',
+      description: '百分數：標價/售價/折扣、盈利虧蝕百分率、複利息計算',
+      icon: Calculator,
+      color: 'bg-emerald-500',
+      hoverColor: 'hover:bg-emerald-600',
+      path: '/percentage-quiz',
+      level: 'F2',
+      badges: [
+        { level: 'F1', chapter: 'CH9', subject: '百分法（一）' },
+        { level: 'F3', chapter: 'CH3', subject: '百分法（二）' }
+      ],
+      category: '初中',
+      topics: ['百分數', '折扣', '盈利虧蝕', '複利息'],
+      inDevelopment: true
+    },
+    {
+      id: 'probability-quiz',
+      title: '排列與組合',
+      description: '概率：nPr vs nCr、潛規則、加法乘法、DSE 實戰模擬',
+      icon: Calculator,
+      color: 'bg-violet-500',
+      hoverColor: 'hover:bg-violet-600',
+      path: '/probability-quiz',
+      level: 'F5',
+      badges: [
+        { level: 'F5', chapter: 'CH15', subject: '排列與組合' }
+      ],
+      category: '高中',
+      topics: ['排列', '組合', '概率', 'nPr', 'nCr'],
+      inDevelopment: true
     }
   ];
 
@@ -388,12 +421,6 @@ const Home = () => {
               </button>
             </div>
           )}
-        </div>
-
-        {/* Coming Soon Section */}
-        <div className="mt-12 bg-white rounded-2xl shadow-md border border-slate-200 p-8 text-center">
-          <h3 className="text-2xl font-bold text-slate-800 mb-2">更多工具即將推出...</h3>
-          <p className="text-slate-600">我們正在開發更多互動式學習工具，敬請期待！</p>
         </div>
       </main>
 
