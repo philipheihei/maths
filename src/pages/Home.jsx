@@ -265,6 +265,22 @@ const Home = () => {
       category: '初中',
       topics: ['提取公因式', '併項法', '二次多項式', '十字相乘法'],
       inDevelopment: true
+    },
+    {
+      id: 'remainder-factor-quiz',
+      title: '餘式定理 & 因式定理',
+      description: '餘式定理與因式定理：找相應的 f(x) 值',
+      icon: Calculator,
+      color: 'bg-teal-500',
+      hoverColor: 'hover:bg-teal-600',
+      path: '/remainder-factor-quiz',
+      level: 'F4',
+      badges: [
+        { level: 'F4', chapter: 'CH4', subject: '續多項式' }
+      ],
+      category: '高中',
+      topics: ['餘式定理', '因式定理', '多項式除法'],
+      inDevelopment: true
     }
   ];
 
