@@ -172,7 +172,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                 <p className="text-slate-700 mb-2">若所有項都出現相同代數/因數時可<span className="text-red-600 font-bold">抽取</span></p>
                 
                 <div className="bg-white rounded-lg p-3 mb-3">
-                  <p className="text-sm text-slate-600 mb-2">例子 1：找出共同因數</p>
+                  <p className="text-sm text-slate-600 mb-2">例子 1：找出相同代數 及 公因數，然後抽出來寫前面，後面加括號裝剩下的代數/因數。</p>
                   <div className="flex items-center gap-2 flex-wrap text-lg">
                     <span><span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">6</span>u<span className="bg-yellow-200 px-1 rounded">v</span> <span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">8</span><span className="bg-yellow-200 px-1 rounded">v</span>w</span>
                   </div>
@@ -194,7 +194,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                 </div>
 
                 <div className="bg-white rounded-lg p-3">
-                  <p className="text-sm text-slate-600 mb-2">例子 2：處理次方的數學</p>
+                  <p className="text-sm text-slate-600 mb-2">例子 2：遇上相同代數但不同次方，只抽最低次方</p>
                   <div className="flex items-center gap-2 flex-wrap text-lg">
                     <span><span className="bg-pink-200 px-1 rounded"><Latex math="m^3" /></span><span className="bg-cyan-200 px-1 rounded">n</span> - 3<span className="bg-pink-200 px-1 rounded">m</span><span className="bg-cyan-200 px-1 rounded"><Latex math="n^2" /></span></span>
                   </div>
@@ -203,7 +203,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                     <span>mn(<span className="bg-pink-200 px-1 rounded"><Latex math="m^2" /></span> - 3<span className="bg-cyan-200 px-1 rounded">n</span>)</span>
                   </div>
                   <div className="mt-3 text-sm text-slate-600">
-                    <span className="text-pink-600">⤷</span> 抽走了一個 m，還有 <span className="bg-pink-200 px-1 rounded">m²</span>
+                    <span className="text-pink-600">⤷</span> 抽走了一個 m，m³ 變為 <span className="bg-pink-200 px-1 rounded">m²</span>，原本的m則會消失。
                   </div>
                 </div>
               </div>
@@ -239,14 +239,13 @@ const TeachingPage = ({ onStartQuiz }) => {
 
               <div className="bg-white rounded-lg p-4 border border-blue-200">
                 <p className="text-sm text-slate-600 mb-2">例子 1：標準四項</p>
-                <Latex math="\begin{aligned} &bm + bn + 5m + 5n \\ &= b(m+n) + 5(m+n) \\ &= (m+n)(b+5) \end{aligned}" block />
+                <Latex math="\begin{aligned} bm + bn + 5m + 5n &= b(m+n) + 5(m+n) \\ &= (m+n)(b+5) \end{aligned}" block />
               </div>
 
               <div className="bg-white rounded-lg p-4 border border-blue-200">
                 <p className="text-sm text-slate-600 mb-2">例子 2：已有括號</p>
                 <div className="space-y-1">
-                  <Latex math="(2x-5) - (2x-5)y" block />
-                  <Latex math="= (2x-5)(1-y)" block />
+                  <Latex math="\begin{aligned} &(2x-5) - (2x-5)y \\ &= (2x-5)(1-y) \end{aligned}" block />
                 </div>
                 <p className="text-sm text-slate-500 mt-2">💡 抽相同括號放前，剩餘部分放後括號</p>
               </div>
@@ -273,7 +272,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
                       <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">1</span>
-                      <span>開啟 FMLA 01（按 MODE → 方程式）</span>
+                      <span>開啟 FMLA 01（按 FMLA 輸入 01）</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">2</span>
@@ -304,7 +303,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                     </div>
                   </div>
                   <p className="text-center mt-4 font-bold text-green-700 text-base">
-                    ∴ 答案 = <Latex math="(x-3)(8x+7)" />
+                    ∴ 答案 <Latex math="= (x-3)(8x+7)" />
                   </p>
                 </div>
               </div>
@@ -313,22 +312,19 @@ const TeachingPage = ({ onStartQuiz }) => {
               <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
                 <h3 className="font-bold text-amber-800 mb-3">⚠️ 次序調動</h3>
                 <p className="text-sm text-slate-700 mb-2">
-                  十字相乘法 / FMLA 需以 <Latex math="ax^2 + bx + c" /> 形式進行
+                  十字相乘法 / FMLA 01 需以 <Latex math="ax^2 + bx + c" /> 形式才能計算正確
                 </p>
                 
                 <div className="bg-white rounded-lg p-3 mb-2">
                   <p className="text-sm text-slate-600 mb-1">例子 1：調動次序</p>
-                  <Latex math="\begin{aligned} 50 - 15m + m^2 &= m^2 - 15m + 50 \end{aligned}" block />
-                  <p className="text-xs text-slate-500">以 2次/1次/0次 代數(0次) 次序作調動</p>
+                  <Latex math="\begin{aligned} &50 - 15m + m^2 \\ &= m^2 - 15m + 50 \end{aligned}" block />
+                  <p className="text-xs text-slate-500">以 2次方/1次方/0次方(沒代數) 順序作調動</p>
                 </div>
 
                 <div className="bg-white rounded-lg p-3">
                   <p className="text-sm text-slate-600 mb-1">例子 2：<Latex math="a^2" /> 係數需是正數</p>
                   <div className="space-y-1">
-                    <Latex math="36 + 5a - a^2" block />
-                    <Latex math="= -a^2 + 5a + 36" block />
-                    <Latex math="= -(a^2 - 5a - 36)" block />
-                    <Latex math="= -(a-9)(a+4)" block />
+                    <Latex math="\begin{aligned} &36 + 5a - a^2 \\ &= -a^2 + 5a + 36 \\ &= -(a^2 - 5a - 36) \\ &= -(a-9)(a+4) \end{aligned}" block />
                   </div>
                   <p className="text-xs text-red-500 mt-2">⚠️ 若沒有抽負，因式分解答案會錯！</p>
                 </div>
@@ -341,9 +337,9 @@ const TeachingPage = ({ onStartQuiz }) => {
                   形式：<Latex math="ax^2 + bxy + cy^2" />
                 </p>
                 <div className="bg-white rounded-lg p-3">
+                  <p className="text-xs text-slate-500 mb-2">💡 方法：先當只有前面的代數 x 用FMLA01去組成括號，最後再在每個括號後補上後面的代數 y</p>
                   <p className="text-sm text-slate-600 mb-1">例子：</p>
-                  <Latex math="6r^2 - 13rs - 28s^2 = (2r-7s)(3r+4s)" block />
-                  <p className="text-xs text-slate-500 mt-2">💡 方法：先用 FMLA 處理係數，再補上第二個變數</p>
+                  <Latex math="\begin{aligned} &6r^2 - 13rs - 28s^2 \\ &= (2r-7s)(3r+4s) \end{aligned}" block />
                 </div>
               </div>
             </div>
@@ -386,9 +382,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                     <p className="text-slate-700 text-sm">
                       ➜ 找 (a) 題目部分（黃色 highlight），套用 (a) 部答案：
                     </p>
-                    <Latex math="= 4r - 14s + (2r-7s)(3r+4s)" block />
-                    <Latex math="= 2(2r-7s) + (2r-7s)(3r+4s)" block />
-                    <Latex math="= (2r-7s)(2 + 3r + 4s)" block />
+                    <Latex math="\begin{aligned} &= 4r - 14s + (2r-7s)(3r+4s) \\ &= 2(2r-7s) + (2r-7s)(3r+4s) \\ &= (2r-7s)(2 + 3r + 4s) \end{aligned}" block />
                   </div>
                 </div>
               </div>
