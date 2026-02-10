@@ -6,7 +6,7 @@ import {
 import { loadKatexOnce } from '../utils/katexLoader';
 
 // KaTeX 數學公式組件
-const Latex = ({ math, block = false }) => {
+const Latex = ({ math, block = false, left = false }) => {
   const containerRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
@@ -15,11 +15,11 @@ const Latex = ({ math, block = false }) => {
   useEffect(() => {
     if (isLoaded && window.katex && containerRef.current) {
       try {
-        window.katex.render(math, containerRef.current, { throwOnError: false, displayMode: block, strict: false });
+        window.katex.render(math, containerRef.current, { throwOnError: false, displayMode: block, strict: false, trust: true });
       } catch (e) { containerRef.current.textContent = math; }
     }
   }, [math, block, isLoaded]);
-  return <span ref={containerRef} className={block ? "block text-center my-2" : "inline-block"} />;
+  return <span ref={containerRef} className={block ? `block ${left ? 'text-left' : 'text-center'} my-2` : "inline-block"} />;
 };
 
 // MathDisplay (colored KaTeX with trust)
@@ -110,6 +110,18 @@ const NOTES_DATA = {
         { id: 'special-angles', num: 2, title: '特殊三角比', color: 'blue' },
         { id: 'trig-equations', num: 3, title: '三角方程', color: 'purple' },
         { id: 'identities', num: 4, title: '需記三角恆等式', color: 'red' },
+      ]
+    },
+    {
+      id: 'quadrilateral',
+      topic: 'CH5 四邊形',
+      color: 'blue',
+      subtopics: [
+        { id: 'parallelogram', num: 1, title: '平行四邊形的定義和性質', color: 'blue' },
+        { id: 'parallelogram-test', num: 2, title: '平行四邊形的判定條件', color: 'green' },
+        { id: 'special-shapes', num: 3, title: '菱形 / 矩形 / 正方形', color: 'orange' },
+        { id: 'midpoint-theorem', num: 4, title: '中點定理', color: 'purple' },
+        { id: 'intercept-theorem', num: 5, title: '截線定理', color: 'purple' },
       ]
     }
   ],
@@ -383,26 +395,26 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
 
       {/* 口訣提示框 */}
       <div className="bg-red-50 border-2 border-red-400 rounded-xl p-4 mb-6">
-        <p className="text-red-600 font-bold mb-3 text-center">口訣：</p>
+        <p className="text-red-600 font-bold mb-3 text-center text-lg">三角比口訣：對斜鄰斜對鄰</p>
         <div className="flex flex-wrap gap-6 items-center justify-center">
-          {/* 左側：三個公式 */}
-          <div className="grid grid-cols-1 gap-3">
-            <div className="bg-white rounded-lg p-3 shadow-sm text-center min-w-[180px]">
-              <div className="text-lg mb-2"><Latex math="\sin\theta" /></div>
-              <div className="text-sm text-slate-600">
-                <Latex math="= \frac{\text{對}}{\text{斜}}" />
+          {/* 左側：三個公式（左右排列） */}
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+              <div className="text-2xl mb-2"><Latex math="\sin \theta" /></div>
+              <div className="text-xl text-slate-600">
+                <Latex math="= \dfrac{\text{對}}{\text{斜}}" />
               </div>
             </div>
-            <div className="bg-white rounded-lg p-3 shadow-sm text-center min-w-[180px]">
-              <div className="text-lg mb-2"><Latex math="\cos\theta" /></div>
-              <div className="text-sm text-slate-600">
-                <Latex math="= \frac{\text{鄰}}{\text{斜}}" />
+            <div className="bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+              <div className="text-2xl mb-2"><Latex math="\cos \theta" /></div>
+              <div className="text-xl text-slate-600">
+                <Latex math="= \dfrac{\text{鄰}}{\text{斜}}" />
               </div>
             </div>
-            <div className="bg-white rounded-lg p-3 shadow-sm text-center min-w-[180px]">
-              <div className="text-lg mb-2"><Latex math="\tan\theta" /></div>
-              <div className="text-sm text-slate-600">
-                <Latex math="= \frac{\text{對}}{\text{鄰}}" />
+            <div className="bg-white rounded-lg p-4 shadow-sm text-center min-w-[140px]">
+              <div className="text-2xl mb-2"><Latex math="\tan \theta" /></div>
+              <div className="text-xl text-slate-600">
+                <Latex math="= \dfrac{\text{對}}{\text{鄰}}" />
               </div>
             </div>
           </div>
@@ -460,9 +472,8 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
                 <p className="text-green-600 mb-2">因題目是直角△，可用畢氏定理得出剩下的邊</p>
-                <div className="space-y-1 text-sm">
-                  <Latex math="12^2 + RQ^2 = 13^2" block />
-                  <div className="text-center"><Latex math="RQ = 5" /></div>
+                <div className="text-sm">
+                  <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\ RQ &= 5 \end{aligned}" block left />
                 </div>
                 <p className="text-green-600 mt-3 text-sm">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold">sin θ / cos θ / tan θ</span></p>
               </div>
@@ -490,11 +501,8 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                   <p className="text-slate-700 mb-2">1. 如果題目沒提供 △ 圖像，需自行繪畫</p>
                   <p className="text-slate-700 mb-3">2. 利用畢氏定理找未知邊的長度</p>
                   
-                  <div className="text-green-600 space-y-1">
-                    <div><Latex math="x^2 + 3^2 = 7^2" /> <span className="text-sm">(畢氏定理)</span></div>
-                    <div><Latex math="x^2 = 7^2 - 3^2" /></div>
-                    <div><Latex math="x^2 = 40" /></div>
-                    <div><Latex math="x = \sqrt{40}" /> <span className="text-purple-600 text-sm">← 出無盡小數，寫 √ 形式</span></div>
+                  <div className="text-green-600">
+                    <Latex math="\begin{aligned} x^2 + 3^2 &= 7^2 \quad \text{(畢氏定理)} \\\\ x^2 &= 7^2 - 3^2 \\\\ x^2 &= 40 \\\\ x &= \sqrt{40} \quad \textcolor{purple}{\text{← 出無盡小數，寫 √ 形式}} \end{aligned}" block left />
                   </div>
                 </div>
                 
@@ -512,14 +520,31 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
 
             <div className="bg-white rounded-lg p-4">
               <p className="text-slate-700 mb-2">3. 已知三邊邊長，可找題目要求 <span className="text-green-600 font-bold"><Latex math="\frac{\tan\theta}{\cos\theta}" inline /></span></p>
-              <div className="space-y-2">
-                <div className="text-blue-600">
-                  <Latex math="\tan\theta = \frac{3}{\sqrt{40}}" block />
-                  <Latex math="\cos\theta = \frac{\sqrt{40}}{7}" block />
+              <div className="flex gap-4 items-start">
+                <div className="flex-1">
+                  <div className="text-blue-600">
+                    <Latex math="\begin{aligned} \tan\theta &= \frac{3}{\sqrt{40}} \\\\ \cos\theta &= \frac{\sqrt{40}}{7} \end{aligned}" block left />
+                  </div>
+                  
+                  <div className="text-blue-600 text-lg mt-4">
+                    <Latex math="\therefore \frac{\tan\theta}{\cos\theta} = \frac{\frac{3}{\sqrt{40}}}{\frac{\sqrt{40}}{7}} = \frac{3}{\sqrt{40}} \times \frac{7}{\sqrt{40}} = \frac{21}{40}" block />
+                  </div>
                 </div>
-                
-                <div className="text-blue-600 text-lg mt-4">
-                  <Latex math="\therefore \frac{\tan\theta}{\cos\theta} = \frac{\frac{3}{\sqrt{40}}}{\frac{\sqrt{40}}{7}} = \frac{3}{\sqrt{40}} \times \frac{7}{\sqrt{40}} = \frac{21}{40}" block />
+
+                {/* 右側三角形圖 */}
+                <div className="flex-shrink-0 hidden md:block">
+                  <svg width="180" height="150" viewBox="0 0 350 280">
+                    <path d="M 40,220 L 280,220 L 280,100 Z" fill="none" stroke="#0d47a1" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M 280,195 L 255,195 L 255,220" fill="none" stroke="#0d47a1" strokeWidth="2" />
+                    <path d="M 90,220 A 50,50 0 0,0 80,190" fill="none" stroke="#0d47a1" strokeWidth="2" />
+                    <text x="95" y="210" fill="#0d47a1" fontSize="24" fontWeight="bold">θ</text>
+                    <text x="130" y="130" fill="#2e7d32" fontSize="28" fontWeight="bold">7</text>
+                    <text x="295" y="170" fill="#2e7d32" fontSize="28" fontWeight="bold">3</text>
+                    <g transform="translate(130, 260)">
+                      <text x="15" y="0" fill="#2e7d32" fontSize="28" fontWeight="bold">40</text>
+                      <path d="M 0,-10 L 8,0 L 15,-25 L 55,-25" fill="none" stroke="#2e7d32" strokeWidth="3" strokeLinecap="round"/>
+                    </g>
+                  </svg>
                 </div>
               </div>
             </div>
@@ -534,7 +559,15 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-green-100">
-                  <th className="border border-gray-400 p-3 text-center">三角比 \ θ</th>
+                  <th className="border border-gray-400 p-3 text-center relative overflow-hidden" style={{ minWidth: '100px', minHeight: '60px' }}>
+                    <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+                      <line x1="0" y1="0" x2="100%" y2="100%" stroke="#9ca3af" strokeWidth="1" />
+                    </svg>
+                    <div className="relative flex justify-between items-start h-full">
+                      <span className="self-end text-sm font-bold mt-4">三角比</span>
+                      <span className="self-start text-sm font-bold mb-4">θ</span>
+                    </div>
+                  </th>
                   <th className="border border-gray-400 p-3 text-center">30°</th>
                   <th className="border border-gray-400 p-3 text-center">45°</th>
                   <th className="border border-gray-400 p-3 text-center">60°</th>
@@ -600,10 +633,9 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
               <span className="text-green-600 text-sm ml-4">目標：找 sin θ = ? (將 sin θ 以外的項移走)</span>
             </div>
             
-            <div className="bg-white rounded-lg p-4 space-y-2">
+            <div className="bg-white rounded-lg p-4">
               <div className="text-blue-600 text-lg">
-                <Latex math="2\sin\theta = \sqrt{3}" block />
-                <Latex math="\sin\theta = \frac{\sqrt{3}}{2}" block />
+                <Latex math="\begin{aligned} 2\sin\theta &= \sqrt{3} \\\\ \sin\theta &= \frac{\sqrt{3}}{2} \end{aligned}" block left />
               </div>
             </div>
           </div>
@@ -628,63 +660,408 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
           <div className="bg-red-50 rounded-lg p-4 border-2 border-red-400">
             <h3 className="text-red-700 font-bold text-lg mb-4">需記三角恆等式</h3>
             
+            {/* 兩欄標題列 */}
+            <div className="grid grid-cols-2 gap-3 mb-3">
+              <div className="text-center font-bold text-red-600 text-base border-b-2 border-red-300 pb-1">原式</div>
+              <div className="text-center font-bold text-green-600 text-base border-b-2 border-green-300 pb-1">變種</div>
+            </div>
+
             <div className="space-y-4 text-lg">
               {/* A */}
               <div className="bg-white rounded-lg p-3">
-                <div className="flex items-center gap-3 flex-wrap">
-                  <span className="text-red-600 font-bold">A.</span>
-                  <Latex math="\sin^2\theta + \cos^2\theta = 1" />
-                  <span className="text-green-600 font-bold">→</span>
-                  <div className="border-l-2 border-green-500 pl-3 space-y-1">
+                <p className="text-red-600 font-bold mb-2">A.</p>
+                <div className="grid grid-cols-2 gap-3 items-start">
+                  <div className="text-center">
+                    <Latex math="\sin^2\theta + \cos^2\theta = 1" />
+                  </div>
+                  <div className="text-left text-green-700 space-y-1">
                     <div><Latex math="\sin^2\theta = 1 - \cos^2\theta" /></div>
                     <div><Latex math="\cos^2\theta = 1 - \sin^2\theta" /></div>
-                    <span className="text-green-600 text-sm">變種</span>
                   </div>
                 </div>
               </div>
 
               {/* B */}
               <div className="bg-white rounded-lg p-3">
-                <div className="flex items-center gap-3 flex-wrap">
-                  <span className="text-red-600 font-bold">B.</span>
-                  <Latex math="\tan\theta = \frac{\sin\theta}{\cos\theta}" />
-                  <span className="text-green-600 font-bold">→</span>
-                  <span className="text-green-600"><Latex math="\frac{1}{\tan\theta} = \frac{\cos\theta}{\sin\theta}" inline /></span>
+                <p className="text-red-600 font-bold mb-2">B.</p>
+                <div className="grid grid-cols-2 gap-3 items-center">
+                  <div className="text-center">
+                    <Latex math="\tan\theta = \frac{\sin\theta}{\cos\theta}" />
+                  </div>
+                  <div className="text-left text-green-700">
+                    <Latex math="\frac{1}{\tan\theta} = \frac{\cos\theta}{\sin\theta}" />
+                  </div>
                 </div>
               </div>
 
               {/* C */}
               <div className="bg-white rounded-lg p-3">
-                <span className="text-red-600 font-bold">C.</span>
-                <Latex math="\sin(90° - \theta) = \cos\theta" />
+                <p className="text-red-600 font-bold mb-2">C.</p>
+                <div className="grid grid-cols-2 gap-3 items-center">
+                  <div className="text-center">
+                    <Latex math="\sin(90° - \theta) = \cos\theta" />
+                  </div>
+                  <div className="text-left text-slate-400 text-sm">—</div>
+                </div>
               </div>
 
               {/* D */}
               <div className="bg-white rounded-lg p-3">
-                <span className="text-red-600 font-bold">D.</span>
-                <Latex math="\cos(90° - \theta) = \sin\theta" />
+                <p className="text-red-600 font-bold mb-2">D.</p>
+                <div className="grid grid-cols-2 gap-3 items-center">
+                  <div className="text-center">
+                    <Latex math="\cos(90° - \theta) = \sin\theta" />
+                  </div>
+                  <div className="text-left text-slate-400 text-sm">—</div>
+                </div>
               </div>
 
               {/* E */}
               <div className="bg-white rounded-lg p-3">
-                <div className="flex items-center gap-3 flex-wrap">
-                  <span className="text-red-600 font-bold">E.</span>
-                  <Latex math="\frac{1}{\tan(90° - \theta)} = \tan\theta" />
-                  <span className="text-green-600 font-bold">→</span>
-                  <span className="text-green-600"><Latex math="\tan(90° - \theta) = \frac{1}{\tan\theta}" inline /></span>
+                <p className="text-red-600 font-bold mb-2">E.</p>
+                <div className="grid grid-cols-2 gap-3 items-center">
+                  <div className="text-center">
+                    <Latex math="\frac{1}{\tan(90° - \theta)} = \tan\theta" />
+                  </div>
+                  <div className="text-left text-green-700">
+                    <Latex math="\tan(90° - \theta) = \frac{1}{\tan\theta}" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
 
-          <div className="bg-amber-50 border border-amber-300 p-4 rounded-lg">
-            <h4 className="font-bold text-amber-800 mb-2">💡 記憶提示</h4>
-            <ul className="text-sm text-slate-700 space-y-1 list-disc list-inside">
-              <li>A 式是最基本的畢氏定理變形</li>
-              <li>B 式記住「tan = sin ÷ cos」</li>
-              <li>C、D 式是互補角關係（90° - θ）</li>
-              <li>E 式結合 B 式和互補角關係</li>
-            </ul>
+// ========================================
+// CH5 四邊形 (F3)
+// ========================================
+const QuadrilateralNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH5 四邊形的性質</h1>
+        <p className="text-slate-600">平行四邊形、菱形、矩形、正方形、中點定理、截線定理</p>
+      </div>
+
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6 text-sm text-slate-600 italic">
+        <p>定義：最簡單的描述（幼稚園 / 小學就識講）</p>
+        <p>性質：延伸知道的 邊 / 角 / 對角線 的關係</p>
+      </div>
+
+      {/* 1. 平行四邊形的定義和性質 */}
+      <CollapsibleSection id="parallelogram" title="平行四邊形的定義和性質" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="text-sm text-slate-500 mb-3">3A05 §5.1, 5.2</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* (a) 定義 */}
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">(a) 定義</h3>
+            <p className="text-slate-700 mb-3">有 <span className="bg-yellow-200 px-1 rounded font-bold text-green-700">兩對對邊平行</span> 的四邊形。</p>
+            <div className="flex justify-center my-3">
+              <svg width="160" height="100" viewBox="0 0 160 100">
+                <path d="M 30,80 L 110,80 L 140,20 L 60,20 Z" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
+                {/* 上下平行箭頭 */}
+                <path d="M 80,80 L 85,75 L 90,80" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                <path d="M 95,20 L 100,15 L 105,20" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                {/* 左右平行箭頭 */}
+                <path d="M 42,50 L 47,45" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                <path d="M 42,55 L 47,50" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                <path d="M 122,50 L 127,45" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                <path d="M 122,55 L 127,50" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+              </svg>
+            </div>
+            <p className="text-slate-500 italic text-sm">(簡記：平行四邊形定義)</p>
+          </div>
+
+          {/* (b) 性質 */}
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">(b) 性質</h3>
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <span className="text-slate-700">(i) 對邊相等。</span>
+                <svg width="60" height="40" viewBox="0 0 80 50">
+                  <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
+                  <line x1="35" y1="40" x2="35" y2="44" stroke="#d32f2f" strokeWidth="2" />
+                  <line x1="50" y1="10" x2="50" y2="6" stroke="#d32f2f" strokeWidth="2" />
+                  <line x1="15" y1="22" x2="19" y2="28" stroke="#d32f2f" strokeWidth="2" />
+                  <line x1="18" y1="22" x2="22" y2="28" stroke="#d32f2f" strokeWidth="2" />
+                  <line x1="65" y1="22" x2="69" y2="28" stroke="#d32f2f" strokeWidth="2" />
+                  <line x1="68" y1="22" x2="72" y2="28" stroke="#d32f2f" strokeWidth="2" />
+                </svg>
+              </div>
+              <p className="text-slate-500 italic text-xs ml-4">(簡記：平行四邊形對邊)</p>
+              <div className="flex items-center gap-3">
+                <span className="text-slate-700">(ii) 對角相等。</span>
+                <svg width="60" height="40" viewBox="0 0 80 50">
+                  <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
+                  <path d="M 18,36 A 10,10 0 0,0 14,40" fill="none" stroke="#1565c0" strokeWidth="2" />
+                  <path d="M 67,14 A 10,10 0 0,0 71,10" fill="none" stroke="#1565c0" strokeWidth="2" />
+                </svg>
+              </div>
+              <p className="text-slate-500 italic text-xs ml-4">(簡記：平行四邊形對角)</p>
+              <div className="flex items-center gap-3">
+                <span className="text-slate-700">(iii) 對角線互相平分。</span>
+                <svg width="60" height="40" viewBox="0 0 80 50">
+                  <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
+                  <line x1="10" y1="40" x2="75" y2="10" stroke="#999" strokeWidth="1" />
+                  <line x1="60" y1="40" x2="25" y2="10" stroke="#999" strokeWidth="1" />
+                </svg>
+              </div>
+              <p className="text-slate-500 italic text-xs ml-4">(簡記：平行四邊形對角線)</p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 2. 平行四邊形的判定條件 */}
+      <CollapsibleSection id="parallelogram-test" title="平行四邊形的判定條件" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="text-sm text-slate-500 mb-3">3A05 §5.3</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div className="flex items-center gap-3 mb-1">
+              <span className="text-slate-700 font-medium">(a) 兩對對邊相等</span>
+              <svg width="50" height="35" viewBox="0 0 80 50">
+                <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
+                <line x1="35" y1="40" x2="35" y2="44" stroke="#d32f2f" strokeWidth="2" />
+                <line x1="50" y1="10" x2="50" y2="6" stroke="#d32f2f" strokeWidth="2" />
+              </svg>
+            </div>
+            <p className="text-green-700 italic text-sm">(簡記：對邊相等)</p>
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div className="flex items-center gap-3 mb-1">
+              <span className="text-slate-700 font-medium">(b) 兩對對角相等</span>
+              <svg width="50" height="35" viewBox="0 0 80 50">
+                <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
+                <path d="M 15,35 A 8,8 0 0,0 10,40" fill="none" stroke="#1565c0" strokeWidth="2" />
+                <path d="M 70,15 A 8,8 0 0,0 75,10" fill="none" stroke="#1565c0" strokeWidth="2" />
+              </svg>
+            </div>
+            <p className="text-green-700 italic text-sm">(簡記：對角相等)</p>
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div className="flex items-center gap-3 mb-1">
+              <span className="text-slate-700 font-medium">(c) 對角線互相平分</span>
+              <svg width="50" height="35" viewBox="0 0 80 50">
+                <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
+                <line x1="10" y1="40" x2="75" y2="10" stroke="#999" strokeWidth="1" />
+                <line x1="60" y1="40" x2="25" y2="10" stroke="#999" strokeWidth="1" />
+              </svg>
+            </div>
+            <p className="text-green-700 italic text-sm">(簡記：對角線互相平分)</p>
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div className="flex items-center gap-3 mb-1">
+              <span className="text-slate-700 font-medium">(d) 一對對邊平行且相等 <span className="text-red-600">★</span></span>
+              <svg width="50" height="35" viewBox="0 0 80 50">
+                <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
+                <path d="M 50,10 L 55,5 L 60,10" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                <path d="M 35,40 L 40,35 L 45,40" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                <line x1="30" y1="10" x2="30" y2="6" stroke="#d32f2f" strokeWidth="2" />
+                <line x1="35" y1="44" x2="35" y2="40" stroke="#d32f2f" strokeWidth="2" />
+              </svg>
+            </div>
+            <p className="text-green-700 italic text-sm">(簡記：對邊 // 且相等)</p>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 3. 菱形 / 矩形 / 正方形 */}
+      <CollapsibleSection id="special-shapes" title="菱形 / 矩形 / 正方形" num={3} color="orange" activeSub={activeSub} sectionRef={s3}>
+        <div className="text-sm text-slate-500 mb-3">3A05 §5.4A–C</div>
+        <div className="space-y-6">
+
+          {/* 菱形 */}
+          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+            <h3 className="font-bold text-orange-800 mb-3">③ 菱形</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-red-600 font-bold mb-2">Def：四個邊都相等的四邊形</p>
+                <div className="flex justify-center my-3">
+                  <svg width="90" height="90" viewBox="0 0 100 100">
+                    <path d="M 50,10 L 90,50 L 50,90 L 10,50 Z" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <p className="text-slate-500 italic text-sm">(簡記：菱形定義)</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-slate-700">(a) 平行四邊形的所有性質</p>
+                <p className="text-red-600 font-bold">(b) 對角線互相<span className="underline">垂直</span></p>
+                <p className="text-green-700 font-bold">(c) 對角線平分每個內角</p>
+                <div className="flex justify-end">
+                  <svg width="70" height="70" viewBox="0 0 100 100">
+                    <path d="M 50,10 L 90,50 L 50,90 L 10,50 Z" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
+                    <line x1="50" y1="10" x2="50" y2="90" stroke="#999" strokeWidth="1" />
+                    <line x1="10" y1="50" x2="90" y2="50" stroke="#999" strokeWidth="1" />
+                    <rect x="50" y="50" width="8" height="8" fill="none" stroke="#d32f2f" strokeWidth="1.5" />
+                  </svg>
+                </div>
+                <p className="text-slate-500 italic text-sm">(簡記：菱形性質)</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 矩形 */}
+          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+            <h3 className="font-bold text-orange-800 mb-3">④ 矩形（長方形）</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-red-600 font-bold mb-2">Def：四個角都是直角（90°）</p>
+                <div className="flex justify-center my-3">
+                  <svg width="120" height="75" viewBox="0 0 120 75">
+                    <rect x="10" y="10" width="100" height="55" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
+                    <rect x="10" y="10" width="8" height="8" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                    <rect x="102" y="57" width="8" height="8" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                  </svg>
+                </div>
+                <p className="text-slate-500 italic text-sm">(簡記：長方形定義)</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-slate-700">(a) 平行四邊形的所有性質</p>
+                <p className="text-red-600 font-bold">(b) 對角線相等（AC = BD）</p>
+                <p className="text-green-700 font-bold">(c) 對角線互相平分為四條相等線段（OA = OB = OC = OD）</p>
+                <div className="flex justify-end">
+                  <svg width="100" height="65" viewBox="0 0 120 75">
+                    <rect x="10" y="10" width="100" height="55" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
+                    <line x1="10" y1="10" x2="110" y2="65" stroke="#999" strokeWidth="1" />
+                    <line x1="110" y1="10" x2="10" y2="65" stroke="#999" strokeWidth="1" />
+                    <text x="55" y="42" fontSize="11" fill="#333">O</text>
+                    <text x="2" y="8" fontSize="10" fill="#333">A</text>
+                    <text x="112" y="8" fontSize="10" fill="#333">D</text>
+                    <text x="2" y="74" fontSize="10" fill="#333">B</text>
+                    <text x="112" y="74" fontSize="10" fill="#333">C</text>
+                  </svg>
+                </div>
+                <p className="text-slate-500 italic text-sm">(簡記：長方形性質)</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 正方形 */}
+          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+            <h3 className="font-bold text-orange-800 mb-3">⑤ 正方形</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-red-600 font-bold mb-2">Def：邊相等 且 角 90°</p>
+                <div className="flex justify-center my-3">
+                  <svg width="80" height="80" viewBox="0 0 80 80">
+                    <rect x="10" y="10" width="60" height="60" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
+                    <rect x="10" y="10" width="6" height="6" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+                    <line x1="10" y1="40" x2="14" y2="40" stroke="#d32f2f" strokeWidth="2" />
+                    <line x1="40" y1="10" x2="40" y2="14" stroke="#d32f2f" strokeWidth="2" />
+                  </svg>
+                </div>
+                <p className="text-slate-500 italic text-sm">(簡記：正方形定義)</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-slate-700">(a) 菱形的所有性質 + 矩形的所有性質</p>
+                <p className="text-red-600 font-bold">(b) 任何邊與對角線的夾角都是 45°</p>
+                <div className="flex justify-end">
+                  <svg width="80" height="80" viewBox="0 0 80 80">
+                    <rect x="10" y="10" width="60" height="60" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
+                    <line x1="10" y1="10" x2="70" y2="70" stroke="#999" strokeWidth="1" />
+                    <line x1="70" y1="10" x2="10" y2="70" stroke="#999" strokeWidth="1" />
+                    <text x="20" y="25" fontSize="10" fill="#d32f2f">45°</text>
+                    <text x="48" y="25" fontSize="10" fill="#d32f2f">45°</text>
+                  </svg>
+                </div>
+                <p className="text-slate-500 italic text-sm">(簡記：正方形性質)</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </CollapsibleSection>
+
+      {/* 4. 中點定理 */}
+      <CollapsibleSection id="midpoint-theorem" title="中點定理 (Mid-point Theorem)" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
+        <div className="text-sm text-slate-500 mb-3">3A05 §5.6A</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <p className="text-slate-700">若 M 和 N 分別是 AB 和 AC 的中點，</p>
+            <p className="text-red-600 font-bold">則 (a) MN // BC</p>
+            <p className="text-red-600 font-bold">　 (b) MN = <Latex math="\dfrac{1}{2}" /> BC</p>
+            <p className="text-slate-500 italic text-sm mt-2">(簡記：中點定理)</p>
+          </div>
+          <div className="flex justify-center">
+            <svg width="180" height="130" viewBox="0 0 180 130">
+              <path d="M 90,15 L 25,115 L 155,115 Z" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
+              <line x1="57" y1="65" x2="122" y2="65" stroke="#6a1b9a" strokeWidth="2.5" />
+              {/* Equal tick marks on AM, MB */}
+              <line x1="55" y1="35" x2="65" y2="45" stroke="#333" strokeWidth="1.5" />
+              <line x1="35" y1="85" x2="45" y2="95" stroke="#333" strokeWidth="1.5" />
+              {/* Equal tick marks on AN, NC */}
+              <line x1="115" y1="35" x2="125" y2="45" stroke="#333" strokeWidth="1.5" />
+              <line x1="130" y1="85" x2="140" y2="95" stroke="#333" strokeWidth="1.5" />
+              <text x="85" y="12" fontSize="13" fill="#333">A</text>
+              <text x="10" y="115" fontSize="13" fill="#333">B</text>
+              <text x="158" y="115" fontSize="13" fill="#333">C</text>
+              <text x="40" y="62" fontSize="13" fill="#6a1b9a">M</text>
+              <text x="125" y="62" fontSize="13" fill="#6a1b9a">N</text>
+            </svg>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 5. 截線定理 */}
+      <CollapsibleSection id="intercept-theorem" title="截線定理 (Intercept Theorem)" num={5} color="purple" activeSub={activeSub} sectionRef={s5}>
+        <div className="text-sm text-slate-500 mb-3">3A05 §5.6B</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <p className="text-slate-700">若 AB // CD // EF，</p>
+            <p className="text-slate-700">且 AC = CE，</p>
+            <p className="text-red-600 font-bold">則 BD = DF</p>
+            <p className="text-slate-500 italic text-sm">(三條平行線截相等線段)</p>
+            <p className="text-slate-500 italic text-sm">(簡記：截線定理)</p>
+          </div>
+          <div className="flex justify-center">
+            <svg width="180" height="120" viewBox="0 0 180 120">
+              {/* 三條平行線 */}
+              <line x1="20" y1="20" x2="160" y2="20" stroke="#333" strokeWidth="1.5" />
+              <line x1="20" y1="60" x2="160" y2="60" stroke="#333" strokeWidth="1.5" />
+              <line x1="20" y1="100" x2="160" y2="100" stroke="#333" strokeWidth="1.5" />
+              {/* 兩條截線 */}
+              <line x1="50" y1="10" x2="75" y2="110" stroke="#1565c0" strokeWidth="2" />
+              <line x1="110" y1="10" x2="135" y2="110" stroke="#1565c0" strokeWidth="2" />
+              {/* 左截線等號 tick */}
+              <line x1="58" y1="38" x2="62" y2="42" stroke="#d32f2f" strokeWidth="2" />
+              <line x1="67" y1="78" x2="71" y2="82" stroke="#d32f2f" strokeWidth="2" />
+              {/* 右截線等號 tick */}
+              <line x1="118" y1="38" x2="122" y2="42" stroke="#d32f2f" strokeWidth="2" />
+              <line x1="127" y1="78" x2="131" y2="82" stroke="#d32f2f" strokeWidth="2" />
+              {/* Labels */}
+              <text x="38" y="16" fontSize="12" fill="#333">A</text>
+              <text x="100" y="16" fontSize="12" fill="#333">B</text>
+              <text x="54" y="56" fontSize="12" fill="#333">C</text>
+              <text x="115" y="56" fontSize="12" fill="#333">D</text>
+              <text x="67" y="96" fontSize="12" fill="#333">E</text>
+              <text x="128" y="96" fontSize="12" fill="#333">F</text>
+            </svg>
+          </div>
+        </div>
+
+        {/* 區分重點 */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-6">
+          <p className="font-bold text-green-700 mb-3">區分重點：中點定理 vs 截線定理</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div className="bg-white rounded-lg p-3">
+              <p className="font-bold text-purple-700 mb-1">中點定理</p>
+              <p className="text-slate-700">1 個三角形，2 個中點</p>
+              <p className="text-red-600 font-bold">→ 平行 且 一半長度</p>
+            </div>
+            <div className="bg-white rounded-lg p-3">
+              <p className="font-bold text-purple-700 mb-1">截線定理</p>
+              <p className="text-slate-700">3 條平行線，截線相等</p>
+              <p className="text-red-600 font-bold">→ 另一邊也相等</p>
+            </div>
           </div>
         </div>
       </CollapsibleSection>
@@ -721,11 +1098,8 @@ const QuadraticEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-slate-800 mb-3">變換為一般式</h3>
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-green-700 mb-2">題目：</p>
-              <div className="space-y-2 text-blue-700">
-                <Latex math="-x = 5 + 2x^2" block />
-                <Latex math="0 = 5 + 2x^2 + x" block />
-                <Latex math="5 + 2x^2 + x = 0" block />
-                <Latex math="2x^2 + x + 5 = 0" block />
+              <div className="text-blue-700">
+                <Latex math="\begin{aligned} -x &= 5 + 2x^2 \\\\ 0 &= 5 + 2x^2 + x \\\\ 5 + 2x^2 + x &= 0 \\\\ 2x^2 + x + 5 &= 0 \end{aligned}" block left />
               </div>
               <div className="mt-3 p-2 bg-red-50 rounded text-sm text-red-600">
                 <p className="font-bold">← 合格的一般式：</p>
@@ -781,24 +1155,14 @@ const QuadraticEquationNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <p className="text-sm text-green-700 mb-2">題目：解 <Latex math="x^2 + 2x = 2" /> <span className="text-red-500">(開方 - 以根式表示答案)</span></p>
-            <div className="space-y-2">
-              <div className="flex items-start gap-2">
+            <div>
+              <div className="flex items-start gap-2 mb-2">
                 <Latex math="x^2 + 2x - 2 = 0" />
                 <span className="text-red-500 text-sm">← 變做一般式，解讀 a/b/c = ?</span>
               </div>
-              <p className="text-green-600"><Latex math="a=1, \quad b=2, \quad c=-2" /></p>
-              <div className="my-3">
-                <Latex math="x = \frac{-2 \pm \sqrt{2^2-4(1)(-2)}}{2(1)}" block />
-              </div>
-              <div className="flex items-start gap-2">
-                <Latex math="= \frac{-2 \pm \sqrt{12}}{2}" />
-                <span className="text-red-500 text-sm">← 已經接受此答案</span>
-              </div>
-              <div className="text-green-600 text-sm ml-4">
-                <Latex math="= \frac{-2}{2} \pm \frac{\sqrt{12}}{2}" inline />
-              </div>
-              <div className="mt-2">
-                <Latex math="= -1 \pm \frac{\sqrt{12}}{2}" block />
+              <p className="text-green-600 mb-2"><Latex math="a=1, \quad b=2, \quad c=-2" /></p>
+              <div className="text-blue-700">
+                <Latex math="\begin{aligned} x &= \frac{-2 \pm \sqrt{2^2-4(1)(-2)}}{2(1)} \\\\ &= \frac{-2 \pm \sqrt{12}}{2} \quad \textcolor{red}{\text{← 已經接受此答案}} \\\\ &= \frac{-2}{2} \pm \frac{\sqrt{12}}{2} \\\\ &= -1 \pm \frac{\sqrt{12}}{2} \end{aligned}" block left />
               </div>
             </div>
           </div>
@@ -822,28 +1186,8 @@ const QuadraticEquationNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <p className="text-sm text-green-700 mb-2">題目：</p>
-            <div className="space-y-2 text-blue-700">
-              <Latex math="4(5m+3)^2 - 28 = 0" block />
-              <div className="flex items-start gap-2">
-                <Latex math="4(5m+3)^2 = 28" />
-                <span className="text-green-600 text-sm">← 處理 + - (-28)</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <Latex math="(5m+3)^2 = 7" />
-                <span className="text-green-600 text-sm">← 處理 × ÷ (28÷4=7)</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <Latex math="5m+3 = \pm\sqrt{7}" />
-                <span className="text-green-600 text-sm">← 取平方根法</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <Latex math="5m = -3 \pm\sqrt{7}" />
-                <span className="text-green-600 text-sm">← 先處理 + -</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <Latex math="m = \frac{-3 \pm \sqrt{7}}{5}" />
-                <span className="text-green-600 text-sm">← 後處理 × ÷</span>
-              </div>
+            <div className="text-blue-700">
+              <Latex math="\begin{aligned} 4(5m+3)^2 - 28 &= 0 \\\\ 4(5m+3)^2 &= 28 && \textcolor{green}{\text{← 處理 + - (-28)}} \\\\ (5m+3)^2 &= 7 && \textcolor{green}{\text{← 處理 × ÷ (28÷4=7)}} \\\\ 5m+3 &= \pm\sqrt{7} && \textcolor{green}{\text{← 取平方根法}} \\\\ 5m &= -3 \pm\sqrt{7} && \textcolor{green}{\text{← 先處理 + -}} \\\\ m &= \frac{-3 \pm \sqrt{7}}{5} && \textcolor{green}{\text{← 後處理 × ÷}} \end{aligned}" block left />
             </div>
           </div>
         </div>
@@ -865,14 +1209,10 @@ const QuadraticEquationNotes = ({ activeSub }) => {
 
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">原本的話，需二次方程計算</h3>
-            <div className="space-y-2">
-              <div className="my-3">
-                <Latex math="x = \frac{-(-4) \pm \sqrt{(-4)^2-4(1)(4)}}{2(1)}" block />
-                <p className="text-green-600 text-sm text-right">← <Latex math="\frac{-b \pm \sqrt{b^2-4ac}}{2a}" inline /></p>
+            <div>
+              <div className="text-blue-700">
+                <Latex math="\begin{aligned} x &= \frac{-(-4) \pm \sqrt{(-4)^2-4(1)(4)}}{2(1)} && \textcolor{green}{\leftarrow \frac{-b \pm \sqrt{b^2-4ac}}{2a}} \\\\ &= \frac{4 \pm \sqrt{0}}{2} \\\\ &= \frac{4}{2} \\\\ &= 2 \end{aligned}" block left />
               </div>
-              <Latex math="= \frac{4 \pm \sqrt{0}}{2}" block />
-              <Latex math="= \frac{4}{2}" block />
-              <Latex math="= 2" block />
               <p className="text-blue-600 font-bold mt-2">答案： x = 2 (二重根)</p>
             </div>
           </div>
@@ -1158,21 +1498,8 @@ const VariationNotes = ({ activeSub, onNavigate }) => {
             <h3 className="font-bold text-blue-800 mb-3">B. 當 x = ?，y = ?</h3>
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-blue-700 mb-2">例：當 x = 10，求 y 的值</p>
-              <div className="space-y-1 ml-4 text-sm">
-                <div className="flex items-start gap-2">
-                  <Latex math="x = \frac{1}{5}y" />
-                  <span className="text-red-500">← 列找到的式 (a部)</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Latex math="10 = \frac{1}{5}y" />
-                  <span className="text-red-500">← 代入法</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Latex math="10 \times 5 = y" />
-                </div>
-                <div className="flex items-start gap-2">
-                  <Latex math="y = 50" />
-                </div>
+              <div className="ml-4 text-sm">
+                <Latex math="\begin{aligned} x &= \frac{1}{5}y && \textcolor{red}{\text{← 列找到的式 (a部)}} \\\\ 10 &= \frac{1}{5}y && \textcolor{red}{\text{← 代入法}} \\\\ 10 \times 5 &= y \\\\ y &= 50 \end{aligned}" block left />
               </div>
             </div>
           </div>
@@ -1695,6 +2022,7 @@ const FunctionNotes = ({ activeSub }) => {
 const NOTES_COMPONENTS = {
   'factorization': FactorizationNotes,
   'trig-identities': TrigonometricIdentitiesNotes,
+  'quadrilateral': QuadrilateralNotes,
   'quadratic-equation': QuadraticEquationNotes,
   'remainder-factor': RemainderFactorNotes,
   'variation': VariationNotes,
@@ -1842,7 +2170,7 @@ const Notes = () => {
             <span className="text-sm font-medium">返回主頁</span>
           </Link>
           <div className="text-indigo-600">
-            <span className="font-bold text-lg">電子筆記</span>
+            <span className="font-bold text-lg">電子筆記 (測試編輯中)</span>
           </div>
           <div className="w-24" />
         </div>
