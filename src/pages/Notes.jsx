@@ -100,6 +100,17 @@ const NOTES_DATA = {
         { id: 'quadratic', num: 3, title: '二次多項式', color: 'green' },
         { id: 'dse-tips', num: 4, title: 'DSE 題型技巧', color: 'red' },
       ]
+    },
+    {
+      id: 'trig-identities',
+      topic: 'CH7 三角恆等式',
+      color: 'red',
+      subtopics: [
+        { id: 'pythagoras', num: 1, title: 'sin cos tan 輔以畢氏定理', color: 'green' },
+        { id: 'special-angles', num: 2, title: '特殊三角比', color: 'blue' },
+        { id: 'trig-equations', num: 3, title: '三角方程', color: 'purple' },
+        { id: 'identities', num: 4, title: '需記三角恆等式', color: 'red' },
+      ]
     }
   ],
   F4: [
@@ -350,6 +361,330 @@ const FactorizationNotes = ({ activeSub }) => {
                 <p className="text-sm mt-1"><span className="font-bold">②</span> 因式即問有哪個括號 → 2 / (2x-3) → 選項 I + II</p>
               </div>
             </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+// ========================================
+// CH7 三角恆等式 (F3)
+// ========================================
+const TrigonometricIdentitiesNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-red-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH7 三角比的關係</h1>
+        <p className="text-slate-600">sin, cos, tan 與畢氏定理的運用</p>
+      </div>
+
+      {/* 口訣提示框 */}
+      <div className="bg-red-50 border-2 border-red-400 rounded-xl p-4 mb-6">
+        <p className="text-red-600 font-bold mb-3 text-center">口訣：</p>
+        <div className="flex flex-wrap gap-6 items-center justify-center">
+          {/* 左側：三個公式 */}
+          <div className="grid grid-cols-1 gap-3">
+            <div className="bg-white rounded-lg p-3 shadow-sm text-center min-w-[180px]">
+              <div className="text-lg mb-2"><Latex math="\sin\theta" /></div>
+              <div className="text-sm text-slate-600">
+                <Latex math="= \frac{\text{對}}{\text{斜}}" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-3 shadow-sm text-center min-w-[180px]">
+              <div className="text-lg mb-2"><Latex math="\cos\theta" /></div>
+              <div className="text-sm text-slate-600">
+                <Latex math="= \frac{\text{鄰}}{\text{斜}}" />
+              </div>
+            </div>
+            <div className="bg-white rounded-lg p-3 shadow-sm text-center min-w-[180px]">
+              <div className="text-lg mb-2"><Latex math="\tan\theta" /></div>
+              <div className="text-sm text-slate-600">
+                <Latex math="= \frac{\text{對}}{\text{鄰}}" />
+              </div>
+            </div>
+          </div>
+
+          {/* 右側：直角三角形圖 */}
+          <div className="bg-white rounded-lg p-6 shadow-sm">
+            <svg width="240" height="200" viewBox="0 0 300 250" className="mx-auto">
+              {/* 定義箭頭 */}
+              <defs>
+                <marker id="arrow-trig" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#1565c0" />
+                </marker>
+              </defs>
+
+              {/* 三角形主體 - 直角在右下 */}
+              {/* 頂點座標: 左下(50, 200), 右下(250, 200), 右上(250, 50) */}
+              <path d="M 50,200 L 250,200 L 250,50 Z" 
+                    fill="none" stroke="#1565c0" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              
+              {/* 直角標記 */}
+              <path d="M 250,180 L 230,180 L 230,200" fill="none" stroke="#1565c0" strokeWidth="2"/>
+              
+              {/* Theta 角標記 */}
+              <path d="M 90,200 A 40,40 0 0,0 85,175" fill="none" stroke="#1565c0" strokeWidth="2"/>
+              <text x="100" y="195" fill="#1565c0" fontSize="24" fontWeight="bold">θ</text>
+
+              {/* 標籤 */}
+              {/* 斜邊 */}
+              <text x="130" y="110" fill="#1565c0" fontSize="28" fontWeight="bold" transform="rotate(-37, 150, 120)">斜</text>
+              
+              {/* 對邊 */}
+              <text x="265" y="140" fill="#1565c0" fontSize="28" fontWeight="bold">對</text>
+              
+              {/* 鄰邊 */}
+              <text x="140" y="240" fill="#1565c0" fontSize="28" fontWeight="bold">鄰</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {/* 1. sin cos tan 輔以畢氏定理 */}
+      <CollapsibleSection id="pythagoras" title="sin cos tan 輔以畢氏定理" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-6">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <p className="text-green-700 font-bold text-lg mb-3">1. sin cos tan 輔以<span className="text-purple-600">畢氏定理</span>去解題</p>
+            <p className="text-slate-700">如果不知道 3 條邊的長度，就不能同時找到 sin θ、cos θ 和 tan θ 的值</p>
+          </div>
+
+          {/* 例 1 */}
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <p className="text-sm text-blue-700 font-bold mb-3">
+              例 1：圖中，∠Q=90°、PQ=12 及 PR=13。試不計算 θ，求 sin θ、cos θ 和 tan θ 的值。
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-green-600 mb-2">因題目是直角△，可用畢氏定理得出剩下的邊</p>
+                <div className="space-y-1 text-sm">
+                  <Latex math="12^2 + RQ^2 = 13^2" block />
+                  <div className="text-center"><Latex math="RQ = 5" /></div>
+                </div>
+                <p className="text-green-600 mt-3 text-sm">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold">sin θ / cos θ / tan θ</span></p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4">
+                <div className="text-blue-600 text-lg space-y-2">
+                  <div><Latex math="\sin\theta = \frac{12}{13}" /></div>
+                  <div><Latex math="\cos\theta = \frac{5}{13}" /></div>
+                  <div><Latex math="\tan\theta = \frac{12}{5}" /></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 例 2 */}
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <p className="text-sm text-blue-700 font-bold mb-3">
+              例 2：已知 <Latex math="\sin\theta = \frac{3}{7}" inline />。求 <Latex math="\frac{\tan\theta}{\cos\theta}" inline /> 的值。
+              <span className="text-purple-600 text-xs ml-2">利用 sin θ = <Latex math="\frac{\text{對}}{\text{斜}}" inline /></span>
+            </p>
+            
+            <div className="bg-white rounded-lg p-4 mb-3">
+              <div className="flex flex-wrap gap-6 items-start">
+                <div className="flex-1 min-w-[200px]">
+                  <p className="text-slate-700 mb-2">1. 如果題目沒提供 △ 圖像，需自行繪畫</p>
+                  <p className="text-slate-700 mb-3">2. 利用畢氏定理找未知邊的長度</p>
+                  
+                  <div className="text-green-600 space-y-1">
+                    <div><Latex math="x^2 + 3^2 = 7^2" /> <span className="text-sm">(畢氏定理)</span></div>
+                    <div><Latex math="x^2 = 7^2 - 3^2" /></div>
+                    <div><Latex math="x^2 = 40" /></div>
+                    <div><Latex math="x = \sqrt{40}" /> <span className="text-purple-600 text-sm">← 出無盡小數，寫 √ 形式</span></div>
+                  </div>
+                </div>
+                
+                <div className="relative w-40 h-32 border-b-2 border-r-2 border-black">
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 160 128">
+                    <line x1="0" y1="128" x2="160" y2="0" stroke="black" strokeWidth="2"/>
+                    <text x="165" y="64" fontSize="16" fill="black">3</text>
+                    <text x="70" y="145" fontSize="16" fill="#1565c0">x</text>
+                    <text x="60" y="40" fontSize="16" fill="black">7</text>
+                    <text x="10" y="115" fontSize="14" fill="black">θ</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4">
+              <p className="text-slate-700 mb-2">3. 已知三邊邊長，可找題目要求 <span className="text-green-600 font-bold"><Latex math="\frac{\tan\theta}{\cos\theta}" inline /></span></p>
+              <div className="space-y-2">
+                <div className="text-blue-600">
+                  <Latex math="\tan\theta = \frac{3}{\sqrt{40}}" block />
+                  <Latex math="\cos\theta = \frac{\sqrt{40}}{7}" block />
+                </div>
+                
+                <div className="text-blue-600 text-lg mt-4">
+                  <Latex math="\therefore \frac{\tan\theta}{\cos\theta} = \frac{\frac{3}{\sqrt{40}}}{\frac{\sqrt{40}}{7}} = \frac{3}{\sqrt{40}} \times \frac{7}{\sqrt{40}} = \frac{21}{40}" block />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 2. 特殊三角比 */}
+      <CollapsibleSection id="special-angles" title="特殊三角比" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-green-100">
+                  <th className="border border-gray-400 p-3 text-center">三角比 \ θ</th>
+                  <th className="border border-gray-400 p-3 text-center">30°</th>
+                  <th className="border border-gray-400 p-3 text-center">45°</th>
+                  <th className="border border-gray-400 p-3 text-center">60°</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold">sin θ</td>
+                  <td className="border border-gray-400 p-3 text-center">
+                    <Latex math="\frac{1}{2}" /> <span className="text-green-600 text-xs">易</span>
+                  </td>
+                  <td className="border border-gray-400 p-3 text-center bg-pink-100">
+                    <Latex math="\frac{1}{\sqrt{2}}" /> 或 <Latex math="\frac{\sqrt{2}}{2}" />
+                  </td>
+                  <td className="border border-gray-400 p-3 text-center bg-yellow-100">
+                    <Latex math="\frac{\sqrt{3}}{2}" />
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold">cos θ</td>
+                  <td className="border border-gray-400 p-3 text-center bg-yellow-100">
+                    <Latex math="\frac{\sqrt{3}}{2}" />
+                  </td>
+                  <td className="border border-gray-400 p-3 text-center bg-pink-100">
+                    <Latex math="\frac{1}{\sqrt{2}}" /> 或 <Latex math="\frac{\sqrt{2}}{2}" />
+                  </td>
+                  <td className="border border-gray-400 p-3 text-center">
+                    <Latex math="\frac{1}{2}" /> <span className="text-green-600 text-xs">易</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold">tan θ</td>
+                  <td className="border border-gray-400 p-3 text-center">
+                    <Latex math="\frac{1}{\sqrt{3}}" /> 或 <Latex math="\frac{\sqrt{3}}{3}" />
+                  </td>
+                  <td className="border border-gray-400 p-3 text-center">
+                    1 <span className="text-green-600 text-xs">易</span>
+                  </td>
+                  <td className="border border-gray-400 p-3 text-center">
+                    <Latex math="\sqrt{3}" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <p className="text-green-700 font-bold mb-2">易：按計算機</p>
+            <div className="text-blue-600 space-y-1 text-sm">
+              <p>tan 60° = 1.732050808</p>
+              <p>√3 = 1.732050808</p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 3. 三角方程 */}
+      <CollapsibleSection id="trig-equations" title="三角方程" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <div className="text-lg mb-4">
+              <Latex math="2\sin\theta - \sqrt{3} = 0" />
+              <span className="text-green-600 text-sm ml-4">目標：找 sin θ = ? (將 sin θ 以外的項移走)</span>
+            </div>
+            
+            <div className="bg-white rounded-lg p-4 space-y-2">
+              <div className="text-blue-600 text-lg">
+                <Latex math="2\sin\theta = \sqrt{3}" block />
+                <Latex math="\sin\theta = \frac{\sqrt{3}}{2}" block />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-purple-200">
+            <p className="text-purple-600 font-bold mb-3">以 sin θ 找 θ：</p>
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className="text-slate-700">按</span>
+              <span className="px-2 py-1 bg-yellow-500 text-black rounded text-xs font-bold">SHIFT</span>
+              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">sin</span>
+              <span className="text-slate-700"><Latex math="\left(\frac{\sqrt{3}}{2}\right)" inline /></span>
+              <span className="text-green-600 text-2xl">→</span>
+              <span className="text-blue-600 text-xl font-bold">θ = 60°</span>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 4. 需記三角恆等式 */}
+      <CollapsibleSection id="identities" title="需記三角恆等式" num={4} color="red" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-6">
+          <div className="bg-red-50 rounded-lg p-4 border-2 border-red-400">
+            <h3 className="text-red-700 font-bold text-lg mb-4">需記三角恆等式</h3>
+            
+            <div className="space-y-4 text-lg">
+              {/* A */}
+              <div className="bg-white rounded-lg p-3">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <span className="text-red-600 font-bold">A.</span>
+                  <Latex math="\sin^2\theta + \cos^2\theta = 1" />
+                  <span className="text-green-600 font-bold">→</span>
+                  <div className="border-l-2 border-green-500 pl-3 space-y-1">
+                    <div><Latex math="\sin^2\theta = 1 - \cos^2\theta" /></div>
+                    <div><Latex math="\cos^2\theta = 1 - \sin^2\theta" /></div>
+                    <span className="text-green-600 text-sm">變種</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* B */}
+              <div className="bg-white rounded-lg p-3">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <span className="text-red-600 font-bold">B.</span>
+                  <Latex math="\tan\theta = \frac{\sin\theta}{\cos\theta}" />
+                  <span className="text-green-600 font-bold">→</span>
+                  <span className="text-green-600"><Latex math="\frac{1}{\tan\theta} = \frac{\cos\theta}{\sin\theta}" inline /></span>
+                </div>
+              </div>
+
+              {/* C */}
+              <div className="bg-white rounded-lg p-3">
+                <span className="text-red-600 font-bold">C.</span>
+                <Latex math="\sin(90° - \theta) = \cos\theta" />
+              </div>
+
+              {/* D */}
+              <div className="bg-white rounded-lg p-3">
+                <span className="text-red-600 font-bold">D.</span>
+                <Latex math="\cos(90° - \theta) = \sin\theta" />
+              </div>
+
+              {/* E */}
+              <div className="bg-white rounded-lg p-3">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <span className="text-red-600 font-bold">E.</span>
+                  <Latex math="\frac{1}{\tan(90° - \theta)} = \tan\theta" />
+                  <span className="text-green-600 font-bold">→</span>
+                  <span className="text-green-600"><Latex math="\tan(90° - \theta) = \frac{1}{\tan\theta}" inline /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-300 p-4 rounded-lg">
+            <h4 className="font-bold text-amber-800 mb-2">💡 記憶提示</h4>
+            <ul className="text-sm text-slate-700 space-y-1 list-disc list-inside">
+              <li>A 式是最基本的畢氏定理變形</li>
+              <li>B 式記住「tan = sin ÷ cos」</li>
+              <li>C、D 式是互補角關係（90° - θ）</li>
+              <li>E 式結合 B 式和互補角關係</li>
+            </ul>
           </div>
         </div>
       </CollapsibleSection>
@@ -1359,6 +1694,7 @@ const FunctionNotes = ({ activeSub }) => {
 // ========================================
 const NOTES_COMPONENTS = {
   'factorization': FactorizationNotes,
+  'trig-identities': TrigonometricIdentitiesNotes,
   'quadratic-equation': QuadraticEquationNotes,
   'remainder-factor': RemainderFactorNotes,
   'variation': VariationNotes,
