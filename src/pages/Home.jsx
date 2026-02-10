@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Calculator, ArrowRight, BookOpen, Award, BarChart2
+  Calculator, ArrowRight, BookOpen, Award, BarChart2, FileText
 } from 'lucide-react';
 
 const Home = () => {
@@ -301,16 +301,25 @@ const Home = () => {
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-600 p-2 rounded-lg">
-              <BookOpen className="w-8 h-8 text-white" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="bg-blue-600 p-2 rounded-lg">
+                <BookOpen className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-slate-800">
+                  遊數得計
+                </h1>
+                <p className="text-lg text-slate-600">數學自習天地</p>
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-slate-800">
-                遊數得計
-              </h1>
-              <p className="text-lg text-slate-600">數學自習天地</p>
-            </div>
+            <Link
+              to="/notes"
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all"
+            >
+              <FileText className="w-5 h-5" />
+              <span>溫習筆記</span>
+            </Link>
           </div>
         </div>
       </header>

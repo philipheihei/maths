@@ -18,6 +18,7 @@ import PercentageQuiz from './apps/PercentageQuiz';
 import ProbabilityQuiz from './apps/ProbabilityQuiz';
 import FactorizationQuiz from './apps/FactorizationQuiz';
 import RemainderFactorQuiz from './apps/RemainderFactorQuiz';
+import Notes from './pages/Notes';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
         <Route path="/probability-quiz" element={<ProbabilityQuiz />} />
         <Route path="/factorization-quiz" element={<FactorizationQuiz />} />
         <Route path="/remainder-factor-quiz" element={<RemainderFactorQuiz />} />
+        <Route path="/notes" element={<Notes />} />
       </Routes>
     </Router>
   );
