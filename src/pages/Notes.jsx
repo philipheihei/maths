@@ -119,7 +119,7 @@ const NOTES_DATA = {
       subtopics: [
         { id: 'parallelogram', num: 1, title: '平行四邊形的定義和性質', color: 'blue' },
         { id: 'parallelogram-test', num: 2, title: '平行四邊形的判定條件', color: 'green' },
-        { id: 'special-shapes', num: 3, title: '菱形 / 矩形 / 正方形', color: 'orange' },
+        { id: 'special-shapes', num: 3, title: '菱形 / 長方形 / 正方形', color: 'orange' },
         { id: 'midpoint-theorem', num: 4, title: '中點定理', color: 'purple' },
         { id: 'intercept-theorem', num: 5, title: '截線定理', color: 'purple' },
       ]
@@ -785,7 +785,7 @@ const QuadrilateralNotes = ({ activeSub }) => {
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">CH5 四邊形的性質</h1>
-        <p className="text-slate-600">平行四邊形、菱形、矩形、正方形、中點定理、截線定理</p>
+        <p className="text-slate-600">平行四邊形、菱形、長方形、正方形、中點定理、截線定理</p>
       </div>
 
       <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-6 text-sm text-slate-600 italic">
@@ -1024,8 +1024,9 @@ const QuadrilateralNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      {/* 3. 菱形 / 矩形 / 正方形 */}
-      <CollapsibleSection id="special-shapes" title="菱形 / 矩形 / 正方形" num={3} color="orange" activeSub={activeSub} sectionRef={s3}>
+      {/* 3. 菱形 / 長方形 / 正方形 */}
+      <CollapsibleSection id="special-shapes" title="
+      菱形 / 長方形 / 正方形的定義和性質" num={3} color="orange" activeSub={activeSub} sectionRef={s3}>
         <div className="text-sm text-slate-500 mb-3">3A05 §5.4A–C</div>
         
         {/* SVG 共用样式组件 */}
@@ -1153,25 +1154,32 @@ const QuadrilateralNotes = ({ activeSub }) => {
           );
 
           const SquarePropertiesSVG = () => (
-            <svg width="180" height="180" viewBox="0 0 180 180">
-              <g stroke="#0ea5e9" strokeWidth="1.5" fill="none">
-                <path d="M20,45 A25,25 0 0,0 37.6,37.6" />
-                <path d="M37.6,37.6 A25,25 0 0,0 45,20" />
-                <path d="M135,20 A25,25 0 0,0 142.4,37.6" />
-                <path d="M142.4,37.6 A25,25 0 0,0 160,45" />
-                <path d="M160,135 A25,25 0 0,0 142.4,142.4" />
-                <path d="M142.4,142.4 A25,25 0 0,0 135,160" />
-                <path d="M45,160 A25,25 0 0,0 37.6,142.4" />
-                <path d="M37.6,142.4 A25,25 0 0,0 20,135" />
+            <svg viewBox="0 0 400 400">
+              <style>{`
+                text { font-family: "Times New Roman", serif; font-size: 24px; fill: black; text-anchor: middle; dominant-baseline: middle; }
+                .shape { stroke: black; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                .arc { stroke: #0ea5e9; stroke-width: 2; fill: none; }
+              `}</style>
+              <g className="arc">
+                <path d="M 90 50 A 40 40 0 0 1 78.28 78.28" />
+                <path d="M 78.28 78.28 A 40 40 0 0 1 50 90" />
+                <path d="M 350 90 A 40 40 0 0 1 321.72 78.28" />
+                <path d="M 321.72 78.28 A 40 40 0 0 1 310 50" />
+                <path d="M 310 350 A 40 40 0 0 1 321.72 321.72" />
+                <path d="M 321.72 321.72 A 40 40 0 0 1 350 310" />
+                <path d="M 50 310 A 40 40 0 0 1 78.28 321.72" />
+                <path d="M 78.28 321.72 A 40 40 0 0 1 90 350" />
               </g>
-              <rect x="20" y="20" width="140" height="140" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
-              <line x1="20" y1="20" x2="160" y2="160" stroke="black" strokeWidth="2.5" />
-              <line x1="160" y1="20" x2="20" y2="160" stroke="black" strokeWidth="2.5" />
-              <g fontFamily="Times New Roman, serif" fontSize="18px" fill="black" textAnchor="middle" fontWeight="bold">
-                <text x="65" y="40">45°</text> <text x="40" y="65">45°</text>
-                <text x="115" y="40">45°</text> <text x="140" y="65">45°</text>
-                <text x="115" y="140">45°</text> <text x="140" y="115">45°</text>
-                <text x="65" y="140">45°</text> <text x="40" y="115">45°</text>
+              <g className="shape">
+                <rect x="50" y="50" width="300" height="300" />
+                <line x1="50" y1="50" x2="350" y2="350" />
+                <line x1="350" y1="50" x2="50" y2="350" />
+              </g>
+              <g>
+                <text x="115" y="75">45°</text><text x="75" y="115">45°</text>
+                <text x="325" y="115">45°</text><text x="285" y="75">45°</text>
+                <text x="285" y="325">45°</text><text x="325" y="285">45°</text>
+                <text x="75" y="285">45°</text><text x="115" y="325">45°</text>
               </g>
             </svg>
           );
