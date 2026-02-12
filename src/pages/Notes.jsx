@@ -1027,108 +1027,302 @@ const QuadrilateralNotes = ({ activeSub }) => {
       {/* 3. 菱形 / 矩形 / 正方形 */}
       <CollapsibleSection id="special-shapes" title="菱形 / 矩形 / 正方形" num={3} color="orange" activeSub={activeSub} sectionRef={s3}>
         <div className="text-sm text-slate-500 mb-3">3A05 §5.4A–C</div>
-        <div className="space-y-6">
+        
+        {/* SVG 共用样式组件 */}
+        {(() => {
+          const SvgStyles = () => (
+            <defs>
+              <style>{`
+                .shape { fill: white; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                .mark { fill: none; stroke: #0ea5e9; stroke-width: 2; stroke-linecap: round; }
+                .mark-thin { fill: none; stroke: #0ea5e9; stroke-width: 1.5; stroke-linecap: round; }
+                .label { font-family: "Times New Roman", serif; font-size: 16px; fill: black; font-weight: bold; font-style: italic; }
+                .angle-text { font-family: sans-serif; font-size: 11px; fill: #333; text-anchor: middle; font-weight: bold; }
+              `}</style>
+            </defs>
+          );
 
-          {/* 菱形 */}
-          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
-            <h3 className="font-bold text-orange-800 mb-3">③ 菱形</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-red-600 font-bold mb-2">Def：四個邊都相等的四邊形</p>
-                <div className="flex justify-center my-3">
-                  <svg width="90" height="90" viewBox="0 0 100 100">
-                    <path d="M 50,10 L 90,50 L 50,90 L 10,50 Z" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
-                  </svg>
-                </div>
-                <p className="text-slate-500 italic text-sm">(簡記：菱形定義)</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-slate-700">(a) 平行四邊形的所有性質</p>
-                <p className="text-red-600 font-bold">(b) 對角線互相<span className="underline">垂直</span></p>
-                <p className="text-green-700 font-bold">(c) 對角線平分每個內角</p>
-                <div className="flex justify-end">
-                  <svg width="70" height="70" viewBox="0 0 100 100">
-                    <path d="M 50,10 L 90,50 L 50,90 L 10,50 Z" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
-                    <line x1="50" y1="10" x2="50" y2="90" stroke="#999" strokeWidth="1" />
-                    <line x1="10" y1="50" x2="90" y2="50" stroke="#999" strokeWidth="1" />
-                    <rect x="50" y="50" width="8" height="8" fill="none" stroke="#d32f2f" strokeWidth="1.5" />
-                  </svg>
-                </div>
-                <p className="text-slate-500 italic text-sm">(簡記：菱形性質)</p>
-              </div>
-            </div>
-          </div>
+          const RhombusDefinitionSVG = () => (
+            <svg width="200" height="140" viewBox="0 0 200 140">
+              <defs>
+                <g id="tick-mark-double">
+                  <line x1="-3" y1="-5" x2="-3" y2="5" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="3" y1="-5" x2="3" y2="5" stroke="#0ea5e9" strokeWidth="2" />
+                </g>
+              </defs>
+              <path d="M20,70 L100,20 L180,70 L100,120 Z" fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round" />
+              <g>
+                <g transform="translate(60, 45) rotate(-32)"><use href="#tick-mark-double" /></g>
+                <g transform="translate(140, 45) rotate(32)"><use href="#tick-mark-double" /></g>
+                <g transform="translate(140, 95) rotate(-32)"><use href="#tick-mark-double" /></g>
+                <g transform="translate(60, 95) rotate(32)"><use href="#tick-mark-double" /></g>
+              </g>
+            </svg>
+          );
 
-          {/* 矩形 */}
-          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
-            <h3 className="font-bold text-orange-800 mb-3">④ 矩形（長方形）</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-red-600 font-bold mb-2">Def：四個角都是直角（90°）</p>
-                <div className="flex justify-center my-3">
-                  <svg width="120" height="75" viewBox="0 0 120 75">
-                    <rect x="10" y="10" width="100" height="55" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
-                    <rect x="10" y="10" width="8" height="8" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                    <rect x="102" y="57" width="8" height="8" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                  </svg>
-                </div>
-                <p className="text-slate-500 italic text-sm">(簡記：長方形定義)</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-slate-700">(a) 平行四邊形的所有性質</p>
-                <p className="text-red-600 font-bold">(b) 對角線相等（AC = BD）</p>
-                <p className="text-green-700 font-bold">(c) 對角線互相平分為四條相等線段（OA = OB = OC = OD）</p>
-                <div className="flex justify-end">
-                  <svg width="100" height="65" viewBox="0 0 120 75">
-                    <rect x="10" y="10" width="100" height="55" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
-                    <line x1="10" y1="10" x2="110" y2="65" stroke="#999" strokeWidth="1" />
-                    <line x1="110" y1="10" x2="10" y2="65" stroke="#999" strokeWidth="1" />
-                    <text x="55" y="42" fontSize="11" fill="#333">O</text>
-                    <text x="2" y="8" fontSize="10" fill="#333">A</text>
-                    <text x="112" y="8" fontSize="10" fill="#333">D</text>
-                    <text x="2" y="74" fontSize="10" fill="#333">B</text>
-                    <text x="112" y="74" fontSize="10" fill="#333">C</text>
-                  </svg>
-                </div>
-                <p className="text-slate-500 italic text-sm">(簡記：長方形性質)</p>
-              </div>
-            </div>
-          </div>
+          const RhombusAnglesSVG = () => (
+            <svg width="200" height="110" viewBox="0 0 200 110">
+              <g stroke="#0ea5e9" strokeWidth="1.5" fill="none" strokeLinecap="round">
+                <path d="M90,30 A15,15 0 0,0 100,20" />
+                <path d="M100,20 A15,15 0 0,0 110,30" />
+                <path d="M90,80 A15,15 0 0,1 100,90" />
+                <path d="M100,90 A15,15 0 0,1 110,80" />
+                <path d="M35,48 A15,15 0 0,1 45,55" />
+                <path d="M45,55 A15,15 0 0,1 35,62" />
+                <path d="M165,48 A15,15 0 0,0 155,55" />
+                <path d="M155,55 A15,15 0 0,0 165,62" />
+                <line x1="93" y1="22" x2="97" y2="26" strokeWidth="1"/>
+                <line x1="103" y1="26" x2="107" y2="22" strokeWidth="1"/>
+                <line x1="93" y1="88" x2="97" y2="84" strokeWidth="1"/>
+                <line x1="103" y1="84" x2="107" y2="88" strokeWidth="1"/>
+                <g strokeWidth="1">
+                  <line x1="38" y1="49" x2="42" y2="51"/> <line x1="39" y1="51" x2="43" y2="53"/>
+                  <line x1="38" y1="61" x2="42" y2="59"/> <line x1="39" y1="59" x2="43" y2="57"/>
+                  <line x1="158" y1="51" x2="162" y2="49"/> <line x1="157" y1="53" x2="161" y2="51"/>
+                  <line x1="158" y1="59" x2="162" y2="61"/> <line x1="157" y1="57" x2="161" y2="59"/>
+                </g>
+              </g>
+              <path d="M20,55 L100,5 L180,55 L100,105 Z" fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round" />
+              <line x1="20" y1="55" x2="180" y2="55" stroke="#16a34a" strokeWidth="2" />
+              <line x1="100" y1="5" x2="100" y2="105" stroke="#16a34a" strokeWidth="2" />
+            </svg>
+          );
 
-          {/* 正方形 */}
-          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
-            <h3 className="font-bold text-orange-800 mb-3">⑤ 正方形</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-red-600 font-bold mb-2">Def：邊相等 且 角 90°</p>
-                <div className="flex justify-center my-3">
-                  <svg width="80" height="80" viewBox="0 0 80 80">
-                    <rect x="10" y="10" width="60" height="60" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
-                    <rect x="10" y="10" width="6" height="6" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                    <line x1="10" y1="40" x2="14" y2="40" stroke="#d32f2f" strokeWidth="2" />
-                    <line x1="40" y1="10" x2="40" y2="14" stroke="#d32f2f" strokeWidth="2" />
-                  </svg>
-                </div>
-                <p className="text-slate-500 italic text-sm">(簡記：正方形定義)</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-slate-700">(a) 菱形的所有性質 + 矩形的所有性質</p>
-                <p className="text-red-600 font-bold">(b) 任何邊與對角線的夾角都是 45°</p>
-                <div className="flex justify-end">
-                  <svg width="80" height="80" viewBox="0 0 80 80">
-                    <rect x="10" y="10" width="60" height="60" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
-                    <line x1="10" y1="10" x2="70" y2="70" stroke="#999" strokeWidth="1" />
-                    <line x1="70" y1="10" x2="10" y2="70" stroke="#999" strokeWidth="1" />
-                    <text x="20" y="25" fontSize="10" fill="#d32f2f">45°</text>
-                    <text x="48" y="25" fontSize="10" fill="#d32f2f">45°</text>
-                  </svg>
-                </div>
-                <p className="text-slate-500 italic text-sm">(簡記：正方形性質)</p>
-              </div>
-            </div>
-          </div>
+          const RhombusPerpendicularSVG = () => (
+            <svg width="200" height="110" viewBox="0 0 200 110">
+              <path d="M20,55 L100,5 L180,55 L100,105 Z" fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round" />
+              <line x1="20" y1="55" x2="180" y2="55" stroke="#16a34a" strokeWidth="2" />
+              <line x1="100" y1="5" x2="100" y2="105" stroke="#16a34a" strokeWidth="2" />
+              <polyline points="100,40 115,40 115,55" stroke="#0ea5e9" strokeWidth="2" fill="none" />
+            </svg>
+          );
 
-        </div>
+          const RectangleDefinitionSVG = () => (
+            <svg width="200" height="140" viewBox="0 0 200 140">
+              <rect x="20" y="20" width="160" height="100" fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round" />
+              <g stroke="#0ea5e9" strokeWidth="2" fill="none">
+                <polyline points="20,40 40,40 40,20" />
+                <polyline points="160,20 160,40 180,40" />
+                <polyline points="180,100 160,100 160,120" />
+                <polyline points="40,120 40,100 20,100" />
+              </g>
+            </svg>
+          );
+
+          const RectanglePropertiesSVG = () => (
+            <svg width="210" height="170" viewBox="-10 -10 220 160">
+              <defs>
+                <g id="tick-mark-double-diag">
+                  <line x1="-3" y1="-5" x2="-3" y2="5" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="3" y1="-5" x2="3" y2="5" stroke="#0ea5e9" strokeWidth="2" />
+                </g>
+              </defs>
+              <rect x="20" y="20" width="160" height="100" fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round" />
+              <line x1="20" y1="20" x2="180" y2="120" stroke="#16a34a" strokeWidth="2" />
+              <line x1="180" y1="20" x2="20" y2="120" stroke="#16a34a" strokeWidth="2" />
+              <text x="5" y="15" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">A</text>
+              <text x="5" y="135" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">B</text>
+              <text x="182" y="135" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">C</text>
+              <text x="182" y="15" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">D</text>
+              <text x="100" y="90" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold" textAnchor="middle">O</text>
+              <g>
+                <g transform="translate(60, 45) rotate(32)"><use href="#tick-mark-double-diag" /></g>
+                <g transform="translate(140, 45) rotate(-32)"><use href="#tick-mark-double-diag" /></g>
+                <g transform="translate(60, 95) rotate(-32)"><use href="#tick-mark-double-diag" /></g>
+                <g transform="translate(140, 95) rotate(32)"><use href="#tick-mark-double-diag" /></g>
+              </g>
+            </svg>
+          );
+
+          const SquareDefinitionSVG = () => (
+            <svg width="160" height="160" viewBox="0 0 160 160">
+              <rect x="20" y="20" width="120" height="120" fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round" />
+              <g stroke="#0ea5e9" strokeWidth="2" fill="none">
+                <polyline points="20,35 35,35 35,20" />
+                <polyline points="140,35 125,35 125,20" />
+                <polyline points="140,125 125,125 125,140" />
+                <polyline points="20,125 35,125 35,140" />
+              </g>
+              <g stroke="#0ea5e9" strokeWidth="2">
+                <g transform="translate(80, 20)"><line x1="-3" y1="-5" x2="-3" y2="5" /> <line x1="3" y1="-5" x2="3" y2="5" /></g>
+                <g transform="translate(140, 80) rotate(90)"><line x1="-3" y1="-5" x2="-3" y2="5" /> <line x1="3" y1="-5" x2="3" y2="5" /></g>
+                <g transform="translate(80, 140)"><line x1="-3" y1="-5" x2="-3" y2="5" /> <line x1="3" y1="-5" x2="3" y2="5" /></g>
+                <g transform="translate(20, 80) rotate(90)"><line x1="-3" y1="-5" x2="-3" y2="5" /> <line x1="3" y1="-5" x2="3" y2="5" /></g>
+              </g>
+            </svg>
+          );
+
+          const SquarePropertiesSVG = () => (
+            <svg width="180" height="180" viewBox="0 0 180 180">
+              <g stroke="#0ea5e9" strokeWidth="1.5" fill="none">
+                <path d="M20,45 A25,25 0 0,0 37.6,37.6" />
+                <path d="M37.6,37.6 A25,25 0 0,0 45,20" />
+                <path d="M135,20 A25,25 0 0,0 142.4,37.6" />
+                <path d="M142.4,37.6 A25,25 0 0,0 160,45" />
+                <path d="M160,135 A25,25 0 0,0 142.4,142.4" />
+                <path d="M142.4,142.4 A25,25 0 0,0 135,160" />
+                <path d="M45,160 A25,25 0 0,0 37.6,142.4" />
+                <path d="M37.6,142.4 A25,25 0 0,0 20,135" />
+              </g>
+              <rect x="20" y="20" width="140" height="140" fill="white" stroke="black" strokeWidth="3" strokeLinejoin="round" />
+              <line x1="20" y1="20" x2="160" y2="160" stroke="black" strokeWidth="2.5" />
+              <line x1="160" y1="20" x2="20" y2="160" stroke="black" strokeWidth="2.5" />
+              <g fontFamily="Times New Roman, serif" fontSize="18px" fill="black" textAnchor="middle" fontWeight="bold">
+                <text x="65" y="40">45°</text> <text x="40" y="65">45°</text>
+                <text x="115" y="40">45°</text> <text x="140" y="65">45°</text>
+                <text x="115" y="140">45°</text> <text x="140" y="115">45°</text>
+                <text x="65" y="140">45°</text> <text x="40" y="115">45°</text>
+              </g>
+            </svg>
+          );
+
+          return (
+            <>
+              {/* 菱形 */}
+              <div className="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-500 mb-6">
+                <h3 className="font-bold text-purple-800 mb-4 text-lg">③ 菱形的定義和性質</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                  <div className="absolute left-1/2 top-0 bottom-0 w-px bg-purple-200 transform -translate-x-1/2 hidden md:block"></div>
+                  
+                  <div className="pr-0 md:pr-4">
+                    <p className="text-purple-900 font-semibold mb-3">(a) 菱形是四邊相等的四邊形。</p>
+                    <div className="flex justify-center my-4">
+                      <RhombusDefinitionSVG />
+                    </div>
+                    <div className="text-center text-purple-700 bg-white border border-purple-200 inline-block px-4 py-1 rounded-full mx-auto w-full">
+                      〔簡記：菱形定義〕
+                    </div>
+                  </div>
+
+                  <div className="pl-0 md:pl-4">
+                    <p className="text-purple-900 font-semibold mb-2">(b) 菱形的性質：</p>
+                    <ul className="list-none space-y-3 text-gray-700">
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(i)</span>
+                        <span>平行四邊形的所有性質</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(ii)</span>
+                        <div className="w-full">
+                          對角線平分每個內角。
+                          <div className="flex justify-center mt-2">
+                            <RhombusAnglesSVG />
+                          </div>
+                        </div>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(iii)</span>
+                        <div className="w-full">
+                          <div className="flex items-center gap-2">
+                            對角線互相<span className="text-red-500 font-bold">垂直（90°）</span>。
+                          </div>
+                          <div className="flex justify-center mt-2">
+                            <RhombusPerpendicularSVG />
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div className="mt-3 text-center text-purple-700 bg-white border border-purple-200 px-4 py-1 rounded-full">
+                      〔簡記：菱形性質〕
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 長方形 */}
+              <div className="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-500 mb-6">
+                <h3 className="font-bold text-purple-800 mb-4 text-lg">④ 長方形的定義和性質</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                  <div className="absolute left-1/2 top-0 bottom-0 w-px bg-purple-200 transform -translate-x-1/2 hidden md:block"></div>
+                  
+                  <div className="pr-0 md:pr-4">
+                    <p className="text-purple-900 font-semibold mb-3">(a) 長方形是所有內角都等於 90° 的四邊形。</p>
+                    <div className="flex justify-center my-4">
+                      <RectangleDefinitionSVG />
+                    </div>
+                    <div className="text-center text-purple-700 bg-white border border-purple-200 inline-block px-4 py-1 rounded-full mx-auto w-full">
+                      〔簡記：長方形定義〕
+                    </div>
+                  </div>
+
+                  <div className="pl-0 md:pl-4">
+                    <p className="text-purple-900 font-semibold mb-2">(b) 長方形的性質：</p>
+                    <ul className="list-none space-y-2 text-gray-700">
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(i)</span>
+                        <span>平行四邊形的所有性質</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(ii)</span>
+                        <div>
+                          對角線相等。<br/>
+                          即 AC = BD
+                        </div>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(iii)</span>
+                        <div className="w-full">
+                          對角線互相平分為四條相等的線段。<br/>
+                          即 OA = OB = OC = OD。
+                          <div className="flex justify-center mt-3">
+                            <RectanglePropertiesSVG />
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div className="mt-3 text-center text-purple-700 bg-white border border-purple-200 px-4 py-1 rounded-full">
+                      〔簡記：長方形性質〕
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 正方形 */}
+              <div className="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-500">
+                <h3 className="font-bold text-purple-800 mb-4 text-lg">⑤ 正方形的定義和性質</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                  <div className="absolute left-1/2 top-0 bottom-0 w-px bg-purple-200 transform -translate-x-1/2 hidden md:block"></div>
+                  
+                  <div className="pr-0 md:pr-4">
+                    <p className="text-purple-900 font-semibold mb-3">(a) 正方形是四邊相等且所有內角都等於 90° 的四邊形。</p>
+                    <div className="flex justify-center my-4">
+                      <SquareDefinitionSVG />
+                    </div>
+                    <div className="text-center text-purple-700 bg-white border border-purple-200 inline-block px-4 py-1 rounded-full mx-auto w-full">
+                      〔簡記：正方形定義〕
+                    </div>
+                  </div>
+
+                  <div className="pl-0 md:pl-4">
+                    <p className="text-purple-900 font-semibold mb-2">(b) 正方形的性質：</p>
+                    <ul className="list-none space-y-2 text-gray-700">
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(i)</span>
+                        <span>菱形的所有性質</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(ii)</span>
+                        <span>長方形的所有性質</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="font-bold text-purple-600">(iii)</span>
+                        <div className="w-full">
+                          任何邊與對角線的夾角都是 45°。
+                          <div className="flex justify-center mt-3">
+                            <SquarePropertiesSVG />
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div className="mt-3 text-center text-purple-700 bg-white border border-purple-200 px-4 py-1 rounded-full">
+                      〔簡記：正方形性質〕
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          );
+        })()}
       </CollapsibleSection>
 
       {/* 4. 中點定理 */}
