@@ -763,16 +763,24 @@ const QuadrilateralNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-3">(a) 定義</h3>
             <p className="text-slate-700 mb-3">有 <span className="bg-yellow-200 px-1 rounded font-bold text-green-700">兩對對邊平行</span> 的四邊形。</p>
             <div className="flex justify-center my-3">
-              <svg width="160" height="100" viewBox="0 0 160 100">
-                <path d="M 30,80 L 110,80 L 140,20 L 60,20 Z" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
-                {/* 上下平行箭頭 */}
-                <path d="M 80,80 L 85,75 L 90,80" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                <path d="M 95,20 L 100,15 L 105,20" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                {/* 左右平行箭頭 */}
-                <path d="M 42,50 L 47,45" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                <path d="M 42,55 L 47,50" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                <path d="M 122,50 L 127,45" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                <path d="M 122,55 L 127,50" fill="none" stroke="#1565c0" strokeWidth="1.5" />
+              <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <path id="arrow-head-single" d="M -5 -5 L 5 0 L -5 5" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <g id="arrow-head-double">
+                      <path d="M -8 -5 L 2 0 L -8 5" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M 0 -5 L 10 0 L 0 5" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </g>
+                </defs>
+                <path d="M 80 150 L 220 150 L 260 50 L 120 50 Z" 
+                      fill="none" 
+                      stroke="black" 
+                      strokeWidth="2.5" 
+                      strokeLinejoin="miter"
+                      strokeLinecap="round"/>
+                <use href="#arrow-head-double" x="190" y="50" transform="rotate(0 190 50)" />
+                <use href="#arrow-head-double" x="150" y="150" transform="rotate(0 150 150)" />
+                <use href="#arrow-head-single" x="100" y="100" transform="rotate(-68.2 100 100)" />
+                <use href="#arrow-head-single" x="240" y="100" transform="rotate(-68.2 240 100)" />
               </svg>
             </div>
             <p className="text-slate-500 italic text-sm">(簡記：平行四邊形定義)</p>
@@ -784,32 +792,74 @@ const QuadrilateralNotes = ({ activeSub }) => {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <span className="text-slate-700">(i) 對邊相等。</span>
-                <svg width="60" height="40" viewBox="0 0 80 50">
-                  <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
-                  <line x1="35" y1="40" x2="35" y2="44" stroke="#d32f2f" strokeWidth="2" />
-                  <line x1="50" y1="10" x2="50" y2="6" stroke="#d32f2f" strokeWidth="2" />
-                  <line x1="15" y1="22" x2="19" y2="28" stroke="#d32f2f" strokeWidth="2" />
-                  <line x1="18" y1="22" x2="22" y2="28" stroke="#d32f2f" strokeWidth="2" />
-                  <line x1="65" y1="22" x2="69" y2="28" stroke="#d32f2f" strokeWidth="2" />
-                  <line x1="68" y1="22" x2="72" y2="28" stroke="#d32f2f" strokeWidth="2" />
+                <svg width="160" height="80" viewBox="0 0 180 80" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <style>{`
+                      .shape { fill: none; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                      .mark { fill: none; stroke: #0ea5e9; stroke-width: 2; stroke-linecap: round; }
+                    `}</style>
+                  </defs>
+                  <g transform="translate(10, 10)">
+                    <g transform="translate(100, 0)"> 
+                       <line x1="-3" y1="-5" x2="-3" y2="5" className="mark" />
+                       <line x1="3" y1="-5" x2="3" y2="5" className="mark" />
+                    </g>
+                    <g transform="translate(60, 60)"> 
+                       <line x1="-3" y1="-5" x2="-3" y2="5" className="mark" />
+                       <line x1="3" y1="-5" x2="3" y2="5" className="mark" />
+                    </g>
+                    <line x1="15.8" y1="27.2" x2="24.2" y2="32.8" className="mark" /> 
+                    <line x1="135.8" y1="27.2" x2="144.2" y2="32.8" className="mark" /> 
+                    <path d="M40,0 L160,0 L120,60 L0,60 Z" className="shape" />
+                  </g>
                 </svg>
               </div>
               <p className="text-slate-500 italic text-xs ml-4">(簡記：平行四邊形對邊)</p>
               <div className="flex items-center gap-3">
                 <span className="text-slate-700">(ii) 對角相等。</span>
-                <svg width="60" height="40" viewBox="0 0 80 50">
-                  <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
-                  <path d="M 18,36 A 10,10 0 0,0 14,40" fill="none" stroke="#1565c0" strokeWidth="2" />
-                  <path d="M 67,14 A 10,10 0 0,0 71,10" fill="none" stroke="#1565c0" strokeWidth="2" />
+                <svg width="160" height="80" viewBox="0 0 180 80" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <style>{`
+                      .shape { fill: none; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                      .mark { fill: none; stroke: #0ea5e9; stroke-width: 2; stroke-linecap: round; }
+                    `}</style>
+                  </defs>
+                  <g transform="translate(10, 10)">
+                    <path d="M15,60 A15,15 0 0,0 8.4,47.4" className="mark" />
+                    <path d="M145,0 A15,15 0 0,0 151.6,12.6" className="mark" />
+                    <path d="M52,0 A12,12 0 0,1 33.3,10" className="mark" />
+                    <path d="M56,0 A16,16 0 0,1 31.1,13.3" className="mark" />
+                    <path d="M108,60 A12,12 0 0,1 126.7,50" className="mark" />
+                    <path d="M104,60 A16,16 0 0,1 128.9,46.7" className="mark" />
+                    <path d="M40,0 L160,0 L120,60 L0,60 Z" className="shape" />
+                  </g>
                 </svg>
               </div>
               <p className="text-slate-500 italic text-xs ml-4">(簡記：平行四邊形對角)</p>
               <div className="flex items-center gap-3">
                 <span className="text-slate-700">(iii) 對角線互相平分。</span>
-                <svg width="60" height="40" viewBox="0 0 80 50">
-                  <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
-                  <line x1="10" y1="40" x2="75" y2="10" stroke="#999" strokeWidth="1" />
-                  <line x1="60" y1="40" x2="25" y2="10" stroke="#999" strokeWidth="1" />
+                <svg width="160" height="80" viewBox="0 0 180 80" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <style>{`
+                      .shape { fill: none; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                      .mark { fill: none; stroke: #0ea5e9; stroke-width: 2; stroke-linecap: round; }
+                    `}</style>
+                  </defs>
+                  <g transform="translate(10, 10)">
+                    <line x1="57" y1="19" x2="63" y2="11" className="mark" />
+                    <line x1="97" y1="49" x2="103" y2="41" className="mark" />
+                    <g transform="translate(120, 15)">
+                        <line x1="-3.62" y1="-3.98" x2="-0.12" y2="5.38" className="mark" />
+                        <line x1="0.12" y1="-5.38" x2="3.62" y2="3.98" className="mark" />
+                    </g>
+                    <g transform="translate(40, 45)">
+                        <line x1="-3.62" y1="-3.98" x2="-0.12" y2="5.38" className="mark" />
+                        <line x1="0.12" y1="-5.38" x2="3.62" y2="3.98" className="mark" />
+                    </g>
+                    <line x1="40" y1="0" x2="120" y2="60" className="shape" strokeWidth="1.5" />
+                    <line x1="160" y1="0" x2="0" y2="60" className="shape" strokeWidth="1.5" />
+                    <path d="M40,0 L160,0 L120,60 L0,60 Z" className="shape" />
+                  </g>
                 </svg>
               </div>
               <p className="text-slate-500 italic text-xs ml-4">(簡記：平行四邊形對角線)</p>
@@ -825,10 +875,26 @@ const QuadrilateralNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <div className="flex items-center gap-3 mb-1">
               <span className="text-slate-700 font-medium">(a) 兩對對邊相等</span>
-              <svg width="50" height="35" viewBox="0 0 80 50">
-                <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
-                <line x1="35" y1="40" x2="35" y2="44" stroke="#d32f2f" strokeWidth="2" />
-                <line x1="50" y1="10" x2="50" y2="6" stroke="#d32f2f" strokeWidth="2" />
+              <svg width="100" height="70" viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <style>{`
+                    .shape { fill: none; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                    .mark { fill: none; stroke: #0ea5e9; stroke-width: 2; stroke-linecap: round; }
+                  `}</style>
+                </defs>
+                <g transform="translate(0, 0)">
+                  <g transform="translate(120, 0)"> 
+                     <line x1="-3" y1="-5" x2="-3" y2="5" className="mark" />
+                     <line x1="3" y1="-5" x2="3" y2="5" className="mark" />
+                  </g>
+                  <g transform="translate(80, 60)"> 
+                     <line x1="-3" y1="-5" x2="-3" y2="5" className="mark" />
+                     <line x1="3" y1="-5" x2="3" y2="5" className="mark" />
+                  </g>
+                  <line x1="35.8" y1="27.2" x2="44.2" y2="32.8" className="mark" /> 
+                  <line x1="155.8" y1="27.2" x2="164.2" y2="32.8" className="mark" /> 
+                  <path d="M60,0 L180,0 L140,60 L20,60 Z" className="shape" />
+                </g>
               </svg>
             </div>
             <p className="text-green-700 italic text-sm">(簡記：對邊相等)</p>
@@ -837,10 +903,22 @@ const QuadrilateralNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <div className="flex items-center gap-3 mb-1">
               <span className="text-slate-700 font-medium">(b) 兩對對角相等</span>
-              <svg width="50" height="35" viewBox="0 0 80 50">
-                <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
-                <path d="M 15,35 A 8,8 0 0,0 10,40" fill="none" stroke="#1565c0" strokeWidth="2" />
-                <path d="M 70,15 A 8,8 0 0,0 75,10" fill="none" stroke="#1565c0" strokeWidth="2" />
+              <svg width="100" height="70" viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <style>{`
+                    .shape { fill: none; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                    .mark { fill: none; stroke: #0ea5e9; stroke-width: 2; stroke-linecap: round; }
+                  `}</style>
+                </defs>
+                <g transform="translate(0, 0)">
+                  <path d="M35,60 A15,15 0 0,0 28.4,47.4" className="mark" />
+                  <path d="M165,0 A15,15 0 0,0 171.6,12.6" className="mark" />
+                  <path d="M72,0 A12,12 0 0,1 53.3,10" className="mark" />
+                  <path d="M76,0 A16,16 0 0,1 51.1,13.3" className="mark" />
+                  <path d="M128,60 A12,12 0 0,1 146.7,50" className="mark" />
+                  <path d="M124,60 A16,16 0 0,1 148.9,46.7" className="mark" />
+                  <path d="M60,0 L180,0 L140,60 L20,60 Z" className="shape" />
+                </g>
               </svg>
             </div>
             <p className="text-green-700 italic text-sm">(簡記：對角相等)</p>
@@ -849,10 +927,28 @@ const QuadrilateralNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <div className="flex items-center gap-3 mb-1">
               <span className="text-slate-700 font-medium">(c) 對角線互相平分</span>
-              <svg width="50" height="35" viewBox="0 0 80 50">
-                <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
-                <line x1="10" y1="40" x2="75" y2="10" stroke="#999" strokeWidth="1" />
-                <line x1="60" y1="40" x2="25" y2="10" stroke="#999" strokeWidth="1" />
+              <svg width="100" height="70" viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <style>{`
+                    .shape { fill: none; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                    .mark { fill: none; stroke: #0ea5e9; stroke-width: 2; stroke-linecap: round; }
+                  `}</style>
+                </defs>
+                <g transform="translate(0, 0)">
+                  <line x1="77" y1="19" x2="83" y2="11" className="mark" />
+                  <line x1="117" y1="49" x2="123" y2="41" className="mark" />
+                  <g transform="translate(140, 15)">
+                      <line x1="-3.62" y1="-3.98" x2="-0.12" y2="5.38" className="mark" />
+                      <line x1="0.12" y1="-5.38" x2="3.62" y2="3.98" className="mark" />
+                  </g>
+                  <g transform="translate(60, 45)">
+                      <line x1="-3.62" y1="-3.98" x2="-0.12" y2="5.38" className="mark" />
+                      <line x1="0.12" y1="-5.38" x2="3.62" y2="3.98" className="mark" />
+                  </g>
+                  <line x1="60" y1="0" x2="140" y2="60" className="shape" strokeWidth="1.5" />
+                  <line x1="180" y1="0" x2="20" y2="60" className="shape" strokeWidth="1.5" />
+                  <path d="M60,0 L180,0 L140,60 L20,60 Z" className="shape" />
+                </g>
               </svg>
             </div>
             <p className="text-green-700 italic text-sm">(簡記：對角線互相平分)</p>
@@ -861,12 +957,27 @@ const QuadrilateralNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <div className="flex items-center gap-3 mb-1">
               <span className="text-slate-700 font-medium">(d) 一對對邊平行且相等 <span className="text-red-600">★</span></span>
-              <svg width="50" height="35" viewBox="0 0 80 50">
-                <path d="M 10,40 L 60,40 L 75,10 L 25,10 Z" fill="none" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
-                <path d="M 50,10 L 55,5 L 60,10" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                <path d="M 35,40 L 40,35 L 45,40" fill="none" stroke="#1565c0" strokeWidth="1.5" />
-                <line x1="30" y1="10" x2="30" y2="6" stroke="#d32f2f" strokeWidth="2" />
-                <line x1="35" y1="44" x2="35" y2="40" stroke="#d32f2f" strokeWidth="2" />
+              <svg width="100" height="70" viewBox="0 0 200 90" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <style>{`
+                    .shape { fill: none; stroke: black; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+                    .mark { fill: none; stroke: #0ea5e9; stroke-width: 2; stroke-linecap: round; }
+                    .fill-mark { fill: #0ea5e9; stroke: none; }
+                  `}</style>
+                </defs>
+                <g transform="translate(0, 0)">
+                  <path d="M110,0 L100,-5 L100,5 Z" className="fill-mark" />
+                  <g transform="translate(125, 0)"> 
+                     <line x1="-3" y1="-5" x2="-3" y2="5" className="mark" />
+                     <line x1="3" y1="-5" x2="3" y2="5" className="mark" />
+                  </g>
+                  <path d="M70,60 L60,55 L60,65 Z" className="fill-mark" />
+                  <g transform="translate(85, 60)"> 
+                     <line x1="-3" y1="-5" x2="-3" y2="5" className="mark" />
+                     <line x1="3" y1="-5" x2="3" y2="5" className="mark" />
+                  </g>
+                  <path d="M60,0 L180,0 L140,60 L20,60 Z" className="shape" />
+                </g>
               </svg>
             </div>
             <p className="text-green-700 italic text-sm">(簡記：對邊 // 且相等)</p>
