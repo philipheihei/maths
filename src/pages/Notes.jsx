@@ -471,11 +471,50 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
             
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
-                <p className="text-green-600 mb-2">因題目是直角△，可用畢氏定理得出剩下的邊</p>
-                <div className="text-sm">
-                  <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\ RQ &= 5 \end{aligned}" block left />
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <div className="flex-1">
+                    <p className="text-green-600 mb-2">因題目是直角△，可用畢氏定理得出剩下的邊</p>
+                    <div className="text-sm">
+                      <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\ RQ &= 5 \end{aligned}" block left />
+                    </div>
+                    <p className="text-green-600 mt-3 text-sm">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold">sin θ / cos θ / tan θ</span></p>
+                  </div>
+                  
+                  <div className="flex-shrink-0 flex items-center justify-center">
+                    <svg width="350" height="250" viewBox="0 0 350 250" xmlns="http://www.w3.org/2000/svg">
+                      {/* 定義樣式 */}
+                      <style>
+                        {`.math-line { stroke: #5e35b1; stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+                        .math-text { font-family: sans-serif; font-size: 24px; fill: #5e35b1; font-weight: bold; }
+                        .math-label { font-family: sans-serif; font-size: 20px; fill: #5e35b1; }`}
+                      </style>
+
+                      {/* 主三角形 P(40, 200) -> Q(280, 200) -> R(280, 100) 
+                           比例：底 240px (代表12), 高 100px (代表5) */}
+                      <path d="M 40 200 L 280 200 L 280 100 Z" className="math-line" />
+
+                      {/* 直角符號 (在 Q 點) */}
+                      <path d="M 280 180 L 260 180 L 260 200" className="math-line" strokeWidth="3" />
+
+                      {/* θ 角度弧線 (在 R 點) */}
+                      {/* 控制點調整過，使其看起來自然 */}
+                      <path d="M 280 135 Q 265 135 258 118" className="math-line" strokeWidth="2" />
+
+                      {/* 頂點標籤 */}
+                      <text x="20" y="210" className="math-text">P</text>
+                      <text x="290" y="215" className="math-text">Q</text>
+                      <text x="290" y="90" className="math-text">R</text>
+
+                      {/* 邊長數據 */}
+                      <text x="150" y="230" className="math-text">12</text> {/* 底邊 */}
+                      <text x="300" y="160" className="math-text">5</text>  {/* 高 */}
+                      <text x="130" y="130" className="math-text">13</text> {/* 斜邊 */}
+
+                      {/* θ 符號 */}
+                      <text x="245" y="155" className="math-text">θ</text>
+                    </svg>
+                  </div>
                 </div>
-                <p className="text-green-600 mt-3 text-sm">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold">sin θ / cos θ / tan θ</span></p>
               </div>
               
               <div className="bg-white rounded-lg p-4">
