@@ -1705,11 +1705,11 @@ const RemainderFactorNotes = ({ activeSub }) => {
             </div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-orange-200">
-            <h3 className="font-bold text-orange-700 mb-3">📋 證明題型</h3>
+            <h3 className="font-bold text-orange-700 mb-3">📋 證明/判斷題型</h3>
             <div className="bg-amber-50 rounded-lg p-3">
-              <p className="text-sm text-slate-600 mb-2">例：題目：證明 <Latex math="x + 4" /> 是 <Latex math="f(x)" /> 的因式</p>
+              <p className="text-sm text-slate-600 mb-2">例：判斷 <Latex math="x + 4" /> 是否 <Latex math="f(x)" /> 的因式?</p>
               <div className="mt-2 space-y-2">
-                <p className="text-slate-700">→ <Latex math="f(-4)" /> 是否 <Latex math="= 0" /> ？</p>
+                <p className="text-slate-700">→ 代數計 <Latex math="f(-4)" /> 是否 <Latex math="= 0" /> ？</p>
                 <div className="flex items-center gap-4 text-sm mt-2">
                   <span className="bg-green-100 text-green-700 px-2 py-1 rounded">= 0 → Yes ✓</span>
                   <span className="bg-red-100 text-red-700 px-2 py-1 rounded">≠ 0 → No ✗</span>
