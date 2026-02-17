@@ -481,6 +481,204 @@ const Task4 = ({ onComplete }) => {
   const [question, setQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
 
+  // 🔥 乘法法則情境庫
+  const multiplyScenarios = [
+    {
+      id: 1,
+      generator: () => {
+        const main = Math.floor(Math.random() * 2) + 4;
+        const soup = Math.floor(Math.random() * 2) + 3;
+        const dessert = Math.floor(Math.random() * 2) + 4;
+        return {
+          text: `餐廳提供 ${main} 款主餐、${soup} 款湯和 ${dessert} 款甜品。客人要各選一款，計算套餐組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「各選一款」表示每個類別都要選，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n總組合 = ${main} × ${soup} × ${dessert} = ${main * soup * dessert} 種`,
+          wrong: `不正確！\n\n「各選一款」表示同時選擇（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 2,
+      generator: () => {
+        const boys = Math.floor(Math.random() * 3) + 5;
+        const girls = Math.floor(Math.random() * 3) + 4;
+        const result = boys * girls;
+        return {
+          text: `某委員會由 ${boys} 名男生和 ${girls} 名女生組成。需選出 1 名男生和 1 名女生作為委員代表，計算有多少種不同的人選配搭時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n1 名男生和 1 名女生可以「同時」作為委員代表 → 相乘 (×)\n\n配搭總數 = ₍${boys}₎C₁ × ₍${girls}₎C₁ = ${boys} × ${girls} = ${result} 種`,
+          wrong: `不正確！\n\n「男生和女生」都要選（同時發生），兩個步驟可以同時完成 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 3,
+      generator: () => {
+        const digits = 10;
+        return {
+          text: `設定一個 4 位數密碼（0-9）。計算可能的密碼總數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n4 位密碼需要依次填入 4 個數字，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n總數 = 10 × 10 × 10 × 10 = ${Math.pow(10, 4)} 種`,
+          wrong: `不正確！\n\n每位數字依次選擇（連續步驟），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 4,
+      generator: () => {
+        const contestants = Math.floor(Math.random() * 3) + 6;
+        return {
+          text: `比賽有 ${contestants} 名參賽者。計算三甲名次（冠亞季軍）的排列方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n排列名次是連續步驟：先選冠軍，再選亞軍，最後選季軍（同時發生）。同時發生 → 相乘 (×)\n\n方法數 = ${contestants} × ${contestants - 1} × ${contestants - 2} = ${contestants * (contestants - 1) * (contestants - 2)} 種`,
+          wrong: `不正確！\n\n排列名次是連續選擇（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 5,
+      generator: () => {
+        const tops = Math.floor(Math.random() * 3) + 5;
+        const pants = Math.floor(Math.random() * 3) + 4;
+        const shoes = Math.floor(Math.random() * 2) + 3;
+        return {
+          text: `衣櫃有 ${tops} 件上衣、${pants} 條褲子和 ${shoes} 對鞋子。計算穿搭組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n穿搭需要「各選一件」：上衣、褲子和鞋子都要選（同時發生）。同時發生 → 相乘 (×)\n\n組合 = ${tops} × ${pants} × ${shoes} = ${tops * pants * shoes} 種`,
+          wrong: `不正確！\n\n穿搭是同時選擇上衣、褲子、鞋子（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 6,
+      generator: () => {
+        const leaders = Math.floor(Math.random() * 4) + 8;
+        return {
+          text: `${leaders} 人中選出正副隊長各 1 人（不能同一人）。計算選擇方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n選正副隊長是兩個步驟：先選正隊長，再選副隊長（同時發生）。同時發生 → 相乘 (×)\n\n方法 = ${leaders} × ${leaders - 1} = ${leaders * (leaders - 1)} 種`,
+          wrong: `不正確！\n\n「正副隊長」是兩個連續步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 7,
+      generator: () => {
+        const morning = Math.floor(Math.random() * 2) + 4;
+        const afternoon = Math.floor(Math.random() * 2) + 3;
+        const evening = Math.floor(Math.random() * 2) + 3;
+        return {
+          text: `旅行有 ${morning} 個上午活動、${afternoon} 個下午活動和 ${evening} 個晚上活動。若各時段選一個活動，計算行程組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「各時段選一個」表示每個時段都要選，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n組合 = ${morning} × ${afternoon} × ${evening} = ${morning * afternoon * evening} 種`,
+          wrong: `不正確！\n\n「各時段選一個」是連續步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 8,
+      generator: () => {
+        const totalR = Math.floor(Math.random() * 5) + 8;
+        const totalW = Math.floor(Math.random() * 5) + 8;
+        const r = Math.floor(Math.random() * 2) + 2;
+        const w = Math.floor(Math.random() * 2) + 2;
+        return {
+          text: `袋中有 ${totalR} 個紅球和 ${totalW} 個白球。計算抽出「${r} 個紅球和 ${w} 個白球」的組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「抽紅球和白球」表示兩種都要抽到（同時發生）。同時發生 → 相乘 (×)\n\n組合 = C(${totalR},${r}) × C(${totalW},${w})`,
+          wrong: `不正確！\n\n「抽紅球和白球」是同時發生（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 9,
+      generator: () => {
+        const days = Math.floor(Math.random() * 2) + 3;
+        const places = Math.floor(Math.random() * 3) + 5;
+        return {
+          text: `旅行共 ${days} 天，每天從 ${places} 個景點中選一個。計算行程安排數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「每天選一個」表示 ${days} 個連續步驟，每天都要選（同時發生）。同時發生 → 相乘 (×)\n\n總數 = ${places}^${days} = ${Math.pow(places, days)} 種`,
+          wrong: `不正確！\n\n「每天選一個」是 ${days} 個連續步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 10,
+      generator: () => {
+        const adults = Math.floor(Math.random() * 4) + 8;
+        const kids = Math.floor(Math.random() * 3) + 5;
+        return {
+          text: `有 ${adults} 名成人和 ${kids} 名小童。選 1 名成人和 1 名小童組隊，計算組隊方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「成人和小童」都要選，是兩個步驟（同時發生）。同時發生 → 相乘 (×)\n\n方法 = ${adults} × ${kids} = ${adults * kids} 種`,
+          wrong: `不正確！\n\n「選成人和小童」是兩個步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 11,
+      generator: () => {
+        const sci = Math.floor(Math.random() * 3) + 4;
+        const math = Math.floor(Math.random() * 3) + 5;
+        const r1 = Math.floor(Math.random() * 2) + 2;
+        const r2 = Math.floor(Math.random() * 2) + 2;
+        const c1 = nCr(sci, r1);
+        const c2 = nCr(math, r2);
+        return {
+          text: `班上有 ${sci} 本科學書和 ${math} 本數學書。需從科學書中選 ${r1} 本，並從數學書中選 ${r2} 本，計算選書方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n從科學書選「並」從數學書選，兩個動作都要完成（同時發生）→ 相乘 (×)\n\n總數 = ₍${sci}₎C${r1} × ₍${math}₎C${r2} = ${c1} × ${c2} = ${c1 * c2} 種`,
+          wrong: `不正確！\n\n「科學書並數學書」是兩個步驟都要完成（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 12,
+      generator: () => {
+        const total = Math.floor(Math.random() * 5) + 10;
+        const select = Math.floor(Math.random() * 2) + 3;
+        const positions = select;
+        const permutations = nPr(total, select);
+        return {
+          text: `${total} 名學生排成 ${positions} 個位置（第1位、第2位...第${positions}位）。計算排列方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n排列需要依次填入每個位置，${positions} 個步驟連續進行（同時發生）→ 相乘 (×)\n\n方法 = ₍${total}₎P${select} = ${permutations} 種`,
+          wrong: `不正確！\n\n排列是連續步驟（AND），每個位置都要填入 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 13,
+      generator: () => {
+        const males = Math.floor(Math.random() * 4) + 6;
+        const females = Math.floor(Math.random() * 4) + 6;
+        const r1 = 2;
+        const r2 = 3;
+        const c1 = nCr(males, r1);
+        const c2 = nCr(females, r2);
+        return {
+          text: `學會有 ${males} 名男會員和 ${females} 名女會員。需選出 ${r1} 名男會員和 ${r2} 名女會員組成小組，計算方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n男女兩組都要選出（同時發生）→ 相乘 (×)\n\n總數 = ₍${males}₎C${r1} × ₍${females}₎C${r2} = ${c1} × ${c2} = ${c1 * c2} 種`,
+          wrong: `不正確！\n\n「男會員和女會員」都要選（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 14,
+      generator: () => {
+        const appetizer = Math.floor(Math.random() * 3) + 3;
+        const main = Math.floor(Math.random() * 3) + 4;
+        const dessert = Math.floor(Math.random() * 2) + 3;
+        return {
+          text: `自助餐有 ${appetizer} 款前菜、${main} 款主菜和 ${dessert} 款甜品。若前菜、主菜、甜品各選 1 款，計算用餐組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n三個類別各選一款，全部都要選擇（同時發生）→ 相乘 (×)\n\n組合 = ${appetizer} × ${main} × ${dessert} = ${appetizer * main * dessert} 種`,
+          wrong: `不正確！\n\n「各選一款」是三個步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 15,
+      generator: () => {
+        const from_cities = Math.floor(Math.random() * 3) + 4;
+        const to_cities = Math.floor(Math.random() * 3) + 5;
+        return {
+          text: `從城市 A 到 B 有 ${from_cities} 條路線，從 B 到 C 有 ${to_cities} 條路線。計算從 A 經 B 到 C 的路線總數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n要「先」選 A→B 路線，「再」選 B→C 路線，兩步缺一不可（同時發生）→ 相乘 (×)\n\n總數 = ${from_cities} × ${to_cities} = ${from_cities * to_cities} 種`,
+          wrong: `不正確！\n\n從 A 到 C 需要兩段路線都選（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    }
+  ];
+
   // 🔥 加法法則情境庫
   const addScenarios = [
     {
@@ -584,130 +782,57 @@ const Task4 = ({ onComplete }) => {
           wrong: `不正確！\n\n「只能得一個獎」表示選其一（OR），不能同時獲得多個獎項 → 相加 (+)`
         };
       }
-    }
-  ];
-
-  // 🔥 乘法法則情境庫
-  const multiplyScenarios = [
-    {
-      id: 1,
-      generator: () => {
-        const main = Math.floor(Math.random() * 2) + 4;
-        const soup = Math.floor(Math.random() * 2) + 3;
-        const dessert = Math.floor(Math.random() * 2) + 4;
-        return {
-          text: `餐廳提供 ${main} 款主餐、${soup} 款湯和 ${dessert} 款甜品。客人要各選一款，計算套餐組合數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n「各選一款」表示每個類別都要選，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n總組合 = ${main} × ${soup} × ${dessert} = ${main * soup * dessert} 種`,
-          wrong: `不正確！\n\n「各選一款」表示同時選擇（AND），同時發生 → 相乘 (×)`
-        };
-      }
-    },
-    {
-      id: 2,
-      generator: () => {
-        const boys = Math.floor(Math.random() * 3) + 5;
-        const girls = Math.floor(Math.random() * 3) + 4;
-        return {
-          text: `班上有 ${boys} 名男生和 ${girls} 名女生。要選 1 名男生和 1 名女生當代表，計算選擇方法數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n選「男生和女生」表示兩者都要選（同時發生）。同時發生 → 相乘 (×)\n\n總數 = ${boys} × ${girls} = ${boys * girls} 種`,
-          wrong: `不正確！\n\n「選男生和女生」是兩個步驟（AND），同時發生 → 相乘 (×)`
-        };
-      }
-    },
-    {
-      id: 3,
-      generator: () => {
-        const digits = 10;
-        return {
-          text: `設定一個 4 位數密碼（0-9）。計算可能的密碼總數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n4 位密碼需要依次填入 4 個數字，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n總數 = 10 × 10 × 10 × 10 = ${Math.pow(10, 4)} 種`,
-          wrong: `不正確！\n\n每位數字依次選擇（連續步驟），同時發生 → 相乘 (×)`
-        };
-      }
-    },
-    {
-      id: 4,
-      generator: () => {
-        const contestants = Math.floor(Math.random() * 3) + 6;
-        return {
-          text: `比賽有 ${contestants} 名參賽者。計算三甲名次（冠亞季軍）的排列方法數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n排列名次是連續步驟：先選冠軍，再選亞軍，最後選季軍（同時發生）。同時發生 → 相乘 (×)\n\n方法數 = ${contestants} × ${contestants - 1} × ${contestants - 2} = ${contestants * (contestants - 1) * (contestants - 2)} 種`,
-          wrong: `不正確！\n\n排列名次是連續選擇（AND），同時發生 → 相乘 (×)`
-        };
-      }
-    },
-    {
-      id: 5,
-      generator: () => {
-        const tops = Math.floor(Math.random() * 3) + 5;
-        const pants = Math.floor(Math.random() * 3) + 4;
-        const shoes = Math.floor(Math.random() * 2) + 3;
-        return {
-          text: `衣櫃有 ${tops} 件上衣、${pants} 條褲子和 ${shoes} 對鞋子。計算穿搭組合數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n穿搭需要「各選一件」：上衣、褲子和鞋子都要選（同時發生）。同時發生 → 相乘 (×)\n\n組合 = ${tops} × ${pants} × ${shoes} = ${tops * pants * shoes} 種`,
-          wrong: `不正確！\n\n穿搭是同時選擇上衣、褲子、鞋子（AND），同時發生 → 相乘 (×)`
-        };
-      }
-    },
-    {
-      id: 6,
-      generator: () => {
-        const leaders = Math.floor(Math.random() * 4) + 8;
-        return {
-          text: `${leaders} 人中選出正副隊長各 1 人（不能同一人）。計算選擇方法數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n選正副隊長是兩個步驟：先選正隊長，再選副隊長（同時發生）。同時發生 → 相乘 (×)\n\n方法 = ${leaders} × ${leaders - 1} = ${leaders * (leaders - 1)} 種`,
-          wrong: `不正確！\n\n「正副隊長」是兩個連續步驟（AND），同時發生 → 相乘 (×)`
-        };
-      }
-    },
-    {
-      id: 7,
-      generator: () => {
-        const morning = Math.floor(Math.random() * 2) + 4;
-        const afternoon = Math.floor(Math.random() * 2) + 3;
-        const evening = Math.floor(Math.random() * 2) + 3;
-        return {
-          text: `旅行有 ${morning} 個上午活動、${afternoon} 個下午活動和 ${evening} 個晚上活動。若各時段選一個活動，計算行程組合數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n「各時段選一個」表示每個時段都要選，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n組合 = ${morning} × ${afternoon} × ${evening} = ${morning * afternoon * evening} 種`,
-          wrong: `不正確！\n\n「各時段選一個」是連續步驟（AND），同時發生 → 相乘 (×)`
-        };
-      }
-    },
-    {
-      id: 8,
-      generator: () => {
-        const totalR = Math.floor(Math.random() * 5) + 8;
-        const totalW = Math.floor(Math.random() * 5) + 8;
-        const r = Math.floor(Math.random() * 2) + 2;
-        const w = Math.floor(Math.random() * 2) + 2;
-        return {
-          text: `袋中有 ${totalR} 個紅球和 ${totalW} 個白球。計算抽出「${r} 個紅球和 ${w} 個白球」的組合數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n「抽紅球和白球」表示兩種都要抽到（同時發生）。同時發生 → 相乘 (×)\n\n組合 = C(${totalR},${r}) × C(${totalW},${w})`,
-          wrong: `不正確！\n\n「抽紅球和白球」是同時發生（AND），同時發生 → 相乘 (×)`
-        };
-      }
     },
     {
       id: 9,
       generator: () => {
-        const days = Math.floor(Math.random() * 2) + 3;
-        const places = Math.floor(Math.random() * 3) + 5;
+        const senior = Math.floor(Math.random() * 5) + 8;
+        const junior = Math.floor(Math.random() * 5) + 10;
         return {
-          text: `旅行共 ${days} 天，每天從 ${places} 個景點中選一個。計算行程安排數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n「每天選一個」表示 ${days} 個連續步驟，每天都要選（同時發生）。同時發生 → 相乘 (×)\n\n總數 = ${places}^${days} = ${Math.pow(places, days)} 種`,
-          wrong: `不正確！\n\n「每天選一個」是 ${days} 個連續步驟（AND），同時發生 → 相乘 (×)`
+          text: `學校有 ${senior} 名高中生或 ${junior} 名初中生。若只選 1 名學生當代表，計算選擇方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「高中生或初中生」只選一人，不能同時選兩個組別。不能同時發生 → 相加 (+)\n\n總數 = ${senior} + ${junior} = ${senior + junior} 種`,
+          wrong: `不正確！\n\n「或」表示選其一（OR），不能同時發生 → 相加 (+)`
         };
       }
     },
     {
       id: 10,
       generator: () => {
-        const adults = Math.floor(Math.random() * 4) + 8;
-        const kids = Math.floor(Math.random() * 3) + 5;
+        const routeA = Math.floor(Math.random() * 3) + 3;
+        const routeB = Math.floor(Math.random() * 3) + 4;
         return {
-          text: `有 ${adults} 名成人和 ${kids} 名小童。選 1 名成人和 1 名小童組隊，計算組隊方法數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n「成人和小童」都要選，是兩個步驟（同時發生）。同時發生 → 相乘 (×)\n\n方法 = ${adults} × ${kids} = ${adults * kids} 種`,
-          wrong: `不正確！\n\n「選成人和小童」是兩個步驟（AND），同時發生 → 相乘 (×)`
+          text: `從城市 X 到城市 Y 可以選 A 路線（${routeA} 種方式）或 B 路線（${routeB} 種方式）。計算總共有多少種前往方法時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n選擇 A 路線「或」B 路線，只能走其中一條（互斥）。不能同時發生 → 相加 (+)\n\n總數 = ${routeA} + ${routeB} = ${routeA + routeB} 種`,
+          wrong: `不正確！\n\n「A 或 B」是二選一（OR），不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 11,
+      generator: () => {
+        const red = Math.floor(Math.random() * 4) + 5;
+        const blue = Math.floor(Math.random() * 4) + 6;
+        const green = Math.floor(Math.random() * 4) + 4;
+        const r = Math.floor(Math.random() * 2) + 2;
+        const c1 = nCr(red, r);
+        const c2 = nCr(blue, r);
+        const c3 = nCr(green, r);
+        return {
+          text: `盒子有 ${red} 個紅球、${blue} 個藍球和 ${green} 個綠球。抽出 ${r} 個「全紅」或「全藍」或「全綠」的球，計算方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「全紅或全藍或全綠」只能選一種顏色，不能同時發生 → 相加 (+)\n\n總數 = ₍${red}₎C${r} + ₍${blue}₎C${r} + ₍${green}₎C${r} = ${c1} + ${c2} + ${c3} = ${c1 + c2 + c3} 種`,
+          wrong: `不正確！\n\n「全紅或全藍或全綠」是選其一（OR），不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 12,
+      generator: () => {
+        const morning = Math.floor(Math.random() * 3) + 4;
+        const afternoon = Math.floor(Math.random() * 3) + 5;
+        return {
+          text: `健身房提供 ${morning} 個早上時段或 ${afternoon} 個下午時段。會員只能選一個時段，計算選擇方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「早上或下午」只選一個時段，不能同時上課。不能同時發生 → 相加 (+)\n\n總數 = ${morning} + ${afternoon} = ${morning + afternoon} 種`,
+          wrong: `不正確！\n\n「早上或下午」是二選一（OR），不能同時發生 → 相加 (+)`
         };
       }
     }
