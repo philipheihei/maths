@@ -20,6 +20,12 @@ import FactorizationQuiz from './apps/FactorizationQuiz';
 import RemainderFactorQuiz from './apps/RemainderFactorQuiz';
 import Notes from './pages/Notes';
 
+// ==========================================
+// 🔥 Agentation（僅開發環境）
+// ==========================================
+const isDev = import.meta.env.DEV;
+const Agentation = isDev ? React.lazy(() => import('agentation').then(m => ({ default: m.Agentation }))) : null;
+
 function App() {
   return (
     <Router>
@@ -44,6 +50,11 @@ function App() {
         <Route path="/remainder-factor-quiz" element={<RemainderFactorQuiz />} />
         <Route path="/notes" element={<Notes />} />
       </Routes>
+      {isDev && Agentation && (
+        <React.Suspense fallback={null}>
+          <Agentation />
+        </React.Suspense>
+      )}
     </Router>
   );
 }
