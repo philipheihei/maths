@@ -545,13 +545,45 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                   </div>
                 </div>
                 
-                <div className="relative w-40 h-32 border-b-2 border-r-2 border-black">
-                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 160 128">
-                    <line x1="0" y1="128" x2="160" y2="0" stroke="black" strokeWidth="2"/>
-                    <text x="165" y="64" fontSize="16" fill="black">3</text>
-                    <text x="70" y="145" fontSize="16" fill="#1565c0">x</text>
-                    <text x="60" y="40" fontSize="16" fill="black">7</text>
-                    <text x="10" y="115" fontSize="14" fill="black">θ</text>
+                {/* 右側三角形圖 */}
+                <div className="flex-shrink-0">
+                  <svg width="400" height="250" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+                    {/* Styles matching the hand-drawn image */}
+                    <style>
+                      {`.line { fill: none; stroke: #0047AB; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+                      .angle-mark { fill: none; stroke: #0047AB; stroke-width: 3; }
+                      .text-green { font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; font-size: 32px; fill: #008000; font-weight: bold; }
+                      .text-blue { font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; font-size: 32px; fill: #00BFFF; font-weight: bold; }
+                      .text-angle { font-family: serif; font-size: 28px; fill: #0047AB; font-style: italic; }`}
+                    </style>
+
+                    {/* Coordinates: 
+                         Right angle at (300, 200)
+                         Height = 100 units (representing 3)
+                         Width approx 210 units (representing ~6.32)
+                         Top vertex: (300, 100)
+                         Left vertex: (90, 200)
+                    */}
+
+                    {/* The Triangle */}
+                    <path d="M 90 200 L 300 200 L 300 100 Z" className="line" />
+
+                    {/* Right Angle Symbol */}
+                    <polyline points="280,200 280,180 300,180" className="angle-mark" />
+
+                    {/* Theta Angle Arc */}
+                    <path d="M 125 200 A 35 35 0 0 0 118 187" className="angle-mark" strokeWidth="2" />
+                    <text x="135" y="195" className="text-angle">θ</text>
+
+                    {/* Labels */}
+                    {/* Hypotenuse (7) - Green */}
+                    <text x="180" y="130" className="text-green" textAnchor="middle">7</text>
+
+                    {/* Opposite Side (3) - Green */}
+                    <text x="320" y="160" className="text-green" textAnchor="start">3</text>
+
+                    {/* Adjacent Side (x) - Cyan/Blue */}
+                    <text x="195" y="240" className="text-blue" textAnchor="middle">x</text>
                   </svg>
                 </div>
               </div>
@@ -570,21 +602,7 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                   </div>
                 </div>
 
-                {/* 右側三角形圖 */}
-                <div className="flex-shrink-0 hidden md:block">
-                  <svg width="180" height="150" viewBox="0 0 350 280">
-                    <path d="M 40,220 L 280,220 L 280,100 Z" fill="none" stroke="#0d47a1" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M 280,195 L 255,195 L 255,220" fill="none" stroke="#0d47a1" strokeWidth="2" />
-                    <path d="M 90,220 A 50,50 0 0,0 80,190" fill="none" stroke="#0d47a1" strokeWidth="2" />
-                    <text x="95" y="210" fill="#0d47a1" fontSize="24" fontWeight="bold">θ</text>
-                    <text x="130" y="130" fill="#2e7d32" fontSize="28" fontWeight="bold">7</text>
-                    <text x="295" y="170" fill="#2e7d32" fontSize="28" fontWeight="bold">3</text>
-                    <g transform="translate(130, 260)">
-                      <text x="15" y="0" fill="#2e7d32" fontSize="28" fontWeight="bold">40</text>
-                      <path d="M 0,-10 L 8,0 L 15,-25 L 55,-25" fill="none" stroke="#2e7d32" strokeWidth="3" strokeLinecap="round"/>
-                    </g>
-                  </svg>
-                </div>
+
               </div>
             </div>
           </div>
