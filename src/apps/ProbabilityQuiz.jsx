@@ -476,41 +476,262 @@ const Task3 = ({ onComplete }) => {
   );
 };
 
-// --- Task 4: 分辨加法與乘法 ---
+// --- Task 4: 分辨加法與乘法 (修正版) ---
 const Task4 = ({ onComplete }) => {
   const [question, setQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
 
-  const generateQuestion = useCallback(() => {
-    const scenario = Math.random() > 0.5 ? 'multiply' : 'add';
-    let q;
-    if (scenario === 'multiply') {
-      const totalR = Math.floor(Math.random() * 5) + 8;
-      const totalW = Math.floor(Math.random() * 5) + 8;
-      const total = totalR + totalW;
-      const r = Math.floor(Math.random() * 2) + 2;
-      const w = Math.floor(Math.random() * 2) + 2;
-      const draw = r + w;
-
-      q = {
-        type: 'multiply',
-        text: `在袋中${total}個球，當中有${totalR}個紅球和${totalW}個白球。若從中抽出${draw}個球，計算當中有 ${r} 個紅球 和 ${w} 個白球的概率。計算可能組合時，你需要把這兩種情況的方法數相加還是相乘？`,
-        hint: 'AND/同時發生，需要將步驟連接起來。',
-        correct_text: `回答正確！抽出 ${r} 個紅球 和 ${w} 個白球 是同時發生(AND)。概率 = P(${r}個紅球) × P(${w}個白球)`,
-        wrong_text: `不正確。請想想情境是「同時發生」(AND) 還是「任選一種可能」(OR)。這題是同時發生(AND)，概率 = P(${r}個紅球) × P(${w}個白球)`
-      };
-    } else {
-      const r = Math.floor(Math.random() * 2) + 2;
-      const w = Math.floor(Math.random() * 2) + 4;
-      q = {
-        type: 'add',
-        text: `想計算抽出 ${r} 個紅球 或 ${w} 個白球的概率。計算可能組合時，你需要把這兩種情況的方法數相加還是相乘？`,
-        hint: 'OR/互不相容的事件，需要將所有可能性加起來。',
-        correct_text: `回答正確！抽出 ${r} 個紅球 或 ${w} 個白球 屬於不同情況（互斥事件）。你需要將這兩種情況的組合數相加 (+) 以獲得總方法數。`,
-        wrong_text: `不正確。請想想情境是「同時發生」(AND) 還是「任選一種可能」(OR)。`
-      };
+  // 🔥 加法法則情境庫
+  const addScenarios = [
+    {
+      id: 1,
+      generator: () => {
+        const action = Math.floor(Math.random() * 5) + 6;
+        const comedy = Math.floor(Math.random() * 5) + 4;
+        const drama = Math.floor(Math.random() * 4) + 3;
+        return {
+          text: `某戲院正上映 ${action} 部動作片、${comedy} 部喜劇和 ${drama} 部劇情片。小明想看其中一部電影，計算選擇方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「其中一部」表示只選一種類型，不能同時看多部。這是「或」的關係（互斥事件）。\n\n總選擇 = ${action} + ${comedy} + ${drama} = ${action + comedy + drama} 種`,
+          wrong: `不正確！\n\n「其中一部」是選擇其中一種（OR），不同類型不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 2,
+      generator: () => {
+        const novels = Math.floor(Math.random() * 4) + 5;
+        const comics = Math.floor(Math.random() * 4) + 6;
+        const science = Math.floor(Math.random() * 5) + 7;
+        return {
+          text: `圖書館有 ${novels} 本小說、${comics} 本漫畫和 ${science} 本科學書。學生要借任何一本書，計算借書方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「任何一本」表示從所有書中只選一本，不能同時借多本。不能同時發生 → 相加 (+)\n\n總方法 = ${novels} + ${comics} + ${science} = ${novels + comics + science} 種`,
+          wrong: `不正確！\n\n「任何一本」代表從三類書中選其一（OR），不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 3,
+      generator: () => {
+        const bus = Math.floor(Math.random() * 3) + 3;
+        const mtr = Math.floor(Math.random() * 2) + 2;
+        const tram = Math.floor(Math.random() * 2) + 1;
+        return {
+          text: `從家到學校有 ${bus} 條巴士路線、${mtr} 條地鐵路線或 ${tram} 條電車路線。計算交通方式的數目時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n只選擇一種交通工具，不能同時搭多種。不能同時發生 → 相加 (+)\n\n總數 = ${bus} + ${mtr} + ${tram} = ${bus + mtr + tram} 種`,
+          wrong: `不正確！\n\n只選「一種」交通方式（OR），不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 4,
+      generator: () => {
+        const men = Math.floor(Math.random() * 3) + 4;
+        const women = Math.floor(Math.random() * 3) + 5;
+        const children = Math.floor(Math.random() * 4) + 6;
+        return {
+          text: `活動有 ${men} 名男士、${women} 名女士和 ${children} 名小童。若只選 1 人當代表，計算選擇方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「只選 1 人」表示從三組中選其一，不能同時選多人。不能同時發生 → 相加 (+)\n\n總數 = ${men} + ${women} + ${children} = ${men + women + children} 種`,
+          wrong: `不正確！\n\n「只選 1 人」是從不同組別中選一個（OR），不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 5,
+      generator: () => {
+        const red = Math.floor(Math.random() * 10) + 13;
+        const black = Math.floor(Math.random() * 10) + 13;
+        return {
+          text: `一副撲克牌有 ${red} 張紅色牌和 ${black} 張黑色牌。抽出「紅色牌或黑色牌」的方法數，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「或」代表只能抽一種顏色，不能同時抽紅色和黑色。不能同時發生 → 相加 (+)\n\n紅色或黑色 = ${red} + ${black} = ${red + black} 種`,
+          wrong: `不正確！\n\n「或」代表選擇其中一種（OR），不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 6,
+      generator: () => {
+        const rice = Math.floor(Math.random() * 2) + 3;
+        const noodles = Math.floor(Math.random() * 2) + 2;
+        return {
+          text: `餐廳有 ${rice} 款飯和 ${noodles} 款麵。客人選擇「飯或麵」作為主食，計算選擇方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n主食只選一種，不能同時吃飯又吃麵。不能同時發生 → 相加 (+)\n\n總數 = ${rice} + ${noodles} = ${rice + noodles} 種`,
+          wrong: `不正確！\n\n「飯或麵」是二選一（OR），不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 7,
+      generator: () => {
+        const math = Math.floor(Math.random() * 3) + 4;
+        const english = Math.floor(Math.random() * 3) + 5;
+        const science = Math.floor(Math.random() * 3) + 3;
+        return {
+          text: `課外活動有 ${math} 個數學班、${english} 個英文班和 ${science} 個科學班。學生選修其中一個班，計算選擇數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「其中一個」表示只選一個班，不能同時上多個班。不能同時發生 → 相加 (+)\n\n總數 = ${math} + ${english} + ${science} = ${math + english + science} 種`,
+          wrong: `不正確！\n\n「其中一個班」是從不同類別選一個（OR），不能同時發生 → 相加 (+)`
+        };
+      }
+    },
+    {
+      id: 8,
+      generator: () => {
+        const gold = Math.floor(Math.random() * 2) + 2;
+        const silver = Math.floor(Math.random() * 2) + 3;
+        const bronze = Math.floor(Math.random() * 3) + 4;
+        return {
+          text: `抽獎有 ${gold} 個金獎、${silver} 個銀獎或 ${bronze} 個銅獎。每人只能得一個獎，計算獲獎方式數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n每人只能得一個獎項，即只能獲金、銀或銅，不能同時拿多個獎項。不能同時發生 → 相加 (+)\n\n總數 = ${gold} + ${silver} + ${bronze} = ${gold + silver + bronze} 種`,
+          wrong: `不正確！\n\n「只能得一個獎」表示選其一（OR），不能同時獲得多個獎項 → 相加 (+)`
+        };
+      }
     }
-    setQuestion(q);
+  ];
+
+  // 🔥 乘法法則情境庫
+  const multiplyScenarios = [
+    {
+      id: 1,
+      generator: () => {
+        const main = Math.floor(Math.random() * 2) + 4;
+        const soup = Math.floor(Math.random() * 2) + 3;
+        const dessert = Math.floor(Math.random() * 2) + 4;
+        return {
+          text: `餐廳提供 ${main} 款主餐、${soup} 款湯和 ${dessert} 款甜品。客人要各選一款，計算套餐組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「各選一款」表示每個類別都要選，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n總組合 = ${main} × ${soup} × ${dessert} = ${main * soup * dessert} 種`,
+          wrong: `不正確！\n\n「各選一款」表示同時選擇（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 2,
+      generator: () => {
+        const boys = Math.floor(Math.random() * 3) + 5;
+        const girls = Math.floor(Math.random() * 3) + 4;
+        return {
+          text: `班上有 ${boys} 名男生和 ${girls} 名女生。要選 1 名男生和 1 名女生當代表，計算選擇方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n選「男生和女生」表示兩者都要選（同時發生）。同時發生 → 相乘 (×)\n\n總數 = ${boys} × ${girls} = ${boys * girls} 種`,
+          wrong: `不正確！\n\n「選男生和女生」是兩個步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 3,
+      generator: () => {
+        const digits = 10;
+        return {
+          text: `設定一個 4 位數密碼（0-9）。計算可能的密碼總數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n4 位密碼需要依次填入 4 個數字，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n總數 = 10 × 10 × 10 × 10 = ${Math.pow(10, 4)} 種`,
+          wrong: `不正確！\n\n每位數字依次選擇（連續步驟），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 4,
+      generator: () => {
+        const contestants = Math.floor(Math.random() * 3) + 6;
+        return {
+          text: `比賽有 ${contestants} 名參賽者。計算三甲名次（冠亞季軍）的排列方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n排列名次是連續步驟：先選冠軍，再選亞軍，最後選季軍（同時發生）。同時發生 → 相乘 (×)\n\n方法數 = ${contestants} × ${contestants - 1} × ${contestants - 2} = ${contestants * (contestants - 1) * (contestants - 2)} 種`,
+          wrong: `不正確！\n\n排列名次是連續選擇（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 5,
+      generator: () => {
+        const tops = Math.floor(Math.random() * 3) + 5;
+        const pants = Math.floor(Math.random() * 3) + 4;
+        const shoes = Math.floor(Math.random() * 2) + 3;
+        return {
+          text: `衣櫃有 ${tops} 件上衣、${pants} 條褲子和 ${shoes} 對鞋子。計算穿搭組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n穿搭需要「各選一件」：上衣、褲子和鞋子都要選（同時發生）。同時發生 → 相乘 (×)\n\n組合 = ${tops} × ${pants} × ${shoes} = ${tops * pants * shoes} 種`,
+          wrong: `不正確！\n\n穿搭是同時選擇上衣、褲子、鞋子（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 6,
+      generator: () => {
+        const leaders = Math.floor(Math.random() * 4) + 8;
+        return {
+          text: `${leaders} 人中選出正副隊長各 1 人（不能同一人）。計算選擇方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n選正副隊長是兩個步驟：先選正隊長，再選副隊長（同時發生）。同時發生 → 相乘 (×)\n\n方法 = ${leaders} × ${leaders - 1} = ${leaders * (leaders - 1)} 種`,
+          wrong: `不正確！\n\n「正副隊長」是兩個連續步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 7,
+      generator: () => {
+        const morning = Math.floor(Math.random() * 2) + 4;
+        const afternoon = Math.floor(Math.random() * 2) + 3;
+        const evening = Math.floor(Math.random() * 2) + 3;
+        return {
+          text: `旅行有 ${morning} 個上午活動、${afternoon} 個下午活動和 ${evening} 個晚上活動。若各時段選一個活動，計算行程組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「各時段選一個」表示每個時段都要選，是連續步驟（同時發生）。同時發生 → 相乘 (×)\n\n組合 = ${morning} × ${afternoon} × ${evening} = ${morning * afternoon * evening} 種`,
+          wrong: `不正確！\n\n「各時段選一個」是連續步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 8,
+      generator: () => {
+        const totalR = Math.floor(Math.random() * 5) + 8;
+        const totalW = Math.floor(Math.random() * 5) + 8;
+        const r = Math.floor(Math.random() * 2) + 2;
+        const w = Math.floor(Math.random() * 2) + 2;
+        return {
+          text: `袋中有 ${totalR} 個紅球和 ${totalW} 個白球。計算抽出「${r} 個紅球和 ${w} 個白球」的組合數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「抽紅球和白球」表示兩種都要抽到（同時發生）。同時發生 → 相乘 (×)\n\n組合 = C(${totalR},${r}) × C(${totalW},${w})`,
+          wrong: `不正確！\n\n「抽紅球和白球」是同時發生（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 9,
+      generator: () => {
+        const days = Math.floor(Math.random() * 2) + 3;
+        const places = Math.floor(Math.random() * 3) + 5;
+        return {
+          text: `旅行共 ${days} 天，每天從 ${places} 個景點中選一個。計算行程安排數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「每天選一個」表示 ${days} 個連續步驟，每天都要選（同時發生）。同時發生 → 相乘 (×)\n\n總數 = ${places}^${days} = ${Math.pow(places, days)} 種`,
+          wrong: `不正確！\n\n「每天選一個」是 ${days} 個連續步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    },
+    {
+      id: 10,
+      generator: () => {
+        const adults = Math.floor(Math.random() * 4) + 8;
+        const kids = Math.floor(Math.random() * 3) + 5;
+        return {
+          text: `有 ${adults} 名成人和 ${kids} 名小童。選 1 名成人和 1 名小童組隊，計算組隊方法數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n「成人和小童」都要選，是兩個步驟（同時發生）。同時發生 → 相乘 (×)\n\n方法 = ${adults} × ${kids} = ${adults * kids} 種`,
+          wrong: `不正確！\n\n「選成人和小童」是兩個步驟（AND），同時發生 → 相乘 (×)`
+        };
+      }
+    }
+  ];
+
+  const generateQuestion = useCallback(() => {
+    const useMultiply = Math.random() > 0.5;
+    
+    if (useMultiply) {
+      const scenario = multiplyScenarios[Math.floor(Math.random() * multiplyScenarios.length)];
+      const q = scenario.generator();
+      setQuestion({
+        type: 'multiply',
+        ...q
+      });
+    } else {
+      const scenario = addScenarios[Math.floor(Math.random() * addScenarios.length)];
+      const q = scenario.generator();
+      setQuestion({
+        type: 'add',
+        ...q
+      });
+    }
+    
     setFeedback(null);
   }, []);
 
@@ -519,12 +740,12 @@ const Task4 = ({ onComplete }) => {
   const handleAnswer = (ans) => {
     if (feedback) return;
     if (ans === question.type) {
-      setFeedback({ correct: true, text: question.correct_text });
+      setFeedback({ correct: true, text: question.correct });
       onComplete(true);
     } else {
       setFeedback({ 
         correct: false, 
-        text: question.wrong_text || `不正確。${question.hint}`
+        text: question.wrong
       });
       onComplete(false);
     }
@@ -532,17 +753,27 @@ const Task4 = ({ onComplete }) => {
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-lg max-w-4xl mx-auto border border-gray-100">
-      <h2 className="text-2xl font-extrabold mb-6 text-gray-800 border-b pb-2 border-dashed">Task 4: 運算符號 (加法 vs 乘法)</h2>
+      <h2 className="text-2xl font-extrabold mb-6 text-gray-800 border-b pb-2 border-dashed">
+        Task 4: 運算符號 (加法 vs 乘法)
+      </h2>
       {question && (
         <div>
           <div className="bg-orange-50 p-6 rounded-xl border border-orange-100 mb-6">
-            <p className="text-xl font-medium text-gray-800 leading-relaxed">{question.text}</p>
+            <p className="text-xl font-medium text-gray-800 leading-relaxed">
+              {question.text}
+            </p>
           </div>
           <div className="flex gap-4">
-            <button onClick={() => handleAnswer('add')} className="flex-1 px-5 py-4 rounded-xl text-white font-bold text-lg transition-transform hover:scale-[1.02] active:scale-[0.98] bg-orange-500 flex justify-center items-center gap-2 shadow-md">
+            <button 
+              onClick={() => handleAnswer('add')} 
+              className="flex-1 px-5 py-4 rounded-xl text-white font-bold text-lg transition-transform hover:scale-[1.02] active:scale-[0.98] bg-orange-500 flex justify-center items-center gap-2 shadow-md"
+            >
               <Plus size={24}/> 相加 (+)
             </button>
-            <button onClick={() => handleAnswer('multiply')} className="flex-1 px-5 py-4 rounded-xl text-white font-bold text-lg transition-transform hover:scale-[1.02] active:scale-[0.98] bg-red-500 flex justify-center items-center gap-2 shadow-md">
+            <button 
+              onClick={() => handleAnswer('multiply')} 
+              className="flex-1 px-5 py-4 rounded-xl text-white font-bold text-lg transition-transform hover:scale-[1.02] active:scale-[0.98] bg-red-500 flex justify-center items-center gap-2 shadow-md"
+            >
               <X size={24}/> 相乘 (×)
             </button>
           </div>
@@ -552,7 +783,6 @@ const Task4 = ({ onComplete }) => {
     </div>
   );
 };
-
 
 // --- Task 5: DSE 實戰 (兩段式問答) ---
 const Task5 = ({ onComplete }) => {
