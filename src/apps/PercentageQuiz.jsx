@@ -555,9 +555,9 @@ const QuizPage = ({ onBackToTeaching }) => {
       ? `${annualRate}\\%` 
       : `\\frac{${annualRate}\\%}{${compounding.n}}`;
     
-    const formulaDisplay = compounding.n === 1
-      ? `\\text{本利和} = \\$${principal.toLocaleString()} \\times (1 + ${annualRate}\\%)^{${years}}`
-      : `\\text{本利和} = \\$${principal.toLocaleString()} \\times \\left(1 + \\frac{${annualRate}\\%}{${compounding.n}}\\right)^{${compounding.n} \\times ${years}}`;
+    const formulaRHS = compounding.n === 1
+      ? `\\$${principal.toLocaleString()} \\times (1 + ${annualRate}\\%)^{${years}}`
+      : `\\$${principal.toLocaleString()} \\times \\left(1 + \\frac{${annualRate}\\%}{${compounding.n}}\\right)^{${compounding.n} \\times ${years}}`;
 
     if (askForInterest) {
       return {
@@ -565,7 +565,8 @@ const QuizPage = ({ onBackToTeaching }) => {
         text: `存款 $${principal.toLocaleString()}，年利率 ${annualRate}%，年期 ${years} 年，複利計算，每${compounding.zh}一結。求利息，準確至最接近的元。`,
         answer: interest,
         hintLatex: `\\begin{aligned}
-          ${formulaDisplay.replace(/\\/g, '\\\\')} &\\approx \\$${roundedAmount.toLocaleString()} \\\\
+          \\text{本利和} &= ${formulaRHS} \\\\
+          &\\approx \\$${roundedAmount.toLocaleString()} \\\\[1em]
           \\text{利息} &= \\text{本利和} - \\text{本金} \\\\
           &= \\$${roundedAmount.toLocaleString()} - \\$${principal.toLocaleString()} \\\\
           &= \\$${interest.toLocaleString()}
@@ -585,7 +586,8 @@ const QuizPage = ({ onBackToTeaching }) => {
         text: `存款 $${principal.toLocaleString()}，年利率 ${annualRate}%，年期 ${years} 年，複利計算，每${compounding.zh}一結。求本利和，準確至最接近的元。`,
         answer: roundedAmount,
         hintLatex: `\\begin{aligned}
-          ${formulaDisplay.replace(/\\/g, '\\\\')} &\\approx \\$${roundedAmount.toLocaleString()}
+          \\text{本利和} &= ${formulaRHS} \\\\
+          &\\approx \\$${roundedAmount.toLocaleString()}
         \\end{aligned}`,
         unit: '$',
         formula: {
