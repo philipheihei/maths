@@ -3,6 +3,52 @@ import { BookOpen, Calculator, Check, X, RefreshCw, ChevronRight, HelpCircle, Ar
 import { Link } from 'react-router-dom';
 import { loadKatexOnce } from '../utils/katexLoader';
 
+// Count the number of '/' characters not inside parentheses
+const countRealSlashes = (expr) => {
+  let depth = 0, count = 0;
+  for (let i = 0; i < expr.length; i++) {
+    if (expr[i] === '(') depth++;
+    else if (expr[i] === ')') depth--;
+    else if (expr[i] === '/' && depth === 0) count++;
+  }
+  return count;
+};
+
+// If a side has exactly one top-level '/', wrap the WHOLE side as \frac{numerator}{denominator}
+// e.g. "4a-ky/k" → "\frac{4a-ky}{k}"
+// If the user already used parentheses, fall through to processFraction for bracket handling.
+const processSingleFraction = (expr) => {
+  if (countRealSlashes(expr) !== 1) return null; // not a single-slash case
+
+  // Find the one top-level slash
+  let depth = 0, slashIdx = -1;
+  for (let i = 0; i < expr.length; i++) {
+    if (expr[i] === '(') depth++;
+    else if (expr[i] === ')') depth--;
+    else if (expr[i] === '/' && depth === 0) { slashIdx = i; break; }
+  }
+
+  const numerator = expr.substring(0, slashIdx).trim();
+  const denominator = expr.substring(slashIdx + 1).trim();
+
+  // Strip surrounding parentheses from numerator/denominator if present
+  const stripOuterParens = (s) => {
+    if (s.startsWith('(') && s.endsWith(')')) {
+      // Verify the parens are matched (not e.g. "(a+b)-(c+d)")
+      let d = 0;
+      for (let i = 0; i < s.length; i++) {
+        if (s[i] === '(') d++;
+        else if (s[i] === ')') d--;
+        if (d === 0 && i < s.length - 1) return s; // closes early
+      }
+      return s.slice(1, -1).trim();
+    }
+    return s;
+  };
+
+  return `\\frac{${stripOuterParens(numerator)}}{${stripOuterParens(denominator)}}`;
+};
+
 // --- Input to LaTeX Converter ---
 const toLatex = (input) => {
   if (!input) return '';
@@ -20,19 +66,20 @@ const toLatex = (input) => {
       // Process left side
       let processedLeft = leftSide;
       if (leftSide.includes('/')) {
-        processedLeft = processFraction(leftSide);
+        processedLeft = processSingleFraction(leftSide) ?? processFraction(leftSide);
       }
       
       // Process right side
       let processedRight = rightSide;
       if (rightSide.includes('/')) {
-        processedRight = processFraction(rightSide);
+        processedRight = processSingleFraction(rightSide) ?? processFraction(rightSide);
       }
       
       return processedLeft + '=' + processedRight;
     } else {
       // No = sign, process normally
-      latex = processFraction(latex);
+      const single = processSingleFraction(latex);
+      latex = single !== null ? single : processFraction(latex);
     }
   }
 
@@ -41,6 +88,7 @@ const toLatex = (input) => {
 
 // Helper function to process fractions intelligently - handles multiple fractions
 // 從左到右掃描，智能識別分子和分母的邊界
+// Supports parenthesized numerators/denominators: (7y-4x)/(x-y)
 const processFraction = (expr) => {
   if (!expr.includes('/')) return expr;
   
@@ -56,27 +104,63 @@ const processFraction = (expr) => {
       break;
     }
     
-    // Find where numerator starts (walk backwards from slash)
-    let numStart = slashIndex - 1;
-    while (numStart > i && !/[(\+\-×\*=\s]/.test(expr[numStart])) {
-      numStart--;
+    let numStart, numerator, before, denominator, denomEnd;
+
+    // Check if numerator is wrapped in parentheses: (...)/ 
+    if (slashIndex > 0 && expr[slashIndex - 1] === ')') {
+      // Walk backwards to find the matching '('
+      let depth = 0;
+      let k = slashIndex - 1;
+      while (k >= i) {
+        if (expr[k] === ')') depth++;
+        else if (expr[k] === '(') {
+          depth--;
+          if (depth === 0) break;
+        }
+        k--;
+      }
+      numStart = k; // index of the matching '('
+      before = expr.substring(i, numStart);
+      // Strip the outer parentheses for frac content
+      numerator = expr.substring(numStart + 1, slashIndex - 1).trim();
+    } else {
+      // No parentheses: find numerator by walking backwards from slash
+      numStart = slashIndex - 1;
+      while (numStart > i && !/[(\+\-×\*=\s]/.test(expr[numStart])) {
+        numStart--;
+      }
+      if (numStart > i || /[(\+\-×\*=\s]/.test(expr[numStart])) {
+        numStart++;
+      }
+      before = expr.substring(i, numStart);
+      numerator = expr.substring(numStart, slashIndex).trim();
     }
-    // If we stopped at a delimiter, move forward one position
-    if (numStart > i || /[(\+\-×\*=\s]/.test(expr[numStart])) {
-      numStart++;
+
+    // Check if denominator is wrapped in parentheses: /(...)
+    if (slashIndex + 1 < expr.length && expr[slashIndex + 1] === '(') {
+      // Walk forwards to find the matching ')'
+      let depth = 0;
+      let k = slashIndex + 1;
+      while (k < expr.length) {
+        if (expr[k] === '(') depth++;
+        else if (expr[k] === ')') {
+          depth--;
+          if (depth === 0) break;
+        }
+        k++;
+      }
+      denomEnd = k + 1; // position after the closing ')'
+      // Strip the outer parentheses for frac content
+      denominator = expr.substring(slashIndex + 2, k).trim();
+    } else {
+      // No parentheses: find denominator end by walking forwards
+      // 分隔符包括：)、+、-、×、*、= 和空格
+      denomEnd = slashIndex + 1;
+      while (denomEnd < expr.length && !/[)\+\-×\*=\s]/.test(expr[denomEnd])) {
+        denomEnd++;
+      }
+      denominator = expr.substring(slashIndex + 1, denomEnd).trim();
     }
-    
-    // Find where denominator ends (walk forwards from slash)
-    // 分隔符包括：)、+、-、×、*、= 和空格
-    let denomEnd = slashIndex + 1;
-    while (denomEnd < expr.length && !/[)\+\-×\*=\s]/.test(expr[denomEnd])) {
-      denomEnd++;
-    }
-    
-    // Extract parts
-    const before = expr.substring(i, numStart);
-    const numerator = expr.substring(numStart, slashIndex).trim();
-    const denominator = expr.substring(slashIndex + 1, denomEnd).trim();
     
     // Build LaTeX fraction
     result += before + `\\frac{${numerator}}{${denominator}}`;
@@ -507,6 +591,18 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
       .toLowerCase();
   };
   
+  // Normalize multiplication commutativity within a single term (by = yb)
+  // Sort the characters of each multiplicative factor alphabetically
+  const normalizeTermMult = (term) => {
+    // Split off a leading numeric coefficient
+    const numMatch = term.match(/^(\d+)(.*)$/);
+    const coeff = numMatch ? numMatch[1] : '';
+    const rest  = numMatch ? numMatch[2] : term;
+    // Sort remaining letters
+    const sorted = rest.split('').sort().join('');
+    return coeff + sorted;
+  };
+
   // Sort and normalize terms in an expression to handle commutative property (a+b = b+a)
   const sortTermsInExpr = (expr) => {
     if (!expr) return '';
@@ -519,7 +615,7 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
     for (let i = 0; i < expr.length; i++) {
       const char = expr[i];
       if ((char === '+' || char === '-') && i > 0 && currentTerm) {
-        terms.push({ sign: currentSign, term: currentTerm.trim() });
+        terms.push({ sign: currentSign, term: normalizeTermMult(currentTerm.trim()) });
         currentSign = char;
         currentTerm = '';
       } else if (char !== '+' && char !== '-') {
@@ -529,7 +625,7 @@ const checkAnswer = (input, expected, problem = null, currentStep = null) => {
       }
     }
     if (currentTerm.trim()) {
-      terms.push({ sign: currentSign, term: currentTerm.trim() });
+      terms.push({ sign: currentSign, term: normalizeTermMult(currentTerm.trim()) });
     }
     
     // Sort terms by their content (ignore sign for sorting)
@@ -921,7 +1017,6 @@ const PracticePage = ({ score, setScore }) => {
     setFeedback(null);
     setCompleted(false);
     setShowKeyboard(false);
-    setScore(0);
     setIsAnswering(false);
   };
 
