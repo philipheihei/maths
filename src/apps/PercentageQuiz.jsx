@@ -174,38 +174,55 @@ const TeachingPage = ({ onStartQuiz }) => {
           {/* SVG 圖解 */}
           <div className="mt-6 bg-slate-50 rounded-lg p-4">
             <h3 className="font-bold text-slate-700 mb-4 text-center">💰 價錢關係圖解</h3>
-            <svg viewBox="0 0 500 200" className="w-full max-w-lg mx-auto">
-              {/* 成本 */}
-              <rect x="20" y="80" width="100" height="50" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
-              <text x="70" y="110" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#92400e">成本</text>
-              
-              {/* 箭頭 */}
-              <path d="M125 105 L165 105" stroke="#6b7280" strokeWidth="2" markerEnd="url(#arrow)" />
-              <text x="145" y="95" textAnchor="middle" fontSize="10" fill="#6b7280">+盈利</text>
-              
-              {/* 售價 */}
-              <rect x="170" y="80" width="100" height="50" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
-              <text x="220" y="110" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#065f46">售價</text>
-              
-              {/* 箭頭 */}
-              <path d="M275 105 L315 105" stroke="#6b7280" strokeWidth="2" markerEnd="url(#arrow)" />
-              <text x="295" y="95" textAnchor="middle" fontSize="10" fill="#6b7280">+折扣</text>
-              
-              {/* 標價 */}
-              <rect x="320" y="80" width="100" height="50" rx="8" fill="#fce7f3" stroke="#ec4899" strokeWidth="2" />
-              <text x="370" y="110" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#9d174d">標價</text>
-              
-              {/* 公式 */}
-              <text x="220" y="170" textAnchor="middle" fontSize="12" fill="#374151">
-                售價 = 標價 × 折扣率 = 成本 + 盈利
-              </text>
-              
-              {/* 箭頭標記 */}
+            <svg viewBox="0 0 480 320" className="w-full max-w-lg mx-auto">
               <defs>
-                <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                  <path d="M0,0 L0,6 L9,3 z" fill="#6b7280" />
+                <marker id="arr-amber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#d97706" />
+                </marker>
+                <marker id="arr-pink" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#ec4899" />
+                </marker>
+                <marker id="arr-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#10b981" />
+                </marker>
+                <marker id="arr-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#ef4444" />
                 </marker>
               </defs>
+
+              {/* 標價（頂部中央） */}
+              <rect x="190" y="18" width="100" height="46" rx="8" fill="#fce7f3" stroke="#ec4899" strokeWidth="2" />
+              <text x="240" y="48" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#9d174d">標價</text>
+
+              {/* 成本（左下） */}
+              <rect x="18" y="200" width="100" height="46" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
+              <text x="68" y="230" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#92400e">成本</text>
+
+              {/* 售價（右下） */}
+              <rect x="362" y="200" width="100" height="46" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
+              <text x="412" y="230" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#065f46">售價</text>
+
+              {/* 成本 → 標價（左斜） */}
+              <line x1="112" y1="200" x2="194" y2="64" stroke="#d97706" strokeWidth="2" markerEnd="url(#arr-amber)" />
+              <text x="105" y="138" textAnchor="end" fontSize="14" fontWeight="bold" fill="#92400e">(1+%)</text>
+
+              {/* 標價 → 售價（右斜） */}
+              <line x1="286" y1="64" x2="366" y2="200" stroke="#ec4899" strokeWidth="2" markerEnd="url(#arr-pink)" />
+              <text x="378" y="126" textAnchor="start" fontSize="14" fontWeight="bold" fill="#9d174d">折扣率</text>
+              <text x="378" y="144" textAnchor="start" fontSize="14" fontWeight="bold" fill="#9d174d">(1-%)</text>
+
+              {/* 成本 → 售價（水平，盈利） */}
+              <line x1="120" y1="216" x2="358" y2="216" stroke="#10b981" strokeWidth="2" markerEnd="url(#arr-green)" />
+              <text x="239" y="208" textAnchor="middle" fontSize="13" fill="#065f46" fontWeight="bold">(1+%) 盈利</text>
+
+              {/* 成本 → 售價（水平，虧蝕） */}
+              <line x1="120" y1="236" x2="358" y2="236" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arr-red)" />
+              <text x="239" y="252" textAnchor="middle" fontSize="13" fill="#dc2626" fontWeight="bold">(1-%) 虧蝕</text>
+
+              {/* 口訣（兩行） */}
+              <rect x="60" y="268" width="360" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe" strokeWidth="1.5" />
+              <text x="240" y="287" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">順箭嘴方向 → ×（乘）</text>
+              <text x="240" y="307" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#b91c1c">逆箭嘴方向 → ÷（除）</text>
             </svg>
           </div>
         </div>
@@ -353,7 +370,7 @@ const QuizPage = ({ onBackToTeaching }) => {
     } else {
       // 已知標價，求售價
       const markedPrice = (Math.floor(Math.random() * 50) + 10) * 5;
-      const sellingPrice = Math.round(markedPrice * discount.rate);
+      const sellingPrice = markedPrice * discount.rate;
 
       return {
         type: 1,
@@ -418,10 +435,10 @@ const QuizPage = ({ onBackToTeaching }) => {
     let sellingPrice, questionText;
 
     if (isProfit) {
-      sellingPrice = Math.round(cost * (1 + profitPercent / 100));
+      sellingPrice = cost * (1 + profitPercent / 100);
       questionText = `某${item}的成本為 $${cost}。現售出該${item}且盈利百分率為 ${profitPercent}%。求該${item}的售價。`;
     } else {
-      sellingPrice = Math.round(cost * (1 - profitPercent / 100));
+      sellingPrice = cost * (1 - profitPercent / 100);
       questionText = `某${item}的成本為 $${cost}。現售出該${item}且虧蝕百分率為 ${profitPercent}%。求該${item}的售價。`;
     }
 
@@ -625,20 +642,27 @@ const QuizPage = ({ onBackToTeaching }) => {
     const numAnswer = parseFloat(userAnswer.replace(/[,$]/g, ''));
     const correctAnswer = currentQuestion.answer;
 
-    // 允許1%的誤差範圍（四捨五入差異）
-    const tolerance = Math.max(1, correctAnswer * 0.01);
-    const isCorrect = Math.abs(numAnswer - correctAnswer) <= tolerance;
+    // 精確比對（不允許誤差）
+    const isCorrect = Math.abs(numAnswer - correctAnswer) < 0.01;
 
     setIsAnswered(true);
     setTotalQuestions(prev => prev + 1);
 
+    const fmtAnswer = Number.isInteger(correctAnswer)
+      ? correctAnswer.toLocaleString()
+      : correctAnswer;
+
     if (isCorrect) {
       setScore(prev => prev + 1);
-      setFeedback({ type: 'correct', msg: `正確！答案是 ${currentQuestion.unit}${correctAnswer.toLocaleString()}` });
+      setFeedback({
+        type: 'correct',
+        msg: `正確！答案是 ${currentQuestion.unit}${fmtAnswer}`,
+        hintLatex: currentQuestion.hintLatex
+      });
     } else {
       setFeedback({ 
         type: 'incorrect', 
-        msg: `答案是 ${currentQuestion.unit}${correctAnswer.toLocaleString()}`,
+        msg: `答案是 ${currentQuestion.unit}${fmtAnswer}`,
         hint: currentQuestion.hint,
         hintLatex: currentQuestion.hintLatex
       });
@@ -797,7 +821,10 @@ const QuizPage = ({ onBackToTeaching }) => {
                   </p>
                 )}
                 {feedback.hintLatex && (
-                  <div className="text-sm mt-2 border-t border-red-200 pt-2">
+                  <div className={`text-sm mt-2 pt-2 border-t ${
+                    feedback.type === 'correct' ? 'border-green-200' : 'border-red-200'
+                  }`}>
+                    <p className="text-xs font-bold text-slate-500 mb-1">解題步驟：</p>
                     <div className="bg-white rounded-lg p-3">
                       <div className="text-slate-800">
                         <Latex math={feedback.hintLatex} block />
@@ -834,30 +861,55 @@ const QuizPage = ({ onBackToTeaching }) => {
         {/* SVG 視覺化（價錢題目） */}
         {quizType === 'price' && currentQuestion && (
           <div className="bg-white rounded-2xl shadow-lg p-4">
-            <svg viewBox="0 0 400 120" className="w-full">
-              {/* 價錢關係圖 */}
-              <rect x="10" y="40" width="80" height="40" rx="5" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
-              <text x="50" y="65" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#92400e">成本</text>
-
-              <path d="M95 60 L125 60" stroke="#6b7280" strokeWidth="2" markerEnd="url(#arrowQ)" />
-              
-              <rect x="130" y="40" width="80" height="40" rx="5" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
-              <text x="170" y="65" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#065f46">售價</text>
-
-              <path d="M215 60 L245 60" stroke="#6b7280" strokeWidth="2" markerEnd="url(#arrowQ)" />
-              
-              <rect x="250" y="40" width="80" height="40" rx="5" fill="#fce7f3" stroke="#ec4899" strokeWidth="2" />
-              <text x="290" y="65" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#9d174d">標價</text>
-
-              {/* 標籤 */}
-              <text x="110" y="35" textAnchor="middle" fontSize="9" fill="#6b7280">+盈利</text>
-              <text x="230" y="35" textAnchor="middle" fontSize="9" fill="#6b7280">+折扣</text>
-
+            <svg viewBox="0 0 480 320" className="w-full">
               <defs>
-                <marker id="arrowQ" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                  <path d="M0,0 L0,6 L9,3 z" fill="#6b7280" />
+                <marker id="arrowQ-amber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#d97706" />
+                </marker>
+                <marker id="arrowQ-pink" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#ec4899" />
+                </marker>
+                <marker id="arrowQ-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#10b981" />
+                </marker>
+                <marker id="arrowQ-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L9,3 z" fill="#ef4444" />
                 </marker>
               </defs>
+
+              {/* 標價（頂部中央） */}
+              <rect x="190" y="18" width="100" height="46" rx="8" fill="#fce7f3" stroke="#ec4899" strokeWidth="2" />
+              <text x="240" y="48" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#9d174d">標價</text>
+
+              {/* 成本（左下） */}
+              <rect x="18" y="200" width="100" height="46" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
+              <text x="68" y="230" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#92400e">成本</text>
+
+              {/* 售價（右下） */}
+              <rect x="362" y="200" width="100" height="46" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
+              <text x="412" y="230" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#065f46">售價</text>
+
+              {/* 成本 → 標價（左斜） */}
+              <line x1="112" y1="200" x2="194" y2="64" stroke="#d97706" strokeWidth="2" markerEnd="url(#arrowQ-amber)" />
+              <text x="105" y="138" textAnchor="end" fontSize="14" fontWeight="bold" fill="#92400e">(1+%)</text>
+
+              {/* 標價 → 售價（右斜） */}
+              <line x1="286" y1="64" x2="366" y2="200" stroke="#ec4899" strokeWidth="2" markerEnd="url(#arrowQ-pink)" />
+              <text x="378" y="126" textAnchor="start" fontSize="14" fontWeight="bold" fill="#9d174d">折扣率</text>
+              <text x="378" y="144" textAnchor="start" fontSize="14" fontWeight="bold" fill="#9d174d">(1-%)</text>
+
+              {/* 成本 → 售價（水平，盈利） */}
+              <line x1="120" y1="216" x2="358" y2="216" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrowQ-green)" />
+              <text x="239" y="208" textAnchor="middle" fontSize="13" fill="#065f46" fontWeight="bold">(1+%) 盈利</text>
+
+              {/* 成本 → 售價（水平，虧蝕） */}
+              <line x1="120" y1="236" x2="358" y2="236" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrowQ-red)" />
+              <text x="239" y="252" textAnchor="middle" fontSize="13" fill="#dc2626" fontWeight="bold">(1-%) 虧蝕</text>
+
+              {/* 口訣（兩行） */}
+              <rect x="60" y="268" width="360" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe" strokeWidth="1.5" />
+              <text x="240" y="287" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">順箭嘴方向 → ×（乘）</text>
+              <text x="240" y="307" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#b91c1c">逆箭嘴方向 → ÷（除）</text>
             </svg>
           </div>
         )}

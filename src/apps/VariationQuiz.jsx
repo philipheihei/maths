@@ -107,16 +107,17 @@ const VariationQuiz = () => {
 
   const currentQuestion = questionSequence[currentQIndex];
 
-  // List of inputs that should NOT trigger auto-close of sqrt
-  const NON_CLOSING_INPUTS = ['+', '-', '=', '/', '(', ')', '^2', '^3', 'sqrt('];
+  // List of inputs that should NOT trigger auto-close of sqrt/cbrt
+  const NON_CLOSING_INPUTS = ['+', '-', '=', '/', '(', ')', '^2', '^3', 'sqrt(', 'cbrt('];
+
+  // Does the current question use a cube root?
+  const needsCbrt = currentQuestion?.formula?.includes('\\sqrt[3]{');
 
   const handleKeyClick = (val) => {
     if (feedback) return;
     
-    // Auto-close logic for sqrt
-    // If the input currently ends with "sqrt(", and the user types a simple term (var, const, num),
-    // we append the term AND a closing bracket.
-    if (inputValue.endsWith('sqrt(') && !NON_CLOSING_INPUTS.includes(val)) {
+    // Auto-close logic for sqrt / cbrt
+    if ((inputValue.endsWith('sqrt(') || inputValue.endsWith('cbrt(')) && !NON_CLOSING_INPUTS.includes(val)) {
         setInputValue(prev => prev + val + ')');
     } else {
         setInputValue(prev => prev + val);
@@ -127,7 +128,7 @@ const VariationQuiz = () => {
     if (feedback) return;
 
     // 定義需要整組刪除的符號 (Tokens)
-    const specialTokens = ["sqrt(", "^2", "^3", "k_1", "k_2"];
+    const specialTokens = ["sqrt(", "cbrt(", "^2", "^3", "k_1", "k_2"];
 
     if (currentQuestion && currentQuestion.vars) {
         currentQuestion.vars.forEach(v => {
@@ -159,11 +160,12 @@ const VariationQuiz = () => {
     let out = "";
     let i = 0;
     
-    // 1. Handle Sqrt Blocks 'sqrt(...)'
+    // 1. Handle Sqrt/Cbrt Blocks 'sqrt(...)' and 'cbrt(...)'
     let processedSqrt = "";
     while (i < rawInput.length) {
-       if (rawInput.substr(i, 5) === 'sqrt(') {
-           processedSqrt += "\\sqrt{";
+       const isCbrt = rawInput.substr(i, 5) === 'cbrt(';
+       if (rawInput.substr(i, 5) === 'sqrt(' || isCbrt) {
+           processedSqrt += isCbrt ? "\\sqrt[3]{" : "\\sqrt{";
            i += 5;
            let balance = 1;
            while (i < rawInput.length && balance > 0) {
@@ -483,7 +485,7 @@ const VariationQuiz = () => {
                 {[1,2,3,'(',')'].map(k => <button key={k} onClick={() => handleKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}
                 <button onClick={() => handleKeyClick('0')} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>0</button>
                 <button onClick={() => handleKeyClick('^2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^2" inline={true} /></button>
-                <button onClick={() => handleKeyClick('sqrt(')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="\sqrt{\square}" inline={true} /></button>
+                <button onClick={() => handleKeyClick(needsCbrt ? 'cbrt(' : 'sqrt(')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex={needsCbrt ? "\\sqrt[3]{\\square}" : "\\sqrt{\\square}"} inline={true} /></button>
                 <button onClick={() => handleKeyClick('^3')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^3" inline={true} /></button>
                 <button onClick={checkAnswer} disabled={!inputValue} className={`${KEY_BASE_CLASS} ${THEME.actionBg} ${THEME.actionText}`}><CornerDownLeft className="w-6 h-6" /></button>
             </div>
