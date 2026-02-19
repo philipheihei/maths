@@ -117,7 +117,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                 <tr className="bg-gray-50 hover:bg-emerald-50 transition-colors">
                   <td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">成本</td>
                   <td className="border border-emerald-200 px-4 py-3">
-                    我做生意<span className="text-red-600 font-bold">買</span>/製作這件貨品需付的錢
+                    我做生意<span className="text-red-600 font-bold">買</span>/製作這件貨品需花的金額(成本價)
                   </td>
                 </tr>
                 <tr className="bg-white hover:bg-emerald-50 transition-colors">

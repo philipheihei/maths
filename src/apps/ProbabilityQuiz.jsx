@@ -164,7 +164,11 @@ const Task1 = ({ onComplete }) => {
       }
     ];
 
-    const scenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+    // 強制各 50% 機率，避免因題庫數量不平均而偏向某類型
+    const combScenarios = scenarios.filter(s => s.type === 'combination');
+    const permScenarios = scenarios.filter(s => s.type === 'permutation');
+    const typePool = Math.random() > 0.5 ? permScenarios : combScenarios;
+    const scenario = typePool[Math.floor(Math.random() * typePool.length)];
     const n = Math.floor(Math.random() * 6) + 6; 
     const r = scenario.type === 'permutation' && scenario.template.toString().includes('冠') ? 3 : Math.floor(Math.random() * 3) + 2; 
 
@@ -237,15 +241,18 @@ const Task2 = ({ onComplete }) => {
     let text = '';
     let known, unknown, unknownLabel;
 
+    let knownLabel;
     if (isPeople) {
       text = `某班總共有 ${total} 名學生。如果已知其中 ${groupA} 人是「男生」，請推斷有多少個是「女生」？`;
       known = groupA;
       unknown = groupB;
+      knownLabel = '男生';
       unknownLabel = '女生';
     } else {
       text = `盒子裡總共有 ${total} 個球，當中有白色和綠色。如果已知其中 ${groupA} 個是「白球」，請推斷有多少個是「綠球」？`;
       known = groupA;
       unknown = groupB;
+      knownLabel = '白球';
       unknownLabel = '綠球';
     }
 
@@ -253,6 +260,7 @@ const Task2 = ({ onComplete }) => {
       total,
       known,
       unknown,
+      knownLabel,
       unknownLabel,
       text
     });
@@ -266,10 +274,10 @@ const Task2 = ({ onComplete }) => {
     if (feedback) return;
     const userAns = parseInt(inputValue);
     if (userAns === question.unknown) {
-      setFeedback({ correct: true, text: `正確！邏輯：總數 (${question.total}) - 已知 (${question.known}) = 未知 (${question.unknown})` });
+      setFeedback({ correct: true, text: `正確！${question.total}（總數）- ${question.known}（${question.knownLabel}）= ${question.unknown}（${question.unknownLabel}）` });
       onComplete(true);
     } else {
-      setFeedback({ correct: false, text: `不正確。請計算：${question.total} (總數) 減去 ${question.known} (已知數量)。正確答案是 ${question.unknown}。` });
+      setFeedback({ correct: false, text: `不正確。${question.total}（總數）- ${question.known}（${question.knownLabel}）= ${question.unknown}（${question.unknownLabel}）` });
       onComplete(false);
     }
   };
@@ -523,11 +531,13 @@ const Task4 = ({ onComplete }) => {
     {
       id: 4,
       generator: () => {
-        const contestants = Math.floor(Math.random() * 3) + 6;
+        const dieSides = [4, 6, 8][Math.floor(Math.random() * 3)];
+        const coinSides = 2;
+        const total = dieSides * coinSides;
         return {
-          text: `比賽有 ${contestants} 名參賽者。計算三甲名次（冠亞季軍）的排列方法數時，應該相加還是相乘？`,
-          correct: `回答正確！\n\n排列名次是連續步驟：先選冠軍，再選亞軍，最後選季軍（同時發生）。同時發生 → 相乘 (×)\n\n方法數 = ${contestants} × ${contestants - 1} × ${contestants - 2} = ${contestants * (contestants - 1) * (contestants - 2)} 種`,
-          wrong: `不正確！\n\n排列名次是連續選擇（AND），同時發生 → 相乘 (×)`
+          text: `同時擲一粒 ${dieSides} 面骰子和拋一枚硬幣，計算所有可能的結果數時，應該相加還是相乘？`,
+          correct: `回答正確！\n\n骰子和硬幣的結果同時發生，同時發生 → 相乘 (×)\n\n總數 = ${dieSides} × ${coinSides} = ${total} 種`,
+          wrong: `不正確！\n\n骰子和硬幣的結果同時發生，同時發生 → 相乘 (×)\n\n總數 = ${dieSides} × ${coinSides} = ${total} 種`
         };
       }
     },

@@ -490,11 +490,23 @@ const QuizPage = ({ onBackToTeaching }) => {
       return `${a}x ${bSign} ${absB}`;
     };
     
+    // 將分數轉為 LaTeX（如 "1/4" → "\\dfrac{1}{4}"）
+    const toLatexVal = (val) => {
+      if (typeof val === 'string' && val.includes('/')) {
+        const neg = val.startsWith('-');
+        const stripped = neg ? val.slice(1) : val;
+        const [num, den] = stripped.split('/');
+        return `${neg ? '-' : ''}\\dfrac{${num}}{${den}}`;
+      }
+      return val;
+    };
+
     const funcName = ['f', 'g', 'p', 'h'][Math.floor(Math.random() * 4)];
     const divisor = formatDivisor();
     const answerValue = formatAnswer();
+    const latexVal = toLatexVal(answerValue);
     
-    let question, correctAnswers, explanation, template;
+    let question, correctAnswers, explanation, explanationLatex, template;
     
     switch (type) {
       case 'remainder': {
@@ -505,6 +517,7 @@ const QuizPage = ({ onBackToTeaching }) => {
           input2: remainder.toString()
         };
         explanation = `將 ${divisor} = 0，得 x = ${answerValue}，所以 ${funcName}(${answerValue}) = ${remainder}`;
+        explanationLatex = `\\begin{aligned}& \\text{將 } ${divisor} = 0\\text{，得 } x = ${latexVal} \\\\ & \\therefore ${funcName}(${latexVal}) = ${remainder}\\end{aligned}`;
         template = { type: 'standard', funcName, answerValue, remainder };
         break;
       }
@@ -516,6 +529,7 @@ const QuizPage = ({ onBackToTeaching }) => {
           input2: '0'
         };
         explanation = `「整除」即餘數為 0。將 ${divisor} = 0，得 x = ${answerValue}，所以 ${funcName}(${answerValue}) = 0`;
+        explanationLatex = `\\begin{aligned}& \\text{「整除」即餘數為 } 0 \\\\ & \\text{將 } ${divisor} = 0\\text{，得 } x = ${latexVal} \\\\ & \\therefore ${funcName}(${latexVal}) = 0\\end{aligned}`;
         template = { type: 'standard', funcName, answerValue, remainder: 0 };
         break;
       }
@@ -527,6 +541,7 @@ const QuizPage = ({ onBackToTeaching }) => {
           input2: '0'
         };
         explanation = `「因式」即餘數為 0。將 ${divisor} = 0，得 x = ${answerValue}，所以 ${funcName}(${answerValue}) = 0`;
+        explanationLatex = `\\begin{aligned}& \\text{「因式」即餘數為 } 0 \\\\ & \\text{將 } ${divisor} = 0\\text{，得 } x = ${latexVal} \\\\ & \\therefore ${funcName}(${latexVal}) = 0\\end{aligned}`;
         template = { type: 'standard', funcName, answerValue, remainder: 0 };
         break;
       }
@@ -565,6 +580,7 @@ const QuizPage = ({ onBackToTeaching }) => {
         
         const divisor2 = formatDivisor2();
         const answerValue2 = formatAnswer2();
+        const latexVal2 = toLatexVal(answerValue2);
         
         question = `當 ${funcName}(x) 除以 ${divisor} 時及當 ${funcName}(x) 除以 ${divisor2} 時，所得的兩餘數相等`;
         correctAnswers = {
@@ -572,6 +588,7 @@ const QuizPage = ({ onBackToTeaching }) => {
           input2: answerValue2
         };
         explanation = `餘數相等即 ${funcName}(${answerValue}) = ${funcName}(${answerValue2})`;
+        explanationLatex = `\\begin{aligned}& \\text{除式一：令 } ${divisor} = 0 \\Rightarrow x = ${latexVal} \\\\ & \\text{除式二：令 } ${divisor2} = 0 \\Rightarrow x = ${latexVal2} \\\\ & \\text{餘數相等即 } ${funcName}(${latexVal}) = ${funcName}(${latexVal2})\\end{aligned}`;
         template = { type: 'equal', funcName, answerValue, answerValue2 };
         break;
       }
@@ -580,7 +597,7 @@ const QuizPage = ({ onBackToTeaching }) => {
         break;
     }
     
-    return { question, correctAnswers, explanation, template, type };
+    return { question, correctAnswers, explanation, explanationLatex, template, type };
   };
 
   // 初始化
@@ -615,7 +632,7 @@ const QuizPage = ({ onBackToTeaching }) => {
     if (isCorrect) {
       setFeedback({
         type: 'correct',
-        msg: '答對了！' + currentQuestion.explanation
+        explanationLatex: currentQuestion.explanationLatex
       });
       setScore(prev => ({ correct: prev.correct + 1, total: prev.total + 1 }));
     } else {
@@ -628,7 +645,7 @@ const QuizPage = ({ onBackToTeaching }) => {
       }
       setFeedback({
         type: 'incorrect',
-        msg: currentQuestion.explanation,
+        explanationLatex: currentQuestion.explanationLatex,
         correctDisplay
       });
       setScore(prev => ({ ...prev, total: prev.total + 1 }));
@@ -659,7 +676,7 @@ const QuizPage = ({ onBackToTeaching }) => {
   if (!currentQuestion) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 pb-72 md:pb-4">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50 pb-4">
       <div className="flex flex-col md:flex-row max-w-4xl mx-auto p-4 gap-4">
         
         {/* 主內容區域 */}
@@ -706,11 +723,11 @@ const QuizPage = ({ onBackToTeaching }) => {
 
           {/* 答案區域 */}
           <div className="mb-4">
-            <p className="text-sm text-slate-600 mb-3">填寫答案：</p>
+            <p className="text-sm text-slate-600 mb-3">填寫步驟：</p>
             
             {currentQuestion.template.type === 'standard' ? (
               <div className="flex items-center gap-2 text-xl justify-center flex-wrap">
-                <span className="font-mono">{currentQuestion.template.funcName}(</span>
+                <Latex math={`${currentQuestion.template.funcName}(`} />
                 <div className="relative inline-flex items-center">
                   {isAnswered && answers.input1 ? (
                     <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-mono bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
@@ -753,7 +770,7 @@ const QuizPage = ({ onBackToTeaching }) => {
               </div>
             ) : (
               <div className="flex items-center gap-2 text-xl justify-center flex-wrap">
-                <span className="font-mono">{currentQuestion.template.funcName}(</span>
+                <Latex math={`${currentQuestion.template.funcName}(`} />
                 <div className="relative inline-flex items-center">
                   {isAnswered && answers.input1 ? (
                     <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-mono bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
@@ -773,7 +790,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                     />
                   )}
                 </div>
-                <span className="font-mono">) = {currentQuestion.template.funcName}(</span>
+                <Latex math={`) = ${currentQuestion.template.funcName}(`} />
                 <div className="relative inline-flex items-center">
                   {isAnswered && answers.input2 ? (
                     <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-mono bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
@@ -817,29 +834,29 @@ const QuizPage = ({ onBackToTeaching }) => {
                 </span>
               </div>
               {feedback.type === 'incorrect' && feedback.correctDisplay && (
-                <div className={`mb-2 text-lg font-mono flex items-center justify-center gap-2 ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
-                  <span>正確答案：</span>
-                  <span>{feedback.correctDisplay.funcName}(</span>
+                <div className={`mb-2 text-lg flex items-center justify-center gap-1 flex-wrap ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
+                  <span className="font-bold mr-1">正確答案：</span>
+                  <Latex math={`${feedback.correctDisplay.funcName}(`} />
                   <FractionDisplay value={feedback.correctDisplay.val1} />
-                  <span>) {feedback.correctDisplay.type === 'equal' ? `= ${feedback.correctDisplay.funcName}(` : '='}</span>
                   {feedback.correctDisplay.type === 'equal' ? (
-                    <>
-                      <FractionDisplay value={feedback.correctDisplay.val2} />
-                      <span>)</span>
-                    </>
+                    <Latex math={`) = ${feedback.correctDisplay.funcName}(`} />
                   ) : (
-                    <FractionDisplay value={feedback.correctDisplay.val2} />
+                    <Latex math=") =" />
                   )}
+                  <FractionDisplay value={feedback.correctDisplay.val2} />
+                  {feedback.correctDisplay.type === 'equal' && <Latex math=")" />}
                 </div>
               )}
-              <p className={`whitespace-pre-line ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
-                {feedback.msg}
-              </p>
+              {feedback.explanationLatex && (
+                <div className={`mt-2 ${feedback.type === 'correct' ? 'text-green-800' : 'text-red-800'}`}>
+                  <Latex math={feedback.explanationLatex} block />
+                </div>
+              )}
             </div>
           )}
 
           {/* 按鈕 */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 mb-4">
             {!isAnswered ? (
               <button
                 onClick={handleSubmit}
@@ -857,6 +874,35 @@ const QuizPage = ({ onBackToTeaching }) => {
                 <RefreshCw className="w-5 h-5" />
               </button>
             )}
+          </div>
+
+          {/* 鍵盤 */}
+          <div className="grid grid-cols-4 gap-2">
+            <Button variant="keyNum" onClick={() => handleKeyPad('7')}>7</Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('8')}>8</Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('9')}>9</Button>
+            <Button variant="keyOp" onClick={() => handleKeyPad('-')}>-</Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('4')}>4</Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('5')}>5</Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('6')}>6</Button>
+            <Button variant="keyOp" onClick={() => handleKeyPad('/')} className="bg-orange-100 flex flex-col items-center justify-center gap-0.5" title="Fraction">
+              <div className="w-4 h-4 border-2 border-orange-800 rounded-sm"></div>
+              <div className="w-6 h-0.5 bg-orange-800"></div>
+              <div className="w-4 h-4 border-2 border-orange-800 border-dashed rounded-sm opacity-50"></div>
+            </Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('1')}>1</Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('2')}>2</Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('3')}>3</Button>
+            <Button variant="keyOp" onClick={() => handleKeyPad('+')}>+</Button>
+            <Button variant="keyNum" onClick={() => handleKeyPad('0')}>0</Button>
+            <Button variant="keyAction" onClick={() => handleKeyPad('DEL')}><Delete className="w-5 h-5" /></Button>
+            <Button
+              variant="keyNext"
+              onClick={() => handleKeyPad('NEXT')}
+              className="col-span-2 flex items-center justify-center gap-1"
+            >
+              NEXT
+            </Button>
           </div>
         </div>
 
@@ -893,56 +939,7 @@ const QuizPage = ({ onBackToTeaching }) => {
         )}
       </main>
 
-      {/* Keypad: fixed at bottom on mobile; right-side column on desktop */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-3 z-30 pb-safe md:relative md:shadow-none md:bg-transparent md:border-none md:pb-0 md:mt-0 md:pl-2 md:w-72 md:flex-shrink-0">
-        
-        {/* Drag handle for mobile only */}
-        <div className="flex justify-center mb-2 md:hidden">
-          <div className="w-12 h-1.5 bg-gray-200 rounded-full"></div>
-        </div>
-        
-        <div className="grid grid-cols-4 gap-2 md:max-w-none md:bg-white md:rounded-xl md:p-3 md:shadow-lg">
-          {/* Row 1 */}
-          <Button variant="keyNum" onClick={() => handleKeyPad('7')}>7</Button>
-          <Button variant="keyNum" onClick={() => handleKeyPad('8')}>8</Button>
-          <Button variant="keyNum" onClick={() => handleKeyPad('9')}>9</Button>
-          <Button variant="keyOp" onClick={() => handleKeyPad('-')}>-</Button>
 
-          {/* Row 2 */}
-          <Button variant="keyNum" onClick={() => handleKeyPad('4')}>4</Button>
-          <Button variant="keyNum" onClick={() => handleKeyPad('5')}>5</Button>
-          <Button variant="keyNum" onClick={() => handleKeyPad('6')}>6</Button>
-          <Button variant="keyOp" onClick={() => handleKeyPad('/')} className="bg-orange-100 flex flex-col items-center justify-center gap-0.5" title="Fraction">
-            <div className="w-4 h-4 border-2 border-orange-800 rounded-sm"></div>
-            <div className="w-6 h-0.5 bg-orange-800"></div>
-            <div className="w-4 h-4 border-2 border-orange-800 border-dashed rounded-sm opacity-50"></div>
-          </Button>
-
-          {/* Row 3 */}
-          <Button variant="keyNum" onClick={() => handleKeyPad('1')}>1</Button>
-          <Button variant="keyNum" onClick={() => handleKeyPad('2')}>2</Button>
-          <Button variant="keyNum" onClick={() => handleKeyPad('3')}>3</Button>
-          <Button variant="keyOp" onClick={() => handleKeyPad('+')}>+</Button>
-
-          {/* Row 4 */}
-          <Button variant="keyNum" onClick={() => handleKeyPad('0')}>0</Button>
-          <Button variant="keyAction" onClick={() => handleKeyPad('DEL')}><Delete className="w-5 h-5" /></Button>
-          <Button 
-            variant="keyNext" 
-            onClick={() => handleKeyPad('NEXT')} 
-            className="col-span-2 flex items-center justify-center gap-1"
-          >
-            NEXT
-          </Button>
-        </div>
-
-        {/* 當前輸入指示 */}
-        <div className="mt-2 text-center text-xs text-slate-500 md:block">
-          正在輸入：<span className={`font-bold ${activeInput === 'input1' ? 'text-teal-600' : 'text-cyan-600'}`}>
-            {activeInput === 'input1' ? '第一格' : '第二格'}
-          </span>
-        </div>
-      </div>
     </div>
     </div>
   );
