@@ -9,6 +9,26 @@ const Home = () => {
 
   const apps = [
     {
+      id: 'angle-master-quiz',
+      title: '尋找圖形角度',
+      description: '中學各級角度定理練習，包含平行線錯角、三角形外角、圓心角與圓周角及交錯弓形',
+      icon: Calculator,
+      color: 'bg-blue-600',
+      hoverColor: 'hover:bg-blue-700',
+      path: '/angle-master-quiz',
+      level: 'F1',
+      badges: [
+        { level: 'F1', chapter: 'CH11', subject: '與直線和三角形有關的角' },
+        { level: 'F2', chapter: 'CH2', subject: '多邊形' },
+        { level: 'F3', chapter: 'CH5', subject: '四邊形' },
+        { level: 'F5', chapter: 'CH12', subject: '圓的基本性質' },
+        { level: 'F5', chapter: 'CH13', subject: '圓的切線' }
+      ],
+      category: '初中',
+      topics: ['平行線', '三角形', '圓形定理'],
+      inDevelopment: true
+    },
+    {
       id: 'angle-quiz',
       title: '角的標記',
       description: '學習如何正確標記和命名角度 (使用三個英文字母)',

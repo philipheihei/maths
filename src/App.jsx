@@ -18,6 +18,7 @@ import PercentageQuiz from './apps/PercentageQuiz';
 import ProbabilityQuiz from './apps/ProbabilityQuiz';
 import FactorizationQuiz from './apps/FactorizationQuiz';
 import RemainderFactorQuiz from './apps/RemainderFactorQuiz';
+import AngleMasterQuiz from './apps/AngleMasterQuiz';
 import Notes from './pages/Notes';
 
 // ==========================================
@@ -48,6 +49,7 @@ function App() {
         <Route path="/probability-quiz" element={<ProbabilityQuiz />} />
         <Route path="/factorization-quiz" element={<FactorizationQuiz />} />
         <Route path="/remainder-factor-quiz" element={<RemainderFactorQuiz />} />
+        <Route path="/angle-master-quiz" element={<AngleMasterQuiz />} />
         <Route path="/notes" element={<Notes />} />
       </Routes>
       {isDev && Agentation && (
