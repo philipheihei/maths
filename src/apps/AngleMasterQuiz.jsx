@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, Pen, Eraser, Trash2, Home as HomeIcon } from 'lucide-react';
+import { ChevronLeft, Pen, Eraser, Trash2, Home as HomeIcon, Lightbulb } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const AngleArc = ({ cx, cy, r, startAngle, endAngle, label, labelOffset = 15 }) => {
+const AngleArc = ({ cx, cy, r, startAngle, endAngle, label, labelOffset = 15, isHighlighted = false }) => {
   const startRad = (startAngle * Math.PI) / 180;
   const endRad = (endAngle * Math.PI) / 180;
   
@@ -15,7 +15,8 @@ const AngleArc = ({ cx, cy, r, startAngle, endAngle, label, labelOffset = 15 }) 
   if (diff < 0) diff += 360;
   const largeArcFlag = diff > 180 ? 1 : 0;
   
-  const pathData = `M ${x1} ${y1} A ${r} ${r} 0 ${largeArcFlag} 1 ${x2} ${y2}`;
+  const pathData = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+  const arcPathData = `M ${x1} ${y1} A ${r} ${r} 0 ${largeArcFlag} 1 ${x2} ${y2}`;
 
   const midAngle = startAngle + diff / 2;
   const midRad = (midAngle * Math.PI) / 180;
@@ -24,7 +25,10 @@ const AngleArc = ({ cx, cy, r, startAngle, endAngle, label, labelOffset = 15 }) 
 
   return (
     <g>
-      <path d={pathData} fill="none" stroke="black" strokeWidth="1.5" />
+      {isHighlighted && (
+        <path d={pathData} fill="rgba(255, 255, 0, 0.5)" stroke="none" />
+      )}
+      <path d={arcPathData} fill="none" stroke="black" strokeWidth="1.5" />
       {label && (
         <text x={lx} y={ly} fontSize="14" textAnchor="middle" dominantBaseline="middle" fill="black">
           {label}
@@ -43,7 +47,7 @@ const QUESTIONS = {
     steps: [
       '∠MND = ∠AMQ = 65° (錯角，AB // CD)'
     ],
-    renderSVG: () => (
+    renderSVG: (showHint) => (
       <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
         <line x1="40" y1="80" x2="280" y2="80" stroke="black" strokeWidth="1.5" />
         <line x1="40" y1="160" x2="280" y2="160" stroke="black" strokeWidth="1.5" />
@@ -62,7 +66,7 @@ const QUESTIONS = {
         <text x="130" y="150" fontSize="14">N</text>
         
         <AngleArc cx={160} cy={80} r={20} startAngle={115} endAngle={180} label="65°" labelOffset={15} />
-        <AngleArc cx={122.7} cy={160} r={20} startAngle={295} endAngle={360} label="?" labelOffset={15} />
+        <AngleArc cx={122.7} cy={160} r={20} startAngle={295} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
   },
@@ -76,7 +80,7 @@ const QUESTIONS = {
       '∠ACD = 48° + 65°',
       '∠ACD = 113°'
     ],
-    renderSVG: () => (
+    renderSVG: (showHint) => (
       <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
         <line x1="80" y1="175" x2="280" y2="175" stroke="black" strokeWidth="1.5" />
         <line x1="80" y1="175" x2="143" y2="40" stroke="black" strokeWidth="1.5" />
@@ -93,7 +97,7 @@ const QUESTIONS = {
         
         <AngleArc cx={143} cy={40} r={25} startAngle={67} endAngle={115} label="48°" labelOffset={12} />
         <AngleArc cx={80} cy={175} r={20} startAngle={295} endAngle={360} label="65°" labelOffset={15} />
-        <AngleArc cx={200} cy={175} r={20} startAngle={247} endAngle={360} label="?" labelOffset={15} />
+        <AngleArc cx={200} cy={175} r={20} startAngle={247} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
   },
@@ -107,7 +111,7 @@ const QUESTIONS = {
       '∠BAC = ½ × 100°',
       '∠BAC = 50°'
     ],
-    renderSVG: () => (
+    renderSVG: (showHint) => (
       <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
         <circle cx="160" cy="120" r="80" fill="none" stroke="black" strokeWidth="1.5" />
         
@@ -127,7 +131,7 @@ const QUESTIONS = {
         <text x="80" y="185" fontSize="14">C</text>
         
         <AngleArc cx={160} cy={120} r={20} startAngle={40} endAngle={140} label="100°" labelOffset={15} />
-        <AngleArc cx={160} cy={40} r={25} startAngle={65} endAngle={115} label="?" labelOffset={15} />
+        <AngleArc cx={160} cy={40} r={25} startAngle={65} endAngle={115} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
   },
@@ -139,7 +143,7 @@ const QUESTIONS = {
     steps: [
       '∠ACB = ∠BAT = 38° (交錯弓形的圓周角)'
     ],
-    renderSVG: () => (
+    renderSVG: (showHint) => (
       <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
         <circle cx="160" cy="110" r="80" fill="none" stroke="black" strokeWidth="1.5" />
         
@@ -158,7 +162,7 @@ const QUESTIONS = {
         <text x="60" y="205" fontSize="14">T</text>
         
         <AngleArc cx={160} cy={190} r={25} startAngle={180} endAngle={218} label="38°" labelOffset={15} />
-        <AngleArc cx={216.6} cy={53.4} r={25} startAngle={112.5} endAngle={150.5} label="?" labelOffset={15} />
+        <AngleArc cx={216.6} cy={53.4} r={25} startAngle={112.5} endAngle={150.5} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
   }
@@ -170,6 +174,8 @@ export default function AngleMasterQuiz() {
   const [userAnswer, setUserAnswer] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [drawMode, setDrawMode] = useState('pen');
+  const [penColor, setPenColor] = useState('rgba(220,50,50,0.85)');
+  const [showHint, setShowHint] = useState(false);
   
   const canvasRef = useRef(null);
 
@@ -213,7 +219,7 @@ export default function AngleMasterQuiz() {
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
         ctx.lineTo(pos.x, pos.y);
-        ctx.strokeStyle = 'rgba(220,50,50,0.85)';
+        ctx.strokeStyle = penColor;
         ctx.lineWidth = 4;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -247,7 +253,7 @@ export default function AngleMasterQuiz() {
       canvas.removeEventListener('mouseup', handleEnd);
       canvas.removeEventListener('mouseleave', handleEnd);
     };
-  }, [currentScreen, drawMode]);
+  }, [currentScreen, drawMode, penColor]);
 
   const handleLevelSelect = (level) => {
     setSelectedLevel(level);
@@ -255,6 +261,7 @@ export default function AngleMasterQuiz() {
     setUserAnswer('');
     setIsSubmitted(false);
     setDrawMode('pen');
+    setShowHint(false);
   };
 
   const handleSubmit = () => {
@@ -287,17 +294,71 @@ export default function AngleMasterQuiz() {
         <h1 className="text-4xl font-bold text-blue-800 mb-2">尋找圖形角度</h1>
         <h2 className="text-xl text-blue-600 mb-8">Angle Master</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-md">
+        <div className="grid grid-cols-1 gap-4 w-full max-w-md mb-8">
           {Object.keys(QUESTIONS).map(level => (
             <button
               key={level}
               onClick={() => handleLevelSelect(level)}
-              className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all border-2 border-blue-100 hover:border-blue-300 flex flex-col items-center"
+              className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-all border-2 border-blue-100 hover:border-blue-300 flex items-center justify-between"
             >
-              <span className="text-2xl font-bold text-gray-800">{QUESTIONS[level].level}</span>
-              <span className="text-sm text-gray-500 mt-2">{QUESTIONS[level].title}</span>
+              <span className="text-2xl font-bold text-gray-800 w-24 text-left">{QUESTIONS[level].level}</span>
+              <span className="text-lg text-gray-600 flex-1 text-left">{QUESTIONS[level].title}</span>
             </button>
           ))}
+        </div>
+
+        <div className="w-full max-w-4xl bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-blue-50 p-4 border-b border-gray-200">
+            <h3 className="text-xl font-bold text-blue-800 text-center">中學圖形定理概覽</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-200">
+            <div className="p-4">
+              <h4 className="font-bold text-lg text-gray-800 mb-2 border-b pb-2">F1</h4>
+              <ul className="space-y-2 text-gray-600">
+                <li>• 直線上的鄰角</li>
+                <li>• 同頂角</li>
+                <li>• 對頂角</li>
+                <li>• 同位角</li>
+                <li>• 錯角</li>
+                <li>• 同旁內角</li>
+                <li>• 三角形內角和</li>
+                <li>• 三角形外角</li>
+              </ul>
+            </div>
+            <div className="p-4">
+              <h4 className="font-bold text-lg text-gray-800 mb-2 border-b pb-2">F2</h4>
+              <ul className="space-y-2 text-gray-600">
+                <li>• 多邊形內角和</li>
+                <li>• 多邊形外角和</li>
+                <li>• 等腰三角形底角</li>
+                <li>• 等邊對等角</li>
+                <li>• 畢氏定理</li>
+              </ul>
+            </div>
+            <div className="p-4">
+              <h4 className="font-bold text-lg text-gray-800 mb-2 border-b pb-2">F3</h4>
+              <ul className="space-y-2 text-gray-600">
+                <li>• 平行四邊形性質</li>
+                <li>• 菱形性質</li>
+                <li>• 矩形性質</li>
+                <li>• 正方形性質</li>
+                <li>• 中點定理</li>
+                <li>• 截偶定理</li>
+              </ul>
+            </div>
+            <div className="p-4">
+              <h4 className="font-bold text-lg text-gray-800 mb-2 border-b pb-2">高中</h4>
+              <ul className="space-y-2 text-gray-600">
+                <li>• 圓心角與圓周角</li>
+                <li>• 半圓上的圓周角</li>
+                <li>• 同弓形內的圓周角</li>
+                <li>• 圓內接四邊形對角</li>
+                <li>• 圓內接四邊形外角</li>
+                <li>• 切線性質</li>
+                <li>• 交錯弓形的圓周角</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -325,11 +386,20 @@ export default function AngleMasterQuiz() {
           {/* Toolbar */}
           <div className="absolute top-2 right-2 z-10 flex gap-2 bg-white/90 p-1 rounded-lg shadow-sm border border-gray-200">
             <button 
-              onClick={() => setDrawMode('pen')}
-              className={`p-2 rounded ${drawMode === 'pen' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'}`}
+              onClick={() => setShowHint(!showHint)}
+              className={`p-2 rounded ${showHint ? 'bg-yellow-100 text-yellow-600' : 'text-gray-600 hover:bg-gray-100'}`}
+              title="提示"
             >
-              <Pen className="w-5 h-5" />
+              <Lightbulb className="w-5 h-5" />
             </button>
+            <div className="w-px bg-gray-300 mx-1"></div>
+            <div className="flex items-center gap-1 px-1">
+              <button onClick={() => { setDrawMode('pen'); setPenColor('rgba(220,50,50,0.85)'); }} className={`w-6 h-6 rounded-full bg-red-500 ${drawMode === 'pen' && penColor === 'rgba(220,50,50,0.85)' ? 'ring-2 ring-offset-2 ring-red-500' : ''}`}></button>
+              <button onClick={() => { setDrawMode('pen'); setPenColor('rgba(50,50,220,0.85)'); }} className={`w-6 h-6 rounded-full bg-blue-500 ${drawMode === 'pen' && penColor === 'rgba(50,50,220,0.85)' ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}></button>
+              <button onClick={() => { setDrawMode('pen'); setPenColor('rgba(50,200,50,0.85)'); }} className={`w-6 h-6 rounded-full bg-green-500 ${drawMode === 'pen' && penColor === 'rgba(50,200,50,0.85)' ? 'ring-2 ring-offset-2 ring-green-500' : ''}`}></button>
+              <button onClick={() => { setDrawMode('pen'); setPenColor('rgba(50,50,50,0.85)'); }} className={`w-6 h-6 rounded-full bg-gray-800 ${drawMode === 'pen' && penColor === 'rgba(50,50,50,0.85)' ? 'ring-2 ring-offset-2 ring-gray-800' : ''}`}></button>
+            </div>
+            <div className="w-px bg-gray-300 mx-1"></div>
             <button 
               onClick={() => setDrawMode('eraser')}
               className={`p-2 rounded ${drawMode === 'eraser' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'}`}
@@ -345,7 +415,7 @@ export default function AngleMasterQuiz() {
           </div>
 
           <div className="relative w-full aspect-[320/220] bg-[#f5f5f5] touch-none">
-            {q.renderSVG()}
+            {q.renderSVG(showHint)}
             <canvas
               ref={canvasRef}
               width={640}
