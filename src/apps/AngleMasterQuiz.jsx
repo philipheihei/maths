@@ -91,7 +91,7 @@ const QUESTIONS = {
           <text x="290" y="165" fontSize="14">B</text>
           <text x="205" y="40" fontSize="14">C</text>
           <AngleArc cx={160} cy={160} r={25} startAngle={180} endAngle={288} label="108°" labelOffset={15} />
-          <AngleArc cx={160} cy={160} r={25} startAngle={288} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={160} cy={160} r={18} startAngle={288} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -262,8 +262,10 @@ const QUESTIONS = {
       answer: 7,
       unit: '',
       steps: [
-        'DE = BC / 2 (中點定理)',
-        'DE = 14 / 2 = 7'
+        <span>∵ <i>D</i> 和 <i>E</i> 分別是 <i>AB</i> 和 <i>AC</i> 的中點</span>,
+        <span>∴ <i>AD</i> = <i>DB</i>, <i>AE</i> = <i>EC</i></span>,
+        <span><i>DE</i> = <i>BC</i> ÷ 2 (中點定理)</span>,
+        <span><i>DE</i> = 14 ÷ 2 = 7</span>
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
@@ -723,20 +725,12 @@ export default function AngleMasterQuiz() {
                 <div key={i} className="text-gray-800 font-mono bg-white/50 p-2 rounded">{step}</div>
               ))}
             </div>
-            <div className="flex gap-4 mt-6">
-              <button
-                onClick={handleBack}
-                className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-bold hover:bg-gray-300"
-              >
-                返回主頁 Back to Home
-              </button>
-              <button
-                onClick={handleNextQuestion}
-                className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700"
-              >
-                下一題 Next Question
-              </button>
-            </div>
+            <button
+              onClick={handleNextQuestion}
+              className="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700"
+            >
+              下一題 Next Question
+            </button>
           </div>
         )}
       </div>
