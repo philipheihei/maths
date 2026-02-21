@@ -1810,34 +1810,6 @@ const QUESTIONS = {
       )
     },
     {
-      id: 'F3-19',
-      difficulty: '淺',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '求點 A(1, 2) 和點 B(4, 6) 之間的距離。',
-      answer: 5,
-      steps: [
-        'AB = √[(4 - 1)² + (6 - 2)²]',
-        'AB = √[3² + 4²]',
-        'AB = √[9 + 16] = √25 = 5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <circle cx="100" cy="140" r="3" fill="black" />
-          <circle cx="220" cy="60" r="3" fill="black" />
-          <line x1="100" y1="140" x2="220" y2="60" stroke="black" strokeWidth="1.5" />
-          <text x="80" y="155" fontSize="14">A(1, 2)</text>
-          <text x="230" y="55" fontSize="14">B(4, 6)</text>
-          {showHint && <line x1="100" y1="140" x2="220" y2="140" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />}
-          {showHint && <line x1="220" y1="140" x2="220" y2="60" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />}
-        </svg>
-      )
-    },
-    {
       id: 'F3-24',
       difficulty: '難',
       level: 'F3',
@@ -2318,38 +2290,6 @@ const QUESTIONS = {
       )
     },
     {
-      id: 'S-17',
-      difficulty: '難',
-      level: 'F4-F6',
-      title: '3D 三角學 (Angle between line and plane)',
-      text: '圖中，VABCD 是一個角錐體，底 ABCD 是長方形。VA 垂直於底 ABCD。已知 VA = 3，AC = 3√3。求 VC 與底 ABCD 的交角。',
-      answer: 30,
-      steps: [
-        'VC 在底 ABCD 上的投影是 AC。',
-        '交角為 ∠VCA。',
-        'tan ∠VCA = VA / AC = 3 / 3√3 = 1/√3',
-        '∠VCA = 30°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="100,160 220,160 260,120 140,120" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="160" x2="100" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="40" x2="220" y2="160" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="40" x2="260" y2="120" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="40" x2="140" y2="120" stroke="black" strokeWidth="1.5" strokeDasharray="4" />
-          <line x1="100" y1="160" x2="260" y2="120" stroke="black" strokeWidth="1.5" strokeDasharray="4" />
-          <text x="85" y="170" fontSize="14">A</text>
-          <text x="225" y="175" fontSize="14">B</text>
-          <text x="270" y="125" fontSize="14">C</text>
-          <text x="125" y="115" fontSize="14">D</text>
-          <text x="95" y="30" fontSize="14">V</text>
-          <text x="85" y="100" fontSize="14">3</text>
-          <text x="180" y="155" fontSize="14">3√3</text>
-          <AngleArc cx={260} cy={120} r={30} startAngle={180} endAngle={206.6} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
       id: 'S-18',
       difficulty: '難',
       level: 'F4-F6',
@@ -2377,61 +2317,6 @@ const QUESTIONS = {
           <text x="160" y="180" fontSize="14">4</text>
           <polyline points="210,160 210,150 220,150" fill="none" stroke="black" strokeWidth="1.5" />
           <AngleArc cx={220} cy={160} r={25} startAngle={180} endAngle={225} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'S-19',
-      difficulty: '淺',
-      level: 'F4-F6',
-      title: '坐標幾何 (Inclination)',
-      text: '直線 L 穿過原點 (0, 0) 和點 (√3, 1)。求 L 的傾角 (Inclination)。',
-      answer: 30,
-      steps: [
-        '斜率 m = (1 - 0) / (√3 - 0) = 1/√3',
-        'tan θ = m = 1/√3',
-        'θ = 30°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="160" x2="280" y2="160" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="200" x2="100" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="183.1" x2="260" y2="67.6" stroke="blue" strokeWidth="2" />
-          <circle cx="100" cy="160" r="3" fill="black" />
-          <circle cx="203.9" cy="100" r="3" fill="black" />
-          <text x="85" y="175" fontSize="14">O</text>
-          <text x="215" y="95" fontSize="14">(√3, 1)</text>
-          <text x="270" y="175" fontSize="14">x</text>
-          <text x="85" y="50" fontSize="14">y</text>
-          <text x="265" y="60" fontSize="14" fill="blue">L</text>
-          <AngleArc cx={100} cy={160} r={30} startAngle={330} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'S-20',
-      difficulty: '中',
-      level: 'F4-F6',
-      title: '坐標幾何 (Angle between lines)',
-      text: '直線 L1 的方程為 y = √3 x，直線 L2 的方程為 y = x。求 L1 與 L2 之間的銳角。',
-      answer: 15,
-      steps: [
-        'L1 的傾角 θ1：tan θ1 = √3 => θ1 = 60°',
-        'L2 的傾角 θ2：tan θ2 = 1 => θ2 = 45°',
-        '交角 = θ1 - θ2 = 60° - 45° = 15°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="160" x2="280" y2="160" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="200" x2="100" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="80" y1="194.6" x2="160" y2="56.1" stroke="blue" strokeWidth="2" />
-          <line x1="60" y1="200" x2="200" y2="60" stroke="green" strokeWidth="2" />
-          <text x="85" y="175" fontSize="14">O</text>
-          <text x="270" y="175" fontSize="14">x</text>
-          <text x="85" y="50" fontSize="14">y</text>
-          <text x="165" y="50" fontSize="14" fill="blue">L1</text>
-          <text x="210" y="60" fontSize="14" fill="green">L2</text>
-          <AngleArc cx={100} cy={160} r={40} startAngle={300} endAngle={315} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -2626,43 +2511,6 @@ const QUESTIONS = {
           <text x="75" y="105" fontSize="14">10</text>
           <text x="155" y="180" fontSize="14">10</text>
           <AngleArc cx={220} cy={160} r={25} startAngle={180} endAngle={225} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'S-28',
-      difficulty: '難',
-      level: 'F4-F6',
-      title: '3D 三角學 (Angle in cuboid)',
-      text: '圖中，ABCDEFGH 是一個長方體，底 ABCD 是正方形。已知 AB = 2，AE = 2√2。求對角線 AG 與底 ABCD 的交角。',
-      answer: 45,
-      steps: [
-        'AG 在底 ABCD 上的投影是 AC。',
-        'AC = √(2² + 2²) = √8 = 2√2',
-        'tan ∠GAC = CG / AC = 2√2 / 2√2 = 1',
-        '∠GAC = 45°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="80,160 180,160 220,130 120,130" fill="none" stroke="black" strokeWidth="1.5" />
-          <polygon points="80,80 180,80 220,50 120,50" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="80" y1="160" x2="80" y2="80" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="160" x2="180" y2="80" stroke="black" strokeWidth="1.5" />
-          <line x1="220" y1="130" x2="220" y2="50" stroke="black" strokeWidth="1.5" />
-          <line x1="120" y1="130" x2="120" y2="50" stroke="black" strokeWidth="1.5" strokeDasharray="4" />
-          <line x1="80" y1="160" x2="220" y2="130" stroke="black" strokeWidth="1.5" strokeDasharray="4" />
-          <line x1="80" y1="160" x2="220" y2="50" stroke="black" strokeWidth="1.5" />
-          <text x="65" y="170" fontSize="14">A</text>
-          <text x="185" y="175" fontSize="14">B</text>
-          <text x="230" y="135" fontSize="14">C</text>
-          <text x="105" y="135" fontSize="14">D</text>
-          <text x="65" y="75" fontSize="14">E</text>
-          <text x="185" y="75" fontSize="14">F</text>
-          <text x="230" y="45" fontSize="14">G</text>
-          <text x="105" y="45" fontSize="14">H</text>
-          <text x="125" y="180" fontSize="14">2</text>
-          <text x="45" y="125" fontSize="14">2√2</text>
-          <AngleArc cx={80} cy={160} r={30} startAngle={322} endAngle={348} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
