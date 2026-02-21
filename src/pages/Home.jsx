@@ -423,12 +423,14 @@ const Home = () => {
                       </div>
                     )}
                     <div className="flex items-center justify-between mb-4">
-                      <Icon className="w-10 h-10 text-white" />
+                      <div className="flex items-center gap-3">
+                        <Icon className="w-8 h-8 text-white" />
+                        <h3 className="text-2xl font-bold text-white">
+                          {app.title}
+                        </h3>
+                      </div>
                       <ArrowRight className="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all" />
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-2">
-                      {app.title}
-                    </h3>
                     {/* ✅ 課程標籤 - 支持多個 badges */}
                     <div className="flex flex-wrap gap-2">
                       {app.badges.map((badge, index) => (
