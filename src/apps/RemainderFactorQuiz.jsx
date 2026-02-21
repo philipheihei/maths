@@ -281,7 +281,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                     <span className="font-bold">💡 技巧（當 <Latex math="ax + b" /> 形式）：</span>
                   </p>
                   <div className="mt-2 flex items-center gap-2 text-sm">
-                    <span>令 <Latex math="ax + b = 0" /></span>
+                    <span><Latex math="ax + b = 0" /></span>
                     <span>→</span>
                     <span><Latex math="x = -\frac{b}{a}" /></span>
                   </div>
@@ -464,7 +464,7 @@ const QuizPage = ({ onBackToTeaching }) => {
       b = [-7, -6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random() * 14)];
     } while (gcd(a, b) !== 1); // 確保 a 和 b 互質
     
-    // 計算 f() 內的值：令 ax + b = 0，x = -b/a
+    // 計算 f() 內的值：ax + b = 0，x = -b/a
     const numerator = -b;
     const denominator = a;
     
@@ -588,7 +588,7 @@ const QuizPage = ({ onBackToTeaching }) => {
           input2: answerValue2
         };
         explanation = `餘數相等即 ${funcName}(${answerValue}) = ${funcName}(${answerValue2})`;
-        explanationLatex = `\\begin{aligned}& \\text{除式一：令 } ${divisor} = 0 \\Rightarrow x = ${latexVal} \\\\ & \\text{除式二：令 } ${divisor2} = 0 \\Rightarrow x = ${latexVal2} \\\\ & \\text{餘數相等即 } ${funcName}(${latexVal}) = ${funcName}(${latexVal2})\\end{aligned}`;
+        explanationLatex = `\\begin{aligned}& \\text{除式一：} ${divisor} = 0 \\Rightarrow x = ${latexVal} \\\\ & \\text{除式二：} ${divisor2} = 0 \\Rightarrow x = ${latexVal2} \\\\ & \\text{餘數相等即 } ${funcName}(${latexVal}) = ${funcName}(${latexVal2})\\end{aligned}`;
         template = { type: 'equal', funcName, answerValue, answerValue2 };
         break;
       }

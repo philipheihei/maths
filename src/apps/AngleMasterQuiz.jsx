@@ -244,8 +244,8 @@ const QUESTIONS = {
           <text x="290" y="165" fontSize="14">D</text>
           <text x="90" y="35" fontSize="14">P</text>
           <text x="230" y="210" fontSize="14">Q</text>
-          <text x="120" y="70" fontSize="14">M</text>
-          <text x="180" y="150" fontSize="14">N</text>
+          <text x="110" y="65" fontSize="14">M</text>
+          <text x="215" y="185" fontSize="14">N</text>
           <AngleArc cx={130} cy={80} r={20} startAngle={0} endAngle={53} label="75°" labelOffset={15} />
           <AngleArc cx={190} cy={160} r={20} startAngle={233} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
@@ -366,8 +366,8 @@ const QUESTIONS = {
           <text x="290" y="165" fontSize="14">D</text>
           <text x="190" y="25" fontSize="14">P</text>
           <text x="90" y="210" fontSize="14">Q</text>
-          <text x="165" y="75" fontSize="14">M</text>
-          <text x="125" y="155" fontSize="14">N</text>
+          <text x="175" y="65" fontSize="14">M</text>
+          <text x="90" y="185" fontSize="14">N</text>
           <AngleArc cx={156.5} cy={80} r={20} startAngle={0} endAngle={115} label="115°" labelOffset={15} />
           <AngleArc cx={118.8} cy={160} r={20} startAngle={180} endAngle={295} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
@@ -399,8 +399,8 @@ const QUESTIONS = {
           <text x="290" y="165" fontSize="14">D</text>
           <text x="90" y="25" fontSize="14">P</text>
           <text x="210" y="210" fontSize="14">Q</text>
-          <text x="120" y="70" fontSize="14">M</text>
-          <text x="185" y="150" fontSize="14">N</text>
+          <text x="140" y="70" fontSize="14">M</text>
+          <text x="190" y="175" fontSize="14">N</text>
           <AngleArc cx={129.4} cy={80} r={20} startAngle={60} endAngle={180} label="54°" labelOffset={15} />
           <AngleArc cx={176.5} cy={160} r={20} startAngle={240} endAngle={360} label="3x" labelOffset={15} />
         </svg>
@@ -468,196 +468,6 @@ const QUESTIONS = {
       )
     },
     {
-      id: 'F1-15',
-      difficulty: '淺',
-      level: 'F1',
-      title: '等腰三角形 (Isos. △)',
-      text: '圖中，△ABC 中，AB = AC。已知 ∠A = 40°，求 ∠B。',
-      answer: 70,
-      steps: [
-        '∠B = ∠C (等腰△底角)',
-        '∠A + ∠B + ∠C = 180° (△內角和)',
-        '40° + 2∠B = 180°',
-        '2∠B = 140°',
-        '∠B = 70°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 100,180 220,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="40" r="3" fill="black" />
-          <circle cx="100" cy="180" r="3" fill="black" />
-          <circle cx="220" cy="180" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="85" y="195" fontSize="14">B</text>
-          <text x="225" y="195" fontSize="14">C</text>
-          <line x1="123" y1="107" x2="137" y2="113" stroke="black" strokeWidth="1.5" />
-          <line x1="197" y1="107" x2="183" y2="113" stroke="black" strokeWidth="1.5" />
-          <AngleArc cx={160} cy={40} r={30} startAngle={67} endAngle={113} label="40°" labelOffset={15} />
-          <AngleArc cx={100} cy={180} r={25} startAngle={293} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F1-16',
-      difficulty: '中',
-      level: 'F1',
-      title: '等腰三角形 (Isos. △)',
-      text: '圖中，△ABC 中，AB = AC。已知 ∠B = 65°，求 ∠A。',
-      answer: 50,
-      steps: [
-        '∠C = ∠B = 65° (等腰△底角)',
-        '∠A + ∠B + ∠C = 180° (△內角和)',
-        '∠A + 65° + 65° = 180°',
-        '∠A = 50°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 100,180 220,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="40" r="3" fill="black" />
-          <circle cx="100" cy="180" r="3" fill="black" />
-          <circle cx="220" cy="180" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="85" y="195" fontSize="14">B</text>
-          <text x="225" y="195" fontSize="14">C</text>
-          <line x1="123" y1="107" x2="137" y2="113" stroke="black" strokeWidth="1.5" />
-          <line x1="197" y1="107" x2="183" y2="113" stroke="black" strokeWidth="1.5" />
-          <AngleArc cx={100} cy={180} r={25} startAngle={293} endAngle={360} label="65°" labelOffset={15} />
-          <AngleArc cx={160} cy={40} r={30} startAngle={67} endAngle={113} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F1-17',
-      difficulty: '中',
-      level: 'F1',
-      title: '等邊三角形 (Equil. △)',
-      text: '圖中，△ABC 是一個等邊三角形。求 ∠A。',
-      answer: 60,
-      steps: [
-        '∠A = ∠B = ∠C (等邊△性質)',
-        '∠A + ∠B + ∠C = 180° (△內角和)',
-        '3∠A = 180°',
-        '∠A = 60°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,178.6 240,178.6" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="40" r="3" fill="black" />
-          <circle cx="80" cy="178.6" r="3" fill="black" />
-          <circle cx="240" cy="178.6" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="195" fontSize="14">B</text>
-          <text x="245" y="195" fontSize="14">C</text>
-          <line x1="114" y1="106" x2="126" y2="113" stroke="black" strokeWidth="1.5" />
-          <line x1="194" y1="113" x2="206" y2="106" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="172" x2="160" y2="186" stroke="black" strokeWidth="1.5" />
-          <AngleArc cx={160} cy={40} r={30} startAngle={60} endAngle={120} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F1-18',
-      difficulty: '難',
-      level: 'F1',
-      title: '三角形外角 (Ext. ∠ of △)',
-      text: '圖中，△ABC 的邊 BC 延長至 D。已知 ∠A = 55° 及 ∠ACD = 120°，求 ∠B。',
-      answer: 65,
-      steps: [
-        '∠A + ∠B = ∠ACD (△外角)',
-        '55° + ∠B = 120°',
-        '∠B = 65°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="60" y1="160" x2="260" y2="160" stroke="black" strokeWidth="1.5" />
-          <polygon points="140,40 60,160 180,160" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="140" cy="40" r="3" fill="black" />
-          <circle cx="60" cy="160" r="3" fill="black" />
-          <circle cx="180" cy="160" r="3" fill="black" />
-          <text x="135" y="30" fontSize="14">A</text>
-          <text x="45" y="175" fontSize="14">B</text>
-          <text x="175" y="180" fontSize="14">C</text>
-          <text x="265" y="175" fontSize="14">D</text>
-          <AngleArc cx={140} cy={40} r={25} startAngle={72} endAngle={124} label="55°" labelOffset={15} />
-          <AngleArc cx={180} cy={160} r={20} startAngle={252} endAngle={360} label="120°" labelOffset={15} />
-          <AngleArc cx={60} cy={160} r={25} startAngle={304} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F1-19',
-      difficulty: '難',
-      level: 'F1',
-      title: '三角形外角 (Ext. ∠ of △)',
-      text: '圖中，△ABC 的邊 BC 延長至 D。已知 ∠B = 45° 及 ∠ACD = 110°，求 ∠A。',
-      answer: 65,
-      steps: [
-        '∠A + ∠B = ∠ACD (△外角)',
-        '∠A + 45° = 110°',
-        '∠A = 65°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="60" y1="160" x2="260" y2="160" stroke="black" strokeWidth="1.5" />
-          <polygon points="140,40 60,160 180,160" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="140" cy="40" r="3" fill="black" />
-          <circle cx="60" cy="160" r="3" fill="black" />
-          <circle cx="180" cy="160" r="3" fill="black" />
-          <text x="135" y="30" fontSize="14">A</text>
-          <text x="45" y="175" fontSize="14">B</text>
-          <text x="175" y="180" fontSize="14">C</text>
-          <text x="265" y="175" fontSize="14">D</text>
-          <AngleArc cx={60} cy={160} r={25} startAngle={304} endAngle={360} label="45°" labelOffset={15} />
-          <AngleArc cx={180} cy={160} r={20} startAngle={252} endAngle={360} label="110°" labelOffset={15} />
-          <AngleArc cx={140} cy={40} r={25} startAngle={72} endAngle={124} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F1-20',
-      difficulty: '難',
-      level: 'F1',
-      title: '多邊形內角和 (∠ sum of polygon)',
-      text: '求一個正五邊形的內角。',
-      answer: 108,
-      steps: [
-        '內角和 = (n - 2) × 180°',
-        '內角和 = (5 - 2) × 180° = 540°',
-        '每個內角 = 540° ÷ 5 = 108°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 240,88 209,183 111,183 80,88" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="30" r="3" fill="black" />
-          <circle cx="240" cy="88" r="3" fill="black" />
-          <circle cx="209" cy="183" r="3" fill="black" />
-          <circle cx="111" cy="183" r="3" fill="black" />
-          <circle cx="80" cy="88" r="3" fill="black" />
-          <AngleArc cx={111} cy={183} r={25} startAngle={252} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F1-21',
-      difficulty: '難',
-      level: 'F1',
-      title: '多邊形外角和 (Sum of ext. ∠s of polygon)',
-      text: '求一個正六邊形的外角。',
-      answer: 60,
-      steps: [
-        '外角和 = 360°',
-        '每個外角 = 360° ÷ 6 = 60°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 225,68 225,143 160,180 95,143 95,68" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="180" x2="220" y2="214" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="180" r="3" fill="black" />
-          <AngleArc cx={160} cy={180} r={25} startAngle={330} endAngle={390} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
       id: 'F1-22',
       difficulty: '中',
       level: 'F1',
@@ -676,114 +486,91 @@ const QUESTIONS = {
           <line x1="40" y1="170" x2="240" y2="170" stroke="black" strokeWidth="1.5" />
           <polygon points="135,45 145,50 135,55" fill="black" />
           <polygon points="135,165 145,170 135,175" fill="black" />
-          <line x1="100" y1="50" x2="180" y2="110" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="170" x2="180" y2="110" stroke="black" strokeWidth="1.5" />
+          <line x1="100" y1="50" x2="160" y2="110" stroke="black" strokeWidth="1.5" />
+          <line x1="100" y1="170" x2="160" y2="110" stroke="black" strokeWidth="1.5" />
           <circle cx="100" cy="50" r="3" fill="black" />
-          <circle cx="180" cy="110" r="3" fill="black" />
+          <circle cx="160" cy="110" r="3" fill="black" />
           <circle cx="100" cy="170" r="3" fill="black" />
           <text x="90" y="40" fontSize="14">A</text>
           <text x="250" y="55" fontSize="14">B</text>
           <text x="90" y="190" fontSize="14">C</text>
           <text x="250" y="175" fontSize="14">D</text>
-          <text x="195" y="115" fontSize="14">E</text>
-          <AngleArc cx={100} cy={50} r={25} startAngle={0} endAngle={37} label="40°" labelOffset={15} />
-          <AngleArc cx={100} cy={170} r={25} startAngle={323} endAngle={360} label="50°" labelOffset={15} />
-          <AngleArc cx={180} cy={110} r={20} startAngle={143} endAngle={217} label="" labelOffset={15} isHighlighted={showHint} />
+          <text x="175" y="115" fontSize="14">E</text>
+          <AngleArc cx={100} cy={50} r={25} startAngle={0} endAngle={45} label="40°" labelOffset={15} />
+          <AngleArc cx={100} cy={170} r={25} startAngle={315} endAngle={360} label="50°" labelOffset={15} />
+          <AngleArc cx={160} cy={110} r={20} startAngle={135} endAngle={225} label="" labelOffset={15} isHighlighted={showHint} />
           {showHint && <line x1="60" y1="110" x2="260" y2="110" stroke="red" strokeWidth="1.5" strokeDasharray="5,5" />}
         </svg>
       )
     },
     {
       id: 'F1-23',
-      difficulty: '中',
+      difficulty: '淺',
       level: 'F1',
-      title: '平行線與三角形 (Mixed)',
-      text: '圖中，AB // CD。已知 ∠AEC = 100° 及 ∠ECD = 45°，求 ∠EAB。',
-      answer: 55,
+      title: '相交線 (Intersecting lines)',
+      text: '圖中，AD、BE 與 CF 相交於 O。求 x。',
+      answer: 100,
       steps: [
-        '過 E 作直線 PQ // AB // CD。',
-        '∠CEQ = ∠ECD = 45° (內錯角，PQ // CD)',
-        '∠AEQ = ∠AEC - ∠CEQ = 100° - 45° = 55°',
-        '∠EAB = ∠AEQ = 55° (內錯角，AB // PQ)'
+        '∠EOF = ∠BOC = 45° (對頂角)',
+        '∠AOF + ∠EOF + ∠EOD = 180° (直線上的鄰角)',
+        '55° + 45° + x - 20° = 180°',
+        'x + 80° = 180°',
+        'x = 100°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="50" x2="240" y2="50" stroke="black" strokeWidth="1.5" />
-          <line x1="40" y1="170" x2="240" y2="170" stroke="black" strokeWidth="1.5" />
-          <polygon points="135,45 145,50 135,55" fill="black" />
-          <polygon points="135,165 145,170 135,175" fill="black" />
-          <line x1="100" y1="50" x2="180" y2="110" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="170" x2="180" y2="110" stroke="black" strokeWidth="1.5" />
-          <circle cx="100" cy="50" r="3" fill="black" />
-          <circle cx="180" cy="110" r="3" fill="black" />
-          <circle cx="100" cy="170" r="3" fill="black" />
-          <text x="90" y="40" fontSize="14">A</text>
-          <text x="250" y="55" fontSize="14">B</text>
-          <text x="90" y="190" fontSize="14">C</text>
-          <text x="250" y="175" fontSize="14">D</text>
-          <text x="195" y="115" fontSize="14">E</text>
-          <AngleArc cx={180} cy={110} r={20} startAngle={143} endAngle={217} label="100°" labelOffset={15} />
-          <AngleArc cx={100} cy={170} r={25} startAngle={323} endAngle={360} label="45°" labelOffset={15} />
-          <AngleArc cx={100} cy={50} r={25} startAngle={0} endAngle={37} label="" labelOffset={15} isHighlighted={showHint} />
-          {showHint && <line x1="60" y1="110" x2="260" y2="110" stroke="red" strokeWidth="1.5" strokeDasharray="5,5" />}
+          <line x1="83.4" y1="45.7" x2="236.6" y2="174.3" stroke="black" strokeWidth="1.5" />
+          <line x1="210" y1="23.4" x2="110" y2="196.6" stroke="black" strokeWidth="1.5" />
+          <line x1="256.6" y1="84.1" x2="63.4" y2="135.9" stroke="black" strokeWidth="1.5" />
+          <circle cx="160" cy="110" r="3" fill="black" />
+          <text x="75" y="40" fontSize="14">A</text>
+          <text x="215" y="20" fontSize="14">B</text>
+          <text x="265" y="85" fontSize="14">C</text>
+          <text x="245" y="185" fontSize="14">D</text>
+          <text x="95" y="205" fontSize="14">E</text>
+          <text x="45" y="145" fontSize="14">F</text>
+          <text x="165" y="100" fontSize="14">O</text>
+          <AngleArc cx={160} cy={110} r={25} startAngle={165} endAngle={220} label="55°" labelOffset={20} />
+          <AngleArc cx={160} cy={110} r={25} startAngle={300} endAngle={345} label="45°" labelOffset={20} />
+          <AngleArc cx={160} cy={110} r={25} startAngle={40} endAngle={120} label="x - 20°" labelOffset={25} isHighlighted={showHint} />
         </svg>
       )
     },
     {
       id: 'F1-24',
-      difficulty: '難',
+      difficulty: '中',
       level: 'F1',
       title: '平行線與三角形 (Mixed)',
-      text: '圖中，AB // CD。已知 ∠EAB = 130° 及 ∠ECD = 140°，求 ∠AEC。',
-      answer: 90,
+      text: '圖中，ED // BF。求 f。',
+      answer: 12,
       steps: [
-        '過 E 作直線 PQ // AB // CD。',
-        '∠AEQ + ∠EAB = 180° (同旁內角，AB // PQ)',
-        '∠AEQ = 180° - 130° = 50°',
-        '∠CEQ + ∠ECD = 180° (同旁內角，PQ // CD)',
-        '∠CEQ = 180° - 140° = 40°',
-        '∠AEC = ∠AEQ + ∠CEQ = 50° + 40° = 90°'
+        '∠ABC = ∠EGB = 4f (內錯角，ED // BF)',
+        '在 △ABC 中，',
+        '4f + 5f + 6f = 180° (△ 內角和)',
+        '15f = 180°',
+        'f = 12°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="50" x2="240" y2="50" stroke="black" strokeWidth="1.5" />
-          <line x1="40" y1="170" x2="240" y2="170" stroke="black" strokeWidth="1.5" />
-          <polygon points="135,45 145,50 135,55" fill="black" />
-          <polygon points="135,165 145,170 135,175" fill="black" />
-          <line x1="180" y1="50" x2="100" y2="110" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="170" x2="100" y2="110" stroke="black" strokeWidth="1.5" />
-          <circle cx="180" cy="50" r="3" fill="black" />
-          <circle cx="100" cy="110" r="3" fill="black" />
-          <circle cx="180" cy="170" r="3" fill="black" />
-          <text x="190" y="40" fontSize="14">A</text>
-          <text x="30" y="55" fontSize="14">B</text>
-          <text x="190" y="190" fontSize="14">C</text>
-          <text x="30" y="175" fontSize="14">D</text>
-          <text x="85" y="115" fontSize="14">E</text>
-          <AngleArc cx={180} cy={50} r={25} startAngle={143} endAngle={180} label="130°" labelOffset={15} />
-          <AngleArc cx={180} cy={170} r={25} startAngle={180} endAngle={217} label="140°" labelOffset={15} />
-          <AngleArc cx={100} cy={110} r={20} startAngle={323} endAngle={37} label="" labelOffset={15} isHighlighted={showHint} />
-          {showHint && <line x1="60" y1="110" x2="260" y2="110" stroke="red" strokeWidth="1.5" strokeDasharray="5,5" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F1-25',
-      difficulty: '難',
-      level: 'F1',
-      title: '多邊形內角和 (Algebra)',
-      text: '一個 n 邊形的內角和是 1080°，求 n。',
-      answer: 8,
-      steps: [
-        '(n - 2) × 180° = 1080°',
-        'n - 2 = 6',
-        'n = 8'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 225,57 252,122 225,187 160,214 95,187 68,122 95,57" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="160" y="122" fontSize="16" textAnchor="middle">n 邊形</text>
-          <text x="160" y="142" fontSize="14" textAnchor="middle">內角和 = 1080°</text>
+          <line x1="40" y1="80" x2="300" y2="80" stroke="black" strokeWidth="1.5" />
+          <line x1="20" y1="160" x2="300" y2="160" stroke="black" strokeWidth="1.5" />
+          <polygon points="180,75 190,80 180,85" fill="black" />
+          <polygon points="180,155 190,160 180,165" fill="black" />
+          <line x1="148" y1="40" x2="40" y2="160" stroke="black" strokeWidth="1.5" />
+          <line x1="148" y1="40" x2="217.3" y2="160" stroke="black" strokeWidth="1.5" />
+          <line x1="217.3" y1="160" x2="289.3" y2="80" stroke="black" strokeWidth="1.5" />
+          <text x="145" y="30" fontSize="14">A</text>
+          <text x="25" y="175" fontSize="14">B</text>
+          <text x="210" y="180" fontSize="14">C</text>
+          <text x="295" y="75" fontSize="14">D</text>
+          <text x="40" y="75" fontSize="14">E</text>
+          <text x="295" y="175" fontSize="14">F</text>
+          <text x="105" y="70" fontSize="14">G</text>
+          <text x="175" y="70" fontSize="14">H</text>
+          <AngleArc cx={112} cy={80} r={20} startAngle={132} endAngle={180} label="4f" labelOffset={20} />
+          <AngleArc cx={148} cy={40} r={25} startAngle={60} endAngle={132} label="6f" labelOffset={20} />
+          <AngleArc cx={217.3} cy={160} r={20} startAngle={180} endAngle={240} label="5f" labelOffset={20} />
+          <AngleArc cx={217.3} cy={160} r={25} startAngle={312} endAngle={360} label="48°" labelOffset={20} />
         </svg>
       )
     }
@@ -994,38 +781,56 @@ const QUESTIONS = {
       difficulty: '淺',
       level: 'F2',
       title: '多邊形內角和 (∠ sum of polygon)',
-      text: '求一個正八邊形的內角。',
-      answer: 135,
+      text: '圖中，ABCD 為四邊形。求 x。',
+      answer: 125,
       steps: [
-        '內角和 = (n - 2) × 180°',
-        '內角和 = (8 - 2) × 180° = 1080°',
-        '每個內角 = 1080° ÷ 8 = 135°'
+        'x + 75° + 95° + 65° = (4 - 2) × 180° (多邊形內角和)',
+        'x + 235° = 360°',
+        'x = 125°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 214,52 236,106 214,160 160,182 106,160 84,106 106,52" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="106" cy="160" r="3" fill="black" />
-          <AngleArc cx={106} cy={160} r={20} startAngle={292.5} endAngle={67.5} label="" labelOffset={15} isHighlighted={showHint} />
+          <polygon points="80,60 260,60 200,180 100,150" fill="none" stroke="black" strokeWidth="1.5" />
+          <text x="65" y="55" fontSize="14">A</text>
+          <text x="265" y="55" fontSize="14">D</text>
+          <text x="205" y="195" fontSize="14">C</text>
+          <text x="80" y="165" fontSize="14">B</text>
+          <AngleArc cx={80} cy={60} r={20} startAngle={0} endAngle={77.5} label="75°" labelOffset={20} />
+          <AngleArc cx={260} cy={60} r={20} startAngle={116.6} endAngle={180} label="65°" labelOffset={20} />
+          <AngleArc cx={200} cy={180} r={20} startAngle={196.7} endAngle={296.6} label="95°" labelOffset={20} />
+          <AngleArc cx={100} cy={150} r={20} startAngle={257.5} endAngle={16.7} label="x" labelOffset={20} isHighlighted={showHint} />
         </svg>
       )
     },
     {
       id: 'F2-09',
-      difficulty: '中',
+      difficulty: '淺',
       level: 'F2',
       title: '多邊形外角和 (Sum of ext. ∠s of polygon)',
-      text: '一個正 n 邊形的每個外角是 40°，求 n。',
-      answer: 9,
+      text: '圖中，ABCDE 為五邊形。求 x。',
+      answer: 80,
       steps: [
-        '外角和 = 360°',
-        '360° ÷ n = 40°',
-        'n = 360 ÷ 40 = 9'
+        'x + 75° + 40° + 105° + 60° = 360° (多邊形外角和)',
+        'x + 280° = 360°',
+        'x = 80°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 225,57 252,122 225,187 160,214 95,187 68,122 95,57" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="160" y="122" fontSize="16" textAnchor="middle">正 n 邊形</text>
-          <text x="160" y="142" fontSize="14" textAnchor="middle">外角 = 40°</text>
+          <line x1="176" y1="63" x2="40" y2="126" stroke="black" strokeWidth="1.5" />
+          <line x1="85" y1="105" x2="108" y2="189" stroke="black" strokeWidth="1.5" />
+          <line x1="100" y1="160" x2="220" y2="160" stroke="black" strokeWidth="1.5" />
+          <line x1="180" y1="160" x2="272" y2="83" stroke="black" strokeWidth="1.5" />
+          <line x1="241" y1="109" x2="144" y2="40" stroke="black" strokeWidth="1.5" />
+          <text x="70" y="105" fontSize="14">A</text>
+          <text x="80" y="165" fontSize="14">B</text>
+          <text x="175" y="175" fontSize="14">C</text>
+          <text x="245" y="125" fontSize="14">D</text>
+          <text x="170" y="50" fontSize="14">E</text>
+          <AngleArc cx={85} cy={105} r={20} startAngle={74.7} endAngle={155.1} label="x" labelOffset={20} isHighlighted={showHint} />
+          <AngleArc cx={100} cy={160} r={20} startAngle={0} endAngle={74.7} label="75°" labelOffset={20} />
+          <AngleArc cx={180} cy={160} r={20} startAngle={320.1} endAngle={360} label="40°" labelOffset={20} />
+          <AngleArc cx={241} cy={109} r={20} startAngle={215.3} endAngle={320.1} label="105°" labelOffset={20} />
+          <AngleArc cx={176} cy={63} r={20} startAngle={155.1} endAngle={215.3} label="60°" labelOffset={20} />
         </svg>
       )
     },
@@ -1034,18 +839,27 @@ const QUESTIONS = {
       difficulty: '中',
       level: 'F2',
       title: '多邊形內角和 (Algebra)',
-      text: '一個 n 邊形的內角和是 1440°，求 n。',
-      answer: 10,
+      text: '圖中，ABCDE 為五邊形。求 x。',
+      answer: 45,
       steps: [
-        '(n - 2) × 180° = 1440°',
-        'n - 2 = 8',
-        'n = 10'
+        '3x + 90° + 3x + 3x + x = (5 - 2) × 180° (多邊形內角和)',
+        '10x + 90° = 540°',
+        '10x = 450°',
+        'x = 45°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 225,57 252,122 225,187 160,214 95,187 68,122 95,57" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="160" y="122" fontSize="16" textAnchor="middle">n 邊形</text>
-          <text x="160" y="142" fontSize="14" textAnchor="middle">內角和 = 1440°</text>
+          <polygon points="120,80 80,140 140,180 200,180 280,120" fill="none" stroke="black" strokeWidth="1.5" />
+          <text x="110" y="70" fontSize="14">A</text>
+          <text x="65" y="145" fontSize="14">B</text>
+          <text x="135" y="200" fontSize="14">C</text>
+          <text x="200" y="200" fontSize="14">D</text>
+          <text x="290" y="125" fontSize="14">E</text>
+          <AngleArc cx={120} cy={80} r={20} startAngle={14.0} endAngle={123.7} label="3x" labelOffset={20} />
+          <polyline points="92.5,148.3 100.8,135.8 88.3,127.5" fill="none" stroke="black" strokeWidth="1.5" />
+          <AngleArc cx={140} cy={180} r={20} startAngle={213.7} endAngle={360} label="3x" labelOffset={20} />
+          <AngleArc cx={200} cy={180} r={20} startAngle={180} endAngle={323.1} label="3x" labelOffset={20} />
+          <AngleArc cx={280} cy={120} r={20} startAngle={143.1} endAngle={194.0} label="x" labelOffset={25} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -1068,137 +882,6 @@ const QUESTIONS = {
           <polygon points="160,30 225,57 252,122 225,187 160,214 95,187 68,122 95,57" fill="none" stroke="black" strokeWidth="1.5" />
           <text x="160" y="122" fontSize="16" textAnchor="middle">正多邊形</text>
           <text x="160" y="142" fontSize="14" textAnchor="middle">內角 = 3 × 外角</text>
-        </svg>
-      )
-    },
-    {
-      id: 'F2-12',
-      difficulty: '淺',
-      level: 'F2',
-      title: '全等三角形 (Congruent △s)',
-      text: '已知 △ABC ≅ △PQR。若 ∠A = 50° 及 ∠B = 60°，求 ∠R。',
-      answer: 70,
-      steps: [
-        '∠C = 180° - 50° - 60° = 70° (△內角和)',
-        '∠R = ∠C = 70° (全等△的對應角)'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="80,40 40,140 140,140" fill="none" stroke="black" strokeWidth="1.5" />
-          <polygon points="240,40 200,140 300,140" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="75" y="30" fontSize="14">A</text>
-          <text x="25" y="155" fontSize="14">B</text>
-          <text x="145" y="155" fontSize="14">C</text>
-          <text x="235" y="30" fontSize="14">P</text>
-          <text x="185" y="155" fontSize="14">Q</text>
-          <text x="305" y="155" fontSize="14">R</text>
-          <text x="160" y="100" fontSize="16" textAnchor="middle">≅</text>
-          <AngleArc cx={80} cy={40} r={20} startAngle={68} endAngle={112} label="50°" labelOffset={15} />
-          <AngleArc cx={40} cy={140} r={20} startAngle={338} endAngle={360} label="60°" labelOffset={15} />
-          <AngleArc cx={300} cy={140} r={20} startAngle={180} endAngle={248} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F2-13',
-      difficulty: '中',
-      level: 'F2',
-      title: '相似三角形 (Similar △s)',
-      text: '已知 △ABC ~ △XYZ。若 AB = 4, BC = 6, XY = 6，求 YZ。',
-      answer: 9,
-      steps: [
-        'AB / XY = BC / YZ (相似△的對應邊)',
-        '4 / 6 = 6 / YZ',
-        '4 × YZ = 36',
-        'YZ = 9'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="80,60 40,140 120,140" fill="none" stroke="black" strokeWidth="1.5" />
-          <polygon points="240,40 180,160 300,160" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="75" y="50" fontSize="14">A</text>
-          <text x="25" y="155" fontSize="14">B</text>
-          <text x="125" y="155" fontSize="14">C</text>
-          <text x="235" y="30" fontSize="14">X</text>
-          <text x="165" y="175" fontSize="14">Y</text>
-          <text x="305" y="175" fontSize="14">Z</text>
-          <text x="150" y="100" fontSize="16" textAnchor="middle">~</text>
-          <text x="45" y="100" fontSize="14">4</text>
-          <text x="80" y="160" fontSize="14">6</text>
-          <text x="195" y="100" fontSize="14">6</text>
-          {showHint && <line x1="180" y1="160" x2="300" y2="160" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F2-14',
-      difficulty: '難',
-      level: 'F2',
-      title: '相似三角形 (Similar △s)',
-      text: '圖中，AB // CD。已知 OA = 3, OB = 4, OD = 8，求 OC。',
-      answer: 6,
-      steps: [
-        '∠AOB = ∠COD (對頂角)',
-        '∠OAB = ∠OCD (內錯角，AB // CD)',
-        '∴ △OAB ~ △OCD (AAA)',
-        'OA / OC = OB / OD (相似△的對應邊)',
-        '3 / OC = 4 / 8',
-        '4 × OC = 24',
-        'OC = 6'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="60" y1="40" x2="180" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="180" x2="260" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="40" x2="260" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="40" x2="100" y2="180" stroke="black" strokeWidth="1.5" />
-          <circle cx="140" cy="96" r="3" fill="black" />
-          <text x="50" y="35" fontSize="14">A</text>
-          <text x="185" y="35" fontSize="14">B</text>
-          <text x="265" y="195" fontSize="14">C</text>
-          <text x="85" y="195" fontSize="14">D</text>
-          <text x="145" y="90" fontSize="14">O</text>
-          <text x="90" y="65" fontSize="14">3</text>
-          <text x="170" y="65" fontSize="14">4</text>
-          <text x="110" y="145" fontSize="14">8</text>
-          {showHint && <line x1="140" y1="96" x2="260" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F2-15',
-      difficulty: '難',
-      level: 'F2',
-      title: '相似三角形 (Similar △s)',
-      text: '圖中，∠ABC = ∠ADE。已知 AD = 4, DB = 6, AE = 5，求 EC。',
-      answer: 3,
-      steps: [
-        '∠A = ∠A (公共角)',
-        '∠ABC = ∠ADE (已知)',
-        '∴ △ABC ~ △ADE (AAA)',
-        'AB / AD = AC / AE (相似△的對應邊)',
-        '(4 + 6) / 4 = (5 + EC) / 5',
-        '10 / 4 = (5 + EC) / 5',
-        '50 = 4(5 + EC)',
-        '50 = 20 + 4EC',
-        '30 = 4EC',
-        'EC = 7.5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 60,180 260,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="120" y1="90" x2="200" y2="90" stroke="black" strokeWidth="1.5" />
-          <text x="155" y="20" fontSize="14">A</text>
-          <text x="45" y="195" fontSize="14">B</text>
-          <text x="270" y="195" fontSize="14">C</text>
-          <text x="105" y="85" fontSize="14">D</text>
-          <text x="210" y="85" fontSize="14">E</text>
-          <text x="130" y="60" fontSize="14">4</text>
-          <text x="80" y="140" fontSize="14">6</text>
-          <text x="185" y="60" fontSize="14">5</text>
-          <AngleArc cx={60} cy={180} r={20} startAngle={303.7} endAngle={360} label="" labelOffset={15} />
-          <AngleArc cx={120} cy={90} r={20} startAngle={303.7} endAngle={360} label="" labelOffset={15} />
-          {showHint && <line x1="200" y1="90" x2="260" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
         </svg>
       )
     },
@@ -1306,19 +989,38 @@ const QUESTIONS = {
       id: 'F2-20',
       difficulty: '中',
       level: 'F2',
-      title: '多邊形外角和 (Sum of ext. ∠s of polygon)',
-      text: '一個正 n 邊形的每個外角是 30°，求 n。',
-      answer: 12,
+      title: '平行線與多邊形外角 (Parallel lines & ext. ∠s)',
+      text: '圖中，ABCDE 為五邊形，且 AE // CD。求 x + y。',
+      answer: 165,
       steps: [
-        '外角和 = 360°',
-        '360° ÷ n = 30°',
-        'n = 360 ÷ 30 = 12'
+        'AE // CD',
+        'x = 105° (平行線性質)',
+        '多邊形外角和 = 360°',
+        '35° + 85° + y + x + (180° - 105°) = 360°',
+        '120° + y + 105° + 75° = 360°',
+        'y + 300° = 360°',
+        'y = 60°',
+        'x + y = 105° + 60° = 165°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 225,57 252,122 225,187 160,214 95,187 68,122 95,57" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="160" y="122" fontSize="16" textAnchor="middle">正 n 邊形</text>
-          <text x="160" y="142" fontSize="14" textAnchor="middle">外角 = 30°</text>
+          <line x1="60" y1="60" x2="260" y2="60" stroke="black" strokeWidth="1.5" />
+          <line x1="40" y1="157" x2="280" y2="157" stroke="black" strokeWidth="1.5" />
+          <line x1="100" y1="60" x2="14.5" y2="120" stroke="black" strokeWidth="1.5" />
+          <line x1="43" y1="100" x2="91" y2="185.5" stroke="black" strokeWidth="1.5" />
+          <line x1="246" y1="157" x2="220" y2="60" stroke="black" strokeWidth="1.5" />
+          <polygon points="160,55 170,60 160,65" fill="black" />
+          <polygon points="160,152 170,157 160,162" fill="black" />
+          <text x="100" y="50" fontSize="14">A</text>
+          <text x="25" y="100" fontSize="14">B</text>
+          <text x="55" y="175" fontSize="14">C</text>
+          <text x="246" y="175" fontSize="14">D</text>
+          <text x="225" y="50" fontSize="14">E</text>
+          <AngleArc cx={100} cy={60} r={20} startAngle={145} endAngle={180} label="35°" labelOffset={25} />
+          <AngleArc cx={43} cy={100} r={20} startAngle={60.7} endAngle={145} label="85°" labelOffset={25} />
+          <AngleArc cx={75} cy={157} r={20} startAngle={0} endAngle={60.7} label="y" labelOffset={20} isHighlighted={showHint} />
+          <AngleArc cx={246} cy={157} r={20} startAngle={255} endAngle={360} label="x" labelOffset={20} isHighlighted={showHint} />
+          <AngleArc cx={220} cy={60} r={20} startAngle={75} endAngle={180} label="105°" labelOffset={25} />
         </svg>
       )
     },
@@ -1394,67 +1096,211 @@ const QUESTIONS = {
     },
     {
       id: 'F2-24',
-      difficulty: '中',
+      difficulty: '淺',
       level: 'F2',
-      title: '相似三角形 (Similar △s)',
-      text: '已知 △ABC ~ △XYZ。若 AB = 5, BC = 8, XY = 10，求 YZ。',
-      answer: 16,
+      title: '等腰三角形 (Isos. △)',
+      text: '圖中，△ABC 中，AB = AC。已知 ∠A = 40°，求 ∠B。',
+      answer: 70,
       steps: [
-        'AB / XY = BC / YZ (相似△的對應邊)',
-        '5 / 10 = 8 / YZ',
-        '1 / 2 = 8 / YZ',
-        'YZ = 16'
+        '∠B = ∠C (等腰△底角)',
+        '∠A + ∠B + ∠C = 180° (△內角和)',
+        '40° + 2∠B = 180°',
+        '2∠B = 140°',
+        '∠B = 70°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="80,60 40,140 120,140" fill="none" stroke="black" strokeWidth="1.5" />
-          <polygon points="240,40 180,160 300,160" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="75" y="50" fontSize="14">A</text>
-          <text x="25" y="155" fontSize="14">B</text>
-          <text x="125" y="155" fontSize="14">C</text>
-          <text x="235" y="30" fontSize="14">X</text>
-          <text x="165" y="175" fontSize="14">Y</text>
-          <text x="305" y="175" fontSize="14">Z</text>
-          <text x="150" y="100" fontSize="16" textAnchor="middle">~</text>
-          <text x="45" y="100" fontSize="14">5</text>
-          <text x="80" y="160" fontSize="14">8</text>
-          <text x="195" y="100" fontSize="14">10</text>
-          {showHint && <line x1="180" y1="160" x2="300" y2="160" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
+          <polygon points="160,40 100,180 220,180" fill="none" stroke="black" strokeWidth="1.5" />
+          <circle cx="160" cy="40" r="3" fill="black" />
+          <circle cx="100" cy="180" r="3" fill="black" />
+          <circle cx="220" cy="180" r="3" fill="black" />
+          <text x="155" y="30" fontSize="14">A</text>
+          <text x="85" y="195" fontSize="14">B</text>
+          <text x="225" y="195" fontSize="14">C</text>
+          <line x1="123" y1="107" x2="137" y2="113" stroke="black" strokeWidth="1.5" />
+          <line x1="197" y1="107" x2="183" y2="113" stroke="black" strokeWidth="1.5" />
+          <AngleArc cx={160} cy={40} r={30} startAngle={67} endAngle={113} label="40°" labelOffset={15} />
+          <AngleArc cx={100} cy={180} r={25} startAngle={293} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
     {
       id: 'F2-25',
-      difficulty: '難',
+      difficulty: '中',
       level: 'F2',
-      title: '相似三角形 (Similar △s)',
-      text: '圖中，AB // CD。已知 OA = 4, OB = 5, OD = 10，求 OC。',
-      answer: 8,
+      title: '等腰三角形 (Isos. △)',
+      text: '圖中，△ABC 中，AB = AC。已知 ∠B = 65°，求 ∠A。',
+      answer: 50,
       steps: [
-        '∠AOB = ∠COD (對頂角)',
-        '∠OAB = ∠OCD (內錯角，AB // CD)',
-        '∴ △OAB ~ △OCD (AAA)',
-        'OA / OC = OB / OD (相似△的對應邊)',
-        '4 / OC = 5 / 10',
-        '4 / OC = 1 / 2',
-        'OC = 8'
+        '∠C = ∠B = 65° (等腰△底角)',
+        '∠A + ∠B + ∠C = 180° (△內角和)',
+        '∠A + 65° + 65° = 180°',
+        '∠A = 50°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="80" y1="60" x2="180" y2="60" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="180" x2="260" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="80" y1="60" x2="260" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="60" x2="60" y2="180" stroke="black" strokeWidth="1.5" />
-          <circle cx="140" cy="100" r="3" fill="black" />
-          <text x="70" y="50" fontSize="14">A</text>
-          <text x="185" y="50" fontSize="14">B</text>
-          <text x="265" y="195" fontSize="14">C</text>
-          <text x="45" y="195" fontSize="14">D</text>
-          <text x="145" y="95" fontSize="14">O</text>
-          <text x="100" y="75" fontSize="14">4</text>
-          <text x="165" y="75" fontSize="14">5</text>
-          <text x="90" y="145" fontSize="14">10</text>
-          {showHint && <line x1="140" y1="100" x2="260" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
+          <polygon points="160,40 100,180 220,180" fill="none" stroke="black" strokeWidth="1.5" />
+          <circle cx="160" cy="40" r="3" fill="black" />
+          <circle cx="100" cy="180" r="3" fill="black" />
+          <circle cx="220" cy="180" r="3" fill="black" />
+          <text x="155" y="30" fontSize="14">A</text>
+          <text x="85" y="195" fontSize="14">B</text>
+          <text x="225" y="195" fontSize="14">C</text>
+          <line x1="123" y1="107" x2="137" y2="113" stroke="black" strokeWidth="1.5" />
+          <line x1="197" y1="107" x2="183" y2="113" stroke="black" strokeWidth="1.5" />
+          <AngleArc cx={100} cy={180} r={25} startAngle={293} endAngle={360} label="65°" labelOffset={15} />
+          <AngleArc cx={160} cy={40} r={30} startAngle={67} endAngle={113} label="" labelOffset={15} isHighlighted={showHint} />
+        </svg>
+      )
+    },
+    {
+      id: 'F2-26',
+      difficulty: '中',
+      level: 'F2',
+      title: '等邊三角形 (Equil. △)',
+      text: '圖中，△ABC 是一個等邊三角形。求 ∠A。',
+      answer: 60,
+      steps: [
+        '∠A = ∠B = ∠C (等邊△性質)',
+        '∠A + ∠B + ∠C = 180° (△內角和)',
+        '3∠A = 180°',
+        '∠A = 60°'
+      ],
+      renderSVG: (showHint) => (
+        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
+          <polygon points="160,40 80,178.6 240,178.6" fill="none" stroke="black" strokeWidth="1.5" />
+          <circle cx="160" cy="40" r="3" fill="black" />
+          <circle cx="80" cy="178.6" r="3" fill="black" />
+          <circle cx="240" cy="178.6" r="3" fill="black" />
+          <text x="155" y="30" fontSize="14">A</text>
+          <text x="65" y="195" fontSize="14">B</text>
+          <text x="245" y="195" fontSize="14">C</text>
+          <line x1="114" y1="106" x2="126" y2="113" stroke="black" strokeWidth="1.5" />
+          <line x1="194" y1="113" x2="206" y2="106" stroke="black" strokeWidth="1.5" />
+          <line x1="160" y1="172" x2="160" y2="186" stroke="black" strokeWidth="1.5" />
+          <AngleArc cx={160} cy={40} r={30} startAngle={60} endAngle={120} label="" labelOffset={15} isHighlighted={showHint} />
+        </svg>
+      )
+    },
+    {
+      id: 'F2-27',
+      difficulty: '難',
+      level: 'F2',
+      title: '三角形外角 (Ext. ∠ of △)',
+      text: '圖中，△ABC 的邊 BC 延長至 D。已知 ∠A = 55° 及 ∠ACD = 120°，求 ∠B。',
+      answer: 65,
+      steps: [
+        '∠A + ∠B = ∠ACD (△外角)',
+        '55° + ∠B = 120°',
+        '∠B = 65°'
+      ],
+      renderSVG: (showHint) => (
+        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
+          <line x1="60" y1="160" x2="260" y2="160" stroke="black" strokeWidth="1.5" />
+          <polygon points="140,40 60,160 180,160" fill="none" stroke="black" strokeWidth="1.5" />
+          <circle cx="140" cy="40" r="3" fill="black" />
+          <circle cx="60" cy="160" r="3" fill="black" />
+          <circle cx="180" cy="160" r="3" fill="black" />
+          <text x="135" y="30" fontSize="14">A</text>
+          <text x="45" y="175" fontSize="14">B</text>
+          <text x="175" y="180" fontSize="14">C</text>
+          <text x="265" y="175" fontSize="14">D</text>
+          <AngleArc cx={140} cy={40} r={25} startAngle={72} endAngle={124} label="55°" labelOffset={15} />
+          <AngleArc cx={180} cy={160} r={20} startAngle={252} endAngle={360} label="120°" labelOffset={15} />
+          <AngleArc cx={60} cy={160} r={25} startAngle={304} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
+        </svg>
+      )
+    },
+    {
+      id: 'F2-28',
+      difficulty: '難',
+      level: 'F2',
+      title: '三角形外角 (Ext. ∠ of △)',
+      text: '圖中，△ABC 的邊 BC 延長至 D。已知 ∠B = 45° 及 ∠ACD = 110°，求 ∠A。',
+      answer: 65,
+      steps: [
+        '∠A + ∠B = ∠ACD (△外角)',
+        '∠A + 45° = 110°',
+        '∠A = 65°'
+      ],
+      renderSVG: (showHint) => (
+        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
+          <line x1="60" y1="160" x2="260" y2="160" stroke="black" strokeWidth="1.5" />
+          <polygon points="140,40 60,160 180,160" fill="none" stroke="black" strokeWidth="1.5" />
+          <circle cx="140" cy="40" r="3" fill="black" />
+          <circle cx="60" cy="160" r="3" fill="black" />
+          <circle cx="180" cy="160" r="3" fill="black" />
+          <text x="135" y="30" fontSize="14">A</text>
+          <text x="45" y="175" fontSize="14">B</text>
+          <text x="175" y="180" fontSize="14">C</text>
+          <text x="265" y="175" fontSize="14">D</text>
+          <AngleArc cx={60} cy={160} r={25} startAngle={304} endAngle={360} label="45°" labelOffset={15} />
+          <AngleArc cx={180} cy={160} r={20} startAngle={252} endAngle={360} label="110°" labelOffset={15} />
+          <AngleArc cx={140} cy={40} r={25} startAngle={72} endAngle={124} label="" labelOffset={15} isHighlighted={showHint} />
+        </svg>
+      )
+    },
+    {
+      id: 'F2-29',
+      difficulty: '難',
+      level: 'F2',
+      title: '多邊形內角和 (∠ sum of polygon)',
+      text: '求一個正五邊形的內角。',
+      answer: 108,
+      steps: [
+        '內角和 = (n - 2) × 180°',
+        '內角和 = (5 - 2) × 180° = 540°',
+        '每個內角 = 540° ÷ 5 = 108°'
+      ],
+      renderSVG: (showHint) => (
+        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
+          <polygon points="160,30 240,88 209,183 111,183 80,88" fill="none" stroke="black" strokeWidth="1.5" />
+          <circle cx="160" cy="30" r="3" fill="black" />
+          <circle cx="240" cy="88" r="3" fill="black" />
+          <circle cx="209" cy="183" r="3" fill="black" />
+          <circle cx="111" cy="183" r="3" fill="black" />
+          <circle cx="80" cy="88" r="3" fill="black" />
+          <AngleArc cx={111} cy={183} r={25} startAngle={252} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
+        </svg>
+      )
+    },
+    {
+      id: 'F2-30',
+      difficulty: '難',
+      level: 'F2',
+      title: '多邊形外角和 (Sum of ext. ∠s of polygon)',
+      text: '求一個正六邊形的外角。',
+      answer: 60,
+      steps: [
+        '外角和 = 360°',
+        '每個外角 = 360° ÷ 6 = 60°'
+      ],
+      renderSVG: (showHint) => (
+        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
+          <polygon points="160,30 225,68 225,143 160,180 95,143 95,68" fill="none" stroke="black" strokeWidth="1.5" />
+          <line x1="160" y1="180" x2="220" y2="214" stroke="black" strokeWidth="1.5" />
+          <circle cx="160" cy="180" r="3" fill="black" />
+          <AngleArc cx={160} cy={180} r={25} startAngle={330} endAngle={390} label="" labelOffset={15} isHighlighted={showHint} />
+        </svg>
+      )
+    },
+    {
+      id: 'F2-31',
+      difficulty: '難',
+      level: 'F2',
+      title: '多邊形內角和 (Algebra)',
+      text: '一個 n 邊形的內角和是 1080°，求 n。',
+      answer: 8,
+      steps: [
+        '(n - 2) × 180° = 1080°',
+        'n - 2 = 6',
+        'n = 8'
+      ],
+      renderSVG: (showHint) => (
+        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
+          <polygon points="160,30 225,57 252,122 225,187 160,214 95,187 68,122 95,57" fill="none" stroke="black" strokeWidth="1.5" />
+          <text x="160" y="122" fontSize="16" textAnchor="middle">n 邊形</text>
+          <text x="160" y="142" fontSize="14" textAnchor="middle">內角和 = 1080°</text>
         </svg>
       )
     }
@@ -1857,80 +1703,81 @@ const QUESTIONS = {
       id: 'F3-15',
       difficulty: '中',
       level: 'F3',
-      title: '形心 (Centroid)',
-      text: '圖中，G 是 △ABC 的形心，AD 是中線。已知 AG = 8，求 GD。',
-      answer: 4,
+      title: '正方形 (Square)',
+      text: '圖中，ABCD 為正方形，對角線 BD 與直線 EC 相交於 O。已知 ∠BOC = 75°，求 x。',
+      answer: 120,
       steps: [
-        'AG : GD = 2 : 1 (形心性質)',
-        '8 : GD = 2 : 1',
-        'GD = 4'
+        '∠OBC = 45° (正方形對角線性質)',
+        '∠OCB = 180° - 75° - 45° = 60° (△ 內角和)',
+        '∠DEC = ∠OCB = 60° (內錯角, AD // BC)',
+        'x = 180° - 60° = 120° (直線上的鄰角)'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 240,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="40" x2="160" y2="180" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="133.3" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="250" y="190" fontSize="14">C</text>
-          <text x="155" y="195" fontSize="14">D</text>
-          <text x="170" y="135" fontSize="14">G</text>
-          <text x="145" y="90" fontSize="14">8</text>
-          <line x1="120" y1="175" x2="120" y2="185" stroke="black" strokeWidth="1.5" />
-          <line x1="200" y1="175" x2="200" y2="185" stroke="black" strokeWidth="1.5" />
-          {showHint && <line x1="160" y1="133.3" x2="160" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
+          <polygon points="80,40 240,40 240,200 80,200" fill="none" stroke="black" strokeWidth="1.5" />
+          <line x1="80" y1="200" x2="240" y2="40" stroke="black" strokeWidth="1.5" />
+          <line x1="147.6" y1="40" x2="240" y2="200" stroke="black" strokeWidth="1.5" />
+          <text x="65" y="35" fontSize="14">A</text>
+          <text x="245" y="35" fontSize="14">D</text>
+          <text x="65" y="215" fontSize="14">B</text>
+          <text x="245" y="215" fontSize="14">C</text>
+          <text x="140" y="30" fontSize="14">E</text>
+          <text x="190" y="100" fontSize="14">O</text>
+          <AngleArc cx={181.4} cy={98.6} r={20} startAngle={60} endAngle={135} label="75°" labelOffset={20} />
+          <AngleArc cx={147.6} cy={40} r={20} startAngle={60} endAngle={180} label="x" labelOffset={20} isHighlighted={showHint} />
         </svg>
       )
     },
     {
       id: 'F3-16',
-      difficulty: '中',
+      difficulty: '淺',
       level: 'F3',
-      title: '內心 (Incenter)',
-      text: '圖中，I 是 △ABC 的內心。已知 ∠BAC = 70°，求 ∠IAC。',
-      answer: 35,
+      title: '長方形 (Rectangle)',
+      text: '圖中，PQRS 是一個長方形，對角線 PR 和 QS 相交於 T。已知 ∠PTS = 120°，求 ∠TQP。',
+      answer: 60,
       steps: [
-        'AI 平分 ∠BAC (內心性質)',
-        '∠IAC = ∠BAC ÷ 2',
-        '∠IAC = 70° ÷ 2 = 35°'
+        '∠PTQ = 180° - 120° = 60° (直線上的鄰角)',
+        'TP = TQ (長方形對角線互相平分且相等)',
+        '∠TQP = ∠TPQ (等腰 △ 底角)',
+        '∠TQP = (180° - 60°) ÷ 2 = 60° (△ 內角和)'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 240,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="40" x2="160" y2="130" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />
-          <circle cx="160" cy="130" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="250" y="190" fontSize="14">C</text>
-          <text x="165" y="145" fontSize="14">I</text>
-          <AngleArc cx={160} cy={40} r={30} startAngle={60} endAngle={120} label="70°" labelOffset={15} />
-          <AngleArc cx={160} cy={40} r={20} startAngle={90} endAngle={120} label="" labelOffset={15} isHighlighted={showHint} />
+          <polygon points="90.7,70 229.3,70 229.3,150 90.7,150" fill="none" stroke="black" strokeWidth="1.5" />
+          <line x1="90.7" y1="70" x2="229.3" y2="150" stroke="black" strokeWidth="1.5" />
+          <line x1="90.7" y1="150" x2="229.3" y2="70" stroke="black" strokeWidth="1.5" />
+          <text x="75" y="65" fontSize="14">P</text>
+          <text x="235" y="65" fontSize="14">S</text>
+          <text x="75" y="165" fontSize="14">Q</text>
+          <text x="235" y="165" fontSize="14">R</text>
+          <text x="155" y="130" fontSize="14">T</text>
+          <AngleArc cx={160} cy={110} r={20} startAngle={210} endAngle={330} label="120°" labelOffset={20} />
+          <AngleArc cx={90.7} cy={150} r={25} startAngle={270} endAngle={330} label="?" labelOffset={20} isHighlighted={showHint} />
         </svg>
       )
     },
     {
       id: 'F3-17',
-      difficulty: '淺',
+      difficulty: '中',
       level: 'F3',
-      title: '外心 (Circumcenter)',
-      text: '圖中，O 是 △ABC 的外心。已知 OA = 5，求 OB。',
-      answer: 5,
+      title: '菱形 (Rhombus)',
+      text: '圖中，ABCD 是一個菱形。已知 ∠ABC = 70°，求 x。',
+      answer: 55,
       steps: [
-        'OA = OB = OC (外心到各頂點距離相等)',
-        'OB = 5'
+        '∠BCD + 70° = 180° (同旁內角, AB // DC)',
+        '∠BCD = 110°',
+        'x = 110° ÷ 2 = 55° (菱形對角線平分內角)'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,160 240,160" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="110" r="3" fill="black" />
-          <line x1="160" y1="110" x2="160" y2="40" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />
-          <line x1="160" y1="110" x2="80" y2="160" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="170" fontSize="14">B</text>
-          <text x="250" y="170" fontSize="14">C</text>
-          <text x="170" y="115" fontSize="14">O</text>
-          <text x="145" y="80" fontSize="14">5</text>
-          {showHint && <line x1="160" y1="110" x2="80" y2="160" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
+          <polygon points="113.9,48.4 253.9,48.4 206,180 66,180" fill="none" stroke="black" strokeWidth="1.5" />
+          <line x1="113.9" y1="48.4" x2="206" y2="180" stroke="black" strokeWidth="1.5" />
+          <text x="100" y="45" fontSize="14">A</text>
+          <text x="260" y="45" fontSize="14">D</text>
+          <text x="50" y="190" fontSize="14">B</text>
+          <text x="215" y="190" fontSize="14">C</text>
+          <AngleArc cx={66} cy={180} r={25} startAngle={290} endAngle={360} label="70°" labelOffset={20} />
+          <AngleArc cx={206} cy={180} r={30} startAngle={235} endAngle={290} label="x" labelOffset={20} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -1938,29 +1785,27 @@ const QUESTIONS = {
       id: 'F3-18',
       difficulty: '中',
       level: 'F3',
-      title: '垂心 (Orthocenter)',
-      text: '圖中，H 是 △ABC 的垂心，AD ⊥ BC。已知 ∠B = 65°，求 ∠BAD。',
-      answer: 25,
+      title: '菱形 (Rhombus)',
+      text: '圖中，PQRS 是一個菱形。已知 ∠QSR = 80°，求 x + y 的值。',
+      answer: 170,
       steps: [
-        '∠ADB = 90° (垂心性質，AD 為高)',
-        '∠BAD + ∠B + ∠ADB = 180° (△內角和)',
-        '∠BAD + 65° + 90° = 180°',
-        '∠BAD = 25°'
+        'x = 90° (菱形對角線互相垂直)',
+        'y = 80° (菱形對角線平分內角)',
+        'x + y = 90° + 80° = 170°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 260,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="40" x2="160" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="80" y1="180" x2="200" y2="96" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="138" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="270" y="190" fontSize="14">C</text>
-          <text x="155" y="195" fontSize="14">D</text>
-          <text x="170" y="145" fontSize="14">H</text>
-          <polyline points="160,170 150,170 150,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <AngleArc cx={80} cy={180} r={25} startAngle={300} endAngle={360} label="65°" labelOffset={15} />
-          <AngleArc cx={160} cy={40} r={30} startAngle={120} endAngle={150} label="" labelOffset={15} isHighlighted={showHint} />
+          <polygon points="160,52.3 260,110 160,167.7 60,110" fill="none" stroke="black" strokeWidth="1.5" />
+          <line x1="60" y1="110" x2="260" y2="110" stroke="black" strokeWidth="1.5" />
+          <line x1="160" y1="52.3" x2="160" y2="167.7" stroke="black" strokeWidth="1.5" />
+          <text x="155" y="45" fontSize="14">P</text>
+          <text x="270" y="115" fontSize="14">S</text>
+          <text x="155" y="185" fontSize="14">R</text>
+          <text x="40" y="115" fontSize="14">Q</text>
+          <text x="140" y="125" fontSize="14">T</text>
+          <AngleArc cx={260} cy={110} r={35} startAngle={150} endAngle={180} label="80°" labelOffset={20} />
+          <AngleArc cx={260} cy={110} r={35} startAngle={180} endAngle={210} label="y" labelOffset={20} isHighlighted={showHint} />
+          <AngleArc cx={160} cy={110} r={20} startAngle={180} endAngle={270} label="x" labelOffset={20} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -1993,113 +1838,6 @@ const QUESTIONS = {
       )
     },
     {
-      id: 'F3-20',
-      difficulty: '淺',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '已知點 A(2, 3) 和點 B(8, 7)，求線段 AB 的中點 M 的 x 坐標。',
-      answer: 5,
-      steps: [
-        'x = (2 + 8) ÷ 2',
-        'x = 10 ÷ 2 = 5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <circle cx="100" cy="140" r="3" fill="black" />
-          <circle cx="220" cy="60" r="3" fill="black" />
-          <circle cx="160" cy="100" r="3" fill="black" />
-          <line x1="100" y1="140" x2="220" y2="60" stroke="black" strokeWidth="1.5" />
-          <text x="80" y="155" fontSize="14">A(2, 3)</text>
-          <text x="230" y="55" fontSize="14">B(8, 7)</text>
-          <text x="140" y="90" fontSize="14">M(x, y)</text>
-          {showHint && <line x1="160" y1="100" x2="160" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="4" strokeDasharray="4,4" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-21',
-      difficulty: '淺',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '已知直線 L1 通過 (1, 2) 和 (3, 6)。求 L1 的斜率。',
-      answer: 2,
-      steps: [
-        '斜率 m = (y2 - y1) / (x2 - x1)',
-        'm = (6 - 2) / (3 - 1)',
-        'm = 4 / 2 = 2'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <circle cx="100" cy="140" r="3" fill="black" />
-          <circle cx="180" cy="60" r="3" fill="black" />
-          <line x1="60" y1="180" x2="220" y2="20" stroke="black" strokeWidth="1.5" />
-          <text x="115" y="150" fontSize="14">(1, 2)</text>
-          <text x="195" y="70" fontSize="14">(3, 6)</text>
-          <text x="230" y="30" fontSize="14">L1</text>
-        </svg>
-      )
-    },
-    {
-      id: 'F3-22',
-      difficulty: '淺',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '直線 L1 的斜率為 3。直線 L2 平行於 L1，求 L2 的斜率。',
-      answer: 3,
-      steps: [
-        'm1 = m2 (平行線斜率相等)',
-        'L2 的斜率 = 3'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <line x1="80" y1="160" x2="140" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="140" y1="160" x2="200" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="145" y="35" fontSize="14">L1</text>
-          <text x="205" y="35" fontSize="14">L2</text>
-          <text x="80" y="100" fontSize="14">m = 3</text>
-        </svg>
-      )
-    },
-    {
-      id: 'F3-23',
-      difficulty: '中',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '直線 L1 的斜率為 2。直線 L2 垂直於 L1，求 L2 的斜率。',
-      answer: -0.5,
-      steps: [
-        'm1 × m2 = -1 (垂直線斜率性質)',
-        '2 × m2 = -1',
-        'm2 = -0.5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <line x1="80" y1="160" x2="160" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="60" x2="240" y2="180" stroke="black" strokeWidth="1.5" />
-          <text x="165" y="35" fontSize="14">L1</text>
-          <text x="245" y="175" fontSize="14">L2</text>
-          <text x="100" y="80" fontSize="14">m = 2</text>
-          <polyline points="120,100 130,106 124,116" fill="none" stroke="black" strokeWidth="1.5" />
-        </svg>
-      )
-    },
-    {
       id: 'F3-24',
       difficulty: '難',
       level: 'F3',
@@ -2126,32 +1864,6 @@ const QUESTIONS = {
           <text x="200" y="105" fontSize="14">4</text>
           <polyline points="160,100 170,100 170,110" fill="none" stroke="black" strokeWidth="1.5" />
           {showHint && <line x1="160" y1="30" x2="240" y2="110" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-25',
-      difficulty: '難',
-      level: 'F3',
-      title: '中點定理 (Mid-point Theorem)',
-      text: '圖中，D、E、F 分別是 △ABC 三邊的中點。已知 △ABC 的周長為 24，求 △DEF 的周長。',
-      answer: 12,
-      steps: [
-        'DE = BC/2, EF = AC/2, DF = AB/2 (中點定理)',
-        '△DEF 周長 = (BC + AC + AB) / 2',
-        '△DEF 周長 = 24 / 2 = 12'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 260,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <polygon points="120,110 210,110 170,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="270" y="190" fontSize="14">C</text>
-          <text x="100" y="105" fontSize="14">D</text>
-          <text x="220" y="105" fontSize="14">E</text>
-          <text x="165" y="195" fontSize="14">F</text>
-          {showHint && <polygon points="120,110 210,110 170,180" fill="rgba(255, 255, 0, 0.5)" stroke="none" />}
         </svg>
       )
     }

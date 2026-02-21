@@ -32,6 +32,74 @@ const Latex = ({ math, block = false }) => {
   return <span ref={containerRef} className={block ? "block text-center my-2" : "inline-block"} />;
 };
 
+// 混合文字+LaTeX 渲染（以 $...$ 標記 LaTeX 部分）
+const StepText = ({ text }) => {
+  const parts = text.split(/(\$[^$]+\$)/g);
+  return (
+    <span className="text-sm text-slate-700 leading-relaxed">
+      {parts.map((part, i) =>
+        part.startsWith('$') && part.endsWith('$')
+          ? <Latex key={i} math={part.slice(1, -1)} />
+          : <span key={i}>{part}</span>
+      )}
+    </span>
+  );
+};
+
+// ========================================
+// 虛擬鍵盤（因式分解專用）
+// ========================================
+const FactorizationKeyboard = ({ onInput, onDelete, onSubmit, disabled, questionVars = [] }) => {
+  const KEY = `h-11 rounded-lg font-medium text-base flex items-center justify-center select-none transition-all shadow-[0_2px_0_0_rgba(0,0,0,0.12)] active:shadow-none active:translate-y-[1px] border`;
+  const NUM = `${KEY} bg-white text-slate-700 border-slate-200`;
+  const VAR = `${KEY} bg-blue-50 text-blue-700 border-blue-200 font-mono italic text-lg`;
+  const OP  = `${KEY} bg-slate-100 text-slate-600 border-slate-200`;
+  const DEL = `${KEY} bg-red-50 text-red-500 border-red-100`;
+
+  // 只顯示題目中出現的 variable（最多5個，但目前題目最多3個）
+  const vars = questionVars.slice(0, 5);
+
+  return (
+    <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 mt-3">
+      {/* Variable row — 只顯示題目 variable */}
+      {vars.length > 0 && (
+        <div className="grid grid-cols-5 gap-1.5 mb-1.5">
+          {vars.map(v => (
+            <button key={v} onClick={() => onInput(v)} disabled={disabled} className={VAR}>{v}</button>
+          ))}
+          {/* 剩餘空位填空白佔位 */}
+          {Array.from({ length: 5 - vars.length }).map((_, i) => (
+            <div key={`sp-${i}`} />
+          ))}
+        </div>
+      )}
+      {/* 7 8 9 + DEL */}
+      <div className="grid grid-cols-5 gap-1.5 mb-1.5">
+        {[7, 8, 9].map(n => <button key={n} onClick={() => onInput(String(n))} disabled={disabled} className={NUM}>{n}</button>)}
+        <button onClick={() => onInput('+')} disabled={disabled} className={OP}>+</button>
+        <button onClick={onDelete} disabled={disabled} className={DEL}>DEL</button>
+      </div>
+      {/* 4 5 6 − x² */}
+      <div className="grid grid-cols-5 gap-1.5 mb-1.5">
+        {[4, 5, 6].map(n => <button key={n} onClick={() => onInput(String(n))} disabled={disabled} className={NUM}>{n}</button>)}
+        <button onClick={() => onInput('-')} disabled={disabled} className={OP}>−</button>
+        <button onClick={() => onInput('^2')} disabled={disabled} className={OP}>x²</button>
+      </div>
+      {/* 1 2 3 ( ) */}
+      <div className="grid grid-cols-5 gap-1.5 mb-1.5">
+        {[1, 2, 3].map(n => <button key={n} onClick={() => onInput(String(n))} disabled={disabled} className={NUM}>{n}</button>)}
+        <button onClick={() => onInput('(')} disabled={disabled} className={OP}>(</button>
+        <button onClick={() => onInput(')')} disabled={disabled} className={OP}>)</button>
+      </div>
+      {/* 0 (寬) + 提交 */}
+      <div className="grid grid-cols-5 gap-1.5">
+        <button onClick={() => onInput('0')} disabled={disabled} className={`${NUM} col-span-4`}>0</button>
+        <button onClick={onSubmit} disabled={disabled} className={`${KEY} bg-blue-500 text-white border-blue-600`}>↵</button>
+      </div>
+    </div>
+  );
+};
+
 // ========================================
 // 教學筆記頁面
 // ========================================
@@ -466,7 +534,13 @@ const QuizPage = ({ onBackToTeaching }) => {
             question: `${factor * a}${v1} ${sign} ${factor * b}${v2}`,
             answer: `${factor}(${a}${v1} ${sign} ${b}${v2})`,
             answerAlt: [`${factor}(${a}${v1}${sign}${b}${v2})`],
-            hint: `找出 ${factor * a} 和 ${factor * b} 的公因數`
+            hint: `找出 ${factor * a} 和 ${factor * b} 的公因數`,
+            steps: [
+              `找出 $${factor * a}$ 和 $${factor * b}$ 的公因數：$${factor}$`,
+              `$${factor * a}${v1} \\div ${factor} = ${a === 1 ? '' : a}${v1}$，$${factor * b}${v2} \\div ${factor} = ${b === 1 ? '' : b}${v2}$`,
+              `$${factor * a}${v1} ${sign} ${factor * b}${v2} = ${factor}(${a}${v1} ${sign} ${b}${v2})$`
+            ],
+            vars: [v1, v2]
           };
         },
         // 代數公因式
@@ -480,7 +554,13 @@ const QuizPage = ({ onBackToTeaching }) => {
             question: `${common}${v1} ${sign} ${common}${v2}`,
             answer: `${common}(${v1} ${sign} ${v2})`,
             answerAlt: [`${common}(${v1}${sign}${v2})`],
-            hint: `${common} 是公因式`
+            hint: `${common} 是公因式`,
+            steps: [
+              `公因式是 $${common}$`,
+              `$${common}${v1} \\div ${common} = ${v1}$，$${common}${v2} \\div ${common} = ${v2}$`,
+              `$${common}${v1} ${sign} ${common}${v2} = ${common}(${v1} ${sign} ${v2})$`
+            ],
+            vars: [common, v1, v2]
           };
         },
         // 負號公因式
@@ -493,7 +573,13 @@ const QuizPage = ({ onBackToTeaching }) => {
             question: `-${common}${v1} - ${common}${v2}`,
             answer: `-${common}(${v1} + ${v2})`,
             answerAlt: [`-${common}(${v1}+${v2})`],
-            hint: `抽出 -${common}`
+            hint: `抽出 -${common}`,
+            steps: [
+              `負號公因式：$-${common}$`,
+              `$-${common}${v1} \\div (-${common}) = ${v1}$，$-${common}${v2} \\div (-${common}) = ${v2}$`,
+              `$-${common}${v1} - ${common}${v2} = -${common}(${v1} + ${v2})$`
+            ],
+            vars: [common, v1, v2]
           };
         }
       ];
@@ -509,11 +595,19 @@ const QuizPage = ({ onBackToTeaching }) => {
           const common = ['p', 'q', 'r', 's'][Math.floor(Math.random() * 4)];
           const v1 = ['m', 'n', 'x', 'y'][Math.floor(Math.random() * 4)];
           const sign = Math.random() > 0.5 ? '+' : '-';
+          const innerSign = sign === '+' ? '-' : '+';
           return {
             question: `-${factor * a}${common}${v1} ${sign} ${factor * b}${common}`,
-            answer: `-${factor}${common}(${a}${v1} ${sign === '+' ? '-' : '+'} ${b})`,
+            answer: `-${factor}${common}(${a}${v1} ${innerSign} ${b})`,
             answerAlt: [],
-            hint: `公因式是 -${factor}${common}`
+            hint: `公因式是 -${factor}${common}`,
+            steps: [
+              `公因式是 $-${factor}${common}$`,
+              `$-${factor * a}${common}${v1} \\div (-${factor}${common}) = ${a === 1 ? '' : a}${v1}$`,
+              `$${sign === '+' ? '' : '-'}${factor * b}${common} \\div (-${factor}${common}) = ${sign === '+' ? '-' : ''}${b === 1 ? '' : b}$`,
+              `$= -${factor}${common}(${a}${v1} ${innerSign} ${b})$`
+            ],
+            vars: [common, v1]
           };
         },
         // 次方抽取
@@ -521,14 +615,19 @@ const QuizPage = ({ onBackToTeaching }) => {
           const base = ['r', 's', 'm', 'n'][Math.floor(Math.random() * 4)];
           const coef1 = [2, 3, 6][Math.floor(Math.random() * 3)];
           const coef2 = coef1 * 2;
-          const exp1 = 3;
-          const exp2 = 2;
           const var2 = ['s', 't', 'x', 'y'].filter(v => v !== base)[0];
           return {
             question: `${coef1}${base}^3 - ${coef2}${base}^2${var2}`,
             answer: `${coef1}${base}^2(${base} - 2${var2})`,
             answerAlt: [`${coef1}${base}²(${base}-2${var2})`],
-            hint: `抽出 ${coef1}${base}²`
+            hint: `抽出 ${coef1}${base}²`,
+            steps: [
+              `公因式是 $${coef1}${base}^2$`,
+              `$${coef1}${base}^3 \\div ${coef1}${base}^2 = ${base}$`,
+              `$${coef2}${base}^2${var2} \\div ${coef1}${base}^2 = 2${var2}$`,
+              `$${coef1}${base}^3 - ${coef2}${base}^2${var2} = ${coef1}${base}^2(${base} - 2${var2})$`
+            ],
+            vars: [base, var2]
           };
         }
       ];
@@ -552,20 +651,33 @@ const QuizPage = ({ onBackToTeaching }) => {
           question: `${c1}${a} + ${c1}${b} + ${c2}${a} + ${c2}${b}`,
           answer: `(${a} + ${b})(${c1} + ${c2})`,
           answerAlt: [`(${a}+${b})(${c1}+${c2})`, `(${c1}+${c2})(${a}+${b})`],
-          hint: `先分組：${c1}(${a}+${b}) + ${c2}(${a}+${b})`
+          hint: `先分組：${c1}(${a}+${b}) + ${c2}(${a}+${b})`,
+          steps: [
+            `分組：$(${c1}${a} + ${c1}${b}) + (${c2}${a} + ${c2}${b})$`,
+            `$= ${c1}(${a} + ${b}) + ${c2}(${a} + ${b})$`,
+            `取出公因式 $(${a} + ${b})$`,
+            `$= (${a} + ${b})(${c1} + ${c2})$`
+          ],
+          vars: [a, b, c1]
         };
       },
       // 已有括號
       () => {
         const a = Math.floor(Math.random() * 4) + 2;
         const b = Math.floor(Math.random() * 6) + 2;
-        const v = ['x', 'y', 'a', 'b'][Math.floor(Math.random() * 4)];
+        const v = ['x', 'a', 'b', 'm'][Math.floor(Math.random() * 4)];
         const sign = Math.random() > 0.5 ? '+' : '-';
         return {
           question: `(${a}${v} ${sign} ${b}) - (${a}${v} ${sign} ${b})y`,
           answer: `(${a}${v} ${sign} ${b})(1 - y)`,
           answerAlt: [`(${a}${v}${sign}${b})(1-y)`],
-          hint: `抽出共同括號 (${a}${v} ${sign} ${b})`
+          hint: `抽出共同括號 (${a}${v} ${sign} ${b})`,
+          steps: [
+            `$(${a}${v} ${sign} ${b})$ 是公因式`,
+            `$= (${a}${v} ${sign} ${b}) \\cdot 1 - (${a}${v} ${sign} ${b}) \\cdot y$`,
+            `$= (${a}${v} ${sign} ${b})(1 - y)$`
+          ],
+          vars: [v, 'y']
         };
       }
     ];
@@ -581,26 +693,22 @@ const QuizPage = ({ onBackToTeaching }) => {
       const scenarios = [
         // a = 1
         () => {
-          const r1 = Math.floor(Math.random() * 9) - 4; // -4 to 4
-          const r2 = Math.floor(Math.random() * 9) - 4;
+          const validRange = [-4, -3, -2, -1, 1, 2, 3, 4];
+          const r1 = validRange[Math.floor(Math.random() * validRange.length)];
+          const r2 = validRange[Math.floor(Math.random() * validRange.length)];
           const b = -(r1 + r2);
           const c = r1 * r2;
           const v = ['x', 'y', 'a', 'm'][Math.floor(Math.random() * 4)];
           const bStr = b === 0 ? '' : (b > 0 ? ` + ${b}${v}` : ` - ${Math.abs(b)}${v}`);
           const cStr = c === 0 ? '' : (c > 0 ? ` + ${c}` : ` - ${Math.abs(c)}`);
           
-          // 簡化 (x-0) 為 x
-          const ans1 = r1 === 0 ? v : (r1 > 0 ? `(${v}-${r1})` : `(${v}+${Math.abs(r1)})`);
-          const ans2 = r2 === 0 ? v : (r2 > 0 ? `(${v}-${r2})` : `(${v}+${Math.abs(r2)})`);
+          const ans1 = r1 > 0 ? `(${v}-${r1})` : `(${v}+${Math.abs(r1)})`;
+          const ans2 = r2 > 0 ? `(${v}-${r2})` : `(${v}+${Math.abs(r2)})`;
           
-          // 生成所有可能的正確答案格式
           const answerAlt = [];
-          // 次序相反
           answerAlt.push(`${ans2}${ans1}`);
-          // 不用空格
           answerAlt.push(`${ans1}${ans2}`.replace(/\s/g, ''));
           answerAlt.push(`${ans2}${ans1}`.replace(/\s/g, ''));
-          // 用空格
           answerAlt.push(`${ans1} ${ans2}`);
           answerAlt.push(`${ans2} ${ans1}`);
           
@@ -608,7 +716,13 @@ const QuizPage = ({ onBackToTeaching }) => {
             question: `${v}^2${bStr}${cStr}`,
             answer: `${ans1}${ans2}`,
             answerAlt: answerAlt,
-            hint: `找兩個數：相加得 ${b}，相乘得 ${c}`
+            hint: `找兩個數：相加得 ${b}，相乘得 ${c}`,
+            steps: [
+              `找兩數：相加得 $${b}$，相乘得 $${c}$`,
+              `兩數為 $${-r1}$ 和 $${-r2}$（即根的相反數）`,
+              `∴ $${v}^2${bStr}${cStr} = ${ans1}${ans2}$`
+            ],
+            vars: [v]
           };
         },
         // 平方差 a² - b²
@@ -619,7 +733,13 @@ const QuizPage = ({ onBackToTeaching }) => {
             question: `${v}^2 - ${a * a}`,
             answer: `(${v} + ${a})(${v} - ${a})`,
             answerAlt: [`(${v}-${a})(${v}+${a})`],
-            hint: `這是平方差：a² - b² = (a+b)(a-b)`
+            hint: `這是平方差：a² - b² = (a+b)(a-b)`,
+            steps: [
+              `平方差公式：$a^2 - b^2 = (a+b)(a-b)$`,
+              `$${v}^2 - ${a * a} = ${v}^2 - ${a}^2$`,
+              `$= (${v}+${a})(${v}-${a})$`
+            ],
+            vars: [v]
           };
         }
       ];
@@ -655,14 +775,20 @@ const QuizPage = ({ onBackToTeaching }) => {
           }
           
           // 構建詳細提示
-          const [a, b, c] = p.fmla;
-          const hint = `在 FMLA 01 輸入 ${a} EXE ${b} EXE ${c} EXE。然後會顯示兩個答案，分數答案的分母放前、分子相反數放後；整數答案直接用相反數`;
+          const [fA, fB, fC] = p.fmla;
+          const hint = `在 FMLA 01 輸入 ${fA} EXE ${fB} EXE ${fC} EXE。然後會顯示兩個答案，分數答案的分母放前、分子相反數放後；整數答案直接用相反數`;
           
           return {
             question: `${aCoef}${v1}^2${bStr}${cStr}`,
             answer: p.ans,
             answerAlt: answerAlt,
-            hint: hint
+            hint: hint,
+            steps: [
+              `用 FMLA 01 輸入 $a=${fA},\\ b=${fB},\\ c=${fC}$`,
+              `得出兩根後轉換成括號形式`,
+              `∴ $${aCoef}${v1}^2${bStr}${cStr} = ${p.ans}$`
+            ],
+            vars: [v1, v2]
           };
         }
       ];
@@ -708,9 +834,14 @@ const QuizPage = ({ onBackToTeaching }) => {
     setTimeout(() => inputRef.current?.focus(), 100);
   };
 
-  // 正規化答案（移除空格等）
+  // 正規化答案（移除空格、統一符號、處理係數1省略）
   const normalizeAnswer = (ans) => {
-    return ans.replace(/\s+/g, '').replace(/²/g, '^2').replace(/³/g, '^3').toLowerCase();
+    return ans
+      .replace(/\s+/g, '')
+      .replace(/²/g, '^2')
+      .replace(/³/g, '^3')
+      .toLowerCase()
+      .replace(/(?<![0-9])1([a-z])/g, '$1'); // 省略係數1，如 1y → y
   };
 
   // 提交答案
@@ -736,7 +867,7 @@ const QuizPage = ({ onBackToTeaching }) => {
           }
         }
       }));
-      setFeedback({ type: 'correct', msg: '答案正確！' });
+      setFeedback({ type: 'correct', msg: '答案正確！', answer: currentQuestion.answer, steps: currentQuestion.steps });
     } else {
       setLevelData(prev => ({
         ...prev,
@@ -751,7 +882,9 @@ const QuizPage = ({ onBackToTeaching }) => {
       setFeedback({ 
         type: 'incorrect', 
         msg: `答案是 ${currentQuestion.answer}`,
-        hint: currentQuestion.hint
+        hint: currentQuestion.hint,
+        answer: currentQuestion.answer,
+        steps: currentQuestion.steps
       });
     }
   };
@@ -1051,9 +1184,22 @@ const QuizPage = ({ onBackToTeaching }) => {
                     {feedback.type === 'correct' ? '正確！' : '不正確'}
                   </span>
                 </div>
-                <p className={feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}>
-                  {feedback.msg}
-                </p>
+                {/* 答案（LaTeX 渲染） */}
+                <div className={`flex items-center gap-2 text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
+                  <span className="font-medium">答案：</span>
+                  <span className="font-mono"><Latex math={feedback.answer || ''} /></span>
+                </div>
+                {/* 解題步驟 */}
+                {feedback.steps && feedback.steps.length > 0 && (
+                  <div className={`mt-3 border-t pt-2 ${feedback.type === 'correct' ? 'border-green-300' : 'border-red-300'}`}>
+                    <p className={`text-xs font-bold mb-1 ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>解題步驟：</p>
+                    {feedback.steps.map((step, i) => (
+                      <div key={i} className="mb-1">
+                        <StepText text={step} className={`text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`} />
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {feedback.hint && (
                   <p className="text-red-600 text-sm mt-2 border-t border-red-200 pt-2">
                     💡 提示：{feedback.hint}
@@ -1083,6 +1229,17 @@ const QuizPage = ({ onBackToTeaching }) => {
               )}
             </div>
           </div>
+        )}
+
+        {/* 虛擬鍵盤 */}
+        {currentQuestion && (
+          <FactorizationKeyboard
+            onInput={(val) => { if (!isAnswered) setUserAnswer(prev => prev + val); }}
+            onDelete={() => { if (!isAnswered) setUserAnswer(prev => prev.slice(0, -1)); }}
+            onSubmit={isAnswered ? handleNext : handleSubmit}
+            disabled={false}
+            questionVars={currentQuestion.vars || []}
+          />
         )}
 
         {/* 筆記彈出框 */}
