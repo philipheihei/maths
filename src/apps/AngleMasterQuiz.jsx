@@ -120,7 +120,7 @@ const QUESTIONS = {
           <text x="155" y="15" fontSize="14">A</text>
           <text x="240" y="175" fontSize="14">B</text>
           <text x="55" y="115" fontSize="14">C</text>
-          <text x="145" y="95" fontSize="14">O</text>
+          <text x="175" y="95" fontSize="14">O</text>
           <AngleArc cx={160} cy={110} r={25} startAngle={270} endAngle={400} label="130°" labelOffset={15} />
           <AngleArc cx={160} cy={110} r={18} startAngle={40} endAngle={180} label="140°" labelOffset={15} />
           <AngleArc cx={160} cy={110} r={20} startAngle={180} endAngle={270} label="" labelOffset={15} isHighlighted={showHint} />
@@ -160,7 +160,6 @@ const QUESTIONS = {
           
           <AngleArc cx={160} cy={80} r={20} startAngle={115} endAngle={180} label="65°" labelOffset={15} />
           <AngleArc cx={122.7} cy={160} r={20} startAngle={295} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
-          <AngleArc cx={122.7} cy={160} r={25} startAngle={0} endAngle={115} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -276,9 +275,9 @@ const QUESTIONS = {
           <text x="120" y="215" fontSize="14">C</text>
           <text x="200" y="15" fontSize="14">D</text>
           <text x="165" y="130" fontSize="14">O</text>
-          <AngleArc cx={160} cy={110} r={25} startAngle={108} endAngle={180} label="2x" labelOffset={15} />
+          <AngleArc cx={160} cy={110} r={20} startAngle={108} endAngle={180} label="2x" labelOffset={15} />
           <AngleArc cx={160} cy={110} r={25} startAngle={0} endAngle={108} label="3x" labelOffset={15} />
-          <AngleArc cx={160} cy={110} r={25} startAngle={180} endAngle={288} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={160} cy={110} r={30} startAngle={180} endAngle={288} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -306,10 +305,10 @@ const QUESTIONS = {
           <text x="125" y="30" fontSize="14">C</text>
           <text x="85" y="165" fontSize="14">D</text>
           <text x="165" y="130" fontSize="14">O</text>
-          <AngleArc cx={160} cy={110} r={25} startAngle={324} endAngle={360} label="x" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={160} cy={110} r={20} startAngle={324} endAngle={360} label="x" labelOffset={15} isHighlighted={showHint} />
           <AngleArc cx={160} cy={110} r={25} startAngle={252} endAngle={324} label="2x" labelOffset={15} />
-          <AngleArc cx={160} cy={110} r={25} startAngle={144} endAngle={252} label="3x" labelOffset={15} />
-          <AngleArc cx={160} cy={110} r={25} startAngle={0} endAngle={144} label="4x" labelOffset={15} />
+          <AngleArc cx={160} cy={110} r={30} startAngle={144} endAngle={252} label="3x" labelOffset={15} />
+          <AngleArc cx={160} cy={110} r={35} startAngle={0} endAngle={144} label="4x" labelOffset={15} />
         </svg>
       )
     },
@@ -346,15 +345,13 @@ const QUESTIONS = {
     },
     {
       id: 'F1-11',
-      difficulty: '中',
+      difficulty: '淺',
       level: 'F1',
       title: '平行線 (Mixed)',
       text: '圖中，AB // CD，直線 PQ 分別與 AB 和 CD 相交於 M 和 N。已知 ∠BMQ = 115°，求 ∠MNC。',
-      answer: 65,
+      answer: 115,
       steps: [
-        '∠BMN + ∠BMQ = 180° (直線上的鄰角)',
-        '∠BMN = 180° - 115° = 65°',
-        '∠MNC = ∠BMN = 65° (內錯角，AB // CD)'
+        '∠MNC = ∠BMQ = 115° (內錯角，AB // CD)'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
@@ -381,13 +378,13 @@ const QUESTIONS = {
       difficulty: '難',
       level: 'F1',
       title: '平行線 (Algebra)',
-      text: '圖中，AB // CD，直線 PQ 分別與 AB 和 CD 相交於 M 和 N。已知 ∠AMN = 2x 及 ∠MND = 3x，求 x。',
-      answer: 36,
+      text: '圖中，AB // CD，直線 PQ 分別與 AB 和 CD 相交於 M 和 N。已知 ∠AMN = 54° 及 ∠MND = 3x，求 x。',
+      answer: 42,
       steps: [
         '∠AMN + ∠MND = 180° (同旁內角，AB // CD)',
-        '2x + 3x = 180°',
-        '5x = 180°',
-        'x = 36°'
+        '54° + 3x = 180°',
+        '3x = 126°',
+        'x = 42°'
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
@@ -404,7 +401,7 @@ const QUESTIONS = {
           <text x="210" y="210" fontSize="14">Q</text>
           <text x="120" y="70" fontSize="14">M</text>
           <text x="185" y="150" fontSize="14">N</text>
-          <AngleArc cx={129.4} cy={80} r={20} startAngle={60} endAngle={180} label="2x" labelOffset={15} />
+          <AngleArc cx={129.4} cy={80} r={20} startAngle={60} endAngle={180} label="54°" labelOffset={15} />
           <AngleArc cx={176.5} cy={160} r={20} startAngle={240} endAngle={360} label="3x" labelOffset={15} />
         </svg>
       )
@@ -551,9 +548,9 @@ const QUESTIONS = {
           <text x="155" y="30" fontSize="14">A</text>
           <text x="65" y="195" fontSize="14">B</text>
           <text x="245" y="195" fontSize="14">C</text>
-          <line x1="113" y1="109" x2="127" y2="109" stroke="black" strokeWidth="1.5" />
-          <line x1="193" y1="109" x2="207" y2="109" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="173" x2="160" y2="185" stroke="black" strokeWidth="1.5" />
+          <line x1="114" y1="106" x2="126" y2="113" stroke="black" strokeWidth="1.5" />
+          <line x1="194" y1="113" x2="206" y2="106" stroke="black" strokeWidth="1.5" />
+          <line x1="160" y1="172" x2="160" y2="186" stroke="black" strokeWidth="1.5" />
           <AngleArc cx={160} cy={40} r={30} startAngle={60} endAngle={120} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
@@ -581,7 +578,7 @@ const QUESTIONS = {
           <text x="45" y="175" fontSize="14">B</text>
           <text x="175" y="180" fontSize="14">C</text>
           <text x="265" y="175" fontSize="14">D</text>
-          <AngleArc cx={140} cy={40} r={25} startAngle={56} endAngle={124} label="55°" labelOffset={15} />
+          <AngleArc cx={140} cy={40} r={25} startAngle={72} endAngle={124} label="55°" labelOffset={15} />
           <AngleArc cx={180} cy={160} r={20} startAngle={252} endAngle={360} label="120°" labelOffset={15} />
           <AngleArc cx={60} cy={160} r={25} startAngle={304} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
@@ -612,7 +609,7 @@ const QUESTIONS = {
           <text x="265" y="175" fontSize="14">D</text>
           <AngleArc cx={60} cy={160} r={25} startAngle={304} endAngle={360} label="45°" labelOffset={15} />
           <AngleArc cx={180} cy={160} r={20} startAngle={252} endAngle={360} label="110°" labelOffset={15} />
-          <AngleArc cx={140} cy={40} r={25} startAngle={56} endAngle={124} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={140} cy={40} r={25} startAngle={72} endAngle={124} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -636,7 +633,7 @@ const QUESTIONS = {
           <circle cx="209" cy="183" r="3" fill="black" />
           <circle cx="111" cy="183" r="3" fill="black" />
           <circle cx="80" cy="88" r="3" fill="black" />
-          <AngleArc cx={111} cy={183} r={25} startAngle={288} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={111} cy={183} r={25} startAngle={252} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -656,7 +653,7 @@ const QUESTIONS = {
           <polygon points="160,30 225,68 225,143 160,180 95,143 95,68" fill="none" stroke="black" strokeWidth="1.5" />
           <line x1="160" y1="180" x2="220" y2="214" stroke="black" strokeWidth="1.5" />
           <circle cx="160" cy="180" r="3" fill="black" />
-          <AngleArc cx={160} cy={180} r={25} startAngle={30} endAngle={330} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={160} cy={180} r={25} startAngle={330} endAngle={390} label="" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -677,6 +674,8 @@ const QUESTIONS = {
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
           <line x1="40" y1="50" x2="240" y2="50" stroke="black" strokeWidth="1.5" />
           <line x1="40" y1="170" x2="240" y2="170" stroke="black" strokeWidth="1.5" />
+          <polygon points="135,45 145,50 135,55" fill="black" />
+          <polygon points="135,165 145,170 135,175" fill="black" />
           <line x1="100" y1="50" x2="180" y2="110" stroke="black" strokeWidth="1.5" />
           <line x1="100" y1="170" x2="180" y2="110" stroke="black" strokeWidth="1.5" />
           <circle cx="100" cy="50" r="3" fill="black" />
@@ -711,6 +710,8 @@ const QUESTIONS = {
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
           <line x1="40" y1="50" x2="240" y2="50" stroke="black" strokeWidth="1.5" />
           <line x1="40" y1="170" x2="240" y2="170" stroke="black" strokeWidth="1.5" />
+          <polygon points="135,45 145,50 135,55" fill="black" />
+          <polygon points="135,165 145,170 135,175" fill="black" />
           <line x1="100" y1="50" x2="180" y2="110" stroke="black" strokeWidth="1.5" />
           <line x1="100" y1="170" x2="180" y2="110" stroke="black" strokeWidth="1.5" />
           <circle cx="100" cy="50" r="3" fill="black" />
@@ -747,6 +748,8 @@ const QUESTIONS = {
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
           <line x1="40" y1="50" x2="240" y2="50" stroke="black" strokeWidth="1.5" />
           <line x1="40" y1="170" x2="240" y2="170" stroke="black" strokeWidth="1.5" />
+          <polygon points="135,45 145,50 135,55" fill="black" />
+          <polygon points="135,165 145,170 135,175" fill="black" />
           <line x1="180" y1="50" x2="100" y2="110" stroke="black" strokeWidth="1.5" />
           <line x1="180" y1="170" x2="100" y2="110" stroke="black" strokeWidth="1.5" />
           <circle cx="180" cy="50" r="3" fill="black" />
