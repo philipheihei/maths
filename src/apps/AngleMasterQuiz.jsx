@@ -1438,20 +1438,20 @@ const QUESTIONS = {
       ],
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="60" y1="40" x2="180" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="180" x2="260" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="40" x2="260" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="40" x2="100" y2="180" stroke="black" strokeWidth="1.5" />
-          <circle cx="140" cy="96" r="3" fill="black" />
-          <text x="50" y="35" fontSize="14">A</text>
-          <text x="185" y="35" fontSize="14">B</text>
+          <line x1="80" y1="60" x2="180" y2="60" stroke="black" strokeWidth="1.5" />
+          <line x1="60" y1="180" x2="260" y2="180" stroke="black" strokeWidth="1.5" />
+          <line x1="80" y1="60" x2="260" y2="180" stroke="black" strokeWidth="1.5" />
+          <line x1="180" y1="60" x2="60" y2="180" stroke="black" strokeWidth="1.5" />
+          <circle cx="140" cy="100" r="3" fill="black" />
+          <text x="70" y="50" fontSize="14">A</text>
+          <text x="185" y="50" fontSize="14">B</text>
           <text x="265" y="195" fontSize="14">C</text>
-          <text x="85" y="195" fontSize="14">D</text>
-          <text x="145" y="90" fontSize="14">O</text>
-          <text x="90" y="65" fontSize="14">4</text>
-          <text x="170" y="65" fontSize="14">5</text>
-          <text x="110" y="145" fontSize="14">10</text>
-          {showHint && <line x1="140" y1="96" x2="260" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
+          <text x="45" y="195" fontSize="14">D</text>
+          <text x="145" y="95" fontSize="14">O</text>
+          <text x="100" y="75" fontSize="14">4</text>
+          <text x="165" y="75" fontSize="14">5</text>
+          <text x="90" y="145" fontSize="14">10</text>
+          {showHint && <line x1="140" y1="100" x2="260" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
         </svg>
       )
     }
@@ -1614,9 +1614,9 @@ const QUESTIONS = {
           <text x="224" y="192" fontSize="14">B</text>
           <text x="265" y="50" fontSize="14">C</text>
           <text x="82" y="50" fontSize="14">D</text>
-          <text x="160" y="130" fontSize="14">E</text>
-          <text x="100" y="125" fontSize="14">4</text>
-          <text x="180" y="155" fontSize="14">5</text>
+          <text x="160" y="105" fontSize="14">E</text>
+          <text x="105" y="140" fontSize="14">4</text>
+          <text x="195" y="140" fontSize="14">5</text>
           {showHint && <line x1="60" y1="175" x2="260" y2="55" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
         </svg>
       )
@@ -1666,9 +1666,8 @@ const QUESTIONS = {
           <text x="220" y="175" fontSize="14">B</text>
           <text x="220" y="50" fontSize="14">C</text>
           <text x="95" y="50" fontSize="14">D</text>
-          <text x="160" y="130" fontSize="14">E</text>
-          <AngleArc cx={160} cy={110} r={15} startAngle={90} endAngle={180} label="" labelOffset={15} isHighlighted={showHint} />
-          <polyline points="160,120 150,120 150,110" fill="none" stroke="black" strokeWidth="1.5" />
+          <text x="160" y="100" fontSize="14">E</text>
+          <AngleArc cx={160} cy={110} r={15} startAngle={45} endAngle={135} label="?" labelOffset={20} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -1690,12 +1689,10 @@ const QUESTIONS = {
           <text x="270" y="185" fontSize="14">C</text>
           <text x="210" y="50" fontSize="14">D</text>
           <text x="85" y="50" fontSize="14">A</text>
-          <AngleArc cx={100} cy={60} r={20} startAngle={110} endAngle={180} label="115°" labelOffset={15} />
-          <AngleArc cx={60} cy={170} r={20} startAngle={290} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
-          <line x1="140" y1="55" x2="160" y2="55" stroke="black" strokeWidth="1.5" />
-          <polygon points="160,55 155,52 155,58" fill="black" />
-          <line x1="150" y1="170" x2="170" y2="170" stroke="black" strokeWidth="1.5" />
-          <polygon points="170,170 165,167 165,173" fill="black" />
+          <AngleArc cx={100} cy={60} r={20} startAngle={0} endAngle={110} label="115°" labelOffset={15} />
+          <AngleArc cx={60} cy={170} r={20} startAngle={290} endAngle={360} label="?" labelOffset={15} isHighlighted={showHint} />
+          <polygon points="160,60 150,55 150,65" fill="black" />
+          <polygon points="170,170 160,165 160,175" fill="black" />
         </svg>
       )
     },
@@ -1772,624 +1769,14 @@ const QUESTIONS = {
           <text x="270" y="190" fontSize="14">C</text>
           <text x="100" y="105" fontSize="14">D</text>
           <text x="220" y="105" fontSize="14">E</text>
-          <AngleArc cx={120} cy={110} r={20} startAngle={0} endAngle={60} label="60°" labelOffset={15} />
-          <AngleArc cx={80} cy={180} r={20} startAngle={0} endAngle={60} label="" labelOffset={15} isHighlighted={showHint} />
-          <line x1="135" y1="75" x2="145" y2="75" stroke="black" strokeWidth="1.5" />
-          <line x1="95" y1="145" x2="105" y2="145" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="75" x2="190" y2="75" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="78" x2="190" y2="78" stroke="black" strokeWidth="1.5" />
-          <line x1="230" y1="145" x2="240" y2="145" stroke="black" strokeWidth="1.5" />
-          <line x1="230" y1="148" x2="240" y2="148" stroke="black" strokeWidth="1.5" />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-13',
-      difficulty: '中',
-      level: 'F3',
-      title: '截線定理 (Intercept Theorem)',
-      text: '圖中，L1 // L2 // L3。直線 AB 和 CD 分別與這三條平行線相交。已知 AB = BC，且 DE = 6，求 EF。',
-      answer: 6,
-      steps: [
-        '∵ L1 // L2 // L3 且 AB = BC',
-        '∴ DE = EF (截線定理)',
-        'EF = 6'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="60" x2="280" y2="60" stroke="black" strokeWidth="1.5" />
-          <line x1="40" y1="110" x2="280" y2="110" stroke="black" strokeWidth="1.5" />
-          <line x1="40" y1="160" x2="280" y2="160" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="40" x2="140" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="220" y1="40" x2="180" y2="180" stroke="black" strokeWidth="1.5" />
-          <text x="20" y="65" fontSize="14">L1</text>
-          <text x="20" y="115" fontSize="14">L2</text>
-          <text x="20" y="165" fontSize="14">L3</text>
-          <text x="90" y="55" fontSize="14">A</text>
-          <text x="105" y="105" fontSize="14">B</text>
-          <text x="120" y="175" fontSize="14">C</text>
-          <text x="225" y="55" fontSize="14">D</text>
-          <text x="205" y="105" fontSize="14">E</text>
-          <text x="190" y="175" fontSize="14">F</text>
-          <text x="220" y="85" fontSize="14">6</text>
-          <line x1="105" y1="85" x2="115" y2="85" stroke="black" strokeWidth="1.5" />
-          <line x1="115" y1="135" x2="125" y2="135" stroke="black" strokeWidth="1.5" />
-          {showHint && <line x1="200" y1="110" x2="185" y2="160" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-14',
-      difficulty: '難',
-      level: 'F3',
-      title: '截線定理 (Intercept Theorem)',
-      text: '圖中，L1 // L2 // L3。已知 AB = BC，DE = 2x + 1，EF = x + 5，求 x。',
-      answer: 4,
-      steps: [
-        'DE = EF (截線定理)',
-        '2x + 1 = x + 5',
-        'x = 4'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="60" x2="280" y2="60" stroke="black" strokeWidth="1.5" />
-          <line x1="40" y1="110" x2="280" y2="110" stroke="black" strokeWidth="1.5" />
-          <line x1="40" y1="160" x2="280" y2="160" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="40" x2="140" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="220" y1="40" x2="180" y2="180" stroke="black" strokeWidth="1.5" />
-          <text x="20" y="65" fontSize="14">L1</text>
-          <text x="20" y="115" fontSize="14">L2</text>
-          <text x="20" y="165" fontSize="14">L3</text>
-          <text x="90" y="55" fontSize="14">A</text>
-          <text x="105" y="105" fontSize="14">B</text>
-          <text x="120" y="175" fontSize="14">C</text>
-          <text x="225" y="55" fontSize="14">D</text>
-          <text x="205" y="105" fontSize="14">E</text>
-          <text x="190" y="175" fontSize="14">F</text>
-          <text x="220" y="85" fontSize="14">2x + 1</text>
-          <text x="205" y="135" fontSize="14">x + 5</text>
-          <line x1="105" y1="85" x2="115" y2="85" stroke="black" strokeWidth="1.5" />
-          <line x1="115" y1="135" x2="125" y2="135" stroke="black" strokeWidth="1.5" />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-15',
-      difficulty: '中',
-      level: 'F3',
-      title: '形心 (Centroid)',
-      text: '圖中，G 是 △ABC 的形心，AD 是中線。已知 AG = 8，求 GD。',
-      answer: 4,
-      steps: [
-        'AG : GD = 2 : 1 (形心性質)',
-        '8 : GD = 2 : 1',
-        'GD = 4'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 240,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="40" x2="160" y2="180" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="133.3" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="250" y="190" fontSize="14">C</text>
-          <text x="155" y="195" fontSize="14">D</text>
-          <text x="170" y="135" fontSize="14">G</text>
-          <text x="145" y="90" fontSize="14">8</text>
-          <line x1="120" y1="175" x2="120" y2="185" stroke="black" strokeWidth="1.5" />
-          <line x1="200" y1="175" x2="200" y2="185" stroke="black" strokeWidth="1.5" />
-          {showHint && <line x1="160" y1="133.3" x2="160" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-16',
-      difficulty: '中',
-      level: 'F3',
-      title: '內心 (Incenter)',
-      text: '圖中，I 是 △ABC 的內心。已知 ∠BAC = 70°，求 ∠IAC。',
-      answer: 35,
-      steps: [
-        'AI 平分 ∠BAC (內心性質)',
-        '∠IAC = ∠BAC ÷ 2',
-        '∠IAC = 70° ÷ 2 = 35°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 240,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="40" x2="160" y2="130" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />
-          <circle cx="160" cy="130" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="250" y="190" fontSize="14">C</text>
-          <text x="165" y="145" fontSize="14">I</text>
-          <AngleArc cx={160} cy={40} r={30} startAngle={60} endAngle={120} label="70°" labelOffset={15} />
-          <AngleArc cx={160} cy={40} r={20} startAngle={90} endAngle={120} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-17',
-      difficulty: '淺',
-      level: 'F3',
-      title: '外心 (Circumcenter)',
-      text: '圖中，O 是 △ABC 的外心。已知 OA = 5，求 OB。',
-      answer: 5,
-      steps: [
-        'OA = OB = OC (外心到各頂點距離相等)',
-        'OB = 5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,160 240,160" fill="none" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="110" r="3" fill="black" />
-          <line x1="160" y1="110" x2="160" y2="40" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />
-          <line x1="160" y1="110" x2="80" y2="160" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="170" fontSize="14">B</text>
-          <text x="250" y="170" fontSize="14">C</text>
-          <text x="170" y="115" fontSize="14">O</text>
-          <text x="145" y="80" fontSize="14">5</text>
-          {showHint && <line x1="160" y1="110" x2="80" y2="160" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-18',
-      difficulty: '中',
-      level: 'F3',
-      title: '垂心 (Orthocenter)',
-      text: '圖中，H 是 △ABC 的垂心，AD ⊥ BC。已知 ∠B = 65°，求 ∠BAD。',
-      answer: 25,
-      steps: [
-        '∠ADB = 90° (垂心性質，AD 為高)',
-        '∠BAD + ∠B + ∠ADB = 180° (△內角和)',
-        '∠BAD + 65° + 90° = 180°',
-        '∠BAD = 25°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 260,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="40" x2="160" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="80" y1="180" x2="200" y2="96" stroke="black" strokeWidth="1.5" />
-          <circle cx="160" cy="138" r="3" fill="black" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="270" y="190" fontSize="14">C</text>
-          <text x="155" y="195" fontSize="14">D</text>
-          <text x="170" y="145" fontSize="14">H</text>
-          <polyline points="160,170 150,170 150,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <AngleArc cx={80} cy={180} r={25} startAngle={300} endAngle={360} label="65°" labelOffset={15} />
-          <AngleArc cx={160} cy={40} r={30} startAngle={120} endAngle={150} label="" labelOffset={15} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-19',
-      difficulty: '淺',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '求點 A(1, 2) 和點 B(4, 6) 之間的距離。',
-      answer: 5,
-      steps: [
-        'AB = √[(4 - 1)² + (6 - 2)²]',
-        'AB = √[3² + 4²]',
-        'AB = √[9 + 16] = √25 = 5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <circle cx="100" cy="140" r="3" fill="black" />
-          <circle cx="220" cy="60" r="3" fill="black" />
-          <line x1="100" y1="140" x2="220" y2="60" stroke="black" strokeWidth="1.5" />
-          <text x="80" y="155" fontSize="14">A(1, 2)</text>
-          <text x="230" y="55" fontSize="14">B(4, 6)</text>
-          {showHint && <line x1="100" y1="140" x2="220" y2="140" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />}
-          {showHint && <line x1="220" y1="140" x2="220" y2="60" stroke="black" strokeWidth="1.5" strokeDasharray="4,4" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-20',
-      difficulty: '淺',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '已知點 A(2, 3) 和點 B(8, 7)，求線段 AB 的中點 M 的 x 坐標。',
-      answer: 5,
-      steps: [
-        'x = (2 + 8) ÷ 2',
-        'x = 10 ÷ 2 = 5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <circle cx="100" cy="140" r="3" fill="black" />
-          <circle cx="220" cy="60" r="3" fill="black" />
-          <circle cx="160" cy="100" r="3" fill="black" />
-          <line x1="100" y1="140" x2="220" y2="60" stroke="black" strokeWidth="1.5" />
-          <text x="80" y="155" fontSize="14">A(2, 3)</text>
-          <text x="230" y="55" fontSize="14">B(8, 7)</text>
-          <text x="140" y="90" fontSize="14">M(x, y)</text>
-          {showHint && <line x1="160" y1="100" x2="160" y2="180" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="4" strokeDasharray="4,4" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-21',
-      difficulty: '淺',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '已知直線 L1 通過 (1, 2) 和 (3, 6)。求 L1 的斜率。',
-      answer: 2,
-      steps: [
-        '斜率 m = (y2 - y1) / (x2 - x1)',
-        'm = (6 - 2) / (3 - 1)',
-        'm = 4 / 2 = 2'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <circle cx="100" cy="140" r="3" fill="black" />
-          <circle cx="180" cy="60" r="3" fill="black" />
-          <line x1="60" y1="180" x2="220" y2="20" stroke="black" strokeWidth="1.5" />
-          <text x="115" y="150" fontSize="14">(1, 2)</text>
-          <text x="195" y="70" fontSize="14">(3, 6)</text>
-          <text x="230" y="30" fontSize="14">L1</text>
-        </svg>
-      )
-    },
-    {
-      id: 'F3-22',
-      difficulty: '淺',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '直線 L1 的斜率為 3。直線 L2 平行於 L1，求 L2 的斜率。',
-      answer: 3,
-      steps: [
-        'm1 = m2 (平行線斜率相等)',
-        'L2 的斜率 = 3'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <line x1="80" y1="160" x2="140" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="140" y1="160" x2="200" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="145" y="35" fontSize="14">L1</text>
-          <text x="205" y="35" fontSize="14">L2</text>
-          <text x="80" y="100" fontSize="14">m = 3</text>
-        </svg>
-      )
-    },
-    {
-      id: 'F3-23',
-      difficulty: '中',
-      level: 'F3',
-      title: '坐標幾何 (Coordinate Geometry)',
-      text: '直線 L1 的斜率為 2。直線 L2 垂直於 L1，求 L2 的斜率。',
-      answer: -0.5,
-      steps: [
-        'm1 × m2 = -1 (垂直線斜率性質)',
-        '2 × m2 = -1',
-        'm2 = -0.5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <line x1="40" y1="180" x2="280" y2="180" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="200" x2="60" y2="40" stroke="black" strokeWidth="1.5" />
-          <text x="285" y="185" fontSize="14">x</text>
-          <text x="55" y="30" fontSize="14">y</text>
-          <line x1="80" y1="160" x2="160" y2="40" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="60" x2="240" y2="180" stroke="black" strokeWidth="1.5" />
-          <text x="165" y="35" fontSize="14">L1</text>
-          <text x="245" y="175" fontSize="14">L2</text>
-          <text x="100" y="80" fontSize="14">m = 2</text>
-          <polyline points="120,100 130,106 124,116" fill="none" stroke="black" strokeWidth="1.5" />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-24',
-      difficulty: '難',
-      level: 'F3',
-      title: '菱形 (Rhombus)',
-      text: '圖中，ABCD 為菱形，對角線 AC = 6，BD = 8。求菱形的周長。',
-      answer: 20,
-      steps: [
-        '對角線互相垂直平分，設交點為 E',
-        'AE = 3, BE = 4',
-        'AB = √(3² + 4²) = 5 (畢氏定理)',
-        '周長 = 4 × 5 = 20'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,30 240,110 160,190 80,110" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="30" x2="160" y2="190" stroke="black" strokeWidth="1.5" />
-          <line x1="80" y1="110" x2="240" y2="110" stroke="black" strokeWidth="1.5" />
-          <text x="155" y="20" fontSize="14">A</text>
-          <text x="250" y="115" fontSize="14">B</text>
-          <text x="155" y="210" fontSize="14">C</text>
-          <text x="60" y="115" fontSize="14">D</text>
-          <text x="165" y="105" fontSize="14">E</text>
-          <text x="170" y="70" fontSize="14">3</text>
-          <text x="200" y="105" fontSize="14">4</text>
-          <polyline points="160,100 170,100 170,110" fill="none" stroke="black" strokeWidth="1.5" />
-          {showHint && <line x1="160" y1="30" x2="240" y2="110" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-25',
-      difficulty: '難',
-      level: 'F3',
-      title: '中點定理 (Mid-point Theorem)',
-      text: '圖中，D、E、F 分別是 △ABC 三邊的中點。已知 △ABC 的周長為 24，求 △DEF 的周長。',
-      answer: 12,
-      steps: [
-        'DE = BC/2, EF = AC/2, DF = AB/2 (中點定理)',
-        '△DEF 周長 = (BC + AC + AB) / 2',
-        '△DEF 周長 = 24 / 2 = 12'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 260,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <polygon points="120,110 210,110 170,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="270" y="190" fontSize="14">C</text>
-          <text x="100" y="105" fontSize="14">D</text>
-          <text x="220" y="105" fontSize="14">E</text>
-          <text x="165" y="195" fontSize="14">F</text>
-          {showHint && <polygon points="120,110 210,110 170,180" fill="rgba(255, 255, 0, 0.5)" stroke="none" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-04',
-      difficulty: '淺',
-      level: 'F3',
-      title: '平行四邊形 (Parallelogram)',
-      text: '圖中，ABCD 為平行四邊形。已知 ∠DAB = 65°，求 ∠BCD。',
-      answer: 65,
-      steps: [
-        '∠BCD = ∠DAB = 65° (平行四邊形對角)'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="60,175 220,175 260,55 100,55" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="40" y="192" fontSize="14">A</text>
-          <text x="224" y="192" fontSize="14">B</text>
-          <text x="265" y="50" fontSize="14">C</text>
-          <text x="82" y="50" fontSize="14">D</text>
-          <AngleArc cx={60} cy={175} r={22} startAngle={290} endAngle={360} label="65°" labelOffset={14} />
-          <AngleArc cx={260} cy={55} r={22} startAngle={110} endAngle={180} label="" labelOffset={18} isHighlighted={showHint} />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-05',
-      difficulty: '中',
-      level: 'F3',
-      title: '平行四邊形 (Parallelogram)',
-      text: '圖中，ABCD 為平行四邊形。已知 AB = 3x - 2 及 DC = x + 8，求 x。',
-      answer: 5,
-      steps: [
-        'AB = DC (平行四邊形對邊)',
-        '3x - 2 = x + 8',
-        '2x = 10',
-        'x = 5'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="60,175 220,175 260,55 100,55" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="40" y="192" fontSize="14">A</text>
-          <text x="224" y="192" fontSize="14">B</text>
-          <text x="265" y="50" fontSize="14">C</text>
-          <text x="82" y="50" fontSize="14">D</text>
-          <text x="120" y="195" fontSize="14">3x - 2</text>
-          <text x="160" y="45" fontSize="14">x + 8</text>
-          {showHint && <line x1="60" y1="175" x2="220" y2="175" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-          {showHint && <line x1="100" y1="55" x2="260" y2="55" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-06',
-      difficulty: '中',
-      level: 'F3',
-      title: '平行四邊形 (Parallelogram)',
-      text: '圖中，ABCD 為平行四邊形，對角線 AC 與 BD 相交於 E。已知 AE = 4 及 BE = 5，求 AC。',
-      answer: 8,
-      steps: [
-        'AC = 2 × AE (平行四邊形對角線互相平分)',
-        'AC = 2 × 4 = 8'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="60,175 220,175 260,55 100,55" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="175" x2="260" y2="55" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="55" x2="220" y2="175" stroke="black" strokeWidth="1.5" />
-          <text x="40" y="192" fontSize="14">A</text>
-          <text x="224" y="192" fontSize="14">B</text>
-          <text x="265" y="50" fontSize="14">C</text>
-          <text x="82" y="50" fontSize="14">D</text>
-          <text x="160" y="130" fontSize="14">E</text>
-          <text x="100" y="125" fontSize="14">4</text>
-          <text x="180" y="155" fontSize="14">5</text>
-          {showHint && <line x1="60" y1="175" x2="260" y2="55" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-07',
-      difficulty: '中',
-      level: 'F3',
-      title: '長方形 (Rectangle)',
-      text: '圖中，ABCD 為長方形，對角線 AC 與 BD 相交於 E。已知 AC = 10，求 BE。',
-      answer: 5,
-      steps: [
-        'BD = AC = 10 (長方形對角線相等)',
-        'BE = BD ÷ 2 = 5 (平行四邊形對角線互相平分)'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="60,160 260,160 260,60 60,60" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="160" x2="260" y2="60" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="60" x2="260" y2="160" stroke="black" strokeWidth="1.5" />
-          <text x="45" y="175" fontSize="14">A</text>
-          <text x="270" y="175" fontSize="14">B</text>
-          <text x="270" y="50" fontSize="14">C</text>
-          <text x="45" y="50" fontSize="14">D</text>
-          <text x="160" y="130" fontSize="14">E</text>
-          <text x="100" y="100" fontSize="14">10</text>
-          {showHint && <line x1="160" y1="110" x2="260" y2="160" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
-        </svg>
-      )
-    },
-    {
-      id: 'F3-08',
-      difficulty: '淺',
-      level: 'F3',
-      title: '正方形 (Square)',
-      text: '圖中，ABCD 為正方形，對角線 AC 與 BD 相交於 E。求 ∠AEB。',
-      answer: 90,
-      steps: [
-        '∠AEB = 90° (正方形對角線互相垂直)'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="110,160 210,160 210,60 110,60" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="110" y1="160" x2="210" y2="60" stroke="black" strokeWidth="1.5" />
-          <line x1="110" y1="60" x2="210" y2="160" stroke="black" strokeWidth="1.5" />
-          <text x="95" y="175" fontSize="14">A</text>
-          <text x="220" y="175" fontSize="14">B</text>
-          <text x="220" y="50" fontSize="14">C</text>
-          <text x="95" y="50" fontSize="14">D</text>
-          <text x="160" y="130" fontSize="14">E</text>
-          <AngleArc cx={160} cy={110} r={15} startAngle={90} endAngle={180} label="" labelOffset={15} isHighlighted={showHint} />
-          <polyline points="160,120 150,120 150,110" fill="none" stroke="black" strokeWidth="1.5" />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-09',
-      difficulty: '淺',
-      level: 'F3',
-      title: '梯形 (Trapezium)',
-      text: '圖中，ABCD 為梯形，AD // BC。已知 ∠DAB = 115°，求 ∠ABC。',
-      answer: 65,
-      steps: [
-        '∠ABC + ∠DAB = 180° (同旁內角, AD // BC)',
-        '∠ABC = 180° - 115° = 65°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="60,170 260,170 200,60 100,60" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="45" y="185" fontSize="14">B</text>
-          <text x="270" y="185" fontSize="14">C</text>
-          <text x="210" y="50" fontSize="14">D</text>
-          <text x="85" y="50" fontSize="14">A</text>
-          <AngleArc cx={100} cy={60} r={20} startAngle={110} endAngle={180} label="115°" labelOffset={15} />
-          <AngleArc cx={60} cy={170} r={20} startAngle={290} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
-          <line x1="140" y1="55" x2="160" y2="55" stroke="black" strokeWidth="1.5" />
-          <polygon points="160,55 155,52 155,58" fill="black" />
-          <line x1="150" y1="170" x2="170" y2="170" stroke="black" strokeWidth="1.5" />
-          <polygon points="170,170 165,167 165,173" fill="black" />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-10',
-      difficulty: '中',
-      level: 'F3',
-      title: '等腰梯形 (Isosceles Trapezium)',
-      text: '圖中，ABCD 為等腰梯形，AD // BC 且 AB = DC。已知 ∠ABC = 70°，求 ∠BCD。',
-      answer: 70,
-      steps: [
-        '∠BCD = ∠ABC = 70° (等腰梯形底角)'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="60,170 260,170 200,60 120,60" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="45" y="185" fontSize="14">B</text>
-          <text x="270" y="185" fontSize="14">C</text>
-          <text x="210" y="50" fontSize="14">D</text>
-          <text x="105" y="50" fontSize="14">A</text>
-          <AngleArc cx={60} cy={170} r={20} startAngle={298} endAngle={360} label="70°" labelOffset={15} />
-          <AngleArc cx={260} cy={170} r={20} startAngle={180} endAngle={242} label="" labelOffset={15} isHighlighted={showHint} />
-          <line x1="85" y1="115" x2="95" y2="115" stroke="black" strokeWidth="1.5" />
-          <line x1="225" y1="115" x2="235" y2="115" stroke="black" strokeWidth="1.5" />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-11',
-      difficulty: '難',
-      level: 'F3',
-      title: '鷂形 (Kite)',
-      text: '圖中，ABCD 為鷂形，AB = AD 及 CB = CD。對角線 AC 與 BD 相交於 E。已知 ∠ABE = 40°，求 ∠BAE。',
-      answer: 50,
-      steps: [
-        '∠AEB = 90° (鷂形對角線互相垂直)',
-        '∠BAE + ∠ABE + ∠AEB = 180° (△內角和)',
-        '∠BAE + 40° + 90° = 180°',
-        '∠BAE = 50°'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,20 220,80 160,200 100,80" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="20" x2="160" y2="200" stroke="black" strokeWidth="1.5" />
-          <line x1="100" y1="80" x2="220" y2="80" stroke="black" strokeWidth="1.5" />
-          <text x="155" y="15" fontSize="14">A</text>
-          <text x="230" y="85" fontSize="14">B</text>
-          <text x="155" y="215" fontSize="14">C</text>
-          <text x="85" y="85" fontSize="14">D</text>
-          <text x="165" y="95" fontSize="14">E</text>
-          <AngleArc cx={220} cy={80} r={25} startAngle={180} endAngle={225} label="40°" labelOffset={15} />
-          <AngleArc cx={160} cy={20} r={30} startAngle={45} endAngle={90} label="" labelOffset={15} isHighlighted={showHint} />
-          <polyline points="160,70 170,70 170,80" fill="none" stroke="black" strokeWidth="1.5" />
-        </svg>
-      )
-    },
-    {
-      id: 'F3-12',
-      difficulty: '中',
-      level: 'F3',
-      title: '中點定理 (Mid-point Theorem)',
-      text: '圖中，在 △ABC 中，D 和 E 分別是 AB 和 AC 的中點。已知 ∠ADE = 60°，求 ∠ABC。',
-      answer: 60,
-      steps: [
-        'DE // BC (中點定理)',
-        '∠ABC = ∠ADE = 60° (同位角, DE // BC)'
-      ],
-      renderSVG: (showHint) => (
-        <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-          <polygon points="160,40 80,180 260,180" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="120" y1="110" x2="210" y2="110" stroke="black" strokeWidth="1.5" />
-          <text x="155" y="30" fontSize="14">A</text>
-          <text x="65" y="190" fontSize="14">B</text>
-          <text x="270" y="190" fontSize="14">C</text>
-          <text x="100" y="105" fontSize="14">D</text>
-          <text x="220" y="105" fontSize="14">E</text>
-          <AngleArc cx={120} cy={110} r={20} startAngle={0} endAngle={60} label="60°" labelOffset={15} />
-          <AngleArc cx={80} cy={180} r={20} startAngle={0} endAngle={60} label="" labelOffset={15} isHighlighted={showHint} />
-          <line x1="135" y1="75" x2="145" y2="75" stroke="black" strokeWidth="1.5" />
-          <line x1="95" y1="145" x2="105" y2="145" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="75" x2="190" y2="75" stroke="black" strokeWidth="1.5" />
-          <line x1="180" y1="78" x2="190" y2="78" stroke="black" strokeWidth="1.5" />
-          <line x1="230" y1="145" x2="240" y2="145" stroke="black" strokeWidth="1.5" />
-          <line x1="230" y1="148" x2="240" y2="148" stroke="black" strokeWidth="1.5" />
+          <AngleArc cx={120} cy={110} r={20} startAngle={300} endAngle={360} label="60°" labelOffset={15} />
+          <AngleArc cx={80} cy={180} r={20} startAngle={300} endAngle={360} label="?" labelOffset={15} isHighlighted={showHint} />
+          <line x1="135" y1="72" x2="145" y2="78" stroke="black" strokeWidth="1.5" />
+          <line x1="95" y1="142" x2="105" y2="148" stroke="black" strokeWidth="1.5" />
+          <line x1="178" y1="76" x2="188" y2="70" stroke="black" strokeWidth="1.5" />
+          <line x1="182" y1="80" x2="192" y2="74" stroke="black" strokeWidth="1.5" />
+          <line x1="228" y1="146" x2="238" y2="140" stroke="black" strokeWidth="1.5" />
+          <line x1="232" y1="150" x2="242" y2="144" stroke="black" strokeWidth="1.5" />
         </svg>
       )
     },
@@ -2900,13 +2287,13 @@ const QUESTIONS = {
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
           <circle cx="160" cy="110" r="70" fill="none" stroke="black" strokeWidth="1.5" />
-          <polygon points="100,74 110,160 210,160 220,74" fill="none" stroke="black" strokeWidth="1.5" />
-          <text x="85" y="70" fontSize="14">A</text>
-          <text x="95" y="175" fontSize="14">B</text>
-          <text x="220" y="175" fontSize="14">C</text>
+          <polygon points="99.4,75 90,110 160,180 220.6,75" fill="none" stroke="black" strokeWidth="1.5" />
+          <text x="85" y="65" fontSize="14">A</text>
+          <text x="70" y="115" fontSize="14">B</text>
+          <text x="160" y="200" fontSize="14">C</text>
           <text x="230" y="70" fontSize="14">D</text>
-          <AngleArc cx={100} cy={74} r={20} startAngle={0} endAngle={83} label="105°" labelOffset={15} />
-          <AngleArc cx={210} cy={160} r={20} startAngle={180} endAngle={263} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={99.4} cy={75} r={20} startAngle={0} endAngle={105} label="105°" labelOffset={15} />
+          <AngleArc cx={160} cy={180} r={20} startAngle={225} endAngle={300} label="?" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -2923,15 +2310,15 @@ const QUESTIONS = {
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
           <circle cx="160" cy="110" r="70" fill="none" stroke="black" strokeWidth="1.5" />
-          <polygon points="110,60 100,150 200,150 220,74" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="200" y1="150" x2="260" y2="150" stroke="black" strokeWidth="1.5" />
-          <text x="95" y="55" fontSize="14">A</text>
-          <text x="85" y="165" fontSize="14">B</text>
-          <text x="195" y="170" fontSize="14">C</text>
-          <text x="230" y="70" fontSize="14">D</text>
+          <polygon points="125,49.4 110.5,159.5 209.5,159.5 221.2,76.1" fill="none" stroke="black" strokeWidth="1.5" />
+          <line x1="209.5" y1="159.5" x2="260" y2="159.5" stroke="black" strokeWidth="1.5" />
+          <text x="115" y="40" fontSize="14">A</text>
+          <text x="95" y="175" fontSize="14">B</text>
+          <text x="200" y="180" fontSize="14">C</text>
+          <text x="235" y="70" fontSize="14">D</text>
           <text x="265" y="155" fontSize="14">E</text>
-          <AngleArc cx={200} cy={150} r={20} startAngle={285} endAngle={360} label="82°" labelOffset={15} />
-          <AngleArc cx={110} cy={60} r={20} startAngle={83} endAngle={173} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={209.5} cy={159.5} r={20} startAngle={278} endAngle={360} label="82°" labelOffset={15} />
+          <AngleArc cx={125} cy={49.4} r={20} startAngle={15.5} endAngle={97.5} label="?" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -2979,14 +2366,14 @@ const QUESTIONS = {
       renderSVG: (showHint) => (
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
           <circle cx="200" cy="110" r="60" fill="none" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="110" x2="170" y2="58" stroke="black" strokeWidth="1.5" />
-          <line x1="60" y1="110" x2="170" y2="162" stroke="black" strokeWidth="1.5" />
-          <line x1="170" y1="58" x2="170" y2="162" stroke="black" strokeWidth="1.5" />
+          <line x1="60" y1="110" x2="174.3" y2="55.8" stroke="black" strokeWidth="1.5" />
+          <line x1="60" y1="110" x2="174.3" y2="164.2" stroke="black" strokeWidth="1.5" />
+          <line x1="174.3" y1="55.8" x2="174.3" y2="164.2" stroke="black" strokeWidth="1.5" />
           <text x="45" y="115" fontSize="14">T</text>
           <text x="175" y="45" fontSize="14">A</text>
           <text x="175" y="180" fontSize="14">B</text>
-          <AngleArc cx={60} cy={110} r={25} startAngle={334.7} endAngle={25.3} label="50°" labelOffset={15} />
-          <AngleArc cx={170} cy={58} r={25} startAngle={90} endAngle={205.3} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={60} cy={110} r={25} startAngle={334.6} endAngle={25.4} label="50°" labelOffset={15} />
+          <AngleArc cx={174.3} cy={55.8} r={25} startAngle={90} endAngle={154.6} label="?" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -3004,16 +2391,16 @@ const QUESTIONS = {
         <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
           <circle cx="160" cy="100" r="60" fill="none" stroke="black" strokeWidth="1.5" />
           <line x1="80" y1="160" x2="240" y2="160" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="160" x2="110" y2="66.8" stroke="black" strokeWidth="1.5" />
+          <line x1="160" y1="160" x2="100.3" y2="106.3" stroke="black" strokeWidth="1.5" />
           <line x1="160" y1="160" x2="212" y2="70" stroke="black" strokeWidth="1.5" />
-          <line x1="110" y1="66.8" x2="212" y2="70" stroke="black" strokeWidth="1.5" />
+          <line x1="100.3" y1="106.3" x2="212" y2="70" stroke="black" strokeWidth="1.5" />
           <text x="165" y="175" fontSize="14">A</text>
-          <text x="95" y="60" fontSize="14">B</text>
+          <text x="85" y="105" fontSize="14">B</text>
           <text x="225" y="65" fontSize="14">C</text>
           <text x="70" y="165" fontSize="14">T</text>
-          <AngleArc cx={160} cy={160} r={25} startAngle={180} endAngle={241.8} label="42°" labelOffset={15} />
-          <AngleArc cx={110} cy={66.8} r={20} startAngle={1.8} endAngle={61.8} label="60°" labelOffset={15} />
-          <AngleArc cx={212} cy={70} r={20} startAngle={120} endAngle={210} label="" labelOffset={15} isHighlighted={showHint} />
+          <AngleArc cx={160} cy={160} r={25} startAngle={180} endAngle={222} label="42°" labelOffset={15} />
+          <AngleArc cx={100.3} cy={106.3} r={20} startAngle={342} endAngle={42} label="60°" labelOffset={15} />
+          <AngleArc cx={212} cy={70} r={20} startAngle={120} endAngle={162} label="?" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
@@ -3062,17 +2449,17 @@ const QUESTIONS = {
           <circle cx="160" cy="120" r="70" fill="none" stroke="black" strokeWidth="1.5" />
           <circle cx="160" cy="120" r="3" fill="black" />
           <text x="165" y="115" fontSize="14">O</text>
-          <line x1="160" y1="120" x2="106.5" y2="165.1" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="120" x2="99.4" y2="84.8" stroke="black" strokeWidth="1.5" />
-          <line x1="160" y1="120" x2="213.5" y2="165.1" stroke="black" strokeWidth="1.5" />
-          <line x1="106.5" y1="165.1" x2="99.4" y2="84.8" stroke="black" strokeWidth="1.5" />
-          <line x1="99.4" y1="84.8" x2="213.5" y2="165.1" stroke="black" strokeWidth="1.5" />
-          <text x="95" y="180" fontSize="14">A</text>
-          <text x="85" y="80" fontSize="14">B</text>
-          <text x="225" y="180" fontSize="14">C</text>
-          <AngleArc cx={106.5} cy={165.1} r={25} startAngle={265} endAngle={310} label="20°" labelOffset={15} />
-          <AngleArc cx={99.4} cy={84.8} r={25} startAngle={35} endAngle={85} label="30°" labelOffset={15} />
-          <AngleArc cx={160} cy={120} r={20} startAngle={40} endAngle={140} label="" labelOffset={15} isHighlighted={showHint} />
+          <line x1="160" y1="120" x2="115" y2="173.6" stroke="black" strokeWidth="1.5" />
+          <line x1="160" y1="120" x2="160" y2="50" stroke="black" strokeWidth="1.5" />
+          <line x1="160" y1="120" x2="220.6" y2="155" stroke="black" strokeWidth="1.5" />
+          <line x1="115" y1="173.6" x2="160" y2="50" stroke="black" strokeWidth="1.5" />
+          <line x1="160" y1="50" x2="220.6" y2="155" stroke="black" strokeWidth="1.5" />
+          <text x="100" y="190" fontSize="14">A</text>
+          <text x="155" y="40" fontSize="14">B</text>
+          <text x="230" y="165" fontSize="14">C</text>
+          <AngleArc cx={115} cy={173.6} r={25} startAngle={290} endAngle={310} label="20°" labelOffset={15} />
+          <AngleArc cx={160} cy={50} r={25} startAngle={60} endAngle={90} label="30°" labelOffset={15} />
+          <AngleArc cx={160} cy={120} r={20} startAngle={30} endAngle={130} label="?" labelOffset={15} isHighlighted={showHint} />
         </svg>
       )
     },
