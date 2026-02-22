@@ -82,7 +82,7 @@ export const questionsF1 = [
         <text x="155" y="15" fontSize="14">A</text>
         <text x="240" y="175" fontSize="14">B</text>
         <text x="55" y="115" fontSize="14">C</text>
-        <text x="175" y="95" fontSize="14">O</text>
+        <text x="168" y="102" fontSize="14">O</text>
         <AngleArc cx={160} cy={110} r={25} startAngle={270} endAngle={400} label="130°" labelOffset={15} />
         <AngleArc cx={160} cy={110} r={18} startAngle={40} endAngle={180} label="140°" labelOffset={15} />
         <AngleArc cx={160} cy={110} r={20} startAngle={180} endAngle={270} label="" labelOffset={15} isHighlighted={showHint} />
@@ -206,8 +206,8 @@ export const questionsF1 = [
         <text x="290" y="165" fontSize="14">D</text>
         <text x="90" y="35" fontSize="14">P</text>
         <text x="230" y="210" fontSize="14">Q</text>
-        <text x="110" y="65" fontSize="14">M</text>
-        <text x="215" y="185" fontSize="14">N</text>
+        <text x="120" y="65" fontSize="14">M</text>
+        <text x="180" y="145" fontSize="14">N</text>
         <AngleArc cx={130} cy={80} r={20} startAngle={0} endAngle={53} label="75°" labelOffset={15} />
         <AngleArc cx={190} cy={160} r={20} startAngle={233} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
@@ -530,7 +530,7 @@ export const questionsF1 = [
         <text x="105" y="70" fontSize="14">G</text>
         <text x="175" y="70" fontSize="14">H</text>
         <AngleArc cx={112} cy={80} r={20} startAngle={132} endAngle={180} label="4f" labelOffset={20} />
-        <AngleArc cx={148} cy={40} r={25} startAngle={60} endAngle={132} label="6f" labelOffset={20} />
+        <AngleArc cx={148} cy={40} r={25} startAngle={60} endAngle={132} label="6f" labelOffset={5} />
         <AngleArc cx={217.3} cy={160} r={20} startAngle={180} endAngle={240} label="5f" labelOffset={20} />
         <AngleArc cx={217.3} cy={160} r={25} startAngle={312} endAngle={360} label="48°" labelOffset={20} />
       </svg>

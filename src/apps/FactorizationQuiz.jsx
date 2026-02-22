@@ -517,6 +517,9 @@ const QuizPage = ({ onBackToTeaching }) => {
   // =====================
   // 提取公因式題目生成
   // =====================
+  const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+  const c1 = (n) => n === 1 ? '' : String(n); // 係數1省略
+
   const generateCommonFactorQuestion = (lv = 1) => {
     if (lv === 1) {
       // LV1: 單一公因式
@@ -524,21 +527,27 @@ const QuizPage = ({ onBackToTeaching }) => {
         // 數字公因式
         () => {
           const factor = [2, 3, 4, 5, 6][Math.floor(Math.random() * 5)];
-          const a = Math.floor(Math.random() * 5) + 1;
-          const b = Math.floor(Math.random() * 5) + 1;
+          // 確保 a 和 b 互質，使 factor 是最大公因數
+          let a, b;
+          do {
+            a = Math.floor(Math.random() * 5) + 1;
+            b = Math.floor(Math.random() * 5) + 1;
+          } while (gcd(a, b) !== 1);
           const vars = ['x', 'y', 'm', 'n', 'a', 'b'];
           const v1 = vars[Math.floor(Math.random() * vars.length)];
           const v2 = vars.filter(v => v !== v1)[Math.floor(Math.random() * (vars.length - 1))];
           const sign = Math.random() > 0.5 ? '+' : '-';
+          const aStr = c1(a);
+          const bStr = c1(b);
           return {
             question: `${factor * a}${v1} ${sign} ${factor * b}${v2}`,
-            answer: `${factor}(${a}${v1} ${sign} ${b}${v2})`,
-            answerAlt: [`${factor}(${a}${v1}${sign}${b}${v2})`],
+            answer: `${factor}(${aStr}${v1} ${sign} ${bStr}${v2})`,
+            answerAlt: [`${factor}(${aStr}${v1}${sign}${bStr}${v2})`],
             hint: `找出 ${factor * a} 和 ${factor * b} 的公因數`,
             steps: [
-              `找出 $${factor * a}$ 和 $${factor * b}$ 的公因數：$${factor}$`,
-              `$${factor * a}${v1} \\div ${factor} = ${a === 1 ? '' : a}${v1}$，$${factor * b}${v2} \\div ${factor} = ${b === 1 ? '' : b}${v2}$`,
-              `$${factor * a}${v1} ${sign} ${factor * b}${v2} = ${factor}(${a}${v1} ${sign} ${b}${v2})$`
+              `找出 $${factor * a}$ 和 $${factor * b}$ 的最大公因數：$${factor}$`,
+              `$${factor * a}${v1} \\div ${factor} = ${aStr}${v1}$，$${factor * b}${v2} \\div ${factor} = ${bStr}${v2}$`,
+              `$${factor * a}${v1} ${sign} ${factor * b}${v2} = ${factor}(${aStr}${v1} ${sign} ${bStr}${v2})$`
             ],
             vars: [v1, v2]
           };
@@ -590,22 +599,27 @@ const QuizPage = ({ onBackToTeaching }) => {
         // 數字 + 代數公因式
         () => {
           const factor = [2, 3, 7][Math.floor(Math.random() * 3)];
-          const a = Math.floor(Math.random() * 4) + 1;
-          const b = Math.floor(Math.random() * 4) + 1;
+          let a, b;
+          do {
+            a = Math.floor(Math.random() * 4) + 1;
+            b = Math.floor(Math.random() * 4) + 1;
+          } while (gcd(a, b) !== 1);
           const common = ['p', 'q', 'r', 's'][Math.floor(Math.random() * 4)];
           const v1 = ['m', 'n', 'x', 'y'][Math.floor(Math.random() * 4)];
           const sign = Math.random() > 0.5 ? '+' : '-';
           const innerSign = sign === '+' ? '-' : '+';
+          const aStr = c1(a); // 係數1省略（前面有代數）
+          const bStr = String(b); // 純數字不省略1
           return {
             question: `-${factor * a}${common}${v1} ${sign} ${factor * b}${common}`,
-            answer: `-${factor}${common}(${a}${v1} ${innerSign} ${b})`,
-            answerAlt: [],
+            answer: `-${factor}${common}(${aStr}${v1} ${innerSign} ${bStr})`,
+            answerAlt: [`-${factor}${common}(${aStr}${v1}${innerSign}${bStr})`],
             hint: `公因式是 -${factor}${common}`,
             steps: [
               `公因式是 $-${factor}${common}$`,
-              `$-${factor * a}${common}${v1} \\div (-${factor}${common}) = ${a === 1 ? '' : a}${v1}$`,
-              `$${sign === '+' ? '' : '-'}${factor * b}${common} \\div (-${factor}${common}) = ${sign === '+' ? '-' : ''}${b === 1 ? '' : b}$`,
-              `$= -${factor}${common}(${a}${v1} ${innerSign} ${b})$`
+              `$-${factor * a}${common}${v1} \\div (-${factor}${common}) = ${aStr}${v1}$`,
+              `$${sign === '+' ? '' : '-'}${factor * b}${common} \\div (-${factor}${common}) = ${sign === '+' ? '-' : ''}${bStr}$`,
+              `$= -${factor}${common}(${aStr}${v1} ${innerSign} ${bStr})$`
             ],
             vars: [common, v1]
           };
@@ -841,7 +855,9 @@ const QuizPage = ({ onBackToTeaching }) => {
       .replace(/²/g, '^2')
       .replace(/³/g, '^3')
       .toLowerCase()
-      .replace(/(?<![0-9])1([a-z])/g, '$1'); // 省略係數1，如 1y → y
+      .replace(/\(1([a-z])/g, '($1')  // 括號內 1y → y
+      .replace(/([+\-])1([a-z])/g, '$1$2')  // +1y 或 -1y → +y 或 -y
+      .replace(/^1([a-z])/g, '$1'); // 開頭的 1y → y
   };
 
   // 提交答案

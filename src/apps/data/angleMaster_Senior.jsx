@@ -276,7 +276,7 @@ export const questionsSenior = [
         <text x="70" y="165" fontSize="14">T</text>
         <AngleArc cx={160} cy={160} r={25} startAngle={180} endAngle={225} label="45°" labelOffset={15} />
         <AngleArc cx={100} cy={100} r={20} startAngle={337.5} endAngle={405} label="65°" labelOffset={15} />
-        <AngleArc cx={160} cy={160} r={25} startAngle={225} endAngle={292.5} label="" labelOffset={15} isHighlighted={showHint} />
+        <AngleArc cx={160} cy={160} r={30} startAngle={225} endAngle={292.5} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
   },
@@ -447,37 +447,6 @@ export const questionsSenior = [
         <text x="160" y="180" fontSize="14">10</text>
         <text x="160" y="130" fontSize="14" fill="blue">面積 = 15</text>
         <AngleArc cx={60} cy={160} r={30} startAngle={330} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
-      </svg>
-    )
-  },
-  {
-    id: 'S-18',
-    difficulty: '難',
-    level: 'F4-F6',
-    title: '3D 三角學 (Angle between two planes)',
-    text: '圖中，VABC 是一個角錐體，底 ABC 是直角三角形，∠ABC = 90°。VA 垂直於底 ABC。已知 VA = 4，AB = 4。求平面 VBC 與平面 ABC 的交角。',
-    answer: 45,
-    steps: [
-      '∵ VA ⊥ 平面 ABC，AB ⊥ BC',
-      '∴ VB ⊥ BC (三垂線定理)',
-      '交角為 ∠VBA。',
-      'tan ∠VBA = VA / AB = 4 / 4 = 1',
-      '∠VBA = 45°'
-    ],
-    renderSVG: (showHint) => (
-      <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-        <polygon points="100,160 220,160 160,100" fill="none" stroke="black" strokeWidth="1.5" />
-        <line x1="100" y1="160" x2="100" y2="40" stroke="black" strokeWidth="1.5" />
-        <line x1="100" y1="40" x2="220" y2="160" stroke="black" strokeWidth="1.5" />
-        <line x1="100" y1="40" x2="160" y2="100" stroke="black" strokeWidth="1.5" />
-        <text x="85" y="170" fontSize="14">A</text>
-        <text x="230" y="170" fontSize="14">B</text>
-        <text x="165" y="95" fontSize="14">C</text>
-        <text x="95" y="30" fontSize="14">V</text>
-        <text x="85" y="100" fontSize="14">4</text>
-        <text x="160" y="180" fontSize="14">4</text>
-        <polyline points="210,160 210,150 220,150" fill="none" stroke="black" strokeWidth="1.5" />
-        <AngleArc cx={220} cy={160} r={25} startAngle={180} endAngle={225} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
   },

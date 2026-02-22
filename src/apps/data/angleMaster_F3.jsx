@@ -260,8 +260,8 @@ export const questionsF3 = [
         <text x="105" y="50" fontSize="14">A</text>
         <AngleArc cx={60} cy={170} r={20} startAngle={298} endAngle={360} label="70°" labelOffset={15} />
         <AngleArc cx={260} cy={170} r={20} startAngle={180} endAngle={242} label="" labelOffset={15} isHighlighted={showHint} />
-        <line x1="85" y1="115" x2="95" y2="115" stroke="black" strokeWidth="1.5" />
-        <line x1="225" y1="115" x2="235" y2="115" stroke="black" strokeWidth="1.5" />
+        <line x1="85.6" y1="112.6" x2="94.4" y2="117.4" stroke="black" strokeWidth="1.5" />
+        <line x1="225.6" y1="117.4" x2="234.4" y2="112.6" stroke="black" strokeWidth="1.5" />
       </svg>
     )
   },
@@ -354,8 +354,8 @@ export const questionsF3 = [
         <text x="205" y="105" fontSize="14">E</text>
         <text x="190" y="175" fontSize="14">F</text>
         <text x="220" y="85" fontSize="14">6</text>
-        <line x1="105" y1="85" x2="115" y2="85" stroke="black" strokeWidth="1.5" />
-        <line x1="115" y1="135" x2="125" y2="135" stroke="black" strokeWidth="1.5" />
+        <line x1="108.1" y1="86.4" x2="117.7" y2="83.6" stroke="black" strokeWidth="1.5" />
+        <line x1="122.3" y1="136.4" x2="131.9" y2="133.6" stroke="black" strokeWidth="1.5" />
         {showHint && <line x1="200" y1="110" x2="185" y2="160" stroke="rgba(255, 255, 0, 0.5)" strokeWidth="8" />}
       </svg>
     )
@@ -390,8 +390,8 @@ export const questionsF3 = [
         <text x="190" y="175" fontSize="14">F</text>
         <text x="220" y="85" fontSize="14">2x + 1</text>
         <text x="205" y="135" fontSize="14">x + 5</text>
-        <line x1="105" y1="85" x2="115" y2="85" stroke="black" strokeWidth="1.5" />
-        <line x1="115" y1="135" x2="125" y2="135" stroke="black" strokeWidth="1.5" />
+        <line x1="108.1" y1="86.4" x2="117.7" y2="83.6" stroke="black" strokeWidth="1.5" />
+        <line x1="122.3" y1="136.4" x2="131.9" y2="133.6" stroke="black" strokeWidth="1.5" />
       </svg>
     )
   },
@@ -447,7 +447,7 @@ export const questionsF3 = [
         <text x="75" y="165" fontSize="14">Q</text>
         <text x="235" y="165" fontSize="14">R</text>
         <text x="155" y="130" fontSize="14">T</text>
-        <AngleArc cx={160} cy={110} r={20} startAngle={210} endAngle={330} label="120°" labelOffset={20} />
+        <AngleArc cx={160} cy={110} r={20} startAngle={210} endAngle={330} label="120°" labelOffset={10} />
         <AngleArc cx={90.7} cy={150} r={25} startAngle={270} endAngle={330} label="?" labelOffset={20} isHighlighted={showHint} />
       </svg>
     )
@@ -527,7 +527,7 @@ export const questionsF3 = [
         <text x="250" y="115" fontSize="14">B</text>
         <text x="155" y="210" fontSize="14">C</text>
         <text x="60" y="115" fontSize="14">D</text>
-        <text x="165" y="105" fontSize="14">E</text>
+        <text x="145" y="125" fontSize="14">E</text>
         <text x="170" y="70" fontSize="14">3</text>
         <text x="200" y="105" fontSize="14">4</text>
         <polyline points="160,100 170,100 170,110" fill="none" stroke="black" strokeWidth="1.5" />

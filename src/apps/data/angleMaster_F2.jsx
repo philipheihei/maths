@@ -405,9 +405,9 @@ export const questionsF2 = [
     ],
     renderSVG: (showHint) => (
       <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
-        <polygon points="160,30 200,43 230,73 243,113 230,153 200,183 160,196 120,183 90,153 77,113 90,73 120,43" fill="none" stroke="black" strokeWidth="1.5" />
-        <circle cx="120" cy="183" r="3" fill="black" />
-        <AngleArc cx={120} cy={183} r={20} startAngle={288} endAngle={72} label="" labelOffset={15} isHighlighted={showHint} />
+        <polygon points="160,30 208.8,45.9 238.9,87.4 238.9,138.6 208.8,180.1 160,196 111.2,180.1 81.1,138.6 81.1,87.4 111.2,45.9" fill="none" stroke="black" strokeWidth="1.5" />
+        <circle cx="111.2" cy="180.1" r="3" fill="black" />
+        <AngleArc cx={111.2} cy={180.1} r={20} startAngle={234} endAngle={378} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
   },
