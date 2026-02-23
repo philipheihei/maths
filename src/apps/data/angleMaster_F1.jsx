@@ -206,8 +206,8 @@ export const questionsF1 = [
         <text x="290" y="165" fontSize="14">D</text>
         <text x="90" y="35" fontSize="14">P</text>
         <text x="230" y="210" fontSize="14">Q</text>
-        <text x="120" y="65" fontSize="14">M</text>
-        <text x="180" y="145" fontSize="14">N</text>
+        <text x="110" y="70" fontSize="14">M</text>
+        <text x="170" y="175" fontSize="14">N</text>
         <AngleArc cx={130} cy={80} r={20} startAngle={0} endAngle={53} label="75°" labelOffset={15} />
         <AngleArc cx={190} cy={160} r={20} startAngle={233} endAngle={360} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
