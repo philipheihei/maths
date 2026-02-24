@@ -544,9 +544,11 @@ const QuizPage = ({ onBackToTeaching }) => {
             answer: `${factor}(${aStr}${v1} ${sign} ${bStr}${v2})`,
             answerAlt: [`${factor}(${aStr}${v1}${sign}${bStr}${v2})`],
             hint: `找出 ${factor * a} 和 ${factor * b} 的公因數`,
+            highlightedQuestion: `\\colorbox{yellow}{${factor * a}}${v1} ${sign} \\colorbox{yellow}{${factor * b}}${v2}`,
             steps: [
               `找出 $${factor * a}$ 和 $${factor * b}$ 的最大公因數：$${factor}$`,
               `$${factor * a}${v1} \\div ${factor} = ${aStr}${v1}$，$${factor * b}${v2} \\div ${factor} = ${bStr}${v2}$`,
+              `先寫公因式在前，加上括號在後放不同的數字/代數`,
               `$${factor * a}${v1} ${sign} ${factor * b}${v2} = ${factor}(${aStr}${v1} ${sign} ${bStr}${v2})$`
             ],
             vars: [v1, v2]
@@ -564,9 +566,11 @@ const QuizPage = ({ onBackToTeaching }) => {
             answer: `${common}(${v1} ${sign} ${v2})`,
             answerAlt: [`${common}(${v1}${sign}${v2})`],
             hint: `${common} 是公因式`,
+            highlightedQuestion: `\\colorbox{yellow}{${common}}${v1} ${sign} \\colorbox{yellow}{${common}}${v2}`,
             steps: [
               `公因式是 $${common}$`,
               `$${common}${v1} \\div ${common} = ${v1}$，$${common}${v2} \\div ${common} = ${v2}$`,
+              `先寫公因式在前，加上括號在後放不同的數字/代數`,
               `$${common}${v1} ${sign} ${common}${v2} = ${common}(${v1} ${sign} ${v2})$`
             ],
             vars: [common, v1, v2]
@@ -583,12 +587,46 @@ const QuizPage = ({ onBackToTeaching }) => {
             answer: `-${common}(${v1} + ${v2})`,
             answerAlt: [`-${common}(${v1}+${v2})`],
             hint: `抽出 -${common}`,
+            highlightedQuestion: `-\\colorbox{yellow}{${common}}${v1} - \\colorbox{yellow}{${common}}${v2}`,
             steps: [
-              `負號公因式：$-${common}$`,
-              `$-${common}${v1} \\div (-${common}) = ${v1}$，$-${common}${v2} \\div (-${common}) = ${v2}$`,
+              `每項都含有 $-${common}$（公因式）`,
+              `先寫公因式在前，加上括號在後放不同的數字/代數`,
               `$-${common}${v1} - ${common}${v2} = -${common}(${v1} + ${v2})$`
             ],
             vars: [common, v1, v2]
+          };
+        },
+        // LV1 三項數字公因式（如 4a - 10b + 8c）
+        () => {
+          const factor = [2, 3, 4][Math.floor(Math.random() * 3)];
+          let a, b, cc;
+          do {
+            a = Math.floor(Math.random() * 5) + 1;
+            b = Math.floor(Math.random() * 5) + 1;
+            cc = Math.floor(Math.random() * 5) + 1;
+          } while (gcd(gcd(a, b), cc) !== 1);
+          const pool = ['a', 'b', 'c', 'x', 'y', 'z', 'm', 'n', 'p'];
+          const v1 = pool[Math.floor(Math.random() * pool.length)];
+          const r1 = pool.filter(v => v !== v1);
+          const v2 = r1[Math.floor(Math.random() * r1.length)];
+          const r2 = r1.filter(v => v !== v2);
+          const v3 = r2[Math.floor(Math.random() * r2.length)];
+          const s1 = Math.random() > 0.5 ? '+' : '-';
+          const s2 = Math.random() > 0.5 ? '+' : '-';
+          const aStr = c1(a); const bStr = c1(b); const cStr = c1(cc);
+          return {
+            question: `${factor * a}${v1} ${s1} ${factor * b}${v2} ${s2} ${factor * cc}${v3}`,
+            answer: `${factor}(${aStr}${v1} ${s1} ${bStr}${v2} ${s2} ${cStr}${v3})`,
+            answerAlt: [`${factor}(${aStr}${v1}${s1}${bStr}${v2}${s2}${cStr}${v3})`],
+            hint: `找出 ${factor * a}、${factor * b} 和 ${factor * cc} 的公因數`,
+            highlightedQuestion: `\\colorbox{yellow}{${factor * a}}${v1} ${s1} \\colorbox{yellow}{${factor * b}}${v2} ${s2} \\colorbox{yellow}{${factor * cc}}${v3}`,
+            steps: [
+              `找出 $${factor * a}$、$${factor * b}$、$${factor * cc}$ 的最大公因數：$${factor}$`,
+              `各項除以 $${factor}$：$${aStr}${v1}$，$${bStr}${v2}$，$${cStr}${v3}$`,
+              `先寫公因式在前，加上括號在後放不同的數字/代數`,
+              `$${factor * a}${v1} ${s1} ${factor * b}${v2} ${s2} ${factor * cc}${v3} = ${factor}(${aStr}${v1} ${s1} ${bStr}${v2} ${s2} ${cStr}${v3})$`
+            ],
+            vars: [v1, v2, v3]
           };
         }
       ];
@@ -615,10 +653,12 @@ const QuizPage = ({ onBackToTeaching }) => {
             answer: `-${factor}${common}(${aStr}${v1} ${innerSign} ${bStr})`,
             answerAlt: [`-${factor}${common}(${aStr}${v1}${innerSign}${bStr})`],
             hint: `公因式是 -${factor}${common}`,
+            highlightedQuestion: `-\\colorbox{yellow}{${factor * a}}\\colorbox{yellow}{${common}}${v1} ${sign} \\colorbox{yellow}{${factor * b}}\\colorbox{yellow}{${common}}`,
             steps: [
               `公因式是 $-${factor}${common}$`,
               `$-${factor * a}${common}${v1} \\div (-${factor}${common}) = ${aStr}${v1}$`,
               `$${sign === '+' ? '' : '-'}${factor * b}${common} \\div (-${factor}${common}) = ${sign === '+' ? '-' : ''}${bStr}$`,
+              `先寫公因式在前，加上括號在後放不同的數字/代數`,
               `$= -${factor}${common}(${aStr}${v1} ${innerSign} ${bStr})$`
             ],
             vars: [common, v1]
@@ -635,13 +675,80 @@ const QuizPage = ({ onBackToTeaching }) => {
             answer: `${coef1}${base}^2(${base} - 2${var2})`,
             answerAlt: [`${coef1}${base}²(${base}-2${var2})`],
             hint: `抽出 ${coef1}${base}²`,
+            highlightedQuestion: `\\colorbox{yellow}{${coef1}}${base}^3 - \\colorbox{yellow}{${coef2}}${base}^2${var2}`,
             steps: [
               `公因式是 $${coef1}${base}^2$`,
               `$${coef1}${base}^3 \\div ${coef1}${base}^2 = ${base}$`,
               `$${coef2}${base}^2${var2} \\div ${coef1}${base}^2 = 2${var2}$`,
+              `先寫公因式在前，加上括號在後放不同的數字/代數`,
               `$${coef1}${base}^3 - ${coef2}${base}^2${var2} = ${coef1}${base}^2(${base} - 2${var2})$`
             ],
             vars: [base, var2]
+          };
+        },
+        // LV2 兩個代數變數為公因式（如 6p²q + 9pq² = 3pq(2p+3q)）
+        () => {
+          const factor = [2, 3, 5][Math.floor(Math.random() * 3)];
+          const pool = ['p', 'q', 'x', 'y', 'a', 'b'];
+          const v1 = pool[Math.floor(Math.random() * pool.length)];
+          const v2 = pool.filter(v => v !== v1)[Math.floor(Math.random() * (pool.length - 1))];
+          let a, b;
+          do {
+            a = Math.floor(Math.random() * 4) + 1;
+            b = Math.floor(Math.random() * 4) + 1;
+          } while (gcd(a, b) !== 1);
+          const sign = Math.random() > 0.5 ? '+' : '-';
+          const aStr = c1(a); const bStr = c1(b);
+          // terms: factor*a * v1^2*v2  sign  factor*b * v1*v2^2
+          // = factor*v1*v2 * (a*v1  sign  b*v2)
+          const t1 = factor * a; const t2 = factor * b;
+          const cfStr = `${factor}${v1}${v2}`;
+          return {
+            question: `${t1}${v1}^2${v2} ${sign} ${t2}${v1}${v2}^2`,
+            answer: `${cfStr}(${aStr}${v1} ${sign} ${bStr}${v2})`,
+            answerAlt: [`${cfStr}(${aStr}${v1}${sign}${bStr}${v2})`],
+            hint: `每項都含有 ${factor}、${v1} 和 ${v2}，公因式是 ${cfStr}`,
+            highlightedQuestion: `\\colorbox{yellow}{${t1}}\\colorbox{yellow}{${v1}}^2\\colorbox{yellow}{${v2}} ${sign} \\colorbox{yellow}{${t2}}\\colorbox{yellow}{${v1}}\\colorbox{yellow}{${v2}}^2`,
+            steps: [
+              `每一項數字都含有 "$${factor}$"（或 "$${factor}$" 的倍數），字母都含有 $${v1}$、$${v2}$`,
+              `先寫公因式（公因數/相同代數） $${cfStr}$ 在前，加上括號在後放不同的數字/代數`,
+              `$= ${cfStr}(${aStr}${v1} ${sign} ${bStr}${v2})$`
+            ],
+            vars: [v1, v2]
+          };
+        },
+        // LV2 三項複合公因式（如 14x²y² - 35xy² + 7y⁴ = 7y²(2x²-5x+y²)）
+        () => {
+          const factor = [2, 3, 7][Math.floor(Math.random() * 3)];
+          const pool = ['x', 'y', 'a', 'b', 'm', 'n'];
+          const v1 = pool[Math.floor(Math.random() * pool.length)];
+          const v2 = pool.filter(v => v !== v1)[Math.floor(Math.random() * (pool.length - 1))];
+          let a, b, cc;
+          do {
+            a = Math.floor(Math.random() * 4) + 1;
+            b = Math.floor(Math.random() * 4) + 1;
+            cc = Math.floor(Math.random() * 3) + 1;
+          } while (gcd(gcd(a, b), cc) !== 1);
+          const s1 = Math.random() > 0.5 ? '+' : '-';
+          const s2 = Math.random() > 0.5 ? '+' : '-';
+          const aStr = c1(a); const bStr = c1(b); const cStr = c1(cc);
+          // terms: factor*a*v1^2*v2^2  s1  factor*b*v1*v2^2  s2  factor*cc*v2^4
+          // = factor*v2^2 * (a*v1^2  s1  b*v1  s2  cc*v2^2)
+          const t1 = factor * a; const t2 = factor * b; const t3 = factor * cc;
+          const cfStr = `${factor}${v2}^2`;
+          const inner = `${aStr}${v1}^2 ${s1} ${bStr}${v1} ${s2} ${cStr}${v2}^2`;
+          return {
+            question: `${t1}${v1}^2${v2}^2 ${s1} ${t2}${v1}${v2}^2 ${s2} ${t3}${v2}^4`,
+            answer: `${cfStr}(${inner})`,
+            answerAlt: [`${cfStr}(${aStr}${v1}^2${s1}${bStr}${v1}${s2}${cStr}${v2}^2)`],
+            hint: `每項都含有 ${factor} 和 ${v2}²，公因式是 ${cfStr}`,
+            highlightedQuestion: `\\colorbox{yellow}{${t1}}${v1}^2\\colorbox{yellow}{${v2}}^2 ${s1} \\colorbox{yellow}{${t2}}${v1}\\colorbox{yellow}{${v2}}^2 ${s2} \\colorbox{yellow}{${t3}}\\colorbox{yellow}{${v2}}^4`,
+            steps: [
+              `每一項數字都含有 "$${factor}$"（或 "$${factor}$" 的倍數），字母都含有 $${v2}^2$`,
+              `先寫公因式（公因數/相同代數） $${cfStr}$ 在前，加上括號在後放不同的數字/代數`,
+              `$= ${cfStr}(${inner})$`
+            ],
+            vars: [v1, v2]
           };
         }
       ];
@@ -707,13 +814,14 @@ const QuizPage = ({ onBackToTeaching }) => {
       const scenarios = [
         // a = 1
         () => {
-          const validRange = [-4, -3, -2, -1, 1, 2, 3, 4];
+          const validRange = [-10,-9,-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9,10];
           const r1 = validRange[Math.floor(Math.random() * validRange.length)];
           const r2 = validRange[Math.floor(Math.random() * validRange.length)];
           const b = -(r1 + r2);
           const c = r1 * r2;
           const v = ['x', 'y', 'a', 'm'][Math.floor(Math.random() * 4)];
-          const bStr = b === 0 ? '' : (b > 0 ? ` + ${b}${v}` : ` - ${Math.abs(b)}${v}`);
+          const bCoef = Math.abs(b) === 1 ? '' : `${Math.abs(b)}`;
+          const bStr = b === 0 ? '' : (b > 0 ? ` + ${bCoef}${v}` : ` - ${bCoef}${v}`);
           const cStr = c === 0 ? '' : (c > 0 ? ` + ${c}` : ` - ${Math.abs(c)}`);
           
           const ans1 = r1 > 0 ? `(${v}-${r1})` : `(${v}+${Math.abs(r1)})`;
@@ -730,83 +838,126 @@ const QuizPage = ({ onBackToTeaching }) => {
             question: `${v}^2${bStr}${cStr}`,
             answer: `${ans1}${ans2}`,
             answerAlt: answerAlt,
-            hint: `找兩個數：相加得 ${b}，相乘得 ${c}`,
+            hint: `FMLA 01 輸入 a=1, b=${b}, c=${c}`,
             steps: [
-              `找兩數：相加得 $${b}$，相乘得 $${c}$`,
-              `兩數為 $${-r1}$ 和 $${-r2}$（即根的相反數）`,
-              `∴ $${v}^2${bStr}${cStr} = ${ans1}${ans2}$`
+              `FMLA 01 輸入：$a=1,\\ b=${b},\\ c=${c}$`,
+              `得出兩個整數答案：$${r1}$ 和 $${r2}$，各取相反數放入括號`,
+              `$= ${ans1}${ans2}$`
             ],
             vars: [v]
           };
         },
         // 平方差 a² - b²
         () => {
-          const a = Math.floor(Math.random() * 6) + 2;
+          const a = Math.floor(Math.random() * 9) + 2;
           const v = ['x', 'y', 'a', 'b'][Math.floor(Math.random() * 4)];
           return {
             question: `${v}^2 - ${a * a}`,
             answer: `(${v} + ${a})(${v} - ${a})`,
             answerAlt: [`(${v}-${a})(${v}+${a})`],
-            hint: `這是平方差：a² - b² = (a+b)(a-b)`,
+            hint: `此題需使用平方差公式`,
             steps: [
-              `平方差公式：$a^2 - b^2 = (a+b)(a-b)$`,
-              `$${v}^2 - ${a * a} = ${v}^2 - ${a}^2$`,
+              `此題需使用平方差公式：$a^2 - b^2 = (a+b)(a-b)$`,
+              `$${v}^2 - ${a * a}$`,
+              `$= ${v}^2 - ${a}^2$`,
               `$= (${v}+${a})(${v}-${a})$`
             ],
             vars: [v]
           };
         }
       ];
-      return scenarios[Math.floor(Math.random() * scenarios.length)]();
+      return scenarios[Math.random() < 0.75 ? 0 : 1]();
     } else {
-      // LV2: 二元二次 ax² + bxy + cy²
-      const scenarios = [
-        () => {
-          const v1 = 'r';
-          const v2 = 's';
-          // 簡單例子
-          const pairs = [
-            { a: 2, b: -7, c: 3, d: 4, ans: `(2${v1}-7${v2})(3${v1}+4${v2})`, fmla: [6, -13, -28] },
-            { a: 1, b: -3, c: 2, d: 5, ans: `(${v1}-3${v2})(2${v1}+5${v2})`, fmla: [2, -1, -15] },
-            { a: 3, b: 2, c: 1, d: -4, ans: `(3${v1}+2${v2})(${v1}-4${v2})`, fmla: [3, -10, -8] }
-          ];
-          const p = pairs[Math.floor(Math.random() * pairs.length)];
-          const aCoef = p.a * p.c;
-          const bCoef = p.a * p.d + p.b * p.c;
-          const cCoef = p.b * p.d;
-          
-          const bStr = bCoef === 0 ? '' : (bCoef > 0 ? ` + ${bCoef}${v1}${v2}` : ` - ${Math.abs(bCoef)}${v1}${v2}`);
-          const cStr = cCoef === 0 ? '' : (cCoef > 0 ? ` + ${cCoef}${v2}^2` : ` - ${Math.abs(cCoef)}${v2}^2`);
-          
-          // 生成替代答案格式
-          const answerAlt = [];
-          // 分解 p.ans 來生成不同格式
-          const parts = p.ans.match(/\([^)]+\)/g);
-          if (parts && parts.length === 2) {
-            answerAlt.push(`${parts[1]}${parts[0]}`); // 次序相反
-            answerAlt.push(p.ans.replace(/\s/g, '')); // 無空格
-            answerAlt.push(`${parts[1]}${parts[0]}`.replace(/\s/g, ''));
-          }
-          
-          // 構建詳細提示
-          const [fA, fB, fC] = p.fmla;
-          const hint = `在 FMLA 01 輸入 ${fA} EXE ${fB} EXE ${fC} EXE。然後會顯示兩個答案，分數答案的分母放前、分子相反數放後；整數答案直接用相反數`;
-          
-          return {
-            question: `${aCoef}${v1}^2${bStr}${cStr}`,
-            answer: p.ans,
-            answerAlt: answerAlt,
-            hint: hint,
-            steps: [
-              `用 FMLA 01 輸入 $a=${fA},\\ b=${fB},\\ c=${fC}$`,
-              `得出兩根後轉換成括號形式`,
-              `∴ $${aCoef}${v1}^2${bStr}${cStr} = ${p.ans}$`
-            ],
-            vars: [v1, v2]
-          };
+      // LV2: 二元二次 ax² + bxy + cy²（完全隨機，係數範圍至12）
+      const varPairs = [['x','y'],['a','b'],['r','s'],['m','n'],['p','q']];
+      const [v1, v2] = varPairs[Math.floor(Math.random() * varPairs.length)];
+
+      // 最大公因數
+      const gcd2 = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a; };
+
+      // 生成候選值：與 coef 互質的非零整數（範圍 ±8）
+      const makeCands = (coef) => {
+        const cands = [];
+        for (let v = -8; v <= 8; v++) {
+          if (v !== 0 && gcd2(coef, Math.abs(v)) === 1) cands.push(v);
         }
+        return cands;
+      };
+
+      let p1, p2, q1, q2, A, B, C;
+      let attempts = 0;
+      do {
+        p1 = Math.floor(Math.random() * 4) + 1;  // 1–4
+        q1 = Math.floor(Math.random() * 4) + 1;  // 1–4
+        const cp = makeCands(p1);
+        const cq = makeCands(q1);
+        p2 = cp[Math.floor(Math.random() * cp.length)];
+        q2 = cq[Math.floor(Math.random() * cq.length)];
+        A = p1 * q1;
+        B = p1 * q2 + p2 * q1;
+        C = p2 * q2;
+        attempts++;
+      } while ((Math.abs(A) > 12 || Math.abs(B) > 12 || Math.abs(C) > 12 || B === 0 || C === 0) && attempts < 300);
+
+      // 構建題目字串（係數1省略）
+      const coef1omit = (n) => Math.abs(n) === 1 ? '' : `${Math.abs(n)}`;
+      const aStr = A === 1 ? '' : `${A}`;
+      const bStr = B === 0 ? '' : (B > 0 ? ` + ${coef1omit(B)}${v1}${v2}` : ` - ${coef1omit(B)}${v1}${v2}`);
+      const cStr = C === 0 ? '' : (C > 0 ? ` + ${coef1omit(C)}${v2}^2` : ` - ${coef1omit(C)}${v2}^2`);
+
+      // 構建因式字串 (c1*v1 + c2*v2)
+      const factStr = (c1, c2) => {
+        const left = c1 === 1 ? v1 : `${c1}${v1}`;
+        const right = c2 === 1 ? ` + ${v2}` : c2 === -1 ? ` - ${v2}` :
+                      c2 > 0 ? ` + ${c2}${v2}` : ` - ${Math.abs(c2)}${v2}`;
+        return `(${left}${right})`;
+      };
+      const ans1 = factStr(p1, p2);
+      const ans2 = factStr(q1, q2);
+      const answer = `${ans1}${ans2}`;
+      const answerAlt = [`${ans2}${ans1}`, answer.replace(/\s/g,''), `${ans2}${ans1}`.replace(/\s/g,'')];
+
+      // 分數 LaTeX 顯示（分母永遠 > 0，已互質）
+      // 根1 = -p2/p1，根2 = -q2/q1
+      const fracTex = (num, den) => {
+        // den > 0 guaranteed (p1, q1 > 0)
+        if (den === 1) return `${num}`;
+        if (num < 0) return `-\\dfrac{${Math.abs(num)}}{${den}}`;
+        return `\\dfrac{${num}}{${den}}`;
+      };
+      const r1tex = fracTex(-p2, p1);
+      const r2tex = fracTex(-q2, q1);
+
+      // 根 → 因式說明
+      const rootLine = (rNum, rDen, fac) => {
+        // rNum = -p2 or -q2 (numerator), rDen = p1 or q1 (denominator)
+        const tex = fracTex(rNum, rDen);
+        if (rDen === 1) {
+          return `$${tex}$（整數），取相反數放入括號 → $${fac}$`;
+        }
+        const rev = rNum < 0 ? `+${Math.abs(rNum)}` : `-${rNum}`;
+        return `$${tex}$，分母 $${rDen}$ 放前，分子取相反得 $${rev}$ → $${fac}$`;
+      };
+
+      const hint = `在 FMLA 01 輸入 ${A} EXE ${B} EXE ${C} EXE。分數答案：分母放前、分子取相反；整數答案：直接取相反`;
+
+      const rootSteps = [
+        `FMLA 01 輸入：$a=${A},\ b=${B},\ c=${C}$`,
+        `得出兩根：$${r1tex}$ 和 $${r2tex}$`,
+        `口訣：分母放前，分子放後變相反`,
+        rootLine(-p2, p1, ans1),
+        rootLine(-q2, q1, ans2),
+        `$= ${ans1}${ans2}$`
       ];
-      return scenarios[0]();
+
+      return {
+        question: `${aStr}${v1}^2${bStr}${cStr}`,
+        answer,
+        answerAlt,
+        hint,
+        steps: rootSteps,
+        vars: [v1, v2]
+      };
     }
   };
 
@@ -1165,7 +1316,7 @@ const QuizPage = ({ onBackToTeaching }) => {
           <div className="bg-white rounded-2xl shadow-lg p-6 mb-4">
             <p className="text-sm text-slate-500 mb-2">因式分解：</p>
             <div className="text-2xl text-center py-4 font-mono">
-              <Latex math={currentQuestion.question} />
+              <Latex math={isAnswered && currentQuestion.highlightedQuestion ? currentQuestion.highlightedQuestion : currentQuestion.question} />
             </div>
 
             {/* 輸入區 */}
