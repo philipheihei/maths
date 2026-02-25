@@ -309,6 +309,25 @@ const Task2 = ({ onComplete }) => {
 };
 
 // --- Task 3: 列出可能性 (兩階段) ---
+
+// 情境模板（只限兩類選項）
+const TASK3_SCENARIOS = [
+  // 筆
+  { A_color: '紅', B_color: '藍', item: '筆', unit: '枝', container: '盒子' },
+  { A_color: '綠', B_color: '黃', item: '筆', unit: '枝', container: '盒子' },
+  // 杯
+  { A_color: '紅', B_color: '藍', item: '杯', unit: '個', container: '桌上' },
+  { A_color: '白', B_color: '黑', item: '杯', unit: '個', container: '桌上' },
+  // 碟
+  { A_color: '紅', B_color: '綠', item: '碟', unit: '隻', container: '架上' },
+  { A_color: '白', B_color: '藍', item: '碟', unit: '隻', container: '架上' },
+  // 球
+  { A_color: '紅', B_color: '黃', item: '球', unit: '個', container: '袋裡' },
+  { A_color: '白', B_color: '黑', item: '球', unit: '個', container: '袋裡' },
+  // 男生女生
+  { A_color: '', B_color: '', item: '人', unit: '名', container: '組裡', A_name: '男生', B_name: '女生', verb: '同學' },
+];
+
 const Task3 = ({ onComplete }) => {
   const [question, setQuestion] = useState(null);
   const [selectedGreens, setSelectedGreens] = useState([]); 
@@ -318,8 +337,11 @@ const Task3 = ({ onComplete }) => {
   const [feedback, setFeedback] = useState(null);
 
   const generateQuestion = useCallback(() => {
-    const A_name = '綠筆';
-    const B_name = '藍筆';
+    const tmpl = TASK3_SCENARIOS[Math.floor(Math.random() * TASK3_SCENARIOS.length)];
+    const A_name = tmpl.A_name || `${tmpl.A_color}${tmpl.item}`;
+    const B_name = tmpl.B_name || `${tmpl.B_color}${tmpl.item}`;
+    const drawNoun = tmpl.verb || tmpl.item;
+
     const A_total = Math.floor(Math.random() * 3) + 4; 
     const B_total = Math.floor(Math.random() * 4) + 6; 
     let draw_total = Math.floor(Math.random() * 2) + 4; 
@@ -341,9 +363,9 @@ const Task3 = ({ onComplete }) => {
     }
     
     setQuestion({
-      A_name, B_name, A_total, B_total, draw_total, max_A, 
+      A_name, B_name, A_total, B_total, draw_total, max_A, unit: tmpl.unit,
       correctGreens, rangeOptions: rangeOptions.filter((v, i, a) => a.indexOf(v) === i), 
-      text: `盒子有 ${A_total} 枝 ${A_name} 及 ${B_total} 枝 ${B_name}，從中隨機抽出 ${draw_total} 枝筆。如果條件是「最多抽 ${max_A} 枝 ${A_name}」，請選出所有可能的情況。`,
+      text: `${tmpl.container}有 ${A_total} ${tmpl.unit} ${A_name} 及 ${B_total} ${tmpl.unit} ${B_name}，從中隨機抽出 ${draw_total} ${tmpl.unit}${drawNoun}。如果條件是「最多抽 ${max_A} ${tmpl.unit} ${A_name}」，請選出所有可能的情況。`,
     });
     setSelectedGreens([]);
     setBlueInputs({});
@@ -378,7 +400,7 @@ const Task3 = ({ onComplete }) => {
     } else {
       setStep1Feedback({
         correct: false,
-        text: `不正確。提示：「最多 ${question.max_A} 枝」意味著綠筆可以是 ${question.correctGreens.join(' 或 ')} 枝。現在已為您選出正確選項，請繼續填寫對應的藍筆數量。`
+        text: `不正確。提示：「最多 ${question.max_A} ${question.unit}」意味著${question.A_name}可以是 ${question.correctGreens.join(' 或 ')} ${question.unit}。現在已為您選出正確選項，請繼續填寫對應的${question.B_name}數量。`
       });
       setSelectedGreens(question.correctGreens); 
       setStep(2); 
@@ -402,7 +424,7 @@ const Task3 = ({ onComplete }) => {
       setFeedback({ correct: true, text: '完全正確！您已成功計算所有組合情況。' });
       onComplete(true);
     } else {
-      setFeedback({ correct: false, text: `不正確。請檢查藍筆數量。總共抽 ${question.draw_total} 枝，如果綠筆有 x 枝，藍筆應是 ${question.draw_total} - x 枝。` });
+      setFeedback({ correct: false, text: `不正確。請檢查${question.B_name}數量。總共抽 ${question.draw_total} ${question.unit}，如果${question.A_name}有 x ${question.unit}，${question.B_name}應是 ${question.draw_total} - x ${question.unit}。` });
       onComplete(false);
     }
   };
@@ -456,7 +478,7 @@ const Task3 = ({ onComplete }) => {
               <div className="space-y-3">
                 {selectedGreens.map(g => (
                   <div key={g} className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg border border-gray-200">
-                    <span className="font-bold text-green-700 w-24 text-right">{g} 枝{question.A_name}</span>
+                    <span className="font-bold text-green-700 w-28 text-right">{g} {question.unit}{question.A_name}</span>
                     <Plus size={16} className="text-gray-400" />
                     <div className="flex items-center">
                       <input 
@@ -465,7 +487,7 @@ const Task3 = ({ onComplete }) => {
                         onChange={(e) => handleBlueInput(g, e.target.value)}
                         className="w-16 text-center border-2 border-blue-200 rounded p-1 focus:border-blue-500 outline-none no-spinners"
                       />
-                      <span className="ml-2 text-blue-800 font-bold">枝{question.B_name}</span>
+                      <span className="ml-2 text-blue-800 font-bold">{question.unit}{question.B_name}</span>
                     </div>
                   </div>
                 ))}
