@@ -731,10 +731,10 @@ export default function AlgebraicFractionsQuiz() {
 
         {/* Question Card - full width */}
         {question && (
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center relative overflow-hidden mb-4">
+            <div className="bg-white px-6 py-3 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center relative overflow-hidden mb-4">
                 <div className="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
-                <div className="text-gray-500 text-sm mb-1 w-full text-left font-bold">題目 (Question):</div>
-                <div className="py-2 w-full flex justify-center scale-110">
+                <div className="text-gray-500 text-xs mb-0 w-full text-left font-bold">題目 (Question):</div>
+                <div className="w-full flex justify-center scale-125">
                     <BlockMath math={`\\frac{${question.num1}}{${question.d1.display}} ${question.isAddition ? '+' : '-'} \\frac{${question.num2}}{${question.d2.display}}`} />
                 </div>
             </div>
