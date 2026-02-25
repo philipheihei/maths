@@ -727,12 +727,11 @@ export default function AlgebraicFractionsQuiz() {
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto p-4 md:grid md:grid-cols-2 md:gap-4">
-      <main className="flex flex-col gap-4 md:pr-2">
-        
-        {/* Question Card */}
+      <div className="max-w-5xl mx-auto p-4">
+
+        {/* Question Card - full width */}
         {question && (
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center relative overflow-hidden">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 flex flex-col items-center relative overflow-hidden mb-4">
                 <div className="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
                 <div className="text-gray-500 text-sm mb-1 w-full text-left font-bold">題目 (Question):</div>
                 <div className="py-2 w-full flex justify-center scale-110">
@@ -740,6 +739,9 @@ export default function AlgebraicFractionsQuiz() {
                 </div>
             </div>
         )}
+
+      <div className="md:grid md:grid-cols-2 md:gap-4">
+      <main className="flex flex-col gap-4 md:pr-2">
 
         {/* Inputs */}
         <div className="flex flex-col gap-3">
@@ -841,8 +843,7 @@ export default function AlgebraicFractionsQuiz() {
             </Button>
         </div>
       </div>
-      </div>
-
+      </div>      </div>
       {/* Tips Modal */}
       {showTips && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
