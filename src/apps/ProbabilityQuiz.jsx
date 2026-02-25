@@ -95,7 +95,7 @@ const HintSection = ({ text, isOpen, setIsOpen }) => {
 };
 
 // --- Task 1: 排列 vs 組合 (自然情境) ---
-const Task1 = ({ onComplete }) => {
+const Task1 = ({ onComplete, score = 0 }) => {
   const [question, setQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
   const [isHintOpen, setIsHintOpen] = useState(false);
@@ -198,7 +198,10 @@ const Task1 = ({ onComplete }) => {
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-lg max-w-4xl mx-auto border border-gray-100">
-      <h2 className="text-2xl font-extrabold mb-6 text-gray-800 border-b pb-2 border-dashed">Task 1: 排列 (nPr) vs 組合 (nCr)</h2>
+      <div className="flex items-center justify-between border-b pb-2 border-dashed mb-6">
+        <h2 className="text-2xl font-extrabold text-gray-800">Task 1: 排列 (nPr) vs 組合 (nCr)</h2>
+        <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-bold border border-yellow-300 text-sm">Score: {score}</span>
+      </div>
       {question && (
         <div className="space-y-6">
           <div className="bg-purple-50 p-6 rounded-xl border border-purple-100">
@@ -272,7 +275,7 @@ const TASK2_SCENARIOS = [
   })},
 ];
 
-const Task2 = ({ onComplete }) => {
+const Task2 = ({ onComplete, score = 0 }) => {
   const [question, setQuestion] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [feedback, setFeedback] = useState(null);
@@ -314,7 +317,10 @@ const Task2 = ({ onComplete }) => {
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-lg max-w-4xl mx-auto border border-gray-100">
-      <h2 className="text-2xl font-extrabold mb-6 text-gray-800 border-b pb-2 border-dashed">Task 2: 隱含資訊 (潛規則)</h2>
+      <div className="flex items-center justify-between border-b pb-2 border-dashed mb-6">
+        <h2 className="text-2xl font-extrabold text-gray-800">Task 2: 隱含資訊 (潛規則)</h2>
+        <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-bold border border-yellow-300 text-sm">Score: {score}</span>
+      </div>
       {question && (
         <div className="space-y-6">
           <div className="bg-blue-50 p-6 rounded-xl border border-blue-100">
@@ -358,7 +364,7 @@ const TASK3_SCENARIOS = [
   { A_color: '', B_color: '', item: '人', unit: '名', container: '組裡', A_name: '男生', B_name: '女生', verb: '同學' },
 ];
 
-const Task3 = ({ onComplete }) => {
+const Task3 = ({ onComplete, score = 0 }) => {
   const [question, setQuestion] = useState(null);
   const [selectedGreens, setSelectedGreens] = useState([]); 
   const [blueInputs, setBlueInputs] = useState({}); 
@@ -461,7 +467,10 @@ const Task3 = ({ onComplete }) => {
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-lg max-w-4xl mx-auto border border-gray-100">
-      <h2 className="text-2xl font-extrabold mb-6 text-gray-800 border-b pb-2 border-dashed">Task 3: 列出可能性</h2>
+      <div className="flex items-center justify-between border-b pb-2 border-dashed mb-6">
+        <h2 className="text-2xl font-extrabold text-gray-800">Task 3: 列出可能性</h2>
+        <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-bold border border-yellow-300 text-sm">Score: {score}</span>
+      </div>
       {question && (
         <div className="space-y-6">
           <div className="bg-yellow-50 p-6 rounded-xl border border-yellow-100">
@@ -537,7 +546,7 @@ const Task3 = ({ onComplete }) => {
 };
 
 // --- Task 4: 分辨加法與乘法 (修正版) ---
-const Task4 = ({ onComplete }) => {
+const Task4 = ({ onComplete, score = 0 }) => {
   const [question, setQuestion] = useState(null);
   const [feedback, setFeedback] = useState(null);
 
@@ -940,9 +949,10 @@ const Task4 = ({ onComplete }) => {
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-lg max-w-4xl mx-auto border border-gray-100">
-      <h2 className="text-2xl font-extrabold mb-6 text-gray-800 border-b pb-2 border-dashed">
-        Task 4: 運算符號 (加法 vs 乘法)
-      </h2>
+      <div className="flex items-center justify-between border-b pb-2 border-dashed mb-6">
+        <h2 className="text-2xl font-extrabold text-gray-800">Task 4: 運算符號 (加法 vs 乘法)</h2>
+        <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-bold border border-yellow-300 text-sm">Score: {score}</span>
+      </div>
       {question && (
         <div>
           <div className="bg-orange-50 p-6 rounded-xl border border-orange-100 mb-6">
@@ -972,7 +982,7 @@ const Task4 = ({ onComplete }) => {
 };
 
 // --- Task 5: DSE 實戰 (兩段式問答) ---
-const Task5 = ({ onComplete }) => {
+const Task5 = ({ onComplete, score = 0 }) => {
   const [problem, setProblem] = useState(null);
   const [currentPart, setCurrentPart] = useState('a'); 
   const [userNum, setUserNum] = useState('');
@@ -1266,7 +1276,10 @@ const Task5 = ({ onComplete }) => {
 
   return (
     <div className="p-6 bg-white rounded-xl shadow-lg max-w-4xl mx-auto border border-gray-100">
-      <h2 className="text-2xl font-extrabold mb-6 text-gray-800 border-b pb-2 border-dashed">Task 5: DSE 實戰模擬</h2>
+      <div className="flex items-center justify-between border-b pb-2 border-dashed mb-6">
+        <h2 className="text-2xl font-extrabold text-gray-800">Task 5: DSE 實戰模擬</h2>
+        <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-bold border border-yellow-300 text-sm">Score: {score}</span>
+      </div>
       {problem && (
         <div className="space-y-6">
           <div className="bg-purple-50 p-6 rounded-xl border border-purple-200">
@@ -1459,11 +1472,11 @@ const ProbabilityQuiz = () => {
 
         {/* 內容區域 */}
         <main className="transition-all duration-300 ease-in-out">
-          {activeTab === 'task1' && <Task1 onComplete={(c) => handleTaskComplete('task1', c)} />}
-          {activeTab === 'task2' && <Task2 onComplete={(c) => handleTaskComplete('task2', c)} />}
-          {activeTab === 'task3' && <Task3 onComplete={(c) => handleTaskComplete('task3', c)} />}
-          {activeTab === 'task4' && <Task4 onComplete={(c) => handleTaskComplete('task4', c)} />}
-          {activeTab === 'task5' && <Task5 onComplete={(c) => handleTaskComplete('task5', c)} />}
+          {activeTab === 'task1' && <Task1 onComplete={(c) => handleTaskComplete('task1', c)} score={taskStatus['task1'] || 0} />}
+          {activeTab === 'task2' && <Task2 onComplete={(c) => handleTaskComplete('task2', c)} score={taskStatus['task2'] || 0} />}
+          {activeTab === 'task3' && <Task3 onComplete={(c) => handleTaskComplete('task3', c)} score={taskStatus['task3'] || 0} />}
+          {activeTab === 'task4' && <Task4 onComplete={(c) => handleTaskComplete('task4', c)} score={taskStatus['task4'] || 0} />}
+          {activeTab === 'task5' && <Task5 onComplete={(c) => handleTaskComplete('task5', c)} score={taskStatus['task5'] || 0} />}
         </main>
       </div>
     </div>
