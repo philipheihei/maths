@@ -32,8 +32,8 @@ const nCr = (n, r) => {
 const MathNotation = ({ type, n, r }) => (
   <span className="inline-flex items-center font-serif text-lg mx-0.5">
     <span className="italic">{type.toUpperCase()}</span>
-    <span className="flex flex-col text-xs leading-none ml-0.5">
-      <span className="-mb-1">{n}</span>
+    <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
+      <span>{n}</span>
       <span>{r}</span>
     </span>
   </span>
