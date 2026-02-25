@@ -227,42 +227,72 @@ const Task1 = ({ onComplete }) => {
 };
 
 // --- Task 2: 潛規則 (自然情境) ---
+
+const TASK2_SCENARIOS = [
+  // 人
+  { build: (t, a, b) => ({
+      knownLabel: '男生', unknownLabel: '女生', unit: '名',
+      text: `某班總共有 ${t} 名學生。如果已知其中 ${a} 人是「男生」，請推斷有多少個是「女生」？`
+  })},
+  // 球
+  { build: (t, a, b) => ({
+      knownLabel: '白球', unknownLabel: '綠球', unit: '個',
+      text: `袋子裡總共有 ${t} 個球，當中有白色和綠色。如果已知其中 ${a} 個是「白球」，請推斷有多少個是「綠球」？`
+  })},
+  { build: (t, a, b) => ({
+      knownLabel: '紅球', unknownLabel: '黃球', unit: '個',
+      text: `袋子裡總共有 ${t} 個球，當中有紅色和黃色。如果已知其中 ${a} 個是「紅球」，請推斷有多少個是「黃球」？`
+  })},
+  // 筆
+  { build: (t, a, b) => ({
+      knownLabel: '紅筆', unknownLabel: '藍筆', unit: '枝',
+      text: `筆盒裡總共有 ${t} 枝筆，當中有紅色和藍色。如果已知其中 ${a} 枝是「紅筆」，請推斷有多少枝是「藍筆」？`
+  })},
+  { build: (t, a, b) => ({
+      knownLabel: '綠筆', unknownLabel: '黃筆', unit: '枝',
+      text: `筆盒裡總共有 ${t} 枝筆，當中有綠色和黃色。如果已知其中 ${a} 枝是「綠筆」，請推斷有多少枝是「黃筆」？`
+  })},
+  // 杯
+  { build: (t, a, b) => ({
+      knownLabel: '紅杯', unknownLabel: '藍杯', unit: '個',
+      text: `桌上總共有 ${t} 個杯，當中有紅色和藍色。如果已知其中 ${a} 個是「紅杯」，請推斷有多少個是「藍杯」？`
+  })},
+  { build: (t, a, b) => ({
+      knownLabel: '白杯', unknownLabel: '黑杯', unit: '個',
+      text: `桌上總共有 ${t} 個杯，當中有白色和黑色。如果已知其中 ${a} 個是「白杯」，請推斷有多少個是「黑杯」？`
+  })},
+  // 碟
+  { build: (t, a, b) => ({
+      knownLabel: '紅碟', unknownLabel: '綠碟', unit: '隻',
+      text: `架上總共有 ${t} 隻碟，當中有紅色和綠色。如果已知其中 ${a} 隻是「紅碟」，請推斷有多少隻是「綠碟」？`
+  })},
+  { build: (t, a, b) => ({
+      knownLabel: '白碟', unknownLabel: '藍碟', unit: '隻',
+      text: `架上總共有 ${t} 隻碟，當中有白色和藍色。如果已知其中 ${a} 隻是「白碟」，請推斷有多少隻是「藍碟」？`
+  })},
+];
+
 const Task2 = ({ onComplete }) => {
   const [question, setQuestion] = useState(null);
   const [inputValue, setInputValue] = useState('');
   const [feedback, setFeedback] = useState(null);
 
   const generateQuestion = useCallback(() => {
-    const total = Math.floor(Math.random() * 20) + 20; 
+    const total = Math.floor(Math.random() * 20) + 20;
     const groupA = Math.floor(total * 0.4 + Math.random() * (total * 0.3));
     const groupB = total - groupA;
 
-    const isPeople = Math.random() > 0.5;
-    let text = '';
-    let known, unknown, unknownLabel;
-
-    let knownLabel;
-    if (isPeople) {
-      text = `某班總共有 ${total} 名學生。如果已知其中 ${groupA} 人是「男生」，請推斷有多少個是「女生」？`;
-      known = groupA;
-      unknown = groupB;
-      knownLabel = '男生';
-      unknownLabel = '女生';
-    } else {
-      text = `盒子裡總共有 ${total} 個球，當中有白色和綠色。如果已知其中 ${groupA} 個是「白球」，請推斷有多少個是「綠球」？`;
-      known = groupA;
-      unknown = groupB;
-      knownLabel = '白球';
-      unknownLabel = '綠球';
-    }
+    const tmpl = TASK2_SCENARIOS[Math.floor(Math.random() * TASK2_SCENARIOS.length)];
+    const built = tmpl.build(total, groupA, groupB);
 
     setQuestion({
       total,
-      known,
-      unknown,
-      knownLabel,
-      unknownLabel,
-      text
+      known: groupA,
+      unknown: groupB,
+      knownLabel: built.knownLabel,
+      unknownLabel: built.unknownLabel,
+      unit: built.unit,
+      text: built.text,
     });
     setFeedback(null);
     setInputValue('');
@@ -274,10 +304,10 @@ const Task2 = ({ onComplete }) => {
     if (feedback) return;
     const userAns = parseInt(inputValue);
     if (userAns === question.unknown) {
-      setFeedback({ correct: true, text: `正確！${question.total}（總數）- ${question.known}（${question.knownLabel}）= ${question.unknown}（${question.unknownLabel}）` });
+      setFeedback({ correct: true, text: `正確！${question.total}（總數）- ${question.known}（${question.knownLabel}）= ${question.unknown} ${question.unit}（${question.unknownLabel}）` });
       onComplete(true);
     } else {
-      setFeedback({ correct: false, text: `不正確。${question.total}（總數）- ${question.known}（${question.knownLabel}）= ${question.unknown}（${question.unknownLabel}）` });
+      setFeedback({ correct: false, text: `不正確。${question.total}（總數）- ${question.known}（${question.knownLabel}）= ${question.unknown} ${question.unit}（${question.unknownLabel}）` });
       onComplete(false);
     }
   };
