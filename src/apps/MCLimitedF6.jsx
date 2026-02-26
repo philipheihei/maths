@@ -34,6 +34,25 @@ const BlockMath = ({ math }) => {
   return <div ref={ref} className="my-2 overflow-x-auto" />;
 };
 
+// Left-aligned, =-aligned explanation block
+// Shows the question as first line, then each step aligned at =
+const AlignedSteps = ({ questionLatex, lines }) => {
+  const ref = useRef(null);
+  const katexLoaded = useKatex();
+  useEffect(() => {
+    if (!katexLoaded || !ref.current || !window.katex) return;
+    // Prepend question, then align subsequent lines at =
+    const allLines = [questionLatex, ...(lines || [])];
+    const content = allLines
+      .map((l, i) => (i === 0 ? l : l.replace(/^(\s*)=/, '$1&=')))
+      .join(' \\\\ ');
+    const tex = `\\displaystyle\\begin{aligned}${content}\\end{aligned}`;
+    try { window.katex.render(tex, ref.current, { displayMode: false, throwOnError: false }); }
+    catch (e) { if (ref.current) ref.current.textContent = tex; }
+  }, [questionLatex, katexLoaded, JSON.stringify(lines)]);
+  return <div ref={ref} className="overflow-x-auto py-2 pl-2 text-left" />;
+};
+
 // ─── Math Utilities ───────────────────────────────────────────────────────────
 const gcd = (a, b) => { a = Math.abs(a); b = Math.abs(b); while (b) { [a, b] = [b, a % b]; } return a; };
 const lcm = (a, b) => (a * b) / gcd(a, b);
@@ -793,9 +812,9 @@ const fmtComplex = (rC, rK, iC, iK, bVar) => {
   const re = fmtExpr(rC, bVar, rK);
   const im = fmtExpr(iC, bVar, iK);
   if (im === '0') return re;
-  if (re === '0') return `${im}i`;
+  if (re === '0') return `${im} i`;
   const imSign = im.startsWith('-') ? '' : '+';
-  return `${re}${imSign}${im}i`;
+  return `${re}${imSign}${im} i`;
 };
 
 const genJointVariationQ = () => {
@@ -1069,8 +1088,8 @@ const genRationalizeFracQ = () => {
   // = (β²+c²)(β-ci)/((β)²+(c)²) = β - ci
   const correct = `${bVar}-${c}i`;
   const w1 = `${bVar}+${c}i`;
-  const w2 = `${c}-${bVar}i`;
-  const w3 = `${c}+${bVar}i`;
+  const w2 = `${c}-${bVar} i`;
+  const w3 = `${c}+${bVar} i`;
   const wrongs = [w1, w2, w3].filter(w => w !== correct).slice(0, 3);
   const opts = shuffle([correct, ...wrongs]);
   return {
@@ -1183,145 +1202,224 @@ const HCFLCMNotes = ({ onBack }) => (
     </h1>
 
     <div className="space-y-8 text-slate-700">
-      {/* 定義 */}
+
+      {/* 一、定義 */}
       <section className="bg-blue-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-blue-800 mb-3">一、定義</h2>
-        <ul className="space-y-3 list-none">
-          <li className="bg-white rounded-lg p-3 shadow-sm">
-            <span className="font-bold text-blue-700">H.C.F.（最高公因式）</span>：能整除所有給定多項式的最高次多項式。
-          </li>
-          <li className="bg-white rounded-lg p-3 shadow-sm">
-            <span className="font-bold text-indigo-700">L.C.M.（最低公倍式）</span>：能被所有給定多項式整除的最低次多項式。
-          </li>
-        </ul>
+        <h2 className="text-lg font-bold text-blue-800 mb-3">一、要點</h2>
+        <div className="space-y-3">
+          <div className="bg-blue-100 rounded-lg p-4 flex items-start gap-3">
+            <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shrink-0">H.C.F.</span>
+            <div>
+              <p className="font-bold text-blue-800">最高公因式</p>
+              <p className="text-sm mt-1">每個變量取<strong>最小次方</strong>（所有式子都有的部分）</p>
+            </div>
+          </div>
+          <div className="bg-indigo-100 rounded-lg p-4 flex items-start gap-3">
+            <span className="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded shrink-0">L.C.M.</span>
+            <div>
+              <p className="font-bold text-indigo-800">最低公倍式</p>
+              <p className="text-sm mt-1">每個變量取<strong>最大次方</strong>（所有式子出現過的最高次）</p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* 單項式方法 */}
+      {/* 二、單項式 */}
       <section className="bg-green-50 rounded-xl p-5">
         <h2 className="text-lg font-bold text-green-800 mb-3">二、單項式的 H.C.F. 及 L.C.M.</h2>
 
         <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-          <p className="font-semibold text-green-700 mb-2">步驟：</p>
-          <ol className="list-decimal pl-5 space-y-2">
-            <li>將每個單項式的<strong>係數</strong>分開計算（若有）：<br />
-              HCF 係數 = 各係數的 GCD，LCM 係數 = 各係數的 LCM
-            </li>
-            <li>對每個<strong>變量字母</strong>分開考慮：<br />
-              <span className="text-blue-700 font-semibold">H.C.F.</span> 取<strong>最小</strong>指數，<span className="text-indigo-700 font-semibold">L.C.M.</span> 取<strong>最大</strong>指數
-            </li>
+          <p className="font-semibold text-green-700 mb-1">步驟：</p>
+          <ol className="list-decimal pl-5 space-y-1 text-sm">
+            <li>係數另外計算：H.C.F. 係數 = 各係數的公因數，L.C.M. 係數 = 各係數的公倍數</li>
+            <li>每個字母分一行，每行列出各式的次方，再取最小（H.C.F.）或最大（L.C.M.）次方</li>
           </ol>
         </div>
 
-        <div className="bg-green-100 rounded-lg p-4">
-          <p className="font-semibold mb-2">例題（14-31）：求 <InlineMath math="3x^4y^2z" />、<InlineMath math="4xy^5z" />、<InlineMath math="6x^2y^3" /> 的 H.C.F.</p>
-          <BlockMath math="\text{係數：GCD}(3,4,6)=1" />
-          <BlockMath math="x: \min(4,1,2)=1 \quad y: \min(2,5,3)=2 \quad z: \min(1,1,0)=0" />
+        {/* HCF Example */}
+        <div className="bg-green-50 rounded-lg p-4 mb-4 border border-green-200">
+          <p className="font-semibold mb-3">例題 1：求 <InlineMath math="3x^4y^2z" />、<InlineMath math="4xy^5z" />、<InlineMath math="6x^2y^3" /> 的 H.C.F.</p>
+          <p className="text-sm mb-2 text-green-700">係數：3、4、6 的公因數 = <strong>1</strong></p>
+          <p className="text-sm mb-3 text-green-700">各字母分行比較（取<strong>最小</strong>次方）：</p>
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
+              <span className="font-bold text-blue-700 w-5">x</span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^4" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^1" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^2" /></span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-blue-700">最小次方：<InlineMath math="x^1 = x" /></span>
+            </div>
+            <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
+              <span className="font-bold text-green-700 w-5">y</span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^2" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^5" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^3" /></span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-green-700">最小次方：<InlineMath math="y^2" /></span>
+            </div>
+            <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
+              <span className="font-bold text-amber-700 w-5">z</span>
+              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="z^1" /></span>
+              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="z^1" /></span>
+              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-amber-700">最小次方：<InlineMath math="z^0" />（不含 z）</span>
+            </div>
+          </div>
+          <p className="text-xs text-amber-700 mt-2">⚠️ <InlineMath math="6x^2y^3" /> 沒有 z，視作 <InlineMath math="z^0" />，故 z 不出現在 H.C.F. 中</p>
           <BlockMath math="\therefore \text{H.C.F.} = xy^2" />
-          <p className="text-sm text-green-700 mt-2">（注意：<InlineMath math="6x^2y^3" /> 沒有 <InlineMath math="z" />，故 <InlineMath math="z" /> 的最小指數為 0）</p>
         </div>
 
-        <div className="bg-indigo-50 rounded-lg p-4 mt-3">
-          <p className="font-semibold mb-2">例題（16-31）：求 <InlineMath math="9a^2b" />、<InlineMath math="12a^4b^3" />、<InlineMath math="15a^6" /> 的 L.C.M.</p>
-          <BlockMath math="\text{係數：LCM}(9,12,15)=180" />
-          <BlockMath math="a: \max(2,4,6)=6 \quad b: \max(1,3,0)=3" />
+        {/* LCM Example */}
+        <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+          <p className="font-semibold mb-3">例題 2：求 <InlineMath math="9a^2b" />、<InlineMath math="12a^4b^3" />、<InlineMath math="15a^6" /> 的 L.C.M.</p>
+          <p className="text-sm mb-2 text-indigo-700">係數：9、12、15 的公倍數 = <strong>180</strong></p>
+          <p className="text-sm mb-3 text-indigo-700">各字母分行比較（取<strong>最大</strong>次方）：</p>
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
+              <span className="font-bold text-blue-700 w-5">a</span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="a^2" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="a^4" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="a^6" /></span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-blue-700">最大次方：<InlineMath math="a^6" /></span>
+            </div>
+            <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
+              <span className="font-bold text-green-700 w-5">b</span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="b^1" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="b^3" /></span>
+              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-green-700">最大次方：<InlineMath math="b^3" /></span>
+            </div>
+          </div>
+          <p className="text-xs text-green-700 mt-2">⚠️ <InlineMath math="15a^6" /> 沒有 b，但 L.C.M. 取最大次方，b 仍需包含</p>
           <BlockMath math="\therefore \text{L.C.M.} = 180a^6b^3" />
         </div>
       </section>
 
-      {/* 多項式方法 */}
+      {/* 三、多項式 */}
       <section className="bg-purple-50 rounded-xl p-5">
         <h2 className="text-lg font-bold text-purple-800 mb-3">三、多項式的 H.C.F. 及 L.C.M.</h2>
 
         <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-          <p className="font-semibold text-purple-700 mb-2">步驟：</p>
-          <ol className="list-decimal pl-5 space-y-2">
-            <li><strong>完全因式分解</strong>每個多項式</li>
-            <li>H.C.F. = <strong>公共因式的乘積</strong>，每個因式取<strong>最低次</strong></li>
-            <li>L.C.M. = <strong>所有因式的乘積</strong>，每個因式取<strong>最高次</strong></li>
+          <p className="font-semibold text-purple-700 mb-1">步驟：</p>
+          <ol className="list-decimal pl-5 space-y-1 text-sm">
+            <li>先<strong>因式分解</strong>每個多項式，寫成各因式之積</li>
+            <li>每個因式分行比較次方，再取最小（H.C.F.）或最大（L.C.M.）次方</li>
           </ol>
         </div>
 
-        <div className="bg-purple-100 rounded-lg p-4">
-          <p className="font-semibold mb-2">例題：求 <InlineMath math="a^2+4a+4" /> 及 <InlineMath math="a^2-4" /> 的 L.C.M.</p>
-          <BlockMath math="a^2+4a+4 = (a+2)^2" />
-          <BlockMath math="a^2-4 = (a+2)(a-2)" />
-          <BlockMath math="\therefore \text{L.C.M.} = (a+2)^2(a-2)" />
+        <div className="bg-purple-100 rounded-lg p-4 mb-4">
+          <p className="font-semibold mb-2">例題 3：求 <InlineMath math="p^2+4p+4" /> 及 <InlineMath math="p^2-4" /> 的 L.C.M.</p>
+          <BlockMath math="p^2+4p+4 = (p+2)^2" />
+          <BlockMath math="p^2-4 = (p+2)(p-2)" />
+          <div className="space-y-2 text-sm mt-2">
+            <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
+              <span className="font-bold text-blue-700 w-16 text-xs">(p+2)</span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(p+2)^2" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(p+2)^1" /></span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-blue-700">最大：<InlineMath math="(p+2)^2" /></span>
+            </div>
+            <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
+              <span className="font-bold text-green-700 w-16 text-xs">(p−2)</span>
+              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(p-2)^1" /></span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-green-700">最大：<InlineMath math="(p-2)^1" /></span>
+            </div>
+          </div>
+          <BlockMath math="\therefore \text{L.C.M.} = (p+2)^2(p-2)" />
         </div>
 
-        <div className="bg-blue-50 rounded-lg p-4 mt-3">
-          <p className="font-semibold mb-2">例題（05-38）：求 <InlineMath math="x^2(x+1)(x+2)" /> 及 <InlineMath math="x(x+1)^3" /> 的 H.C.F.</p>
-          <BlockMath math="\text{公共因式：} x \text{ 及 } (x+1)" />
-          <BlockMath math="x: \min(2,1)=1 \quad (x+1): \min(1,3)=1" />
+        <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+          <p className="font-semibold mb-2">例題 4：求 <InlineMath math="x^2(x+1)(x+2)" /> 及 <InlineMath math="x(x+1)^3" /> 的 H.C.F.</p>
+          <div className="space-y-2 text-sm mt-2">
+            <div className="flex items-center gap-2 bg-blue-100 rounded-lg px-3 py-2">
+              <span className="font-bold text-blue-700 w-8 text-xs">x</span>
+              <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^2" /></span>
+              <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^1" /></span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-blue-700">最小：<InlineMath math="x^1" /></span>
+            </div>
+            <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
+              <span className="font-bold text-green-700 w-8 text-xs">(x+1)</span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+1)^1" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+1)^3" /></span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-green-700">最小：<InlineMath math="(x+1)^1" /></span>
+            </div>
+            <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
+              <span className="font-bold text-amber-700 w-8 text-xs">(x+2)</span>
+              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+2)^1" /></span>
+              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
+              <span className="text-slate-400">→</span>
+              <span className="font-bold text-amber-700">最小：<InlineMath math="(x+2)^0" />（不含）</span>
+            </div>
+          </div>
           <BlockMath math="\therefore \text{H.C.F.} = x(x+1)" />
         </div>
       </section>
 
-      {/* 求第三個多項式 */}
+      {/* 四、求第三式 */}
       <section className="bg-orange-50 rounded-xl p-5">
         <h2 className="text-lg font-bold text-orange-800 mb-3">四、已知 H.C.F.、L.C.M. 及兩個式，求第三個式</h2>
 
         <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-          <p className="font-semibold text-orange-700 mb-2">方法（針對每個變量分開考慮）：</p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>設已知兩式的指數為 <InlineMath math="e_1, e_2" />，H.C.F. 指數為 <InlineMath math="h" />，L.C.M. 指數為 <InlineMath math="l" /></li>
-            <li>若 <InlineMath math="\min(e_1,e_2) > h" />（兩式都達不到 H.C.F.）→ 第三式指數 = <InlineMath math="h" /></li>
-            <li>若 <InlineMath math="\max(e_1,e_2) < l" />（兩式都達不到 L.C.M.）→ 第三式指數 = <InlineMath math="l" /></li>
+          <p className="font-semibold text-orange-700 mb-2">方法（針對每個變量分行考慮）：</p>
+          <ul className="list-disc pl-5 space-y-2 text-sm">
+            <li>若兩個已知式的次方都<strong>高於</strong> H.C.F. → 第三式需補足 H.C.F. 的次方</li>
+            <li>若兩個已知式的次方都<strong>低於</strong> L.C.M. → 第三式需補足 L.C.M. 的次方</li>
           </ul>
         </div>
 
         <div className="bg-orange-100 rounded-lg p-4">
-          <p className="font-semibold mb-2">例題（21-31）：H.C.F. = <InlineMath math="x^2y^2z" />，L.C.M. = <InlineMath math="x^3y^4z^5" /><br />第一式 = <InlineMath math="x^3y^2z^2" />，第二式 = <InlineMath math="x^2y^3z^5" />，求第三式</p>
-          <div className="overflow-x-auto">
-            <table className="text-sm text-center border-collapse mt-2 w-full">
-              <thead>
-                <tr className="bg-orange-200">
-                  <th className="border border-orange-300 px-3 py-1">變量</th>
-                  <th className="border border-orange-300 px-3 py-1">h</th>
-                  <th className="border border-orange-300 px-3 py-1">l</th>
-                  <th className="border border-orange-300 px-3 py-1">e₁</th>
-                  <th className="border border-orange-300 px-3 py-1">e₂</th>
-                  <th className="border border-orange-300 px-3 py-1">e₃</th>
-                  <th className="border border-orange-300 px-3 py-1">理由</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="bg-white">
-                  <td className="border border-orange-300 px-3 py-1 font-bold">x</td>
-                  <td className="border border-orange-300 px-3 py-1">2</td>
-                  <td className="border border-orange-300 px-3 py-1">3</td>
-                  <td className="border border-orange-300 px-3 py-1">3</td>
-                  <td className="border border-orange-300 px-3 py-1">2</td>
-                  <td className="border border-orange-300 px-3 py-1 text-blue-700 font-semibold">2 or 3</td>
-                  <td className="border border-orange-300 px-3 py-1 text-xs">min=max=h,l 均達到</td>
-                </tr>
-                <tr className="bg-orange-50">
-                  <td className="border border-orange-300 px-3 py-1 font-bold">y</td>
-                  <td className="border border-orange-300 px-3 py-1">2</td>
-                  <td className="border border-orange-300 px-3 py-1">4</td>
-                  <td className="border border-orange-300 px-3 py-1">2</td>
-                  <td className="border border-orange-300 px-3 py-1">3</td>
-                  <td className="border border-orange-300 px-3 py-1 text-indigo-700 font-semibold">4</td>
-                  <td className="border border-orange-300 px-3 py-1 text-xs">max(2,3)=3 &lt; 4=l → e₃=4</td>
-                </tr>
-                <tr className="bg-white">
-                  <td className="border border-orange-300 px-3 py-1 font-bold">z</td>
-                  <td className="border border-orange-300 px-3 py-1">1</td>
-                  <td className="border border-orange-300 px-3 py-1">5</td>
-                  <td className="border border-orange-300 px-3 py-1">2</td>
-                  <td className="border border-orange-300 px-3 py-1">5</td>
-                  <td className="border border-orange-300 px-3 py-1 text-red-700 font-semibold">1</td>
-                  <td className="border border-orange-300 px-3 py-1 text-xs">min(2,5)=2 &gt; 1=h → e₃=1</td>
-                </tr>
-              </tbody>
-            </table>
+          <p className="font-semibold mb-3">例題 5：H.C.F. = <InlineMath math="x^2y^2z" />，L.C.M. = <InlineMath math="x^3y^4z^5" />，第一式 = <InlineMath math="x^3y^2z^2" />，第二式 = <InlineMath math="x^2y^3z^5" />，求第三式</p>
+
+          <div className="space-y-2 text-sm">
+            {/* x row */}
+            <div className="bg-blue-50 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-blue-700 w-5">x</span>
+                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="x^2" /></span>
+                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="x^3" /></span>
+                <span className="text-xs text-slate-500">式1:</span><span className="bg-blue-200 rounded px-1"><InlineMath math="x^3" /></span>
+                <span className="text-xs text-slate-500">式2:</span><span className="bg-blue-200 rounded px-1"><InlineMath math="x^2" /></span>
+              </div>
+              <p className="text-xs mt-1 text-blue-700">式1有 x³，式2有 x²，已涵蓋 H.C.F.(x²) 和 L.C.M.(x³) → 第三式 x 次方自由（取 x² 或 x³ 均可）</p>
+            </div>
+            {/* y row */}
+            <div className="bg-green-50 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-green-700 w-5">y</span>
+                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="y^2" /></span>
+                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="y^4" /></span>
+                <span className="text-xs text-slate-500">式1:</span><span className="bg-green-200 rounded px-1"><InlineMath math="y^2" /></span>
+                <span className="text-xs text-slate-500">式2:</span><span className="bg-green-200 rounded px-1"><InlineMath math="y^3" /></span>
+              </div>
+              <p className="text-xs mt-1 text-green-700">式1和式2的最大次方是 y³，未達到 L.C.M. 的 y⁴ → 第三式必須有 <strong>y⁴</strong></p>
+            </div>
+            {/* z row */}
+            <div className="bg-amber-50 rounded-lg px-3 py-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-amber-700 w-5">z</span>
+                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="z^1" /></span>
+                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="z^5" /></span>
+                <span className="text-xs text-slate-500">式1:</span><span className="bg-amber-200 rounded px-1"><InlineMath math="z^2" /></span>
+                <span className="text-xs text-slate-500">式2:</span><span className="bg-amber-200 rounded px-1"><InlineMath math="z^5" /></span>
+              </div>
+              <p className="text-xs mt-1 text-amber-700">式1和式2的最小次方是 z²，高於 H.C.F. 的 z¹ → 第三式必須有 <strong>z¹</strong></p>
+            </div>
           </div>
-          <p className="mt-2 text-sm">由選項得 <InlineMath math="e_{3x}=2" />，故第三式 = <InlineMath math="x^2y^4z" /></p>
+          <BlockMath math="\therefore \text{第三式} = x^2y^4z \text{（由選項確認 x 取 } x^2\text{）}" />
         </div>
       </section>
 
-      {/* 常見因式分解 提示 */}
+      {/* 五、常用恆等式 */}
       <section className="bg-yellow-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-yellow-800 mb-3">五、常用因式分解恆等式（配合 L.C.M./H.C.F.）</h2>
+        <h2 className="text-lg font-bold text-yellow-800 mb-3">五、常用因式分解恆等式</h2>
         <div className="grid gap-3 md:grid-cols-2">
           {[
             ['a^2-b^2=(a+b)(a-b)', '平方差'],
@@ -1329,7 +1427,7 @@ const HCFLCMNotes = ({ onBack }) => (
             ['a^2-2ab+b^2=(a-b)^2', '完全平方差'],
           ].map(([formula, name]) => (
             <div key={name} className="bg-white rounded-lg p-3 shadow-sm flex items-center gap-3">
-              <span className="text-yellow-600 font-bold text-sm w-14 shrink-0">{name}</span>
+              <span className="text-yellow-600 font-bold text-sm w-16 shrink-0">{name}</span>
               <InlineMath math={formula} />
             </div>
           ))}
@@ -1350,163 +1448,133 @@ const BinaryNotes = ({ onBack }) => (
     </h1>
     <div className="space-y-8 text-slate-700">
 
-      {/* Concept */}
+      {/* Section 1: Bit positions */}
       <section className="bg-teal-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-teal-800 mb-3">一、基本概念</h2>
-        <div className="grid gap-3 md:grid-cols-2">
-          <div className="bg-white rounded-lg p-4 shadow-sm">
-            <p className="font-bold text-teal-700 mb-2">二進制（Base 2）</p>
-            <p className="text-sm">只使用 0 和 1，每個位置代表 2 的冪次：</p>
-            <BlockMath math="\cdots + b_3 \cdot 2^3 + b_2 \cdot 2^2 + b_1 \cdot 2^1 + b_0 \cdot 2^0" />
+        <h2 className="text-lg font-bold text-teal-800 mb-3">一、數位概念</h2>
+        <div className="space-y-4">
+          <div className="bg-teal-100 rounded-lg p-4">
+            <p className="font-semibold mb-2">⚠️ 數位置的方法（重要！）</p>
+            <p className="text-sm mb-3">從<strong>右至左</strong>，最右邊為第 0 位，向左依次為第 1, 2, 3, … 位。</p>
+            <div className="overflow-x-auto">
+              <table className="text-sm text-center border-collapse w-full">
+                <thead>
+                  <tr className="bg-teal-200">
+                    <th className="border border-teal-300 px-3 py-1">二進制數</th>
+                    {[11,10,9,8,7,6,5,4,3,2,1,0].map(p => (
+                      <th key={p} className="border border-teal-300 px-2 py-1 text-xs">位 {p}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-white">
+                    <td className="border border-teal-300 px-3 py-1 font-mono font-bold">110001001011</td>
+                    {[1,1,0,0,0,1,0,0,1,0,1,1].map((b, i) => (
+                      <td key={i} className={`border border-teal-300 px-2 py-1 font-mono font-bold ${b===1 ? 'text-teal-700' : 'text-slate-400'}`}>{b}</td>
+                    ))}
+                  </tr>
+                  <tr className="bg-teal-50">
+                    <td className="border border-teal-300 px-3 py-1 text-xs">對應冪次</td>
+                    {[11,10,9,8,7,6,5,4,3,2,1,0].map(p => (
+                      <td key={p} className="border border-teal-300 px-2 py-1 text-xs"><InlineMath math={`2^{${p}}`} /></td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm mt-3 text-teal-800">
+              例：<InlineMath math="11+2^6+2^{10}+2^{11}" /> → 先用計算機得十進制值，再轉二進制。
+            </p>
           </div>
-          <div className="bg-white rounded-lg p-4 shadow-sm">
-            <p className="font-bold text-teal-700 mb-2">例子</p>
-            <BlockMath math="1011_2 = 2^3+2^1+2^0 = 8+2+1 = 11" />
-            <BlockMath math="10110_2 = 2^4+2^2+2^1 = 22" />
-          </div>
         </div>
       </section>
 
-      {/* Powers Table */}
-      <section className="bg-blue-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-blue-800 mb-3">二、常用 2 的冪次（必記！）</h2>
-        <div className="overflow-x-auto">
-          <table className="text-sm text-center border-collapse w-full">
-            <thead>
-              <tr className="bg-blue-200">
-                {[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].map(n => (
-                  <th key={n} className="border border-blue-300 px-2 py-1"><InlineMath math={`2^{${n}}`} /></th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-white">
-                {[1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768].map((v, i) => (
-                  <td key={i} className="border border-blue-300 px-2 py-1 font-mono text-xs">{v}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Binary to Decimal */}
-      <section className="bg-green-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-green-800 mb-3">三、二進制 → 十進制（手算）</h2>
-        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
-          <p className="font-semibold text-green-700 mb-2">方法：找出所有「1」的位置，加起對應的 2 的冪次</p>
-          <p className="text-sm mb-2">例：<InlineMath math="10110010110010112" /> 中，「1」在位置：</p>
-          <BlockMath math="15,13,12,9,7,6,3,1,0" />
-          <BlockMath math="= 2^{15}+2^{13}+2^{12}+2^9+2^7+2^6+2^3+2^1+2^0" />
-          <BlockMath math="= 11 \times 2^{12} + 11 \times 2^6 + 11" />
-          <p className="text-sm text-green-700">(因為 <InlineMath math="11 = 1011_2" />，其圖案在位 12、6、0 重複出現)</p>
-        </div>
-        <div className="bg-green-100 rounded-lg p-4">
-          <p className="font-semibold mb-2">識別「係數×2ⁿ」的竅門（SP-33 / 08-40 類）：</p>
-          <ol className="list-decimal pl-5 space-y-1 text-sm">
-            <li>先找到二進制數中最高的一組連續位</li>
-            <li>把這組位（如 <InlineMath math="10011_2 = 19" />）作為係數 k</li>
-            <li>餘下低位轉十進制為餘數 r</li>
-            <li>答案：<InlineMath math="k \times 2^n + r" /></li>
-          </ol>
-        </div>
-      </section>
-
-      {/* Decimal to Binary */}
-      <section className="bg-amber-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-amber-800 mb-3">四、十進制 → 二進制（手算：連除法）</h2>
-        <div className="bg-white rounded-lg p-4 shadow-sm">
-          <p className="font-semibold text-amber-700 mb-2">例：22 → 二進制</p>
-          <div className="font-mono text-sm space-y-1 p-2 bg-amber-50 rounded">
-            <div>22 ÷ 2 = 11 餘 <span className="text-red-600 font-bold">0</span></div>
-            <div>11 ÷ 2 = 5  餘 <span className="text-red-600 font-bold">1</span></div>
-            <div>5  ÷ 2 = 2  餘 <span className="text-red-600 font-bold">1</span></div>
-            <div>2  ÷ 2 = 1  餘 <span className="text-red-600 font-bold">0</span></div>
-            <div>1  ÷ 2 = 0  餘 <span className="text-red-600 font-bold">1</span></div>
-          </div>
-          <BlockMath math="\text{由下向上讀餘數：} 22 = 10110_2" />
-        </div>
-      </section>
-
-      {/* CASIO Instructions */}
+      {/* Section 2: CASIO BASE MODE */}
       <section className="bg-purple-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-purple-800 mb-3">五、CASIO fx-50FHII — BASE MODE 轉換</h2>
+        <h2 className="text-lg font-bold text-purple-800 mb-3">二、CASIO fx-50FHII — 計算機 Mode 3</h2>
 
         <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-          <p className="font-bold text-purple-700 mb-2">📱 進入 BASE MODE</p>
-          <div className="space-y-2 text-sm">
-            <div className="flex items-center gap-2 bg-purple-50 rounded p-2">
-              <span className="bg-gray-800 text-white text-xs font-mono px-2 py-1 rounded">MODE</span>
-              <span>→ 選擇</span>
-              <span className="bg-gray-800 text-white text-xs font-mono px-2 py-1 rounded">4</span>
-              <span>（BASE-N）</span>
-            </div>
-            <p className="text-gray-500">計算機進入 Base 模式，預設為十進制 (DEC)</p>
+          <p className="font-bold text-purple-700 mb-3">📱 進入 BASE-N 模式</p>
+          <div className="flex items-center flex-wrap gap-2 text-sm bg-purple-50 rounded p-3">
+            <span className="bg-gray-800 text-white text-xs font-mono px-2 py-1 rounded">MODE</span>
+            <span>→</span>
+            <span className="bg-gray-800 text-white text-xs font-mono px-2 py-1 rounded">3</span>
+            <span className="text-gray-500">（進入 BASE 模式，預設 DEC 十進制）</span>
           </div>
         </div>
 
         <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
-          <p className="font-bold text-purple-700 mb-3">🔄 進制轉換方法</p>
-          <div className="space-y-3">
-            <div className="border-l-4 border-blue-400 pl-3">
-              <p className="font-semibold text-blue-700 text-sm">十進制 → 二進制</p>
-              <div className="flex flex-wrap items-center gap-1 mt-1 text-sm">
-                <span>輸入十進制數 →</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">BIN</span>
-                <span>（按</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">SHIFT</span>
-                <span>+</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">4</span>
-                <span>）→</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">=</span>
+          <p className="font-bold text-purple-700 mb-3">🔄 二進制 ↔ 十進制 轉換</p>
+          <div className="space-y-4">
+
+            <div className="border-l-4 border-blue-400 pl-4 space-y-2">
+              <p className="font-semibold text-blue-700">二進制 → 十進制</p>
+              <ol className="list-decimal pl-4 space-y-1 text-sm">
+                <li>在 BASE 模式（DEC 狀態）下，按
+                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">SHIFT</span>+
+                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">4</span>
+                  切換到 <strong>BIN 二進制輸入</strong>
+                </li>
+                <li>輸入二進制數字（只能輸入 0 和 1）</li>
+                <li>按
+                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
+                  確認
+                </li>
+                <li>按
+                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">x²</span>
+                  （即 DEC 鍵）→ 顯示十進制結果
+                </li>
+              </ol>
+              <div className="bg-blue-50 rounded p-2 text-sm font-mono">
+                例：輸入 <strong>1100</strong> → EXE → x² → 顯示 <strong className="text-blue-700">12</strong>
               </div>
             </div>
-            <div className="border-l-4 border-green-400 pl-3">
-              <p className="font-semibold text-green-700 text-sm">二進制 → 十進制</p>
-              <div className="flex flex-wrap items-center gap-1 mt-1 text-sm">
-                <span>先按</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">BIN</span>
-                <span>→ 輸入二進制數 →</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">DEC</span>
-                <span>（</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">SHIFT</span>
-                <span>+</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">6</span>
-                <span>）→</span>
-                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">=</span>
+
+            <div className="border-l-4 border-green-400 pl-4 space-y-2">
+              <p className="font-semibold text-green-700">算式 / 十進制 → 二進制</p>
+              <ol className="list-decimal pl-4 space-y-1 text-sm">
+                <li>先在 COMP 模式（MODE 1）計算算式的十進制值</li>
+                <li>記下數值，進入 BASE 模式（MODE 3）</li>
+                <li>在 DEC 狀態下輸入十進制數 →
+                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">SHIFT</span>+
+                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">4</span>
+                  （BIN）→
+                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">=</span>
+                  → 顯示二進制
+                </li>
+              </ol>
+              <div className="bg-green-50 rounded p-2 text-sm font-mono">
+                例：COMP 算得 <InlineMath math="11+2^6+2^{10}+2^{11}=3147" /> → BASE MODE → 輸入 3147 → BIN → 得二進制
               </div>
             </div>
-            <div className="border-l-4 border-amber-400 pl-3">
-              <p className="font-semibold text-amber-700 text-sm">直接計算二進制算式</p>
-              <div className="text-sm mt-1">
-                <span>在 BIN 模式下直接輸入二進制運算（+, -, ×）→</span>
-                <span className="ml-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">=</span>
-              </div>
-            </div>
+
           </div>
         </div>
 
-        <div className="bg-purple-100 rounded-lg p-4">
-          <p className="font-bold text-purple-700 mb-2">💡 DSE 考試技巧</p>
-          <ol className="list-decimal pl-5 space-y-2 text-sm">
-            <li>遇到「算式 → 二進制」題：先用計算機求十進制值，再用 BASE MODE 轉換</li>
-            <li>遇到「二進制 → 算式」題：先用 BASE MODE 得十進制，再對照選項</li>
-            <li>進制模式下只能用 0 和 1 輸入；輸入其他數字會顯示 ERROR</li>
-            <li>離開 BASE MODE：按 <span className="bg-gray-800 text-white text-xs font-mono px-1 py-0.5 rounded">MODE</span> → <span className="bg-gray-800 text-white text-xs font-mono px-1 py-0.5 rounded">1</span>（回 COMP）</li>
-          </ol>
+        <div className="bg-purple-100 rounded-lg p-4 mb-4">
+          <p className="font-bold text-purple-700 mb-2">⚠️ 注意事項</p>
+          <ul className="list-disc pl-5 space-y-2 text-sm">
+            <li>BIN 模式只能輸入 0 和 1；輸入其他數字顯示 <strong>Maths ERROR</strong> → 代表數字太長，需拆開計算</li>
+            <li>若二進制數太長（超過計算機顯示位數），先計算算式的十進制值再轉換</li>
+            <li>離開 BASE 模式：<span className="bg-gray-800 text-white text-xs font-mono px-1 py-0.5 rounded">MODE</span> → <span className="bg-gray-800 text-white text-xs font-mono px-1 py-0.5 rounded">1</span>（回 COMP）</li>
+          </ul>
         </div>
 
-        <div className="bg-white rounded-lg p-4 shadow-sm mt-4">
-          <p className="font-bold text-purple-700 mb-2">📝 實作例題</p>
-          <div className="space-y-3 text-sm">
-            <div>
-              <p className="font-semibold">求 <InlineMath math="7 \times 2^{10}+2^8+5 \times 2^3-2^3" /> 的二進制：</p>
-              <p>① 先計算：<InlineMath math="7168+256+40-8=7456" /></p>
-              <p>② BASE MODE →  BIN：輸入 7456 → 得 <InlineMath math="1110100100000_2" /></p>
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <p className="font-bold text-purple-700 mb-3">📝 實戰例題</p>
+          <div className="space-y-4 text-sm">
+            <div className="border border-slate-200 rounded-lg p-3">
+              <p className="font-semibold mb-1">題目：求 <InlineMath math="11+2^6+2^{10}+2^{11}" /> 的二進制（如圖例題）</p>
+              <p>① 在 COMP 模式計算十進制：<InlineMath math="11+64+1024+2048=3147" /></p>
+              <p>② MODE 3 → DEC 輸入 3147 → SHIFT+4（BIN）→ = → 得 <InlineMath math="110001001011_2" /></p>
             </div>
-            <div>
-              <p className="font-semibold">求 <InlineMath math="10000100001_2" /> 的十進制：</p>
-              <p>BASE MODE → 輸入 10000100001 → DEC → 得 <InlineMath math="1057" /></p>
+            <div className="border border-slate-200 rounded-lg p-3">
+              <p className="font-semibold mb-1">題目：求 <InlineMath math="7 \times 2^{10}+2^8+5 \times 2^3-2^3" /> 的二進制</p>
+              <p>① COMP：<InlineMath math="7168+256+40-8=7456" /></p>
+              <p>② BASE MODE BIN：輸入 7456 → 得 <InlineMath math="1110100100000_2" /></p>
+            </div>
+            <div className="border border-slate-200 rounded-lg p-3">
+              <p className="font-semibold mb-1">題目：求 <InlineMath math="1100_2" /> 的十進制</p>
+              <p>MODE 3 → BIN → 輸入 1100 → EXE → x²（DEC）→ 得 <InlineMath math="12" /></p>
             </div>
           </div>
         </div>
@@ -1710,7 +1778,7 @@ const ComplexNotes = ({ onBack }) => (
 // ─── MC Option Button ─────────────────────────────────────────────────────────
 const OptionBtn = ({ label, optionLatex, state, onClick }) => {
   // state: 'idle' | 'correct' | 'wrong' | 'reveal'
-  const base = 'w-full text-left flex items-start gap-3 px-4 py-3 rounded-xl border-2 transition-all duration-200 font-medium';
+  const base = 'w-full text-left flex items-start gap-3 px-4 py-4 rounded-xl border-2 transition-all duration-200 font-medium';
   const styles = {
     idle: 'border-slate-200 hover:border-blue-400 hover:bg-blue-50 bg-white cursor-pointer',
     correct: 'border-green-500 bg-green-50 cursor-default',
@@ -1733,7 +1801,7 @@ const OptionBtn = ({ label, optionLatex, state, onClick }) => {
         {label}
       </span>
       {icons[state]}
-      <span><InlineMath math={optionLatex} /></span>
+      <span className="text-lg leading-relaxed"><InlineMath math={optionLatex} /></span>
     </button>
   );
 };
@@ -1829,10 +1897,8 @@ const HCFLCMQuiz = ({ onBack }) => {
               {selected === question.correctIndex ? '正確！' : `錯誤！答案是 ${optionLabels[question.correctIndex]}`}
             </span>
           </div>
-          <div className="bg-white rounded-lg px-4 py-3 space-y-1">
-            {(question.explanationLines || []).map((line, i) => (
-              <BlockMath key={i} math={line} />
-            ))}
+          <div className="bg-white rounded-lg px-4 py-3">
+            <AlignedSteps questionLatex={question.questionLatex} lines={question.explanationLines || []} />
           </div>
         </div>
       )}
@@ -1922,8 +1988,8 @@ const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
               {selected === question.correctIndex ? '正確！' : `錯誤！答案是 ${optionLabels[question.correctIndex]}`}
             </span>
           </div>
-          <div className="bg-white rounded-lg px-4 py-3 space-y-1">
-            {(question.explanationLines || []).map((line, i) => <BlockMath key={i} math={line} />)}
+          <div className="bg-white rounded-lg px-4 py-3">
+            <AlignedSteps questionLatex={question.questionLatex} lines={question.explanationLines || []} />
           </div>
         </div>
       )}
@@ -1945,7 +2011,7 @@ const TOPICS = [
     desc: '二進制與十進制互轉、二進制算式求值、係數×2ⁿ+餘數分解，CASIO 50FHII BASE MODE 技巧',
     icon: '🔟',
     color: 'from-teal-500 to-cyan-600',
-    badges: [{ level: 'F4', chapter: 'CH3', subject: '二進制' }],
+    badges: [{ level: 'F3', chapter: 'CH2', subject: '指數定律' }],
   },
   {
     id: 'hcf-lcm',
@@ -1969,7 +2035,7 @@ const TOPICS = [
     desc: 'i 的冪次循環、化簡含 i 的代數式、有理化分式、令式子為實數，DSE 歷屆題型',
     icon: '🔮',
     color: 'from-purple-500 to-violet-600',
-    badges: [{ level: 'F6', chapter: 'CH2', subject: '複數 i' }],
+    badges: [{ level: 'F4', chapter: 'CH1', subject: '數系' }],
   },
 ];
 
@@ -2009,7 +2075,7 @@ const MCLimitedF6 = () => {
         <div className="inline-block bg-yellow-100 border border-yellow-300 text-yellow-700 text-sm font-bold px-4 py-1.5 rounded-full mb-4">
           ★ DSE 歷屆 MC 模擬練習
         </div>
-        <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-3">選擇題限時衝刺</h2>
+        <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-3">選擇題</h2>
         <p className="text-slate-500 text-base max-w-xl mx-auto">
           自動生成仿 DSE 風格選擇題，涵蓋課程重點。選擇以下主題開始練習或閱讀筆記。
         </p>

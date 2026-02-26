@@ -319,7 +319,7 @@ const Home = () => {
       ],
       category: '高中',
       topics: ['H.C.F.', 'L.C.M.', '多項式', 'DSE MC'],
-      inDevelopment: false
+      inDevelopment: true
     }
   ];
 
