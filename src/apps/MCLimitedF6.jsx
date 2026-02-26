@@ -552,6 +552,626 @@ const generateQuestion = () => {
   return typeWeights[typeWeights.length - 1].gen();
 };
 
+// ─── Topic 1b: Binary Conversion Generator ─────────────────────────────────
+
+const toBin = (n) => (n >>> 0).toString(2);
+const binStr = (n) => `\\text{${toBin(n)}}_2`;
+
+// Format k×2^n expression in LaTeX
+const coeffPow2 = (k, n) =>
+  n === 0 ? String(k) : k === 1 ? `2^{${n}}` : `${k} \\times 2^{${n}}`;
+
+// Format a complete options string: [k1×2^n1 + k2×2^n2 + r]
+const fmtBinExpr = (terms) => {
+  // terms: [{k, n}] sorted high→low, last may have n=null meaning plain int
+  return terms.map((t, i) => {
+    const s = coeffPow2(t.k, t.n ?? 0);
+    return (i === 0 || s.startsWith('-')) ? s : `+${s}`;
+  }).join('');
+};
+
+// ── Type A: k * (2^a + 2^b [+ 2^c]) – repeated bit-pattern (23-31 style) ────
+const genBinaryRepeatedQ = () => {
+  // Pick a coefficient whose binary is a recognisable 3-4 bit pattern
+  const kOptions = [
+    { k: 3,  bw: 2 },  // 11
+    { k: 5,  bw: 3 },  // 101
+    { k: 7,  bw: 3 },  // 111
+    { k: 9,  bw: 4 },  // 1001
+    { k: 11, bw: 4 },  // 1011
+    { k: 13, bw: 4 },  // 1101
+    { k: 6,  bw: 3 },  // 110
+    { k: 10, bw: 4 },  // 1010
+  ];
+  const { k, bw } = kOptions[randInt(0, kOptions.length - 1)];
+  const gap = bw + randInt(1, 3);                    // ensure patterns don't overlap
+  const num_terms = Math.random() < 0.6 ? 3 : 2;
+  const offsets = [0];
+  for (let i = 1; i < num_terms; i++) offsets.push(offsets[i - 1] + gap + randInt(0, 2));
+  const maxOffset = offsets[offsets.length - 1];
+  if (maxOffset + bw > 16) return genBinaryRepeatedQ(); // retry if too long
+
+  const value = offsets.reduce((s, o) => s + k * Math.pow(2, o), 0);
+  const binDisplay = binStr(value);
+
+  // Correct: k×2^a + k×2^b [+ k×2^c]
+  const correctTerms = [...offsets].reverse().map(o => ({ k, n: o === 0 ? null : o }));
+  const correctLatex = correctTerms.map((t, i) => {
+    const s = t.n !== null ? `${k} \\times 2^{${t.n}}` : String(k);
+    return i === 0 ? s : `+${s}`;
+  }).join('');
+
+  // Distractors: shift all offsets by ±1 (off-by-one errors)
+  const makeOpt = (delta) => {
+    const terms = [...offsets].reverse().map(o => {
+      const newO = o === 0 ? null : o + delta;
+      return o === 0 ? String(k) : `${k} \\times 2^{${newO}}`;
+    });
+    return terms.map((s, i) => (i === 0 || s.startsWith('-')) ? s : `+${s}`).join('');
+  };
+  const w1 = makeOpt(1);
+  const w2 = makeOpt(-1);
+  const w3 = makeOpt(2);
+  const wrongs = [w1, w2, w3].filter(w => w !== correctLatex);
+  while (wrongs.length < 3) wrongs.push(makeOpt(wrongs.length + 3));
+
+  const opts = shuffle([correctLatex, ...wrongs.slice(0, 3)]);
+  return {
+    questionLatex: `${binDisplay} =`,
+    options: opts,
+    correctIndex: opts.indexOf(correctLatex),
+    explanationLines: [
+      `${k}_{10} = ${toBin(k)}_2`,
+      `\\text{二進制中「${toBin(k)}」圖案分別在位 ${[...offsets].reverse().join('、')} 出現}`,
+      `= ${correctLatex}`,
+    ],
+    subtypeLabel: '二進制 → 重複圖案分解',
+  };
+};
+
+// ── Type B: Binary → k×2^n + r  (SP-33 / 08-40 / 11-41 style) ──────────────
+const genBinaryCoeffRemainderQ = () => {
+  const highN  = randInt(7, 12);       // shift amount
+  const k      = randInt(2, 15);       // coefficient for high part
+  const r      = randInt(1, (1 << Math.min(highN - 1, 7)) - 1);  // remainder < 2^highN
+  // Ensure k's binary doesn't interfere with r's bits
+  const kBits  = Math.floor(Math.log2(k)) + 1;
+  if (kBits + highN > 16) return genBinaryCoeffRemainderQ();
+
+  const value  = k * Math.pow(2, highN) + r;
+  if (value > 65535) return genBinaryCoeffRemainderQ();
+  const binDisplay = binStr(value);
+
+  const correctLatex = `${coeffPow2(k, highN)}+${r}`;
+  const w1 = `${coeffPow2(k, highN + 1)}+${r}`;
+  const w2 = `${coeffPow2(k, highN)}+${r * 2}`;
+  const w3 = `${coeffPow2(k, highN + 1)}+${r * 2}`;
+  const wrongs = [w1, w2, w3].filter(w => w !== correctLatex);
+  while (wrongs.length < 3) wrongs.push(`${coeffPow2(k + 1, highN)}+${r}`);
+
+  const opts = shuffle([correctLatex, ...wrongs.slice(0, 3)]);
+  return {
+    questionLatex: `${binDisplay} =`,
+    options: opts,
+    correctIndex: opts.indexOf(correctLatex),
+    explanationLines: [
+      `\\text{高位部分：} ${toBin(k)}_2 \\text{ 在位 } ${highN} \\Rightarrow ${k} \\times 2^{${highN}}`,
+      `\\text{低位部分：} ${toBin(r)}_2 = ${r}`,
+      `\\therefore ${binDisplay} = ${correctLatex}`,
+    ],
+    subtypeLabel: '二進制 → 係數×2ⁿ + 餘數',
+  };
+};
+
+// ── Type C: Powers-of-2 expression → binary  (15-33 style) ──────────────────
+const genExprToBinaryQ = () => {
+  const numPowers = randInt(3, 5);
+  // Pick distinct powers (avoid overlap)
+  const pool = Array.from({ length: 14 }, (_, i) => i + 1); // 1..14
+  const powers = shuffle(pool).slice(0, numPowers).sort((a, b) => b - a);
+  const addConst = Math.random() < 0.5 ? randInt(1, 5) : 0;  // optional small constant
+  const value = powers.reduce((s, p) => s + Math.pow(2, p), 0) + addConst;
+  if (value > 65535) return genExprToBinaryQ();
+
+  const correctBin = toBin(value);
+
+  // Build question expression
+  const termList = powers.map(p => p === 1 ? '2' : `2^{${p}}`);
+  if (addConst > 0) termList.push(String(addConst));
+  const questionExpr = termList.join('+');
+
+  // Generate wrong binaries (flip 1-2 bits)
+  const makeBinWrong = (delta) => {
+    const v2 = Math.max(1, value + delta);
+    return toBin(v2);
+  };
+  const wrongValues = new Set();
+  const candidates = [1, -1, 2, -2, 4, -4, 8, -8, 16, -16];
+  for (const d of shuffle(candidates)) {
+    const v2 = value + d;
+    if (v2 > 0 && v2 !== value) wrongValues.add(v2);
+    if (wrongValues.size >= 3) break;
+  }
+  const wrongs = [...wrongValues].map(toBin);
+
+  const opts = shuffle([correctBin, ...wrongs.slice(0, 3)]);
+  return {
+    questionLatex: `${questionExpr} =`,
+    options: opts.map(b => `${b}_2`),
+    correctIndex: opts.indexOf(correctBin),
+    explanationLines: [
+      `\\text{計算值：}${value}_{10}`,
+      `${value} \\div 2 \\text{ 逐步取餘：} ${correctBin}_2`,
+    ],
+    subtypeLabel: '冪次算式 → 二進制',
+  };
+};
+
+// ── Type D: Arithmetic with coefficients → binary  (14-34 style) ─────────────
+const genArithToBinaryQ = () => {
+  // e.g. 7×2^10 + 2^8 + 5×2^3 - 2^3
+  const base1 = randInt(8, 11);   // high power
+  const k1    = randInt(2, 9);    // coefficient for high part
+  const base2 = randInt(4, base1 - 2); // mid power
+  const k2    = randInt(1, 4);
+  const sgn   = Math.random() < 0.4 ? -1 : 1;
+  const base3 = randInt(0, base2 - 1);
+  const k3    = randInt(1, 4);
+  const value = k1 * Math.pow(2, base1) + k2 * Math.pow(2, base2) + sgn * k3 * Math.pow(2, base3);
+  if (value <= 0 || value > 65535) return genArithToBinaryQ();
+
+  const correctBin = toBin(value);
+
+  // Build LaTeX expression
+  const t1 = coeffPow2(k1, base1);
+  const t2 = coeffPow2(k2, base2);
+  const t3 = coeffPow2(k3, base3);
+  const questionExpr = `${t1}+${t2}${sgn > 0 ? '+' : '-'}${t3}`;
+
+  const wrongDeltas = shuffle([1, -1, 2, -2, 4, -4, 8, 16]);
+  const wrongs = [];
+  for (const d of wrongDeltas) {
+    const v2 = value + d;
+    if (v2 > 0 && v2 !== value) { wrongs.push(toBin(v2)); }
+    if (wrongs.length >= 3) break;
+  }
+
+  const opts = shuffle([correctBin, ...wrongs.slice(0, 3)]);
+  return {
+    questionLatex: `${questionExpr} =`,
+    options: opts.map(b => `${b}_2`),
+    correctIndex: opts.indexOf(correctBin),
+    explanationLines: [
+      `= ${k1 * Math.pow(2, base1)} + ${k2 * Math.pow(2, base2)} ${sgn > 0 ? '+' : '-'} ${k3 * Math.pow(2, base3)}`,
+      `= ${value}_{10}`,
+      `= ${correctBin}_2`,
+    ],
+    subtypeLabel: '係數算式 → 二進制',
+  };
+};
+
+// Master generator for binary topic
+const generateBinaryQuestion = () => {
+  const gens = [
+    { fn: genBinaryRepeatedQ,      w: 25 },
+    { fn: genBinaryCoeffRemainderQ, w: 35 },
+    { fn: genExprToBinaryQ,        w: 25 },
+    { fn: genArithToBinaryQ,       w: 15 },
+  ];
+  const total = gens.reduce((s, g) => s + g.w, 0);
+  let r = Math.random() * total;
+  for (const g of gens) {
+    r -= g.w;
+    if (r <= 0) { try { return g.fn(); } catch (e) { /* retry */ } }
+  }
+  return genBinaryCoeffRemainderQ();
+};
+
+// ─── Topic 3: Variation Constants Generator ─────────────────────────────────
+
+// Helper: format LaTeX term like x, x^{2}, \sqrt{x}
+const powL = (v, p) => {
+  if (p === 0) return '';
+  if (p === 1) return v;
+  if (p === 0.5) return `\\sqrt{${v}}`;
+  return `${v}^{${p}}`;
+};
+
+// Helper: format symbolic expression coeff*varName + constVal
+const fmtExpr = (coeff, varName, constVal) => {
+  const parts = [];
+  if (coeff === 1) parts.push(varName);
+  else if (coeff === -1) parts.push(`-${varName}`);
+  else if (coeff !== 0) parts.push(`${coeff}${varName}`);
+  if (constVal > 0) parts.push(parts.length ? `+${constVal}` : `${constVal}`);
+  else if (constVal < 0) parts.push(`${constVal}`);
+  return parts.join('') || '0';
+};
+
+// Helper: format a+bi with optional symbolic parameter
+const fmtComplex = (rC, rK, iC, iK, bVar) => {
+  const re = fmtExpr(rC, bVar, rK);
+  const im = fmtExpr(iC, bVar, iK);
+  if (im === '0') return re;
+  if (re === '0') return `${im}i`;
+  const imSign = im.startsWith('-') ? '' : '+';
+  return `${re}${imSign}${im}i`;
+};
+
+const genJointVariationQ = () => {
+  const varGroups = [
+    { main: 'z', v1: 'x', v2: 'y' },
+    { main: 'w', v1: 'x', v2: 'y' },
+    { main: 'z', v1: 'u', v2: 'v' },
+    { main: 'w', v1: 'a', v2: 'b' },
+    { main: 'z', v1: 'a', v2: 'b' },
+  ];
+  const { main, v1, v2 } = varGroups[randInt(0, varGroups.length - 1)];
+
+  const powTypes = [
+    { p1: 1, p2: 2, p1Desc: '', p2Desc: '平方', sqrt: false },
+    { p1: 2, p2: 3, p1Desc: '平方', p2Desc: '立方', sqrt: false },
+    { p1: 1, p2: 3, p1Desc: '', p2Desc: '立方', sqrt: false },
+    { p1: 2, p2: 1, p1Desc: '平方', p2Desc: '', sqrt: false },
+    { p1: 3, p2: 2, p1Desc: '立方', p2Desc: '平方', sqrt: false },
+    { p1: 1, p2: 1, p1Desc: '', p2Desc: '', sqrt: false },
+    { p1: 3, p2: 1, p1Desc: '立方', p2Desc: '', sqrt: false },
+    { p1: 0.5, p2: 2, p1Desc: '平方根', p2Desc: '平方', sqrt: true },
+    { p1: 0.5, p2: 3, p1Desc: '平方根', p2Desc: '立方', sqrt: true },
+  ];
+  const { p1, p2, p1Desc, p2Desc, sqrt: isSqrt } = powTypes[randInt(0, powTypes.length - 1)];
+
+  const v1Desc = p1Desc ? `${v1}的${p1Desc}` : v1;
+  const v2Desc = p2Desc ? `${v2}的${p2Desc}` : v2;
+  const qLatex = `\\text{若 } ${main} \\text{ 隨 } ${v1Desc} \\text{ 正變且隨 } ${v2Desc} \\text{ 反變，下列何者必為常數？}`;
+
+  // relationship: main = k * v1^p1 / v2^p2
+  // constant k:
+  //   normal:  main * v2^p2 / v1^p1  = k
+  //   isSqrt:  main^2 * v2^(2p2) / v1 = k^2  (avoid sqrt in displayed answers)
+  let correctLatex, hintLine;
+  if (isSqrt) {
+    const numStr = `${powL(main, 2)}${powL(v2, 2 * p2)}`;
+    const denStr = v1;
+    correctLatex = `\\frac{${numStr}}{${denStr}}`;
+    hintLine = `${main}=\\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}} \\Rightarrow ${powL(main,2)}=\\frac{k^2 ${v1}}{${powL(v2,2*p2)}} \\Rightarrow \\frac{${numStr}}{${denStr}}=k^2=\\text{常數}`;
+  } else {
+    const numParts = [main, powL(v2, p2)].filter(Boolean);
+    const numStr = numParts.join('');
+    const denStr = powL(v1, p1) || '1';
+    correctLatex = denStr === '1' ? numStr : `\\frac{${numStr}}{${denStr}}`;
+    hintLine = `${main}=\\frac{k${powL(v1,p1)}}{${powL(v2,p2)}} \\Rightarrow \\frac{${numStr}}{${denStr}}=k=\\text{常數}`;
+  }
+
+  // Wrong options: clearly non-constant by using wrong variable arrangement
+  const v1p = isSqrt ? v1 : powL(v1, p1);
+  const v2p = isSqrt ? powL(v2, 2 * p2) : powL(v2, p2);
+  const mainSq = powL(main, 2);
+
+  const wrongCandidates = [
+    // W1: flip v1 and v2
+    `\\frac{${main}${v1p}}{${v2p}}`,
+    // W2: v1 / (main * v2)
+    `\\frac{${v1p}}{${main}${v2p}}`,
+    // W3: main^2 * v1 in numerator
+    `\\frac{${mainSq}${v1p}}{${v2p}}`,
+    // W4: product
+    `${main}${v1p}${v2p}`,
+    // W5: v2 / (main * v1)
+    `\\frac{${v2p}}{${main}${v1p}}`,
+  ];
+
+  const uniqueWrongs = [...new Set(wrongCandidates)]
+    .filter(w => w !== correctLatex)
+    .slice(0, 3);
+  while (uniqueWrongs.length < 3) uniqueWrongs.push(`\\frac{${main}^{${uniqueWrongs.length+2}}}{${v1p}${v2p}}`);
+
+  const opts = shuffle([correctLatex, ...uniqueWrongs.slice(0, 3)]);
+  return {
+    questionLatex: qLatex,
+    options: opts,
+    correctIndex: opts.indexOf(correctLatex),
+    explanationLines: [
+      `\\text{設 } ${main} = \\frac{k${isSqrt ? `\\sqrt{${v1}}` : powL(v1,p1)}}{${powL(v2,p2)}}`,
+      hintLine,
+      `\\therefore \\text{答案為 } ${correctLatex}`,
+    ],
+    subtypeLabel: '變分常數',
+  };
+};
+
+const generateVariationQuestion = () => genJointVariationQ();
+
+// ─── Topic 4: Complex Numbers Generator ──────────────────────────────────────
+
+// i powers: i^0=1, i^1=i, i^2=-1, i^3=-i  (period 4)
+const iCycle = (n) => {
+  const k = ((n % 4) + 4) % 4;
+  return [{ re: 1, im: 0 }, { re: 0, im: 1 }, { re: -1, im: 0 }, { re: 0, im: -1 }][k];
+};
+const iCycleStr = (n) => ['1', 'i', '-1', '-i'][((n % 4) + 4) % 4];
+
+// Type A: weighted sum c1*i^n + c2*i^(n+1) + ... find real part
+const genIWeightedSumQ = () => {
+  const startN = randInt(1, 8);
+  let realSum = 0, imSum = 0;
+  const terms = [];
+  const expLines = [];
+  for (let j = 0; j < 4; j++) {
+    const n = startN + j;
+    const coeff = j + 1;
+    const p = iCycle(n);
+    realSum += coeff * p.re;
+    imSum += coeff * p.im;
+    const pL = n === 1 ? 'i' : `i^{${n}}`;
+    terms.push(`${coeff}${pL}`);
+    const rv = coeff * p.re, iv = coeff * p.im;
+    const vStr = (rv === 0 && iv === 0) ? '0' :
+      (rv !== 0 ? String(rv) : '') +
+      (iv > 0 && rv !== 0 ? `+${iv}i` : iv < 0 ? `${iv}i` : iv !== 0 ? `${iv}i` : '');
+    expLines.push(`${coeff} \\cdot i^{${n}} = ${coeff}(${iCycleStr(n)}) = ${vStr || '0'}`);
+  }
+  const questionLatex = `${terms.join('+')} \\text{ 的實部為}`;
+  const correct = String(realSum);
+  const candidates = [...new Set([realSum + 2, realSum - 2, imSum, -realSum, realSum + 4].map(String))]
+    .filter(w => w !== correct);
+  while (candidates.length < 3) candidates.push(String(realSum + candidates.length * 3 + 1));
+  const wrongs = candidates.slice(0, 3);
+  const opts = shuffle([correct, ...wrongs]);
+  return {
+    questionLatex,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `i^1=i,\ i^2=-1,\ i^3=-i,\ i^4=1 \\text{（週期為4）}`,
+      ...expLines,
+      `\\text{實部} = ${realSum}`,
+    ],
+    subtypeLabel: '複數 i — 冪次加權實部',
+  };
+};
+
+// Type B: i^n(βi ± c)  simplify, options in a+bi form with symbolic β
+const genIExprSymQ = () => {
+  const n = randInt(2, 7);
+  const sgn = Math.random() < 0.5 ? 1 : -1;
+  const c = randInt(1, 5);
+  const p = iCycle(n);
+  // (p.re + p.im*i)(β*i + sgn*c)
+  // = p.re*(βi + sgn*c) + p.im*i*(βi + sgn*c)
+  // = p.re*βi + p.re*sgn*c - p.im*β + p.im*sgn*c*i
+  // Re: -p.im*β + p.re*sgn*c
+  // Im:  p.re*β + p.im*sgn*c
+  const rBeta = -p.im, rConst = p.re * sgn * c;
+  const iBeta =  p.re, iConst = p.im * sgn * c;
+  const bVar = '\\beta';
+  const correct = fmtComplex(rBeta, rConst, iBeta, iConst, bVar);
+  const w1 = fmtComplex(-rBeta, rConst,  iBeta, iConst, bVar);
+  const w2 = fmtComplex( rBeta, rConst, -iBeta, iConst, bVar);
+  const w3 = fmtComplex(-rBeta, rConst, -iBeta, iConst, bVar);
+  const wrongs = [...new Set([w1, w2, w3])].filter(w => w !== correct).slice(0, 3);
+  while (wrongs.length < 3) wrongs.push(fmtComplex(rBeta + wrongs.length, rConst, iBeta, iConst, bVar));
+  const cStr = (sgn > 0 ? `+${c}` : `-${c}`);
+  const opts = shuffle([correct, ...wrongs.slice(0, 3)]);
+  return {
+    questionLatex: `i^{${n}}(\\beta i${cStr}) =`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `i^{${n}} = ${iCycleStr(n)}`,
+      `(${iCycleStr(n)})(\\beta i${cStr}) = \\beta \\cdot i^{${n+1}} ${sgn>0?'+':'-'}${c} \\cdot i^{${n}}`,
+      `= \\beta(${iCycleStr(n+1)}) ${sgn>0?'+':'-'}${c}(${iCycleStr(n)})`,
+      `= ${correct}`,
+    ],
+    subtypeLabel: '複數 i — 含參數化簡',
+  };
+};
+
+// Type C: (x + ni)(m + i) find real part, x is real parameter
+const genComplexMulRealQ = () => {
+  const n = randInt(1, 5);
+  const m = randInt(1, 5);
+  const pVar = ['x', 'k', 'a'][randInt(0, 2)];
+  // (pVar + ni)(m + i) = m*pVar + pVar*i + nm*i + n*i^2
+  // = (m*pVar - n) + (pVar + nm)*i   → real part = m*pVar - n
+  const mS = m > 1 ? `${m}` : '';
+  const correct = `${mS}${pVar}-${n}`;
+  const w1 = `${mS}${pVar}+${n}`;
+  const w2 = n > 1 ? `${n}${pVar}-${m}` : `${pVar}-${m}`;
+  const w3 = `${m + n}${pVar}`;
+  const wrongs = [w1, w2, w3].filter(w => w !== correct).slice(0, 3);
+  const opts = shuffle([correct, ...wrongs]);
+  return {
+    questionLatex: `\\text{若 }${pVar}\\text{ 為實數，則 }(${pVar}+${n}i)(${m}+i)\\text{ 的實部為}`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `(${pVar}+${n}i)(${m}+i) = ${m}${pVar}+${pVar}i+${n*m}i+${n}i^2`,
+      `= ${m}${pVar}+${pVar}i+${n*m}i-${n}`,
+      `= (${mS}${pVar}-${n})+(${pVar}+${n*m})i`,
+      `\\text{實部} = ${mS}${pVar}-${n}`,
+    ],
+    subtypeLabel: '複數 i — 乘積實部',
+  };
+};
+
+// Type D: ak - (b + ki)/i  = ?  (k is real)
+const genDivideByIQ = () => {
+  const a = randInt(2, 6);
+  const b = randInt(1, 5);
+  // ak - (b+ki)/i  where 1/i = -i
+  // (b+ki)/i = (b+ki)(-i)/1 = -bi - ki^2 = k - bi
+  // ak - (k - bi) = (a-1)k + bi
+  const realCoeff = a - 1;
+  const imConst = b;
+  const correct = `${realCoeff}k+${imConst}i`;
+  const w1 = `${realCoeff}k-${imConst}i`;
+  const w2 = `${a + 1}k+${imConst}i`;
+  const w3 = `${realCoeff + 2}k+${imConst}i`;
+  const wrongs = [w1, w2, w3].filter(w => w !== correct).slice(0, 3);
+  const opts = shuffle([correct, ...wrongs]);
+  return {
+    questionLatex: `\\text{若 }k\\text{ 為實數，則 }${a}k-\\frac{${b}+ki}{i}=`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `\\frac{1}{i} = \\frac{-i}{i \\cdot (-i)} = \\frac{-i}{1} = -i`,
+      `\\frac{${b}+ki}{i} = (${b}+ki)(-i) = -${b}i-ki^2 = k-${b}i`,
+      `${a}k-(k-${b}i) = ${realCoeff}k+${imConst}i`,
+    ],
+    subtypeLabel: '複數 i — 化簡含 i 分式',
+  };
+};
+
+// Type E: sum of consecutive powers i^m + ... + i^n
+const genIPowerRangeQ = () => {
+  const start = randInt(7, 15);
+  const end = randInt(start + 7, start + 16);
+  let re = 0, im = 0;
+  for (let n = start; n <= end; n++) {
+    const p = iCycle(n);
+    re += p.re; im += p.im;
+  }
+  const count = end - start + 1;
+  const resultStr = (() => {
+    if (re === 0 && im === 0) return '0';
+    if (im === 0) return String(re);
+    if (re === 0) return im === 1 ? 'i' : im === -1 ? '-i' : `${im}i`;
+    return `${re}${im > 0 ? '+' : ''}${im === 1 ? '' : im === -1 ? '-' : im}i`;
+  })();
+  const correct = resultStr;
+  const pool = ['0', 'i', '-i', '1', '-1', '1+i', '-1+i', '1-i', '-1-i'].filter(w => w !== correct);
+  const wrongs = shuffle(pool).slice(0, 3);
+  const opts = shuffle([correct, ...wrongs]);
+  const rem = count % 4;
+  return {
+    questionLatex: `i^{${start}}+i^{${start+1}}+\\cdots+i^{${end}}=`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `i^1+i^2+i^3+i^4=0\\text{（每4項和為 0）}`,
+      `\\text{共 }${count}\\text{ 項，}${count}=${Math.floor(count/4)}\\times4+${rem}`,
+      rem === 0
+        ? `\\text{整除4，故和為 0}` 
+        : `\\text{餘 }${rem}\\text{ 項，從 }i^{${start + Math.floor(count/4)*4}}\\text{ 計}`,
+      `\\therefore \\text{答案} = ${correct}`,
+    ],
+    subtypeLabel: '複數 i — 連續冪次之和',
+  };
+};
+
+// Type F: (β² + c²)/(β + ci) rationalize, β real
+const genRationalizeFracQ = () => {
+  const c = randInt(1, 4);
+  const cSq = c * c;
+  const bVar = ['\\beta', '\\alpha', 'k'][randInt(0, 2)];
+  // (β²+c²)/(β+ci) · (β-ci)/(β-ci) = (β+ci)(β-ci)·... wait
+  // = (β²+c²)(β-ci)/((β)²+(c)²) = β - ci
+  const correct = `${bVar}-${c}i`;
+  const w1 = `${bVar}+${c}i`;
+  const w2 = `${c}-${bVar}i`;
+  const w3 = `${c}+${bVar}i`;
+  const wrongs = [w1, w2, w3].filter(w => w !== correct).slice(0, 3);
+  const opts = shuffle([correct, ...wrongs]);
+  return {
+    questionLatex: `\\text{若 }${bVar}\\text{ 為實數，則 }\\frac{${bVar}^2+${cSq}}{${bVar}+${c}i}=`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `\\frac{${bVar}^2+${cSq}}{${bVar}+${c}i} \\cdot \\frac{${bVar}-${c}i}{${bVar}-${c}i}`,
+      `=\\frac{(${bVar}^2+${cSq})(${bVar}-${c}i)}{${bVar}^2+${cSq}}`,
+      `=${bVar}-${c}i`,
+    ],
+    subtypeLabel: '複數 i — 有理化分式',
+  };
+};
+
+// Type G: z = (a+p)i^n + (a+q)i^(n+1), find a such that z is real
+const genMakeRealQ = () => {
+  const n1 = randInt(4, 9);
+  const p = randInt(2, 6);
+  const q = randInt(-5, -1);
+  const r1 = iCycle(n1), r2 = iCycle(n1 + 1);
+  // Im part = (a+p)*r1.im + (a+q)*r2.im = 0
+  const coefA = r1.im + r2.im;
+  if (coefA === 0) return genMakeRealQ();
+  const rhs = -(p * r1.im + q * r2.im);
+  if (rhs % coefA !== 0) return genMakeRealQ();
+  const aVal = rhs / coefA;
+  if (Math.abs(aVal) > 8) return genMakeRealQ();
+  const correct = String(aVal);
+  const wrongs = [...new Set([-aVal, aVal + 2, aVal - 2, aVal + 3].map(String))]
+    .filter(w => w !== correct).slice(0, 3);
+  const pS = p >= 0 ? `+${p}` : `${p}`;
+  const qS = q >= 0 ? `+${q}` : `${q}`;
+  const opts = shuffle([correct, ...wrongs]);
+  return {
+    questionLatex: `\\text{設 }z=(a${pS})i^{${n1}}+(a${qS})i^{${n1+1}}\\text{，其中 }a\\text{ 為實數。若 }z\\text{ 為實數，則 }a=`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `i^{${n1}}=${iCycleStr(n1)},\\quad i^{${n1+1}}=${iCycleStr(n1+1)}`,
+      `z=(a${pS})(${iCycleStr(n1)})+(a${qS})(${iCycleStr(n1+1)})`,
+      `\\text{令虛部}=0:\\;${coefA}a+${p*r1.im+q*r2.im}=0`,
+      `a=${aVal}`,
+    ],
+    subtypeLabel: '複數 i — 令式子為實數',
+  };
+};
+
+// Type H: find k such that expr/(k-i) + c/(k+i) real part = ?
+const genSumFracRealQ = () => {
+  const a1 = randInt(1, 3);
+  const a2 = randInt(1, 3);
+  // a1*i/(k-i) + a2/(k+i)
+  // common denom (k-i)(k+i) = k²+1
+  // numerator = a1*i*(k+i) + a2*(k-i)
+  //           = a1*(ki+i²) + a2*(k-i)
+  //           = a1*ki - a1 + a2*k - a2*i
+  //           = (a2*k - a1) + (a1*k - a2)*i
+  // Re = (a2*k - a1)/(k²+1)
+  const correct = `\\frac{${a2}k-${a1}}{k^2+1}`;
+  const w1 = `\\frac{${a2}k+${a1}}{k^2+1}`;
+  const w2 = `\\frac{${a1}k-${a2}}{k^2+1}`;
+  const w3 = `\\frac{${a2}k-${a1}}{k^2-1}`;
+  const wrongs = [w1, w2, w3].filter(w => w !== correct).slice(0, 3);
+  const a1Str = a1 > 1 ? `${a1}` : '';
+  const opts = shuffle([correct, ...wrongs]);
+  return {
+    questionLatex: `\\text{若 }k\\text{ 為實數，則 }\\frac{${a1Str}i}{k-i}+\\frac{${a2}}{k+i}\\text{ 的實部為}`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `\\text{通分：分母}=(k-i)(k+i)=k^2+1`,
+      `\\text{分子}=${a1}i(k+i)+${a2}(k-i)=${a1}ki+${a1}i^2+${a2}k-${a2}i`,
+      `=(${a2}k-${a1})+(${a1}k-${a2})i`,
+      `\\text{實部}=\\frac{${a2}k-${a1}}{k^2+1}`,
+    ],
+    subtypeLabel: '複數 i — 分式之和實部',
+  };
+};
+
+// Master generator for complex topic
+const generateComplexQuestion = () => {
+  const gens = [
+    { fn: genIWeightedSumQ, w: 20 },
+    { fn: genIExprSymQ,     w: 20 },
+    { fn: genComplexMulRealQ, w: 15 },
+    { fn: genDivideByIQ,    w: 15 },
+    { fn: genIPowerRangeQ,  w: 15 },
+    { fn: genMakeRealQ,     w: 10 },
+    { fn: genRationalizeFracQ, w: 10 },
+    { fn: genSumFracRealQ,  w: 10 },
+  ];
+  const total = gens.reduce((s, g) => s + g.w, 0);
+  let r = Math.random() * total;
+  for (const g of gens) {
+    r -= g.w;
+    if (r <= 0) { try { return g.fn(); } catch (e) { /* retry */ } }
+  }
+  return genIWeightedSumQ();
+};
+
 // ─── Notes Component for HCF / LCM ───────────────────────────────────────────
 const HCFLCMNotes = ({ onBack }) => (
   <div className="max-w-3xl mx-auto px-4 py-8">
@@ -719,6 +1339,374 @@ const HCFLCMNotes = ({ onBack }) => (
   </div>
 );
 
+// ─── Notes Component for Binary Conversion ──────────────────────────────────
+const BinaryNotes = ({ onBack }) => (
+  <div className="max-w-3xl mx-auto px-4 py-8">
+    <button onClick={onBack} className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium">
+      <ArrowLeft className="w-5 h-5" /> 返回
+    </button>
+    <h1 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-teal-400 pb-3">
+      📘 筆記：二進制轉換
+    </h1>
+    <div className="space-y-8 text-slate-700">
+
+      {/* Concept */}
+      <section className="bg-teal-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-teal-800 mb-3">一、基本概念</h2>
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="bg-white rounded-lg p-4 shadow-sm">
+            <p className="font-bold text-teal-700 mb-2">二進制（Base 2）</p>
+            <p className="text-sm">只使用 0 和 1，每個位置代表 2 的冪次：</p>
+            <BlockMath math="\cdots + b_3 \cdot 2^3 + b_2 \cdot 2^2 + b_1 \cdot 2^1 + b_0 \cdot 2^0" />
+          </div>
+          <div className="bg-white rounded-lg p-4 shadow-sm">
+            <p className="font-bold text-teal-700 mb-2">例子</p>
+            <BlockMath math="1011_2 = 2^3+2^1+2^0 = 8+2+1 = 11" />
+            <BlockMath math="10110_2 = 2^4+2^2+2^1 = 22" />
+          </div>
+        </div>
+      </section>
+
+      {/* Powers Table */}
+      <section className="bg-blue-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-blue-800 mb-3">二、常用 2 的冪次（必記！）</h2>
+        <div className="overflow-x-auto">
+          <table className="text-sm text-center border-collapse w-full">
+            <thead>
+              <tr className="bg-blue-200">
+                {[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].map(n => (
+                  <th key={n} className="border border-blue-300 px-2 py-1"><InlineMath math={`2^{${n}}`} /></th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-white">
+                {[1,2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768].map((v, i) => (
+                  <td key={i} className="border border-blue-300 px-2 py-1 font-mono text-xs">{v}</td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Binary to Decimal */}
+      <section className="bg-green-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-green-800 mb-3">三、二進制 → 十進制（手算）</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
+          <p className="font-semibold text-green-700 mb-2">方法：找出所有「1」的位置，加起對應的 2 的冪次</p>
+          <p className="text-sm mb-2">例：<InlineMath math="10110010110010112" /> 中，「1」在位置：</p>
+          <BlockMath math="15,13,12,9,7,6,3,1,0" />
+          <BlockMath math="= 2^{15}+2^{13}+2^{12}+2^9+2^7+2^6+2^3+2^1+2^0" />
+          <BlockMath math="= 11 \times 2^{12} + 11 \times 2^6 + 11" />
+          <p className="text-sm text-green-700">(因為 <InlineMath math="11 = 1011_2" />，其圖案在位 12、6、0 重複出現)</p>
+        </div>
+        <div className="bg-green-100 rounded-lg p-4">
+          <p className="font-semibold mb-2">識別「係數×2ⁿ」的竅門（SP-33 / 08-40 類）：</p>
+          <ol className="list-decimal pl-5 space-y-1 text-sm">
+            <li>先找到二進制數中最高的一組連續位</li>
+            <li>把這組位（如 <InlineMath math="10011_2 = 19" />）作為係數 k</li>
+            <li>餘下低位轉十進制為餘數 r</li>
+            <li>答案：<InlineMath math="k \times 2^n + r" /></li>
+          </ol>
+        </div>
+      </section>
+
+      {/* Decimal to Binary */}
+      <section className="bg-amber-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-amber-800 mb-3">四、十進制 → 二進制（手算：連除法）</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <p className="font-semibold text-amber-700 mb-2">例：22 → 二進制</p>
+          <div className="font-mono text-sm space-y-1 p-2 bg-amber-50 rounded">
+            <div>22 ÷ 2 = 11 餘 <span className="text-red-600 font-bold">0</span></div>
+            <div>11 ÷ 2 = 5  餘 <span className="text-red-600 font-bold">1</span></div>
+            <div>5  ÷ 2 = 2  餘 <span className="text-red-600 font-bold">1</span></div>
+            <div>2  ÷ 2 = 1  餘 <span className="text-red-600 font-bold">0</span></div>
+            <div>1  ÷ 2 = 0  餘 <span className="text-red-600 font-bold">1</span></div>
+          </div>
+          <BlockMath math="\text{由下向上讀餘數：} 22 = 10110_2" />
+        </div>
+      </section>
+
+      {/* CASIO Instructions */}
+      <section className="bg-purple-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-purple-800 mb-3">五、CASIO fx-50FHII — BASE MODE 轉換</h2>
+
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
+          <p className="font-bold text-purple-700 mb-2">📱 進入 BASE MODE</p>
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center gap-2 bg-purple-50 rounded p-2">
+              <span className="bg-gray-800 text-white text-xs font-mono px-2 py-1 rounded">MODE</span>
+              <span>→ 選擇</span>
+              <span className="bg-gray-800 text-white text-xs font-mono px-2 py-1 rounded">4</span>
+              <span>（BASE-N）</span>
+            </div>
+            <p className="text-gray-500">計算機進入 Base 模式，預設為十進制 (DEC)</p>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
+          <p className="font-bold text-purple-700 mb-3">🔄 進制轉換方法</p>
+          <div className="space-y-3">
+            <div className="border-l-4 border-blue-400 pl-3">
+              <p className="font-semibold text-blue-700 text-sm">十進制 → 二進制</p>
+              <div className="flex flex-wrap items-center gap-1 mt-1 text-sm">
+                <span>輸入十進制數 →</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">BIN</span>
+                <span>（按</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">SHIFT</span>
+                <span>+</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">4</span>
+                <span>）→</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">=</span>
+              </div>
+            </div>
+            <div className="border-l-4 border-green-400 pl-3">
+              <p className="font-semibold text-green-700 text-sm">二進制 → 十進制</p>
+              <div className="flex flex-wrap items-center gap-1 mt-1 text-sm">
+                <span>先按</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">BIN</span>
+                <span>→ 輸入二進制數 →</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">DEC</span>
+                <span>（</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">SHIFT</span>
+                <span>+</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">6</span>
+                <span>）→</span>
+                <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">=</span>
+              </div>
+            </div>
+            <div className="border-l-4 border-amber-400 pl-3">
+              <p className="font-semibold text-amber-700 text-sm">直接計算二進制算式</p>
+              <div className="text-sm mt-1">
+                <span>在 BIN 模式下直接輸入二進制運算（+, -, ×）→</span>
+                <span className="ml-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">=</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-purple-100 rounded-lg p-4">
+          <p className="font-bold text-purple-700 mb-2">💡 DSE 考試技巧</p>
+          <ol className="list-decimal pl-5 space-y-2 text-sm">
+            <li>遇到「算式 → 二進制」題：先用計算機求十進制值，再用 BASE MODE 轉換</li>
+            <li>遇到「二進制 → 算式」題：先用 BASE MODE 得十進制，再對照選項</li>
+            <li>進制模式下只能用 0 和 1 輸入；輸入其他數字會顯示 ERROR</li>
+            <li>離開 BASE MODE：按 <span className="bg-gray-800 text-white text-xs font-mono px-1 py-0.5 rounded">MODE</span> → <span className="bg-gray-800 text-white text-xs font-mono px-1 py-0.5 rounded">1</span>（回 COMP）</li>
+          </ol>
+        </div>
+
+        <div className="bg-white rounded-lg p-4 shadow-sm mt-4">
+          <p className="font-bold text-purple-700 mb-2">📝 實作例題</p>
+          <div className="space-y-3 text-sm">
+            <div>
+              <p className="font-semibold">求 <InlineMath math="7 \times 2^{10}+2^8+5 \times 2^3-2^3" /> 的二進制：</p>
+              <p>① 先計算：<InlineMath math="7168+256+40-8=7456" /></p>
+              <p>② BASE MODE →  BIN：輸入 7456 → 得 <InlineMath math="1110100100000_2" /></p>
+            </div>
+            <div>
+              <p className="font-semibold">求 <InlineMath math="10000100001_2" /> 的十進制：</p>
+              <p>BASE MODE → 輸入 10000100001 → DEC → 得 <InlineMath math="1057" /></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+);
+
+// ─── Notes Component for Variation ─────────────────────────────────────────────
+const VariationNotes = ({ onBack }) => (
+  <div className="max-w-3xl mx-auto px-4 py-8">
+    <button onClick={onBack} className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium">
+      <ArrowLeft className="w-5 h-5" /> 返回
+    </button>
+    <h1 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-amber-400 pb-3">
+      📘 筆記：變分常數
+    </h1>
+    <div className="space-y-8 text-slate-700">
+      <section className="bg-amber-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-amber-800 mb-3">一、正變與反變</h2>
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="bg-white rounded-lg p-4 shadow-sm">
+            <p className="font-bold text-amber-700 mb-2">正變（正比）</p>
+            <BlockMath math="y \propto x \Rightarrow y = kx" />
+            <p className="text-sm">y 隨 x 增大而增大，常數 <InlineMath math="k = \frac{y}{x}" /></p>
+          </div>
+          <div className="bg-white rounded-lg p-4 shadow-sm">
+            <p className="font-bold text-amber-700 mb-2">反變（反比）</p>
+            <BlockMath math="y \propto \frac{1}{x} \Rightarrow y = \frac{k}{x}" />
+            <p className="text-sm">y 隨 x 增大而減小，常數 <InlineMath math="k = xy" /></p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-orange-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-orange-800 mb-3">二、聯變（Joint Variation）</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
+          <p className="font-semibold text-orange-700 mb-2">一般形式：</p>
+          <BlockMath math="z = k \cdot \frac{x^a}{y^b}" />
+          <p>（z 隨 <InlineMath math="x^a" /> 正變，隨 <InlineMath math="y^b" /> 反變）</p>
+        </div>
+        <div className="bg-orange-100 rounded-lg p-4">
+          <p className="font-semibold mb-2">求常數 k 的方法：</p>
+          <BlockMath math="k = \frac{z \cdot y^b}{x^a}" />
+          <p className="text-sm text-orange-700">故 <InlineMath math="\frac{zy^b}{x^a}" /> 必為常數。</p>
+        </div>
+      </section>
+
+      <section className="bg-green-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-green-800 mb-3">三、常見描述與對應關係</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-green-200">
+                <th className="border border-green-300 px-3 py-2 text-left">描述</th>
+                <th className="border border-green-300 px-3 py-2 text-left">關係式</th>
+                <th className="border border-green-300 px-3 py-2 text-left">常數</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['z 隨 x² 正變，y³ 反變', 'z = kx²/y³', 'zy³/x²'],
+                ['w 隨 √u 正變，v² 反變', 'w = k√u/v²', 'w²v⁴/u （= k²）'],
+                ['z 隨 x 反變，y³ 正變', 'z = ky³/x', 'xz/y³'],
+                ['z 隨 x 正變，y² 反變', 'z = kx/y²', 'zy²/x'],
+              ].map(([desc, formula, constant], i) => (
+                <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-green-50'}>
+                  <td className="border border-green-300 px-3 py-2">{desc}</td>
+                  <td className="border border-green-300 px-3 py-2"><InlineMath math={formula.replace(/²/g,'^{2}').replace(/³/g,'^{3}').replace(/√u/,'\\sqrt{u}')} /></td>
+                  <td className="border border-green-300 px-3 py-2 font-semibold text-green-700"><InlineMath math={constant.replace(/²/g,'^{2}').replace(/³/g,'^{3}').replace(/⁴/g,'^{4}')} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="bg-blue-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-blue-800 mb-3">四、特別情況：平方根正變</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
+          <p className="font-semibold text-blue-700 mb-1">問題：w 隨 √u 正變，v² 反變</p>
+          <BlockMath math="w = \frac{k\sqrt{u}}{v^2}" />
+          <p className="text-sm text-blue-700 mb-2">直接常數含 √u，選項通常不出現根號。</p>
+          <p className="font-semibold text-blue-700 mb-1">技巧：兩邊平方</p>
+          <BlockMath math="w^2 = \frac{k^2 u}{v^4} \Rightarrow \frac{w^2 v^4}{u} = k^2 = \text{常數}" />
+        </div>
+        <div className="bg-blue-100 rounded-lg p-3 text-sm">
+          <p>⚠️ 注意：<InlineMath math="k^2" /> 也是常數，所以 <InlineMath math="\frac{w^2v^4}{u}" /> 必為常數。</p>
+        </div>
+      </section>
+
+      <section className="bg-purple-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-purple-800 mb-3">五、答題技巧</h2>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>寫出關係式 <InlineMath math="z = k \cdot \frac{\text{正比因素}}{\text{反比因素}}" /></li>
+          <li>移項求 k：常數 = <InlineMath math="z \times \frac{\text{反比因素}}{\text{正比因素}}" /></li>
+          <li>若涉及根式，兩邊平方得 <InlineMath math="k^2" />，再構造含 <InlineMath math="k^2" /> 的常數式</li>
+          <li>逐項代入選項驗證，看哪個結果恆等於常數</li>
+        </ol>
+      </section>
+    </div>
+  </div>
+);
+
+// ─── Notes Component for Complex Numbers ─────────────────────────────────────
+const ComplexNotes = ({ onBack }) => (
+  <div className="max-w-3xl mx-auto px-4 py-8">
+    <button onClick={onBack} className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium">
+      <ArrowLeft className="w-5 h-5" /> 返回
+    </button>
+    <h1 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-purple-400 pb-3">
+      📘 筆記：複數 i
+    </h1>
+    <div className="space-y-8 text-slate-700">
+      <section className="bg-purple-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-purple-800 mb-3">一、虛數單位 i 的冪次循環</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
+          <BlockMath math="i^1 = i, \quad i^2 = -1, \quad i^3 = -i, \quad i^4 = 1" />
+          <p className="text-sm text-purple-700 mt-2">週期為 4，即 <InlineMath math="i^{4k} = 1" />，<InlineMath math="i^{4k+1} = i" />，<InlineMath math="i^{4k+2} = -1" />，<InlineMath math="i^{4k+3} = -i" /></p>
+        </div>
+        <div className="bg-purple-100 rounded-lg p-3">
+          <p className="font-semibold mb-1">技巧：用 n mod 4 判斷</p>
+          <p className="text-sm">例：<InlineMath math="i^{37}" />，37 mod 4 = 1，故 <InlineMath math="i^{37} = i" /></p>
+        </div>
+      </section>
+
+      <section className="bg-indigo-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-indigo-800 mb-3">二、連續冪次之和</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
+          <p className="font-semibold text-indigo-700 mb-1">關鍵：每 4 項和為 0</p>
+          <BlockMath math="i^n + i^{n+1} + i^{n+2} + i^{n+3} = i^n(1+i-1-i) = 0" />
+        </div>
+        <div className="bg-indigo-100 rounded-lg p-3">
+          <p className="font-semibold mb-1">例（25-35）：<InlineMath math="i^9+i^{10}+\cdots+i^{999}" /></p>
+          <BlockMath math="\text{共 } 999-9+1 = 991 \text{ 項}" />
+          <BlockMath math="991 = 247 \times 4 + 3" />
+          <BlockMath math="\text{餘 3 項：} i^{997}+i^{998}+i^{999} = i+(-1)+(-i) = -1" />
+        </div>
+      </section>
+
+      <section className="bg-blue-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-blue-800 mb-3">三、有理化含 i 的分式</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
+          <p className="font-semibold text-blue-700 mb-2">共軛複數乘法：</p>
+          <BlockMath math="\frac{a+bi}{c+di} = \frac{(a+bi)(c-di)}{c^2+d^2}" />
+        </div>
+        <div className="grid gap-3 md:grid-cols-2">
+          <div className="bg-blue-100 rounded-lg p-3">
+            <p className="font-semibold mb-1 text-sm">除以 i：</p>
+            <BlockMath math="\frac{1}{i} = \frac{-i}{i(-i)} = -i" />
+          </div>
+          <div className="bg-blue-100 rounded-lg p-3">
+            <p className="font-semibold mb-1 text-sm">例（SP-34）：</p>
+            <BlockMath math="4k-\frac{6+ki}{i}=4k-(k-6i)=3k+6i" />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-green-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-green-800 mb-3">四、「令式子為實數」問題</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <p className="font-semibold text-green-700 mb-2">方法：令虛部 = 0</p>
+          <p>展開後，虛部含參數。令虛部 = 0，解出參數。</p>
+        </div>
+        <div className="bg-green-100 rounded-lg p-4 mt-3">
+          <p className="font-semibold mb-1">例（15-35）：<InlineMath math="z = (a+5)i^6+(a-3)i^7" />，z 為實數</p>
+          <BlockMath math="i^6 = -1,\quad i^7 = -i" />
+          <BlockMath math="z = -(a+5) + (3-a)i" />
+          <BlockMath math="\text{令虛部}=0:\; 3-a=0 \Rightarrow a=3" />
+        </div>
+      </section>
+
+      <section className="bg-yellow-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-yellow-800 mb-3">五、加權冪次求實部</h2>
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <p className="font-semibold mb-1">例（13-36）：<InlineMath math="i+2i^2+3i^3+4i^4" /> 的實部為</p>
+          <BlockMath math="= i + 2(-1) + 3(-i) + 4(1) = -2+4+\underbrace{i-3i}_{-2i} = 2-2i" />
+          <BlockMath math="\text{實部} = 2" />
+        </div>
+      </section>
+
+      <section className="bg-red-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-red-800 mb-3">六、運算重點提示</h2>
+        <ul className="space-y-2">
+          <li className="bg-white rounded-lg p-3 shadow-sm">
+            <InlineMath math="(a+bi)(c+di) = (ac-bd)+(ad+bc)i" />
+          </li>
+          <li className="bg-white rounded-lg p-3 shadow-sm">
+            <span className="font-semibold">實部</span> = 不含 i 的部份；<span className="font-semibold">虛部</span> = i 的係數
+          </li>
+          <li className="bg-white rounded-lg p-3 shadow-sm">
+            若 x 為實數，則 <InlineMath math="(x+ni)(m+i)" /> 展開後實部含 x
+          </li>
+        </ul>
+      </section>
+    </div>
+  </div>
+);
+
 // ─── MC Option Button ─────────────────────────────────────────────────────────
 const OptionBtn = ({ label, optionLatex, state, onClick }) => {
   // state: 'idle' | 'correct' | 'wrong' | 'reveal'
@@ -861,21 +1849,127 @@ const HCFLCMQuiz = ({ onBack }) => {
   );
 };
 
+// ─── Generic Topic Quiz ──────────────────────────────────────────────────────
+const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
+  const [question, setQuestion] = useState(() => generateFn());
+  const [selected, setSelected] = useState(null);
+  const [score, setScore] = useState({ correct: 0, total: 0 });
+  const [streak, setStreak] = useState(0);
+
+  const nextQuestion = useCallback(() => {
+    setQuestion(generateFn());
+    setSelected(null);
+  }, [generateFn]);
+
+  const handleSelect = (idx) => {
+    if (selected !== null) return;
+    setSelected(idx);
+    const ok = idx === question.correctIndex;
+    setScore(s => ({ correct: s.correct + (ok ? 1 : 0), total: s.total + 1 }));
+    setStreak(st => ok ? st + 1 : 0);
+  };
+
+  const optionLabels = ['A', 'B', 'C', 'D'];
+  const getState = (idx) => {
+    if (selected === null) return 'idle';
+    if (idx === question.correctIndex) return selected === idx ? 'correct' : 'reveal';
+    if (idx === selected) return 'wrong';
+    return 'idle';
+  };
+  const accuracy = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-6">
+      <div className="flex items-center justify-between mb-6">
+        <button onClick={onBack} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 font-medium">
+          <ArrowLeft className="w-5 h-5" /> 返回
+        </button>
+        <div className="flex items-center gap-3 text-sm">
+          {streak >= 3 && (
+            <span className="flex items-center gap-1 text-orange-500 font-bold">
+              <Star className="w-4 h-4 fill-orange-400" /> ×{streak}
+            </span>
+          )}
+          <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">✓ {score.correct}/{score.total}</span>
+          <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">{accuracy}%</span>
+        </div>
+      </div>
+      <div className="mb-3">
+        <span className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">{question.subtypeLabel}</span>
+      </div>
+      <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 mb-5">
+        <p className="text-base font-semibold text-slate-700 mb-4"><InlineMath math={question.questionLatex} /></p>
+        <div className="space-y-3">
+          {question.options.map((opt, idx) => (
+            <OptionBtn
+              key={`${idx}-${question.questionLatex.slice(0,20)}`}
+              label={optionLabels[idx]}
+              optionLatex={opt}
+              state={getState(idx)}
+              onClick={() => handleSelect(idx)}
+            />
+          ))}
+        </div>
+      </div>
+      {selected !== null && (
+        <div className={`rounded-xl p-4 mb-4 border-l-4 ${
+          selected === question.correctIndex ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-400'}`}>
+          <div className="flex items-center gap-2 mb-3">
+            {selected === question.correctIndex
+              ? <CheckCircle className="w-5 h-5 text-green-600" />
+              : <XCircle className="w-5 h-5 text-red-500" />}
+            <span className={`font-bold ${selected === question.correctIndex ? 'text-green-700' : 'text-red-600'}`}>
+              {selected === question.correctIndex ? '正確！' : `錯誤！答案是 ${optionLabels[question.correctIndex]}`}
+            </span>
+          </div>
+          <div className="bg-white rounded-lg px-4 py-3 space-y-1">
+            {(question.explanationLines || []).map((line, i) => <BlockMath key={i} math={line} />)}
+          </div>
+        </div>
+      )}
+      {selected !== null && (
+        <button onClick={nextQuestion}
+          className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">
+          下一題 <ChevronRight className="w-5 h-5" />
+        </button>
+      )}
+    </div>
+  );
+};
+
 // ─── Topic List ───────────────────────────────────────────────────────────────
 const TOPICS = [
+  {
+    id: 'binary',
+    title: '二進制轉換',
+    desc: '二進制與十進制互轉、二進制算式求值、係數×2ⁿ+餘數分解，CASIO 50FHII BASE MODE 技巧',
+    icon: '🔟',
+    color: 'from-teal-500 to-cyan-600',
+    badges: [{ level: 'F4', chapter: 'CH3', subject: '二進制' }],
+  },
   {
     id: 'hcf-lcm',
     title: '多項式的 H.C.F. 及 L.C.M.',
     desc: '最高公因式與最小公倍式，涵蓋純變量單項式、含係數單項式、可因式分解多項式及求第三式',
     icon: '📐',
     color: 'from-blue-500 to-indigo-600',
-    lightColor: 'bg-blue-50 border-blue-200',
-    badges: [
-      { level: 'F3', chapter: 'CH2', subject: '多項式' },
-      { level: 'F4', chapter: 'CH1', subject: '多項式的運算' },
-      { level: 'F4', chapter: 'CH4', subject: '續多項式' },
-      { level: 'F5', chapter: 'CH11', subject: '更多關於多項式' },
-    ],
+    badges: [{ level: 'F4', chapter: 'CH4', subject: '續多項式' }],
+  },
+  {
+    id: 'variation',
+    title: '變分常數',
+    desc: '正變、反變、聯變：判斷哪個代數式必為常數，涵蓋整數次及平方根次正變',
+    icon: '📊',
+    color: 'from-amber-500 to-orange-600',
+    badges: [{ level: 'F5', chapter: 'CH11', subject: '變分' }],
+  },
+  {
+    id: 'complex',
+    title: '複數 i',
+    desc: 'i 的冪次循環、化簡含 i 的代數式、有理化分式、令式子為實數，DSE 歷屆題型',
+    icon: '🔮',
+    color: 'from-purple-500 to-violet-600',
+    badges: [{ level: 'F6', chapter: 'CH2', subject: '複數 i' }],
   },
 ];
 
@@ -885,10 +1979,16 @@ const MCLimitedF6 = () => {
   const [activeTopic, setActiveTopic] = useState(null);
 
   if (view === 'quiz' && activeTopic) {
+    if (activeTopic.id === 'binary')   return <TopicQuiz onBack={() => setView('home')} generateFn={generateBinaryQuestion} topicLabel="二進制轉換" />;
     if (activeTopic.id === 'hcf-lcm') return <HCFLCMQuiz onBack={() => setView('home')} />;
+    if (activeTopic.id === 'variation') return <TopicQuiz onBack={() => setView('home')} generateFn={generateVariationQuestion} topicLabel="變分常數" />;
+    if (activeTopic.id === 'complex') return <TopicQuiz onBack={() => setView('home')} generateFn={generateComplexQuestion} topicLabel="複數 i" />;
   }
   if (view === 'notes' && activeTopic) {
+    if (activeTopic.id === 'binary')   return <BinaryNotes onBack={() => setView('home')} />;
     if (activeTopic.id === 'hcf-lcm') return <HCFLCMNotes onBack={() => setView('home')} />;
+    if (activeTopic.id === 'variation') return <VariationNotes onBack={() => setView('home')} />;
+    if (activeTopic.id === 'complex') return <ComplexNotes onBack={() => setView('home')} />;
   }
 
   // Home – topic selector
@@ -952,21 +2052,7 @@ const MCLimitedF6 = () => {
           </div>
         ))}
 
-        {/* Coming Soon */}
-        {[
-          { title: '二進制轉換', icon: '🔟', level: 'F4' },
-          { title: '變分常數', icon: '📊', level: 'F5' },
-          { title: '複數 i', icon: '🔮', level: 'F6' },
-        ].map(t => (
-          <div key={t.title} className="bg-white/70 border border-slate-200 rounded-2xl px-6 py-5 flex items-center gap-4 opacity-60">
-            <span className="text-3xl">{t.icon}</span>
-            <div>
-              <span className="bg-slate-200 text-slate-500 text-xs font-bold px-2 py-0.5 rounded-full mr-2">{t.level}</span>
-              <span className="text-slate-500 font-semibold">{t.title}</span>
-              <span className="ml-3 text-xs text-slate-400">（即將推出）</span>
-            </div>
-          </div>
-        ))}
+
       </div>
     </div>
   );
