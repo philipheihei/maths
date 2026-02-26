@@ -9,6 +9,25 @@ const Home = () => {
 
   const apps = [
     {
+      id: 'mc-limited-f6',
+      title: 'DSE MC限定',
+      description: 'DSE 歷屆 MC 模擬練習：自動生成仿 DSE 選擇題，涵蓋 F3–F5 重點，附筆記',
+      icon: Calculator,
+      color: 'bg-slate-800',
+      hoverColor: 'hover:bg-slate-900',
+      path: '/mc-limited-f6',
+      level: 'F6',
+      badges: [
+        { level: 'F3', chapter: 'CH2', subject: '多項式' },
+        { level: 'F4', chapter: 'CH1', subject: '多項式的運算' },
+        { level: 'F4', chapter: 'CH4', subject: '續多項式' },
+        { level: 'F5', chapter: 'CH11', subject: '更多關於多項式' },
+      ],
+      category: '高中',
+      topics: ['H.C.F.', 'L.C.M.', '多項式', 'DSE MC'],
+      inDevelopment: false
+    },
+    {
       id: 'angle-master-quiz',
       title: '尋找圖形角度',
       description: '中學各級角度定理練習，包含平行線錯角、三角形外角、圓心角與圓周角及交錯弓形',

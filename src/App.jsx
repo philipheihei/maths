@@ -19,6 +19,7 @@ import ProbabilityQuiz from './apps/ProbabilityQuiz';
 import FactorizationQuiz from './apps/FactorizationQuiz';
 import RemainderFactorQuiz from './apps/RemainderFactorQuiz';
 import AngleMasterQuiz from './apps/AngleMasterQuiz';
+import MCLimitedF6 from './apps/MCLimitedF6';
 import Notes from './pages/Notes';
 
 // ==========================================
@@ -50,6 +51,7 @@ function App() {
         <Route path="/factorization-quiz" element={<FactorizationQuiz />} />
         <Route path="/remainder-factor-quiz" element={<RemainderFactorQuiz />} />
         <Route path="/angle-master-quiz" element={<AngleMasterQuiz />} />
+        <Route path="/mc-limited-f6" element={<MCLimitedF6 />} />
         <Route path="/notes" element={<Notes />} />
       </Routes>
       {isDev && Agentation && (
