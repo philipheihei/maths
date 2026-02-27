@@ -35,22 +35,16 @@ const BlockMath = ({ math }) => {
 };
 
 // Left-aligned, =-aligned explanation block
-// Shows the question as first line, then each step aligned at =
+// Shows the question as first line, then each step on its own line (no scroll)
 const AlignedSteps = ({ questionLatex, lines }) => {
-  const ref = useRef(null);
-  const katexLoaded = useKatex();
-  useEffect(() => {
-    if (!katexLoaded || !ref.current || !window.katex) return;
-    // Prepend question, then align subsequent lines at =
-    const allLines = [questionLatex, ...(lines || [])];
-    const content = allLines
-      .map((l, i) => (i === 0 ? l : l.replace(/^(\s*)=/, '$1&=')))
-      .join(' \\\\ ');
-    const tex = `\\displaystyle\\begin{aligned}${content}\\end{aligned}`;
-    try { window.katex.render(tex, ref.current, { displayMode: false, throwOnError: false }); }
-    catch (e) { if (ref.current) ref.current.textContent = tex; }
-  }, [questionLatex, katexLoaded, JSON.stringify(lines)]);
-  return <div ref={ref} className="overflow-x-auto py-2 pl-2 text-left" />;
+  const allLines = [...(questionLatex ? [questionLatex] : []), ...(lines || [])];
+  return (
+    <div className="py-2 pl-2 text-left space-y-1">
+      {allLines.map((line, i) => (
+        <div key={i}><InlineMath math={line} /></div>
+      ))}
+    </div>
+  );
 };
 
 // ─── Math Utilities ───────────────────────────────────────────────────────────
@@ -141,9 +135,7 @@ const makeWrongExps = (vars, correctExps, allExps, mode) => {
 const genHCFLCMMonomialQ = (mode) => {
   const varPools = [['x', 'y', 'z'], ['a', 'b', 'c'], ['u', 'v', 'w'], ['p', 'q', 'r']];
   const poolIdx = randInt(0, varPools.length - 1);
-  const allVars = varPools[poolIdx];
-  const numVars = randInt(2, 3);
-  const vars = allVars.slice(0, numVars);
+  const vars = varPools[poolIdx]; // always 3 variables
 
   const exprExps = [];
   const targetExps = {};
@@ -176,6 +168,10 @@ const genHCFLCMMonomialQ = (mode) => {
   }
 
   const exprStrs = expMaps.map(m => monomialLatex(vars, m));
+
+  // Ensure all three expressions are distinct; retry if not
+  if (new Set(exprStrs).size < 3) return genHCFLCMMonomialQ(mode);
+
   const answerStr = monomialLatex(vars, targetExps);
 
   const wrongs = makeWrongExps(vars, targetExps, expMaps, mode).map(w => monomialLatex(vars, w));
@@ -193,22 +189,25 @@ const genHCFLCMMonomialQ = (mode) => {
   const opts = shuffle([answerStr, ...uniqueWrongs.slice(0, 3)]);
   const correctIdx = opts.indexOf(answerStr);
   const label = mode === 'hcf' ? 'H.C.F.' : 'L.C.M.';
-  const op = mode === 'hcf' ? '\\min' : '\\max';
   const ruleText = mode === 'hcf' ? '最小' : '最大';
 
   const varBreakdown = vars.map(v => {
-    const vals = expMaps.map(m => m[v]).join(',');
-    return `${v}: ${op}(${vals}) = ${targetExps[v]}`;
-  }).join(', \\quad ');
+    const termStrs = expMaps.map(m => {
+      const e = m[v];
+      return e === 1 ? v : `${v}^{${e}}`;
+    }).join(',\\ ');
+    const resultStr = targetExps[v] === 1 ? v : `${v}^{${targetExps[v]}}`;
+    return `${termStrs} \\rightarrow \\text{${ruleText}次方：}${resultStr}`;
+  });
 
   return {
     type: mode,
-    questionLatex: `\\text{求 } ${exprStrs.join(' \\text{、} ')} \\text{ 的 } ${label}`,
+    questionLatex: `${exprStrs.slice(0, -1).join(' \\text{、} ')} \\text{ 及 } ${exprStrs[exprStrs.length - 1]} \\text{ 的 ${label} 為}`,
     options: opts,
     correctIndex: correctIdx,
     explanationLines: [
       `\\textbf{${label}} \\text{ → 每個變量取${ruleText}指數}`,
-      varBreakdown,
+      ...varBreakdown,
       `\\therefore \\text{${label}} = ${answerStr}`,
     ],
     subtypeLabel: `${label} — 純變量單項式`,
@@ -259,43 +258,61 @@ const genHCFLCMCoeffQ = (mode) => {
   }
 
   const exprStrs = [c1, c2, c3].map((c, i) => monomialLatex(vars, expMaps[i], c));
+
+  // Ensure all three expressions are distinct; retry if not
+  if (new Set(exprStrs).size < 3) return genHCFLCMCoeffQ(mode);
+
   const answerStr = monomialLatex(vars, targetExps, targetCoeff);
 
-  // Plausible wrong coefficients
-  const wrongCoeffs = mode === 'hcf'
-    ? [lcmMany(triple), gcdMany([c1, c2]) * 2, gcdMany([c1, c3])]
-    : [gcdMany(triple), lcmMany([c1, c2]), lcmMany([c1, c2]) * 2];
+  // DSE-style distractors (mirror pasted image 2 pattern):
+  const oppCoeff = mode === 'hcf' ? lcmMany(triple) : gcdMany(triple);
 
-  const wrongs = makeWrongExps(vars, targetExps, expMaps, mode);
+  // opposite variable exponents (max for HCF question, min for LCM question)
+  const oppExps = {};
+  for (const v of vars) {
+    oppExps[v] = mode === 'hcf'
+      ? Math.max(...expMaps.map(m => m[v]))
+      : Math.min(...expMaps.map(m => m[v]));
+  }
+  // sum of all exponents for each var (common wrong: add instead of min/max)
+  const sumExps = {};
+  for (const v of vars) {
+    sumExps[v] = expMaps.reduce((acc, m) => acc + m[v], 0);
+  }
+
   const allWrongs = [
-    monomialLatex(vars, targetExps, wrongCoeffs[0]),
-    monomialLatex(vars, wrongs[0] || targetExps, targetCoeff),
-    monomialLatex(vars, wrongs[1] || targetExps, wrongCoeffs[1]),
-    monomialLatex(vars, targetExps, wrongCoeffs[2]),
+    monomialLatex(vars, oppExps, oppCoeff),    // full opposite: e.g. L.C.M. as wrong for H.C.F.
+    monomialLatex(vars, oppExps, targetCoeff), // correct coeff, opposite exponents
+    monomialLatex(vars, targetExps, oppCoeff), // opposite coeff, correct exponents
+    monomialLatex(vars, sumExps, targetCoeff), // correct coeff, sum exponents
+    monomialLatex(vars, sumExps, oppCoeff),    // opposite coeff, sum exponents
   ].filter(w => w !== answerStr);
 
   const uniqueWrongs = [...new Set(allWrongs)].slice(0, 3);
   const opts = shuffle([answerStr, ...uniqueWrongs]);
   const correctIdx = opts.indexOf(answerStr);
   const label = mode === 'hcf' ? 'H.C.F.' : 'L.C.M.';
-  const op = mode === 'hcf' ? '\\min' : '\\max';
   const ruleText = mode === 'hcf' ? '最小' : '最大';
   const coeffOp = mode === 'hcf' ? 'GCD' : 'LCM';
 
   const varBreakdown = vars.map(v => {
-    const vals = expMaps.map(m => m[v]).join(',');
-    return `${v}: ${op}(${vals}) = ${targetExps[v]}`;
-  }).join(', \\quad ');
+    const termStrs = expMaps.map(m => {
+      const e = m[v];
+      return e === 1 ? v : `${v}^{${e}}`;
+    }).join(',\\ ');
+    const resultStr = targetExps[v] === 1 ? v : `${v}^{${targetExps[v]}}`;
+    return `${termStrs} \\rightarrow \\text{${ruleText}次方：}${resultStr}`;
+  });
 
   return {
     type: mode,
-    questionLatex: `\\text{求 } ${exprStrs.join(' \\text{、} ')} \\text{ 的 } ${label}`,
+    questionLatex: `${exprStrs.slice(0, -1).join(' \\text{、} ')} \\text{ 及 } ${exprStrs[exprStrs.length - 1]} \\text{ 的 ${label} 為}`,
     options: opts,
     correctIndex: correctIdx,
     explanationLines: [
-      `\\textbf{${label}} \\text{ → 係數取 ${coeffOp}，變量取${ruleText}指數}`,
-      `\\text{係數：${coeffOp}}(${c1},${c2},${c3}) = ${targetCoeff}`,
-      varBreakdown,
+      `\\textbf{${label}} \\text{ → 數字取${mode === 'hcf' ? '最大公因數' : '最小公倍數'}，代數取${ruleText}指數}`,
+      `\\text{${c1}, ${c2}, ${c3} 的${mode === 'hcf' ? '公因數' : '公倍數'}為 } ${targetCoeff}`,
+      ...varBreakdown,
       `\\therefore \\text{${label}} = ${answerStr}`,
     ],
     subtypeLabel: `${label} — 含係數單項式`,
@@ -358,7 +375,7 @@ const genHCFFactoredQ = () => {
 
   return {
     type: 'hcf',
-    questionLatex: `\\text{求 } ${expr1Str} \\text{ 及 } ${expr2Str} \\text{ 的 H.C.F.}`,
+    questionLatex: `${expr1Str} \\text{ 及 } ${expr2Str} \\text{ 的 H.C.F. 為}`,
     options: opts,
     correctIndex: correctIdx,
     explanationLines: [
@@ -432,28 +449,31 @@ const genFindThirdQ = () => {
   const opts = shuffle([answerStr, ...uniqueWrongs]);
   const correctIdx = opts.indexOf(answerStr);
 
+  const expStr = (v, e) => e === 1 ? v : `${v}^{${e}}`;
+
   const varLines = vars.map(v => {
     const h = hcfExps[v], l = lcmExps[v];
     const a1 = e1[v], a2 = e2[v], a3 = e3[v];
+    const s1 = expStr(v, a1), s2 = expStr(v, a2);
+    const sh = expStr(v, h), sl = expStr(v, l);
     if (a3 === h) {
-      return `${v}: \\min(${a1},${a2})=${Math.min(a1,a2)} > h,\\; \\therefore e_3=h=${h}`;
+      return `\\text{${v}：式1有 }${s1}\\text{，式2有 }${s2}\\text{，但 H.C.F. 為 }${sh}\\text{，能推理出第三個數式須有 }${sh}`;
     } else {
-      return `${v}: \\max(${a1},${a2})=${Math.max(a1,a2)} < l,\\; \\therefore e_3=l=${l}`;
+      return `\\text{${v}：式1有 }${s1}\\text{，式2有 }${s2}\\text{，但 L.C.M. 為 }${sl}\\text{，能推理出第三個數式須有 }${sl}`;
     }
   });
 
   return {
     type: 'find_third',
-    questionLatex: `\\text{三個單項式的 H.C.F. 及 L.C.M. 分別為 } ${hcfStr} \\text{ 及 } ${lcmStr}。\\text{若前兩個單項式分別為 } ${expr1Str} \\text{ 及 } ${expr2Str}，\\text{則第三個單項式為}`,
+    questionLatex: `\\text{三個數式的 H.C.F. 及 L.C.M. 分別為 } ${hcfStr} \\text{ 及 } ${lcmStr}。`,
+    questionLatex2: `\\text{若第一個數式及第二個數式分別為 } ${expr1Str} \\text{ 及 } ${expr2Str}\\text{，則第三個數式為}`,
     options: opts,
     correctIndex: correctIdx,
     explanationLines: [
-      `\\text{若 } \\min(e_1,e_2)>h \\Rightarrow e_3=h\\text{（補足 H.C.F.）}`,
-      `\\text{若 } \\max(e_1,e_2)<l \\Rightarrow e_3=l\\text{（補足 L.C.M.）}`,
       ...varLines,
-      `\\therefore \\text{第三式} = ${answerStr}`,
+      `\\therefore \\text{第三個數式} = ${answerStr}`,
     ],
-    subtypeLabel: '求第三個單項式（已知 H.C.F., L.C.M. 及兩個單項式）',
+    subtypeLabel: '求第三個數式（已知 H.C.F., L.C.M. 及兩個數式）',
   };
 };
 
@@ -468,7 +488,11 @@ const FACTORED_POLY_TEMPLATES = [
     mode: 'hcf',
     answer: 'x(x+1)',
     wrongs: ['x(x+1)(x+2)', 'x^2(x+1)^3', 'x^2(x+1)^3(x+2)'],
-    hint: '\\text{取每個因式的最小次：} x^{\\min(2,1)}(x+1)^{\\min(1,3)}=x(x+1)',
+    hint: [
+      'x^2,\\ x \\rightarrow \\text{最小次方：}x',
+      '(x+1)^1,\\ (x+1)^3 \\rightarrow \\text{最小次方：}(x+1)^1',
+      '(x+2)^1,\\ \\text{沒有} \\rightarrow \\text{（不含 }(x+2)\\text{）}',
+    ],
   },
   {
     // 210xy² and 30x²yz — LCM
@@ -478,7 +502,12 @@ const FACTORED_POLY_TEMPLATES = [
     mode: 'lcm',
     answer: '630x^2y^2z',
     wrongs: ['30xy', '210x^2y^2z', '30xyz'],
-    hint: `\\text{LCM}(210,30)=630,\\ \\text{LCM}(x,x^2)=x^2,\\ \\text{LCM}(y^2,y)=y^2,\\ \\text{LCM}(1,z)=z`,
+    hint: [
+      '\\text{係數：210 及 30 的公倍數為 }630',
+      'x,\\ x^2 \\rightarrow \\text{最大次方：}x^2',
+      'y^2,\\ y \\rightarrow \\text{最大次方：}y^2',
+      '1,\\ z \\rightarrow \\text{最大次方：}z',
+    ],
   },
   {
     // x²-1 = (x+1)(x-1),  x²+2x+1 = (x+1)²   LCM
@@ -513,11 +542,14 @@ const FACTORED_POLY_TEMPLATES = [
   {
     // 12-31: H.C.F.=ab², L.C.M.=4a⁴b⁵c⁶, expr1=2a²b⁴, expr2=4a⁴b²c⁶ → find third
     var: 'a',
-    exprs: ['\\text{H.C.F.}=ab^2,\\ \\text{L.C.M.}=4a^4b^5c^6', '\\text{第一個}=2a^2b^4,\\ \\text{第二個}=4a^4b^2c^6'],
+    hcf: 'ab^2',
+    lcm: '4a^4b^5c^6',
+    expr1: '2a^2b^4',
+    expr2: '4a^4b^2c^6',
     factored: ['', ''],
     mode: 'find_third',
-    answer: '2ab^5c^6',
-    wrongs: ['ab^5', 'ab^2c', '2ab^2c^6'],
+    answer: 'ab^5',
+    wrongs: ['2ab^5c^6', 'ab^2c', '2ab^2c^6'],
     hint: `\\text{對每個因素：若兩式不能達到 H.C.F. 或 L.C.M.，則第三式須補足。}`,
   },
 ];
@@ -526,13 +558,14 @@ const genFactoredPolyQ = () => {
   const tmpl = FACTORED_POLY_TEMPLATES[randInt(0, FACTORED_POLY_TEMPLATES.length - 1)];
   const label = tmpl.mode === 'hcf' ? 'H.C.F.' : (tmpl.mode === 'lcm' ? 'L.C.M.' : '第三個多項式');
 
-  let questionLatex;
+  let questionLatex, questionLatex2;
   if (tmpl.mode === 'find_third') {
-    questionLatex = `\\text{三個多項式的 } ${tmpl.exprs[0]}。${tmpl.exprs[1]}，\\text{則第三個多項式為}`;
+    questionLatex = `\\text{三個數式的 H.C.F. 及 L.C.M. 分別為 } ${tmpl.hcf} \\text{ 及 } ${tmpl.lcm}`;
+    questionLatex2 = `\\text{若第一個數式及第二個數式分別為 } ${tmpl.expr1} \\text{ 及 } ${tmpl.expr2}\\text{，則第三個數式為}`;
   } else if (tmpl.exprs.length === 2) {
-    questionLatex = `\\text{求 } ${tmpl.exprs[0]} \\text{ 及 } ${tmpl.exprs[1]} \\text{ 的 } ${label}`;
+    questionLatex = `${tmpl.exprs[0]} \\text{ 及 } ${tmpl.exprs[1]} \\text{ 的 ${label} 為}`;
   } else {
-    questionLatex = `\\text{求 } ${tmpl.exprs.join(' \\text{、} ')} \\text{ 的 } ${label}`;
+    questionLatex = `${tmpl.exprs.slice(0, -1).join(' \\text{、} ')} \\text{ 及 } ${tmpl.exprs[tmpl.exprs.length - 1]} \\text{ 的 ${label} 為}`;
   }
 
   const opts = shuffle([tmpl.answer, ...tmpl.wrongs.slice(0, 3)]);
@@ -540,13 +573,18 @@ const genFactoredPolyQ = () => {
 
   const explLines = [];
   if (tmpl.hint) {
-    tmpl.hint.split(',\\ ').forEach(s => explLines.push(s.trim()));
+    if (Array.isArray(tmpl.hint)) {
+      tmpl.hint.forEach(s => explLines.push(s));
+    } else {
+      tmpl.hint.split(',\\ ').forEach(s => explLines.push(s.trim()));
+    }
   }
   explLines.push(`\\therefore \\text{${tmpl.mode === 'find_third' ? '第三式' : label}} = ${tmpl.answer}`);
 
   return {
     type: tmpl.mode,
     questionLatex,
+    questionLatex2,
     options: opts,
     correctIndex: correctIdx,
     explanationLines: explLines,
@@ -886,15 +924,24 @@ const genJointVariationQ = () => {
   while (uniqueWrongs.length < 3) uniqueWrongs.push(`\\frac{${main}^{${uniqueWrongs.length+2}}}{${v1p}${v2p}}`);
 
   const opts = shuffle([correctLatex, ...uniqueWrongs.slice(0, 3)]);
+  const setExpr = isSqrt
+    ? `${main} = \\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}}`
+    : `${main} = \\frac{k${powL(v1,p1)}}{${powL(v2,p2)}}`;
+  const kExpr = isSqrt
+    ? `\\frac{${powL(main,2)}${powL(v2,2*p2)}}{${v1}} = k^2`
+    : `${correctLatex} = k`;
+  const kLabel = isSqrt ? 'k^2' : 'k';
   return {
     questionLatex: qLatex,
     options: opts,
     correctIndex: opts.indexOf(correctLatex),
     explanationLines: [
-      `\\text{設 } ${main} = \\frac{k${isSqrt ? `\\sqrt{${v1}}` : powL(v1,p1)}}{${powL(v2,p2)}}`,
-      hintLine,
+      `\\text{常數即要找 } ${kLabel}`,
+      `\\text{設式：} ${setExpr}`,
+      kExpr,
       `\\therefore \\text{答案為 } ${correctLatex}`,
     ],
+    variationQ: true,
     subtypeLabel: '變分常數',
   };
 };
@@ -1866,12 +1913,14 @@ const HCFLCMQuiz = ({ onBack }) => {
         </span>
       </div>
 
-      {/* Question Card */}
-      <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 mb-5">
-        <p className="text-base font-semibold text-slate-700 mb-4">
-          <InlineMath math={question.questionLatex} />
-        </p>
+      {/* Question */}
+      <div className="text-base font-semibold text-slate-700 mb-3">
+        <div><InlineMath math={question.questionLatex} /></div>
+        {question.questionLatex2 && <div><InlineMath math={question.questionLatex2} /></div>}
+      </div>
 
+      {/* Options Card */}
+      <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 mb-5">
         <div className="space-y-3">
           {question.options.map((opt, idx) => (
             <OptionBtn
@@ -1898,7 +1947,7 @@ const HCFLCMQuiz = ({ onBack }) => {
             </span>
           </div>
           <div className="bg-white rounded-lg px-4 py-3">
-            <AlignedSteps questionLatex={question.questionLatex} lines={question.explanationLines || []} />
+            <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />
           </div>
         </div>
       )}
@@ -1963,8 +2012,11 @@ const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
       <div className="mb-3">
         <span className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">{question.subtypeLabel}</span>
       </div>
+      <div className="text-base font-semibold text-slate-700 mb-3">
+        <div><InlineMath math={question.questionLatex} /></div>
+        {question.questionLatex2 && <div><InlineMath math={question.questionLatex2} /></div>}
+      </div>
       <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 mb-5">
-        <p className="text-base font-semibold text-slate-700 mb-4"><InlineMath math={question.questionLatex} /></p>
         <div className="space-y-3">
           {question.options.map((opt, idx) => (
             <OptionBtn
@@ -1989,7 +2041,7 @@ const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
             </span>
           </div>
           <div className="bg-white rounded-lg px-4 py-3">
-            <AlignedSteps questionLatex={question.questionLatex} lines={question.explanationLines || []} />
+            <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />
           </div>
         </div>
       )}
