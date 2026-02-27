@@ -924,23 +924,48 @@ const genJointVariationQ = () => {
   while (uniqueWrongs.length < 3) uniqueWrongs.push(`\\frac{${main}^{${uniqueWrongs.length+2}}}{${v1p}${v2p}}`);
 
   const opts = shuffle([correctLatex, ...uniqueWrongs.slice(0, 3)]);
-  const setExpr = isSqrt
-    ? `${main} = \\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}}`
-    : `${main} = \\frac{k${powL(v1,p1)}}{${powL(v2,p2)}}`;
-  const kExpr = isSqrt
-    ? `\\frac{${powL(main,2)}${powL(v2,2*p2)}}{${v1}} = k^2`
-    : `${correctLatex} = k`;
-  const kLabel = isSqrt ? 'k^2' : 'k';
+
+  // Build \begin{aligned} explanation with k → k² reasoning
+  let explanationAligned;
+  if (isSqrt) {
+    // Try k first → reveals sqrt → not in options → pivot to k²
+    const setLine = `\\text{設式：}\\, ${main} &= \\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}}`;
+    const sqrtKNum = `${main}${powL(v2,p2)}`;
+    const sqrtKLine = `\\frac{${sqrtKNum}}{\\sqrt{${v1}}} &= k \\quad\\text{（此式含 }\\sqrt{\\,}\\text{，不在選項中）}`;
+    const squaredLine = `${powL(main,2)} &= \\frac{k^2 ${v1}}{${powL(v2,2*p2)}}`;
+    const k2Line = `${correctLatex} &= k^2 \\quad\\checkmark\\text{（此式在選項中）}`;
+    const conclusionLine = `&\\therefore \\text{答案為 } ${correctLatex}`;
+    explanationAligned = [
+      `\\begin{aligned}`,
+      `&\\text{先嘗試找 } k \\\\[4pt]`,
+      `${setLine} \\\\[4pt]`,
+      `${sqrtKLine} \\\\[4pt]`,
+      `&\\text{改為嘗試找 } k^2 \\\\[4pt]`,
+      `${squaredLine} \\\\[4pt]`,
+      `${k2Line} \\\\[4pt]`,
+      `${conclusionLine}`,
+      `\\end{aligned}`,
+    ].join('\n');
+  } else {
+    // Direct k case
+    const setLine = `\\text{設式：}\\, ${main} &= \\frac{k${powL(v1,p1)}}{${powL(v2,p2)}}`;
+    const kLine = `${correctLatex} &= k \\quad\\checkmark\\text{（此式在選項中）}`;
+    const conclusionLine = `&\\therefore \\text{答案為 } ${correctLatex}`;
+    explanationAligned = [
+      `\\begin{aligned}`,
+      `&\\text{先嘗試找 } k \\\\[4pt]`,
+      `${setLine} \\\\[4pt]`,
+      `${kLine} \\\\[4pt]`,
+      `${conclusionLine}`,
+      `\\end{aligned}`,
+    ].join('\n');
+  }
+
   return {
     questionLatex: qLatex,
     options: opts,
     correctIndex: opts.indexOf(correctLatex),
-    explanationLines: [
-      `\\text{常數即要找 } ${kLabel}`,
-      `\\text{設式：} ${setExpr}`,
-      kExpr,
-      `\\therefore \\text{答案為 } ${correctLatex}`,
-    ],
+    explanationAligned,
     variationQ: true,
     subtypeLabel: '變分常數',
   };
@@ -1947,7 +1972,9 @@ const HCFLCMQuiz = ({ onBack }) => {
             </span>
           </div>
           <div className="bg-white rounded-lg px-4 py-3">
-            <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />
+            {question.explanationAligned
+              ? <BlockMath math={question.explanationAligned} />
+              : <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />}
           </div>
         </div>
       )}
@@ -2041,7 +2068,9 @@ const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
             </span>
           </div>
           <div className="bg-white rounded-lg px-4 py-3">
-            <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />
+            {question.explanationAligned
+              ? <BlockMath math={question.explanationAligned} />
+              : <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />}
           </div>
         </div>
       )}
