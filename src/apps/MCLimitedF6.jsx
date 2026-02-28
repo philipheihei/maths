@@ -878,32 +878,44 @@ const genJointVariationQ = () => {
   const { main, v1, v2 } = varGroups[randInt(0, varGroups.length - 1)];
 
   const powTypes = [
-    { p1: 1, p2: 2, p1Desc: '', p2Desc: '平方', sqrt: false },
-    { p1: 2, p2: 3, p1Desc: '平方', p2Desc: '立方', sqrt: false },
-    { p1: 1, p2: 3, p1Desc: '', p2Desc: '立方', sqrt: false },
-    { p1: 2, p2: 1, p1Desc: '平方', p2Desc: '', sqrt: false },
-    { p1: 3, p2: 2, p1Desc: '立方', p2Desc: '平方', sqrt: false },
-    { p1: 1, p2: 1, p1Desc: '', p2Desc: '', sqrt: false },
-    { p1: 3, p2: 1, p1Desc: '立方', p2Desc: '', sqrt: false },
-    { p1: 0.5, p2: 2, p1Desc: '平方根', p2Desc: '平方', sqrt: true },
-    { p1: 0.5, p2: 3, p1Desc: '平方根', p2Desc: '立方', sqrt: true },
+    // ── Direct k (6 types) ──────────────────────────────────────────────────
+    { p1: 1, p2: 2, p1Desc: '',   p2Desc: '平方', sqrt: false, recip: false },
+    { p1: 2, p2: 3, p1Desc: '平方', p2Desc: '立方', sqrt: false, recip: false },
+    { p1: 1, p2: 3, p1Desc: '',   p2Desc: '立方', sqrt: false, recip: false },
+    { p1: 2, p2: 1, p1Desc: '平方', p2Desc: '',   sqrt: false, recip: false },
+    { p1: 3, p2: 2, p1Desc: '立方', p2Desc: '平方', sqrt: false, recip: false },
+    { p1: 1, p2: 1, p1Desc: '',   p2Desc: '',     sqrt: false, recip: false },
+    // ── k² variants: v1 is √ (2 types) ─────────────────────────────────────
+    { p1: 0.5, p2: 2, p1Desc: '平方根', p2Desc: '平方', sqrt: true,  recip: false },
+    { p1: 0.5, p2: 3, p1Desc: '平方根', p2Desc: '立方', sqrt: true,  recip: false },
+    // ── 1/k variants: answer is reciprocal expression (4 types) ─────────────
+    { p1: 1, p2: 2, p1Desc: '',   p2Desc: '平方', sqrt: false, recip: true },
+    { p1: 2, p2: 1, p1Desc: '平方', p2Desc: '',   sqrt: false, recip: true },
+    { p1: 3, p2: 2, p1Desc: '立方', p2Desc: '平方', sqrt: false, recip: true },
+    { p1: 1, p2: 3, p1Desc: '',   p2Desc: '立方', sqrt: false, recip: true },
   ];
-  const { p1, p2, p1Desc, p2Desc, sqrt: isSqrt } = powTypes[randInt(0, powTypes.length - 1)];
+  const { p1, p2, p1Desc, p2Desc, sqrt: isSqrt, recip: isRecip } = powTypes[randInt(0, powTypes.length - 1)];
 
   const v1Desc = p1Desc ? `${v1}的${p1Desc}` : v1;
   const v2Desc = p2Desc ? `${v2}的${p2Desc}` : v2;
   const qLatex = `\\text{若 } ${main} \\text{ 隨 } ${v1Desc} \\text{ 正變且隨 } ${v2Desc} \\text{ 反變，下列何者必為常數？}`;
 
   // relationship: main = k * v1^p1 / v2^p2
-  // constant k:
-  //   normal:  main * v2^p2 / v1^p1  = k
-  //   isSqrt:  main^2 * v2^(2p2) / v1 = k^2  (avoid sqrt in displayed answers)
+  // constant forms:
+  //   direct:  main * v2^p2 / v1^p1 = k
+  //   isSqrt:  main^2 * v2^(2p2) / v1 = k²  (avoid √ in displayed answers)
+  //   isRecip: v1^p1 / (main * v2^p2) = 1/k  (also a constant)
   let correctLatex, hintLine;
   if (isSqrt) {
     const numStr = `${powL(main, 2)}${powL(v2, 2 * p2)}`;
     const denStr = v1;
     correctLatex = `\\frac{${numStr}}{${denStr}}`;
-    hintLine = `${main}=\\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}} \\\\ ${powL(main,2)}=\\frac{k^2 ${v1}}{${powL(v2,2*p2)}} \\\\ \\frac{${numStr}}{${denStr}}=k^2=\\text{常數}`;
+    hintLine = `${main}=\\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}} \\\\ \\frac{${numStr}}{${denStr}}=k^2=\\text{常數}`;
+  } else if (isRecip) {
+    const numStr = powL(v1, p1) || '1';
+    const denStr = [main, powL(v2, p2)].filter(Boolean).join('');
+    correctLatex = `\\frac{${numStr}}{${denStr}}`;
+    hintLine = `${main}=\\frac{k${powL(v1,p1)}}{${powL(v2,p2)}} \\\\ \\frac{${numStr}}{${denStr}}=\\frac{1}{k}=\\text{常數}`;
   } else {
     const numParts = [main, powL(v2, p2)].filter(Boolean);
     const numStr = numParts.join('');
@@ -918,15 +930,10 @@ const genJointVariationQ = () => {
   const mainSq = powL(main, 2);
 
   const wrongCandidates = [
-    // W1: flip v1 and v2
     `\\frac{${main}${v1p}}{${v2p}}`,
-    // W2: v1 / (main * v2)
     `\\frac{${v1p}}{${main}${v2p}}`,
-    // W3: main^2 * v1 in numerator
     `\\frac{${mainSq}${v1p}}{${v2p}}`,
-    // W4: product
     `${main}${v1p}${v2p}`,
-    // W5: v2 / (main * v1)
     `\\frac{${v2p}}{${main}${v1p}}`,
   ];
 
@@ -937,39 +944,42 @@ const genJointVariationQ = () => {
 
   const opts = shuffle([correctLatex, ...uniqueWrongs.slice(0, 3)]);
 
-  // Build \begin{aligned} explanation with k → k² reasoning
+  // Build explanation using \begin{array}{l} so headers are truly flush left
+  const df = (n, d) => `\\dfrac{${n}}{${d}}`;
   let explanationAligned;
   if (isSqrt) {
-    // Try k first → reveals sqrt → not in options → pivot to k²
-    const setLine = `\\text{設式：}\\, ${main} &= \\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}}`;
     const sqrtKNum = `${main}${powL(v2,p2)}`;
-    const sqrtKLine = `\\frac{${sqrtKNum}}{\\sqrt{${v1}}} &= k \\quad\\text{（此式含 }\\sqrt{\\,}\\text{，不在選項中）}`;
-    const squaredLine = `${powL(main,2)} &= \\frac{k^2 ${v1}}{${powL(v2,2*p2)}}`;
-    const k2Line = `${correctLatex} &= k^2 \\quad\\checkmark\\text{（此式在選項中）}`;
-    const conclusionLine = `\\therefore \\text{答案為 } ${correctLatex} &`;
     explanationAligned = [
-      `\\begin{aligned}`,
-      `\\text{先嘗試找 } k & \\\\[4pt]`,
-      `${setLine} \\\\[4pt]`,
-      `${sqrtKLine} \\\\[4pt]`,
-      `\\text{改為嘗試找 } k^2 & \\\\[4pt]`,
-      `${squaredLine} \\\\[4pt]`,
-      `${k2Line} \\\\[4pt]`,
-      `${conclusionLine}`,
-      `\\end{aligned}`,
+      `\\displaystyle\\begin{array}{l}`,
+      `\\text{先嘗試找 } k \\\\[6pt]`,
+      `\\quad ${main} = ${df(`k\\sqrt{${v1}}`, powL(v2,p2))} \\\\[10pt]`,
+      `\\quad ${df(sqrtKNum, `\\sqrt{${v1}}`)} = k \\quad\\text{（此式含 }\\sqrt{\\,}\\text{，不在選項中）} \\\\[14pt]`,
+      `\\text{改為嘗試找 } k^2 \\\\[6pt]`,
+      `\\quad ${correctLatex} = k^2 \\quad\\checkmark\\text{（此式在選項中）} \\\\[14pt]`,
+      `\\therefore \\text{答案為 } ${correctLatex}`,
+      `\\end{array}`,
+    ].join('\n');
+  } else if (isRecip) {
+    const recipNumStr = powL(v1, p1) || '1';
+    const recipDenStr = [main, powL(v2, p2)].filter(Boolean).join('');
+    explanationAligned = [
+      `\\displaystyle\\begin{array}{l}`,
+      `\\text{嘗試找 } \\dfrac{1}{k} \\\\[6pt]`,
+      `\\quad ${main} = ${df(`k${powL(v1,p1)}`, powL(v2,p2))} \\\\[10pt]`,
+      `\\quad ${df(recipNumStr, recipDenStr)} = \\dfrac{1}{k} \\quad\\checkmark\\text{（此式在選項中）} \\\\[14pt]`,
+      `\\therefore \\text{答案為 } ${correctLatex}`,
+      `\\end{array}`,
     ].join('\n');
   } else {
-    // Direct k case
-    const setLine = `\\text{設式：}\\, ${main} &= \\frac{k${powL(v1,p1)}}{${powL(v2,p2)}}`;
-    const kLine = `${correctLatex} &= k \\quad\\checkmark\\text{（此式在選項中）}`;
-    const conclusionLine = `\\therefore \\text{答案為 } ${correctLatex} &`;
+    const numParts = [main, powL(v2, p2)].filter(Boolean).join('');
+    const denStr = powL(v1, p1) || '1';
     explanationAligned = [
-      `\\begin{aligned}`,
-      `\\text{先嘗試找 } k & \\\\[4pt]`,
-      `${setLine} \\\\[4pt]`,
-      `${kLine} \\\\[4pt]`,
-      `${conclusionLine}`,
-      `\\end{aligned}`,
+      `\\displaystyle\\begin{array}{l}`,
+      `\\text{先嘗試找 } k \\\\[6pt]`,
+      `\\quad ${main} = ${df(`k${powL(v1,p1)}`, powL(v2,p2))} \\\\[10pt]`,
+      `\\quad ${correctLatex} = k \\quad\\checkmark\\text{（此式在選項中）} \\\\[14pt]`,
+      `\\therefore \\text{答案為 } ${correctLatex}`,
+      `\\end{array}`,
     ].join('\n');
   }
 
