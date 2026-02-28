@@ -150,8 +150,15 @@ const QUESTIONS = [
 
 **Note**: No state management (Redux/Zustand), no form libraries, no CSS-in-JS.
 
+## MC Question Rules
+- **每條MC必須有恰好4個選項**（1個正確 + 3個錯誤）
+- Wrong answer arrays must always contain exactly 3 distinct items, all different from the correct answer
+- Always use `[...new Set([w1, w2, w3].filter(w => w !== correct))]` and pad with a `while` loop if fewer than 3 remain
+- Never rely on hardcoded wrongs being distinct — verify algebraically that no two wrongs can be equal for any valid input
+
 ## Common Pitfalls
 1. **SVG coordinate system**: Remember Y-axis increases downward; angles calculated with `Math.atan2(y, x)`
 2. **Traditional Chinese**: Do not use Simplified Chinese (简体中文)
 3. **Route paths**: Must match exactly between App.jsx and Home.jsx `path` property
 4. **Answer validation**: Always provide multiple valid answer formats in `valid` arrays (e.g., `["x+y=10", "y+x=10"]`)
+5. **MC 4 options**: After building the options array, assert `opts.length === 4` mentally — if wrongs can collide or equal correct for any parameter value, add deduplication + padding

@@ -1010,6 +1010,7 @@ const genIWeightedSumQ = () => {
   let realSum = 0, imSum = 0;
   const terms = [];
   const expLines = [];
+  const realParts = [];
   for (let j = 0; j < 4; j++) {
     const n = startN + j;
     const coeff = j + 1;
@@ -1023,6 +1024,7 @@ const genIWeightedSumQ = () => {
       (rv !== 0 ? String(rv) : '') +
       (iv > 0 && rv !== 0 ? `+${iv}i` : iv < 0 ? `${iv}i` : iv !== 0 ? `${iv}i` : '');
     expLines.push(`${coeff} \\cdot i^{${n}} = ${coeff}(${iCycleStr(n)}) = ${vStr || '0'}`);
+    if (rv !== 0) realParts.push(rv);
   }
   const questionLatex = `${terms.join('+')} \\text{ 的實部為}`;
   const correct = String(realSum);
@@ -1036,9 +1038,11 @@ const genIWeightedSumQ = () => {
     options: opts,
     correctIndex: opts.indexOf(correct),
     explanationLines: [
-      `i^1=i,\ i^2=-1,\ i^3=-i,\ i^4=1 \\text{（週期為4）}`,
+      `i^1=i,\\ i^2=-1,\\ i^3=-i,\\ i^4=1 \\text{（週期為4）}`,
       ...expLines,
-      `\\text{實部} = ${realSum}`,
+      realParts.length > 1
+        ? `\\therefore \\text{實部} = ${realParts.map(v => `(${v})`).join('+')} = ${realSum}`
+        : `\\therefore \\text{實部} = ${realSum}`,
     ],
     subtypeLabel: '複數 i — 冪次加權實部',
   };
@@ -1092,17 +1096,19 @@ const genComplexMulRealQ = () => {
   const w1 = `${mS}${pVar}+${n}`;
   const w2 = n > 1 ? `${n}${pVar}-${m}` : `${pVar}-${m}`;
   const w3 = `${m + n}${pVar}`;
-  const wrongs = [w1, w2, w3].filter(w => w !== correct).slice(0, 3);
-  const opts = shuffle([correct, ...wrongs]);
+  // Deduplicate and pad to ensure exactly 3 wrongs (w2 can equal correct when m===n)
+  const wrongs = [...new Set([w1, w2, w3].filter(w => w !== correct))];
+  while (wrongs.length < 3) wrongs.push(`${m + n + wrongs.length}${pVar}`);
+  const opts = shuffle([correct, ...wrongs.slice(0, 3)]);
   return {
     questionLatex: `\\text{若 }${pVar}\\text{ 為實數，則 }(${pVar}+${n}i)(${m}+i)\\text{ 的實部為}`,
     options: opts,
     correctIndex: opts.indexOf(correct),
     explanationLines: [
       `(${pVar}+${n}i)(${m}+i) = ${m}${pVar}+${pVar}i+${n*m}i+${n}i^2`,
-      `= ${m}${pVar}+${pVar}i+${n*m}i-${n}`,
+      `= ${m}${pVar}+${pVar}i+${n*m}i-${n}\\quad(\\because i^2=-1)`,
       `= (${mS}${pVar}-${n})+(${pVar}+${n*m})i`,
-      `\\text{實部} = ${mS}${pVar}-${n}`,
+      `\\therefore \\text{實部} = ${mS}${pVar}-${n}`,
     ],
     subtypeLabel: '複數 i — 乘積實部',
   };
@@ -1120,7 +1126,8 @@ const genDivideByIQ = () => {
   const correct = `${realCoeff}k+${imConst}i`;
   const w1 = `${realCoeff}k-${imConst}i`;
   const w2 = `${a + 1}k+${imConst}i`;
-  const w3 = `${realCoeff + 2}k+${imConst}i`;
+  // w3 was ${realCoeff+2}k which always equalled w2 (both = ${a+1}k); use ${a}k instead
+  const w3 = `${realCoeff + 1}k+${imConst}i`;
   const wrongs = [w1, w2, w3].filter(w => w !== correct).slice(0, 3);
   const opts = shuffle([correct, ...wrongs]);
   return {
@@ -1129,8 +1136,9 @@ const genDivideByIQ = () => {
     correctIndex: opts.indexOf(correct),
     explanationLines: [
       `\\frac{1}{i} = \\frac{-i}{i \\cdot (-i)} = \\frac{-i}{1} = -i`,
-      `\\frac{${b}+ki}{i} = (${b}+ki)(-i) = -${b}i-ki^2 = k-${b}i`,
-      `${a}k-(k-${b}i) = ${realCoeff}k+${imConst}i`,
+      `\\frac{${b}+ki}{i} = (${b}+ki)(-i) = -${b}i-ki^2`,
+      `= -${b}i+k = k-${b}i\\quad(\\because i^2=-1)`,
+      `${a}k-(k-${b}i) = ${a}k-k+${b}i = ${realCoeff}k+${imConst}i`,
     ],
     subtypeLabel: '複數 i — 化簡含 i 分式',
   };
@@ -1157,17 +1165,36 @@ const genIPowerRangeQ = () => {
   const wrongs = shuffle(pool).slice(0, 3);
   const opts = shuffle([correct, ...wrongs]);
   const rem = count % 4;
+  const groups = Math.floor(count / 4);
+  // Build remainder term explanation
+  let remExpLines = [];
+  if (rem > 0) {
+    const remStart = start + groups * 4;
+    const remTerms = [];
+    const remVals = [];
+    for (let t = 0; t < rem; t++) {
+      remTerms.push(`i^{${remStart + t}}`);
+      remVals.push(iCycleStr(remStart + t));
+    }
+    const remValsJoined = remVals.map((v, i) => {
+      if (i === 0) return v;
+      return v.startsWith('-') ? v : `+${v}`;
+    }).join('');
+    remExpLines = [
+      `\\text{餘 }${rem}\\text{ 項：}${remTerms.join('+')}`,
+      `= ${remValsJoined} = ${correct}`,
+    ];
+  }
   return {
     questionLatex: `i^{${start}}+i^{${start+1}}+\\cdots+i^{${end}}=`,
     options: opts,
     correctIndex: opts.indexOf(correct),
     explanationLines: [
       `i^1+i^2+i^3+i^4=0\\text{（每4項和為 0）}`,
-      `\\text{共 }${count}\\text{ 項，}${count}=${Math.floor(count/4)}\\times4+${rem}`,
-      rem === 0
-        ? `\\text{整除4，故和為 0}` 
-        : `\\text{餘 }${rem}\\text{ 項，從 }i^{${start + Math.floor(count/4)*4}}\\text{ 計}`,
-      `\\therefore \\text{答案} = ${correct}`,
+      `\\text{共 }${count}\\text{ 項，}${count}=${groups}\\times4+${rem}`,
+      ...(rem === 0
+        ? [`\\therefore \\text{整除4，和為 }0`]
+        : remExpLines),
     ],
     subtypeLabel: '複數 i — 連續冪次之和',
   };
@@ -1191,9 +1218,9 @@ const genRationalizeFracQ = () => {
     options: opts,
     correctIndex: opts.indexOf(correct),
     explanationLines: [
-      `\\frac{${bVar}^2+${cSq}}{${bVar}+${c}i} \\cdot \\frac{${bVar}-${c}i}{${bVar}-${c}i}`,
-      `=\\frac{(${bVar}^2+${cSq})(${bVar}-${c}i)}{${bVar}^2+${cSq}}`,
-      `=${bVar}-${c}i`,
+      `\\text{乘共軛：}\\frac{${bVar}^2+${cSq}}{${bVar}+${c}i} \\times \\frac{${bVar}-${c}i}{${bVar}-${c}i}`,
+      `\\text{分母 }(${bVar}+${c}i)(${bVar}-${c}i)=${bVar}^2+(${c})^2=${bVar}^2+${cSq}`,
+      `=\\frac{(${bVar}^2+${cSq})(${bVar}-${c}i)}{${bVar}^2+${cSq}}=${bVar}-${c}i`,
     ],
     subtypeLabel: '複數 i — 有理化分式',
   };
@@ -1217,6 +1244,9 @@ const genMakeRealQ = () => {
     .filter(w => w !== correct).slice(0, 3);
   const pS = p >= 0 ? `+${p}` : `${p}`;
   const qS = q >= 0 ? `+${q}` : `${q}`;
+  const coefAStr = coefA === 1 ? '' : coefA === -1 ? '-' : `${coefA}`;
+  const imConstVal = p * r1.im + q * r2.im;
+  const imConstStr = imConstVal === 0 ? '' : imConstVal > 0 ? `+${imConstVal}` : `${imConstVal}`;
   const opts = shuffle([correct, ...wrongs]);
   return {
     questionLatex: `\\text{設 }z=(a${pS})i^{${n1}}+(a${qS})i^{${n1+1}}\\text{，其中 }a\\text{ 為實數。若 }z\\text{ 為實數，則 }a=`,
@@ -1225,8 +1255,9 @@ const genMakeRealQ = () => {
     explanationLines: [
       `i^{${n1}}=${iCycleStr(n1)},\\quad i^{${n1+1}}=${iCycleStr(n1+1)}`,
       `z=(a${pS})(${iCycleStr(n1)})+(a${qS})(${iCycleStr(n1+1)})`,
-      `\\text{令虛部}=0:\\;${coefA}a+${p*r1.im+q*r2.im}=0`,
-      `a=${aVal}`,
+      `\\text{展開後收集虛部，令虛部}=0\\text{：}`,
+      `${coefAStr}a${imConstStr}=0`,
+      `\\therefore a=${aVal}`,
     ],
     subtypeLabel: '複數 i — 令式子為實數',
   };
@@ -1256,9 +1287,11 @@ const genSumFracRealQ = () => {
     correctIndex: opts.indexOf(correct),
     explanationLines: [
       `\\text{通分：分母}=(k-i)(k+i)=k^2+1`,
-      `\\text{分子}=${a1}i(k+i)+${a2}(k-i)=${a1}ki+${a1}i^2+${a2}k-${a2}i`,
+      `\\text{分子}=${a1}i(k+i)+${a2}(k-i)`,
+      `=${a1}ki+${a1}i^2+${a2}k-${a2}i`,
+      `=${a1}ki-${a1}+${a2}k-${a2}i\\quad(\\because i^2=-1)`,
       `=(${a2}k-${a1})+(${a1}k-${a2})i`,
-      `\\text{實部}=\\frac{${a2}k-${a1}}{k^2+1}`,
+      `\\therefore \\text{實部}=\\frac{${a2}k-${a1}}{k^2+1}`,
     ],
     subtypeLabel: '複數 i — 分式之和實部',
   };

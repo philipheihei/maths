@@ -312,10 +312,10 @@ const Home = () => {
       path: '/mc-limited-f6',
       level: 'F6',
       badges: [
-        { level: 'F3', chapter: 'CH2', subject: '多項式' },
-        { level: 'F4', chapter: 'CH1', subject: '多項式的運算' },
+        { level: 'F3', chapter: 'CH2', subject: '整數指數定律' },
+        { level: 'F4', chapter: 'CH1', subject: '一元二次方程（一）' },
         { level: 'F4', chapter: 'CH4', subject: '續多項式' },
-        { level: 'F5', chapter: 'CH11', subject: '更多關於多項式' },
+        { level: 'F5', chapter: 'CH11', subject: '變分' },
       ],
       category: '高中',
       topics: ['H.C.F.', 'L.C.M.', '多項式', 'DSE MC'],
@@ -457,7 +457,7 @@ const Home = () => {
                           key={index}
                           className="inline-block bg-white/30 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full"
                         >
-                          {badge.chapter} {badge.subject}
+                          {badge.level} {badge.chapter} {badge.subject}
                         </span>
                       ))}
                     </div>
