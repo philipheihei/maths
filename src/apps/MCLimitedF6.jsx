@@ -34,6 +34,18 @@ const BlockMath = ({ math }) => {
   return <div ref={ref} className="my-2 overflow-x-auto" />;
 };
 
+const LeftBlockMath = ({ math }) => {
+  const ref = useRef(null);
+  const katexLoaded = useKatex();
+  useEffect(() => {
+    if (katexLoaded && ref.current && window.katex) {
+      try { window.katex.render(math, ref.current, { displayMode: true, throwOnError: false, fleqn: true }); }
+      catch (e) { if (ref.current) ref.current.textContent = math; }
+    }
+  }, [math, katexLoaded]);
+  return <div ref={ref} className="my-2 overflow-x-auto pl-2" />;
+};
+
 // Left-aligned, =-aligned explanation block
 // Shows the question as first line, then each step on its own line (no scroll)
 const AlignedSteps = ({ questionLatex, lines }) => {
@@ -712,7 +724,7 @@ const genBinaryCoeffRemainderQ = () => {
     options: opts,
     correctIndex: opts.indexOf(correctLatex),
     explanationLines: [
-      `\\text{高位部分：} ${toBin(k)}_2 \\text{ 在位 } ${highN} \\Rightarrow ${k} \\times 2^{${highN}}`,
+      `\\text{高位部分：} ${toBin(k)}_2 \\text{ 在位 } ${highN} = ${k} \\times 2^{${highN}}`,
       `\\text{低位部分：} ${toBin(r)}_2 = ${r}`,
       `\\therefore ${binDisplay} = ${correctLatex}`,
     ],
@@ -891,13 +903,13 @@ const genJointVariationQ = () => {
     const numStr = `${powL(main, 2)}${powL(v2, 2 * p2)}`;
     const denStr = v1;
     correctLatex = `\\frac{${numStr}}{${denStr}}`;
-    hintLine = `${main}=\\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}} \\Rightarrow ${powL(main,2)}=\\frac{k^2 ${v1}}{${powL(v2,2*p2)}} \\Rightarrow \\frac{${numStr}}{${denStr}}=k^2=\\text{常數}`;
+    hintLine = `${main}=\\frac{k\\sqrt{${v1}}}{${powL(v2,p2)}} \\\\ ${powL(main,2)}=\\frac{k^2 ${v1}}{${powL(v2,2*p2)}} \\\\ \\frac{${numStr}}{${denStr}}=k^2=\\text{常數}`;
   } else {
     const numParts = [main, powL(v2, p2)].filter(Boolean);
     const numStr = numParts.join('');
     const denStr = powL(v1, p1) || '1';
     correctLatex = denStr === '1' ? numStr : `\\frac{${numStr}}{${denStr}}`;
-    hintLine = `${main}=\\frac{k${powL(v1,p1)}}{${powL(v2,p2)}} \\Rightarrow \\frac{${numStr}}{${denStr}}=k=\\text{常數}`;
+    hintLine = `${main}=\\frac{k${powL(v1,p1)}}{${powL(v2,p2)}} \\\\ \\frac{${numStr}}{${denStr}}=k=\\text{常數}`;
   }
 
   // Wrong options: clearly non-constant by using wrong variable arrangement
@@ -934,13 +946,13 @@ const genJointVariationQ = () => {
     const sqrtKLine = `\\frac{${sqrtKNum}}{\\sqrt{${v1}}} &= k \\quad\\text{（此式含 }\\sqrt{\\,}\\text{，不在選項中）}`;
     const squaredLine = `${powL(main,2)} &= \\frac{k^2 ${v1}}{${powL(v2,2*p2)}}`;
     const k2Line = `${correctLatex} &= k^2 \\quad\\checkmark\\text{（此式在選項中）}`;
-    const conclusionLine = `&\\therefore \\text{答案為 } ${correctLatex}`;
+    const conclusionLine = `\\therefore \\text{答案為 } ${correctLatex} &`;
     explanationAligned = [
       `\\begin{aligned}`,
-      `&\\text{先嘗試找 } k \\\\[4pt]`,
+      `\\text{先嘗試找 } k & \\\\[4pt]`,
       `${setLine} \\\\[4pt]`,
       `${sqrtKLine} \\\\[4pt]`,
-      `&\\text{改為嘗試找 } k^2 \\\\[4pt]`,
+      `\\text{改為嘗試找 } k^2 & \\\\[4pt]`,
       `${squaredLine} \\\\[4pt]`,
       `${k2Line} \\\\[4pt]`,
       `${conclusionLine}`,
@@ -950,10 +962,10 @@ const genJointVariationQ = () => {
     // Direct k case
     const setLine = `\\text{設式：}\\, ${main} &= \\frac{k${powL(v1,p1)}}{${powL(v2,p2)}}`;
     const kLine = `${correctLatex} &= k \\quad\\checkmark\\text{（此式在選項中）}`;
-    const conclusionLine = `&\\therefore \\text{答案為 } ${correctLatex}`;
+    const conclusionLine = `\\therefore \\text{答案為 } ${correctLatex} &`;
     explanationAligned = [
       `\\begin{aligned}`,
-      `&\\text{先嘗試找 } k \\\\[4pt]`,
+      `\\text{先嘗試找 } k & \\\\[4pt]`,
       `${setLine} \\\\[4pt]`,
       `${kLine} \\\\[4pt]`,
       `${conclusionLine}`,
@@ -1671,12 +1683,12 @@ const VariationNotes = ({ onBack }) => (
         <div className="grid gap-3 md:grid-cols-2">
           <div className="bg-white rounded-lg p-4 shadow-sm">
             <p className="font-bold text-amber-700 mb-2">正變（正比）</p>
-            <BlockMath math="y \propto x \Rightarrow y = kx" />
+            <BlockMath math="\begin{aligned} y &\propto x \\ y &= kx \end{aligned}" />
             <p className="text-sm">y 隨 x 增大而增大，常數 <InlineMath math="k = \frac{y}{x}" /></p>
           </div>
           <div className="bg-white rounded-lg p-4 shadow-sm">
             <p className="font-bold text-amber-700 mb-2">反變（反比）</p>
-            <BlockMath math="y \propto \frac{1}{x} \Rightarrow y = \frac{k}{x}" />
+            <BlockMath math="\begin{aligned} y &\propto \frac{1}{x} \\ y &= \frac{k}{x} \end{aligned}" />
             <p className="text-sm">y 隨 x 增大而減小，常數 <InlineMath math="k = xy" /></p>
           </div>
         </div>
@@ -1732,7 +1744,7 @@ const VariationNotes = ({ onBack }) => (
           <BlockMath math="w = \frac{k\sqrt{u}}{v^2}" />
           <p className="text-sm text-blue-700 mb-2">直接常數含 √u，選項通常不出現根號。</p>
           <p className="font-semibold text-blue-700 mb-1">技巧：兩邊平方</p>
-          <BlockMath math="w^2 = \frac{k^2 u}{v^4} \Rightarrow \frac{w^2 v^4}{u} = k^2 = \text{常數}" />
+          <BlockMath math="\begin{aligned} w^2 &= \frac{k^2 u}{v^4} \\ \frac{w^2 v^4}{u} &= k^2 = \text{常數} \end{aligned}" />
         </div>
         <div className="bg-blue-100 rounded-lg p-3 text-sm">
           <p>⚠️ 注意：<InlineMath math="k^2" /> 也是常數，所以 <InlineMath math="\frac{w^2v^4}{u}" /> 必為常數。</p>
@@ -1816,7 +1828,7 @@ const ComplexNotes = ({ onBack }) => (
           <p className="font-semibold mb-1">例（15-35）：<InlineMath math="z = (a+5)i^6+(a-3)i^7" />，z 為實數</p>
           <BlockMath math="i^6 = -1,\quad i^7 = -i" />
           <BlockMath math="z = -(a+5) + (3-a)i" />
-          <BlockMath math="\text{令虛部}=0:\; 3-a=0 \Rightarrow a=3" />
+          <BlockMath math="\begin{aligned} \text{令虛部}=0:\; 3-a &= 0 \\ a &= 3 \end{aligned}" />
         </div>
       </section>
 
@@ -1973,7 +1985,7 @@ const HCFLCMQuiz = ({ onBack }) => {
           </div>
           <div className="bg-white rounded-lg px-4 py-3">
             {question.explanationAligned
-              ? <BlockMath math={question.explanationAligned} />
+              ? <LeftBlockMath math={question.explanationAligned} />
               : <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />}
           </div>
         </div>
@@ -1988,6 +2000,7 @@ const HCFLCMQuiz = ({ onBack }) => {
         </button>
       )}
     </div>
+
   );
 };
 
@@ -2069,7 +2082,7 @@ const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
           </div>
           <div className="bg-white rounded-lg px-4 py-3">
             {question.explanationAligned
-              ? <BlockMath math={question.explanationAligned} />
+              ? <LeftBlockMath math={question.explanationAligned} />
               : <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />}
           </div>
         </div>
