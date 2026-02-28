@@ -512,10 +512,11 @@ const FACTORED_POLY_TEMPLATES = [
     exprs: ['210xy^2', '30x^2yz'],
     factored: ['2 \\cdot 3 \\cdot 5 \\cdot 7 \\cdot x \\cdot y^2', '2 \\cdot 3 \\cdot 5 \\cdot x^2 \\cdot y \\cdot z'],
     mode: 'lcm',
-    answer: '630x^2y^2z',
-    wrongs: ['30xy', '210x^2y^2z', '30xyz'],
+    answer: '210x^2y^2z',
+    wrongs: ['30xy', '630x^2y^2z', '30xyz'],
     hint: [
-      '\\text{係數：210 及 30 的公倍數為 }630',
+      '\\text{係數：}210=2{\\times}3{\\times}5{\\times}7,\\;30=2{\\times}3{\\times}5',
+      '\\text{LCM}(210,30)=210\\;(\\because 210=7{\\times}30)',
       'x,\\ x^2 \\rightarrow \\text{最大次方：}x^2',
       'y^2,\\ y \\rightarrow \\text{最大次方：}y^2',
       '1,\\ z \\rightarrow \\text{最大次方：}z',
@@ -1278,7 +1279,9 @@ const genSumFracRealQ = () => {
   const w1 = `\\frac{${a2}k+${a1}}{k^2+1}`;
   const w2 = `\\frac{${a1}k-${a2}}{k^2+1}`;
   const w3 = `\\frac{${a2}k-${a1}}{k^2-1}`;
-  const wrongs = [w1, w2, w3].filter(w => w !== correct).slice(0, 3);
+  // When a1=a2, w2 equals correct; deduplicate and pad
+  const wrongs = [...new Set([w1, w2, w3].filter(w => w !== correct))];
+  while (wrongs.length < 3) wrongs.push(`\\frac{${a1+a2}k-${a1}}{k^2+1}`);
   const a1Str = a1 > 1 ? `${a1}` : '';
   const opts = shuffle([correct, ...wrongs]);
   return {
