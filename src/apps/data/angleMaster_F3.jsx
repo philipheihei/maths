@@ -482,12 +482,12 @@ export const questionsF3 = [
     difficulty: '中',
     level: 'F3',
     title: '菱形 (Rhombus)',
-    text: '圖中，PQRS 是一個菱形。已知 ∠QSR = 80°，求 x + y 的值。',
-    answer: 170,
+    text: '圖中，PQRS 是一個菱形。已知 ∠QSR = 30°，求 x + y 的值。',
+    answer: 120,
     steps: [
       'x = 90° (菱形對角線互相垂直)',
-      'y = 80° (菱形對角線平分內角)',
-      'x + y = 90° + 80° = 170°'
+      'y = 30° (菱形對角線平分內角)',
+      'x + y = 90° + 30° = 120°'
     ],
     renderSVG: (showHint) => (
       <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
@@ -499,7 +499,7 @@ export const questionsF3 = [
         <text x="155" y="185" fontSize="14">R</text>
         <text x="40" y="115" fontSize="14">Q</text>
         <text x="140" y="125" fontSize="14">T</text>
-        <AngleArc cx={260} cy={110} r={35} startAngle={150} endAngle={180} label="80°" labelOffset={20} />
+        <AngleArc cx={260} cy={110} r={35} startAngle={150} endAngle={180} label="30°" labelOffset={20} />
         <AngleArc cx={260} cy={110} r={35} startAngle={180} endAngle={210} label="y" labelOffset={20} isHighlighted={showHint} />
         <AngleArc cx={160} cy={110} r={20} startAngle={180} endAngle={270} label="x" labelOffset={20} isHighlighted={showHint} />
       </svg>

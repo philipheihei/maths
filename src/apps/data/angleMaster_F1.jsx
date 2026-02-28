@@ -165,19 +165,19 @@ export const questionsF1 = [
       <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
         <line x1="40" y1="80" x2="280" y2="80" stroke="black" strokeWidth="1.5" />
         <line x1="40" y1="160" x2="280" y2="160" stroke="black" strokeWidth="1.5" />
-        <line x1="120" y1="30" x2="200" y2="200" stroke="black" strokeWidth="1.5" />
-        <circle cx="143.5" cy="80" r="3" fill="black" />
-        <circle cx="181.2" cy="160" r="3" fill="black" />
+        <line x1="188.9" y1="30" x2="90.7" y2="200" stroke="black" strokeWidth="1.5" />
+        <circle cx="160" cy="80" r="3" fill="black" />
+        <circle cx="113.8" cy="160" r="3" fill="black" />
         <text x="30" y="85" fontSize="14">A</text>
         <text x="290" y="85" fontSize="14">B</text>
         <text x="30" y="165" fontSize="14">C</text>
         <text x="290" y="165" fontSize="14">D</text>
-        <text x="110" y="25" fontSize="14">P</text>
-        <text x="210" y="210" fontSize="14">Q</text>
-        <text x="155" y="75" fontSize="14">M</text>
-        <text x="195" y="155" fontSize="14">N</text>
-        <AngleArc cx={143.5} cy={80} r={20} startAngle={180} endAngle={245} label="120°" labelOffset={15} />
-        <AngleArc cx={181.2} cy={160} r={20} startAngle={180} endAngle={245} label="" labelOffset={15} isHighlighted={showHint} />
+        <text x="175" y="25" fontSize="14">P</text>
+        <text x="100" y="210" fontSize="14">Q</text>
+        <text x="170" y="75" fontSize="14">M</text>
+        <text x="125" y="155" fontSize="14">N</text>
+        <AngleArc cx={160} cy={80} r={20} startAngle={180} endAngle={300} label="120°" labelOffset={15} />
+        <AngleArc cx={113.8} cy={160} r={20} startAngle={180} endAngle={300} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
   },
@@ -340,10 +340,10 @@ export const questionsF1 = [
     difficulty: '難',
     level: 'F1',
     title: '平行線 (Algebra)',
-    text: '圖中，AB // CD，直線 PQ 分別與 AB 和 CD 相交於 M 和 N。已知 ∠AMN = 54° 及 ∠MND = 3x，求 x。',
+    text: '圖中，AB // CD，直線 PQ 分別與 AB 和 CD 相交於 M 和 N。已知 ∠AMN = 54° 及 ∠MNC = 3x，求 x。',
     answer: 42,
     steps: [
-      '∠AMN + ∠MND = 180° (同旁內角，AB // CD)',
+      '∠AMN + ∠MNC = 180° (同旁內角，AB // CD)',
       '54° + 3x = 180°',
       '3x = 126°',
       'x = 42°'
@@ -352,19 +352,19 @@ export const questionsF1 = [
       <svg viewBox="0 0 320 220" className="w-full h-full bg-[#f5f5f5]">
         <line x1="40" y1="80" x2="280" y2="80" stroke="black" strokeWidth="1.5" />
         <line x1="40" y1="160" x2="280" y2="160" stroke="black" strokeWidth="1.5" />
-        <line x1="100" y1="30" x2="200" y2="200" stroke="black" strokeWidth="1.5" />
-        <circle cx="129.4" cy="80" r="3" fill="black" />
-        <circle cx="176.5" cy="160" r="3" fill="black" />
+        <line x1="196.3" y1="30" x2="72.8" y2="200" stroke="black" strokeWidth="1.5" />
+        <circle cx="160" cy="80" r="3" fill="black" />
+        <circle cx="101.9" cy="160" r="3" fill="black" />
         <text x="30" y="85" fontSize="14">A</text>
         <text x="290" y="85" fontSize="14">B</text>
         <text x="30" y="165" fontSize="14">C</text>
         <text x="290" y="165" fontSize="14">D</text>
-        <text x="90" y="25" fontSize="14">P</text>
-        <text x="210" y="210" fontSize="14">Q</text>
-        <text x="140" y="70" fontSize="14">M</text>
-        <text x="190" y="175" fontSize="14">N</text>
-        <AngleArc cx={129.4} cy={80} r={20} startAngle={60} endAngle={180} label="54°" labelOffset={15} />
-        <AngleArc cx={176.5} cy={160} r={20} startAngle={240} endAngle={360} label="3x" labelOffset={15} />
+        <text x="185" y="25" fontSize="14">P</text>
+        <text x="80" y="210" fontSize="14">Q</text>
+        <text x="170" y="70" fontSize="14">M</text>
+        <text x="85" y="175" fontSize="14">N</text>
+        <AngleArc cx={160} cy={80} r={20} startAngle={126} endAngle={180} label="54°" labelOffset={15} />
+        <AngleArc cx={101.9} cy={160} r={20} startAngle={180} endAngle={306} label="3x" labelOffset={15} />
       </svg>
     )
   },
