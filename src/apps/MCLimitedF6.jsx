@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Home as HomeIcon, RefreshCw, BookOpen, ArrowLeft, CheckCircle, XCircle, ChevronRight, Star, FileText } from 'lucide-react';
 import { loadKatexOnce } from '../utils/katexLoader';
@@ -1567,6 +1567,22 @@ const HCFLCMNotes = ({ onBack }) => (
   </div>
 );
 
+// ─── Helper: annotated binary number with bit-position labels ──────────────
+const BinAnnotated = ({ bits }) => (
+  <span className="inline-flex items-end font-mono">
+    {bits.split('').map((bit, i) => {
+      const pos = bits.length - 1 - i;
+      return (
+        <span key={i} className="inline-flex flex-col items-center" style={{ margin: '0 1px' }}>
+          <span className="leading-none mb-0.5" style={{ fontSize: '11px', color: '#c00', fontWeight: 700 }}>{pos}</span>
+          <span className={`text-xl font-bold leading-none ${bit === '1' ? 'text-red-600' : 'text-slate-500'}`}>{bit}</span>
+        </span>
+      );
+    })}
+    <span className="text-base self-end mb-0.5 ml-0.5">₂</span>
+  </span>
+);
+
 // ─── Notes Component for Binary Conversion ──────────────────────────────────
 const BinaryNotes = ({ onBack }) => (
   <div className="max-w-3xl mx-auto px-4 py-8">
@@ -1713,6 +1729,66 @@ const BinaryNotes = ({ onBack }) => (
         <div className="bg-white rounded-lg p-4 shadow-sm">
           <p className="font-bold text-purple-700 mb-3">📝 實戰例題</p>
           <div className="space-y-4 text-sm">
+
+            {/* DSE-2014-Q34 */}
+            <div className="border-2 border-blue-300 rounded-lg p-3 bg-blue-50">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded">Question</span>
+                <span className="text-xs font-semibold text-blue-700">DSE-2014-Q34</span>
+              </div>
+              <p className="font-semibold text-base mb-3">
+                <InlineMath math="7\times 2^{10}+2^8+5\times 2^3-2^3 =" /> ?
+              </p>
+              <div className="space-y-1 mb-3 pl-2">
+                <p>A.&nbsp;&nbsp;<InlineMath math="111010100000_2" /></p>
+                <p>B.&nbsp;&nbsp;<InlineMath math="111100010000_2" /></p>
+                <p>C.&nbsp;&nbsp;<InlineMath math="1110100100000_2" /></p>
+                <p>D.&nbsp;&nbsp;<InlineMath math="1111000010000_2" /></p>
+              </div>
+
+              <div className="bg-white rounded-lg p-3 border border-blue-200">
+                <p className="font-bold text-blue-700 mb-3">Solution</p>
+
+                <div className="mb-3 flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">1</span>
+                    <span className="font-semibold">計算機直接出題目嘅數值</span>
+                  </div>
+                  <p className="ml-8"><InlineMath math="7\times 2^{10}+2^8+5\times 2^3-2^3 =" /> <span className="font-bold text-blue-700">7456</span></p>
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0">2</span>
+                    <span className="font-semibold">用展開式(Expanded form)出每個答案嘅數值</span>
+                  </div>
+                  <div className="mt-1 ml-2 space-y-2">
+                    <div className="border-l-4 border-gray-300 pl-3">
+                      <p className="font-semibold">A.&nbsp;<BinAnnotated bits="111010100000" /></p>
+                      <p className="text-gray-500 text-xs"><InlineMath math="=2^{11}+2^{10}+2^9+2^7+2^5" /></p>
+                      <p>= <span className="font-bold text-red-600">3744</span>&ensp;<span className="text-red-600">檢查同題目數值是否一樣 → 不同，所以不是答案</span></p>
+                    </div>
+                    <div className="border-l-4 border-gray-300 pl-3">
+                      <p className="font-semibold">B.&nbsp;<BinAnnotated bits="111100010000" /></p>
+                      <p className="text-gray-500 text-xs"><InlineMath math="=2^{11}+2^{10}+2^9+2^8+2^4" /></p>
+                      <p>= <span className="font-bold text-red-600">3856</span>&ensp;<span className="text-red-600">檢查同題目數值是否一樣 → 不同，所以不是答案</span></p>
+                    </div>
+                    <div className="border-l-4 border-green-500 pl-3 bg-green-50 rounded pr-2 py-1">
+                      <p className="font-semibold">C.&nbsp;<BinAnnotated bits="1110100100000" /></p>
+                      <p className="text-gray-500 text-xs"><InlineMath math="=2^{12}+2^{11}+2^{10}+2^8+2^5" /></p>
+                      <p>= <span className="font-bold text-green-600">7456</span>&ensp;<span className="text-green-700 font-semibold">檢查同題目數值是否一樣 → 一樣！答案：C</span></p>
+                    </div>
+                    <div className="border-l-4 border-gray-300 pl-3">
+                      <p className="font-semibold">D.&nbsp;<BinAnnotated bits="1111000010000" /></p>
+                      <p className="text-gray-500 text-xs"><InlineMath math="=2^{12}+2^{11}+2^{10}+2^9+2^4" /></p>
+                      <p>= <span className="font-bold text-red-600">7696</span>&ensp;<span className="text-red-600">檢查同題目數值是否一樣 → 不同，所以不是答案</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Practice problems */}
             <div className="border border-slate-200 rounded-lg p-3">
               <p className="font-semibold mb-1">題目：求 <InlineMath math="11+2^6+2^{10}+2^{11}" /> 的二進制（如圖例題）</p>
               <p>① 在 COMP 模式計算十進制：<InlineMath math="11+64+1024+2048=3147" /></p>
@@ -1732,6 +1808,7 @@ const BinaryNotes = ({ onBack }) => (
                 </span>
                 → 得 <InlineMath math="12" /></p>
             </div>
+
           </div>
         </div>
       </section>
@@ -1856,7 +1933,7 @@ const ComplexNotes = ({ onBack }) => (
       {/* Section 1: Calculator */}
       <section className="bg-teal-50 rounded-xl p-5 border-2 border-teal-300">
         <h2 className="text-lg font-bold text-teal-800 mb-1">🧮 一、計算機神技 — Complex Mode</h2>
-        <p className="text-sm text-teal-600 mb-4">見到 i 的題目，10秒用計算機搞掂！</p>
+        <p className="text-sm text-teal-600 mb-4">見到 <em>i</em> 的題目，10秒用計算機搞掂！</p>
 
         {/* Steps */}
         <div className="space-y-3 mb-5">
@@ -1974,7 +2051,7 @@ const ComplexNotes = ({ onBack }) => (
                 <span className="text-slate-400 text-xs mx-1">→ 輸入：</span>
                 <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-xs">4<span className="text-teal-700 font-bold">iii</span> ÷ ( <span className="text-teal-700 font-bold">i</span> - 1 )</span>
               </div>
-              <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^3" /> 時須打 <code>i × i × i</code>（有幾次方就打幾個 i 相乘）</p>
+              <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^3" /> 時須打 <code><em>i</em> × <em>i</em> × <em>i</em></code>（有幾次方就打幾個 <em>i</em> 相乘）</p>
               <div className="flex gap-2 flex-wrap">
                 <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
                   <span className="font-mono bg-green-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
@@ -2086,7 +2163,7 @@ const ComplexNotes = ({ onBack }) => (
 
       {/* Section 3 (was 二) */}
       <section className="bg-indigo-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-indigo-800 mb-3">三、虛數單位 i 的冪次循環</h2>
+        <h2 className="text-lg font-bold text-indigo-800 mb-3">三、虛數單位 <em>i</em> 的冪次循環</h2>
         <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
           <BlockMath math="i^1 = i, \quad i^2 = -1, \quad i^3 = -i, \quad i^4 = 1" />
           <p className="text-sm text-indigo-700 mt-2">週期為 4，即 <InlineMath math="i^{4k} = 1" />，<InlineMath math="i^{4k+1} = i" />，<InlineMath math="i^{4k+2} = -1" />，<InlineMath math="i^{4k+3} = -i" /></p>
@@ -2157,11 +2234,122 @@ const ComplexNotes = ({ onBack }) => (
         </ul>
       </section>
 
-    </div>
-  </div>
-);
+        {/* Section 8: Number System Chart */}
+        <section className="bg-slate-50 rounded-xl p-5 border border-slate-200 overflow-hidden">
+          <h2 className="text-lg font-bold text-slate-800 mb-6">八、數系表</h2>
+          <div className="overflow-x-auto pb-4">
+            <div className="min-w-[600px] flex flex-col items-center pt-2 select-none">
+              
+              {/* L1: Complex */}
+              <div className="bg-[#e78a8d] text-[#2c3e50] font-bold text-lg py-2.5 px-20 border border-red-300 z-10 relative shadow-sm">
+                複數
+              </div>
+              
+              {/* Line L1 to L2 */}
+              <div className="w-full flex flex-col items-center">
+                <div className="w-0 h-5 border-l-2 border-slate-700"></div>
+                <div className="w-[60%] border-t-2 border-slate-700 h-5 flex justify-between rounded-t-sm">
+                  <div className="w-0 h-full border-l-2 border-slate-700 -ml-[1px]"></div>
+                  <div className="w-0 h-full border-r-2 border-slate-700 -mr-[1px]"></div>
+                </div>
+              </div>
+              
+              {/* L2 row */}
+              <div className="w-full flex justify-center gap-[10%] px-[5%] -mt-1">
+                {/* L2 Left Node */}
+                <div className="flex flex-col w-[40%] items-center z-10">
+                  <div className="w-full text-center shadow-sm">
+                    <div className="bg-[#acd691] text-[#2c3e50] font-bold py-2 border border-green-300">實數與虛數的和</div>
+                    <div className="bg-[#fcde84] text-[#2c3e50] font-bold py-1.5 border border-yellow-400 mt-[-1px] text-base">有 <span className="italic font-bold text-lg">i</span> 的數</div>
+                  </div>
+                  <div className="mt-2 text-blue-600 font-bold self-start pl-2">
+                    <span className="text-[#6495ed] text-xl font-bold">e.g. </span>
+                    <span className="text-[#2c3e50] font-mono text-xl ml-2 tracking-wider">2+7i , -3i</span>
+                  </div>
+                </div>
+                
+                {/* L2 Right Node (Real) */}
+                <div className="flex flex-col w-[40%] items-center z-10">
+                  <div className="w-full text-center shadow-sm">
+                    <div className="bg-[#abdbfb] text-[#2c3e50] font-bold py-2 border border-blue-300 tracking-[0.2em]">實數</div>
+                    <div className="bg-[#fcde84] text-[#2c3e50] font-bold py-1.5 border border-yellow-400 mt-[-1px] text-base">無 <span className="italic font-bold text-lg">i</span> 的數</div>
+                  </div>
+                  
+                  {/* Branch L2R -> L3 */}
+                  <div className="w-full flex flex-col items-center">
+                    <div className="w-0 h-5 border-l-2 border-slate-700"></div>
+                    <div className="w-[85%] border-t-2 border-slate-700 h-5 flex justify-between rounded-t-sm">
+                      <div className="w-0 h-full border-l-2 border-slate-700 -ml-[1px]"></div>
+                      <div className="w-0 h-full border-r-2 border-slate-700 -mr-[1px]"></div>
+                    </div>
+                  </div>
+                  
+                  {/* L3 row */}
+                  <div className="w-[120%] flex justify-between gap-[5%] -ml-[10%] -mt-1">
+                    {/* L3 Left: Irrational */}
+                    <div className="flex flex-col w-[45%] items-center z-10">
+                      <div className="w-full text-center shadow-sm">
+                        <div className="bg-[#abdbfb] text-[#2c3e50] font-bold py-1.5 border border-blue-300">無理數</div>
+                        <div className="bg-[#fcde84] text-[#2c3e50] font-bold py-1.5 border border-yellow-400 mt-[-1px] text-[13px] whitespace-nowrap px-1"><span className="text-orange-500">爛數</span>(寫唔到做分數)</div>
+                      </div>
+                      <div className="mt-2 text-blue-600 font-bold self-start pl-1 flex items-center">
+                        <span className="text-[#6495ed] text-lg font-bold">e.g. </span>
+                        <span className="text-[#2c3e50] ml-2 flex items-center gap-1.5 inline-flex text-[17px] font-semibold">
+                          <InlineMath math="\pi" /> , <InlineMath math="\sin 60^\circ" />
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* L3 Right: Rational */}
+                    <div className="flex flex-col w-[45%] items-center z-10">
+                      <div className="w-full text-center shadow-sm">
+                        <div className="bg-[#abdbfb] text-[#2c3e50] font-bold py-1.5 border border-blue-300">有理數</div>
+                        <div className="bg-[#fcde84] text-[#2c3e50] font-bold py-1.5 border border-yellow-400 mt-[-1px] text-[13px] whitespace-nowrap px-1"><span className="text-blue-500">靚數</span>(整數/分數)</div>
+                      </div>
+                      
+                      {/* Branch L3R -> L4 */}
+                      <div className="w-full flex flex-col items-center text-slate-700">
+                        <div className="w-0 h-4 border-l-2 border-slate-700"></div>
+                        <div className="w-[90%] border-t-2 border-slate-700 h-4 flex justify-between rounded-t-sm">
+                          <div className="w-0 h-full border-l-2 border-slate-700 -ml-[1px]"></div>
+                          <div className="w-0 h-full border-r-2 border-slate-700 -mr-[1px]"></div>
+                        </div>
+                      </div>
+                      
+                      {/* L4 row */}
+                      <div className="w-[125%] flex justify-between gap-[5%] -ml-[12.5%] -mt-1">
+                        {/* L4 Left: Integer */}
+                        <div className="flex flex-col flex-1 items-center z-10">
+                          <div className="w-full bg-[#abdbfb] text-[#2c3e50] font-bold py-1.5 text-center border border-blue-300 shadow-sm whitespace-nowrap">整數</div>
+                          <div className="text-blue-600 font-bold self-start mt-2 w-full flex pl-1">
+                            <span className="text-[#6495ed] text-sm">e.g.</span>
+                            <span className="text-[#2c3e50] ml-1.5 font-mono tracking-widest text-[15px] pt-px">-4, 0, 7</span>
+                          </div>
+                        </div>
+                        
+                        {/* L4 Right: Fraction */}
+                        <div className="flex flex-col flex-1 items-center z-10">
+                          <div className="w-full bg-[#abdbfb] text-[#2c3e50] font-bold py-1.5 text-center border border-blue-300 shadow-sm whitespace-nowrap">分數</div>
+                          <div className="text-blue-600 font-bold w-full self-start mt-1.5 flex items-start pl-1">
+                            <span className="text-[#6495ed] text-sm mt-1">e.g.</span>
+                            <span className="text-[#2c3e50] font-bold inline-flex items-center gap-2 text-base ml-1.5">
+                              <InlineMath math="\dfrac{3}{5}" /> , <InlineMath math="\dfrac{2}{9}" />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-// ─── MC Option Button ─────────────────────────────────────────────────────────
+      </div>
+    </div>
+  );
+
 const OptionBtn = ({ label, optionLatex, state, onClick }) => {
   // state: 'idle' | 'correct' | 'wrong' | 'reveal'
   const base = 'w-full text-left flex items-start gap-3 px-4 py-4 rounded-xl border-2 transition-all duration-200 font-medium';
@@ -2306,6 +2494,220 @@ const HCFLCMQuiz = ({ onBack }) => {
   );
 };
 
+// ─── Notes Component for Function Graphs ───────────────────────────────────────
+const FunctionGraphNotes = ({ onBack }) => (
+  <div className="max-w-3xl mx-auto px-4 py-8">
+    <button onClick={onBack} className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium">
+      <ArrowLeft className="w-5 h-5" /> 返回
+    </button>
+    <h1 className="text-2xl font-bold text-slate-800 mb-2 border-b-2 border-orange-400 pb-3">
+      📈 筆記：函數圖像 — <InlineMath math="y = ax^2+bx+c" /> 的 a、b、c
+    </h1>
+    <p className="text-sm text-slate-500 mb-6">F4 CH3 · 二次函數</p>
+
+    <div className="space-y-8 text-slate-700">
+
+      {/* 0: Intro */}
+      <section className="bg-orange-50 rounded-xl p-5 border-2 border-orange-200">
+        <div className="text-center mb-3">
+          <span className="text-3xl font-black tracking-tight">
+            <span className="text-slate-700">y = </span>
+            <span className="text-orange-500">a</span>
+            <span className="text-slate-700">x² + </span>
+            <span className="text-amber-500">b</span>
+            <span className="text-slate-700">x + </span>
+            <span className="text-sky-500">c</span>
+          </span>
+        </div>
+        <p className="text-sm text-center text-slate-600">
+          呢條公式反映一幅<strong>拋物線</strong>嘅圖像。<br />
+          <span className="text-orange-500 font-bold">a</span>、<span className="text-amber-500 font-bold">b</span>、<span className="text-sky-500 font-bold">c</span> 各自幫你搵圖像上嘅不同資訊 🔖
+        </p>
+      </section>
+
+      {/* 1: a — Direction */}
+      <section className="bg-orange-50 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="bg-orange-500 text-white font-black text-lg px-3 py-1 rounded-lg">a</span>
+          <h2 className="text-lg font-bold text-orange-800">Direction of Opening — 開口方向</h2>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          {/* a > 0 */}
+          <div className="bg-white rounded-xl p-4 border-2 border-yellow-300 shadow-sm flex flex-col items-center">
+            <div className="text-base font-bold text-slate-700 mb-1"><InlineMath math="a > 0" /></div>
+            <div className="text-xs text-slate-500 mb-3">開口向上 (open upward)</div>
+            {/* SVG smiley parabola */}
+            <svg viewBox="0 0 120 100" className="w-36 h-28">
+              {/* axes */}
+              <line x1="10" y1="80" x2="110" y2="80" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr)" />
+              <line x1="60" y1="95" x2="60" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr)" />
+              <defs>
+                <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                  <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
+                </marker>
+              </defs>
+              {/* upward parabola */}
+              <path d="M20,80 Q60,20 100,80" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" />
+              {/* eyes */}
+              <circle cx="42" cy="30" r="5" fill="#1e293b" />
+              <circle cx="78" cy="30" r="5" fill="#1e293b" />
+            </svg>
+            <div className="mt-1 bg-yellow-100 text-yellow-800 font-bold text-sm px-3 py-1 rounded-full">正數：笑哈哈 🙂</div>
+          </div>
+
+          {/* a < 0 */}
+          <div className="bg-white rounded-xl p-4 border-2 border-sky-300 shadow-sm flex flex-col items-center">
+            <div className="text-base font-bold text-slate-700 mb-1"><InlineMath math="a < 0" /></div>
+            <div className="text-xs text-slate-500 mb-3">開口向下 (open downward)</div>
+            <svg viewBox="0 0 120 100" className="w-36 h-28">
+              <line x1="10" y1="50" x2="110" y2="50" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr2)" />
+              <line x1="60" y1="95" x2="60" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr2)" />
+              <defs>
+                <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                  <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
+                </marker>
+              </defs>
+              {/* downward parabola */}
+              <path d="M15,50 Q60,5 105,50" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round" />
+              {/* eyes */}
+              <circle cx="40" cy="22" r="5" fill="#1e293b" />
+              <circle cx="80" cy="22" r="5" fill="#1e293b" />
+            </svg>
+            <div className="mt-1 bg-sky-100 text-sky-800 font-bold text-sm px-3 py-1 rounded-full">負數：喊哈哈 ☹️</div>
+          </div>
+        </div>
+
+        <div className="mt-4 bg-orange-100 rounded-lg px-4 py-3 text-sm text-orange-800">
+          <strong>記法：</strong>正數笑😊，負數喊😢 — <em>a</em> 如人臉，正面就笑，負面就喊！
+        </div>
+      </section>
+
+      {/* 2: c — y-intercept */}
+      <section className="bg-sky-50 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="bg-sky-500 text-white font-black text-lg px-3 py-1 rounded-lg">c</span>
+          <h2 className="text-lg font-bold text-sky-800">y-intercept — y 截距</h2>
+        </div>
+
+        <div className="bg-white rounded-xl p-4 border border-sky-200 shadow-sm flex flex-col md:flex-row items-center gap-6">
+          <div className="flex-1">
+            <p className="text-sm mb-3">
+              <span className="text-sky-500 font-black text-xl">c</span> 就係圖像與 <strong>y 軸的交點</strong>。
+            </p>
+            <div className="bg-sky-50 rounded-lg px-4 py-3 border border-sky-200 text-sm">
+              <p className="font-semibold text-sky-700 mb-1">原因：</p>
+              <p>代入 <InlineMath math="x = 0" />：</p>
+              <BlockMath math="y = a(0)^2 + b(0) + c = c" />
+              <p className="text-slate-600">∴ y 截距 = <span className="font-bold text-sky-600">c</span>，交點為 <InlineMath math="(0,\ c)" /></p>
+            </div>
+          </div>
+
+          {/* SVG y-intercept diagram */}
+          <svg viewBox="0 0 130 120" className="w-36 h-36 shrink-0">
+            <line x1="10" y1="95" x2="120" y2="95" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrC)" />
+            <line x1="50" y1="115" x2="50" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrC)" />
+            <defs>
+              <marker id="arrC" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
+              </marker>
+            </defs>
+            {/* upward parabola shifted so vertex is visible */}
+            <path d="M10,95 Q50,30 110,95" fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round" />
+            {/* dot at y-intercept */}
+            <circle cx="50" cy="60" r="4" fill="#0ea5e9" />
+            {/* (0,c) label */}
+            <text x="54" y="62" fontSize="10" fill="#0369a1" fontWeight="bold">(0, c)</text>
+            {/* arrow pointing to intercept */}
+            <line x1="72" y1="78" x2="54" y2="64" stroke="#0369a1" strokeWidth="1.5" markerEnd="url(#arrC)" />
+            {/* annotation box */}
+            <rect x="58" y="78" width="52" height="18" rx="4" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="1" />
+            <text x="62" y="89" fontSize="8" fill="#0369a1" fontWeight="bold">y-intercept</text>
+          </svg>
+        </div>
+      </section>
+
+      {/* 3: b — Axis of Symmetry */}
+      <section className="bg-amber-50 rounded-xl p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="bg-amber-500 text-white font-black text-lg px-3 py-1 rounded-lg">b</span>
+          <h2 className="text-lg font-bold text-amber-800">Axis of Symmetry — 對稱軸</h2>
+        </div>
+
+        <div className="bg-amber-100 rounded-lg px-4 py-3 mb-4 text-sm text-amber-800">
+          ⚠️ <strong>b 無單獨所代表的資訊</strong>，但可以<strong>配合 a</strong> 用於搵對稱軸！
+        </div>
+
+        <div className="bg-white rounded-xl p-4 border border-amber-200 shadow-sm flex flex-col md:flex-row items-center gap-6">
+          <div className="flex-1 space-y-3">
+            <div className="flex items-center gap-3">
+              <span className="bg-slate-100 text-slate-700 text-xs font-bold px-2 py-1 rounded">公式</span>
+              <span className="text-lg font-bold">
+                <InlineMath math="x = -\dfrac{b}{2a}" />
+              </span>
+            </div>
+            <div className="bg-amber-50 rounded-lg px-3 py-2 border border-amber-200 text-xs text-amber-700">
+              <strong>記法：</strong>計算 b ÷ 2a，加個負號，就係對稱軸 x 的值。
+            </div>
+            <div className="bg-white rounded-lg p-3 border border-slate-200 text-sm">
+              <p className="font-semibold text-slate-700 mb-1">例：<InlineMath math="y = 2x^2 - 8x + 3" /></p>
+              <p className="text-slate-600"><InlineMath math="a=2,\ b=-8" /></p>
+              <BlockMath math="x = -\frac{-8}{2(2)} = \frac{8}{4} = 2" />
+              <p className="text-slate-600">∴ 對稱軸為 <InlineMath math="x = 2" /></p>
+            </div>
+          </div>
+
+          {/* SVG axis of symmetry diagram */}
+          <svg viewBox="0 0 130 120" className="w-36 h-36 shrink-0">
+            <line x1="10" y1="95" x2="120" y2="95" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrB)" />
+            <line x1="20" y1="115" x2="20" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrB)" />
+            <defs>
+              <marker id="arrB" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
+              </marker>
+            </defs>
+            {/* upward parabola */}
+            <path d="M10,95 Q65,20 120,95" fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round" />
+            {/* dashed axis of symmetry */}
+            <line x1="65" y1="110" x2="65" y2="10" stroke="#f59e0b" strokeWidth="2" strokeDasharray="5,3" />
+            {/* label */}
+            <text x="68" y="112" fontSize="9" fill="#b45309" fontWeight="bold">x = -b/2a</text>
+          </svg>
+        </div>
+      </section>
+
+      {/* 4: Summary */}
+      <section className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+        <h2 className="text-lg font-bold text-slate-800 mb-4">📋 總結</h2>
+        <div className="space-y-3">
+          <div className="flex items-start gap-3 bg-white rounded-lg p-3 border border-orange-200 shadow-sm">
+            <span className="bg-orange-500 text-white font-black text-base px-2.5 py-0.5 rounded shrink-0 mt-0.5">a</span>
+            <div>
+              <p className="font-bold text-orange-800">開口方向 Direction of Opening</p>
+              <p className="text-sm text-slate-600"><InlineMath math="a>0" /> → 開口向上（笑）　<InlineMath math="a<0" /> → 開口向下（喊）</p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 bg-white rounded-lg p-3 border border-sky-200 shadow-sm">
+            <span className="bg-sky-500 text-white font-black text-base px-2.5 py-0.5 rounded shrink-0 mt-0.5">c</span>
+            <div>
+              <p className="font-bold text-sky-800">y 截距 y-intercept</p>
+              <p className="text-sm text-slate-600">圖像與 y 軸交於 <InlineMath math="(0,\ c)" /></p>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 bg-white rounded-lg p-3 border border-amber-200 shadow-sm">
+            <span className="bg-amber-500 text-white font-black text-base px-2.5 py-0.5 rounded shrink-0 mt-0.5">b</span>
+            <div>
+              <p className="font-bold text-amber-800">對稱軸 Axis of Symmetry</p>
+              <p className="text-sm text-slate-600"><InlineMath math="x = -\dfrac{b}{2a}" />（b 獨立無意義，要配合 a）</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+);
+
 // ─── Generic Topic Quiz ──────────────────────────────────────────────────────
 const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
   const [question, setQuestion] = useState(() => generateFn());
@@ -2433,6 +2835,15 @@ const TOPICS = [
     color: 'from-purple-500 to-violet-600',
     badges: [{ level: 'F4', chapter: 'CH1', subject: '數系' }],
   },
+  {
+    id: 'function-graph',
+    title: '函數圖像',
+    desc: 'y = ax²+bx+c 中 a、b、c 的意義：開口方向、y 截距、對稱軸公式',
+    icon: '📈',
+    color: 'from-orange-500 to-amber-600',
+    badges: [{ level: 'F4', chapter: 'CH3', subject: '二次函數' }],
+    notesOnly: true,
+  },
 ];
 
 // ─── Main MCLimitedF6 App ─────────────────────────────────────────────────────
@@ -2451,6 +2862,7 @@ const MCLimitedF6 = () => {
     if (activeTopic.id === 'hcf-lcm') return <HCFLCMNotes onBack={() => setView('home')} />;
     if (activeTopic.id === 'variation') return <VariationNotes onBack={() => setView('home')} />;
     if (activeTopic.id === 'complex') return <ComplexNotes onBack={() => setView('home')} />;
+    if (activeTopic.id === 'function-graph') return <FunctionGraphNotes onBack={() => setView('home')} />;
   }
 
   // Home – topic selector
@@ -2498,12 +2910,14 @@ const MCLimitedF6 = () => {
             </div>
 
             <div className="px-6 py-4 flex gap-3 flex-wrap">
-              <button
-                onClick={() => { setActiveTopic(topic); setView('quiz'); }}
-                className="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-blue-600 text-white font-bold py-2.5 rounded-xl hover:bg-blue-700 transition shadow">
-                <Star className="w-4 h-4 fill-yellow-300 text-yellow-300" />
-                開始練習
-              </button>
+              {!topic.notesOnly && (
+                <button
+                  onClick={() => { setActiveTopic(topic); setView('quiz'); }}
+                  className="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-blue-600 text-white font-bold py-2.5 rounded-xl hover:bg-blue-700 transition shadow">
+                  <Star className="w-4 h-4 fill-yellow-300 text-yellow-300" />
+                  開始練習
+                </button>
+              )}
               <button
                 onClick={() => { setActiveTopic(topic); setView('notes'); }}
                 className="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-slate-100 text-slate-700 font-semibold py-2.5 rounded-xl hover:bg-slate-200 transition">
