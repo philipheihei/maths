@@ -252,15 +252,55 @@ export default function InequalityQuiz() {
     } else {
       setStatus('wrong');
       let explanation = "";
+
       if (currentQ.type === 'text') {
         explanation = `正確答案是 ${formatDisplay(cleanAnswer)}。\n提示：${currentQ.hint}`;
       } else {
-        const isSolid = currentQ.operator.includes('=');
-        const isRight = currentQ.operator.includes('>');
-        
+        // Parse operator and number from an expression like "x>=5", "x<-3"
+        const parseOp = (str) => {
+          const m = str.match(/^x(>=|<=|>|<)(-?\d+)$/);
+          return m ? { op: m[1], num: parseInt(m[2]) } : null;
+        };
+
+        const correct = parseOp(cleanAnswer);
+        const student = parseOp(cleanInput);
+
         explanation = `正確答案是 ${formatDisplay(cleanAnswer)}。\n`;
-        explanation += `1. 觀察空心/實心圓點：${isSolid ? '實心 (包含等於)' : '空心 (不包含等於)'}。\n`;
-        explanation += `2. 觀察箭頭方向：${isRight ? '指向右邊 (大於)' : '指向左邊 (小於)'}。`;
+
+        if (!student) {
+          explanation += `\n格式有誤，請輸入如 x>3 或 x≤-2 的格式。`;
+        } else {
+          const issues = [];
+
+          // 1. Number check
+          if (student.num !== correct.num) {
+            issues.push(`【數值錯誤】你輸入了 ${student.num}，但正確答案是 ${correct.num}。\n👉 讀取數值方法：留意數線上圓圈（○ 或 ●）的位置，該位置的數字就是 x 的值。圖中圓圈在 ${correct.num}，所以應寫 x ... ${correct.num}。`);
+          }
+
+          // 2. Circle (equal sign) check
+          const correctHasEqual = correct.op.includes('=');
+          const studentHasEqual = student.op.includes('=');
+          if (studentHasEqual && !correctHasEqual) {
+            issues.push(`圓圈判斷有誤：圖中是空心圓圈 ○，代表不包含該數值，不需加「等於」（應用 ${correct.op}，而非 ${formatDisplay(student.op)}）。`);
+          } else if (!studentHasEqual && correctHasEqual) {
+            issues.push(`圓圈判斷有誤：圖中是實心圓圈 ●，代表包含該數值，須加「等於」（應用 ${formatDisplay(correct.op)}，而非 ${formatDisplay(student.op)}）。`);
+          }
+
+          // 3. Direction (arrow) check
+          const correctIsRight = correct.op.includes('>');
+          const studentIsRight = student.op.includes('>');
+          if (studentIsRight && !correctIsRight) {
+            issues.push(`箭咀方向有誤：圖中箭咀向左 ←，表示小於（x 比該數更小）。\n小貼士：x 在不等式左邊時，列式不等號方向跟圖形箭咀方向。`);
+          } else if (!studentIsRight && correctIsRight) {
+            issues.push(`箭咀方向有誤：圖中箭咀向右 →，表示大於（x 比該數更大）。\n小貼士：x 在不等式左邊時，列式不等號方向跟圖形箭咀方向。`);
+          }
+
+          if (issues.length === 0) {
+            explanation += `\n答案有誤，請再細心檢查。`;
+          } else {
+            explanation += '\n' + issues.map((msg, i) => `${i + 1}. ${msg}`).join('\n\n');
+          }
+        }
       }
       setFeedbackMsg(explanation);
     }

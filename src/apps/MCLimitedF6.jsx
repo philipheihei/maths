@@ -1846,34 +1846,260 @@ const ComplexNotes = ({ onBack }) => (
       📘 筆記：複數 i
     </h1>
     <div className="space-y-8 text-slate-700">
+
+      {/* ══ MC 部份 ══ */}
+      <div className="flex items-center gap-3">
+        <span className="bg-teal-600 text-white text-sm font-bold px-3 py-1 rounded-full">MC 部份</span>
+        <div className="flex-1 h-px bg-teal-200" />
+      </div>
+
+      {/* Section 1: Calculator */}
+      <section className="bg-teal-50 rounded-xl p-5 border-2 border-teal-300">
+        <h2 className="text-lg font-bold text-teal-800 mb-1">🧮 一、計算機神技 — Complex Mode</h2>
+        <p className="text-sm text-teal-600 mb-4">見到 i 的題目，10秒用計算機搞掂！</p>
+
+        {/* Steps */}
+        <div className="space-y-3 mb-5">
+          <div className="flex items-start gap-3 bg-white rounded-xl p-4 shadow-sm">
+            <span className="shrink-0 w-8 h-8 rounded-full bg-teal-500 text-white font-bold text-sm flex items-center justify-center">1</span>
+            <div>
+              <p className="font-bold text-teal-800">開啟 Complex Mode</p>
+              <p className="text-sm text-slate-600 mt-0.5">按 <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-xs font-bold">MODE</span> → 選 <span className="font-mono bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">2 (CMPLX)</span></p>
+              <p className="text-xs text-slate-400 mt-1">⚠️ 每次計完記得 MODE → 1 返回一般模式</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 bg-white rounded-xl p-4 shadow-sm">
+            <span className="shrink-0 w-8 h-8 rounded-full bg-teal-500 text-white font-bold text-sm flex items-center justify-center">2</span>
+            <div>
+              <p className="font-bold text-teal-800">照題目直接輸入</p>
+              <p className="text-sm text-slate-600 mt-0.5">將式子逐字撳入計算機，<InlineMath math="i" /> 按 <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-xs font-bold">ENG</span>（即 <InlineMath math="i" /> 鍵）</p>
+              <p className="text-xs text-slate-400 mt-1">無限制題目可先代入數值（例如 k = 10）</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 bg-white rounded-xl p-4 shadow-sm">
+            <span className="shrink-0 w-8 h-8 rounded-full bg-teal-500 text-white font-bold text-sm flex items-center justify-center">3</span>
+            <div>
+              <p className="font-bold text-teal-800">讀出答案</p>
+              <p className="text-xs text-slate-400 mt-0.5 mb-2">⚡ 系統預設先顯示<strong className="text-green-700">實部</strong>，直接按 EXE 即可</p>
+              <div className="flex gap-3 mt-1 flex-wrap">
+                <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                  <span className="font-mono bg-green-600 text-white text-xs px-2 py-1 rounded font-bold">EXE</span>
+                  <span className="text-sm font-semibold text-green-800">→ 出 <span className="underline">實部</span>（Real Part）</span>
+                </div>
+                <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-3 py-2">
+                  <span className="font-mono bg-slate-600 text-white text-xs px-2 py-1 rounded font-bold">SHIFT</span>
+                  <span className="text-xs text-slate-400">+</span>
+                  <span className="font-mono bg-slate-600 text-white text-xs px-2 py-1 rounded font-bold">EXE</span>
+                  <span className="text-sm font-semibold text-blue-800">→ 出 <span className="underline">虛部</span>（Imag Part）</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Concept: a+bi form */}
+        <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-200 mb-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded">重要概念</span>
+            <span className="text-sm font-bold text-indigo-800">DSE 所有含 <InlineMath math="i" /> 的混算，答案均以 <InlineMath math="a+bi" /> 形式表達</span>
+          </div>
+          <div className="grid md:grid-cols-2 gap-3 mt-3">
+            <div className="bg-white rounded-lg px-4 py-3 border border-indigo-100">
+              <p className="text-xs text-indigo-500 font-bold mb-2">認識 a 與 b</p>
+              <div className="flex items-center gap-3 mb-1">
+                <InlineMath math="a + bi" />
+                <span className="text-xs text-slate-400">↑ 實部　↑ 虛部</span>
+              </div>
+              <div className="flex gap-4 mt-2 text-sm">
+                <span className="bg-green-100 text-green-800 rounded px-2 py-0.5 font-bold">a = 實部</span>
+                <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-bold">b = 虛部</span>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg px-4 py-3 border border-indigo-100 space-y-2 text-sm">
+              <div className="flex items-center gap-2">
+                <InlineMath math="5 - 3i" />
+                <span className="text-slate-400">→</span>
+                <span className="bg-green-100 text-green-800 rounded px-2 py-0.5 text-xs">a = 5</span>
+                <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 text-xs">b = −3</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <InlineMath math="8 + 7i" />
+                <span className="text-slate-400">→</span>
+                <span className="bg-green-100 text-green-800 rounded px-2 py-0.5 text-xs">a = 8</span>
+                <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 text-xs">b = 7</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Warm-up: Mode 2 complex arithmetic */}
+        <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="bg-slate-600 text-white text-xs font-bold px-2 py-1 rounded">熱身練習</span>
+            <span className="text-sm font-bold text-slate-700">用 Mode 2 計複數四則混算</span>
+          </div>
+          <p className="text-sm text-slate-500 mb-3">切換到 Mode 2 後，照樣輸入式子，計算機會自動以 <InlineMath math="a+bi" /> 形式顯示答案。</p>
+
+          <div className="space-y-3">
+            {/* Example 1 */}
+            <div className="bg-white rounded-lg p-3 border border-slate-200">
+              <p className="text-xs text-slate-400 font-bold mb-2">例 1</p>
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <InlineMath math="-4(5-3i)" />
+                <span className="text-slate-400">=</span>
+                <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-xs">-4 × (5 - 3 <span className="text-teal-700 font-bold">i</span>)</span>
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
+                  <span className="font-mono bg-green-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
+                  <span className="text-sm text-green-800">先出 <strong>−20</strong>（實部 a）</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
+                  <span className="font-mono bg-slate-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
+                  <span className="text-xs text-slate-400">+</span>
+                  <span className="font-mono bg-slate-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
+                  <span className="text-sm text-blue-800">後出 <strong>12</strong>（虛部 b）</span>
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 mt-2">∴ 答案為 <InlineMath math="-20+12i" /></p>
+            </div>
+
+            {/* Example 2 */}
+            <div className="bg-white rounded-lg p-3 border border-slate-200">
+              <p className="text-xs text-slate-400 font-bold mb-2">例 2</p>
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <InlineMath math="\dfrac{4i^3}{i-1}" />
+                <span className="text-slate-400 text-xs mx-1">→ 輸入：</span>
+                <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-xs">4<span className="text-teal-700 font-bold">iii</span> ÷ ( <span className="text-teal-700 font-bold">i</span> - 1 )</span>
+              </div>
+              <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^3" /> 時須打 <code>i × i × i</code>（有幾次方就打幾個 i 相乘）</p>
+              <div className="flex gap-2 flex-wrap">
+                <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
+                  <span className="font-mono bg-green-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
+                  <span className="text-sm text-green-800">先出 <strong>-2</strong>（實部 a）</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
+                  <span className="font-mono bg-slate-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
+                  <span className="text-xs text-slate-400">+</span>
+                  <span className="font-mono bg-slate-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
+                  <span className="text-sm text-blue-800">後出 <strong>2</strong>（虛部 b）</span>
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 mt-2">∴ 答案為 <InlineMath math="-2+2i" /></p>
+            </div>
+          </div>
+          <p className="text-xs text-teal-700 mt-3 bg-teal-50 rounded-lg px-3 py-2 border border-teal-100">💡 記住：<strong>EXE 先出實部（a）</strong>，<strong>SHIFT+EXE 後出虛部（b）</strong>，合起來就是 a+bi 的答案。</p>
+        </div>
+
+        {/* Example */}
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-teal-200">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="bg-amber-100 text-amber-800 text-xs font-bold px-2 py-1 rounded">例題</span>
+            <span className="text-sm font-bold text-slate-700">2023 DSE Paper2 Q34</span>
+          </div>
+          <p className="text-sm mb-3 text-slate-700">若 <InlineMath math="k" /> 為一實數，則 <InlineMath math="\dfrac{i}{k-i}+\dfrac{2}{k+i}" /> 的實部為？</p>
+
+          <div className="space-y-2 text-sm">
+            <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
+              <span className="shrink-0 w-6 h-6 rounded-full bg-amber-400 text-white font-bold text-xs flex items-center justify-center">1</span>
+              <span className="text-amber-800 font-semibold">無限制 → 代 <InlineMath math="k=10" /></span>
+            </div>
+            <div className="flex items-center gap-2 bg-teal-50 rounded-lg px-3 py-2">
+              <span className="shrink-0 w-6 h-6 rounded-full bg-teal-500 text-white font-bold text-xs flex items-center justify-center">2</span>
+              <div>
+                <span className="text-teal-800 font-semibold">Cal 機輸入：</span>
+                <span className="font-mono bg-slate-100 text-slate-800 text-xs px-2 py-0.5 rounded ml-1">( i ÷ (10 - i) ) + ( 2 ÷ (10 + i) )</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 bg-green-50 rounded-lg px-3 py-2">
+              <span className="shrink-0 w-6 h-6 rounded-full bg-green-600 text-white font-bold text-xs flex items-center justify-center">3</span>
+              <span className="text-green-800">按 <span className="font-mono bg-green-600 text-white text-xs px-2 py-0.5 rounded font-bold">EXE</span> → 實部 = <InlineMath math="\dfrac{19}{101}" /></span>
+            </div>
+            <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
+              <span className="shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center">4</span>
+              <span className="text-blue-800">對比選項：代 <InlineMath math="k=10" /> 後答案為 <InlineMath math="\dfrac{19}{101}" /> → 選 <strong>B. <InlineMath math="\dfrac{2k-1}{k^2+1}" /></strong></span>
+            </div>
+          </div>
+
+          <div className="mt-3 bg-slate-50 rounded-lg p-3 text-xs text-slate-500 border border-slate-200">
+            💡 代入數值後，逐一代入4個選項，哪個答案相符即是正確選項。若兩個選項相符，換另一個數值再試。
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 長答部份 ══ */}
+      <div className="flex items-center gap-3">
+        <span className="bg-purple-600 text-white text-sm font-bold px-3 py-1 rounded-full">長答部份</span>
+        <div className="flex-1 h-px bg-purple-200" />
+      </div>
+
+      {/* Section 2: i power derivations from first principles */}
       <section className="bg-purple-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-purple-800 mb-3">一、虛數單位 i 的冪次循環</h2>
+        <h2 className="text-lg font-bold text-purple-800 mb-3">二、<InlineMath math="i" /> 的四則混算（以計算機 Complex Mode 計）</h2>
+
+        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
+          <p className="text-sm text-purple-700 font-semibold mb-3">由定義出發逐步推導：</p>
+          <div className="space-y-2">
+            {[
+              { lhs: 'i', eq: '\\sqrt{-1}', note: '' },
+              { lhs: 'i^2', eq: '(\\sqrt{-1})(\\sqrt{-1}) = -1', note: '' },
+              { lhs: 'i^3', eq: 'i \\cdot i^2 = i(-1) = -i', note: '' },
+              { lhs: 'i^4', eq: 'i^2 \\cdot i^2 = (-1)(-1) = 1', note: '' },
+            ].map(({ lhs, eq, note }) => (
+              <div key={lhs} className="flex items-center gap-3 bg-purple-50 rounded-lg px-3 py-2 text-sm">
+                <span className="w-12 font-bold text-purple-700 shrink-0"><InlineMath math={lhs} /></span>
+                <span className="text-slate-400">=</span>
+                <span className="text-slate-700"><InlineMath math={eq} /></span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-purple-100 rounded-lg p-4">
+          <p className="font-semibold text-purple-800 mb-2">每 4 個次方為一個循環 🔄</p>
+          <div className="grid grid-cols-4 gap-2 text-sm text-center">
+            {[
+              ['i^5', 'i'], ['i^6', '-1'], ['i^7', '-i'], ['i^8', '1'],
+            ].map(([p, v]) => (
+              <div key={p} className="bg-white rounded-lg py-2 shadow-sm">
+                <div className="text-xs text-slate-400 mb-1"><InlineMath math={p} /></div>
+                <div className="font-bold text-purple-700"><InlineMath math={v} /></div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-3 flex items-center gap-2 flex-wrap text-sm bg-white rounded-lg px-3 py-2">
+            <InlineMath math="i^1=i" />
+            <span className="text-slate-300">→</span>
+            <InlineMath math="i^2=-1" />
+            <span className="text-slate-300">→</span>
+            <InlineMath math="i^3=-i" />
+            <span className="text-slate-300">→</span>
+            <InlineMath math="i^4=1" />
+            <span className="text-slate-300">→</span>
+            <InlineMath math="i^5=i" />
+            <span className="text-slate-400 text-xs">（循環）</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3 (was 二) */}
+      <section className="bg-indigo-50 rounded-xl p-5">
+        <h2 className="text-lg font-bold text-indigo-800 mb-3">三、虛數單位 i 的冪次循環</h2>
         <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
           <BlockMath math="i^1 = i, \quad i^2 = -1, \quad i^3 = -i, \quad i^4 = 1" />
-          <p className="text-sm text-purple-700 mt-2">週期為 4，即 <InlineMath math="i^{4k} = 1" />，<InlineMath math="i^{4k+1} = i" />，<InlineMath math="i^{4k+2} = -1" />，<InlineMath math="i^{4k+3} = -i" /></p>
+          <p className="text-sm text-indigo-700 mt-2">週期為 4，即 <InlineMath math="i^{4k} = 1" />，<InlineMath math="i^{4k+1} = i" />，<InlineMath math="i^{4k+2} = -1" />，<InlineMath math="i^{4k+3} = -i" /></p>
         </div>
-        <div className="bg-purple-100 rounded-lg p-3">
+        <div className="bg-indigo-100 rounded-lg p-3">
           <p className="font-semibold mb-1">技巧：用 n mod 4 判斷</p>
           <p className="text-sm">例：<InlineMath math="i^{37}" />，37 mod 4 = 1，故 <InlineMath math="i^{37} = i" /></p>
         </div>
       </section>
 
-      <section className="bg-indigo-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-indigo-800 mb-3">二、連續冪次之和</h2>
-        <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
-          <p className="font-semibold text-indigo-700 mb-1">關鍵：每 4 項和為 0</p>
-          <BlockMath math="i^n + i^{n+1} + i^{n+2} + i^{n+3} = i^n(1+i-1-i) = 0" />
-        </div>
-        <div className="bg-indigo-100 rounded-lg p-3">
-          <p className="font-semibold mb-1">例（25-35）：<InlineMath math="i^9+i^{10}+\cdots+i^{999}" /></p>
-          <BlockMath math="\text{共 } 999-9+1 = 991 \text{ 項}" />
-          <BlockMath math="991 = 247 \times 4 + 3" />
-          <BlockMath math="\text{餘 3 項：} i^{997}+i^{998}+i^{999} = i+(-1)+(-i) = -1" />
-        </div>
-      </section>
-
+      {/* Section 4 (was 三) */}
       <section className="bg-blue-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-blue-800 mb-3">三、有理化含 i 的分式</h2>
+        <h2 className="text-lg font-bold text-blue-800 mb-3">四、有理化含 i 的分式</h2>
         <div className="bg-white rounded-lg p-4 shadow-sm mb-3">
           <p className="font-semibold text-blue-700 mb-2">共軛複數乘法：</p>
           <BlockMath math="\frac{a+bi}{c+di} = \frac{(a+bi)(c-di)}{c^2+d^2}" />
@@ -1890,8 +2116,9 @@ const ComplexNotes = ({ onBack }) => (
         </div>
       </section>
 
+      {/* Section 5 (was 四) */}
       <section className="bg-green-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-green-800 mb-3">四、「令式子為實數」問題</h2>
+        <h2 className="text-lg font-bold text-green-800 mb-3">五、「令式子為實數」問題</h2>
         <div className="bg-white rounded-lg p-4 shadow-sm">
           <p className="font-semibold text-green-700 mb-2">方法：令虛部 = 0</p>
           <p>展開後，虛部含參數。令虛部 = 0，解出參數。</p>
@@ -1904,8 +2131,9 @@ const ComplexNotes = ({ onBack }) => (
         </div>
       </section>
 
+      {/* Section 6 (was 五) */}
       <section className="bg-yellow-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-yellow-800 mb-3">五、加權冪次求實部</h2>
+        <h2 className="text-lg font-bold text-yellow-800 mb-3">六、加權冪次求實部</h2>
         <div className="bg-white rounded-lg p-4 shadow-sm">
           <p className="font-semibold mb-1">例（13-36）：<InlineMath math="i+2i^2+3i^3+4i^4" /> 的實部為</p>
           <BlockMath math="= i + 2(-1) + 3(-i) + 4(1) = -2+4+\underbrace{i-3i}_{-2i} = 2-2i" />
@@ -1913,8 +2141,9 @@ const ComplexNotes = ({ onBack }) => (
         </div>
       </section>
 
+      {/* Section 7 (was 六) */}
       <section className="bg-red-50 rounded-xl p-5">
-        <h2 className="text-lg font-bold text-red-800 mb-3">六、運算重點提示</h2>
+        <h2 className="text-lg font-bold text-red-800 mb-3">七、運算重點提示</h2>
         <ul className="space-y-2">
           <li className="bg-white rounded-lg p-3 shadow-sm">
             <InlineMath math="(a+bi)(c+di) = (ac-bd)+(ad+bc)i" />
@@ -1927,6 +2156,7 @@ const ComplexNotes = ({ onBack }) => (
           </li>
         </ul>
       </section>
+
     </div>
   </div>
 );
