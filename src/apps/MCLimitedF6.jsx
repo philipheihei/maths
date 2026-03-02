@@ -2494,6 +2494,482 @@ const HCFLCMQuiz = ({ onBack }) => {
   );
 };
 
+// ─── Topic 5: Function Graph (y = ax² + bx + c) Generators ──────────────────
+
+// Helper: draw a parabola SVG for a quadratic with given properties
+const ParabolaSVG = ({ aSign, yIntSign, vertexSide, className = '' }) => {
+  // aSign: 1 or -1 (open up / down)
+  // yIntSign: 1 (positive y-int), -1 (negative), 0 (through O)
+  // vertexSide: 'left' | 'right' | 'center' (which side of y-axis)
+  const W = 140, H = 130;
+  const axisY = aSign > 0 ? 70 : 60;  // x-axis position
+  const axisX = vertexSide === 'right' ? 40 : vertexSide === 'left' ? 100 : 70;
+
+  // vertex x/y in SVG coords
+  const vx = vertexSide === 'right' ? 95 : vertexSide === 'left' ? 35 : 70;
+  const vy = aSign > 0
+    ? axisY + 25   // vertex below axis (positive y = up in math = down in SVG)
+    : axisY - 35;
+
+  // y-intercept dot position
+  const yIntY = yIntSign < 0 ? axisY + 18 : yIntSign > 0 ? axisY - 22 : axisY;
+
+  // Build parabola path via 5 sample points
+  const a = aSign > 0 ? 0.02 : -0.02;
+  const pts = [];
+  for (let sx = 5; sx <= W - 5; sx += 3) {
+    const dx = sx - vx;
+    const sy = vy + a * dx * dx * (aSign > 0 ? 8 : 8);
+    if (sy > 5 && sy < H - 5) pts.push(`${sx},${sy}`);
+  }
+  const pathD = pts.length > 1 ? `M${pts.join(' L')}` : '';
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className={`w-36 h-32 ${className}`}>
+      <defs>
+        <marker id="fgArr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
+        </marker>
+      </defs>
+      {/* axes */}
+      <line x1="5" y1={axisY} x2={W - 5} y2={axisY} stroke="#374151" strokeWidth="1.5" markerEnd="url(#fgArr)" />
+      <line x1={axisX} y1={H - 5} x2={axisX} y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#fgArr)" />
+      {/* labels */}
+      <text x={W - 10} y={axisY + 12} fontSize="10" fill="#374151" fontWeight="bold">x</text>
+      <text x={axisX + 5} y="14" fontSize="10" fill="#374151" fontWeight="bold">y</text>
+      <text x={axisX - 10} y={axisY + 12} fontSize="9" fill="#374151">O</text>
+      {/* parabola */}
+      {pathD && <path d={pathD} fill="none" stroke="#3b82f6" strokeWidth="2.2" strokeLinecap="round" />}
+      {/* y-intercept dot */}
+      <circle cx={axisX} cy={yIntY} r="3" fill="#f59e0b" />
+    </svg>
+  );
+};
+
+// ── Type A: Vertex form y = a(x−h)² + k — statement check (NO graph) ────────
+const genVertexFormQ = () => {
+  const a = (Math.random() < 0.5 ? 1 : -1) * randInt(1, 4);
+  const h = randInt(-6, 6);
+  const k = randInt(-9, 9);
+
+  // y = a(x - h)² + k
+  // Direction: a>0 upward, a<0 downward
+  // Vertex: (h, k)
+  // y-intercept: a*h² + k  (sub x=0)
+  const yInt = a * h * h + k;
+  // Does it cross x-axis? Discriminant-like: if a>0 and k>0 → no x-int, etc.
+  // Actually: a(x-h)²= -k → if -k/a >= 0 crosses, else no
+  const crossesX = (-k / a) >= 0;
+
+  // Format the equation LaTeX
+  const aStr = a === 1 ? '' : a === -1 ? '-' : `${a}`;
+  const hPart = h === 0 ? 'x' : h > 0 ? `(x-${h})` : `(x+${-h})`;
+  const kPart = k === 0 ? '' : k > 0 ? `+${k}` : `${k}`;
+  const eqLatex = `y = ${aStr}${hPart}^2${kPart}`;
+
+  // Build 4 statements: 1 correct + 3 wrong
+  const stmts = [];
+  // S1: direction
+  stmts.push({ text: a > 0 ? '該圖像開口向上。' : '該圖像開口向下。', correct: true, expl: `a = ${a} ${a > 0 ? '> 0' : '< 0'}` });
+  stmts.push({ text: a > 0 ? '該圖像開口向下。' : '該圖像開口向上。', correct: false, expl: `a = ${a} ${a > 0 ? '> 0 \\text{，開口向上}' : '< 0 \\text{，開口向下}'}` });
+  // S2: y-intercept
+  stmts.push({ text: `該圖像的 y 截距為 ${k}。`, correct: yInt === k, expl: `x=0 \\text{ 代入：} y = ${a}(0${h >= 0 ? `-${h}` : `+${-h}`})^2${kPart} = ${yInt}` });
+  if (yInt !== k) {
+    stmts.push({ text: `該圖像的 y 截距為 ${yInt}。`, correct: true, expl: `x=0 \\text{ 代入：} y = ${yInt}` });
+  }
+  // S3: passes through vertex
+  stmts.push({ text: `該圖像通過點 (${h}, ${k})。`, correct: true, expl: `\\text{頂點} = (${h}, ${k})` });
+  // S4: wrong point (swap sign or shift)
+  const wrongPt = `(${-h}, ${k})`;
+  if (-h !== h) {
+    stmts.push({ text: `該圖像通過點 ${wrongPt}。`, correct: false, expl: `\\text{代入 }x=${-h}:\\; y = ${a}(${-h}-${h >= 0 ? h : `(${h})`})^2${kPart} \\neq ${k}` });
+  }
+  // S5: x-axis intersection
+  stmts.push({ text: crossesX ? '該圖像與 x 軸沒有相交。' : '該圖像與 x 軸相交。',
+    correct: false, expl: crossesX ? `\\frac{-k}{a} = \\frac{${-k}}{${a}} \\ge 0 \\text{，有交點}` : `\\frac{-k}{a} = \\frac{${-k}}{${a}} < 0 \\text{，無交點}` });
+  stmts.push({ text: !crossesX ? '該圖像與 x 軸沒有相交。' : '該圖像與 x 軸相交。',
+    correct: true, expl: !crossesX ? `\\text{無實根}` : `\\text{有實根}` });
+
+  // Pick exactly 1 correct + 3 wrong
+  const corrects = stmts.filter(s => s.correct);
+  const wrongs = stmts.filter(s => !s.correct);
+  const chosen = corrects[randInt(0, corrects.length - 1)];
+  // Get 3 unique wrongs
+  const wrongPool = shuffle(wrongs).slice(0, 3);
+
+  const opts = shuffle([chosen, ...wrongPool]);
+  const correctIndex = opts.indexOf(chosen);
+
+  return {
+    questionLatex: `\\text{下列有關 }${eqLatex}\\text{ 的圖像之敘述，何者正確？}`,
+    options: opts.map(o => `\\text{${o.text}}`),
+    correctIndex,
+    explanationLines: [
+      `${eqLatex}`,
+      `a = ${a} ${a > 0 ? '> 0' : '< 0'} \\Rightarrow \\text{開口向${a > 0 ? '上' : '下'}}`,
+      `\\text{y 截距：代 }x=0 \\Rightarrow y = ${yInt}`,
+      `\\text{頂點} = (${h},\\; ${k})`,
+      crossesX
+        ? `\\frac{-k}{a} = ${(-k / a).toFixed?.((-k / a) % 1 === 0 ? 0 : 1)} \\ge 0 \\Rightarrow \\text{與 x 軸有交點}`
+        : `\\frac{-k}{a} < 0 \\Rightarrow \\text{與 x 軸無交點}`,
+      `\\therefore \\text{${chosen.text}}`,
+    ],
+    subtypeLabel: '函數圖像 — 頂點式敘述',
+  };
+};
+
+// ── Type B: y = ax² + bx + c signs from graph (WITH SVG) ────────────────────
+const genSignsFromGraphQ = () => {
+  const aSign = Math.random() < 0.5 ? 1 : -1;
+  const cSign = Math.random() < 0.33 ? 0 : Math.random() < 0.5 ? 1 : -1;
+  // b determines axis of symmetry direction; pick random vertex side
+  const vertexSide = ['left', 'right', 'center'][randInt(0, 2)];
+  // For axis x = -b/(2a):
+  //   vertexSide 'right' → axis > 0 → -b/(2a) > 0 → if a>0 then b<0; if a<0 then b>0
+  //   vertexSide 'left'  → axis < 0 → opposite
+  //   vertexSide 'center' → b ≈ 0
+  let bSign;
+  if (vertexSide === 'center') bSign = 0;
+  else if (vertexSide === 'right') bSign = -aSign;
+  else bSign = aSign;
+
+  // We use variable names: default a,b. Sometimes m,n or other pairs.  
+  const varSets = [
+    { eq: (A, B) => `${A}x^2+x+${B}`, v1: 'm', v2: 'n', hasMiddle: true },
+    { eq: (A, B) => `${A}x^2+${B}x+${A === 'a' ? 'b' : 'n'}`, v1: 'a', v2: 'b', hasMiddle: false },
+  ];
+  const vs = varSets[randInt(0, varSets.length - 1)];
+  const v1 = vs.v1, v2 = vs.v2;
+
+  // Build correct answer
+  const aLabel = aSign > 0 ? `${v1} > 0` : `${v1} < 0`;
+  const bLabel = cSign > 0 ? `${v2} > 0` : cSign < 0 ? `${v2} < 0` : `${v2} = 0`;
+  const correct = `${aLabel} \\text{ 及 } ${bLabel}`;
+
+  // 3 wrongs: flip one or both
+  const w1 = `${aSign > 0 ? `${v1} < 0` : `${v1} > 0`} \\text{ 及 } ${bLabel}`;
+  const w2 = `${aLabel} \\text{ 及 } ${cSign > 0 ? `${v2} < 0` : `${v2} > 0`}`;
+  const w3 = `${aSign > 0 ? `${v1} < 0` : `${v1} > 0`} \\text{ 及 } ${cSign > 0 ? `${v2} < 0` : `${v2} > 0`}`;
+
+  const wrongs = [...new Set([w1, w2, w3])].filter(w => w !== correct).slice(0, 3);
+  while (wrongs.length < 3) wrongs.push(`${v1} = 0 \\text{ 及 } ${bLabel}`);
+
+  const opts = shuffle([correct, ...wrongs.slice(0, 3)]);
+
+  // equation display
+  const eqDisplay = vs.hasMiddle ? `y = ${v1}x^2+x+${v2}` : `y = ${v1}x^2+${v2}x+b`;
+
+  return {
+    questionLatex: `\\text{圖中所示為 }${eqDisplay}\\text{ 的圖像，其中 }${v1}\\text{ 及 }${v2}\\text{ 均為常數。下列何者正確？}`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `\\text{圖像開口向${aSign > 0 ? '上' : '下'}} \\Rightarrow ${v1} ${aSign > 0 ? '> 0' : '< 0'}`,
+      `\\text{y 截距${cSign > 0 ? '為正' : cSign < 0 ? '為負' : '為 0（過原點）'}} \\Rightarrow ${v2} ${cSign > 0 ? '> 0' : cSign < 0 ? '< 0' : '= 0'}`,
+      `\\therefore ${correct}`,
+    ],
+    subtypeLabel: '函數圖像 — 讀圖判斷符號',
+    // Graph data for rendering
+    graphData: { aSign, yIntSign: cSign, vertexSide },
+  };
+};
+
+// ── Type C: y = a(x+b)² signs from graph (WITH SVG) ─────────────────────────
+const genVertexSquareSignsQ = () => {
+  const aSign = Math.random() < 0.5 ? 1 : -1;
+  // vertex at x = -b; if b>0 vertex is left of O, if b<0 vertex is right
+  const bSign = Math.random() < 0.5 ? 1 : -1;
+  const vertexSide = bSign > 0 ? 'left' : 'right';
+
+  const correct = `${aSign > 0 ? 'a > 0' : 'a < 0'} \\text{ 及 } ${bSign > 0 ? 'b > 0' : 'b < 0'}`;
+  const w1 = `${aSign > 0 ? 'a < 0' : 'a > 0'} \\text{ 及 } ${bSign > 0 ? 'b > 0' : 'b < 0'}`;
+  const w2 = `${aSign > 0 ? 'a > 0' : 'a < 0'} \\text{ 及 } ${bSign > 0 ? 'b < 0' : 'b > 0'}`;
+  const w3 = `${aSign > 0 ? 'a < 0' : 'a > 0'} \\text{ 及 } ${bSign > 0 ? 'b < 0' : 'b > 0'}`;
+
+  const opts = shuffle([correct, w1, w2, w3]);
+
+  return {
+    questionLatex: `\\text{圖中所示為 }y = a(x+b)^2\\text{ 的圖像，其中 }a\\text{ 及 }b\\text{ 均為常數。下列何者正確？}`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `\\text{圖像開口向${aSign > 0 ? '上' : '下'}} \\Rightarrow a ${aSign > 0 ? '> 0' : '< 0'}`,
+      `\\text{頂點在 y 軸${vertexSide === 'left' ? '左方' : '右方'}，即 }x = -b ${vertexSide === 'left' ? '< 0' : '> 0'}`,
+      `\\Rightarrow b ${bSign > 0 ? '> 0' : '< 0'}`,
+      `\\therefore ${correct}`,
+    ],
+    subtypeLabel: '函數圖像 — a(x+b)² 符號',
+    graphData: { aSign, yIntSign: 0, vertexSide },
+  };
+};
+
+// ── Type D: Axis of symmetry from expanded form (NO graph) ──────────────────
+const genAxisOfSymmetryQ = () => {
+  // y = -2x² + ax + b; given y-intercept and one root, find axis
+  const leadCoeff = (Math.random() < 0.5 ? 1 : -1) * randInt(1, 3);
+  const axisVal = randInt(1, 6);
+  // b_coeff = -2 * leadCoeff * axisVal (from x = -b/(2a))
+  const bCoeff = -2 * leadCoeff * axisVal;
+  const cVal = randInt(-12, 12);
+
+  const aStr = leadCoeff === 1 ? '' : leadCoeff === -1 ? '-' : `${leadCoeff}`;
+  const bStr = bCoeff === 0 ? '' : bCoeff > 0 ? `+${bCoeff}` : `${bCoeff}`;
+  const cStr = cVal === 0 ? '' : cVal > 0 ? `+${cVal}` : `${cVal}`;
+
+  const correct = `x = ${axisVal}`;
+  const wrongs = [`x = ${-axisVal}`, `x = ${axisVal + 1}`, `x = ${axisVal * 2}`, `y = ${axisVal}`]
+    .filter(w => w !== correct);
+  const uniqueWrongs = [...new Set(wrongs)].slice(0, 3);
+
+  const opts = shuffle([correct, ...uniqueWrongs]);
+
+  return {
+    questionLatex: `\\text{函數 }y = ${aStr}x^2${bStr}x${cStr}\\text{ 的圖像之對稱軸方程為}`,
+    options: opts.map(o => o),
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `a = ${leadCoeff},\\; b = ${bCoeff}`,
+      `\\text{對稱軸：}x = -\\frac{b}{2a} = -\\frac{${bCoeff}}{2(${leadCoeff})} = -\\frac{${bCoeff}}{${2 * leadCoeff}} = ${axisVal}`,
+      `\\therefore x = ${axisVal}`,
+    ],
+    subtypeLabel: '函數圖像 — 對稱軸',
+  };
+};
+
+// ── Type E: Point substitution — find k (NO graph) ──────────────────────────
+const genPointSubQ = () => {
+  const a = (Math.random() < 0.5 ? 1 : -1) * randInt(1, 3);
+  const b = (Math.random() < 0.5 ? 1 : -1) * randInt(1, 6);
+  const xVal = randInt(1, 4);
+  const yVal = a * xVal * xVal + b * xVal; // c = 0 so we can ask for k = y when pass through (xVal, k)
+  const c = randInt(-8, 8);
+  const k = a * xVal * xVal + b * xVal + c;
+
+  const aStr = a === 1 ? '' : a === -1 ? '-' : `${a}`;
+  const bStr = b === 0 ? '' : b > 0 ? `+${b}` : `${b}`;
+  const cStr = `+c`;
+
+  const correct = String(k);
+  const pool = [...new Set([k + 1, k - 1, k + 2, k - 2, -k, a * xVal * xVal + c].map(String))]
+    .filter(w => w !== correct);
+  const wrongs = pool.slice(0, 3);
+  while (wrongs.length < 3) wrongs.push(String(k + wrongs.length + 3));
+
+  const opts = shuffle([correct, ...wrongs]);
+
+  return {
+    questionLatex: `\\text{圖中，}y = ${aStr}x^2${bStr}x+c\\text{ 的圖像通過點 }(${xVal},\\; k)\\text{。若 }c = ${c}\\text{，求 }k\\text{ 的值。}`,
+    options: opts,
+    correctIndex: opts.indexOf(correct),
+    explanationLines: [
+      `\\text{代 }x = ${xVal}\\text{ 入 }y = ${aStr}x^2${bStr}x+${c}`,
+      `y = ${a}(${xVal})^2 ${b >= 0 ? '+' : ''}${b}(${xVal}) + ${c}`,
+      `= ${a * xVal * xVal} ${b * xVal >= 0 ? '+' : ''}${b * xVal} ${c >= 0 ? '+' : ''}${c}`,
+      `= ${k}`,
+      `\\therefore k = ${k}`,
+    ],
+    subtypeLabel: '函數圖像 — 代點求值',
+  };
+};
+
+// ── Type F: Factored/product form statement (NO graph, like 19-10) ──────────
+const genFactoredFormQ = () => {
+  const p = randInt(1, 5);
+  const q = randInt(1, 5);
+  const r = randInt(1, 8);
+  // y = (p - x)(x + q) + r  = -x² + (p-q)x + pq + r
+  const aCoeff = -1;
+  const bCoeff = p - q;
+  const cCoeff = p * q + r;
+  const yInt = cCoeff;
+
+  // Statements
+  const s1_correct = true; // opens downward (a=-1<0)
+  const s1_text = '該圖像開口向下。';
+  const s1_wrong_text = '該圖像開口向上。';
+
+  // Check point: does it pass through some specific point?
+  // At x=p: y = 0*(p+q)+r = r → passes through (p, r)
+  // At x=-q: y = (p+q)*0+r = r → passes through (-q, r)
+  const testX = p;
+  const testY = r;
+  const s2_text = `該圖像通過點 (${testX}, ${testY})。`;
+  const s2_correct = true;
+
+  // x-intercepts: (p-x)(x+q)+r = 0 → not simply x=p or x=-q (because of +r)
+  const s3_text = `該圖像的 x 截距為 ${-q} 及 ${p}。`;
+  const s3_correct = false; // false because of +r
+
+  // y-intercept
+  const s4_text = `該圖像的 y 截距為 ${r}。`;
+  const s4_correct = yInt === r; // pq + r ≠ r unless pq=0
+
+  const s5_text = `該圖像的 y 截距為 ${yInt}。`;
+  const s5_correct = true;
+
+  // Pick statements for I, II, III format or simple 4-option
+  // Use simple 4-option: pick 1 correct + 3 wrong  
+  const pool = [
+    { t: s1_text, c: true },
+    { t: s1_wrong_text, c: false },
+    { t: s2_text, c: true },
+    { t: s3_text, c: false },
+    { t: s4_text, c: s4_correct },
+    { t: s5_text, c: true },
+    { t: `該圖像通過點 (${-q}, ${r + 1})。`, c: false },
+  ];
+
+  const corrPool = pool.filter(s => s.c);
+  const wrongPool = pool.filter(s => !s.c);
+  const chosen = corrPool[randInt(0, corrPool.length - 1)];
+  const wrongOpts = shuffle(wrongPool).slice(0, 3);
+
+  const opts = shuffle([chosen, ...wrongOpts]);
+  const correctIndex = opts.indexOf(chosen);
+
+  return {
+    questionLatex: `\\text{下列有關 }y = (${p}-x)(x+${q})+${r}\\text{ 的圖像之敘述，何者正確？}`,
+    options: opts.map(o => `\\text{${o.t}}`),
+    correctIndex,
+    explanationLines: [
+      `y = (${p}-x)(x+${q})+${r} = -x^2+${bCoeff === 0 ? '' : (bCoeff > 0 ? bCoeff : `(${bCoeff})`)}x+${cCoeff}`,
+      `a = -1 < 0 \\Rightarrow \\text{開口向下}`,
+      `\\text{y 截距：代 }x=0 \\Rightarrow y = ${p} \\times ${q} + ${r} = ${cCoeff}`,
+      `\\text{代 }x=${p}\\text{：}y = 0 \\times (${p}+${q})+${r} = ${r} \\Rightarrow \\text{通過 }(${p},${r})`,
+      `\\text{注意：x 截距不是 }${p}\\text{ 和 }${-q}\\text{（因為有 }+${r}\\text{）}`,
+      `\\therefore \\text{${chosen.t}}`,
+    ],
+    subtypeLabel: '函數圖像 — 因式形式敘述',
+  };
+};
+
+// Master generator for function graph topic
+const generateFunctionGraphQuestion = () => {
+  const gens = [
+    { fn: genVertexFormQ, w: 25 },
+    { fn: genSignsFromGraphQ, w: 20 },
+    { fn: genVertexSquareSignsQ, w: 15 },
+    { fn: genAxisOfSymmetryQ, w: 15 },
+    { fn: genPointSubQ, w: 15 },
+    { fn: genFactoredFormQ, w: 10 },
+  ];
+  const total = gens.reduce((s, g) => s + g.w, 0);
+  let r = Math.random() * total;
+  for (const g of gens) { r -= g.w; if (r <= 0) return g.fn(); }
+  return genVertexFormQ();
+};
+
+// ─── Function Graph Quiz Component ──────────────────────────────────────────
+const FunctionGraphQuiz = ({ onBack }) => {
+  const [question, setQuestion] = useState(() => generateFunctionGraphQuestion());
+  const [selected, setSelected] = useState(null);
+  const [score, setScore] = useState({ correct: 0, total: 0 });
+  const [streak, setStreak] = useState(0);
+
+  const nextQuestion = useCallback(() => {
+    setQuestion(generateFunctionGraphQuestion());
+    setSelected(null);
+  }, []);
+
+  const handleSelect = (idx) => {
+    if (selected !== null) return;
+    setSelected(idx);
+    const ok = idx === question.correctIndex;
+    setScore(s => ({ correct: s.correct + (ok ? 1 : 0), total: s.total + 1 }));
+    setStreak(st => ok ? st + 1 : 0);
+  };
+
+  const optionLabels = ['A', 'B', 'C', 'D'];
+  const getState = (idx) => {
+    if (selected === null) return 'idle';
+    if (idx === question.correctIndex) return selected === idx ? 'correct' : 'reveal';
+    if (idx === selected) return 'wrong';
+    return 'idle';
+  };
+  const accuracy = score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
+
+  return (
+    <div className="max-w-3xl mx-auto px-4 py-6">
+      <div className="flex items-center justify-between mb-6">
+        <button onClick={onBack} className="flex items-center gap-2 text-slate-600 hover:text-blue-600 font-medium">
+          <ArrowLeft className="w-5 h-5" /> 返回
+        </button>
+        <div className="flex items-center gap-3 text-sm">
+          {streak >= 3 && (
+            <span className="flex items-center gap-1 text-orange-500 font-bold">
+              <Star className="w-4 h-4 fill-orange-400" /> ×{streak}
+            </span>
+          )}
+          <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">✓ {score.correct}/{score.total}</span>
+          <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">{accuracy}%</span>
+        </div>
+      </div>
+
+      <div className="mb-3">
+        <span className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">{question.subtypeLabel}</span>
+      </div>
+
+      {/* Question stem */}
+      <div className="text-base font-semibold text-slate-700 mb-3">
+        <InlineMath math={question.questionLatex} />
+      </div>
+
+      {/* Graph if present */}
+      {question.graphData && (
+        <div className="flex justify-center mb-4 bg-white rounded-xl p-3 border border-slate-200 shadow-sm">
+          <ParabolaSVG
+            aSign={question.graphData.aSign}
+            yIntSign={question.graphData.yIntSign}
+            vertexSide={question.graphData.vertexSide}
+          />
+        </div>
+      )}
+
+      {/* Options */}
+      <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 mb-5">
+        <div className="space-y-3">
+          {question.options.map((opt, idx) => (
+            <OptionBtn
+              key={`${idx}-${question.subtypeLabel}`}
+              label={optionLabels[idx]}
+              optionLatex={opt}
+              state={getState(idx)}
+              onClick={() => handleSelect(idx)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Explanation */}
+      {selected !== null && (
+        <div className={`rounded-xl p-4 mb-4 border-l-4 ${
+          selected === question.correctIndex ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-400'}`}>
+          <div className="flex items-center gap-2 mb-3">
+            {selected === question.correctIndex
+              ? <CheckCircle className="w-5 h-5 text-green-600" />
+              : <XCircle className="w-5 h-5 text-red-500" />}
+            <span className={`font-bold ${selected === question.correctIndex ? 'text-green-700' : 'text-red-600'}`}>
+              {selected === question.correctIndex ? '正確！' : `錯誤！答案是 ${optionLabels[question.correctIndex]}`}
+            </span>
+          </div>
+          <div className="bg-white rounded-lg px-4 py-3 space-y-1">
+            {(question.explanationLines || []).map((line, i) => (
+              <div key={i}><InlineMath math={line} /></div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {selected !== null && (
+        <button onClick={nextQuestion}
+          className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition">
+          下一題 <ChevronRight className="w-5 h-5" />
+        </button>
+      )}
+    </div>
+  );
+};
+
 // ─── Notes Component for Function Graphs ───────────────────────────────────────
 const FunctionGraphNotes = ({ onBack }) => (
   <div className="max-w-3xl mx-auto px-4 py-8">
@@ -2842,7 +3318,6 @@ const TOPICS = [
     icon: '📈',
     color: 'from-orange-500 to-amber-600',
     badges: [{ level: 'F4', chapter: 'CH3', subject: '二次函數' }],
-    notesOnly: true,
   },
 ];
 
@@ -2856,6 +3331,7 @@ const MCLimitedF6 = () => {
     if (activeTopic.id === 'hcf-lcm') return <HCFLCMQuiz onBack={() => setView('home')} />;
     if (activeTopic.id === 'variation') return <TopicQuiz onBack={() => setView('home')} generateFn={generateVariationQuestion} topicLabel="變分常數" />;
     if (activeTopic.id === 'complex') return <TopicQuiz onBack={() => setView('home')} generateFn={generateComplexQuestion} topicLabel="複數 i" />;
+    if (activeTopic.id === 'function-graph') return <FunctionGraphQuiz onBack={() => setView('home')} />;
   }
   if (view === 'notes' && activeTopic) {
     if (activeTopic.id === 'binary')   return <BinaryNotes onBack={() => setView('home')} />;
