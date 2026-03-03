@@ -269,7 +269,12 @@ export default function InequalityQuiz() {
         explanation = `正確答案是 ${formatDisplay(cleanAnswer)}。\n`;
 
         if (!student) {
-          explanation += `\n格式有誤，請輸入如 x>3 或 x≤-2 的格式。`;
+          const missingX = /^(>=|<=|>|<)/.test(cleanInput);
+          if (missingX) {
+            explanation += `\n漏寫了 x！答案開頭要有 x，例如 x>3 或 x≤-2。`;
+          } else {
+            explanation += `\n格式有誤，請輸入如 x>3 或 x≤-2 的格式。`;
+          }
         } else {
           const issues = [];
 
