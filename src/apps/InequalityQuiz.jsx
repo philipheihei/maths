@@ -4,16 +4,16 @@ import { ArrowRight, ArrowLeft, CheckCircle, XCircle, Delete, Trophy, HomeIcon, 
 
 // --- Constants & Data ---
 const TEXT_QUESTIONS = [
-  { text: "x 小於 N", operator: "<", hint: "比它小，不包含它" },
-  { text: "x 大於 N", operator: ">", hint: "比它大，不包含它" },
-  { text: "x 小於或等於 N", operator: "<=", hint: "可以是它，或是比它小" },
-  { text: "x 不大於 N", operator: "<=", hint: "「不大於」即是小於或等於 (≤)" },
-  { text: "x 至大為 N", operator: "<=", hint: "最大只能是它，不能超過" },
-  { text: "x 最多是 N", operator: "<=", hint: "最大只能是它，不能超過" },
-  { text: "x 大於或等於 N", operator: ">=", hint: "可以是它，或是比它大" },
-  { text: "x 不小於 N", operator: ">=", hint: "「不小於」即是大於或等於 (≥)" },
-  { text: "x 至小為 N", operator: ">=", hint: "最小也要是它，不能更少" },
-  { text: "x 最少是 N", operator: ">=", hint: "最小也要是它，不能更少" }
+  { text: "x 小於 N", operator: "<", hint: "「小於 N」即 比 N 細、不包含 N → 用 <" },
+  { text: "x 大於 N", operator: ">", hint: "「大於 N」即 大於N不包括等於N → 用 >" },
+  { text: "x 小於或等於 N", operator: "<=", hint: "「小於或等於 N」即 可以是 N，也可以比 N 細 → 用 ≤" },
+  { text: "x 不大於 N", operator: "<=", hint: "「不大於 N」即 不超過 N，包含等於 N 及細於 N → 用 ≤" },
+  { text: "x 至大為 N", operator: "<=", hint: "「至大為 N」即 最大只是 N，包含等於 N 及細於 N → 用 ≤" },
+  { text: "x 最多是 N", operator: "<=", hint: "「最多是 N」即 上限是 N，包含等於 N 及細於 N → 用 ≤" },
+  { text: "x 大於或等於 N", operator: ">=", hint: "「大於或等於 N」即 可以是 N，也可以比 N 大 → 用 ≥" },
+  { text: "x 不小於 N", operator: ">=", hint: "「不小於 N」即 不少過 N，包含等於 N 及大於 N → 用 ≥" },
+  { text: "x 至小為 N", operator: ">=", hint: "「至小為 N」即 最小也要是 N，包含等於 N 及大於 N → 用 ≥" },
+  { text: "x 最少是 N", operator: ">=", hint: "「最少是 N」即 下限是 N，包含等於 N 及大於 N → 用 ≥" }
 ];
 
 const GRAPH_TYPES = ['<', '>', '<=', '>='];
@@ -132,7 +132,7 @@ const NumberLine = ({ value, operator }) => {
   const ticks = [0, value].filter((v, idx, arr) => arr.indexOf(v) === idx).map((n) => (
     <g key={n}>
       <line x1={mapX(n)} y1={axisY - 6} x2={mapX(n)} y2={axisY + 6} stroke="#94a3b8" strokeWidth="2" />
-      <text x={mapX(n)} y={axisY + 30} textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="600" fontFamily="monospace">{n}</text>
+      <text x={mapX(n)} y={axisY + 30} textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="600" fontFamily="sans-serif">{n}</text>
     </g>
   ));
 
@@ -200,12 +200,13 @@ export default function InequalityQuiz() {
     const num = getRandomInt(-10, 10);
     const questionText = template.text.replace('N', num);
     const answer = `x${template.operator}${num}`;
+    const hint = template.hint.replace(/N/g, num);
     
     setCurrentQ({
       type: 'text',
       display: questionText,
       answer: answer,
-      hint: template.hint,
+      hint: hint,
       template: template
     });
     resetState();
@@ -425,7 +426,7 @@ export default function InequalityQuiz() {
 
               <div className="mb-6">
                 <div className={`
-                    w-full h-16 flex items-center justify-center text-3xl font-mono tracking-wider rounded-xl border-2 bg-white transition-colors
+                    w-full h-16 flex items-center justify-center text-3xl font-sans tracking-wider rounded-xl border-2 bg-white transition-colors
                     ${status === 'correct' ? 'border-green-500 text-green-600 bg-green-50' : 
                       status === 'wrong' ? 'border-red-500 text-red-600 bg-red-50' : 
                       'border-slate-200 text-slate-800 shadow-inner'}

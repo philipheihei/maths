@@ -301,13 +301,13 @@ const FactorizationNotes = ({ activeSub }) => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-gray-50 p-3 rounded">
                   <p className="font-bold text-center mb-2 text-base">答案 1（整數）</p>
-                  <p className="text-center text-3xl font-mono mb-2">3</p>
+                  <p className="text-center text-3xl font-sans mb-2">3</p>
                   <p className="text-center text-sm text-slate-600 mt-2">→ 相反數：-3</p>
                   <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(x-3)" /></p>
                 </div>
                 <div className="bg-gray-50 p-3 rounded">
                   <p className="font-bold text-center mb-2 text-base">答案 2（分數）</p>
-                  <p className="text-center text-3xl font-mono mb-2">-0.875</p>
+                  <p className="text-center text-3xl font-sans mb-2">-0.875</p>
                   <p className="text-center text-sm text-slate-600 mt-2">= <Latex math="-\frac{7}{8}" /></p>
                   <p className="text-center text-sm text-slate-600">分母放前，分子相反數放後</p>
                   <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(8x+7)" /></p>
@@ -2049,7 +2049,7 @@ const SimEqCalculatorNotes = ({ activeSub }) => {
           <div className="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-xl border-2 border-green-500">
             <h4 className="text-green-700 font-bold mb-3">📌 範例：解聯立方程</h4>
             <div className="bg-white p-3 rounded-lg text-center mb-4 border border-green-400">
-              <div className="text-lg font-mono flex items-center justify-center gap-3">
+              <div className="text-lg font-sans flex items-center justify-center gap-3">
                 <span className="text-5xl leading-none">{`{`}</span>
                 <div className="text-left"><div>x + 2y = 10</div><div>3x − 4y = −6</div></div>
               </div>
@@ -2126,13 +2126,13 @@ const ApproximationNotes = ({ activeSub }) => {
             <h3 className="text-lg font-bold text-slate-800">1. 有效數字：<span className="text-slate-600">不是開首的 0 就是有效數字</span></h3>
           </div>
           <div className="space-y-4 bg-slate-50 p-4 rounded-lg">
-            <div className="text-lg font-mono flex items-center gap-2">
+            <div className="text-lg font-sans flex items-center gap-2">
               <span className="text-blue-600 font-bold">I.</span>
               <span className="relative">8<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">1</span></span><span>.</span>
               <span className="relative">4<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">2</span></span>
               <span className="relative">6<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">3</span></span>
             </div>
-            <div className="text-lg font-mono flex items-center gap-2">
+            <div className="text-lg font-sans flex items-center gap-2">
               <span className="text-blue-600 font-bold">II.</span>
               <span className="relative">0<span className="absolute -top-4 left-0 text-sm text-red-600 font-bold">×</span></span><span>.</span>
               <span className="relative">0<span className="absolute -top-4 left-0 text-sm text-red-600 font-bold">×</span></span>
@@ -2140,7 +2140,7 @@ const ApproximationNotes = ({ activeSub }) => {
               <span className="relative">8<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">2</span></span>
               <span className="text-red-600 text-sm ml-4">× 不是有效數字</span>
             </div>
-            <div className="text-lg font-mono flex items-center gap-2">
+            <div className="text-lg font-sans flex items-center gap-2">
               <span className="text-blue-600 font-bold">III.</span>
               <span className="relative">0<span className="absolute -top-4 left-0 text-sm text-red-600 font-bold">×</span></span><span>.</span>
               <span className="relative">6<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">1</span></span>
@@ -2159,9 +2159,9 @@ const ApproximationNotes = ({ activeSub }) => {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-blue-50 p-4 rounded-lg space-y-3">
                 <h4 className="font-bold text-blue-800 mb-2">捨入方法：</h4>
-                <div className="flex items-center gap-3"><span className="text-red-600 text-xs">(必定進位)</span><span className="text-blue-600 font-bold w-12">上捨</span><span className="font-mono">45.1 → <b>46</b></span></div>
-                <div className="flex items-center gap-3"><span className="text-red-600 text-xs">(4捨5入)</span><span className="text-blue-600 font-bold w-12">捨入</span><span className="font-mono">45.1 → <b>45</b></span></div>
-                <div className="flex items-center gap-3"><span className="text-red-600 text-xs">(不需進位)</span><span className="text-blue-600 font-bold w-12">下捨</span><span className="font-mono">45.9 → <b>45</b></span></div>
+                <div className="flex items-center gap-3"><span className="text-red-600 text-xs">(必定進位)</span><span className="text-blue-600 font-bold w-12">上捨</span><span className="font-sans">45.1 → <b>46</b></span></div>
+                <div className="flex items-center gap-3"><span className="text-red-600 text-xs">(4捨5入)</span><span className="text-blue-600 font-bold w-12">捨入</span><span className="font-sans">45.1 → <b>45</b></span></div>
+                <div className="flex items-center gap-3"><span className="text-red-600 text-xs">(不需進位)</span><span className="text-blue-600 font-bold w-12">下捨</span><span className="font-sans">45.9 → <b>45</b></span></div>
               </div>
               <div className="bg-green-50 p-4 rounded-lg">
                 <h4 className="font-bold text-green-800 mb-2">取值目標：</h4>

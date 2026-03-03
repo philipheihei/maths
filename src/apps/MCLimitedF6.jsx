@@ -2509,18 +2509,32 @@ const ParabolaSVG = ({ aSign, yIntSign, vertexSide, className = '' }) => {
   const vx = vertexSide === 'right' ? 95 : vertexSide === 'left' ? 35 : 70;
   const vy = aSign > 0
     ? axisY + 25   // vertex below axis (positive y = up in math = down in SVG)
-    : axisY - 35;
+    : axisY - 25;  // vertex above axis
 
   // y-intercept dot position
   const yIntY = yIntSign < 0 ? axisY + 18 : yIntSign > 0 ? axisY - 22 : axisY;
 
+  // Let's compute a `k` factor such that sy = vy + k * (sx - vx)^2
+  // It must pass through (axisX, yIntY) -> yIntY = vy + k * (axisX - vx)^2
+  // So k = (yIntY - vy) / (axisX - vx)^2
+  // Unless axisX == vx, then we just use a default k.
+  const distSq = (axisX - vx) * (axisX - vx);
+  let k = distSq > 0.1 ? (yIntY - vy) / distSq : (aSign > 0 ? -0.02 : 0.02);
+
+  // Fallback: if k has the wrong sign (e.g. asking for an upward opening parabola but yInt is lower than vertex, which is impossible algebraically unless vertex is not the vertex),
+  // we just use a default k and override yIntY to lie on the curve.
+  let exactYIntY = yIntY;
+  if ((aSign > 0 && k > 0) || (aSign < 0 && k < 0)) {
+     k = aSign > 0 ? -0.03 : 0.03;
+     exactYIntY = vy + k * distSq;
+  }
+
   // Build parabola path via 5 sample points
-  const a = aSign > 0 ? 0.02 : -0.02;
   const pts = [];
   for (let sx = 5; sx <= W - 5; sx += 3) {
     const dx = sx - vx;
-    const sy = vy + a * dx * dx * (aSign > 0 ? 8 : 8);
-    if (sy > 5 && sy < H - 5) pts.push(`${sx},${sy}`);
+    const sy = vy + k * dx * dx;
+    if (sy > -10 && sy < H + 10) pts.push(`${sx},${sy}`);
   }
   const pathD = pts.length > 1 ? `M${pts.join(' L')}` : '';
 
@@ -2541,7 +2555,7 @@ const ParabolaSVG = ({ aSign, yIntSign, vertexSide, className = '' }) => {
       {/* parabola */}
       {pathD && <path d={pathD} fill="none" stroke="#3b82f6" strokeWidth="2.2" strokeLinecap="round" />}
       {/* y-intercept dot */}
-      <circle cx={axisX} cy={yIntY} r="3" fill="#f59e0b" />
+      <circle cx={axisX} cy={exactYIntY} r="3" fill="#f59e0b" />
     </svg>
   );
 };
@@ -3005,29 +3019,29 @@ const FunctionGraphNotes = ({ onBack }) => (
       <section className="bg-orange-50 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-4">
           <span className="bg-orange-500 text-white font-black text-lg px-3 py-1 rounded-lg">a</span>
-          <h2 className="text-lg font-bold text-orange-800">Direction of Opening — 開口方向</h2>
+          <h2 className="text-lg font-bold text-orange-800">開口方向</h2>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           {/* a > 0 */}
           <div className="bg-white rounded-xl p-4 border-2 border-yellow-300 shadow-sm flex flex-col items-center">
             <div className="text-base font-bold text-slate-700 mb-1"><InlineMath math="a > 0" /></div>
-            <div className="text-xs text-slate-500 mb-3">開口向上 (open upward)</div>
+            <div className="text-xs text-slate-500 mb-3">開口向上</div>
             {/* SVG smiley parabola */}
             <svg viewBox="0 0 120 100" className="w-36 h-28">
               {/* axes */}
-              <line x1="10" y1="80" x2="110" y2="80" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr)" />
-              <line x1="60" y1="95" x2="60" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr)" />
+              <line x1="10" y1="70" x2="110" y2="70" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr1)" />
+              <line x1="60" y1="95" x2="60" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr1)" />
               <defs>
-                <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <marker id="arr1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
                   <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
                 </marker>
               </defs>
               {/* upward parabola */}
-              <path d="M20,80 Q60,20 100,80" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M 20,20 Q 60,150 100,20" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" />
               {/* eyes */}
-              <circle cx="42" cy="30" r="5" fill="#1e293b" />
-              <circle cx="78" cy="30" r="5" fill="#1e293b" />
+              <circle cx="42" cy="45" r="5" fill="#1e293b" />
+              <circle cx="78" cy="45" r="5" fill="#1e293b" />
             </svg>
             <div className="mt-1 bg-yellow-100 text-yellow-800 font-bold text-sm px-3 py-1 rounded-full">正數：笑哈哈 🙂</div>
           </div>
@@ -3035,9 +3049,9 @@ const FunctionGraphNotes = ({ onBack }) => (
           {/* a < 0 */}
           <div className="bg-white rounded-xl p-4 border-2 border-sky-300 shadow-sm flex flex-col items-center">
             <div className="text-base font-bold text-slate-700 mb-1"><InlineMath math="a < 0" /></div>
-            <div className="text-xs text-slate-500 mb-3">開口向下 (open downward)</div>
+            <div className="text-xs text-slate-500 mb-3">開口向下</div>
             <svg viewBox="0 0 120 100" className="w-36 h-28">
-              <line x1="10" y1="50" x2="110" y2="50" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr2)" />
+              <line x1="10" y1="60" x2="110" y2="60" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr2)" />
               <line x1="60" y1="95" x2="60" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr2)" />
               <defs>
                 <marker id="arr2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
@@ -3045,10 +3059,10 @@ const FunctionGraphNotes = ({ onBack }) => (
                 </marker>
               </defs>
               {/* downward parabola */}
-              <path d="M15,50 Q60,5 105,50" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M 20,95 Q 60,-30 100,95" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round" />
               {/* eyes */}
-              <circle cx="40" cy="22" r="5" fill="#1e293b" />
-              <circle cx="80" cy="22" r="5" fill="#1e293b" />
+              <circle cx="42" cy="45" r="5" fill="#1e293b" />
+              <circle cx="78" cy="45" r="5" fill="#1e293b" />
             </svg>
             <div className="mt-1 bg-sky-100 text-sky-800 font-bold text-sm px-3 py-1 rounded-full">負數：喊哈哈 ☹️</div>
           </div>
@@ -3063,43 +3077,19 @@ const FunctionGraphNotes = ({ onBack }) => (
       <section className="bg-sky-50 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-4">
           <span className="bg-sky-500 text-white font-black text-lg px-3 py-1 rounded-lg">c</span>
-          <h2 className="text-lg font-bold text-sky-800">y-intercept — y 截距</h2>
+          <h2 className="text-lg font-bold text-sky-800">y 截距</h2>
         </div>
 
-        <div className="bg-white rounded-xl p-4 border border-sky-200 shadow-sm flex flex-col md:flex-row items-center gap-6">
-          <div className="flex-1">
-            <p className="text-sm mb-3">
-              <span className="text-sky-500 font-black text-xl">c</span> 就係圖像與 <strong>y 軸的交點</strong>。
-            </p>
-            <div className="bg-sky-50 rounded-lg px-4 py-3 border border-sky-200 text-sm">
-              <p className="font-semibold text-sky-700 mb-1">原因：</p>
-              <p>代入 <InlineMath math="x = 0" />：</p>
-              <BlockMath math="y = a(0)^2 + b(0) + c = c" />
-              <p className="text-slate-600">∴ y 截距 = <span className="font-bold text-sky-600">c</span>，交點為 <InlineMath math="(0,\ c)" /></p>
-            </div>
+        <div className="bg-white rounded-xl p-4 border border-sky-200 shadow-sm">
+          <p className="text-sm mb-3">
+            <span className="text-sky-500 font-black text-xl">c</span> 就係圖像與 <strong>y 軸的交點</strong>。
+          </p>
+          <div className="bg-sky-50 rounded-lg px-4 py-3 border border-sky-200 text-sm">
+            <p className="font-semibold text-sky-700 mb-1">原因：</p>
+            <p>代入 <InlineMath math="x = 0" />：</p>
+            <BlockMath math="y = a(0)^2 + b(0) + c = c" />
+            <p className="text-slate-600">∴ y 截距 = <span className="font-bold text-sky-600">c</span>，交點為 <InlineMath math="(0,\ c)" /></p>
           </div>
-
-          {/* SVG y-intercept diagram */}
-          <svg viewBox="0 0 130 120" className="w-36 h-36 shrink-0">
-            <line x1="10" y1="95" x2="120" y2="95" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrC)" />
-            <line x1="50" y1="115" x2="50" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrC)" />
-            <defs>
-              <marker id="arrC" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-                <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
-              </marker>
-            </defs>
-            {/* upward parabola shifted so vertex is visible */}
-            <path d="M10,95 Q50,30 110,95" fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round" />
-            {/* dot at y-intercept */}
-            <circle cx="50" cy="60" r="4" fill="#0ea5e9" />
-            {/* (0,c) label */}
-            <text x="54" y="62" fontSize="10" fill="#0369a1" fontWeight="bold">(0, c)</text>
-            {/* arrow pointing to intercept */}
-            <line x1="72" y1="78" x2="54" y2="64" stroke="#0369a1" strokeWidth="1.5" markerEnd="url(#arrC)" />
-            {/* annotation box */}
-            <rect x="58" y="78" width="52" height="18" rx="4" fill="#e0f2fe" stroke="#7dd3fc" strokeWidth="1" />
-            <text x="62" y="89" fontSize="8" fill="#0369a1" fontWeight="bold">y-intercept</text>
-          </svg>
         </div>
       </section>
 
@@ -3107,7 +3097,7 @@ const FunctionGraphNotes = ({ onBack }) => (
       <section className="bg-amber-50 rounded-xl p-5">
         <div className="flex items-center gap-2 mb-4">
           <span className="bg-amber-500 text-white font-black text-lg px-3 py-1 rounded-lg">b</span>
-          <h2 className="text-lg font-bold text-amber-800">Axis of Symmetry — 對稱軸</h2>
+          <h2 className="text-lg font-bold text-amber-800">對稱軸</h2>
         </div>
 
         <div className="bg-amber-100 rounded-lg px-4 py-3 mb-4 text-sm text-amber-800">
@@ -3134,20 +3124,25 @@ const FunctionGraphNotes = ({ onBack }) => (
           </div>
 
           {/* SVG axis of symmetry diagram */}
-          <svg viewBox="0 0 130 120" className="w-36 h-36 shrink-0">
-            <line x1="10" y1="95" x2="120" y2="95" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrB)" />
-            <line x1="20" y1="115" x2="20" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrB)" />
+          <svg viewBox="0 0 140 120" className="w-40 h-40 shrink-0">
+            <line x1="10" y1="85" x2="130" y2="85" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrB)" />
+            <line x1="30" y1="115" x2="30" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrB)" />
             <defs>
               <marker id="arrB" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
                 <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
               </marker>
             </defs>
             {/* upward parabola */}
-            <path d="M10,95 Q65,20 120,95" fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round" />
+            <path d="M 20,25 Q 75,160 130,25" fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round" />
             {/* dashed axis of symmetry */}
-            <line x1="65" y1="110" x2="65" y2="10" stroke="#f59e0b" strokeWidth="2" strokeDasharray="5,3" />
+            <line x1="75" y1="110" x2="75" y2="10" stroke="#f59e0b" strokeWidth="2" strokeDasharray="5,3" />
             {/* label */}
-            <text x="68" y="112" fontSize="9" fill="#b45309" fontWeight="bold">x = -b/2a</text>
+            <text x="50" y="118" fontSize="10" fill="#374151" fontWeight="bold">x</text>
+            <text x="58" y="118" fontSize="10" fill="#374151" fontWeight="bold">=</text>
+            <text x="66" y="118" fontSize="10" fill="#374151" fontWeight="bold">-</text>
+            <text x="74" y="111" fontSize="9" fill="#f59e0b" fontWeight="bold">b</text>
+            <line x1="72" y1="114" x2="84" y2="114" stroke="#374151" strokeWidth="1.5" />
+            <text x="72" y="122" fontSize="9" fill="#374151" fontWeight="bold">2a</text>
           </svg>
         </div>
       </section>
@@ -3159,21 +3154,21 @@ const FunctionGraphNotes = ({ onBack }) => (
           <div className="flex items-start gap-3 bg-white rounded-lg p-3 border border-orange-200 shadow-sm">
             <span className="bg-orange-500 text-white font-black text-base px-2.5 py-0.5 rounded shrink-0 mt-0.5">a</span>
             <div>
-              <p className="font-bold text-orange-800">開口方向 Direction of Opening</p>
+              <p className="font-bold text-orange-800">開口方向</p>
               <p className="text-sm text-slate-600"><InlineMath math="a>0" /> → 開口向上（笑）　<InlineMath math="a<0" /> → 開口向下（喊）</p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-white rounded-lg p-3 border border-sky-200 shadow-sm">
             <span className="bg-sky-500 text-white font-black text-base px-2.5 py-0.5 rounded shrink-0 mt-0.5">c</span>
             <div>
-              <p className="font-bold text-sky-800">y 截距 y-intercept</p>
+              <p className="font-bold text-sky-800">y 截距</p>
               <p className="text-sm text-slate-600">圖像與 y 軸交於 <InlineMath math="(0,\ c)" /></p>
             </div>
           </div>
           <div className="flex items-start gap-3 bg-white rounded-lg p-3 border border-amber-200 shadow-sm">
             <span className="bg-amber-500 text-white font-black text-base px-2.5 py-0.5 rounded shrink-0 mt-0.5">b</span>
             <div>
-              <p className="font-bold text-amber-800">對稱軸 Axis of Symmetry</p>
+              <p className="font-bold text-amber-800">對稱軸</p>
               <p className="text-sm text-slate-600"><InlineMath math="x = -\dfrac{b}{2a}" />（b 獨立無意義，要配合 a）</p>
             </div>
           </div>

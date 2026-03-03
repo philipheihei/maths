@@ -444,7 +444,7 @@ const Prog01Lv2OriginalDisplay = ({ eq1, eq2, varX, varY }) => {
 
   if (!katexLoaded) {
     return (
-      <div className="text-xl space-y-2 ml-4 font-mono">
+      <div className="text-xl space-y-2 ml-4 font-sans">
         <div>{eq1}</div>
         <div>{eq2}</div>
       </div>
@@ -563,7 +563,7 @@ const MathRenderer = ({ expression, size = 'normal' }) => {
   };
 
   return (
-    <div className={`flex items-center flex-wrap gap-1 font-mono ${sizeClass} text-gray-800`}>
+    <div className={`flex items-center flex-wrap gap-1 font-sans ${sizeClass} text-gray-800`}>
       {processedTokens.map((part, idx) => {
         if (typeof part === 'object' && part.type === 'frac') {
           return (
@@ -585,7 +585,7 @@ const MathRenderer = ({ expression, size = 'normal' }) => {
 const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = false, inputs = {}, onInputChange, onFocus, inputRefs, eqIndex }) => {
   if (showPlaceholders) {
     return (
-      <div className="flex items-center gap-1 text-xl md:text-2xl font-mono flex-wrap">
+      <div className="flex items-center gap-1 text-xl md:text-2xl font-sans flex-wrap">
         <input
           ref={el => { if (inputRefs) inputRefs.current[`eq${eqIndex}-a`] = el; }}
           type="text"
@@ -654,7 +654,7 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
   parts.push(<span key="eq"> = {c}</span>);
   
   return (
-    <div className="text-xl md:text-2xl font-mono flex items-center">
+    <div className="text-xl md:text-2xl font-sans flex items-center">
       {parts}
     </div>
   );
@@ -811,7 +811,7 @@ const CheatsheetModal = ({ isOpen, onClose }) => {
           {CHEATSHEET.map((item, idx) => (
             <div key={idx} className="flex justify-between items-center p-2 bg-gray-50 rounded-lg shadow-sm border border-gray-100">
               <span className="font-medium text-gray-700 text-sm">{item.key}</span>
-              <span className="font-mono text-blue-700 bg-blue-100 px-3 py-1 rounded-full text-sm">{item.val}</span>
+              <span className="font-sans text-blue-700 bg-blue-100 px-3 py-1 rounded-full text-sm">{item.val}</span>
             </div>
           ))}
         </div>
@@ -999,7 +999,7 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             <h4 className="text-green-700 font-bold mb-3">📌 範例：解聯立方程</h4>
             
             <div className="bg-white p-3 rounded-lg text-center mb-4 border border-green-400">
-              <div className="text-lg font-mono flex items-center justify-center gap-3">
+              <div className="text-lg font-sans flex items-center justify-center gap-3">
                 <span className="text-5xl leading-none">{`{`}</span>
                 <div className="text-left">
                   <div>x + 2y = 10</div>
