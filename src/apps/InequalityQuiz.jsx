@@ -271,7 +271,31 @@ export default function InequalityQuiz() {
         if (!student) {
           const missingX = /^(>=|<=|>|<)/.test(cleanInput);
           if (missingX) {
-            explanation += `\n漏寫了 x！答案開頭要有 x，例如 x>3 或 x≤-2。`;
+            const mPartial = cleanInput.match(/^(>=|<=|>|<)(-?\d+)$/);
+            const issues = [];
+            issues.push(`漏寫了 x！答案開頭要有 x，不能只寫 ${formatDisplay(cleanInput)}。`);
+            if (mPartial) {
+              const studentOp = mPartial[1];
+              const studentNum = parseInt(mPartial[2]);
+              if (studentNum !== correct.num) {
+                issues.push(`數值有誤：你輸入了 ${studentNum}，正確是 ${correct.num}。`);
+              }
+              const correctHasEqual = correct.op.includes('=');
+              const studentHasEqual = studentOp.includes('=');
+              if (studentHasEqual && !correctHasEqual) {
+                issues.push(`符號有誤：圖中是空心圓圈 ○，不需加「等於」（應用 ${correct.op}，而非 ${formatDisplay(studentOp)}）。`);
+              } else if (!studentHasEqual && correctHasEqual) {
+                issues.push(`符號有誤：圖中是實心圓圈 ●，須加「等於」（應用 ${formatDisplay(correct.op)}，而非 ${formatDisplay(studentOp)}）。`);
+              }
+              const correctIsRight = correct.op.includes('>');
+              const studentIsRight = studentOp.includes('>');
+              if (studentIsRight && !correctIsRight) {
+                issues.push(`方向有誤：圖中箭咀向左 ←，應用 ${formatDisplay(correct.op)}。`);
+              } else if (!studentIsRight && correctIsRight) {
+                issues.push(`方向有誤：圖中箭咀向右 →，應用 ${formatDisplay(correct.op)}。`);
+              }
+            }
+            explanation += '\n' + issues.map((msg, i) => `${i + 1}. ${msg}`).join('\n\n');
           } else {
             explanation += `\n格式有誤，請輸入如 x>3 或 x≤-2 的格式。`;
           }
