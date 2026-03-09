@@ -102,6 +102,48 @@ const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
   return <div ref={containerRef} className="inline-block text-left text-2xl" style={{ maxWidth }} />;
 };
 
+// --- 計算機 SD Mode 步驟顯示元件 ---
+const CalcSDSteps = ({ isVariance = false, sigmaValue = null }) => (
+  <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+    <div className="border-2 border-green-400 rounded-xl overflow-hidden">
+      <div className="bg-green-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+        <span>📱</span> 使用計算機 SD Mode
+      </div>
+      <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
+        <div className="flex items-start gap-2">
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+          <span>按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">MODE</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">4</span> 進入統計模式</span>
+        </div>
+        <div className="flex items-start gap-2">
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+          <span>按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">SHIFT</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">9</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">1</span> 清除舊數據</span>
+        </div>
+        <div className="flex items-start gap-2">
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+          <span>逐一輸入每個數值，每個數值後按 <span className="inline-block bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded">M+</span> 儲存</span>
+        </div>
+        <div className="flex items-start gap-2">
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
+          <span>完成後按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">SHIFT</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">2</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">2</span> 得出 σ（標準差）</span>
+        </div>
+        {isVariance && (
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">5</span>
+            <span>方差 σ² = （標準差）²，即將 σ 再按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">x²</span> 得出方差</span>
+          </div>
+        )}
+        {sigmaValue !== null && (
+          <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 font-mono text-xs border border-slate-200">
+            {isVariance
+              ? <><span className="text-slate-500">σ =</span> <span className="text-blue-700 font-bold">{sigmaValue}</span>　<span className="text-slate-500">∴ 方差 σ² =</span> <span className="text-red-600 font-bold">{Number((sigmaValue * sigmaValue).toPrecision(3))}</span></>
+              : <><span className="text-slate-500">∴ σ =</span> <span className="text-red-600 font-bold">{sigmaValue}</span></>}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+);
+
 // --- 數學工具函數庫 ---
 const MathUtils = {
   sum: (arr) => arr.reduce((a, b) => a + b, 0),
@@ -688,20 +730,27 @@ export default function StatisticsApp() {
         setTotalQuestions(t => t + 1);
       } else {
         let explanation = "";
+        let explanationJSX = null;
         if (currentMeasure.id === 'mean') explanation = `平均數 = 總和 (${MathUtils.sum(data)}) ÷ 數量 (${data.length})`;
         if (currentMeasure.id === 'range') explanation = `分佈域 = 最大值 (${Math.max(...data)}) - 最小值 (${Math.min(...data)})`;
         if (currentMeasure.id === 'iqr') {
           const {q1, q3} = MathUtils.quartiles(data);
-          explanation = `IQR = Q3 (${q3}) - Q1 (${q1})`;
+          explanation = `四分位數間距 = Q3 - Q1\n              = ${q3} - ${q1}\n              = ${q3 - q1}`;
         }
-        if (currentMeasure.id === 'variance') explanation = `方差 (σ²) = 每個數與平均數差的平方和 ÷ N`;
-        if (currentMeasure.id === 'stdDev') explanation = `標準差 (σ) = √方差`;
+        if (currentMeasure.id === 'variance') {
+          const sd = MathUtils.stdDev(data);
+          explanationJSX = <CalcSDSteps isVariance={true} sigmaValue={Number(formatToSignificantFigures(sd, 3))} />;
+        }
+        if (currentMeasure.id === 'stdDev') {
+          explanationJSX = <CalcSDSteps isVariance={false} sigmaValue={Number(formatAnswer(correct))} />;
+        }
         if (currentMeasure.id === 'median') explanation = `中位數 = 排序後中間的數`;
 
         setFeedback({ 
           type: 'wrong', 
           msg: '答案不正確', 
-          detail: `正確答案是 ${formatAnswer(correct)}。\n${explanation}` 
+          detail: explanation ? `正確答案是 ${formatAnswer(correct)}。\n${explanation}` : `正確答案是 ${formatAnswer(correct)}。`,
+          detailJSX: explanationJSX
         });
         setTotalQuestions(t => t + 1);
       }
@@ -895,7 +944,9 @@ export default function StatisticsApp() {
                   正確答案：<span className="font-bold">{formatAnswer(getCorrectAnswer())}</span>
                 </div>
               )}
-              {feedback.detail && (
+              {feedback.detailJSX ? (
+                <div className="w-full mb-4">{feedback.detailJSX}</div>
+              ) : feedback.detail && (
                 <pre className="text-sm font-mono whitespace-pre-wrap bg-white/50 p-3 rounded mb-4">
                   {feedback.detail}
                 </pre>
