@@ -681,8 +681,8 @@ export default function StatisticsApp() {
         return;
       }
 
-      // Tolerance for float
-      if (Math.abs(user - correct) < 0.05) {
+      // 必須與顯示答案（3位有效數字）完全吻合，不設誤差
+      if (user === parseFloat(formatAnswer(correct))) {
         setFeedback({ type: 'correct', msg: '答對了！太棒了！', detail: '' });
         setScore(s => s + 1);
         setTotalQuestions(t => t + 1);
