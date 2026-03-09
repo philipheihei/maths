@@ -75,12 +75,8 @@ const FunctionGraphNotes = ({ onBack }) => (
               <circle cx="42" cy="45" r="5" fill="#1e293b" />
               <circle cx="78" cy="45" r="5" fill="#1e293b" />
             </svg>
-            <div className="mt-1 bg-sky-100 text-sky-800 font-bold text-sm px-3 py-1 rounded-full">負數：喊哈哈 ☹️</div>
+            <div className="mt-1 bg-sky-100 text-sky-800 font-bold text-sm px-3 py-1 rounded-full">負數：喊口樣 ☹️</div>
           </div>
-        </div>
-
-        <div className="mt-4 bg-orange-100 rounded-lg px-4 py-3 text-sm text-orange-800">
-          <strong>記法：</strong>正數笑😊，負數喊😢 — <em>a</em> 如人臉，正面就笑，負面就喊！
         </div>
       </section>
 

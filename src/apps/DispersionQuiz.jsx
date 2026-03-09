@@ -106,12 +106,14 @@ const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
 const MeanSteps = ({ data, mean }) => {
   const sum = data.reduce((a, b) => a + b, 0);
   const n = data.length;
-  const displaySum = sum;
-  const displayN = n;
-  // Show values list, up to 12 then abbreviate
-  const preview = data.length <= 12
-    ? data.join(' + ')
-    : data.slice(0, 6).join(' + ') + ' + … + ' + data.slice(-3).join(' + ');
+  // Build frequency map
+  const freq = {};
+  data.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
+  const keys = Object.keys(freq).map(Number).sort((a, b) => a - b);
+  // Compact numerator expression: v×f + v×f + ...
+  const numExpr = keys.map(k => freq[k] === 1 ? `${k}` : `${k}×${freq[k]}`).join(' + ');
+  // Compact denominator expression: f + f + ...
+  const denExpr = keys.map(k => `${freq[k]}`).join(' + ');
   return (
     <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
       <div className="border-2 border-blue-400 rounded-xl overflow-hidden">
@@ -121,19 +123,27 @@ const MeanSteps = ({ data, mean }) => {
         <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
-            <span>平均數公式：<span className="font-bold text-blue-700">平均數 = 總和 ÷ 數量</span></span>
+            <span>平均數 = <span className="font-bold text-blue-700">（所有數值加起來）÷（數值個數）</span></span>
           </div>
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
-            <span>將所有數值加起來：<br/><span className="font-mono text-xs text-slate-600 break-all">{preview}</span><br/>總和 = <span className="font-bold text-blue-700">{displaySum}</span></span>
+            <span>
+              將題目數字代入：
+              <div className="mt-1 inline-flex flex-col items-center font-mono text-xs text-slate-700 border border-slate-300 rounded px-2 py-1 bg-slate-50 ml-1">
+                <span className="border-b border-slate-500 pb-0.5 break-all">{numExpr}</span>
+                <span className="pt-0.5 break-all">{denExpr}</span>
+              </div>
+            </span>
           </div>
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
-            <span>數出數值總數量 = <span className="font-bold text-blue-700">{displayN}</span></span>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
-            <span>平均數 = 總和 ÷ 數量 = {displaySum} ÷ {displayN}</span>
+            <span>化簡：
+              <span className="font-mono ml-1">
+                <span className="font-bold text-blue-700">{sum}</span>
+                {' '}÷{' '}
+                <span className="font-bold text-blue-700">{n}</span>
+              </span>
+            </span>
           </div>
           <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 font-mono text-base border border-slate-200">
             <span className="text-slate-500">∴ 平均數 =</span> <span className="text-red-600 font-bold text-lg">{mean}</span>
@@ -164,7 +174,7 @@ const CalcSDSteps = ({ isVariance = false, sigmaValue = null }) => (
         </div>
         <div className="flex items-start gap-2">
           <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
-          <span>按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">SHIFT</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">9</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">1</span> 清除舊數據</span>
+          <span>按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">SHIFT</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">9</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">1</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">EXE</span> 清除舊數據</span>
         </div>
         <div className="flex items-start gap-2">
           <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
