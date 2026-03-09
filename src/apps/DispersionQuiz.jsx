@@ -102,7 +102,55 @@ const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
   return <div ref={containerRef} className="inline-block text-left text-2xl" style={{ maxWidth }} />;
 };
 
+// --- 平均數步驟顯示元件 ---
+const MeanSteps = ({ data, mean }) => {
+  const sum = data.reduce((a, b) => a + b, 0);
+  const n = data.length;
+  const displaySum = sum;
+  const displayN = n;
+  // Show values list, up to 12 then abbreviate
+  const preview = data.length <= 12
+    ? data.join(' + ')
+    : data.slice(0, 6).join(' + ') + ' + … + ' + data.slice(-3).join(' + ');
+  return (
+    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+      <div className="border-2 border-blue-400 rounded-xl overflow-hidden">
+        <div className="bg-blue-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+          <span>📐</span> 平均數（Mean）計算步驟
+        </div>
+        <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+            <span>平均數公式：<span className="font-bold text-blue-700">平均數 = 總和 ÷ 數量</span></span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+            <span>將所有數值加起來：<br/><span className="font-mono text-xs text-slate-600 break-all">{preview}</span><br/>總和 = <span className="font-bold text-blue-700">{displaySum}</span></span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+            <span>數出數值總數量 = <span className="font-bold text-blue-700">{displayN}</span></span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
+            <span>平均數 = 總和 ÷ 數量 = {displaySum} ÷ {displayN}</span>
+          </div>
+          <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 font-mono text-base border border-slate-200">
+            <span className="text-slate-500">∴ 平均數 =</span> <span className="text-red-600 font-bold text-lg">{mean}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // --- 計算機 SD Mode 步驟顯示元件 ---
+const toSigFigs = (val, sf = 3) => {
+  if (!val || val === 0) return '0';
+  const mag = Math.floor(Math.log10(Math.abs(val)));
+  const factor = Math.pow(10, sf - mag - 1);
+  return (Math.round(val * factor) / factor).toString();
+};
 const CalcSDSteps = ({ isVariance = false, sigmaValue = null }) => (
   <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
     <div className="border-2 border-green-400 rounded-xl overflow-hidden">
@@ -124,19 +172,19 @@ const CalcSDSteps = ({ isVariance = false, sigmaValue = null }) => (
         </div>
         <div className="flex items-start gap-2">
           <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
-          <span>完成後按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">SHIFT</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">2</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">2</span> 得出 σ（標準差）</span>
+          <span>完成後按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">SHIFT</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">2</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">2</span> 得出 σ（標準差）{sigmaValue !== null && <span className="font-bold text-blue-700">「{sigmaValue}」</span>}</span>
         </div>
         {isVariance && (
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">5</span>
-            <span>方差 σ² = （標準差）²，即將 σ 再按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">x²</span> 得出方差</span>
+            <span>方差 σ² = （標準差）²，即將 <span className="font-bold text-blue-700">「{sigmaValue}」</span> 再按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">x²</span> 得出方差</span>
           </div>
         )}
         {sigmaValue !== null && (
-          <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 font-mono text-xs border border-slate-200">
+          <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 font-mono text-base border border-slate-200">
             {isVariance
-              ? <><span className="text-slate-500">σ =</span> <span className="text-blue-700 font-bold">{sigmaValue}</span>　<span className="text-slate-500">∴ 方差 σ² =</span> <span className="text-red-600 font-bold">{Number((sigmaValue * sigmaValue).toPrecision(3))}</span></>
-              : <><span className="text-slate-500">∴ σ =</span> <span className="text-red-600 font-bold">{sigmaValue}</span></>}
+              ? <><span className="text-slate-500">∴ 方差 σ² =</span> <span className="text-red-600 font-bold text-lg">{toSigFigs(sigmaValue * sigmaValue, 3)}</span></>
+              : <><span className="text-slate-500">∴ σ =</span> <span className="text-red-600 font-bold text-lg">{toSigFigs(sigmaValue, 3)}</span></>}
           </div>
         )}
       </div>
@@ -731,7 +779,7 @@ export default function StatisticsApp() {
       } else {
         let explanation = "";
         let explanationJSX = null;
-        if (currentMeasure.id === 'mean') explanation = `平均數 = 總和 (${MathUtils.sum(data)}) ÷ 數量 (${data.length})`;
+        if (currentMeasure.id === 'mean') explanationJSX = <MeanSteps data={data} mean={formatAnswer(correct)} />;
         if (currentMeasure.id === 'range') explanation = `分佈域 = 最大值 (${Math.max(...data)}) - 最小值 (${Math.min(...data)})`;
         if (currentMeasure.id === 'iqr') {
           const {q1, q3} = MathUtils.quartiles(data);
@@ -739,10 +787,10 @@ export default function StatisticsApp() {
         }
         if (currentMeasure.id === 'variance') {
           const sd = MathUtils.stdDev(data);
-          explanationJSX = <CalcSDSteps isVariance={true} sigmaValue={Number(formatToSignificantFigures(sd, 3))} />;
+          explanationJSX = <CalcSDSteps isVariance={true} sigmaValue={parseFloat(sd.toFixed(4))} />;
         }
         if (currentMeasure.id === 'stdDev') {
-          explanationJSX = <CalcSDSteps isVariance={false} sigmaValue={Number(formatAnswer(correct))} />;
+          explanationJSX = <CalcSDSteps isVariance={false} sigmaValue={parseFloat(correct.toFixed(4))} />;
         }
         if (currentMeasure.id === 'median') explanation = `中位數 = 排序後中間的數`;
 
@@ -1384,8 +1432,8 @@ export default function StatisticsApp() {
                               </span>
                               <br/>
                               <b>公式：方差 = (標準差)²</b><br/>
-                              標準差 = {formatToSignificantFigures(MathUtils.stdDev(learnData), 3)}<br/>
-                              <b>方差 = ({formatToSignificantFigures(MathUtils.stdDev(learnData), 3)})² = {formatAnswer(MathUtils.variance(learnData))}</b>
+                              標準差 = {MathUtils.stdDev(learnData).toFixed(4)}<br/>
+                              <b>方差 = ({MathUtils.stdDev(learnData).toFixed(4)})² = {MathUtils.variance(learnData).toFixed(4)}</b>
                             </p>
                           )}
                           {selectedStat === 'stdDev' && (
@@ -1398,7 +1446,7 @@ export default function StatisticsApp() {
                               </span>
                               <br/>
                               數據：{learnData.join(', ')}<br/>
-                              <b>標準差 (SD) = {formatToSignificantFigures(MathUtils.stdDev(learnData), 3)}</b> <span className="text-slate-500 text-sm">(約至3位有效數字)</span>
+                              <b>標準差 (SD) = {MathUtils.stdDev(learnData).toFixed(4)}</b> <span className="text-slate-500 text-sm">(約至4位小數)</span>
                             </p>
                           )}
                         </div>
