@@ -102,6 +102,247 @@ const HorizontalFraction = ({ numerator, denominator, maxWidth = "100%" }) => {
   return <div ref={containerRef} className="inline-block text-left text-2xl" style={{ maxWidth }} />;
 };
 
+// --- 平均數解釋元件 ---
+const MeanExplanation = ({ data, mean, chartType }) => {
+  const total = data.reduce((a, b) => a + b, 0);
+  const n = data.length;
+  const sorted = [...data].sort((a, b) => a - b);
+
+  return (
+    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+      <div className="border-2 border-orange-400 rounded-xl overflow-hidden">
+        <div className="bg-orange-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+          <span>∑</span> 如何計算平均數
+        </div>
+        <div className="bg-white px-4 py-3 space-y-3 text-sm text-slate-700">
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+            <div>
+              <div>將所有數值加起來</div>
+              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200">
+                {sorted.join(' + ')} = <span className="font-bold text-blue-700">{total}</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+            <span>{chartType === 'table' ? '數一數頻數，有多少個數' : '數一數有幾多個數值'} → 共 <span className="font-bold text-blue-700">{n}</span> 個</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+            <div>
+              <span>平均數 = 總和 ÷ 數量</span>
+              <div className="mt-1 bg-slate-100 rounded px-3 py-2 border border-slate-200">
+                <span className="text-base font-bold">
+                  <span className="text-slate-500">平均數 = </span>
+                  <span className="text-blue-700">{total}</span>
+                  <span className="text-slate-500"> ÷ </span>
+                  <span className="text-blue-700">{n}</span>
+                  <span className="text-slate-500"> = </span>
+                  <span className="text-red-600">{mean}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- 眾數解釋元件 ---
+const ModeExplanation = ({ data, correctModes, chartType }) => {
+  // 計算每個數值的頻數
+  const freq = {};
+  data.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
+  const maxFreq = Math.max(...Object.values(freq));
+  const entries = Object.keys(freq).map(Number).sort((a, b) => a - b);
+
+  return (
+    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+      <div className="border-2 border-blue-400 rounded-xl overflow-hidden">
+        <div className="bg-blue-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+          <span>📊</span>
+          {chartType === 'bar'
+            ? '找出最高的柱 → 數值出現次數最多'
+            : '找出出現次數最多的數值'
+          }
+        </div>
+        <div className="bg-white px-4 py-3">
+          <table className="w-full text-sm text-center border-collapse">
+            <thead>
+              <tr className="bg-slate-100">
+                <th className="border border-slate-200 px-3 py-1">數值</th>
+                {entries.map(v => (
+                  <th key={v} className={`border px-3 py-1 ${
+                    correctModes.includes(v)
+                      ? 'bg-red-100 border-red-300 text-red-700 font-bold'
+                      : 'border-slate-200'
+                  }`}>{v}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-slate-200 px-3 py-1 font-semibold bg-slate-50">頻數</td>
+                {entries.map(v => (
+                  <td key={v} className={`border px-3 py-1 ${
+                    correctModes.includes(v)
+                      ? 'bg-red-50 border-red-300 text-red-700 font-bold text-base'
+                      : 'border-slate-200 text-slate-500'
+                  }`}>
+                    {freq[v]}
+                    {correctModes.includes(v) && <span className="ml-1">&#9650;</span>}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+          <p className="text-xs text-slate-500 mt-2">
+            頻數最高為 <span className="font-bold text-red-600">{maxFreq}</span>，
+            所以眾數是 <span className="font-bold text-red-600">{correctModes.join(', ')}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- IQR 解釋元件 ---
+const IQRExplanation = ({ data, chartType }) => {
+  const sorted = [...data].sort((a, b) => a - b);
+  const n = sorted.length;
+  const mid = Math.floor(n / 2);
+  const lowerHalf = sorted.slice(0, mid);
+  const upperHalf = n % 2 === 0 ? sorted.slice(mid) : sorted.slice(mid + 1);
+  const q2 = n % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  const q1 = lowerHalf.length % 2 !== 0
+    ? lowerHalf[Math.floor(lowerHalf.length / 2)]
+    : (lowerHalf[lowerHalf.length / 2 - 1] + lowerHalf[lowerHalf.length / 2]) / 2;
+  const q3 = upperHalf.length % 2 !== 0
+    ? upperHalf[Math.floor(upperHalf.length / 2)]
+    : (upperHalf[upperHalf.length / 2 - 1] + upperHalf[upperHalf.length / 2]) / 2;
+  const iqr = q3 - q1;
+
+  // 框線圖專用說明：直接從圖讀 Q1/Q3
+  if (chartType === 'box') {
+    return (
+      <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+        <div className="border-2 border-purple-400 rounded-xl overflow-hidden">
+          <div className="bg-purple-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+            <span>📐</span> 如何從框線圖讀出 IQR
+          </div>
+          <div className="bg-white px-4 py-3 space-y-3 text-sm text-slate-700">
+            <div className="flex items-start gap-2">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+              <span>從框線圖找出 <span className="font-bold text-blue-700">Q₁</span>（盒子左邊）和 <span className="font-bold text-red-700">Q₃</span>（盒子右邊）</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+              <div className="bg-slate-100 rounded px-3 py-2 border border-slate-200 w-full">
+                <span className="text-base font-bold">
+                  <span className="text-slate-500">四分位數間距 = Q₃ − Q₁ = </span>
+                  <span className="text-red-700">{q3}</span>
+                  <span className="text-slate-500"> − </span>
+                  <span className="text-blue-700">{q1}</span>
+                  <span className="text-slate-500"> = </span>
+                  <span className="text-red-600">{iqr}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+      <div className="border-2 border-purple-400 rounded-xl overflow-hidden">
+        <div className="bg-purple-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+          <span>📐</span> 如何計算四分位數間距 (IQR)
+        </div>
+        <div className="bg-white px-4 py-3 space-y-3 text-sm text-slate-700">
+
+          {/* Step 1: sorted data */}
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+            <div>
+              <div>將數據由小至大排列</div>
+              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-1">
+                {sorted.map((v, i) => (
+                  <span key={i} className={`px-1 rounded ${
+                    i === mid && n % 2 !== 0 ? 'bg-yellow-200 font-bold' : ''
+                  }`}>{v}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Step 2: find median => split */}
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+            <div>
+              <span>找出中位數，將數據分為上下半組</span>
+              <div className="mt-1 flex items-center gap-2 flex-wrap">
+                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-mono">
+                  下半組: [{lowerHalf.join(', ')}]
+                </span>
+                <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">
+                  中位數 = {q2}
+                </span>
+                <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-mono">
+                  上半組: [{upperHalf.join(', ')}]
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 3: Q1 */}
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+            <span>
+              Q₁ = 下半組的中位數
+              <span className="ml-2 font-mono bg-blue-50 border border-blue-200 px-2 py-0.5 rounded text-blue-700 font-bold">
+                [{lowerHalf.join(', ')}] → Q₁ = {q1}
+              </span>
+            </span>
+          </div>
+
+          {/* Step 4: Q3 */}
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
+            <span>
+              Q₃ = 上半組的中位數
+              <span className="ml-2 font-mono bg-red-50 border border-red-200 px-2 py-0.5 rounded text-red-700 font-bold">
+                [{upperHalf.join(', ')}] → Q₃ = {q3}
+              </span>
+            </span>
+          </div>
+
+          {/* Step 5: IQR */}
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">5</span>
+            <div>
+              <div className="bg-slate-100 rounded px-3 py-2 border border-slate-200">
+                <span className="text-base font-bold">
+                  <span className="text-slate-500">四分位數間距 = Q₃ − Q₁ = </span>
+                  <span className="text-red-700">{q3}</span>
+                  <span className="text-slate-500"> − </span>
+                  <span className="text-blue-700">{q1}</span>
+                  <span className="text-slate-500"> = </span>
+                  <span className="text-red-600">{iqr}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // --- 平均數步驟顯示元件 ---
 const MeanSteps = ({ data, mean }) => {
   const sum = data.reduce((a, b) => a + b, 0);
@@ -155,52 +396,65 @@ const MeanSteps = ({ data, mean }) => {
 };
 
 // --- 計算機 SD Mode 步驟顯示元件 ---
-const toSigFigs = (val, sf = 3) => {
-  if (!val || val === 0) return '0';
-  const mag = Math.floor(Math.log10(Math.abs(val)));
-  const factor = Math.pow(10, sf - mag - 1);
-  return (Math.round(val * factor) / factor).toString();
-};
-const CalcSDSteps = ({ isVariance = false, sigmaValue = null }) => (
-  <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
-    <div className="border-2 border-green-400 rounded-xl overflow-hidden">
-      <div className="bg-green-500 text-white px-4 py-2 font-bold flex items-center gap-2">
-        <span>📱</span> 使用計算機 SD Mode
-      </div>
-      <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
-        <div className="flex items-start gap-2">
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
-          <span>按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">MODE</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">4</span> 進入統計模式</span>
+const Kbd = ({ children, green }) => (
+  <span className={`inline-block text-white text-xs font-bold px-2 py-0.5 rounded ${green ? 'bg-green-600' : 'bg-slate-800'}`}>{children}</span>
+);
+
+const CalcSDSteps = ({ isVariance = false, sigmaValue = null, data = [] }) => {
+  // 取最多5個獨特數值作例子
+  const uniqueVals = [...new Set(data)].sort((a, b) => a - b).slice(0, 5);
+  const exampleStr = uniqueVals.map(v => `${v} M+`).join('  ');
+  const hasMore = [...new Set(data)].length > 5;
+
+  return (
+    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+      <div className="border-2 border-green-400 rounded-xl overflow-hidden">
+        <div className="bg-green-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+          <span>📱</span> 使用計算機 SD Mode
         </div>
-        <div className="flex items-start gap-2">
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
-          <span>按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">SHIFT</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">9</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">1</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">EXE</span> 清除舊數據</span>
-        </div>
-        <div className="flex items-start gap-2">
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
-          <span>逐一輸入每個數值，每個數值後按 <span className="inline-block bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded">M+</span> 儲存</span>
-        </div>
-        <div className="flex items-start gap-2">
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
-          <span>完成後按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">SHIFT</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">2</span> <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">2</span> 得出 σ（標準差）{sigmaValue !== null && <span className="font-bold text-blue-700">「{sigmaValue}」</span>}</span>
-        </div>
-        {isVariance && (
+        <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
           <div className="flex items-start gap-2">
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">5</span>
-            <span>方差 σ² = （標準差）²，即將 <span className="font-bold text-blue-700">「{sigmaValue}」</span> 再按 <span className="inline-block bg-slate-800 text-white text-xs font-bold px-2 py-0.5 rounded">x²</span> 得出方差</span>
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+            <span>按 <Kbd>MODE</Kbd> <Kbd>4</Kbd> 進入統計模式</span>
           </div>
-        )}
-        {sigmaValue !== null && (
-          <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 font-mono text-base border border-slate-200">
-            {isVariance
-              ? <><span className="text-slate-500">∴ 方差 σ² =</span> <span className="text-red-600 font-bold text-lg">{toSigFigs(sigmaValue * sigmaValue, 3)}</span></>
-              : <><span className="text-slate-500">∴ σ =</span> <span className="text-red-600 font-bold text-lg">{toSigFigs(sigmaValue, 3)}</span></>}
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+            <span>按 <Kbd>SHIFT</Kbd> <Kbd>9</Kbd> <Kbd>1</Kbd> <Kbd>EXE</Kbd> 清除舊數據</span>
           </div>
-        )}
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+            <div>
+              <span>逐一輸入每個數值，每個數值後按 <Kbd green>M+</Kbd> 儲存</span>
+              {uniqueVals.length > 0 && (
+                <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200">
+                  例：{exampleStr}{hasMore ? ' …' : ''}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
+            <span>完成後按 <Kbd>SHIFT</Kbd> <Kbd>2</Kbd> <Kbd>2</Kbd> 得出標準差</span>
+          </div>
+          {isVariance && (
+            <div className="flex items-start gap-2">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">5</span>
+              <span>方差 = （標準差）²，即將標準差再按 <Kbd>x²</Kbd> 得出方差</span>
+            </div>
+          )}
+          {sigmaValue !== null && (
+            <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 border border-slate-200">
+              {isVariance
+                ? <span className="text-base font-bold"><span className="text-slate-500">標準差 = </span><span className="text-blue-700">{sigmaValue}</span><span className="text-slate-500">　∴ 方差 = </span><span className="text-red-600">{Number((sigmaValue * sigmaValue).toPrecision(3))}</span></span>
+                : <span className="text-base font-bold"><span className="text-slate-500">標準差 = </span><span className="text-red-600">{sigmaValue}</span></span>
+              }
+            </div>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // --- 數學工具函數庫 ---
 const MathUtils = {
@@ -767,7 +1021,8 @@ export default function StatisticsApp() {
           setFeedback({ 
             type: 'wrong', 
             msg: '答案不正確', 
-            detail: `正確答案是：${formatAnswer(correct)}（用逗號分隔多個眾數）` 
+            detail: `正確答案是：${formatAnswer(correct)}`,
+            detailJSX: <ModeExplanation data={data} correctModes={[...correct].sort((a,b)=>a-b)} chartType={currentChart} />
           });
           setTotalQuestions(t => t + 1);
         }
@@ -792,8 +1047,7 @@ export default function StatisticsApp() {
         if (currentMeasure.id === 'mean') explanationJSX = <MeanSteps data={data} mean={formatAnswer(correct)} />;
         if (currentMeasure.id === 'range') explanation = `分佈域 = 最大值 (${Math.max(...data)}) - 最小值 (${Math.min(...data)})`;
         if (currentMeasure.id === 'iqr') {
-          const {q1, q3} = MathUtils.quartiles(data);
-          explanation = `四分位數間距 = Q3 - Q1\n              = ${q3} - ${q1}\n              = ${q3 - q1}`;
+          explanationJSX = <IQRExplanation data={data} chartType={currentChart} />;
         }
         if (currentMeasure.id === 'variance') {
           const sd = MathUtils.stdDev(data);
@@ -807,7 +1061,7 @@ export default function StatisticsApp() {
         setFeedback({ 
           type: 'wrong', 
           msg: '答案不正確', 
-          detail: explanation ? `正確答案是 ${formatAnswer(correct)}。\n${explanation}` : `正確答案是 ${formatAnswer(correct)}。`,
+          detail: (explanation && !explanationJSX) ? `正確答案是 ${formatAnswer(correct)}。\n${explanation}` : `正確答案是 ${formatAnswer(correct)}。`,
           detailJSX: explanationJSX
         });
         setTotalQuestions(t => t + 1);
