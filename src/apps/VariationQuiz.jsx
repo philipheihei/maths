@@ -81,7 +81,10 @@ const QUESTIONS_DATA = [
     formula: "P = k_1 + k_2 h^3",
     vars: ["P", "h"],
     subData: {
-      given: [{ label: "P(1)", value: "3" }, { label: "P(2)", value: "17" }],
+      given: [
+        { indepVar: "h", indepVal: "1", depVar: "P", depVal: "3" },
+        { indepVar: "h", indepVal: "2", depVar: "P", depVal: "17" }
+      ],
       equations: [
         ["k_1+k_2(1)^3=3", "k_1+k_2=3", "3=k_1+k_2(1)^3", "3=k_1+k_2"],
         ["k_1+k_2(2)^3=17", "k_1+8k_2=17", "17=k_1+k_2(2)^3", "17=k_1+8k_2"]
@@ -109,7 +112,10 @@ const QUESTIONS_DATA = [
     formula: "S = k_1 + k_2 n",
     vars: ["S", "n"],
     subData: {
-      given: [{ label: "S(4)", value: "22" }, { label: "S(6)", value: "32" }],
+      given: [
+        { indepVar: "n", indepVal: "4", depVar: "S", depVal: "22" },
+        { indepVar: "n", indepVal: "6", depVar: "S", depVal: "32" }
+      ],
       equations: [
         ["k_1+k_2(4)=22", "k_1+4k_2=22", "22=k_1+k_2(4)", "22=k_1+4k_2"],
         ["k_1+k_2(6)=32", "k_1+6k_2=32", "32=k_1+k_2(6)", "32=k_1+6k_2"]
@@ -137,7 +143,10 @@ const QUESTIONS_DATA = [
     formula: "W = k_1 l + k_2 l^2",
     vars: ["W", "l"],
     subData: {
-      given: [{ label: "W(3)", value: "18" }, { label: "W(5)", value: "50" }],
+      given: [
+        { indepVar: "l", indepVal: "3", depVar: "W", depVal: "18" },
+        { indepVar: "l", indepVal: "5", depVar: "W", depVal: "50" }
+      ],
       equations: [
         ["k_1(3)+k_2(3)^2=18", "3k_1+9k_2=18", "18=k_1(3)+k_2(3)^2", "18=3k_1+9k_2"],
         ["k_1(5)+k_2(5)^2=50", "5k_1+25k_2=50", "50=k_1(5)+k_2(5)^2", "50=5k_1+25k_2"]
@@ -151,7 +160,10 @@ const QUESTIONS_DATA = [
     formula: "C = k_1 + k_2 x^2",
     vars: ["C", "x"],
     subData: {
-      given: [{ label: "C(1)", value: "7" }, { label: "C(4)", value: "22" }],
+      given: [
+        { indepVar: "x", indepVal: "1", depVar: "C", depVal: "7" },
+        { indepVar: "x", indepVal: "4", depVar: "C", depVal: "22" }
+      ],
       equations: [
         ["k_1+k_2(1)^2=7", "k_1+k_2=7", "7=k_1+k_2(1)^2", "7=k_1+k_2"],
         ["k_1+k_2(4)^2=22", "k_1+16k_2=22", "22=k_1+k_2(4)^2", "22=k_1+16k_2"]
@@ -691,13 +703,22 @@ const VariationQuiz = () => {
               </div>
 
               {/* Given value chip */}
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm text-slate-500">將</span>
-                <span className="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-full text-sm border border-indigo-200">
-                  <MathDisplay latex={`${given.label} = ${given.value}`} inline={true} />
-                </span>
-                <span className="text-sm text-slate-500">代入，寫出方程：</span>
-              </div>
+              {given.indepVar ? (
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="bg-indigo-100 text-indigo-800 font-bold px-3 py-1.5 rounded-full text-sm border border-indigo-200 flex items-center gap-1">
+                    當&nbsp;<MathDisplay latex={`${given.depVar} = ${given.depVal}`} inline={true} />&nbsp;時，<MathDisplay latex={`${given.indepVar} = ${given.indepVal}`} inline={true} />
+                  </span>
+                  <span className="text-sm text-slate-500">利用以上資訊，寫出代入方程：</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-sm text-slate-500">將</span>
+                  <span className="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-full text-sm border border-indigo-200">
+                    <MathDisplay latex={`${given.label} = ${given.value}`} inline={true} />
+                  </span>
+                  <span className="text-sm text-slate-500">代入，寫出方程：</span>
+                </div>
+              )}
 
               {/* Sub input box */}
               <div className={`relative ${THEME.cardBg} rounded-xl border-2 p-2 ${boxHeight} flex flex-row items-stretch transition-colors shadow-inner w-full
