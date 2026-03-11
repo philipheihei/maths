@@ -208,6 +208,229 @@ const ModeExplanation = ({ data, correctModes, chartType }) => {
   );
 };
 
+// --- 中位數解釋元件 ---
+const MedianExplanation = ({ data, chartType }) => {
+  const sorted = [...data].sort((a, b) => a - b);
+  const n = sorted.length;
+  const isOdd = n % 2 !== 0;
+  const median = isOdd ? sorted[Math.floor(n / 2)] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
+
+  // 框線圖：直接從中線讀出中位數
+  if (chartType === 'box') {
+    return (
+      <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+        <div className="border-2 border-teal-400 rounded-xl overflow-hidden">
+          <div className="bg-teal-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+            <span>📊</span> 如何從框線圖讀出中位數
+          </div>
+          <div className="bg-white px-4 py-3 space-y-3 text-sm text-slate-700">
+            <div className="flex items-start gap-2">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+              <span>框線圖「盒子」中間的<span className="font-bold text-red-600">豎線</span>就是中位數</span>
+            </div>
+            <div className="mt-1 bg-slate-100 rounded px-3 py-2 border border-slate-200">
+              <span className="text-base font-bold">
+                <span className="text-slate-500">∴ 中位數 = </span>
+                <span className="text-red-600">{median}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 頻數表 / 棒型圖：用累積頻數法
+  if (chartType === 'table' || chartType === 'bar') {
+    // 建立頻數表
+    const freq = {};
+    data.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
+    const keys = Object.keys(freq).map(Number).sort((a, b) => a - b);
+
+    // 建立累積頻數
+    let cumFreq = 0;
+    const rows = keys.map(k => {
+      const from = cumFreq + 1;
+      cumFreq += freq[k];
+      return { val: k, f: freq[k], cum: cumFreq, from };
+    });
+
+    // 找中位數位置
+    const pos1 = isOdd ? Math.ceil(n / 2) : n / 2;       // 1-indexed
+    const pos2 = isOdd ? pos1 : n / 2 + 1;               // 1-indexed (same as pos1 if odd)
+
+    // 找哪行包含 pos1 / pos2
+    const rowForPos = (pos) => rows.find(r => pos >= r.from && pos <= r.cum);
+    const r1 = rowForPos(pos1);
+    const r2 = rowForPos(pos2);
+
+    return (
+      <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+        <div className="border-2 border-teal-400 rounded-xl overflow-hidden">
+          <div className="bg-teal-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+            <span>📊</span> 如何用頻數表求中位數
+          </div>
+          <div className="bg-white px-4 py-3 space-y-3 text-sm text-slate-700">
+
+            {/* Step 1: count total */}
+            <div className="flex items-start gap-2">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+              <div>
+                <span>先數<span className="font-bold text-blue-700">總頻數</span>（所有頻數加起來）</span>
+                <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200">
+                  {rows.map(r => r.f).join(' + ')} = <span className="font-bold text-blue-700">{n}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2: find position */}
+            <div className="flex items-start gap-2">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+              <div>
+                {isOdd ? (
+                  <span>
+                    總頻數 <span className="font-bold text-blue-700">{n}</span> 為<span className="font-bold">奇數</span>，
+                    中位數是第 <span className="font-bold text-red-600">({n}+1)÷2 = {pos1}</span> 個數
+                  </span>
+                ) : (
+                  <span>
+                    總頻數 <span className="font-bold text-blue-700">{n}</span> 為<span className="font-bold">偶數</span>，
+                    中位數是第 <span className="font-bold text-red-600">{pos1}</span> 和第{' '}
+                    <span className="font-bold text-red-600">{pos2}</span> 個數的平均值
+                    （即 {n}÷2 = {pos1}，{n}÷2+1 = {pos2}）
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Step 3: cumulative freq table */}
+            <div className="flex items-start gap-2">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+              <div className="w-full">
+                <span>用<span className="font-bold text-blue-700">累積頻數</span>找出該位置屬於哪個數值</span>
+                <div className="mt-2 overflow-x-auto">
+                  <table className="w-full text-xs text-center border-collapse">
+                    <thead>
+                      <tr className="bg-slate-100">
+                        <th className="border border-slate-200 px-2 py-1">數值</th>
+                        <th className="border border-slate-200 px-2 py-1">頻數</th>
+                        <th className="border border-slate-200 px-2 py-1">累積頻數</th>
+                        <th className="border border-slate-200 px-2 py-1">包含第…個數</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map(r => {
+                        const isTarget = (r.val === r1?.val) || (r.val === r2?.val);
+                        return (
+                          <tr key={r.val} className={isTarget ? 'bg-red-50' : ''}>
+                            <td className={`border px-2 py-1 font-bold ${
+                              isTarget ? 'border-red-300 text-red-700' : 'border-slate-200'
+                            }`}>{r.val}</td>
+                            <td className={`border px-2 py-1 ${
+                              isTarget ? 'border-red-300 text-red-700' : 'border-slate-200'
+                            }`}>{r.f}</td>
+                            <td className={`border px-2 py-1 font-bold ${
+                              isTarget ? 'border-red-300 text-red-700' : 'border-slate-200'
+                            }`}>{r.cum}</td>
+                            <td className={`border px-2 py-1 ${
+                              isTarget ? 'border-red-300 text-red-700 font-bold' : 'border-slate-200 text-slate-500'
+                            }`}>
+                              第 {r.from}{r.f > 1 ? `–${r.cum}` : ''} 個
+                              {isTarget && <span className="ml-1">&#9664;</span>}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 4: conclusion */}
+            <div className="flex items-start gap-2">
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
+              <div className="bg-slate-100 rounded px-3 py-2 border border-slate-200 w-full">
+                {isOdd ? (
+                  <span className="text-base font-bold">
+                    <span className="text-slate-500">第 {pos1} 個數 = </span>
+                    <span className="text-red-600">{r1?.val}</span>
+                    <span className="text-slate-500">，∴ 中位數 = </span>
+                    <span className="text-red-600">{median}</span>
+                  </span>
+                ) : (
+                  <span className="text-base font-bold">
+                    <span className="text-slate-500">第{pos1}個數 = </span>
+                    <span className="text-red-600">{r1?.val}</span>
+                    <span className="text-slate-500">，第{pos2}個數 = </span>
+                    <span className="text-red-600">{r2?.val}</span>
+                    <span className="text-slate-500">，∴ 中位數 = ({r1?.val}+{r2?.val})÷2 = </span>
+                    <span className="text-red-600">{median}</span>
+                  </span>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 幹葉圖：排列後找中間
+  return (
+    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+      <div className="border-2 border-teal-400 rounded-xl overflow-hidden">
+        <div className="bg-teal-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+          <span>📊</span> 如何從幹葉圖求中位數
+        </div>
+        <div className="bg-white px-4 py-3 space-y-3 text-sm text-slate-700">
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+            <span>幹葉圖的數值已由小至大排列，共 <span className="font-bold text-blue-700">{n}</span> 個</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+            <div>
+              {isOdd ? (
+                <span>共 <span className="font-bold text-blue-700">{n}</span> 個（奇數），中位數是第 <span className="font-bold text-red-600">({n}+1)÷2 = {Math.ceil(n/2)}</span> 個數</span>
+              ) : (
+                <span>共 <span className="font-bold text-blue-700">{n}</span> 個（偶數），中位數是第 <span className="font-bold text-red-600">{n/2}</span> 和第 <span className="font-bold text-red-600">{n/2+1}</span> 個數的平均值</span>
+              )}
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+            <div className="w-full">
+              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-1">
+                {sorted.map((v, i) => {
+                  const isMedianPos = isOdd
+                    ? i === Math.floor(n / 2)
+                    : i === n / 2 - 1 || i === n / 2;
+                  return (
+                    <span key={i} className={`px-1 rounded ${
+                      isMedianPos ? 'bg-red-200 font-bold text-red-700' : ''
+                    }`}>{v}</span>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="bg-slate-100 rounded px-3 py-2 border border-slate-200">
+            <span className="text-base font-bold">
+              {isOdd ? (
+                <><span className="text-slate-500">∴ 中位數 = 第{Math.ceil(n/2)}個數 = </span><span className="text-red-600">{median}</span></>
+              ) : (
+                <><span className="text-slate-500">∴ 中位數 = ({sorted[n/2-1]} + {sorted[n/2]}) ÷ 2 = </span><span className="text-red-600">{median}</span></>
+              )}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // --- IQR 解釋元件 ---
 const IQRExplanation = ({ data, chartType }) => {
   const sorted = [...data].sort((a, b) => a - b);
@@ -344,7 +567,7 @@ const IQRExplanation = ({ data, chartType }) => {
 };
 
 // --- 平均數步驟顯示元件 ---
-const MeanSteps = ({ data, mean }) => {
+const MeanSteps = ({ data, mean, chartType }) => {
   const sum = data.reduce((a, b) => a + b, 0);
   const n = data.length;
   // Build frequency map
@@ -355,11 +578,34 @@ const MeanSteps = ({ data, mean }) => {
   const numExpr = keys.map(k => freq[k] === 1 ? `${k}` : `${k}×${freq[k]}`).join(' + ');
   // Compact denominator expression: f + f + ...
   const denExpr = keys.map(k => `${freq[k]}`).join(' + ');
+
+  const isFreqChart = chartType === 'table' || chartType === 'bar';
+  // Calculator example entries as JSX
+  const sortedAll = [...data].sort((a, b) => a - b);
+  const calcExampleJSX = isFreqChart
+    ? keys.map((k, i) => (
+        <span key={k} className="inline-flex items-center gap-0.5 mr-3">
+          {k} <Kbd>;</Kbd> {freq[k]} <Kbd green>M+</Kbd>
+        </span>
+      ))
+    : [
+        ...sortedAll.slice(0, 8).map((v, i) => (
+          <span key={i} className="inline-flex items-center gap-0.5 mr-2">
+            {v} <Kbd green>M+</Kbd>
+          </span>
+        )),
+        ...(sortedAll.length > 8 ? [<span key="more" className="text-slate-400">…</span>] : [])
+      ];
+
   return (
-    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
+    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2 space-y-3">
+
+      {/* Part 1: Long method */}
       <div className="border-2 border-blue-400 rounded-xl overflow-hidden">
         <div className="bg-blue-500 text-white px-4 py-2 font-bold flex items-center gap-2">
-          <span>📐</span> 平均數（Mean）計算步驟
+          <span>📐</span>
+          <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded font-normal">方法一</span>
+          長答方法
         </div>
         <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
           <div className="flex items-start gap-2">
@@ -391,20 +637,82 @@ const MeanSteps = ({ data, mean }) => {
           </div>
         </div>
       </div>
+
+      {/* Part 2: Calculator method */}
+      <div className="border-2 border-green-400 rounded-xl overflow-hidden">
+        <div className="bg-green-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+          <span>📱</span>
+          <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded font-normal">方法二</span>
+          使用計算機 SD Mode
+        </div>
+        <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
+            <span>按 <Kbd>MODE</Kbd> <Kbd>4</Kbd> 進入統計模式</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
+            <span>按 <Kbd>SHIFT</Kbd> <Kbd>9</Kbd> <Kbd>1</Kbd> <Kbd>EXE</Kbd> 清除舊數據</span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
+            <div>
+              {isFreqChart ? (
+                <span>輸入格式：數值 <Kbd>;</Kbd> 頻數 <Kbd green>M+</Kbd>（每組一次）</span>
+              ) : (
+                <span>逐一輸入每個數值，每個數值後按 <Kbd green>M+</Kbd> 儲存</span>
+              )}
+              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-y-1">
+                例：{calcExampleJSX}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
+            <span>完成後按 <Kbd>SHIFT</Kbd> <Kbd>2</Kbd> <Kbd>1</Kbd> 得出平均數（x̄）</span>
+          </div>
+          <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 border border-slate-200">
+            <span className="text-base font-bold">
+              <span className="text-slate-500">平均數 = </span>
+              <span className="text-red-600">{mean}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };
 
 // --- 計算機 SD Mode 步驟顯示元件 ---
 const Kbd = ({ children, green }) => (
-  <span className={`inline-block text-white text-xs font-bold px-2 py-0.5 rounded ${green ? 'bg-green-600' : 'bg-slate-800'}`}>{children}</span>
+  <span className={`inline-block text-white text-xs font-bold px-2 py-0.5 rounded ${green ? 'bg-slate-500' : 'bg-slate-800'}`}>{children}</span>
 );
 
-const CalcSDSteps = ({ isVariance = false, sigmaValue = null, data = [] }) => {
-  // 取最多5個獨特數值作例子
-  const uniqueVals = [...new Set(data)].sort((a, b) => a - b).slice(0, 5);
-  const exampleStr = uniqueVals.map(v => `${v} M+`).join('  ');
-  const hasMore = [...new Set(data)].length > 5;
+const CalcSDSteps = ({ isVariance = false, sigmaValue = null, data = [], chartType = '' }) => {
+  const isFreqChart = chartType === 'table' || chartType === 'bar';
+  const sortedAll = [...data].sort((a, b) => a - b);
+
+  // Build freq map for freq charts
+  const freq = {};
+  data.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
+  const freqKeys = Object.keys(freq).map(Number).sort((a, b) => a - b);
+
+  // Build JSX example
+  const exampleJSX = isFreqChart
+    ? freqKeys.map((k, i) => (
+        <span key={k} className="inline-flex items-center gap-0.5 mr-3">
+          {k} <Kbd>;</Kbd> {freq[k]} <Kbd green>M+</Kbd>
+        </span>
+      ))
+    : [
+        ...sortedAll.slice(0, 8).map((v, i) => (
+          <span key={i} className="inline-flex items-center gap-0.5 mr-2">
+            {v} <Kbd green>M+</Kbd>
+          </span>
+        )),
+        ...(sortedAll.length > 8 ? [<span key="more" className="text-slate-400">…</span>] : [])
+      ];
 
   return (
     <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
@@ -424,10 +732,14 @@ const CalcSDSteps = ({ isVariance = false, sigmaValue = null, data = [] }) => {
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
             <div>
-              <span>逐一輸入每個數值，每個數值後按 <Kbd green>M+</Kbd> 儲存</span>
-              {uniqueVals.length > 0 && (
-                <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200">
-                  例：{exampleStr}{hasMore ? ' …' : ''}
+              {isFreqChart ? (
+                <span>輸入格式：數值 <Kbd>;</Kbd> 頻數 <Kbd green>M+</Kbd>（每組一次）</span>
+              ) : (
+                <span>逐一輸入每個數值，每個數值後按 <Kbd green>M+</Kbd> 儲存</span>
+              )}
+              {data.length > 0 && (
+                <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-y-1">
+                  例：{exampleJSX}
                 </div>
               )}
             </div>
@@ -1044,19 +1356,19 @@ export default function StatisticsApp() {
       } else {
         let explanation = "";
         let explanationJSX = null;
-        if (currentMeasure.id === 'mean') explanationJSX = <MeanSteps data={data} mean={formatAnswer(correct)} />;
+        if (currentMeasure.id === 'mean') explanationJSX = <MeanSteps data={data} mean={formatAnswer(correct)} chartType={currentChart} />;
         if (currentMeasure.id === 'range') explanation = `分佈域 = 最大值 (${Math.max(...data)}) - 最小值 (${Math.min(...data)})`;
         if (currentMeasure.id === 'iqr') {
           explanationJSX = <IQRExplanation data={data} chartType={currentChart} />;
         }
         if (currentMeasure.id === 'variance') {
           const sd = MathUtils.stdDev(data);
-          explanationJSX = <CalcSDSteps isVariance={true} sigmaValue={parseFloat(sd.toFixed(4))} />;
+          explanationJSX = <CalcSDSteps isVariance={true} sigmaValue={parseFloat(sd.toFixed(4))} data={data} chartType={currentChart} />;
         }
         if (currentMeasure.id === 'stdDev') {
-          explanationJSX = <CalcSDSteps isVariance={false} sigmaValue={parseFloat(correct.toFixed(4))} />;
+          explanationJSX = <CalcSDSteps isVariance={false} sigmaValue={parseFloat(correct.toFixed(4))} data={data} chartType={currentChart} />;
         }
-        if (currentMeasure.id === 'median') explanation = `中位數 = 排序後中間的數`;
+        if (currentMeasure.id === 'median') explanationJSX = <MedianExplanation data={data} chartType={currentChart} />;
 
         setFeedback({ 
           type: 'wrong', 
@@ -1541,48 +1853,7 @@ export default function StatisticsApp() {
                         
                         <div className="p-4 bg-slate-50 rounded-lg border border-slate-100 text-sm leading-relaxed">
                           {selectedStat === 'mean' && (
-                            <p>
-                              將所有數值加總，除以數據個數。<br/>
-                              {selectedChart === 'table' || selectedChart === 'bar' ? (
-                                // 頻數表和棒型圖：使用 f × x 格式
-                                (() => {
-                                  const freq = {};
-                                  learnData.forEach(v => freq[v] = (freq[v] || 0) + 1);
-                                  const keys = Object.keys(freq).map(Number).sort((a,b)=>a-b);
-                                  const terms = keys.map(k => `${k}(${freq[k]})`);
-                                  return (
-                                    <>
-                                      <div className="mt-2 flex items-center gap-2">
-                                        <span className="font-semibold">平均數 =</span>
-                                        <Fraction 
-                                          numerator={terms.join(' + ')} 
-                                          denominator={learnData.length}
-                                        />
-                                      </div>
-                                      <div className="mt-2 flex items-center gap-2">
-                                        <span className="font-semibold">平均數 =</span>
-                                        <KaTeXValue value={formatAnswer(MathUtils.mean(learnData))} />
-                                      </div>
-                                    </>
-                                  );
-                                })()
-                              ) : (
-                                // 其他圖表：列出所有數據
-                                <>
-                                  <div className="mt-2 flex items-center gap-2">
-                                    <span className="font-semibold">平均數 =</span>
-                                    <Fraction 
-                                      numerator={learnData.join(' + ')} 
-                                      denominator={learnData.length}
-                                    />
-                                  </div>
-                                  <div className="mt-2 flex items-center gap-2">
-                                    <span className="font-semibold">平均數 =</span>
-                                    <KaTeXValue value={formatAnswer(MathUtils.mean(learnData))} />
-                                  </div>
-                                </>
-                              )}
-                            </p>
+                            <MeanSteps data={learnData} mean={formatAnswer(MathUtils.mean(learnData))} chartType={selectedChart} />
                           )}
                           
                           {selectedStat === 'median' && selectedChart === 'box' && (
@@ -1686,32 +1957,10 @@ export default function StatisticsApp() {
                             </p>
                           )}
                           {selectedStat === 'variance' && (
-                            <p>
-                              計算每個數與平均數距離的平方，取平均。<br/>
-                              <br/>
-                              <b>使用 CASIO fx-50FH II 計算機計算：</b><br/>
-                              <span className="text-slate-600 text-sm">
-                                1. 先按上述方法計算標準差 (σn)<br/>
-                                2. 將標準差平方即可得到方差<br/>
-                              </span>
-                              <br/>
-                              <b>公式：方差 = (標準差)²</b><br/>
-                              標準差 = {MathUtils.stdDev(learnData).toFixed(4)}<br/>
-                              <b>方差 = ({MathUtils.stdDev(learnData).toFixed(4)})² = {MathUtils.variance(learnData).toFixed(4)}</b>
-                            </p>
+                            <CalcSDSteps isVariance={true} sigmaValue={parseFloat(MathUtils.stdDev(learnData).toFixed(4))} data={learnData} chartType={selectedChart} />
                           )}
                           {selectedStat === 'stdDev' && (
-                            <p>
-                              <b>使用計算機 SD 模式計算標準差：</b><br/>
-                              <span className="text-slate-600 text-sm">
-                                1. 按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">MODE</kbd> → 選擇 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">4 (SD)</kbd><br/>
-                                2. 逐個輸入數據，每個數後按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">M+</kbd> 來儲存<br/>
-                                3. 輸入完畢後，按 <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">SHIFT</kbd> <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2</kbd> <kbd className="px-2 py-1 bg-slate-200 rounded text-xs">2</kbd> (σn) 得到標準差<br/>
-                              </span>
-                              <br/>
-                              數據：{learnData.join(', ')}<br/>
-                              <b>標準差 (SD) = {MathUtils.stdDev(learnData).toFixed(4)}</b> <span className="text-slate-500 text-sm">(約至4位小數)</span>
-                            </p>
+                            <CalcSDSteps isVariance={false} sigmaValue={parseFloat(MathUtils.stdDev(learnData).toFixed(4))} data={learnData} chartType={selectedChart} />
                           )}
                         </div>
                       </div>
