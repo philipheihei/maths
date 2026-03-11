@@ -226,7 +226,7 @@ const MedianExplanation = ({ data, chartType }) => {
           <div className="bg-white px-4 py-3 space-y-3 text-sm text-slate-700">
             <div className="flex items-start gap-2">
               <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
-              <span>框線圖「盒子」中間的<span className="font-bold text-red-600">豎線</span>就是中位數</span>
+              <span>框線圖「長方形」中間的<span className="font-bold text-red-600">直線</span>就是中位數</span>
             </div>
             <div className="mt-1 bg-slate-100 rounded px-3 py-2 border border-slate-200">
               <span className="text-base font-bold">
@@ -453,12 +453,12 @@ const IQRExplanation = ({ data, chartType }) => {
       <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
         <div className="border-2 border-purple-400 rounded-xl overflow-hidden">
           <div className="bg-purple-500 text-white px-4 py-2 font-bold flex items-center gap-2">
-            <span>📐</span> 如何從框線圖讀出 IQR
+            <span>📐</span> 如何從框線圖讀出四分位數間距
           </div>
           <div className="bg-white px-4 py-3 space-y-3 text-sm text-slate-700">
             <div className="flex items-start gap-2">
               <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
-              <span>從框線圖找出 <span className="font-bold text-blue-700">Q₁</span>（盒子左邊）和 <span className="font-bold text-red-700">Q₃</span>（盒子右邊）</span>
+              <span>從框線圖找出 <span className="font-bold text-blue-700">Q₁</span>（長方形左邊）和 <span className="font-bold text-red-700">Q₃</span>（長方形右邊）</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
@@ -568,6 +568,9 @@ const IQRExplanation = ({ data, chartType }) => {
 
 // --- 平均數步驟顯示元件 ---
 const MeanSteps = ({ data, mean, chartType }) => {
+  const [activeTab, setActiveTab] = useState('method1');
+  const [showTip, setShowTip] = useState(false);
+
   const sum = data.reduce((a, b) => a + b, 0);
   const n = data.length;
   // Build frequency map
@@ -588,25 +591,57 @@ const MeanSteps = ({ data, mean, chartType }) => {
           {k} <Kbd>;</Kbd> {freq[k]} <Kbd green>M+</Kbd>
         </span>
       ))
-    : [
-        ...sortedAll.slice(0, 8).map((v, i) => (
+    : (() => {
+        const runs = [];
+        sortedAll.forEach(v => {
+          if (runs.length > 0 && runs[runs.length - 1].v === v) runs[runs.length - 1].c++;
+          else runs.push({ v, c: 1 });
+        });
+        const display = runs.slice(0, 7);
+        const items = display.map((r, i) => (
           <span key={i} className="inline-flex items-center gap-0.5 mr-2">
-            {v} <Kbd green>M+</Kbd>
+            {r.v} {Array.from({ length: r.c }).map((_, j) => <Kbd key={j} green>M+</Kbd>)}
           </span>
-        )),
-        ...(sortedAll.length > 8 ? [<span key="more" className="text-slate-400">…</span>] : [])
-      ];
+        ));
+        if (runs.length > 7) items.push(<span key="more" className="text-slate-400">…</span>);
+        return items;
+      })();
+
+  const tabBorderColor = activeTab === 'method1' ? 'border-blue-400' : 'border-green-400';
 
   return (
-    <div className="text-left w-full max-w-md mx-auto mt-1 mb-2 space-y-3">
+    <div className={`text-left w-full max-w-md mx-auto mt-1 mb-2 border-2 rounded-xl overflow-hidden ${tabBorderColor}`}>
 
-      {/* Part 1: Long method */}
-      <div className="border-2 border-blue-400 rounded-xl overflow-hidden">
-        <div className="bg-blue-500 text-white px-4 py-2 font-bold flex items-center gap-2">
+      {/* Tab buttons */}
+      <div className="flex">
+        <button
+          onClick={() => setActiveTab('method1')}
+          className={`flex-1 px-3 py-2 font-bold text-sm flex items-center justify-center gap-1.5 transition-colors ${
+            activeTab === 'method1'
+              ? 'bg-blue-500 text-white'
+              : 'bg-slate-100 text-slate-500 hover:bg-blue-50 hover:text-blue-600'
+          }`}
+        >
           <span>📐</span>
-          <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded font-normal">方法一</span>
+          <span className="text-xs font-normal opacity-80">方法一</span>
           長答方法
-        </div>
+        </button>
+        <button
+          onClick={() => setActiveTab('method2')}
+          className={`flex-1 px-3 py-2 font-bold text-sm flex items-center justify-center gap-1.5 transition-colors border-l ${
+            activeTab === 'method2'
+              ? 'bg-green-500 text-white border-green-400'
+              : 'bg-slate-100 text-slate-500 hover:bg-green-50 hover:text-green-600 border-slate-200'
+          }`}
+        >
+          <span>📱</span>
+          <span className="text-xs font-normal opacity-80">方法二</span>
+          計算機 SD
+        </button>
+      </div>
+
+      {/* Method 1: Long method */}
+      {activeTab === 'method1' && (
         <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
@@ -636,15 +671,10 @@ const MeanSteps = ({ data, mean, chartType }) => {
             <span className="text-slate-500">∴ 平均數 =</span> <span className="text-red-600 font-bold text-lg">{mean}</span>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Part 2: Calculator method */}
-      <div className="border-2 border-green-400 rounded-xl overflow-hidden">
-        <div className="bg-green-500 text-white px-4 py-2 font-bold flex items-center gap-2">
-          <span>📱</span>
-          <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded font-normal">方法二</span>
-          使用計算機 SD Mode
-        </div>
+      {/* Method 2: Calculator method */}
+      {activeTab === 'method2' && (
         <div className="bg-white px-4 py-3 space-y-2 text-sm text-slate-700">
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
@@ -660,7 +690,18 @@ const MeanSteps = ({ data, mean, chartType }) => {
               {isFreqChart ? (
                 <span>輸入格式：數值 <Kbd>;</Kbd> 頻數 <Kbd green>M+</Kbd>（每組一次）</span>
               ) : (
-                <span>逐一輸入每個數值，每個數值後按 <Kbd green>M+</Kbd> 儲存</span>
+                <>
+                  <div className="flex items-center gap-2">
+                    <span>逐一輸入每個數值，每個數值後按 <Kbd green>M+</Kbd> 儲存</span>
+                    <button onClick={() => setShowTip(t => !t)} className="text-yellow-500 hover:text-yellow-600 text-base leading-none" title="小提示">💡</button>
+                  </div>
+                  {showTip && (
+                    <div className="mt-1 text-xs text-slate-500 bg-yellow-50 border border-yellow-200 rounded px-2 py-1">
+                      數字相同時可連按 <Kbd green>M+</Kbd>，毋須重新輸入數字<br />
+                      例如出現 3 次 25：輸入 25 後連按 <Kbd green>M+</Kbd> <Kbd green>M+</Kbd> <Kbd green>M+</Kbd>
+                    </div>
+                  )}
+                </>
               )}
               <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-y-1">
                 例：{calcExampleJSX}
@@ -678,7 +719,7 @@ const MeanSteps = ({ data, mean, chartType }) => {
             </span>
           </div>
         </div>
-      </div>
+      )}
 
     </div>
   );
@@ -690,6 +731,7 @@ const Kbd = ({ children, green }) => (
 );
 
 const CalcSDSteps = ({ isVariance = false, sigmaValue = null, data = [], chartType = '' }) => {
+  const [showTip, setShowTip] = useState(false);
   const isFreqChart = chartType === 'table' || chartType === 'bar';
   const sortedAll = [...data].sort((a, b) => a - b);
 
@@ -698,21 +740,28 @@ const CalcSDSteps = ({ isVariance = false, sigmaValue = null, data = [], chartTy
   data.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
   const freqKeys = Object.keys(freq).map(Number).sort((a, b) => a - b);
 
-  // Build JSX example
+  // Build JSX example (run-length encoded for non-freq charts)
   const exampleJSX = isFreqChart
     ? freqKeys.map((k, i) => (
         <span key={k} className="inline-flex items-center gap-0.5 mr-3">
           {k} <Kbd>;</Kbd> {freq[k]} <Kbd green>M+</Kbd>
         </span>
       ))
-    : [
-        ...sortedAll.slice(0, 8).map((v, i) => (
+    : (() => {
+        const runs = [];
+        sortedAll.forEach(v => {
+          if (runs.length > 0 && runs[runs.length - 1].v === v) runs[runs.length - 1].c++;
+          else runs.push({ v, c: 1 });
+        });
+        const display = runs.slice(0, 7);
+        const items = display.map((r, i) => (
           <span key={i} className="inline-flex items-center gap-0.5 mr-2">
-            {v} <Kbd green>M+</Kbd>
+            {r.v} {Array.from({ length: r.c }).map((_, j) => <Kbd key={j} green>M+</Kbd>)}
           </span>
-        )),
-        ...(sortedAll.length > 8 ? [<span key="more" className="text-slate-400">…</span>] : [])
-      ];
+        ));
+        if (runs.length > 7) items.push(<span key="more" className="text-slate-400">…</span>);
+        return items;
+      })();
 
   return (
     <div className="text-left w-full max-w-md mx-auto mt-1 mb-2">
@@ -735,7 +784,18 @@ const CalcSDSteps = ({ isVariance = false, sigmaValue = null, data = [], chartTy
               {isFreqChart ? (
                 <span>輸入格式：數值 <Kbd>;</Kbd> 頻數 <Kbd green>M+</Kbd>（每組一次）</span>
               ) : (
-                <span>逐一輸入每個數值，每個數值後按 <Kbd green>M+</Kbd> 儲存</span>
+                <>
+                  <div className="flex items-center gap-2">
+                    <span>逐一輸入每個數值，每個數值後按 <Kbd green>M+</Kbd> 儲存</span>
+                    <button onClick={() => setShowTip(t => !t)} className="text-yellow-500 hover:text-yellow-600 text-base leading-none" title="小提示">💡</button>
+                  </div>
+                  {showTip && (
+                    <div className="mt-1 text-xs text-slate-500 bg-yellow-50 border border-yellow-200 rounded px-2 py-1">
+                      數字相同時可連按 <Kbd green>M+</Kbd>，毋須重新輸入數字<br />
+                      例如出現 3 次 25：輸入 25 後連按 <Kbd green>M+</Kbd> <Kbd green>M+</Kbd> <Kbd green>M+</Kbd>
+                    </div>
+                  )}
+                </>
               )}
               {data.length > 0 && (
                 <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-y-1">
@@ -1366,7 +1426,7 @@ export default function StatisticsApp() {
           explanationJSX = <CalcSDSteps isVariance={true} sigmaValue={parseFloat(sd.toFixed(4))} data={data} chartType={currentChart} />;
         }
         if (currentMeasure.id === 'stdDev') {
-          explanationJSX = <CalcSDSteps isVariance={false} sigmaValue={parseFloat(correct.toFixed(4))} data={data} chartType={currentChart} />;
+          explanationJSX = <CalcSDSteps isVariance={false} sigmaValue={Number(parseFloat(correct).toPrecision(3))} data={data} chartType={currentChart} />;
         }
         if (currentMeasure.id === 'median') explanationJSX = <MedianExplanation data={data} chartType={currentChart} />;
 
@@ -1400,10 +1460,14 @@ export default function StatisticsApp() {
       hintMsg = "提示：將數據由小至大排列，找出正中間的數。";
     } else if (currentMeasure.id === 'stdDev') {
       setHighlight('data');
-      hintMsg = "提示：使用計算機MODE 4，先SHIFT 9 1 清除數據，再輸入每個數據後以M+ 儲存。完成輸入數據後按 SHIFT 2 2 得出標準差。";
+      hintMsg = "提示：使用計算機 SD Mode 計算標準差。";
+      setFeedback({ type: 'hint', msg: hintMsg, hintJSX: <CalcSDSteps data={data} chartType={currentChart} isVariance={false} sigmaValue={Number(parseFloat(MathUtils.stdDev(data)).toPrecision(3))} /> });
+      return;
     } else if (currentMeasure.id === 'variance') {
       setHighlight('data');
-      hintMsg = "提示：方差 = (標準差)²\n使用計算機MODE 4，先SHIFT 9 1 清除數據，再輸入每個數據後以M+ 儲存。完成輸入數據後按 SHIFT 2 2 得出標準差。再將標準差答案平方就是方差了。";
+      hintMsg = "提示：方差 = (標準差)²，先用計算機求標準差，再平方。";
+      setFeedback({ type: 'hint', msg: hintMsg, hintJSX: <CalcSDSteps data={data} chartType={currentChart} isVariance={true} sigmaValue={parseFloat(MathUtils.stdDev(data).toFixed(4))} /> });
+      return;
     } else {
       setHighlight('data');
       hintMsg = "提示：仔細觀察數據分佈。";
@@ -1545,10 +1609,15 @@ export default function StatisticsApp() {
               
               {/* Hint Display */}
               {feedback?.type === 'hint' && (
-                 <div className="mt-2 p-3 bg-amber-50 text-amber-800 text-sm rounded border border-amber-200 flex items-start gap-2 animate-fadeIn whitespace-pre-line">
-                   <div className="mt-1"><HelpCircle size={14} /></div>
-                   <div>{feedback.msg}</div>
-                 </div>
+                <div className="mt-2 w-full">
+                  <div className="p-3 bg-amber-50 text-amber-800 text-sm rounded border border-amber-200 flex items-start gap-2 animate-fadeIn whitespace-pre-line">
+                    <div className="mt-1"><HelpCircle size={14} /></div>
+                    <div>{feedback.msg}</div>
+                  </div>
+                  {feedback.hintJSX && (
+                    <div className="mt-2">{feedback.hintJSX}</div>
+                  )}
+                </div>
               )}
               
               {/* 虛擬數字鍵盤 */}
@@ -1960,7 +2029,7 @@ export default function StatisticsApp() {
                             <CalcSDSteps isVariance={true} sigmaValue={parseFloat(MathUtils.stdDev(learnData).toFixed(4))} data={learnData} chartType={selectedChart} />
                           )}
                           {selectedStat === 'stdDev' && (
-                            <CalcSDSteps isVariance={false} sigmaValue={parseFloat(MathUtils.stdDev(learnData).toFixed(4))} data={learnData} chartType={selectedChart} />
+                            <CalcSDSteps isVariance={false} sigmaValue={Number(parseFloat(MathUtils.stdDev(learnData)).toPrecision(3))} data={learnData} chartType={selectedChart} />
                           )}
                         </div>
                       </div>
