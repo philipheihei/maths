@@ -132,7 +132,6 @@ const DraggablePoint = ({ point, onDragStart, isDragging, label = 'P', color = '
         stroke="white"
         strokeWidth="2"
         style={{ cursor: 'grab', pointerEvents: 'none' }}
-        className="transition-all duration-150"
       />
       <text 
         x={svgCoords.x + 12} 
