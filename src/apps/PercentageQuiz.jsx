@@ -411,6 +411,7 @@ const QuizPage = ({ onBackToTeaching }) => {
       text: `某${item}以其標價${discountZh}售出。售出該${item}後，盈利為 $${profit} 且盈利百分率為 ${profitPercent}%。求該${item}的標價。`,
       answer: markedPrice,
       hintLatex: `\\begin{aligned}
+        \\text{成本} \\times \\text{盈利百分率} &= \\text{盈利} \\\\
         \\text{成本} &= \\text{盈利} \\div \\text{盈利百分率} \\\\
         &= \\$${profit} \\div ${profitPercent}\\% \\\\
         &= \\$${cost} \\\\
