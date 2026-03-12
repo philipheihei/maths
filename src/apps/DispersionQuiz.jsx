@@ -942,7 +942,7 @@ const BoxPlot = ({ data, highlight }) => {
 
   return (
     <svg viewBox={`0 0 ${width} 200`} className="w-full bg-white rounded-lg shadow-sm border border-slate-200">
-      <text x={width/2} y="20" textAnchor="middle" className="font-bold text-slate-700">框線圖</text>
+      <text x={width/2} y="20" textAnchor="middle" className="font-bold text-slate-700">框線圖 (Box-and-Whisker Diagram)</text>
       
       {/* Axis */}
       <line x1={padding} y1="150" x2={width-padding} y2="150" stroke="#94a3b8" strokeWidth="2" />
@@ -1033,7 +1033,7 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [], highlightColors 
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center">
-      <h3 className="font-bold text-slate-700 mb-2">幹葉圖</h3>
+      <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf Diagram)</h3>
       <table className="border-collapse">
         <thead>
           <tr className="text-slate-500 text-sm border-b border-slate-400">
@@ -1074,7 +1074,7 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [], highlightColors 
         </tbody>
       </table>
       <div className="mt-4 text-xs text-slate-500">
-        圖例：4 | 2 = 42
+        Key: 4 | 2 = 42
       </div>
     </div>
   );
@@ -1095,14 +1095,14 @@ const BarChart = ({ data, highlight }) => {
 
   return (
     <svg viewBox={`0 0 ${width} ${height}`} className="w-full bg-white rounded-lg shadow-sm border border-slate-200">
-      <text x={width/2} y="20" textAnchor="middle" className="font-bold text-slate-700">棒型圖</text>
+      <text x={width/2} y="20" textAnchor="middle" className="font-bold text-slate-700">棒型圖 (Bar Chart)</text>
       
       {/* Axes */}
       <line x1={margin} y1={height-margin} x2={width-margin} y2={height-margin} stroke="#334155" strokeWidth="2" />
       <line x1={margin} y1={height-margin} x2={margin} y2={margin} stroke="#334155" strokeWidth="2" />
       
-      <text x={width/2} y={height-10} textAnchor="middle" className="text-xs">數值</text>
-      <text x={10} y={height/2} transform={`rotate(-90, 10, ${height/2})`} textAnchor="middle" className="text-xs">頻數</text>
+      <text x={width/2} y={height-10} textAnchor="middle" className="text-xs">數值 (Score)</text>
+      <text x={10} y={height/2} transform={`rotate(-90, 10, ${height/2})`} textAnchor="middle" className="text-xs">頻數 (Freq)</text>
 
       {keys.map((k, i) => {
         const x = margin + i * ((width - 2*margin) / keys.length) + 20;
@@ -1143,7 +1143,7 @@ const FrequencyTable = ({ data, highlight }) => {
 
   return (
     <div className="w-full overflow-x-auto bg-white rounded-lg shadow-sm border border-slate-200">
-      <div className="p-2 bg-slate-50 border-b border-slate-200 font-bold text-center text-slate-700">頻數表</div>
+      <div className="p-2 bg-slate-50 border-b border-slate-200 font-bold text-center text-slate-700">頻數表 (Frequency Table)</div>
       <table className="w-full text-sm text-center border-collapse">
         <thead className="bg-slate-100 text-slate-600">
           <tr>
@@ -1189,7 +1189,7 @@ const FrequencyTable = ({ data, highlight }) => {
 // --- 虛擬鍵盤組件 ---
 const Keypad = ({ value, onChange }) => {
   const handleKeyClick = (key) => {
-    if (key === '刪除') {
+    if (key === 'DEL') {
       onChange(value.slice(0, -1));
     } else {
       // 防止多個小數點
@@ -1202,7 +1202,7 @@ const Keypad = ({ value, onChange }) => {
     ['7', '8', '9'],
     ['4', '5', '6'],
     ['1', '2', '3'],
-    ['.', '0', '刪除']
+    ['.', '0', 'DEL']
   ];
 
   return (
@@ -1215,7 +1215,7 @@ const Keypad = ({ value, onChange }) => {
                 key={key}
                 onClick={() => handleKeyClick(key)}
                 className={`p-4 rounded font-bold text-lg transition-colors ${
-                  key === '刪除'
+                  key === 'DEL'
                     ? 'bg-red-500 hover:bg-red-600 text-white'
                     : key === '.'
                     ? 'bg-slate-400 hover:bg-slate-500 text-white'
@@ -1465,13 +1465,13 @@ export default function StatisticsApp() {
   }, []);
 
   const topics = [
-    { id: 'mean', label: '平均數', layers: ['stem', 'bar', 'table'] },
-    { id: 'median', label: '中位數', layers: ['box', 'stem', 'bar', 'table'] },
-    { id: 'mode', label: '眾數', layers: ['stem', 'bar', 'table'] },
-    { id: 'range', label: '分佈域', layers: ['box', 'stem', 'bar', 'table'] },
-    { id: 'iqr', label: '四分位數間距', layers: ['box', 'stem', 'bar', 'table'] },
-    { id: 'variance', label: '方差', layers: ['stem', 'bar', 'table'] },
-    { id: 'stdDev', label: '標準差', layers: ['stem', 'bar', 'table'] },
+    { id: 'mean', label: '平均數 (Mean)', layers: ['stem', 'bar', 'table'] },
+    { id: 'median', label: '中位數 (Median)', layers: ['box', 'stem', 'bar', 'table'] },
+    { id: 'mode', label: '眾數 (Mode)', layers: ['stem', 'bar', 'table'] },
+    { id: 'range', label: '分佈域 (Range)', layers: ['box', 'stem', 'bar', 'table'] },
+    { id: 'iqr', label: '四分位數間距 (Interquartile Range)', layers: ['box', 'stem', 'bar', 'table'] },
+    { id: 'variance', label: '方差 (Variance)', layers: ['stem', 'bar', 'table'] },
+    { id: 'stdDev', label: '標準差 (SD)', layers: ['stem', 'bar', 'table'] },
   ];
 
   const generateNewQuestion = (forceTopic = null) => {
@@ -1695,7 +1695,7 @@ export default function StatisticsApp() {
       <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-blue-600 mb-2">📊 統計學離差大師</h1>
-          <p className="text-slate-500">掌握平均數、中位數、眾數、方差、標準差、四分位數間距</p>
+          <p className="text-slate-500">掌握 Mean, Median, Mode, Variance, SD, IQR</p>
         </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl px-4">
@@ -1706,7 +1706,7 @@ export default function StatisticsApp() {
           <div className="flex items-center justify-center mb-3 text-blue-500 group-hover:scale-110 transition-transform">
             <BookOpen size={48} />
           </div>
-          <h3 className="text-xl font-bold text-slate-700">教學模式</h3>
+          <h3 className="text-xl font-bold text-slate-700">教學模式 (Learn)</h3>
           <p className="text-sm text-slate-500 mt-2">視覺化解釋各種概念</p>
         </button>
 
@@ -1717,7 +1717,7 @@ export default function StatisticsApp() {
           <div className="flex items-center justify-center mb-3 text-green-500 group-hover:scale-110 transition-transform">
             <Calculator size={48} />
           </div>
-          <h3 className="text-xl font-bold text-slate-700">測驗模式</h3>
+          <h3 className="text-xl font-bold text-slate-700">測驗模式 (Quiz)</h3>
           <p className="text-sm text-slate-500 mt-2">隨機題型挑戰</p>
         </button>
       </div>
@@ -1872,10 +1872,10 @@ export default function StatisticsApp() {
     const [learnHighlight, setLearnHighlight] = useState(null);
 
     const chartTypes = {
-      box: { name: '框線圖', stats: ['median', 'range', 'iqr'] },
-      stem: { name: '幹葉圖', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] },
-      bar: { name: '棒型圖', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] },
-      table: { name: '頻數表', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] }
+      box: { name: '框線圖 (Box-and-Whisker Diagram)', stats: ['median', 'range', 'iqr'] },
+      stem: { name: '幹葉圖 (Stem-and-Leaf Diagram)', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] },
+      bar: { name: '棒型圖 (Bar Chart)', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] },
+      table: { name: '頻數表 (Frequency Table)', stats: ['mean', 'median', 'mode', 'range', 'iqr', 'stdDev', 'variance'] }
     };
 
     const handleChartSelect = (chartType) => {
@@ -2121,7 +2121,7 @@ export default function StatisticsApp() {
                             className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-300 rounded-lg hover:bg-blue-50 text-sm w-full text-left"
                           >
                             <TrendingUp size={16} className="text-blue-500"/>
-                            視覺化重點（點擊查看）
+                            視覺化重點 (點擊查看)
                           </button>
                         )}
                         
@@ -2281,7 +2281,7 @@ export default function StatisticsApp() {
               <span className="text-2xl font-black text-green-500 bg-green-50 px-3 py-1 rounded-xl">LV1</span>
             </div>
             <h3 className="text-xl font-bold text-slate-700 mb-1">基礎題</h3>
-            <p className="text-sm text-slate-500">從圖表直接計算平均數、中位數、眾數、分佈域、四分位數間距、標準差等統計量</p>
+            <p className="text-sm text-slate-500">從圖表直接計算 Mean、Median、Mode、Range、IQR、SD 等統計量</p>
             <div className="mt-4 flex items-center gap-1 text-green-600 text-sm font-medium">
               開始 <ArrowRight size={14} />
             </div>
