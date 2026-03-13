@@ -108,22 +108,6 @@ const Home = () => {
       inDevelopment: true
     },
     {
-      id: 'standard-score-quiz',
-      title: '標準分特訓',
-      description: '練習標準分計算：已知平均分及標準差求標準分或得分；從學生資料求標準差或平均分；多步驟應用題',
-      icon: BarChart2,
-      color: 'bg-indigo-500',
-      hoverColor: 'hover:bg-indigo-600',
-      path: '/standard-score-quiz',
-      level: 'F5',
-      badges: [
-        { level: 'F5', chapter: 'CH14', subject: '統計' }
-      ],
-      category: '高中',
-      topics: ['標準分', '平均分', '標準差'],
-      inDevelopment: false
-    },
-    {
       id: 'dispersion-quiz',
       title: '高中統計特訓',
       description: '學習如何在不同圖表得出以下集中趨勢的量度：平均數、中位數、眾數、四分位數間距、分佈域、標準差、方差',
@@ -153,7 +137,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['不等式', '文字翻譯', '數線表示'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'compound-inequality-quiz',
@@ -217,7 +201,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['坐標轉換', '平移', '旋轉', '反射'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'algebraic-fractions',
@@ -316,7 +300,7 @@ const Home = () => {
       ],
       category: '高中',
       topics: ['餘式定理', '因式定理', '多項式除法'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'mc-limited-f6',

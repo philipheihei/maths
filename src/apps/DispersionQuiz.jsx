@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Calculator, 
   BarChart2, 
@@ -1903,6 +1903,7 @@ const ChartDisplay = React.memo(({ chartType, data, highlight }) => {
 });
 
 export default function StatisticsApp() {
+  const navigate = useNavigate();
   const [mode, setMode] = useState('menu'); // menu, quiz, learn
   const [currentChart, setCurrentChart] = useState(null); // box, stem, bar, table
   const [currentMeasure, setCurrentMeasure] = useState(null);
@@ -2554,28 +2555,38 @@ export default function StatisticsApp() {
                 {/* 定義 */}
                 <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-4">
                   <p className="text-slate-700 text-base leading-relaxed">
-                    標準分提供在平均之上／下的位置，能知道大概的<span className="font-bold text-indigo-700">排名位置</span>。
+                    標準分提供在群體中某人大概的<span className="font-bold text-indigo-700">排名位置</span>，包括平均之上/下。
                   </p>
                 </div>
                 {/* 公式 */}
                 <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-4">
-                  <p className="text-xs font-bold text-indigo-500 uppercase tracking-wide mb-3">公式</p>
-                  <LV2KatexLine math={`z = \\dfrac{x - \\bar{x}}{\\sigma}`} />
-                  <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
-                    <div className="bg-white rounded-lg p-3 border border-indigo-100">
-                      <div className="font-bold text-indigo-700 text-lg">z</div>
-                      <div className="text-slate-500 text-xs mt-1">標準分</div>
+                  <p className="text-xs font-bold text-indigo-500 uppercase tracking-wide mb-4">公式</p>
+                  {/* 手寫風格公式佈局 */}
+                  <div className="flex items-center justify-center gap-3 flex-wrap">
+                    {/* 左：標準分(z) = */}
+                    <div className="flex items-center gap-1">
+                      <span className="text-lg font-bold text-slate-700">標準分</span>
+                      <span className="text-base text-green-600 font-bold">(z)</span>
+                      <span className="text-lg font-bold text-slate-700 mx-1">=</span>
                     </div>
-                    <div className="bg-white rounded-lg p-3 border border-indigo-100">
-                      <div className="font-bold text-indigo-700 text-lg">x</div>
-                      <div className="text-slate-500 text-xs mt-1">某學生的分數</div>
-                    </div>
-                    <div className="bg-white rounded-lg p-3 border border-indigo-100">
-                      <div className="font-bold text-indigo-700 text-lg">σ</div>
-                      <div className="text-slate-500 text-xs mt-1">標準差</div>
+                    {/* 右：分數 */}
+                    <div className="flex flex-col items-center">
+                      {/* 分子 */}
+                      <div className="flex items-center gap-1 border-b-2 border-slate-700 pb-1 px-2">
+                        <span className="text-base font-bold text-slate-700">某學生的分數</span>
+                        <span className="text-sm text-green-600 font-bold">(x)</span>
+                        <span className="text-base font-bold text-slate-700 mx-1">−</span>
+                        <span className="text-base font-bold text-slate-700">平均分數</span>
+                        <span className="text-sm text-green-600 font-bold">(x̄)</span>
+                      </div>
+                      {/* 分母 */}
+                      <div className="flex items-center gap-1 pt-1 px-2">
+                        <span className="text-base font-bold text-slate-700">標準差</span>
+                        <span className="text-sm text-green-600 font-bold">(σ)</span>
+                      </div>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 mt-3 text-center">當中有 3 個數已提供，代入公式求未知的數</p>
+                  <p className="text-xs text-slate-500 mt-4 text-center">當中有 3 個數已提供，代入公式求未知的數</p>
                 </div>
                 {/* 正負意義 */}
                 <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-4">
@@ -2849,6 +2860,19 @@ export default function StatisticsApp() {
             <h3 className="text-xl font-bold text-slate-700 mb-1">進階題（DSE 題型）</h3>
             <p className="text-sm text-slate-500">頻數表含未知數，按已知條件（平均數 / 中位數）求未知數或其範圍</p>
             <div className="mt-4 flex items-center gap-1 text-blue-600 text-sm font-medium">
+              開始 <ArrowRight size={14} />
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/standard-score-quiz')}
+            className="p-6 bg-white border-2 border-transparent hover:border-indigo-400 rounded-2xl shadow-md hover:shadow-lg transition-all text-left"
+          >
+            <div className="mb-3">
+              <span className="text-2xl font-black text-indigo-500 bg-indigo-50 px-3 py-1 rounded-xl">標準分</span>
+            </div>
+            <h3 className="text-xl font-bold text-slate-700 mb-1">標準分特訓</h3>
+            <p className="text-sm text-slate-500">已知平均分及標準差，求標準分或原始分數；從學生資料求標準差或平均分</p>
+            <div className="mt-4 flex items-center gap-1 text-indigo-600 text-sm font-medium">
               開始 <ArrowRight size={14} />
             </div>
           </button>
