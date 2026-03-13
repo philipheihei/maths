@@ -277,6 +277,9 @@ const VariationQuiz = () => {
     if (currentQuestion && currentQuestion.vars) {
         currentQuestion.vars.forEach(v => {
             if (v.length > 1) specialTokens.push(v);
+            // Also treat var^2 / var^3 as atomic tokens
+            specialTokens.push(v + "^2");
+            specialTokens.push(v + "^3");
         });
     }
 

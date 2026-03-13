@@ -1308,8 +1308,9 @@ const generateLV2FreqMedianS = () => {
     // median = medianVal  ⟺  cB < (T+s)/2 ≤ cM
     const sMin = Math.max(1, 2 * cB - T + 1);
     const sMax = 2 * cM - T;
-    if (sMax < sMin + 2 || sMax > 20) continue;
+    if (sMax < sMin + 1 || sMax > 30) continue;
     const freqMedian = cM - cB; // frequency of medianVal group
+    const ctx = LV2_ITEM_CONTEXTS[Math.floor(Math.random() * LV2_ITEM_CONTEXTS.length)];
     return {
       type: 'freq-median-s',
       context: `下表顯示某班學生擁有${ctx.label}的數目的分佈`,
@@ -1352,33 +1353,391 @@ const generateLV2FreqMedianS = () => {
   return null;
 };
 
-// 隨機生成一個 LV2 題目
-const generateLV2Question = () => {
-  const r = Math.random();
-  const q = r < 0.5 ? generateLV2FreqMeanN() : generateLV2FreqMedianS();
-  if (q) return q;
-  return generateLV2FreqMeanN() || generateLV2FreqMedianS() || {
-    type: 'freq-mean-n',
-    context: '下表顯示某班學生擁有計算機的數目的分佈',
-    xLabel: '計算機的數目（部）',
-    values: [1, 2, 3, 4],
-    displayFreqs: ['8', '5', 'n', '1'],
-    unknownIdx: 2,
-    mean: 2,
-    parts: [{
-      label: '',
-      question: '求 n 的值',
-      answer: 6,
-      steps: [
-        `2 = \\dfrac{22 + 3n}{14 + n}`,
-        `2(14 + n) = 22 + 3n`,
-        `28 + 2n = 22 + 3n`,
-        `(2 - 3)n = 22 - 28`,
-        `-n = -6`,
-        `n = 6`,
-      ]
-    }]
+// LV2 Type F: 頻數表，已知眾數，求 k 的最小/最大可取値
+const generateLV2FreqModeK = () => {
+  for (let attempt = 0; attempt < 300; attempt++) {
+    const start = Math.floor(Math.random() * 3); // 0, 1, or 2
+    const len = 4 + Math.floor(Math.random() * 2); // 4 or 5 values
+    const values = Array.from({ length: len }, (_, i) => start + i);
+
+    // mode index must not be first or last (so k at edge is more interesting)
+    const modeIdx = 1 + Math.floor(Math.random() * (len - 2));
+    const unknownIdx = Math.floor(Math.random() * len);
+    if (unknownIdx === modeIdx) continue;
+
+    const modeFreq = 7 + Math.floor(Math.random() * 5); // 7–11
+
+    // All non-unknown, non-mode frequencies strictly less than modeFreq
+    const knownFreqs = values.map((_, i) => {
+      if (i === unknownIdx) return 0;
+      if (i === modeIdx) return modeFreq;
+      return 2 + Math.floor(Math.random() * (modeFreq - 2));
+    });
+
+    const kMin = 1;
+    const kMax = modeFreq - 1;
+    if (kMax < 2) continue;
+
+    const ctx = LV2_ITEM_CONTEXTS[Math.floor(Math.random() * LV2_ITEM_CONTEXTS.length)];
+    const modeVal = values[modeIdx];
+
+    return {
+      type: 'freq-mode-k',
+      context: `下表顯示某班學生擁有${ctx.label}的數目的分佈`,
+      xLabel: `${ctx.label}的數目（${ctx.unit}）`,
+      values,
+      displayFreqs: knownFreqs.map((f, i) => i === unknownIdx ? 'k' : String(f)),
+      unknownIdx,
+      modeVal,
+      modeFreq,
+      parts: [
+        {
+          label: '(i)',
+          question: `若該分佈的眾數為 ${modeVal}，求 k 的最小可取値`,
+          answer: kMin,
+          steps: [
+            `\\text{眾數} = ${modeVal} \\Rightarrow \\text{「${modeVal}\\text{」的頻數必須最大}}`,
+            `\\text{「${modeVal}\\text{」}的頻數} = ${modeFreq}`,
+            `k < ${modeFreq}\\text{（讓眾數保持為 }${modeVal}\\text{）}`,
+            `k \\geq 1\\text{（k 為正整數）}`,
+            `\\therefore k_{\\min} = ${kMin}`,
+          ],
+        },
+        {
+          label: '(ii)',
+          question: `若該分佈的眾數為 ${modeVal}，求 k 的最大可取値`,
+          answer: kMax,
+          steps: [
+            `\\text{眾數} = ${modeVal} \\Rightarrow k < ${modeFreq}`,
+            `k \\leq ${modeFreq} - 1 = ${kMax}`,
+            `\\therefore k_{\\max} = ${kMax}`,
+          ],
+        },
+      ],
+    };
+  }
+  return null;
+};
+
+// LV2 幹葉圖語境
+const LV2_STEM_CONTEXTS = [
+  '一群工人在某星期的工作時數（以小時為單位）',
+  '某袋子內的信件的重量（以克為單位）',
+  '某班學生在測驗中的分數（以分為單位）',
+  '某公司職員的月薪（以千元為單位）',
+  '某班同學某次數學測驗的成績（以分為單位）',
+  '某超市每天的銷售量（以件為單位）',
+];
+
+// LV2 Type C: 幹葉圖有未知葉，已知分佈域，求未知值
+const generateLV2StemLeafRange = () => {
+  for (let attempt = 0; attempt < 300; attempt++) {
+    const stemStart = 1 + Math.floor(Math.random() * 4);
+    const numStems = 3 + Math.floor(Math.random() * 2);
+    if (stemStart + numStems - 1 > 7) continue;
+    const stems = Array.from({ length: numStems }, (_, i) => stemStart + i);
+
+    // Generate 3-8 sorted leaves per stem
+    const allLeaves = stems.map(() => {
+      const count = 3 + Math.floor(Math.random() * 6);
+      const leaves = Array.from({ length: count }, () => Math.floor(Math.random() * 10));
+      return leaves.sort((a, b) => a - b);
+    });
+
+    const knownMin = stems[0] * 10 + allLeaves[0][0];
+    const knownMax = stems[stems.length - 1] * 10 + allLeaves[stems.length - 1][allLeaves[stems.length - 1].length - 1];
+    const unknownInFirst = Math.random() < 0.5;
+
+    let unknownLeaf, actualMin, actualMax;
+
+    if (unknownInFirst) {
+      // a is inserted before all leaves of first stem → must be ≤ existing first leaf
+      const maxPossibleLeaf = allLeaves[0][0];
+      const loR = Math.max(15, knownMax - (stems[0] * 10 + maxPossibleLeaf));
+      const hiR = Math.min(50, knownMax - stems[0] * 10);
+      if (loR > hiR) continue;
+      const rangeVal = loR + Math.floor(Math.random() * (hiR - loR + 1));
+      actualMin = knownMax - rangeVal;
+      unknownLeaf = actualMin - stems[0] * 10;
+      if (unknownLeaf < 0 || unknownLeaf > maxPossibleLeaf) continue;
+      actualMax = knownMax;
+    } else {
+      // w is appended after all leaves of last stem → must be ≥ existing last leaf
+      const lastIdx = stems.length - 1;
+      const minPossibleLeaf = allLeaves[lastIdx][allLeaves[lastIdx].length - 1];
+      const loR = Math.max(15, stems[lastIdx] * 10 + minPossibleLeaf - knownMin);
+      const hiR = Math.min(50, stems[lastIdx] * 10 + 9 - knownMin);
+      if (loR > hiR) continue;
+      const rangeVal = loR + Math.floor(Math.random() * (hiR - loR + 1));
+      actualMax = knownMin + rangeVal;
+      unknownLeaf = actualMax - stems[lastIdx] * 10;
+      if (unknownLeaf < minPossibleLeaf || unknownLeaf > 9) continue;
+      actualMin = knownMin;
+    }
+
+    const rangeVal = actualMax - actualMin;
+    const varName = unknownInFirst ? 'a' : 'w';
+    const ctx = LV2_STEM_CONTEXTS[Math.floor(Math.random() * LV2_STEM_CONTEXTS.length)];
+
+    const displayLeaves = allLeaves.map((leaves, si) => {
+      if (si === 0 && unknownInFirst) return [varName, ...leaves];
+      if (si === stems.length - 1 && !unknownInFirst) return [...leaves, varName];
+      return [...leaves];
+    });
+
+    const steps = unknownInFirst ? [
+      `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+      `${rangeVal} = ${actualMax} - \\text{最小值}`,
+      `\\text{最小值} = ${actualMax} - ${rangeVal}`,
+      `\\text{最小值} = ${actualMin}`,
+      `\\therefore ${varName} = ${unknownLeaf}`,
+    ] : [
+      `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+      `${rangeVal} = \\text{最大值} - ${actualMin}`,
+      `\\text{最大值} = ${actualMin} + ${rangeVal}`,
+      `\\text{最大值} = ${actualMax}`,
+      `\\therefore ${varName} = ${unknownLeaf}`,
+    ];
+
+    return {
+      type: 'stem-leaf-unknown',
+      context: `下面的幹葉圖顯示${ctx}`,
+      stems,
+      displayLeaves,
+      varName,
+      rangeVal,
+      parts: [{
+        label: '',
+        question: `已知該分佈的分佈域為 ${rangeVal}，求 ${varName} 的值`,
+        answer: unknownLeaf,
+        steps,
+      }],
+    };
+  }
+  return null;
+};
+
+// LV2 Type D: 幹葉圖有未知葉，分佈域 = k × IQR
+const generateLV2StemLeafIQR = () => {
+  // 與 MathUtils.quartiles 一致的 IQR 計算
+  const computeIQR = (sorted) => {
+    const n = sorted.length;
+    const mid = Math.floor(n / 2);
+    const lower = sorted.slice(0, mid);
+    const upper = n % 2 === 0 ? sorted.slice(mid) : sorted.slice(mid + 1);
+    const medOf = arr => arr.length % 2 !== 0
+      ? arr[Math.floor(arr.length / 2)]
+      : (arr[arr.length / 2 - 1] + arr[arr.length / 2]) / 2;
+    return { q1: medOf(lower), q3: medOf(upper) };
   };
+
+  for (let attempt = 0; attempt < 500; attempt++) {
+    const stemStart = 1 + Math.floor(Math.random() * 4);
+    const numStems = 3 + Math.floor(Math.random() * 2);
+    if (stemStart + numStems - 1 > 7) continue;
+    const stems = Array.from({ length: numStems }, (_, i) => stemStart + i);
+
+    const allLeaves = stems.map(() => {
+      const count = 3 + Math.floor(Math.random() * 5);
+      return Array.from({ length: count }, () => Math.floor(Math.random() * 10)).sort((a, b) => a - b);
+    });
+
+    const allData = stems.flatMap((s, si) => allLeaves[si].map(l => s * 10 + l));
+    const knownMin = allData[0];
+    const knownMax = allData[allData.length - 1];
+    const { q1, q3 } = computeIQR(allData);
+    const iqr = q3 - q1;
+    if (iqr <= 0 || !Number.isInteger(iqr)) continue;
+
+    const k = 2 + Math.floor(Math.random() * 3); // k = 2, 3, or 4
+    const rangeVal = k * iqr;
+    const unknownInFirst = Math.random() < 0.5;
+    let unknownLeaf, actualMin, actualMax, varName;
+
+    if (unknownInFirst) {
+      actualMin = knownMax - rangeVal;
+      actualMax = knownMax;
+      unknownLeaf = actualMin - stems[0] * 10;
+      varName = 'a';
+      if (unknownLeaf < 0 || unknownLeaf > allLeaves[0][0]) continue;
+      // Verify IQR stays the same after inserting unknown at min
+      const newData = [actualMin, ...allData];
+      const { q1: nq1, q3: nq3 } = computeIQR(newData);
+      if (nq3 - nq1 !== iqr) continue;
+    } else {
+      actualMax = knownMin + rangeVal;
+      actualMin = knownMin;
+      unknownLeaf = actualMax - stems[stems.length - 1] * 10;
+      varName = 'w';
+      if (unknownLeaf < allLeaves[stems.length - 1][allLeaves[stems.length - 1].length - 1] || unknownLeaf > 9) continue;
+      const newData = [...allData, actualMax];
+      const { q1: nq1, q3: nq3 } = computeIQR(newData);
+      if (nq3 - nq1 !== iqr) continue;
+    }
+
+    const ctx = LV2_STEM_CONTEXTS[Math.floor(Math.random() * LV2_STEM_CONTEXTS.length)];
+    const displayLeaves = allLeaves.map((leaves, si) => {
+      if (si === 0 && unknownInFirst) return [varName, ...leaves];
+      if (si === stems.length - 1 && !unknownInFirst) return [...leaves, varName];
+      return [...leaves];
+    });
+
+    const steps = unknownInFirst ? [
+      `\\text{四分位數間距} = Q_3 - Q_1 = ${q3} - ${q1} = ${iqr}`,
+      `\\text{分佈域} = ${k} \\times \\text{四分位數間距} = ${k} \\times ${iqr} = ${rangeVal}`,
+      `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+      `${rangeVal} = ${actualMax} - \\text{最小值}`,
+      `\\text{最小值} = ${actualMax} - ${rangeVal} = ${actualMin}`,
+      `\\therefore ${varName} = ${unknownLeaf}`,
+    ] : [
+      `\\text{四分位數間距} = Q_3 - Q_1 = ${q3} - ${q1} = ${iqr}`,
+      `\\text{分佈域} = ${k} \\times \\text{四分位數間距} = ${k} \\times ${iqr} = ${rangeVal}`,
+      `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+      `${rangeVal} = \\text{最大值} - ${actualMin}`,
+      `\\text{最大值} = ${actualMin} + ${rangeVal} = ${actualMax}`,
+      `\\therefore ${varName} = ${unknownLeaf}`,
+    ];
+
+    return {
+      type: 'stem-leaf-unknown',
+      context: `下面的幹葉圖顯示${ctx}`,
+      stems,
+      displayLeaves,
+      varName,
+      parts: [{
+        label: '',
+        question: `已知該分佈的分佈域為其四分位數間距的 ${k} 倍，求 ${varName} 的值`,
+        answer: unknownLeaf,
+        steps,
+      }],
+    };
+  }
+  return null;
+};
+
+// LV2 框線圖語境
+const LV2_BOX_CONTEXTS = [
+  '某公司 X 組文員的年齡',
+  '某班學生的數學測驗成績（以分為單位）',
+  '某公司員工的月薪（以千元為單位）',
+  '某校男生的身高（以厘米為單位）',
+  '某超市每日售出商品件數',
+  '某班學生的體重（以千克為單位）',
+];
+
+// LV2 Type E: 框線圖，部分數值未知（a, b），已知分佈域及四分位數間距，求未知值
+// 4 valid variants: {min,Q1}, {min,Q3}, {Q1,max}, {Q3,max}
+const generateLV2BoxPlot = () => {
+  // Defines all 4 solvable two-unknown combos
+  const VARIANTS = [
+    {
+      unknownLabels: (v) => ({ min: 'a', q1: 'b' }),
+      parts: (v) => [
+        { label: '(a)', question: '求 a 的值', answer: v.min, steps: [
+          `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+          `${v.max} - a = ${v.range}`,
+          `a = ${v.min}`,
+        ]},
+        { label: '(b)', question: '求 b 的值', answer: v.q1, steps: [
+          `\\text{四分位數間距} = Q_3 - Q_1`,
+          `${v.q3} - b = ${v.iqr}`,
+          `b = ${v.q1}`,
+        ]},
+      ],
+    },
+    {
+      unknownLabels: (v) => ({ min: 'a', q3: 'b' }),
+      parts: (v) => [
+        { label: '(a)', question: '求 a 的值', answer: v.min, steps: [
+          `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+          `${v.max} - a = ${v.range}`,
+          `a = ${v.min}`,
+        ]},
+        { label: '(b)', question: '求 b 的值', answer: v.q3, steps: [
+          `\\text{四分位數間距} = Q_3 - Q_1`,
+          `b - ${v.q1} = ${v.iqr}`,
+          `b = ${v.q3}`,
+        ]},
+      ],
+    },
+    {
+      unknownLabels: (v) => ({ q1: 'a', max: 'b' }),
+      parts: (v) => [
+        { label: '(a)', question: '求 a 的值', answer: v.q1, steps: [
+          `\\text{四分位數間距} = Q_3 - Q_1`,
+          `${v.q3} - a = ${v.iqr}`,
+          `a = ${v.q1}`,
+        ]},
+        { label: '(b)', question: '求 b 的值', answer: v.max, steps: [
+          `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+          `b - ${v.min} = ${v.range}`,
+          `b = ${v.max}`,
+        ]},
+      ],
+    },
+    {
+      unknownLabels: (v) => ({ q3: 'a', max: 'b' }),
+      parts: (v) => [
+        { label: '(a)', question: '求 a 的值', answer: v.q3, steps: [
+          `\\text{四分位數間距} = Q_3 - Q_1`,
+          `a - ${v.q1} = ${v.iqr}`,
+          `a = ${v.q3}`,
+        ]},
+        { label: '(b)', question: '求 b 的值', answer: v.max, steps: [
+          `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+          `b - ${v.min} = ${v.range}`,
+          `b = ${v.max}`,
+        ]},
+      ],
+    },
+  ];
+
+  for (let attempt = 0; attempt < 300; attempt++) {
+    const min = 15 + Math.floor(Math.random() * 25);
+    const q1  = min + 5  + Math.floor(Math.random() * 15);
+    const q2  = q1  + 3  + Math.floor(Math.random() * 12);
+    const q3  = q2  + 3  + Math.floor(Math.random() * 12);
+    const max = q3  + 5  + Math.floor(Math.random() * 20);
+    const range = max - min;
+    const iqr   = q3 - q1;
+    if (iqr <= 5 || range <= iqr || range > 80) continue;
+
+    const ctx = LV2_BOX_CONTEXTS[Math.floor(Math.random() * LV2_BOX_CONTEXTS.length)];
+    const variant = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
+    const vals = { min, q1, q2, q3, max, range, iqr };
+
+    return {
+      type: 'box-plot-unknown',
+      context: `下面的框線圖顯示${ctx}的分佈`,
+      min, q1, q2, q3, max, range, iqr,
+      unknownLabels: variant.unknownLabels(vals),
+      conditionText: `已知該分佈的分佈域及四分位數間距分別為 ${range} 及 ${iqr}`,
+      parts: variant.parts(vals),
+    };
+  }
+  return null;
+};
+
+// 題型生成器陣列 — 新增題型時只需在此加入新函數
+const LV2_GENERATORS = [
+  generateLV2FreqMeanN,
+  generateLV2FreqMedianS,
+  generateLV2StemLeafRange,
+  generateLV2StemLeafIQR,
+  generateLV2BoxPlot,
+  generateLV2FreqModeK,
+];
+
+// 隨機生成一個 LV2 題目（從所有題型中平均隨機選取）
+const generateLV2Question = () => {
+  const startIdx = Math.floor(Math.random() * LV2_GENERATORS.length);
+  for (let i = 0; i < LV2_GENERATORS.length; i++) {
+    const gen = LV2_GENERATORS[(startIdx + i) % LV2_GENERATORS.length];
+    const q = gen();
+    if (q) return q;
+  }
+  // 最後保底（理論上不會到達）
+  return generateLV2FreqMeanN();
 };
 
 // LV2 頻數表顯示元件
@@ -1410,6 +1769,107 @@ const LV2FreqTableDisplay = ({ xLabel, values, displayFreqs, unknownIdx }) => (
     </table>
   </div>
 );
+
+// LV2 幹葉圖顯示元件（仿 LV1 幹葉圖格式）
+const LV2StemLeafDisplay = ({ stems, displayLeaves, varName }) => (
+  <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center my-3">
+    <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf Diagram)</h3>
+    <table className="border-collapse">
+      <thead>
+        <tr className="text-slate-500 text-sm border-b border-slate-400">
+          <th className="pr-2 text-right border-r-2 border-slate-400 pb-1">幹（十位）</th>
+          <th className="pl-2 text-left pb-1">葉（個位）</th>
+        </tr>
+      </thead>
+      <tbody>
+        {stems.map((stem, si) => (
+          <tr key={stem} className="hover:bg-slate-50">
+            <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">{stem}</td>
+            <td className="pl-2 text-left">
+              <span className="text-lg flex items-center gap-0">
+                {displayLeaves[si].map((leaf, li) => (
+                  <span
+                    key={li}
+                    className={`inline-block w-6 text-center ${String(leaf) === varName
+                      ? 'font-bold italic text-amber-700 bg-amber-100 rounded'
+                      : ''}`}
+                  >
+                    {leaf}
+                  </span>
+                ))}
+              </span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <div className="mt-4 text-xs text-slate-500">
+      Key: {stems[0]} | {displayLeaves[0].find(l => String(l) !== varName) ?? varName} = {stems[0]}{displayLeaves[0].find(l => String(l) !== varName) ?? varName}
+    </div>
+  </div>
+);
+
+// LV2 框線圖顯示元件
+const LV2BoxPlotDisplay = ({ min, q1, q2, q3, max, unknownLabels = {} }) => {
+  const padding = 50;
+  const svgWidth = 500;
+  const axisY = 128;
+  const boxTop = 78;
+  const boxBottom = 118;
+  const midY = (boxTop + boxBottom) / 2;
+
+  const span = max - min;
+  const svgMin = min - span * 0.12;
+  const svgMax = max + span * 0.12;
+  const scale = (v) => ((v - svgMin) / (svgMax - svgMin)) * (svgWidth - 2 * padding) + padding;
+
+  const getLabel = (key, val) => unknownLabels[key] !== undefined ? unknownLabels[key] : String(val);
+  const isUnknown = (key) => unknownLabels[key] !== undefined;
+
+  const positions = [
+    { key: 'min', val: min },
+    { key: 'q1',  val: q1  },
+    { key: 'q2',  val: q2  },
+    { key: 'q3',  val: q3  },
+    { key: 'max', val: max },
+  ];
+
+  return (
+    <div className="bg-white p-3 rounded-lg shadow-sm border border-slate-200 my-3">
+      <svg viewBox={`0 0 ${svgWidth} 165`} className="w-full">
+        {/* Axis */}
+        <line x1={padding - 15} y1={axisY} x2={svgWidth - padding + 15} y2={axisY} stroke="#94a3b8" strokeWidth="2" />
+        {/* Whiskers */}
+        <line x1={scale(min)} y1={midY} x2={scale(q1)} y2={midY} stroke="#3b82f6" strokeWidth="2" />
+        <line x1={scale(q3)} y1={midY} x2={scale(max)} y2={midY} stroke="#3b82f6" strokeWidth="2" />
+        {/* Min/Max caps */}
+        <line x1={scale(min)} y1={boxTop + 5} x2={scale(min)} y2={boxBottom - 5} stroke="#3b82f6" strokeWidth="2" />
+        <line x1={scale(max)} y1={boxTop + 5} x2={scale(max)} y2={boxBottom - 5} stroke="#3b82f6" strokeWidth="2" />
+        {/* Box */}
+        <rect x={scale(q1)} y={boxTop} width={scale(q3) - scale(q1)} height={boxBottom - boxTop}
+          fill="white" stroke="#3b82f6" strokeWidth="2" />
+        {/* Median */}
+        <line x1={scale(q2)} y1={boxTop} x2={scale(q2)} y2={boxBottom} stroke="#3b82f6" strokeWidth="2" />
+        {/* Tick marks and labels */}
+        {positions.map(({ key, val }) => (
+          <g key={key}>
+            <line x1={scale(val)} y1={axisY - 4} x2={scale(val)} y2={axisY + 4} stroke="#64748b" strokeWidth="1.5" />
+            <text
+              x={scale(val)} y={axisY + 20}
+              textAnchor="middle"
+              fontSize="13"
+              fill={isUnknown(key) ? '#d97706' : '#334155'}
+              fontStyle={isUnknown(key) ? 'italic' : 'normal'}
+              fontWeight={isUnknown(key) ? 'bold' : 'normal'}
+            >
+              {getLabel(key, val)}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
 
 // LV2 單行 KaTeX 渲染元件（module-level，可使用 hooks）
 const LV2KatexLine = ({ math }) => {
@@ -2378,17 +2838,33 @@ export default function StatisticsApp() {
           {/* 題目背景卡 */}
           <div className="bg-white rounded-xl shadow-lg p-5 mb-4">
             <p className="text-slate-700 font-medium mb-1">{lv2Q.context}。</p>
-            <LV2FreqTableDisplay
-              xLabel={lv2Q.xLabel}
-              values={lv2Q.values}
-              displayFreqs={lv2Q.displayFreqs}
-              unknownIdx={lv2Q.unknownIdx}
-            />
-            <p className="text-blue-700 font-bold mt-2">
-              {lv2Q.type === 'freq-mean-n'
-                ? `該分佈的平均數為 ${lv2Q.mean}。`
-                : `該分佈的中位數為 ${lv2Q.medianVal}。`}
-            </p>
+            {lv2Q.type === 'stem-leaf-unknown' ? (
+              <LV2StemLeafDisplay stems={lv2Q.stems} displayLeaves={lv2Q.displayLeaves} varName={lv2Q.varName} />
+            ) : lv2Q.type === 'box-plot-unknown' ? (
+              <>
+                <LV2BoxPlotDisplay
+                  min={lv2Q.min} q1={lv2Q.q1} q2={lv2Q.q2} q3={lv2Q.q3} max={lv2Q.max}
+                  unknownLabels={lv2Q.unknownLabels}
+                />
+                <p className="text-blue-700 font-bold mt-2">{lv2Q.conditionText}。</p>
+              </>
+            ) : (
+              <>
+                <LV2FreqTableDisplay
+                  xLabel={lv2Q.xLabel}
+                  values={lv2Q.values}
+                  displayFreqs={lv2Q.displayFreqs}
+                  unknownIdx={lv2Q.unknownIdx}
+                />
+                <p className="text-blue-700 font-bold mt-2">
+                  {lv2Q.type === 'freq-mean-n'
+                    ? `該分佈的平均數為 ${lv2Q.mean}。`
+                    : lv2Q.type === 'freq-mode-k'
+                    ? 'k 為正整數。'
+                    : `該分佈的中位數為 ${lv2Q.medianVal}。`}
+                </p>
+              </>
+            )}
           </div>
 
           {/* 小題進度（多小題才顯示） */}
