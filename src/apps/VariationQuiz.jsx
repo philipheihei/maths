@@ -816,9 +816,9 @@ const VariationQuiz = () => {
                 <button onClick={() => handleKeyClick('/')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText} flex flex-col text-xs leading-none`}><span>◻</span><span className="border-t border-current w-3 my-0.5"></span><span>◻</span></button>
                 {[1,2,3,'(',')'].map(k => <button key={k} onClick={() => handleKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}
                 <button onClick={() => handleKeyClick('0')} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>0</button>
-                <button onClick={() => handleKeyClick('^2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^2" inline={true} /></button>
+                <button onClick={() => handleKeyClick(`${currentQuestion?.vars?.[1] || 'x'}^2`)} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex={`${currentQuestion?.vars?.[1] || 'x'}^2`} inline={true} /></button>
                 <button onClick={() => handleKeyClick(needsCbrt ? 'cbrt(' : 'sqrt(')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex={needsCbrt ? "\\sqrt[3]{\\square}" : "\\sqrt{\\square}"} inline={true} /></button>
-                <button onClick={() => handleKeyClick('^3')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^3" inline={true} /></button>
+                <button onClick={() => handleKeyClick(`${currentQuestion?.vars?.[1] || 'x'}^3`)} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex={`${currentQuestion?.vars?.[1] || 'x'}^3`} inline={true} /></button>
                 <button onClick={checkAnswer} disabled={!inputValue} className={`${KEY_BASE_CLASS} ${THEME.actionBg} ${THEME.actionText}`}><CornerDownLeft className="w-6 h-6" /></button>
             </div>
         </div>
@@ -841,9 +841,9 @@ const VariationQuiz = () => {
           <div className="grid grid-cols-5 gap-2">
             {[7,8,9,'+','-'].map(k => <button key={k} onClick={() => handleSubKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}
             {[4,5,6,'='].map(k => <button key={k} onClick={() => handleSubKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}
-            <button onClick={() => handleSubKeyClick('^2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^2" inline={true} /></button>
+            <button onClick={() => handleSubKeyClick('^2')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="\square^2" inline={true} /></button>
             {[1,2,3].map(k => <button key={k} onClick={() => handleSubKeyClick(k.toString())} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>{k}</button>)}
-            <button onClick={() => handleSubKeyClick('^3')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="x^3" inline={true} /></button>
+            <button onClick={() => handleSubKeyClick('^3')} className={`${KEY_BASE_CLASS} ${THEME.operatorBg} ${THEME.operatorText}`}><MathDisplay latex="\square^3" inline={true} /></button>
             <button onClick={() => handleSubKeyClick('0')} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>0</button>
             <button onClick={() => handleSubKeyClick('.')} className={`${KEY_BASE_CLASS} ${THEME.keyBg} ${THEME.keyText}`}>.</button>
             <button onClick={() => {}} className="invisible" />

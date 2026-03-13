@@ -1265,8 +1265,10 @@ const generateLV2FreqMeanN = () => {
     if (n < 2 || n > 15) continue;
     const ctx = LV2_ITEM_CONTEXTS[Math.floor(Math.random() * LV2_ITEM_CONTEXTS.length)];
     const meanSumF = mean * sumF;
-    const diffCoeff = mean - vk;
-    const diffConst = sumVF - meanSumF;
+    // Build expanded numerator: each known v*f product shown individually, unknown as vk*n
+    const expandedNumer = values.map((v, i) =>
+      i === unknownIdx ? `${vk}n` : String(v * knownFreqs[i])
+    ).join(' + ');
     return {
       type: 'freq-mean-n',
       context: `下表顯示某班學生擁有${ctx.label}的數目的分佈`,
@@ -1280,11 +1282,10 @@ const generateLV2FreqMeanN = () => {
         question: '求 n 的值',
         answer: n,
         steps: [
-          `${mean} = \\dfrac{${sumVF} + ${vk}n}{${sumF} + n}`,
-          `${mean}(${sumF} + n) = ${sumVF} + ${vk}n`,
-          `${meanSumF} + ${mean}n = ${sumVF} + ${vk}n`,
-          `(${mean} - ${vk})n = ${sumVF} - ${meanSumF}`,
-          `${diffCoeff}n = ${diffConst}`,
+          `\\dfrac{${expandedNumer}}{${sumF} + n} = ${mean}`,
+          `\\dfrac{${sumVF} + ${vk}n}{${sumF} + n} = ${mean}`,
+          `${sumVF} + ${vk}n = ${mean}(${sumF} + n)`,
+          `${sumVF} + ${vk}n = ${meanSumF} + ${mean}n`,
           `n = ${n}`,
         ]
       }]
@@ -1308,7 +1309,7 @@ const generateLV2FreqMedianS = () => {
     const sMin = Math.max(1, 2 * cB - T + 1);
     const sMax = 2 * cM - T;
     if (sMax < sMin + 2 || sMax > 20) continue;
-    const ctx = LV2_ITEM_CONTEXTS[Math.floor(Math.random() * LV2_ITEM_CONTEXTS.length)];
+    const freqMedian = cM - cB; // frequency of medianVal group
     return {
       type: 'freq-median-s',
       context: `下表顯示某班學生擁有${ctx.label}的數目的分佈`,
@@ -1324,10 +1325,13 @@ const generateLV2FreqMedianS = () => {
           question: `求 s 的最小可取值`,
           answer: sMin,
           steps: [
-            `\\text{中位數} = ${medianVal}`,
-            `\\Rightarrow \\text{累積頻數}(${values[1]}) < \\dfrac{N}{2} \\leq \\text{累積頻數}(${medianVal})`,
-            `${cB} < \\dfrac{${T}+s}{2} \\leq ${cM}`,
-            `\\text{左邊不等式：} s > 2 \\times ${cB} - ${T} = ${2 * cB - T}`,
+            `\\text{想像全班按數目排隊：}`,
+            `\\underbrace{\\text{前 }${cB}\\text{ 人}}_{\\leq ${values[1]}\\text{ 本}} \\;\\Bigg|\\; \\underbrace{\\text{第 }${cB+1}\\text{–}${cM}\\text{ 人}}_{${medianVal}\\text{ 本，共}${freqMedian}\\text{人}} \\;\\Bigg|\\; \\underbrace{\\text{後面 }s\\text{ 人}}_{${values[3]}\\text{ 本}} \\;\\Bigg|\\; \\underbrace{\\text{最後 }${knownFreqs[4]}\\text{ 人}}_{${values[4]}\\text{ 本}}`,
+            `\\text{要中位數}=${medianVal}\\text{，正中間的人要站在第 }${cB+1}\\text{–}${cM}\\text{ 位}`,
+            `\\text{如果 }s\\text{ 太少，全班人數太少，中間的人反而站在「}${values[1]}\\text{ 本」組 → 中位數}\\neq ${medianVal}`,
+            `\\text{全班共 }${T}+s\\text{ 人，正中間在第}\\dfrac{${T}+s}{2}\\text{位}`,
+            `\\text{要讓中間位置}\\textbf{超過}\\text{前 }${cB}\\text{ 人：}\\dfrac{${T}+s}{2} > ${cB}`,
+            `s > ${2*cB} - ${T} = ${2*cB-T}`,
             `\\therefore s_{\\min} = ${sMin}`,
           ]
         },
@@ -1336,9 +1340,9 @@ const generateLV2FreqMedianS = () => {
           question: `寫出 s 的最大可取值`,
           answer: sMax,
           steps: [
-            `\\text{右邊不等式：} \\dfrac{${T}+s}{2} \\leq ${cM}`,
-            `${T}+s \\leq ${2 * cM}`,
-            `s \\leq ${2 * cM} - ${T} = ${sMax}`,
+            `\\text{如果 }s\\text{ 太多，全班人數太多，中間的人反而落入「}${values[3]}\\text{ 本」組 → 中位數}\\neq ${medianVal}`,
+            `\\text{要讓中間位置}\\textbf{不超過}\\text{第 }${cM}\\text{ 位：}\\dfrac{${T}+s}{2} \\leq ${cM}`,
+            `s \\leq ${2*cM} - ${T} = ${sMax}`,
             `\\therefore s_{\\max} = ${sMax}`,
           ]
         }
@@ -1695,7 +1699,7 @@ export default function StatisticsApp() {
       <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-blue-600 mb-2">📊 統計學離差大師</h1>
-          <p className="text-slate-500">掌握 Mean, Median, Mode, Variance, SD, IQR</p>
+          <p className="text-slate-500">掌握平均數、中位數、眾數、方差、標準差、四分位數間距</p>
         </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl px-4">
@@ -2281,7 +2285,7 @@ export default function StatisticsApp() {
               <span className="text-2xl font-black text-green-500 bg-green-50 px-3 py-1 rounded-xl">LV1</span>
             </div>
             <h3 className="text-xl font-bold text-slate-700 mb-1">基礎題</h3>
-            <p className="text-sm text-slate-500">從圖表直接計算 Mean、Median、Mode、Range、IQR、SD 等統計量</p>
+            <p className="text-sm text-slate-500">從圖表直接計算平均數、中位數、眾數、分佈域、四分位數間距、標準差等統計量</p>
             <div className="mt-4 flex items-center gap-1 text-green-600 text-sm font-medium">
               開始 <ArrowRight size={14} />
             </div>
