@@ -2334,6 +2334,7 @@ export default function StatisticsApp() {
     const [learnData, setLearnData] = useState([]);
     const [learnMeasure, setLearnMeasure] = useState(null);
     const [learnHighlight, setLearnHighlight] = useState(null);
+    const [selectedSection, setSelectedSection] = useState('charts'); // 'charts' | 'standard-score'
 
     const chartTypes = {
       box: { name: '框線圖 (Box-and-Whisker Diagram)', stats: ['median', 'range', 'iqr'] },
@@ -2514,14 +2515,14 @@ export default function StatisticsApp() {
         <div className="flex h-[calc(100vh-60px)]">
           {/* 左側邊欄：圖表類型選擇 */}
           <div className="w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto">
-            <h3 className="font-bold text-slate-700 mb-4 px-2">選擇圖表類別:</h3>
+            <h3 className="font-bold text-slate-700 mb-2 px-2">選擇圖表類別:</h3>
             <div className="space-y-2">
               {Object.entries(chartTypes).map(([key, chart]) => (
                 <button
                   key={key}
-                  onClick={() => handleChartSelect(key)}
+                  onClick={() => { setSelectedSection('charts'); handleChartSelect(key); }}
                   className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${
-                    selectedChart === key
+                    selectedSection === 'charts' && selectedChart === key
                       ? 'bg-blue-100 text-blue-800 border border-blue-300'
                       : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
                   }`}
@@ -2530,11 +2531,88 @@ export default function StatisticsApp() {
                 </button>
               ))}
             </div>
+            <div className="mt-4 pt-4 border-t border-slate-200">
+              <h3 className="font-bold text-slate-700 mb-2 px-2">其他概念:</h3>
+              <button
+                onClick={() => setSelectedSection('standard-score')}
+                className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${
+                  selectedSection === 'standard-score'
+                    ? 'bg-indigo-100 text-indigo-800 border border-indigo-300'
+                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                標準分 (Standard Score)
+              </button>
+            </div>
           </div>
 
           {/* 右側主內容 */}
           <div className="flex-1 p-6 overflow-y-auto">
-            {selectedChart && learnData.length > 0 ? (
+            {selectedSection === 'standard-score' ? (
+              <div className="max-w-2xl">
+                <h2 className="text-3xl font-bold text-slate-800 mb-6">標準分 (Standard Score)</h2>
+                {/* 定義 */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-4">
+                  <p className="text-slate-700 text-base leading-relaxed">
+                    標準分提供在平均之上／下的位置，能知道大概的<span className="font-bold text-indigo-700">排名位置</span>。
+                  </p>
+                </div>
+                {/* 公式 */}
+                <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-4">
+                  <p className="text-xs font-bold text-indigo-500 uppercase tracking-wide mb-3">公式</p>
+                  <LV2KatexLine math={`z = \\dfrac{x - \\bar{x}}{\\sigma}`} />
+                  <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
+                    <div className="bg-white rounded-lg p-3 border border-indigo-100">
+                      <div className="font-bold text-indigo-700 text-lg">z</div>
+                      <div className="text-slate-500 text-xs mt-1">標準分</div>
+                    </div>
+                    <div className="bg-white rounded-lg p-3 border border-indigo-100">
+                      <div className="font-bold text-indigo-700 text-lg">x</div>
+                      <div className="text-slate-500 text-xs mt-1">某學生的分數</div>
+                    </div>
+                    <div className="bg-white rounded-lg p-3 border border-indigo-100">
+                      <div className="font-bold text-indigo-700 text-lg">σ</div>
+                      <div className="text-slate-500 text-xs mt-1">標準差</div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-3 text-center">當中有 3 個數已提供，代入公式求未知的數</p>
+                </div>
+                {/* 正負意義 */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-4">
+                  <div className="bg-slate-800 text-white px-5 py-3 font-bold">標準分的意義</div>
+                  <div className="divide-y divide-slate-100">
+                    <div className="flex items-center gap-4 px-5 py-4">
+                      <span className="text-2xl font-black text-red-500 w-10 text-center">−</span>
+                      <div>
+                        <p className="font-bold text-slate-700">標準分為<span className="text-red-500">負數</span></p>
+                        <p className="text-sm text-slate-500 mt-0.5">差過平均（Below Average）→ 後半排名</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 px-5 py-4">
+                      <span className="text-2xl font-black text-green-500 w-10 text-center">+</span>
+                      <div>
+                        <p className="font-bold text-slate-700">標準分為<span className="text-green-600">正數</span></p>
+                        <p className="text-sm text-slate-500 mt-0.5">好過平均（Above Average）→ 前半排名</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 px-5 py-4">
+                      <span className="text-2xl font-black text-blue-500 w-10 text-center">0</span>
+                      <div>
+                        <p className="font-bold text-slate-700">標準分為 <span className="text-blue-500">0</span></p>
+                        <p className="text-sm text-slate-500 mt-0.5">剛好等於平均分</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* 例題 */}
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
+                  <p className="font-bold text-amber-800 mb-3">例題</p>
+                  <p className="text-slate-700 text-sm mb-3">某次測驗的平均分為 60 分，標準差為 8 分。小明得 76 分，求小明的標準分。</p>
+                  <LV2KatexLine math={`z = \\dfrac{76 - 60}{8} = \\dfrac{16}{8} = 2`} />
+                  <p className="text-sm text-slate-600 mt-2">標準分為 2，即小明的成績比平均高出 2 個標準差，排名在前半。</p>
+                </div>
+              </div>
+            ) : selectedChart && learnData.length > 0 ? (
               <div className="max-w-4xl">
                 {/* 標題 */}
                 <h2 className="text-3xl font-bold text-slate-800 mb-4">{chartTypes[selectedChart].name}</h2>
