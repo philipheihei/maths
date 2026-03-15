@@ -75,9 +75,9 @@ const BinaryNotes = ({ onBack }) => (
         <div className="bg-white rounded-lg p-4 shadow-sm mb-4">
           <p className="font-bold text-purple-700 mb-3">📱 進入 BASE 模式</p>
           <div className="flex items-center flex-wrap gap-2 text-sm bg-purple-50 rounded p-3">
-            <span className="bg-gray-800 text-white text-xs font-mono px-2 py-1 rounded">MODE</span>
+            <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-1 rounded">MODE</span>
             <span>→</span>
-            <span className="bg-gray-800 text-white text-xs font-mono px-2 py-1 rounded">3</span>
+            <span className="bg-gray-900 text-white text-xs font-mono px-2 py-1 rounded">3</span>
             <span className="text-gray-500">（進入 BASE 模式，預設 <span className="text-green-600 font-bold">DEC</span> 十進制）</span>
           </div>
         </div>
@@ -92,19 +92,19 @@ const BinaryNotes = ({ onBack }) => (
                 <li>在 BASE 模式（<span className="text-green-600 font-bold">DEC</span> 狀態）下，按
                   <span className="relative inline-block mx-1 align-middle">
                     <span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span>
-                    <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">log</span>
+                    <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span>
                   </span>
                   切換到 <strong><span className="text-green-600">BIN</span> 二進制輸入</strong>
                 </li>
                 <li>輸入二進制數字（只能輸入 0 和 1）</li>
                 <li>按
-                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
+                  <span className="mx-1 bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
                   確認
                 </li>
                 <li className="pt-3">按
                   <span className="relative inline-block mx-1 align-middle">
                     <span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">DEC</span>
-                    <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">x²</span>
+                    <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">x²</span>
                   </span>
                   → 顯示十進制結果
                 </li>
@@ -114,14 +114,14 @@ const BinaryNotes = ({ onBack }) => (
                 <div className="font-mono flex flex-wrap items-center gap-1 pt-4">
                   <span className="relative inline-block mx-1 align-middle">
                     <span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span>
-                    <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">log</span>
+                    <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span>
                   </span>
                   <span>→ 輸入 <strong>1100</strong> →</span>
-                  <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
+                  <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
                   <span>→</span>
                   <span className="relative inline-block mx-1 align-middle">
                     <span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">DEC</span>
-                    <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">x²</span>
+                    <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">x²</span>
                   </span>
                   <span>→ 顯示 <strong className="text-blue-700">12</strong>（十進數為 12）</span>
                 </div>
@@ -131,20 +131,20 @@ const BinaryNotes = ({ onBack }) => (
             <div className="border-l-4 border-green-400 pl-4 space-y-2">
               <p className="font-semibold text-green-700">算式 / 十進制 → 二進制</p>
               <ol className="list-decimal pl-4 space-y-1 text-sm">
-                <li>先在 COMP 模式（<span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">1</span>）計算算式的十進制值</li>
-                <li>記下數值，進入 BASE 模式（<span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">3</span>）</li>
+                <li>先在 COMP 模式（<span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span>）計算算式的十進制值</li>
+                <li>記下數值，進入 BASE 模式（<span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">3</span>）</li>
                 <li className="pt-5">在 <span className="text-green-600 font-bold">DEC</span> 狀態下輸入十進制數 → 按
                   <span className="relative inline-block mx-1 align-middle">
                     <span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span>
-                    <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">log</span>
+                    <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span>
                   </span>
                   切換到 <span className="text-green-600 font-bold">BIN</span> → 按
-                  <span className="mx-1 bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
+                  <span className="mx-1 bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
                   → 顯示二進制
                 </li>
               </ol>
               <div className="bg-green-50 rounded p-2 text-sm font-mono">
-                例：COMP 算得 <InlineMath math="11+2^6+2^{10}+2^{11}=3147" /> → BASE <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">MODE</span> → <span className="text-green-600 font-bold">DEC</span> 輸入 3147 → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → 得二進制
+                例：COMP 算得 <InlineMath math="11+2^6+2^{10}+2^{11}=3147" /> → BASE <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span> → <span className="text-green-600 font-bold">DEC</span> 輸入 3147 → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → 得二進制
               </div>
             </div>
 
@@ -156,7 +156,7 @@ const BinaryNotes = ({ onBack }) => (
           <ul className="list-disc pl-5 space-y-2 text-sm">
             <li><span className="text-green-600 font-bold">BIN</span> 模式只能輸入 0 和 1</li>
             <li>若二進制數太長（超過計算機顯示位數）會顯示不了，需要拆開不同組件計算去推斷答案。</li>
-            <li>計其他數要離開 BASE 模式：<span className="bg-gray-800 text-white text-xs font-mono px-1 py-0.5 rounded">MODE</span> → <span className="bg-gray-800 text-white text-xs font-mono px-1 py-0.5 rounded">1</span>（回 COMP）</li>
+            <li>計其他數要離開 BASE 模式：<span className="bg-gray-300 text-gray-800 text-xs font-mono px-1 py-0.5 rounded">MODE</span> → <span className="bg-gray-900 text-white text-xs font-mono px-1 py-0.5 rounded">1</span>（回 COMP）</li>
           </ul>
         </div>
 
@@ -222,19 +222,19 @@ const BinaryNotes = ({ onBack }) => (
             <div className="border border-slate-200 rounded-lg p-3">
               <p className="font-semibold mb-1">題目：求 <InlineMath math="11+2^6+2^{10}+2^{11}" /> 的二進制</p>
               <p>① 在 COMP 模式計算十進制：<InlineMath math="11+64+1024+2048=3147" /></p>
-              <p>② <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">3</span> → <span className="text-green-600 font-bold">DEC</span> 輸入 3147 → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → 得 <InlineMath math="110001001011_2" /></p>
+              <p>② <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">3</span> → <span className="text-green-600 font-bold">DEC</span> 輸入 3147 → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → 得 <InlineMath math="110001001011_2" /></p>
             </div>
             <div className="border border-slate-200 rounded-lg p-3">
               <p className="font-semibold mb-1">題目：求 <InlineMath math="7 \times 2^{10}+2^8+5 \times 2^3-2^3" /> 的二進制</p>
               <p>① COMP：<InlineMath math="7168+256+40-8=7456" /></p>
-              <p>② BASE <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">MODE</span> → <span className="text-green-600 font-bold">DEC</span> 輸入 7456 → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → 得 <InlineMath math="1110100100000_2" /></p>
+              <p>② BASE <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span> → <span className="text-green-600 font-bold">DEC</span> 輸入 7456 → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → 得 <InlineMath math="1110100100000_2" /></p>
             </div>
             <div className="border border-slate-200 rounded-lg p-3">
               <p className="font-semibold mb-1">題目：求 <InlineMath math="1100_2" /> 的十進制</p>
-              <p><span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">3</span> → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ 輸入 1100 → <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> →
+              <p><span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">3</span> → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ 輸入 1100 → <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> →
                 <span className="relative inline-block mx-1 align-middle">
                   <span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">DEC</span>
-                  <span className="bg-gray-800 text-white text-xs font-mono px-2 py-0.5 rounded">x²</span>
+                  <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">x²</span>
                 </span>
                 → 得 <InlineMath math="12" /></p>
             </div>

@@ -885,11 +885,11 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
                   <div className="flex flex-wrap gap-1">
                     {item.keys.map((key, i) => (
                       <span key={i} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${
-                        key === 'SHIFT' ? 'bg-yellow-500 text-black' :
-                        key === 'ALPHA' ? 'bg-red-600 text-white' :
-                        key === 'x⁻¹' ? 'bg-gray-700 text-white' :
-                        key === 'a b/c' ? 'bg-gray-700 text-white' :
-                        'bg-gray-800 text-white'
+                        key === 'SHIFT' ? 'bg-gray-300 text-yellow-700' :
+                        key === 'ALPHA' ? 'bg-gray-300 text-red-600' :
+                        key === 'x⁻¹' ? 'bg-gray-900 text-white' :
+                        key === 'a b/c' ? 'bg-gray-900 text-white' :
+                        'bg-gray-900 text-white'
                       }`}>{key}</span>
                     ))}
                   </div>
@@ -910,19 +910,19 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
               <strong>進入程式編輯模式</strong>
             </div>
             <div className="flex flex-wrap gap-1 items-center text-sm">
-              <span className="px-2 py-1 bg-purple-600 text-white rounded text-xs font-bold">MODE</span>
-              <span className="px-2 py-1 bg-purple-600 text-white rounded text-xs font-bold">MODE</span>
+              <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span>
+              <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span>
               <span className="text-blue-900 font-bold">→</span>
-              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">6</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">6</span>
               <span className="text-gray-500 text-xs">(PRGM)</span>
               <span className="text-blue-900 font-bold">→</span>
-              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
               <span className="text-gray-500 text-xs">(EDIT)</span>
               <span className="text-blue-900 font-bold">→</span>
-              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
               <span className="text-gray-500 text-xs">(Prog 1)</span>
               <span className="text-blue-900 font-bold">→</span>
-              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
               <span className="text-gray-500 text-xs">(COMP)</span>
             </div>
           </div>
@@ -1010,8 +1010,8 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             
             <p className="font-bold text-sm mb-2">步驟一：執行程式</p>
             <div className="bg-white p-2 rounded mb-3">
-              <span className="px-2 py-1 bg-blue-600 text-white rounded text-xs font-bold">Prog</span>
-              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold ml-1">1</span>
+              <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">Prog</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold ml-1">1</span>
               <span className="text-gray-500 text-xs ml-2">→ 計算機顯示「A?」</span>
             </div>
             
@@ -1028,10 +1028,10 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
                 <div key={idx} className="flex flex-wrap items-center gap-1">
                   {item.keys.map((k, i) => (
                     <span key={i} className={`px-2 py-1 rounded text-xs font-bold ${
-                      k === '(−)' ? 'bg-red-600 text-white' : 'bg-gray-800 text-white'
+                      k === '(−)' ? 'bg-gray-900 text-white' : 'bg-gray-900 text-white'
                     }`}>{k}</span>
                   ))}
-                  <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span>
+                  <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span>
                   <span className="text-gray-500 text-xs">{item.label}</span>
                 </div>
               ))}
@@ -1039,7 +1039,7 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             
             <div className="bg-blue-100 p-3 rounded-lg mt-3 text-center border border-blue-300">
               <p>計算機顯示 <span className="text-2xl font-bold text-blue-700">2.8</span> <span className="text-sm text-gray-600 font-medium">（即 x = 2.8）</span></p>
-              <p className="mt-2">按 <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span> 後顯示 <span className="text-2xl font-bold text-blue-700">3.6</span> <span className="text-sm text-gray-600 font-medium">（即 y = 3.6）</span></p>
+              <p className="mt-2">按 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span> 後顯示 <span className="text-2xl font-bold text-blue-700">3.6</span> <span className="text-sm text-gray-600 font-medium">（即 y = 3.6）</span></p>
               <div className="mt-3 pt-3 border-t border-blue-300">
                 ✅ <strong>答案：x = 2.8，y = 3.6</strong>
               </div>
@@ -1054,8 +1054,8 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
           <div className="bg-red-50 border-2 border-red-400 p-3 rounded-lg mb-3">
             <div className="font-bold text-red-700 mb-2">⚠️ 注意</div>
             <ul className="text-sm space-y-1 list-disc list-inside text-gray-700">
-              <li>輸入負數時要用 <span className="px-1 bg-gray-800 text-white rounded text-xs">(−)</span> 鍵（負號鍵），不是減號</li>
-              <li>係數為 1 時也要輸入 <span className="px-1 bg-gray-800 text-white rounded text-xs">1</span></li>
+              <li>輸入負數時要用 <span className="px-1 bg-gray-900 text-white rounded text-xs">(−)</span> 鍵（負號鍵），不是減號</li>
+              <li>係數為 1 時也要輸入 <span className="px-1 bg-gray-900 text-white rounded text-xs">1</span></li>
               <li>注意輸入順序：先 x 係數，再 y 係數，最後常數</li>
               <li>如方程要整理（如 4y + 3x = 10），先改寫成 3x + 4y = 10</li>
             </ul>
@@ -1065,7 +1065,7 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             <div className="font-bold text-yellow-700 mb-2">💡 提示</div>
             <ul className="text-sm space-y-1 list-disc list-inside text-gray-700">
               <li>如果顯示「Math ERROR」，表示方程無解或有無限多解</li>
-              <li>要重新計算，只需按 <span className="px-1 bg-blue-600 text-white rounded text-xs">Prog</span> <span className="px-1 bg-gray-800 text-white rounded text-xs">1</span> 再次執行</li>
+              <li>要重新計算，只需按 <span className="px-1 bg-orange-500 text-white rounded text-xs">Prog</span> <span className="px-1 bg-gray-900 text-white rounded text-xs">1</span> 再次執行</li>
               <li>程式會永久保存，關機後仍可使用</li>
             </ul>
           </div>
@@ -2336,7 +2336,7 @@ export default function SimultaneousEqQuiz() {
                     <div className="mt-3 flex gap-2">
                         <button 
                             onClick={inlineFeedback.action} 
-                            className="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
+                            className="bg-gray-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
                         >
                             下一題
                         </button>
@@ -2451,7 +2451,7 @@ export default function SimultaneousEqQuiz() {
                 <div className="mt-3 flex gap-2">
                     <button 
                         onClick={inlineFeedback.action} 
-                        className="bg-gray-800 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
+                        className="bg-gray-900 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-700 transition"
                     >
                         下一題
                     </button>
@@ -2568,7 +2568,7 @@ export default function SimultaneousEqQuiz() {
                 {mode === 'word-lv2' && renderWordLv2()}
             </main>
 
-            <div className="bg-gray-800 text-white p-2 md:px-8 text-center md:text-left z-20 flex justify-between items-center">
+            <div className="bg-gray-900 text-white p-2 md:px-8 text-center md:text-left z-20 flex justify-between items-center">
                 <div className="flex items-center gap-4">
                     <span className="text-gray-400 text-sm">
                       {activeInput 

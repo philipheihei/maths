@@ -714,8 +714,8 @@ const TrigonometricIdentitiesNotes = ({ activeSub }) => {
             <p className="text-purple-600 font-bold mb-3">以 sin θ 找 θ：</p>
             <div className="flex items-center gap-3 flex-wrap">
               <span className="text-slate-700">按</span>
-              <span className="px-2 py-1 bg-yellow-500 text-black rounded text-xs font-bold">SHIFT</span>
-              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">sin</span>
+              <span className="px-2 py-1 bg-gray-300 text-yellow-700 rounded text-xs font-bold">SHIFT</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">sin</span>
               <span className="text-slate-700"><Latex math="\left(\frac{\sqrt{3}}{2}\right)" inline /></span>
               <span className="text-green-600 text-2xl">→</span>
               <span className="text-blue-600 text-xl font-bold">θ = 60°</span>
@@ -1472,7 +1472,7 @@ const QuadraticEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-red-800 mb-3 text-lg">一般式：<Latex math="ax^2 + bx + c = \textcolor{red}{\underline{0}}" />，<Latex math="\textcolor{red}{a > 0}" /></h3>
             <p className="text-green-600 text-sm mb-3"><Latex math="x^2" /> → x → 沒x &nbsp;&nbsp;&nbsp; ↙ 必定=0</p>
             <div className="bg-white rounded-lg p-3 mb-3">
-              <p className="text-red-600 font-bold mb-2">- 一般式是去做二次公式 / 按計算機 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">FMLA</span> <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">01</span> 時有用</p>
+              <p className="text-red-600 font-bold mb-2">- 一般式是去做二次公式 / 按計算機 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">FMLA</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">01</span> 時有用</p>
               <p className="text-red-600">∴ 需要以一般式去得出 a / b / c 值去作計算</p>
             </div>
           </div>
@@ -1498,12 +1498,12 @@ const QuadraticEquationNotes = ({ activeSub }) => {
               <p className="text-blue-600 mb-2">例：<Latex math="x^2 + 4x + 3 = 0" /></p>
               <div className="space-y-2">
                 <p className="text-green-700"><span className="font-bold">Step 1:</span> 認 a, b, c &nbsp;&nbsp; <span className="text-blue-600">a=1, b=4, c=3</span></p>
-                <p className="text-green-700"><span className="font-bold">Step 2:</span> 按 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">FMLA</span> <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">01</span></p>
+                <p className="text-green-700"><span className="font-bold">Step 2:</span> 按 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">FMLA</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">01</span></p>
                 <p className="text-slate-500 text-sm ml-4">(屏幕顯示: Formula No?)</p>
-                <p className="text-slate-500 text-sm ml-4">輸入: <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">0</span> <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span></p>
+                <p className="text-slate-500 text-sm ml-4">輸入: <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">0</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span></p>
                 <p className="text-green-700"><span className="font-bold">Step 3:</span> 輸入 a, b, c 的數值</p>
                 <div className="ml-4 text-sm space-y-1">
-                  <div><span className="inline-block w-6 h-6 rounded-full border-2 border-green-600 text-center text-xs leading-5">1</span> <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span> <span className="px-2 py-1 bg-gray-300 text-black rounded text-xs font-bold">EXE</span></div>
+                  <div><span className="inline-block w-6 h-6 rounded-full border-2 border-green-600 text-center text-xs leading-5">1</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span></div>
                   <div><span className="inline-block w-6 h-6 rounded-full border-2 border-purple-600 text-center text-xs leading-5">2</span> 輸入!</div>
                 </div>
                 <p className="text-green-700"><span className="font-bold">Step 4:</span> 出答案 (2個!)</p>
@@ -1976,10 +1976,10 @@ const SimEqCalculatorNotes = ({ activeSub }) => {
                     <div className="flex flex-wrap gap-1">
                       {item.keys.map((key, i) => (
                         <span key={i} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${
-                          key === 'SHIFT' ? 'bg-yellow-500 text-black' :
-                          key === 'ALPHA' ? 'bg-red-600 text-white' :
-                          (key === 'x⁻¹' || key === 'a b/c') ? 'bg-gray-700 text-white' :
-                          'bg-gray-800 text-white'
+                          key === 'SHIFT' ? 'bg-gray-300 text-yellow-700' :
+                          key === 'ALPHA' ? 'bg-gray-300 text-red-600' :
+                          (key === 'x⁻¹' || key === 'a b/c') ? 'bg-gray-900 text-white' :
+                          'bg-gray-900 text-white'
                         }`}>{key}</span>
                       ))}
                     </div>
@@ -1998,19 +1998,19 @@ const SimEqCalculatorNotes = ({ activeSub }) => {
                 <strong>進入程式編輯模式</strong>
               </div>
               <div className="flex flex-wrap gap-1 items-center text-sm">
-                <span className="px-2 py-1 bg-purple-600 text-white rounded text-xs font-bold">MODE</span>
-                <span className="px-2 py-1 bg-purple-600 text-white rounded text-xs font-bold">MODE</span>
+                <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span>
+                <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span>
                 <span className="text-blue-900 font-bold">→</span>
-                <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">6</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">6</span>
                 <span className="text-gray-500 text-xs">(PRGM)</span>
                 <span className="text-blue-900 font-bold">→</span>
-                <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
                 <span className="text-gray-500 text-xs">(EDIT)</span>
                 <span className="text-blue-900 font-bold">→</span>
-                <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
                 <span className="text-gray-500 text-xs">(Prog 1)</span>
                 <span className="text-blue-900 font-bold">→</span>
-                <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold">1</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
                 <span className="text-gray-500 text-xs">(COMP)</span>
               </div>
             </div>
@@ -2069,8 +2069,8 @@ const SimEqCalculatorNotes = ({ activeSub }) => {
             </div>
             <p className="font-bold text-sm mb-2">步驟一：執行程式</p>
             <div className="bg-white p-2 rounded mb-3">
-              <span className="px-2 py-1 bg-blue-600 text-white rounded text-xs font-bold">Prog</span>
-              <span className="px-2 py-1 bg-gray-800 text-white rounded text-xs font-bold ml-1">1</span>
+              <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">Prog</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold ml-1">1</span>
               <span className="text-gray-500 text-xs ml-2">→ 計算機顯示「A?」</span>
             </div>
             <p className="font-bold text-sm mb-2">步驟二：依次輸入係數</p>
@@ -2082,16 +2082,16 @@ const SimEqCalculatorNotes = ({ activeSub }) => {
               ].map((item, idx) => (
                 <div key={idx} className="flex flex-wrap items-center gap-1">
                   {item.keys.map((k, i) => (
-                    <span key={i} className={`px-2 py-1 rounded text-xs font-bold ${k === '(−)' ? 'bg-red-600 text-white' : 'bg-gray-800 text-white'}`}>{k}</span>
+                    <span key={i} className={`px-2 py-1 rounded text-xs font-bold ${k === '(−)' ? 'bg-gray-900 text-white' : 'bg-gray-900 text-white'}`}>{k}</span>
                   ))}
-                  <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span>
+                  <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span>
                   <span className="text-gray-500 text-xs">{item.label}</span>
                 </div>
               ))}
             </div>
             <div className="bg-blue-100 p-3 rounded-lg mt-3 text-center border border-blue-300">
               <p>計算機顯示 <span className="text-2xl font-bold text-blue-700">2.8</span> <span className="text-sm text-gray-600">（x = 2.8）</span></p>
-              <p className="mt-2">按 <span className="px-2 py-1 bg-green-600 text-white rounded text-xs font-bold">EXE</span> 後顯示 <span className="text-2xl font-bold text-blue-700">3.6</span> <span className="text-sm text-gray-600">（y = 3.6）</span></p>
+              <p className="mt-2">按 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span> 後顯示 <span className="text-2xl font-bold text-blue-700">3.6</span> <span className="text-sm text-gray-600">（y = 3.6）</span></p>
               <div className="mt-3 pt-3 border-t border-blue-300">✅ <strong>答案：x = 2.8，y = 3.6</strong></div>
             </div>
           </div>
@@ -2100,8 +2100,8 @@ const SimEqCalculatorNotes = ({ activeSub }) => {
           <div className="bg-red-50 border-2 border-red-400 p-3 rounded-lg">
             <div className="font-bold text-red-700 mb-2">⚠️ 注意</div>
             <ul className="text-sm space-y-1 list-disc list-inside text-gray-700">
-              <li>輸入負數時要用 <span className="px-1 bg-gray-800 text-white rounded text-xs">(−)</span> 鍵（負號鍵），不是減號</li>
-              <li>係數為 1 時也要輸入 <span className="px-1 bg-gray-800 text-white rounded text-xs">1</span></li>
+              <li>輸入負數時要用 <span className="px-1 bg-gray-900 text-white rounded text-xs">(−)</span> 鍵（負號鍵），不是減號</li>
+              <li>係數為 1 時也要輸入 <span className="px-1 bg-gray-900 text-white rounded text-xs">1</span></li>
               <li>注意輸入順序：先 x 係數，再 y 係數，最後常數</li>
               <li>如方程要整理（如 4y + 3x = 10），先改寫成 3x + 4y = 10</li>
             </ul>
@@ -2110,7 +2110,7 @@ const SimEqCalculatorNotes = ({ activeSub }) => {
             <div className="font-bold text-yellow-700 mb-2">💡 提示</div>
             <ul className="text-sm space-y-1 list-disc list-inside text-gray-700">
               <li>如果顯示「Math ERROR」，表示方程無解或有無限多解</li>
-              <li>要重新計算，只需按 <span className="px-1 bg-blue-600 text-white rounded text-xs">Prog</span> <span className="px-1 bg-gray-800 text-white rounded text-xs">1</span> 再次執行</li>
+              <li>要重新計算，只需按 <span className="px-1 bg-orange-500 text-white rounded text-xs">Prog</span> <span className="px-1 bg-gray-900 text-white rounded text-xs">1</span> 再次執行</li>
               <li>程式會永久保存，關機後仍可使用</li>
             </ul>
           </div>

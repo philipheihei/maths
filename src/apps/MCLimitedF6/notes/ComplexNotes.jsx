@@ -28,7 +28,7 @@ const ComplexNotes = ({ onBack }) => (
             <span className="shrink-0 w-8 h-8 rounded-full bg-teal-500 text-white font-bold text-sm flex items-center justify-center">1</span>
             <div>
               <p className="font-bold text-teal-800">開啟 Complex Mode</p>
-              <p className="text-sm text-slate-600 mt-0.5">按 <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-xs font-bold">MODE</span> → 選 <span className="font-mono bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">2 (CMPLX)</span></p>
+              <p className="text-sm text-slate-600 mt-0.5">按 <span className="font-mono bg-gray-300 text-gray-800 px-1.5 py-0.5 rounded text-xs font-bold">MODE</span> → 選 <span className="font-mono bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">2 (CMPLX)</span></p>
               <p className="text-xs text-slate-400 mt-1">⚠️ 每次計完記得 MODE → 1 返回一般模式</p>
             </div>
           </div>
@@ -37,7 +37,7 @@ const ComplexNotes = ({ onBack }) => (
             <span className="shrink-0 w-8 h-8 rounded-full bg-teal-500 text-white font-bold text-sm flex items-center justify-center">2</span>
             <div>
               <p className="font-bold text-teal-800">照題目直接輸入</p>
-              <p className="text-sm text-slate-600 mt-0.5">將式子逐字撳入計算機，<InlineMath math="i" /> 按 <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded text-xs font-bold">ENG</span>（即 <InlineMath math="i" /> 鍵）</p>
+              <p className="text-sm text-slate-600 mt-0.5">將式子逐字撳入計算機，<InlineMath math="i" /> 按 <span className="font-mono bg-gray-900 text-white px-1.5 py-0.5 rounded text-xs font-bold">ENG</span>（即 <InlineMath math="i" /> 鍵）</p>
               <p className="text-xs text-slate-400 mt-1">無限制題目可先代入數值（例如 k = 10）</p>
             </div>
           </div>
@@ -49,13 +49,13 @@ const ComplexNotes = ({ onBack }) => (
               <p className="text-xs text-slate-400 mt-0.5 mb-2">⚡ 系統預設先顯示<strong className="text-green-700">實部</strong>，直接按 EXE 即可</p>
               <div className="flex gap-3 mt-1 flex-wrap">
                 <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
-                  <span className="font-mono bg-green-600 text-white text-xs px-2 py-1 rounded font-bold">EXE</span>
+                  <span className="font-mono bg-gray-900 text-white text-xs px-2 py-1 rounded font-bold">EXE</span>
                   <span className="text-sm font-semibold text-green-800">→ 出 <span className="underline">實部</span>（Real Part）</span>
                 </div>
                 <div className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-3 py-2">
-                  <span className="font-mono bg-slate-600 text-white text-xs px-2 py-1 rounded font-bold">SHIFT</span>
+                  <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-2 py-1 rounded font-bold">SHIFT</span>
                   <span className="text-xs text-slate-400">+</span>
-                  <span className="font-mono bg-slate-600 text-white text-xs px-2 py-1 rounded font-bold">EXE</span>
+                  <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-2 py-1 rounded font-bold">EXE</span>
                   <span className="text-sm font-semibold text-blue-800">→ 出 <span className="underline">虛部</span>（Imag Part）</span>
                 </div>
               </div>
@@ -101,7 +101,7 @@ const ComplexNotes = ({ onBack }) => (
         {/* Warm-up exercises */}
         <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-4">
           <div className="flex items-center gap-2 mb-3">
-            <span className="bg-slate-600 text-white text-xs font-bold px-2 py-1 rounded">熱身練習</span>
+            <span className="bg-gray-300 text-yellow-700 text-xs font-bold px-2 py-1 rounded">熱身練習</span>
             <span className="text-sm font-bold text-slate-700">用 Mode 2 計複數四則混算</span>
           </div>
           <p className="text-sm text-slate-500 mb-3">切換到 Mode 2 後，照樣輸入式子，計算機會自動以 <InlineMath math="a+bi" /> 形式顯示答案。</p>
@@ -116,13 +116,13 @@ const ComplexNotes = ({ onBack }) => (
               </div>
               <div className="flex gap-2 flex-wrap">
                 <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
-                  <span className="font-mono bg-green-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
+                  <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
                   <span className="text-sm text-green-800">先出 <strong>−20</strong>（實部 a）</span>
                 </div>
                 <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
-                  <span className="font-mono bg-slate-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
+                  <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
                   <span className="text-xs text-slate-400">+</span>
-                  <span className="font-mono bg-slate-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
+                  <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
                   <span className="text-sm text-blue-800">後出 <strong>12</strong>（虛部 b）</span>
                 </div>
               </div>
@@ -139,13 +139,13 @@ const ComplexNotes = ({ onBack }) => (
               <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^3" /> 時須打 <code><em>i</em> × <em>i</em> × <em>i</em></code>（有幾次方就打幾個 <em>i</em> 相乘）</p>
               <div className="flex gap-2 flex-wrap">
                 <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
-                  <span className="font-mono bg-green-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
+                  <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
                   <span className="text-sm text-green-800">先出 <strong>-2</strong>（實部 a）</span>
                 </div>
                 <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
-                  <span className="font-mono bg-slate-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
+                  <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
                   <span className="text-xs text-slate-400">+</span>
-                  <span className="font-mono bg-slate-600 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
+                  <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
                   <span className="text-sm text-blue-800">後出 <strong>2</strong>（虛部 b）</span>
                 </div>
               </div>
@@ -177,7 +177,7 @@ const ComplexNotes = ({ onBack }) => (
             </div>
             <div className="flex items-center gap-2 bg-green-50 rounded-lg px-3 py-2">
               <span className="shrink-0 w-6 h-6 rounded-full bg-green-600 text-white font-bold text-xs flex items-center justify-center">3</span>
-              <span className="text-green-800">按 <span className="font-mono bg-green-600 text-white text-xs px-2 py-0.5 rounded font-bold">EXE</span> → 實部 = <InlineMath math="\dfrac{19}{101}" /></span>
+              <span className="text-green-800">按 <span className="font-mono bg-gray-900 text-white text-xs px-2 py-0.5 rounded font-bold">EXE</span> → 實部 = <InlineMath math="\dfrac{19}{101}" /></span>
             </div>
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center">4</span>

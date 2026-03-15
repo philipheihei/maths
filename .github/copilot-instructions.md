@@ -135,6 +135,32 @@ const QUESTIONS = [
   - Feedback: `green-600` (correct), `red-600` (incorrect)
   - Backgrounds: gradient `from-blue-50 via-indigo-50 to-purple-50`
 
+## Calculator Key Styling (CASIO fx-50FH II)
+
+When displaying CASIO fx-50FH II keys in notes or instructions, **always** use these exact Tailwind classes. Every new notes page or instruction section must follow this standard.
+
+| Key | Examples | Classes |
+|-----|----------|---------|
+| Black key (standard) | EXE, 0-9, +, −, ×, ÷, log, sin, cos, tan, ln, x², ENG, EXP, Ans, (−), x⁻¹, a b/c | `bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded` |
+| Gray key — MODE/SETUP | MODE | `bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded` |
+| Gray key — SHIFT | SHIFT | `bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded` |
+| Gray key — ALPHA | ALPHA | `bg-gray-300 text-red-600 text-xs font-mono px-2 py-0.5 rounded` |
+| Orange key | Prog, FMLA | `bg-orange-500 text-white text-xs font-mono px-2 py-0.5 rounded` |
+| SHIFT secondary label (green) | BIN, DEC, HEX, OCT | `text-green-600 text-xs font-bold` floating `absolute -top-3.5` above base key |
+
+**Floating SHIFT-label pattern** (e.g. BIN printed above log key):
+```jsx
+<span className="relative inline-block mx-1 align-middle">
+  <span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span>
+  <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span>
+</span>
+```
+
+**Rules:**
+- DEL / AC in quiz virtual keypads (touch UI) may use `bg-gray-900 text-red-400` to distinguish from numbers
+- Do NOT use `bg-gray-800`, `bg-slate-600`, `bg-green-600`, `bg-purple-600`, or `bg-yellow-500` for CASIO key depictions
+- Pure UI buttons (student input keypads in quizzes) are exempt — they use touch-friendly sizing and may differ
+
 ## Testing Approach
 **No automated tests currently** - validation is done through:
 - Manual quiz playthroughs

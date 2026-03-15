@@ -200,10 +200,10 @@ export default function IndexLaws() {
   };
 
   const generateProblemLV2 = () => {
-    const typeIdx = getRandomInt(0, 4); // 5種題型
+    const typeIdx = getRandomInt(0, 9); // 6種題型 (0-7各佔20%分4種, 8→題型4佔10%, 9→題型5佔10%)
     
     // 題型0: 原有題型 (x^a y^b)^k / (x^c y^d)
-    if (typeIdx === 0) {
+    if (typeIdx <= 1) {
       const a = getRandomNonZero(-4, 4);
       const b = getRandomNonZero(-4, 4);
       const k = getRandomInt(2, 3) * (Math.random() > 0.5 ? -1 : 1);
@@ -273,7 +273,7 @@ export default function IndexLaws() {
     }
     
     // 題型1: (a·b^e1)(a^e2·b^e3)^k - 乘法形式
-    else if (typeIdx === 1) {
+    else if (typeIdx <= 3) {
       const e1 = getRandomInt(2, 4);
       const e2 = getRandomInt(-3, -1);
       const e3 = getRandomInt(3, 5);
@@ -333,7 +333,7 @@ export default function IndexLaws() {
     }
     
     // 題型2: xy^e1 / (x^e2 · y^e3)^k
-    else if (typeIdx === 2) {
+    else if (typeIdx <= 5) {
       const e1 = getRandomInt(5, 9);
       const e2 = getRandomInt(-3, -1);
       const e3 = getRandomInt(2, 4);
@@ -389,7 +389,7 @@ export default function IndexLaws() {
     }
     
     // 題型3: (m^e1·n^e2)^k1 / (m^e3)^k2
-    else if (typeIdx === 3) {
+    else if (typeIdx <= 7) {
       const e1 = getRandomInt(3, 5);
       const e2 = getRandomInt(-2, -1);
       const k1 = getRandomInt(2, 4);
@@ -446,7 +446,7 @@ export default function IndexLaws() {
     }
     
     // 題型4: m^e1 / (m^e2·n^e3)^k
-    else {
+    else if (typeIdx === 8) {
       const e1 = getRandomInt(7, 11);
       const e2 = getRandomInt(2, 4);
       const e3 = getRandomInt(-8, -5);
@@ -496,6 +496,56 @@ export default function IndexLaws() {
         expectations: {
           step1: step1Str,
           step1Keywords: [`m^${denM}`, `n^${denN}`],
+          step2: step2Str,
+          step3: step3Str,
+          finalAns: step3Str,
+        },
+      });
+    }
+
+    // 題型5 (~10%): (p^e0·q^e1)(p^e2·q^e3)^k — 乘積形式，兩bracket均有明確指數
+    else {
+      const e0 = getRandomInt(2, 5);
+      const e1 = getRandomInt(2, 5);
+      const e2 = getRandomInt(-4, -1); // negative inside bracket
+      const e3 = getRandomInt(2, 5);
+      const k = getRandomInt(3, 5);
+
+      // Build qLatex: (p^e0 q^e1)(p^e2 q^e3)^k
+      const qLatex = `(p^{${e0}}q^{${e1}})(p^{${e2}}q^{${e3}})^{${k}}`;
+
+      // Step 1: 拆括號 → p^e0 q^e1 p^(e2k) q^(e3k)
+      const e2k = e2 * k;  // negative
+      const e3k = e3 * k;  // positive
+      const step1Str = `p^${e0}q^${e1}p^${e2k}q^${e3k}`;
+      const step1Keywords = [`p^${e2k}`, `q^${e3k}`];
+
+      // Step 2: 負指數轉正指數
+      // e0>0, e1>0, e3k>0 → numerator; e2k<0 → denominator
+      const step2Str = `${formatExpTerm('p', e0)}${formatExpTerm('q', e1)}${formatExpTerm('q', e3k)}/${formatExpTerm('p', Math.abs(e2k))}`;
+
+      // Step 3: 合併同底約簡
+      const finalP = e0 + e2k;
+      const finalQ = e1 + e3k;
+      const step3NumParts = [];
+      const step3DenParts = [];
+      if (finalP > 0) step3NumParts.push(formatExpTerm('p', finalP));
+      else if (finalP < 0) step3DenParts.push(formatExpTerm('p', Math.abs(finalP)));
+      if (finalQ > 0) step3NumParts.push(formatExpTerm('q', finalQ));
+      else if (finalQ < 0) step3DenParts.push(formatExpTerm('q', Math.abs(finalQ)));
+      if (step3NumParts.length === 0) step3NumParts.push('1');
+      if (step3DenParts.length === 0) step3DenParts.push('1');
+      const step3Str = step3DenParts[0] === '1'
+        ? step3NumParts.join('')
+        : `${step3NumParts.join('')}/${step3DenParts.join('')}`;
+
+      setProblem({
+        level: 2,
+        qLatex,
+        variables: ['p', 'q'],
+        expectations: {
+          step1: step1Str,
+          step1Keywords,
           step2: step2Str,
           step3: step3Str,
           finalAns: step3Str,
