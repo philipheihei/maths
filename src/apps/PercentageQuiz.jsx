@@ -322,7 +322,7 @@ const QuizPage = ({ onBackToTeaching }) => {
   // 價錢百分數題目生成
   // =====================
   const generatePriceQuestion = () => {
-    const types = [1, 2, 3, 4];
+    const types = [1, 2, 3, 4, 5];
     const type = types[Math.floor(Math.random() * types.length)];
 
     switch (type) {
@@ -330,6 +330,7 @@ const QuizPage = ({ onBackToTeaching }) => {
       case 2: return generateType2Question();
       case 3: return generateType3Question();
       case 4: return generateType4Question();
+      case 5: return generateType5Question();
       default: return generateType1Question();
     }
   };
@@ -410,6 +411,7 @@ const QuizPage = ({ onBackToTeaching }) => {
       text: `某${item}以其標價${discountZh}售出。售出該${item}後，盈利為 $${profit} 且盈利百分率為 ${profitPercent}%。求該${item}的標價。`,
       answer: markedPrice,
       hintLatex: `\\begin{aligned}
+        \\text{成本} \\times \\text{盈利百分率} &= \\text{盈利} \\\\
         \\text{成本} &= \\text{盈利} \\div \\text{盈利百分率} \\\\
         &= \\$${profit} \\div ${profitPercent}\\% \\\\
         &= \\$${cost} \\\\
@@ -540,6 +542,73 @@ const QuizPage = ({ onBackToTeaching }) => {
           unit: '$'
         };
       }
+    }
+  };
+
+  // 類型5: 求成本
+  const generateType5Question = () => {
+    const items = ['紀念品', '手錶', '電器', '皮包', '運動鞋', '玩具'];
+    const item = items[Math.floor(Math.random() * items.length)];
+    const variant = Math.random() > 0.5;
+
+    if (variant) {
+      // 5a: 已知售價和盈利/虧蝕百分率，求成本
+      const profitPercents = [10, 20, 25, 30, 40, 50];
+      const profitPercent = profitPercents[Math.floor(Math.random() * profitPercents.length)];
+      const isProfit = Math.random() > 0.3;
+      // cost multiples of 200 ensure integer selling price for all profitPercents
+      const cost = (Math.floor(Math.random() * 5) + 1) * 200;
+      const multiplier = isProfit ? (1 + profitPercent / 100) : (1 - profitPercent / 100);
+      const sellingPrice = cost * multiplier;
+      const label = isProfit ? '盈利' : '虧蝕';
+      const operator = isProfit ? '+' : '-';
+
+      return {
+        type: 5,
+        text: `某${item}的售價為 $${sellingPrice}，${label}百分率為 ${profitPercent}%，求該${item}的成本。`,
+        answer: cost,
+        hintLatex: `\\begin{aligned}
+          \\text{售價} &= \\text{成本} \\times (1 ${operator} ${profitPercent}\\%) \\\\
+          \\text{成本} &= \\dfrac{\\text{售價}}{1 ${operator} ${profitPercent}\\%} \\\\
+          &= \\dfrac{\\$${sellingPrice}}{${multiplier}} \\\\
+          &= \\$${cost}
+        \\end{aligned}`,
+        unit: '$'
+      };
+    } else {
+      // 5b: 已知售價、折扣、標價較成本高X%，求成本（仿 DSE 題型）
+      const discountOptions = [
+        { zh: '四折', rate: 0.4 },
+        { zh: '五折', rate: 0.5 },
+        { zh: '六折', rate: 0.6 },
+        { zh: '七折', rate: 0.7 },
+        { zh: '八折', rate: 0.8 },
+      ];
+      const premiumPercents = [25, 40, 50, 60, 75, 100];
+      const discount = discountOptions[Math.floor(Math.random() * discountOptions.length)];
+      const premiumPercent = premiumPercents[Math.floor(Math.random() * premiumPercents.length)];
+      // cost multiples of 200 → markedPrice always integer for all premiumPercents
+      // and sellingPrice always integer for all discount rates
+      const cost = (Math.floor(Math.random() * 5) + 1) * 200;
+      const premiumFrac = 1 + premiumPercent / 100;
+      const markedPrice = cost * premiumFrac;
+      const sellingPrice = Math.round(markedPrice * discount.rate);
+
+      return {
+        type: 5,
+        text: `某${item}的售價為 $${sellingPrice}，以其標價${discount.zh}售出，標價較成本高 ${premiumPercent}%，求該${item}的成本。`,
+        answer: cost,
+        hintLatex: `\\begin{aligned}
+          \\text{標價} &= \\text{售價} \\div ${discount.rate} \\\\
+          &= \\$${sellingPrice} \\div ${discount.rate} \\\\
+          &= \\$${markedPrice} \\\\[0.5em]
+          \\text{標價} &= \\text{成本} \\times (1 + ${premiumPercent}\\%) \\\\
+          \\text{成本} &= \\text{標價} \\div ${premiumFrac} \\\\
+          &= \\$${markedPrice} \\div ${premiumFrac} \\\\
+          &= \\$${cost}
+        \\end{aligned}`,
+        unit: '$'
+      };
     }
   };
 

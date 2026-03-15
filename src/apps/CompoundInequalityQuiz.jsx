@@ -1845,12 +1845,12 @@ const CompoundInequalityQuiz = () => {
                 <div>
                   <div className="font-bold text-green-600 mb-1 flex items-center gap-1 text-lg">正整數：</div>
                   <div className="font-mono text-slate-700 text-xl font-bold">1, 2, 3, 4, 5...</div>
-                  <div className="text-sm text-slate-400 mt-1">不是小數 (如 5.8, 5.9 ✗)</div>
+                  <div className="text-sm text-slate-400 mt-1">不能是小數 (如 5.8, 5.9 ✗)</div>
                 </div>
                 <div>
                   <div className="font-bold text-red-500 mb-1 flex items-center gap-1 text-lg">負整數：</div>
                   <div className="font-mono text-slate-700 text-xl font-bold">-1, -2, -3, -4...</div>
-                  <div className="text-sm text-slate-400 mt-1">不是小數 (如 -3.2 ✗)</div>
+                  <div className="text-sm text-slate-400 mt-1">不能是小數 (如 -3.2 ✗)</div>
                 </div>
               </div>
               <div className="mt-3 text-blue-600 font-bold border-t border-slate-200 pt-2 text-sm">
@@ -1862,22 +1862,32 @@ const CompoundInequalityQuiz = () => {
               <h3 className="font-bold text-slate-700">常見例子： <span className="ml-2 text-xs font-normal text-slate-500 bg-slate-100 px-2 py-1 rounded">💡 用數線想</span></h3>
               
               <div className="flex flex-col gap-3">
-                <div className="bg-blue-50 p-3 rounded-lg border border-blue-100">
-                  <div className="text-slate-700">e.g. 計到 <span className="font-mono font-bold text-blue-800 text-lg">x &gt; -3</span>，<span className="text-blue-700">最小整數</span>是 <span className="font-bold text-lg">-2</span></div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex-1 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                    <div className="text-slate-700">e.g. 計到 <span className="font-mono font-bold text-blue-800 text-lg">x &gt; -3</span>，滿足的<span className="text-blue-700">最小整數</span>是 <span className="font-bold text-lg">-2</span></div>
+                  </div>
+                  <div className="flex-1 bg-red-50 p-3 rounded-lg border border-red-100">
+                    <div className="text-slate-700">計到 <span className="font-mono font-bold text-red-800 text-lg">x &lt; -5</span>，滿足的<span className="text-red-700">最大整數</span>是 <span className="font-bold text-lg">-6</span></div>
+                  </div>
                 </div>
 
-                <div className="bg-red-50 p-3 rounded-lg border border-red-100">
-                  <div className="text-slate-700">計到 <span className="font-mono font-bold text-red-800 text-lg">x &lt; -5</span>，<span className="text-red-700">最大整數</span>是 <span className="font-bold text-lg">-6</span></div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 mt-1">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <div className="flex-1 bg-purple-50 p-3 rounded-lg border border-purple-100 flex flex-col justify-center">
-                    <div className="text-slate-700">計到 <span className="font-mono font-bold text-purple-800 text-lg">x ≥ 4</span>，<span className="text-purple-700">最小整數</span>是 <span className="font-bold text-lg">4</span></div>
+                    <div className="text-slate-700">計到 <span className="font-mono font-bold text-purple-800 text-lg">x ≥ 4</span>，滿足的<span className="text-purple-700">最小整數</span>是 <span className="font-bold text-lg">4</span></div>
                   </div>
                   <div className="flex-1 bg-emerald-50 p-3 rounded-lg border border-emerald-100 flex flex-col justify-center">
-                    <div className="text-slate-700">計到 <span className="font-mono font-bold text-emerald-800 text-lg">y ≤ -8</span>，<span className="text-emerald-700">最大整數</span>是 <span className="font-bold text-lg">-8</span></div>
+                    <div className="text-slate-700">計到 <span className="font-mono font-bold text-emerald-800 text-lg">x ≤ -8</span>，滿足的<span className="text-emerald-700">最大整數</span>是 <span className="font-bold text-lg">-8</span></div>
                   </div>
                 </div>
+
+                <div className="bg-amber-50 p-3 rounded-lg border border-amber-200">
+                  <div className="text-slate-700">列出所有符合 <span className="font-mono font-bold text-amber-800 text-lg">x &gt; -4</span> 的<span className="text-amber-700 font-bold"> 負整數</span>：<span className="font-bold text-lg text-amber-900"> -3, -2, -1</span></div>
+                </div>
+
+                <div className="bg-sky-50 p-3 rounded-lg border border-sky-200">
+                  <div className="text-slate-700">有多少個<span className="text-sky-700 font-bold">正整數</span>同時滿足 <span className="font-mono font-bold text-sky-800 text-lg">x ≤ 6</span>：<span className="font-bold text-lg text-sky-900"> 6</span><span className="text-slate-500 text-sm ml-1">（不需列出 1, 2, 3, 4, 5, 6，只需列出總數）</span></div>
+                </div>
+
                 <div className="text-right mt-1">
                   <span className="text-lg font-bold text-red-600">若不等號包含 "="，直接寫不等式的數字便可</span>
                 </div>

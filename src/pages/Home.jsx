@@ -137,7 +137,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['不等式', '文字翻譯', '數線表示'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'compound-inequality-quiz',
@@ -201,7 +201,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['坐標轉換', '平移', '旋轉', '反射'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'algebraic-fractions',
@@ -300,7 +300,7 @@ const Home = () => {
       ],
       category: '高中',
       topics: ['餘式定理', '因式定理', '多項式除法'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'mc-limited-f6',

@@ -63,6 +63,7 @@ const CoordinateGrid = ({ children, size = SVG_SIZE, onMouseMove, onMouseUp, onM
       height={size} 
       viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`} 
       className="bg-white rounded-xl border border-gray-200 shadow-sm"
+      style={{ touchAction: 'none' }}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseLeave}
@@ -131,7 +132,6 @@ const DraggablePoint = ({ point, onDragStart, isDragging, label = 'P', color = '
         stroke="white"
         strokeWidth="2"
         style={{ cursor: 'grab', pointerEvents: 'none' }}
-        className="transition-all duration-150"
       />
       <text 
         x={svgCoords.x + 12} 

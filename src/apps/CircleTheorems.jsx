@@ -538,7 +538,7 @@ const CircleTheorems = () => {
                       <>
                           <polygon points={`${coords.A.x},${coords.A.y} ${coords.B.x},${coords.B.y} ${coords.C.x},${coords.C.y} ${coords.D.x},${coords.D.y}`} className="fill-blue-50 stroke-blue-500 stroke-2 opacity-80" />
                           
-                          <line x1={coords.A.x} y1={coords.A.y} x2={coordsE.x} y2={coordsE.y} className="stroke-slate-400 stroke-2 stroke-dasharray-4" markerEnd="url(#arrow)" />
+                          <line x1={coords.A.x} y1={coords.A.y} x2={coordsE.x} y2={coordsE.y} className="stroke-slate-400 stroke-2 stroke-dasharray-4" />
                           <text x={coordsE.x + 5} y={coordsE.y} className="text-xs fill-slate-500">E</text>
 
                           <path d={getAngleArcPath(coords.B.x, coords.B.y, 25, getAngle(coords.A.x, coords.A.y, coords.B), getAngle(coords.C.x, coords.C.y, coords.B))} className="fill-blue-100 stroke-blue-300" />

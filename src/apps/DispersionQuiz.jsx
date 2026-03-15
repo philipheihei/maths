@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Calculator, 
   BarChart2, 
@@ -1232,6 +1232,665 @@ const Keypad = ({ value, onChange }) => {
   );
 };
 
+// ================================================
+// LV2 題目生成器和相關組件
+// ================================================
+
+const LV2_ITEM_CONTEXTS = [
+  { label: '原子筆', unit: '支' },
+  { label: '圖書', unit: '本' },
+  { label: '計算機', unit: '部' },
+  { label: '電話', unit: '部' },
+  { label: '玩具', unit: '件' },
+  { label: '文具', unit: '件' },
+];
+
+// LV2 Type A: 頻數表，已知平均數，求 n
+const generateLV2FreqMeanN = () => {
+  for (let attempt = 0; attempt < 300; attempt++) {
+    const start = Math.floor(Math.random() * 4) + 1;
+    const len = 4 + Math.floor(Math.random() * 2);
+    const values = Array.from({ length: len }, (_, i) => start + i);
+    const mean = start + Math.floor(Math.random() * (len - 1));
+    const unknownIdx = Math.floor(Math.random() * len);
+    const vk = values[unknownIdx];
+    if (mean === vk) continue;
+    const knownFreqs = values.map((_, i) => i === unknownIdx ? 0 : Math.floor(Math.random() * 8) + 3);
+    const sumF = knownFreqs.reduce((a, b) => a + b, 0);
+    const sumVF = values.reduce((s, v, i) => s + v * knownFreqs[i], 0);
+    const denom = vk - mean;
+    const numer = mean * sumF - sumVF;
+    if (numer % denom !== 0) continue;
+    const n = numer / denom;
+    if (n < 2 || n > 15) continue;
+    const ctx = LV2_ITEM_CONTEXTS[Math.floor(Math.random() * LV2_ITEM_CONTEXTS.length)];
+    const meanSumF = mean * sumF;
+    // Build expanded numerator: each known v*f product shown individually, unknown as vk*n
+    const expandedNumer = values.map((v, i) =>
+      i === unknownIdx ? `${vk}n` : String(v * knownFreqs[i])
+    ).join(' + ');
+    return {
+      type: 'freq-mean-n',
+      context: `下表顯示某班學生擁有${ctx.label}的數目的分佈`,
+      xLabel: `${ctx.label}的數目（${ctx.unit}）`,
+      values,
+      displayFreqs: knownFreqs.map((f, i) => i === unknownIdx ? 'n' : String(f)),
+      unknownIdx,
+      mean,
+      parts: [{
+        label: '',
+        question: '求 n 的值',
+        answer: n,
+        steps: [
+          `\\dfrac{${expandedNumer}}{${sumF} + n} = ${mean}`,
+          `\\dfrac{${sumVF} + ${vk}n}{${sumF} + n} = ${mean}`,
+          `${sumVF} + ${vk}n = ${mean}(${sumF} + n)`,
+          `${sumVF} + ${vk}n = ${meanSumF} + ${mean}n`,
+          `n = ${n}`,
+        ]
+      }]
+    };
+  }
+  return null;
+};
+
+// LV2 Type B: 頻數表，已知中位數，求 s 的最小/最大可取值
+const generateLV2FreqMedianS = () => {
+  for (let attempt = 0; attempt < 500; attempt++) {
+    const start = Math.floor(Math.random() * 5) + 4;
+    const values = [start, start + 1, start + 2, start + 3, start + 4];
+    const medianVal = values[2];
+    const unknownIdx = 3; // s after median → gives both min and max bounds
+    const knownFreqs = values.map((_, i) => i === unknownIdx ? 0 : Math.floor(Math.random() * 8) + 3);
+    const cB = knownFreqs[0] + knownFreqs[1]; // cumFreq below medianVal
+    const cM = cB + knownFreqs[2];            // cumFreq up to medianVal
+    const T = knownFreqs.reduce((a, b) => a + b, 0);
+    // median = medianVal  ⟺  cB < (T+s)/2 ≤ cM
+    const sMin = Math.max(1, 2 * cB - T + 1);
+    const sMax = 2 * cM - T;
+    if (sMax < sMin + 1 || sMax > 30) continue;
+    const freqMedian = cM - cB; // frequency of medianVal group
+    const ctx = LV2_ITEM_CONTEXTS[Math.floor(Math.random() * LV2_ITEM_CONTEXTS.length)];
+    return {
+      type: 'freq-median-s',
+      context: `下表顯示某班學生擁有${ctx.label}的數目的分佈`,
+      xLabel: `${ctx.label}的數目（${ctx.unit}）`,
+      values,
+      displayFreqs: knownFreqs.map((f, i) => i === unknownIdx ? 's' : String(f)),
+      unknownIdx,
+      medianVal,
+      cB, cM, T,
+      parts: [
+        {
+          label: '(a)',
+          question: `求 s 的最小可取值`,
+          answer: sMin,
+          steps: [
+            `\\text{想像全班按數目排隊：}`,
+            `\\underbrace{\\text{前 }${cB}\\text{ 人}}_{\\leq ${values[1]}\\text{ 本}} \\;\\Bigg|\\; \\underbrace{\\text{第 }${cB+1}\\text{–}${cM}\\text{ 人}}_{${medianVal}\\text{ 本，共}${freqMedian}\\text{人}} \\;\\Bigg|\\; \\underbrace{\\text{後面 }s\\text{ 人}}_{${values[3]}\\text{ 本}} \\;\\Bigg|\\; \\underbrace{\\text{最後 }${knownFreqs[4]}\\text{ 人}}_{${values[4]}\\text{ 本}}`,
+            `\\text{要中位數}=${medianVal}\\text{，正中間的人要站在第 }${cB+1}\\text{–}${cM}\\text{ 位}`,
+            `\\text{如果 }s\\text{ 太少，全班人數太少，中間的人反而站在「}${values[1]}\\text{ 本」組 → 中位數}\\neq ${medianVal}`,
+            `\\text{全班共 }${T}+s\\text{ 人，正中間在第}\\dfrac{${T}+s}{2}\\text{位}`,
+            `\\text{要讓中間位置}\\textbf{超過}\\text{前 }${cB}\\text{ 人：}\\dfrac{${T}+s}{2} > ${cB}`,
+            `s > ${2*cB} - ${T} = ${2*cB-T}`,
+            `\\therefore s_{\\min} = ${sMin}`,
+          ]
+        },
+        {
+          label: '(b)',
+          question: `寫出 s 的最大可取值`,
+          answer: sMax,
+          steps: [
+            `\\text{如果 }s\\text{ 太多，全班人數太多，中間的人反而落入「}${values[3]}\\text{ 本」組 → 中位數}\\neq ${medianVal}`,
+            `\\text{要讓中間位置}\\textbf{不超過}\\text{第 }${cM}\\text{ 位：}\\dfrac{${T}+s}{2} \\leq ${cM}`,
+            `s \\leq ${2*cM} - ${T} = ${sMax}`,
+            `\\therefore s_{\\max} = ${sMax}`,
+          ]
+        }
+      ]
+    };
+  }
+  return null;
+};
+
+// LV2 Type F: 頻數表，已知眾數，求 k 的最小/最大可取値
+const generateLV2FreqModeK = () => {
+  for (let attempt = 0; attempt < 300; attempt++) {
+    const start = Math.floor(Math.random() * 3); // 0, 1, or 2
+    const len = 4 + Math.floor(Math.random() * 2); // 4 or 5 values
+    const values = Array.from({ length: len }, (_, i) => start + i);
+
+    // mode index must not be first or last (so k at edge is more interesting)
+    const modeIdx = 1 + Math.floor(Math.random() * (len - 2));
+    const unknownIdx = Math.floor(Math.random() * len);
+    if (unknownIdx === modeIdx) continue;
+
+    const modeFreq = 7 + Math.floor(Math.random() * 5); // 7–11
+
+    // All non-unknown, non-mode frequencies strictly less than modeFreq
+    const knownFreqs = values.map((_, i) => {
+      if (i === unknownIdx) return 0;
+      if (i === modeIdx) return modeFreq;
+      return 2 + Math.floor(Math.random() * (modeFreq - 2));
+    });
+
+    const kMin = 1;
+    const kMax = modeFreq - 1;
+    if (kMax < 2) continue;
+
+    const ctx = LV2_ITEM_CONTEXTS[Math.floor(Math.random() * LV2_ITEM_CONTEXTS.length)];
+    const modeVal = values[modeIdx];
+
+    return {
+      type: 'freq-mode-k',
+      context: `下表顯示某班學生擁有${ctx.label}的數目的分佈`,
+      xLabel: `${ctx.label}的數目（${ctx.unit}）`,
+      values,
+      displayFreqs: knownFreqs.map((f, i) => i === unknownIdx ? 'k' : String(f)),
+      unknownIdx,
+      modeVal,
+      modeFreq,
+      parts: [
+        {
+          label: '(i)',
+          question: `若該分佈的眾數為 ${modeVal}，求 k 的最小可取値`,
+          answer: kMin,
+          steps: [
+            `\\text{眾數} = ${modeVal} \\Rightarrow \\text{「${modeVal}\\text{」的頻數必須最大}}`,
+            `\\text{「${modeVal}\\text{」}的頻數} = ${modeFreq}`,
+            `k < ${modeFreq}\\text{（讓眾數保持為 }${modeVal}\\text{）}`,
+            `k \\geq 1\\text{（k 為正整數）}`,
+            `\\therefore k_{\\min} = ${kMin}`,
+          ],
+        },
+        {
+          label: '(ii)',
+          question: `若該分佈的眾數為 ${modeVal}，求 k 的最大可取値`,
+          answer: kMax,
+          steps: [
+            `\\text{眾數} = ${modeVal} \\Rightarrow k < ${modeFreq}`,
+            `k \\leq ${modeFreq} - 1 = ${kMax}`,
+            `\\therefore k_{\\max} = ${kMax}`,
+          ],
+        },
+      ],
+    };
+  }
+  return null;
+};
+
+// LV2 幹葉圖語境
+const LV2_STEM_CONTEXTS = [
+  '一群工人在某星期的工作時數（以小時為單位）',
+  '某袋子內的信件的重量（以克為單位）',
+  '某班學生在測驗中的分數（以分為單位）',
+  '某公司職員的月薪（以千元為單位）',
+  '某班同學某次數學測驗的成績（以分為單位）',
+  '某超市每天的銷售量（以件為單位）',
+];
+
+// LV2 Type C: 幹葉圖有未知葉，已知分佈域，求未知值
+const generateLV2StemLeafRange = () => {
+  for (let attempt = 0; attempt < 300; attempt++) {
+    const stemStart = 1 + Math.floor(Math.random() * 4);
+    const numStems = 3 + Math.floor(Math.random() * 2);
+    if (stemStart + numStems - 1 > 7) continue;
+    const stems = Array.from({ length: numStems }, (_, i) => stemStart + i);
+
+    // Generate 3-8 sorted leaves per stem
+    const allLeaves = stems.map(() => {
+      const count = 3 + Math.floor(Math.random() * 6);
+      const leaves = Array.from({ length: count }, () => Math.floor(Math.random() * 10));
+      return leaves.sort((a, b) => a - b);
+    });
+
+    const knownMin = stems[0] * 10 + allLeaves[0][0];
+    const knownMax = stems[stems.length - 1] * 10 + allLeaves[stems.length - 1][allLeaves[stems.length - 1].length - 1];
+    const unknownInFirst = Math.random() < 0.5;
+
+    let unknownLeaf, actualMin, actualMax;
+
+    if (unknownInFirst) {
+      // a is inserted before all leaves of first stem → must be ≤ existing first leaf
+      const maxPossibleLeaf = allLeaves[0][0];
+      const loR = Math.max(15, knownMax - (stems[0] * 10 + maxPossibleLeaf));
+      const hiR = Math.min(50, knownMax - stems[0] * 10);
+      if (loR > hiR) continue;
+      const rangeVal = loR + Math.floor(Math.random() * (hiR - loR + 1));
+      actualMin = knownMax - rangeVal;
+      unknownLeaf = actualMin - stems[0] * 10;
+      if (unknownLeaf < 0 || unknownLeaf > maxPossibleLeaf) continue;
+      actualMax = knownMax;
+    } else {
+      // w is appended after all leaves of last stem → must be ≥ existing last leaf
+      const lastIdx = stems.length - 1;
+      const minPossibleLeaf = allLeaves[lastIdx][allLeaves[lastIdx].length - 1];
+      const loR = Math.max(15, stems[lastIdx] * 10 + minPossibleLeaf - knownMin);
+      const hiR = Math.min(50, stems[lastIdx] * 10 + 9 - knownMin);
+      if (loR > hiR) continue;
+      const rangeVal = loR + Math.floor(Math.random() * (hiR - loR + 1));
+      actualMax = knownMin + rangeVal;
+      unknownLeaf = actualMax - stems[lastIdx] * 10;
+      if (unknownLeaf < minPossibleLeaf || unknownLeaf > 9) continue;
+      actualMin = knownMin;
+    }
+
+    const rangeVal = actualMax - actualMin;
+    const varName = unknownInFirst ? 'a' : 'w';
+    const ctx = LV2_STEM_CONTEXTS[Math.floor(Math.random() * LV2_STEM_CONTEXTS.length)];
+
+    const displayLeaves = allLeaves.map((leaves, si) => {
+      if (si === 0 && unknownInFirst) return [varName, ...leaves];
+      if (si === stems.length - 1 && !unknownInFirst) return [...leaves, varName];
+      return [...leaves];
+    });
+
+    const steps = unknownInFirst ? [
+      `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+      `${rangeVal} = ${actualMax} - \\text{最小值}`,
+      `\\text{最小值} = ${actualMax} - ${rangeVal}`,
+      `\\text{最小值} = ${actualMin}`,
+      `\\therefore ${varName} = ${unknownLeaf}`,
+    ] : [
+      `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+      `${rangeVal} = \\text{最大值} - ${actualMin}`,
+      `\\text{最大值} = ${actualMin} + ${rangeVal}`,
+      `\\text{最大值} = ${actualMax}`,
+      `\\therefore ${varName} = ${unknownLeaf}`,
+    ];
+
+    return {
+      type: 'stem-leaf-unknown',
+      context: `下面的幹葉圖顯示${ctx}`,
+      stems,
+      displayLeaves,
+      varName,
+      rangeVal,
+      parts: [{
+        label: '',
+        question: `已知該分佈的分佈域為 ${rangeVal}，求 ${varName} 的值`,
+        answer: unknownLeaf,
+        steps,
+      }],
+    };
+  }
+  return null;
+};
+
+// LV2 Type D: 幹葉圖有未知葉，分佈域 = k × IQR
+const generateLV2StemLeafIQR = () => {
+  // 與 MathUtils.quartiles 一致的 IQR 計算
+  const computeIQR = (sorted) => {
+    const n = sorted.length;
+    const mid = Math.floor(n / 2);
+    const lower = sorted.slice(0, mid);
+    const upper = n % 2 === 0 ? sorted.slice(mid) : sorted.slice(mid + 1);
+    const medOf = arr => arr.length % 2 !== 0
+      ? arr[Math.floor(arr.length / 2)]
+      : (arr[arr.length / 2 - 1] + arr[arr.length / 2]) / 2;
+    return { q1: medOf(lower), q3: medOf(upper) };
+  };
+
+  for (let attempt = 0; attempt < 500; attempt++) {
+    const stemStart = 1 + Math.floor(Math.random() * 4);
+    const numStems = 3 + Math.floor(Math.random() * 2);
+    if (stemStart + numStems - 1 > 7) continue;
+    const stems = Array.from({ length: numStems }, (_, i) => stemStart + i);
+
+    const allLeaves = stems.map(() => {
+      const count = 3 + Math.floor(Math.random() * 5);
+      return Array.from({ length: count }, () => Math.floor(Math.random() * 10)).sort((a, b) => a - b);
+    });
+
+    const allData = stems.flatMap((s, si) => allLeaves[si].map(l => s * 10 + l));
+    const knownMin = allData[0];
+    const knownMax = allData[allData.length - 1];
+    const { q1, q3 } = computeIQR(allData);
+    const iqr = q3 - q1;
+    if (iqr <= 0 || !Number.isInteger(iqr)) continue;
+
+    const k = 2 + Math.floor(Math.random() * 3); // k = 2, 3, or 4
+    const rangeVal = k * iqr;
+    const unknownInFirst = Math.random() < 0.5;
+    let unknownLeaf, actualMin, actualMax, varName;
+
+    if (unknownInFirst) {
+      actualMin = knownMax - rangeVal;
+      actualMax = knownMax;
+      unknownLeaf = actualMin - stems[0] * 10;
+      varName = 'a';
+      if (unknownLeaf < 0 || unknownLeaf > allLeaves[0][0]) continue;
+      // Verify IQR stays the same after inserting unknown at min
+      const newData = [actualMin, ...allData];
+      const { q1: nq1, q3: nq3 } = computeIQR(newData);
+      if (nq3 - nq1 !== iqr) continue;
+    } else {
+      actualMax = knownMin + rangeVal;
+      actualMin = knownMin;
+      unknownLeaf = actualMax - stems[stems.length - 1] * 10;
+      varName = 'w';
+      if (unknownLeaf < allLeaves[stems.length - 1][allLeaves[stems.length - 1].length - 1] || unknownLeaf > 9) continue;
+      const newData = [...allData, actualMax];
+      const { q1: nq1, q3: nq3 } = computeIQR(newData);
+      if (nq3 - nq1 !== iqr) continue;
+    }
+
+    const ctx = LV2_STEM_CONTEXTS[Math.floor(Math.random() * LV2_STEM_CONTEXTS.length)];
+    const displayLeaves = allLeaves.map((leaves, si) => {
+      if (si === 0 && unknownInFirst) return [varName, ...leaves];
+      if (si === stems.length - 1 && !unknownInFirst) return [...leaves, varName];
+      return [...leaves];
+    });
+
+    const steps = unknownInFirst ? [
+      `\\text{四分位數間距} = Q_3 - Q_1 = ${q3} - ${q1} = ${iqr}`,
+      `\\text{分佈域} = ${k} \\times \\text{四分位數間距} = ${k} \\times ${iqr} = ${rangeVal}`,
+      `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+      `${rangeVal} = ${actualMax} - \\text{最小值}`,
+      `\\text{最小值} = ${actualMax} - ${rangeVal} = ${actualMin}`,
+      `\\therefore ${varName} = ${unknownLeaf}`,
+    ] : [
+      `\\text{四分位數間距} = Q_3 - Q_1 = ${q3} - ${q1} = ${iqr}`,
+      `\\text{分佈域} = ${k} \\times \\text{四分位數間距} = ${k} \\times ${iqr} = ${rangeVal}`,
+      `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+      `${rangeVal} = \\text{最大值} - ${actualMin}`,
+      `\\text{最大值} = ${actualMin} + ${rangeVal} = ${actualMax}`,
+      `\\therefore ${varName} = ${unknownLeaf}`,
+    ];
+
+    return {
+      type: 'stem-leaf-unknown',
+      context: `下面的幹葉圖顯示${ctx}`,
+      stems,
+      displayLeaves,
+      varName,
+      parts: [{
+        label: '',
+        question: `已知該分佈的分佈域為其四分位數間距的 ${k} 倍，求 ${varName} 的值`,
+        answer: unknownLeaf,
+        steps,
+      }],
+    };
+  }
+  return null;
+};
+
+// LV2 框線圖語境
+const LV2_BOX_CONTEXTS = [
+  '某公司 X 組文員的年齡',
+  '某班學生的數學測驗成績（以分為單位）',
+  '某公司員工的月薪（以千元為單位）',
+  '某校男生的身高（以厘米為單位）',
+  '某超市每日售出商品件數',
+  '某班學生的體重（以千克為單位）',
+];
+
+// LV2 Type E: 框線圖，部分數值未知（a, b），已知分佈域及四分位數間距，求未知值
+// 4 valid variants: {min,Q1}, {min,Q3}, {Q1,max}, {Q3,max}
+const generateLV2BoxPlot = () => {
+  // Defines all 4 solvable two-unknown combos
+  const VARIANTS = [
+    {
+      unknownLabels: (v) => ({ min: 'a', q1: 'b' }),
+      parts: (v) => [
+        { label: '(a)', question: '求 a 的值', answer: v.min, steps: [
+          `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+          `${v.max} - a = ${v.range}`,
+          `a = ${v.min}`,
+        ]},
+        { label: '(b)', question: '求 b 的值', answer: v.q1, steps: [
+          `\\text{四分位數間距} = Q_3 - Q_1`,
+          `${v.q3} - b = ${v.iqr}`,
+          `b = ${v.q1}`,
+        ]},
+      ],
+    },
+    {
+      unknownLabels: (v) => ({ min: 'a', q3: 'b' }),
+      parts: (v) => [
+        { label: '(a)', question: '求 a 的值', answer: v.min, steps: [
+          `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+          `${v.max} - a = ${v.range}`,
+          `a = ${v.min}`,
+        ]},
+        { label: '(b)', question: '求 b 的值', answer: v.q3, steps: [
+          `\\text{四分位數間距} = Q_3 - Q_1`,
+          `b - ${v.q1} = ${v.iqr}`,
+          `b = ${v.q3}`,
+        ]},
+      ],
+    },
+    {
+      unknownLabels: (v) => ({ q1: 'a', max: 'b' }),
+      parts: (v) => [
+        { label: '(a)', question: '求 a 的值', answer: v.q1, steps: [
+          `\\text{四分位數間距} = Q_3 - Q_1`,
+          `${v.q3} - a = ${v.iqr}`,
+          `a = ${v.q1}`,
+        ]},
+        { label: '(b)', question: '求 b 的值', answer: v.max, steps: [
+          `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+          `b - ${v.min} = ${v.range}`,
+          `b = ${v.max}`,
+        ]},
+      ],
+    },
+    {
+      unknownLabels: (v) => ({ q3: 'a', max: 'b' }),
+      parts: (v) => [
+        { label: '(a)', question: '求 a 的值', answer: v.q3, steps: [
+          `\\text{四分位數間距} = Q_3 - Q_1`,
+          `a - ${v.q1} = ${v.iqr}`,
+          `a = ${v.q3}`,
+        ]},
+        { label: '(b)', question: '求 b 的值', answer: v.max, steps: [
+          `\\text{分佈域} = \\text{最大值} - \\text{最小值}`,
+          `b - ${v.min} = ${v.range}`,
+          `b = ${v.max}`,
+        ]},
+      ],
+    },
+  ];
+
+  for (let attempt = 0; attempt < 300; attempt++) {
+    const min = 15 + Math.floor(Math.random() * 25);
+    const q1  = min + 5  + Math.floor(Math.random() * 15);
+    const q2  = q1  + 3  + Math.floor(Math.random() * 12);
+    const q3  = q2  + 3  + Math.floor(Math.random() * 12);
+    const max = q3  + 5  + Math.floor(Math.random() * 20);
+    const range = max - min;
+    const iqr   = q3 - q1;
+    if (iqr <= 5 || range <= iqr || range > 80) continue;
+
+    const ctx = LV2_BOX_CONTEXTS[Math.floor(Math.random() * LV2_BOX_CONTEXTS.length)];
+    const variant = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
+    const vals = { min, q1, q2, q3, max, range, iqr };
+
+    return {
+      type: 'box-plot-unknown',
+      context: `下面的框線圖顯示${ctx}的分佈`,
+      min, q1, q2, q3, max, range, iqr,
+      unknownLabels: variant.unknownLabels(vals),
+      conditionText: `已知該分佈的分佈域及四分位數間距分別為 ${range} 及 ${iqr}`,
+      parts: variant.parts(vals),
+    };
+  }
+  return null;
+};
+
+// 題型生成器陣列 — 新增題型時只需在此加入新函數
+const LV2_GENERATORS = [
+  generateLV2FreqMeanN,
+  generateLV2FreqMedianS,
+  generateLV2StemLeafRange,
+  generateLV2StemLeafIQR,
+  generateLV2BoxPlot,
+  generateLV2FreqModeK,
+];
+
+// 隨機生成一個 LV2 題目（從所有題型中平均隨機選取）
+const generateLV2Question = () => {
+  const startIdx = Math.floor(Math.random() * LV2_GENERATORS.length);
+  for (let i = 0; i < LV2_GENERATORS.length; i++) {
+    const gen = LV2_GENERATORS[(startIdx + i) % LV2_GENERATORS.length];
+    const q = gen();
+    if (q) return q;
+  }
+  // 最後保底（理論上不會到達）
+  return generateLV2FreqMeanN();
+};
+
+// LV2 頻數表顯示元件
+const LV2FreqTableDisplay = ({ xLabel, values, displayFreqs, unknownIdx }) => (
+  <div className="overflow-x-auto my-3">
+    <table className="border-collapse mx-auto text-sm sm:text-base">
+      <thead>
+        <tr>
+          <th className="border border-gray-400 px-4 py-2 font-bold text-center bg-blue-50 text-blue-800 min-w-[120px]">
+            {xLabel}
+          </th>
+          {values.map(v => (
+            <th key={v} className="border border-gray-400 px-4 py-2 text-center font-bold bg-blue-50">{v}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td className="border border-gray-400 px-4 py-2 font-bold text-center bg-blue-50 text-blue-800">學生人數</td>
+          {displayFreqs.map((f, i) => (
+            <td key={i} className={`border border-gray-400 px-3 py-2 text-center font-bold ${
+              i === unknownIdx ? 'bg-amber-100 text-amber-700 italic text-lg' : ''
+            }`}>
+              {f}
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+);
+
+// LV2 幹葉圖顯示元件（仿 LV1 幹葉圖格式）
+const LV2StemLeafDisplay = ({ stems, displayLeaves, varName }) => (
+  <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center my-3">
+    <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf Diagram)</h3>
+    <table className="border-collapse">
+      <thead>
+        <tr className="text-slate-500 text-sm border-b border-slate-400">
+          <th className="pr-2 text-right border-r-2 border-slate-400 pb-1">幹（十位）</th>
+          <th className="pl-2 text-left pb-1">葉（個位）</th>
+        </tr>
+      </thead>
+      <tbody>
+        {stems.map((stem, si) => (
+          <tr key={stem} className="hover:bg-slate-50">
+            <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">{stem}</td>
+            <td className="pl-2 text-left">
+              <span className="text-lg flex items-center gap-0">
+                {displayLeaves[si].map((leaf, li) => (
+                  <span
+                    key={li}
+                    className={`inline-block w-6 text-center ${String(leaf) === varName
+                      ? 'font-bold italic text-amber-700 bg-amber-100 rounded'
+                      : ''}`}
+                  >
+                    {leaf}
+                  </span>
+                ))}
+              </span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <div className="mt-4 text-xs text-slate-500">
+      Key: {stems[0]} | {displayLeaves[0].find(l => String(l) !== varName) ?? varName} = {stems[0]}{displayLeaves[0].find(l => String(l) !== varName) ?? varName}
+    </div>
+  </div>
+);
+
+// LV2 框線圖顯示元件
+const LV2BoxPlotDisplay = ({ min, q1, q2, q3, max, unknownLabels = {} }) => {
+  const padding = 50;
+  const svgWidth = 500;
+  const axisY = 128;
+  const boxTop = 78;
+  const boxBottom = 118;
+  const midY = (boxTop + boxBottom) / 2;
+
+  const span = max - min;
+  const svgMin = min - span * 0.12;
+  const svgMax = max + span * 0.12;
+  const scale = (v) => ((v - svgMin) / (svgMax - svgMin)) * (svgWidth - 2 * padding) + padding;
+
+  const getLabel = (key, val) => unknownLabels[key] !== undefined ? unknownLabels[key] : String(val);
+  const isUnknown = (key) => unknownLabels[key] !== undefined;
+
+  const positions = [
+    { key: 'min', val: min },
+    { key: 'q1',  val: q1  },
+    { key: 'q2',  val: q2  },
+    { key: 'q3',  val: q3  },
+    { key: 'max', val: max },
+  ];
+
+  return (
+    <div className="bg-white p-3 rounded-lg shadow-sm border border-slate-200 my-3">
+      <svg viewBox={`0 0 ${svgWidth} 165`} className="w-full">
+        {/* Axis */}
+        <line x1={padding - 15} y1={axisY} x2={svgWidth - padding + 15} y2={axisY} stroke="#94a3b8" strokeWidth="2" />
+        {/* Whiskers */}
+        <line x1={scale(min)} y1={midY} x2={scale(q1)} y2={midY} stroke="#3b82f6" strokeWidth="2" />
+        <line x1={scale(q3)} y1={midY} x2={scale(max)} y2={midY} stroke="#3b82f6" strokeWidth="2" />
+        {/* Min/Max caps */}
+        <line x1={scale(min)} y1={boxTop + 5} x2={scale(min)} y2={boxBottom - 5} stroke="#3b82f6" strokeWidth="2" />
+        <line x1={scale(max)} y1={boxTop + 5} x2={scale(max)} y2={boxBottom - 5} stroke="#3b82f6" strokeWidth="2" />
+        {/* Box */}
+        <rect x={scale(q1)} y={boxTop} width={scale(q3) - scale(q1)} height={boxBottom - boxTop}
+          fill="white" stroke="#3b82f6" strokeWidth="2" />
+        {/* Median */}
+        <line x1={scale(q2)} y1={boxTop} x2={scale(q2)} y2={boxBottom} stroke="#3b82f6" strokeWidth="2" />
+        {/* Tick marks and labels */}
+        {positions.map(({ key, val }) => (
+          <g key={key}>
+            <line x1={scale(val)} y1={axisY - 4} x2={scale(val)} y2={axisY + 4} stroke="#64748b" strokeWidth="1.5" />
+            <text
+              x={scale(val)} y={axisY + 20}
+              textAnchor="middle"
+              fontSize="13"
+              fill={isUnknown(key) ? '#d97706' : '#334155'}
+              fontStyle={isUnknown(key) ? 'italic' : 'normal'}
+              fontWeight={isUnknown(key) ? 'bold' : 'normal'}
+            >
+              {getLabel(key, val)}
+            </text>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
+
+// LV2 單行 KaTeX 渲染元件（module-level，可使用 hooks）
+const LV2KatexLine = ({ math }) => {
+  const ref = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => { loadKatexOnce().then(() => setLoaded(true)); }, []);
+  useEffect(() => {
+    if (!loaded || !window.katex || !ref.current) return;
+    try {
+      window.katex.render(math, ref.current, { displayMode: true, throwOnError: false });
+    } catch (e) { if (ref.current) ref.current.innerText = math; }
+  }, [math, loaded]);
+  return <div ref={ref} className="my-0.5 text-center" />;
+};
+
+const LV2StepsDisplay = ({ steps }) => (
+  <div>
+    {steps.map((s, i) => <LV2KatexLine key={i} math={s} />)}
+  </div>
+);
+
 // --- 主應用邏輯 ---
 
 // 將圖表組件完全獨立並 memoized，避免輸入時重新渲染
@@ -1244,6 +1903,7 @@ const ChartDisplay = React.memo(({ chartType, data, highlight }) => {
 });
 
 export default function StatisticsApp() {
+  const navigate = useNavigate();
   const [mode, setMode] = useState('menu'); // menu, quiz, learn
   const [currentChart, setCurrentChart] = useState(null); // box, stem, bar, table
   const [currentMeasure, setCurrentMeasure] = useState(null);
@@ -1253,6 +1913,16 @@ export default function StatisticsApp() {
   const [score, setScore] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [highlight, setHighlight] = useState(null);
+
+  // LV2 state
+  const [quizLevel, setQuizLevel] = useState(null); // null | 'lv1' | 'lv2'
+  const [lv2Q, setLv2Q] = useState(null);
+  const [lv2SubPart, setLv2SubPart] = useState(0);
+  const [lv2SubAnswered, setLv2SubAnswered] = useState(false);
+  const [lv2Feedback, setLv2Feedback] = useState(null);
+  const [lv2Score, setLv2Score] = useState(0);
+  const [lv2Total, setLv2Total] = useState(0);
+  const lv2InputRef = useRef(null);
 
   // 使用 useCallback 優化輸入處理，避免不必要的重新渲染
   const handleInputChange = useCallback((e) => {
@@ -1490,7 +2160,7 @@ export default function StatisticsApp() {
       <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-blue-600 mb-2">📊 統計學離差大師</h1>
-          <p className="text-slate-500">掌握 Mean, Median, Mode, Variance, SD, IQR</p>
+          <p className="text-slate-500">掌握平均數、中位數、眾數、方差、標準差、四分位數間距</p>
         </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl px-4">
@@ -1506,7 +2176,7 @@ export default function StatisticsApp() {
         </button>
 
         <button 
-          onClick={() => { setMode('quiz'); setScore(0); setTotalQuestions(0); generateNewQuestion(); }}
+          onClick={() => { setMode('quiz'); setQuizLevel(null); }}
           className="p-6 bg-white border-2 border-green-100 hover:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all group"
         >
           <div className="flex items-center justify-center mb-3 text-green-500 group-hover:scale-110 transition-transform">
@@ -1665,6 +2335,7 @@ export default function StatisticsApp() {
     const [learnData, setLearnData] = useState([]);
     const [learnMeasure, setLearnMeasure] = useState(null);
     const [learnHighlight, setLearnHighlight] = useState(null);
+    const [selectedSection, setSelectedSection] = useState('charts'); // 'charts' | 'standard-score'
 
     const chartTypes = {
       box: { name: '框線圖 (Box-and-Whisker Diagram)', stats: ['median', 'range', 'iqr'] },
@@ -1845,14 +2516,14 @@ export default function StatisticsApp() {
         <div className="flex h-[calc(100vh-60px)]">
           {/* 左側邊欄：圖表類型選擇 */}
           <div className="w-64 bg-white border-r border-slate-200 p-4 overflow-y-auto">
-            <h3 className="font-bold text-slate-700 mb-4 px-2">選擇圖表類別:</h3>
+            <h3 className="font-bold text-slate-700 mb-2 px-2">選擇圖表類別:</h3>
             <div className="space-y-2">
               {Object.entries(chartTypes).map(([key, chart]) => (
                 <button
                   key={key}
-                  onClick={() => handleChartSelect(key)}
+                  onClick={() => { setSelectedSection('charts'); handleChartSelect(key); }}
                   className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${
-                    selectedChart === key
+                    selectedSection === 'charts' && selectedChart === key
                       ? 'bg-blue-100 text-blue-800 border border-blue-300'
                       : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
                   }`}
@@ -1861,11 +2532,98 @@ export default function StatisticsApp() {
                 </button>
               ))}
             </div>
+            <div className="mt-4 pt-4 border-t border-slate-200">
+              <h3 className="font-bold text-slate-700 mb-2 px-2">其他概念:</h3>
+              <button
+                onClick={() => setSelectedSection('standard-score')}
+                className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors ${
+                  selectedSection === 'standard-score'
+                    ? 'bg-indigo-100 text-indigo-800 border border-indigo-300'
+                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                標準分 (Standard Score)
+              </button>
+            </div>
           </div>
 
           {/* 右側主內容 */}
           <div className="flex-1 p-6 overflow-y-auto">
-            {selectedChart && learnData.length > 0 ? (
+            {selectedSection === 'standard-score' ? (
+              <div className="max-w-2xl">
+                <h2 className="text-3xl font-bold text-slate-800 mb-6">標準分 (Standard Score)</h2>
+                {/* 定義 */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-4">
+                  <p className="text-slate-700 text-base leading-relaxed">
+                    標準分提供在群體中某人大概的<span className="font-bold text-indigo-700">排名位置</span>，包括平均之上/下。
+                  </p>
+                </div>
+                {/* 公式 */}
+                <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-6 mb-4">
+                  <p className="text-xs font-bold text-indigo-500 uppercase tracking-wide mb-4">公式</p>
+                  {/* 手寫風格公式佈局 */}
+                  <div className="flex items-center justify-center gap-3 flex-wrap">
+                    {/* 左：標準分(z) = */}
+                    <div className="flex items-center gap-1">
+                      <span className="text-lg font-bold text-slate-700">標準分</span>
+                      <span className="text-base text-green-600 font-bold">(z)</span>
+                      <span className="text-lg font-bold text-slate-700 mx-1">=</span>
+                    </div>
+                    {/* 右：分數 */}
+                    <div className="flex flex-col items-center">
+                      {/* 分子 */}
+                      <div className="flex items-center gap-1 border-b-2 border-slate-700 pb-1 px-2">
+                        <span className="text-base font-bold text-slate-700">某學生的分數</span>
+                        <span className="text-sm text-green-600 font-bold">(x)</span>
+                        <span className="text-base font-bold text-slate-700 mx-1">−</span>
+                        <span className="text-base font-bold text-slate-700">平均分數</span>
+                        <span className="text-sm text-green-600 font-bold">(x̄)</span>
+                      </div>
+                      {/* 分母 */}
+                      <div className="flex items-center gap-1 pt-1 px-2">
+                        <span className="text-base font-bold text-slate-700">標準差</span>
+                        <span className="text-sm text-green-600 font-bold">(σ)</span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-4 text-center">當中有 3 個數已提供，代入公式求未知的數</p>
+                </div>
+                {/* 正負意義 */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-4">
+                  <div className="bg-slate-800 text-white px-5 py-3 font-bold">標準分的意義</div>
+                  <div className="divide-y divide-slate-100">
+                    <div className="flex items-center gap-4 px-5 py-4">
+                      <span className="text-2xl font-black text-red-500 w-10 text-center">−</span>
+                      <div>
+                        <p className="font-bold text-slate-700">標準分為<span className="text-red-500">負數</span></p>
+                        <p className="text-sm text-slate-500 mt-0.5">差過平均（Below Average）→ 後半排名</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 px-5 py-4">
+                      <span className="text-2xl font-black text-green-500 w-10 text-center">+</span>
+                      <div>
+                        <p className="font-bold text-slate-700">標準分為<span className="text-green-600">正數</span></p>
+                        <p className="text-sm text-slate-500 mt-0.5">好過平均（Above Average）→ 前半排名</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 px-5 py-4">
+                      <span className="text-2xl font-black text-blue-500 w-10 text-center">0</span>
+                      <div>
+                        <p className="font-bold text-slate-700">標準分為 <span className="text-blue-500">0</span></p>
+                        <p className="text-sm text-slate-500 mt-0.5">剛好等於平均分</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* 例題 */}
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
+                  <p className="font-bold text-amber-800 mb-3">例題</p>
+                  <p className="text-slate-700 text-sm mb-3">某次測驗的平均分為 60 分，標準差為 8 分。小明得 76 分，求小明的標準分。</p>
+                  <LV2KatexLine math={`z = \\dfrac{76 - 60}{8} = \\dfrac{16}{8} = 2`} />
+                  <p className="text-sm text-slate-600 mt-2">標準分為 2，即小明的成績比平均高出 2 個標準差，排名在前半。</p>
+                </div>
+              </div>
+            ) : selectedChart && learnData.length > 0 ? (
               <div className="max-w-4xl">
                 {/* 標題 */}
                 <h2 className="text-3xl font-bold text-slate-800 mb-4">{chartTypes[selectedChart].name}</h2>
@@ -2048,10 +2806,242 @@ export default function StatisticsApp() {
     );
   };
 
+
+  // --- 難度選擇畫面 ---
+  const LevelSelectView = () => (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+        <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+          <HomeIcon size={20} />
+          <span className="text-sm">返回首頁</span>
+        </Link>
+        <span className="font-bold text-slate-700">高中統計特訓</span>
+        <button onClick={() => setMode('menu')} className="text-slate-500 hover:text-slate-800 flex items-center gap-2 text-sm">
+          <RotateCcw size={16} /> 返回目錄
+        </button>
+      </div>
+      <div className="flex flex-col items-center justify-center min-h-[500px] space-y-6 p-6">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-blue-600 mb-2">選擇難度</h1>
+          <p className="text-slate-500">請選擇測驗模式</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
+          <button
+            onClick={() => { setQuizLevel('lv1'); setScore(0); setTotalQuestions(0); generateNewQuestion(); }}
+            className="p-6 bg-white border-2 border-transparent hover:border-green-400 rounded-2xl shadow-md hover:shadow-lg transition-all text-left"
+          >
+            <div className="mb-3">
+              <span className="text-2xl font-black text-green-500 bg-green-50 px-3 py-1 rounded-xl">LV1</span>
+            </div>
+            <h3 className="text-xl font-bold text-slate-700 mb-1">基礎題</h3>
+            <p className="text-sm text-slate-500">從圖表直接計算平均數、中位數、眾數、分佈域、四分位數間距、標準差等統計量</p>
+            <div className="mt-4 flex items-center gap-1 text-green-600 text-sm font-medium">
+              開始 <ArrowRight size={14} />
+            </div>
+          </button>
+          <button
+            onClick={() => {
+              const q = generateLV2Question();
+              setLv2Q(q);
+              setLv2SubPart(0);
+              setLv2SubAnswered(false);
+              setUserAnswer('');
+              setLv2Feedback(null);
+              setLv2Score(0);
+              setLv2Total(0);
+              setQuizLevel('lv2');
+              setTimeout(() => lv2InputRef.current?.focus(), 150);
+            }}
+            className="p-6 bg-white border-2 border-transparent hover:border-blue-400 rounded-2xl shadow-md hover:shadow-lg transition-all text-left"
+          >
+            <div className="mb-3">
+              <span className="text-2xl font-black text-blue-500 bg-blue-50 px-3 py-1 rounded-xl">LV2</span>
+            </div>
+            <h3 className="text-xl font-bold text-slate-700 mb-1">進階題（DSE 題型）</h3>
+            <p className="text-sm text-slate-500">頻數表含未知數，按已知條件（平均數 / 中位數）求未知數或其範圍</p>
+            <div className="mt-4 flex items-center gap-1 text-blue-600 text-sm font-medium">
+              開始 <ArrowRight size={14} />
+            </div>
+          </button>
+          <button
+            onClick={() => navigate('/standard-score-quiz')}
+            className="p-6 bg-white border-2 border-transparent hover:border-indigo-400 rounded-2xl shadow-md hover:shadow-lg transition-all text-left"
+          >
+            <div className="mb-3">
+              <span className="text-2xl font-black text-indigo-500 bg-indigo-50 px-3 py-1 rounded-xl">標準分</span>
+            </div>
+            <h3 className="text-xl font-bold text-slate-700 mb-1">標準分特訓</h3>
+            <p className="text-sm text-slate-500">已知平均分及標準差，求標準分或原始分數；從學生資料求標準差或平均分</p>
+            <div className="mt-4 flex items-center gap-1 text-indigo-600 text-sm font-medium">
+              開始 <ArrowRight size={14} />
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // --- LV2 測驗畫面 ---
+  const QuizLV2View = () => {
+    if (!lv2Q) return null;
+    const part = lv2Q.parts[lv2SubPart];
+    const isLastPart = lv2SubPart >= lv2Q.parts.length - 1;
+    const totalParts = lv2Q.parts.length;
+
+    const handleSubmitLV2 = () => {
+      if (!userAnswer.trim() || lv2SubAnswered) return;
+      const userNum = parseFloat(userAnswer.trim());
+      if (isNaN(userNum)) return;
+      const correct = Math.abs(userNum - part.answer) < 0.5;
+      setLv2Total(t => t + 1);
+      if (correct) setLv2Score(s => s + 1);
+      setLv2Feedback({ correct, answer: part.answer, steps: part.steps });
+      setLv2SubAnswered(true);
+    };
+
+    const handleNextPartLV2 = () => {
+      if (!isLastPart) {
+        setLv2SubPart(p => p + 1);
+        setLv2SubAnswered(false);
+        setUserAnswer('');
+        setLv2Feedback(null);
+        setTimeout(() => lv2InputRef.current?.focus(), 100);
+      } else {
+        const newQ = generateLV2Question();
+        setLv2Q(newQ);
+        setLv2SubPart(0);
+        setLv2SubAnswered(false);
+        setUserAnswer('');
+        setLv2Feedback(null);
+        setTimeout(() => lv2InputRef.current?.focus(), 100);
+      }
+    };
+
+    return (
+      <div className="min-h-screen bg-slate-100">
+        <div className="bg-white px-4 py-3 border-b border-gray-100 flex items-center justify-between sticky top-0 z-10">
+          <Link to="/" className="text-slate-500 hover:text-slate-700 flex items-center gap-2">
+            <HomeIcon size={20} />
+            <span className="text-sm">返回首頁</span>
+          </Link>
+          <span className="font-bold text-slate-700">高中統計特訓 — LV2</span>
+          <button onClick={() => { setMode('quiz'); setQuizLevel(null); }} className="text-slate-500 hover:text-slate-800 flex items-center gap-2 text-sm">
+            <RotateCcw size={16} /> 選難度
+          </button>
+        </div>
+
+        <div className="max-w-2xl mx-auto p-4">
+          {/* 分數 */}
+          <div className="bg-white rounded-xl shadow p-3 mb-4 flex justify-between text-sm">
+            <span className="text-slate-600">題數：<span className="font-bold text-blue-600">{lv2Total}</span></span>
+            <span className="text-slate-600">得分：<span className="font-bold text-green-600">{lv2Score} / {lv2Total > 0 ? lv2Total : '-'}</span></span>
+          </div>
+
+          {/* 題目背景卡 */}
+          <div className="bg-white rounded-xl shadow-lg p-5 mb-4">
+            <p className="text-slate-700 font-medium mb-1">{lv2Q.context}。</p>
+            {lv2Q.type === 'stem-leaf-unknown' ? (
+              <LV2StemLeafDisplay stems={lv2Q.stems} displayLeaves={lv2Q.displayLeaves} varName={lv2Q.varName} />
+            ) : lv2Q.type === 'box-plot-unknown' ? (
+              <>
+                <LV2BoxPlotDisplay
+                  min={lv2Q.min} q1={lv2Q.q1} q2={lv2Q.q2} q3={lv2Q.q3} max={lv2Q.max}
+                  unknownLabels={lv2Q.unknownLabels}
+                />
+                <p className="text-blue-700 font-bold mt-2">{lv2Q.conditionText}。</p>
+              </>
+            ) : (
+              <>
+                <LV2FreqTableDisplay
+                  xLabel={lv2Q.xLabel}
+                  values={lv2Q.values}
+                  displayFreqs={lv2Q.displayFreqs}
+                  unknownIdx={lv2Q.unknownIdx}
+                />
+                <p className="text-blue-700 font-bold mt-2">
+                  {lv2Q.type === 'freq-mean-n'
+                    ? `該分佈的平均數為 ${lv2Q.mean}。`
+                    : lv2Q.type === 'freq-mode-k'
+                    ? 'k 為正整數。'
+                    : `該分佈的中位數為 ${lv2Q.medianVal}。`}
+                </p>
+              </>
+            )}
+          </div>
+
+          {/* 小題進度（多小題才顯示） */}
+          {totalParts > 1 && (
+            <div className="flex gap-2 mb-3">
+              {lv2Q.parts.map((p, i) => (
+                <span key={i} className={`px-3 py-1 rounded-full text-sm font-bold ${
+                  i < lv2SubPart ? 'bg-green-200 text-green-700' :
+                  i === lv2SubPart ? 'bg-blue-200 text-blue-700' :
+                  'bg-gray-100 text-gray-400'
+                }`}>{p.label}</span>
+              ))}
+            </div>
+          )}
+
+          {/* 當前小題 */}
+          <div className="bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden">
+            <div className="bg-blue-50 px-5 py-3 border-b border-blue-100">
+              <p className="text-blue-800 font-bold">{part.label ? `${part.label} ` : ''}{part.question}</p>
+            </div>
+            <div className="p-5">
+              {!lv2SubAnswered ? (
+                <div className="flex flex-col gap-3 items-center">
+                  <div className="flex gap-2 w-full max-w-xs">
+                    <input
+                      ref={lv2InputRef}
+                      type="text"
+                      inputMode="numeric"
+                      value={userAnswer}
+                      onChange={handleInputChange}
+                      placeholder="輸入答案..."
+                      onKeyDown={e => { if (e.key === 'Enter') handleSubmitLV2(); }}
+                      className="flex-1 p-3 border-2 border-slate-200 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center"
+                      autoComplete="off"
+                    />
+                    <button
+                      onClick={handleSubmitLV2}
+                      disabled={!userAnswer.trim()}
+                      className="px-4 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                    >✓</button>
+                  </div>
+                  <Keypad value={userAnswer} onChange={setUserAnswer} />
+                </div>
+              ) : (
+                <div className={`rounded-lg p-4 ${lv2Feedback?.correct ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                  <div className={`flex items-center gap-2 font-bold text-lg mb-3 ${lv2Feedback?.correct ? 'text-green-700' : 'text-red-700'}`}>
+                    {lv2Feedback?.correct ? <CheckCircle size={20} /> : <XCircle size={20} />}
+                    {lv2Feedback?.correct ? '答對了！' : `答案是 ${lv2Feedback?.answer}`}
+                  </div>
+                  <div className="bg-white rounded-lg p-3 mb-3">
+                    <p className="text-xs font-bold text-slate-400 mb-1">解題步驟：</p>
+                    <LV2StepsDisplay steps={lv2Feedback?.steps || []} />
+                  </div>
+                  <button
+                    onClick={handleNextPartLV2}
+                    className="w-full py-3 bg-slate-800 text-white font-bold rounded-lg hover:bg-slate-700 flex items-center justify-center gap-2 transition-colors"
+                  >
+                    {isLastPart ? '下一題' : `繼續 ${lv2Q.parts[lv2SubPart + 1]?.label || '下一小問'}`}
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 font-sans text-slate-900">
       {mode === 'menu' && <MenuView />}
-      {mode === 'quiz' && <QuizView />}
+      {mode === 'quiz' && quizLevel === null && <LevelSelectView />}
+      {mode === 'quiz' && quizLevel === 'lv1' && <QuizView />}
+      {mode === 'quiz' && quizLevel === 'lv2' && <QuizLV2View />}
       {mode === 'learn' && <LearnView />}
     </div>
   );
