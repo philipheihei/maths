@@ -72,8 +72,8 @@ const FunctionGraphNotes = ({ onBack }) => (
               <line x1="10" y1="60" x2="110" y2="60" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr2)" />
               <line x1="60" y1="95" x2="60" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr2)" />
               <path d="M 20,95 Q 60,-30 100,95" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="42" cy="45" r="5" fill="#1e293b" />
-              <circle cx="78" cy="45" r="5" fill="#1e293b" />
+              <circle cx="42" cy="12" r="5" fill="#1e293b" />
+              <circle cx="78" cy="12" r="5" fill="#1e293b" />
             </svg>
             <div className="mt-1 bg-sky-100 text-sky-800 font-bold text-sm px-3 py-1 rounded-full">負數：喊口樣 ☹️</div>
           </div>
@@ -130,7 +130,7 @@ const FunctionGraphNotes = ({ onBack }) => (
             </div>
           </div>
 
-          <svg viewBox="0 0 140 120" className="w-40 h-40 shrink-0">
+          <svg viewBox="0 0 140 132" className="w-40 h-44 shrink-0">
             <defs>
               <marker id="arrB" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
                 <path d="M0,0 L6,3 L0,6 Z" fill="#374151" />
@@ -140,12 +140,12 @@ const FunctionGraphNotes = ({ onBack }) => (
             <line x1="30" y1="115" x2="30" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrB)" />
             <path d="M 20,25 Q 75,160 130,25" fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round" />
             <line x1="75" y1="110" x2="75" y2="10" stroke="#f59e0b" strokeWidth="2" strokeDasharray="5,3" />
-            <text x="50" y="118" fontSize="10" fill="#374151" fontWeight="bold">x</text>
-            <text x="58" y="118" fontSize="10" fill="#374151" fontWeight="bold">=</text>
-            <text x="66" y="118" fontSize="10" fill="#374151" fontWeight="bold">-</text>
-            <text x="74" y="111" fontSize="9" fill="#f59e0b" fontWeight="bold">b</text>
-            <line x1="72" y1="114" x2="84" y2="114" stroke="#374151" strokeWidth="1.5" />
-            <text x="72" y="122" fontSize="9" fill="#374151" fontWeight="bold">2a</text>
+            <text x="44" y="121" fontSize="14" fill="#374151" fontWeight="bold" fontStyle="italic">x</text>
+            <text x="54" y="121" fontSize="14" fill="#374151" fontWeight="bold"> =</text>
+            <text x="66" y="121" fontSize="15" fill="#374151" fontWeight="bold">−</text>
+            <text x="76" y="114" fontSize="13" fill="#f59e0b" fontWeight="bold">b</text>
+            <line x1="73" y1="117" x2="87" y2="117" stroke="#374151" strokeWidth="1.8" />
+            <text x="72" y="129" fontSize="13" fill="#374151" fontWeight="bold">2a</text>
           </svg>
         </div>
       </section>
