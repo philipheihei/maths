@@ -53,8 +53,8 @@ const FunctionGraphNotes = ({ onBack }) => (
               <line x1="10" y1="70" x2="110" y2="70" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr1)" />
               <line x1="60" y1="95" x2="60" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arr1)" />
               <path d="M 20,20 Q 60,150 100,20" fill="none" stroke="#f59e0b" strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="42" cy="45" r="5" fill="#1e293b" />
-              <circle cx="78" cy="45" r="5" fill="#1e293b" />
+              <circle cx="42" cy="12" r="5" fill="#1e293b" />
+              <circle cx="78" cy="12" r="5" fill="#1e293b" />
             </svg>
             <div className="mt-1 bg-yellow-100 text-yellow-800 font-bold text-sm px-3 py-1 rounded-full">正數：笑哈哈 🙂</div>
           </div>
