@@ -20,15 +20,15 @@ const HCFLCMNotes = ({ onBack }) => (
           <div className="bg-blue-100 rounded-lg p-4 flex items-start gap-3">
             <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded shrink-0">H.C.F.</span>
             <div>
-              <p className="font-bold text-blue-800">最高公因式</p>
-              <p className="text-sm mt-1">每個變量取<strong>最小次方</strong>（所有式子都有的部分）</p>
+              <p className="font-bold text-blue-800">最大公因式</p>
+              <p className="text-sm mt-1">每個代數取<strong>最小次方</strong>（所有式子都有的部分）</p>
             </div>
           </div>
           <div className="bg-indigo-100 rounded-lg p-4 flex items-start gap-3">
             <span className="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded shrink-0">L.C.M.</span>
             <div>
-              <p className="font-bold text-indigo-800">最低公倍式</p>
-              <p className="text-sm mt-1">每個變量取<strong>最大次方</strong>（所有式子出現過的最高次）</p>
+              <p className="font-bold text-indigo-800">最小公倍式</p>
+              <p className="text-sm mt-1">每個代數取<strong>最大次方</strong>（所有式子出現過的最高次方）</p>
             </div>
           </div>
         </div>

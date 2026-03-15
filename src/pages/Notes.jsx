@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   Home as HomeIcon, ChevronDown, ChevronRight, ArrowRight
 } from 'lucide-react';
 import { loadKatexOnce } from '../utils/katexLoader';
+import { InequalityNotes } from '../components/InequalityNotes';
 
 // KaTeX 數學公式組件
 const Latex = ({ math, block = false, left = false }) => {
@@ -88,7 +89,19 @@ const NOTES_DATA = {
       ]
     }
   ],
-  F2: [],
+  F2: [
+    {
+      id: 'inequality',
+      topic: 'CH8 不等式',
+      color: 'blue',
+      subtopics: [
+        { id: 'keywords', num: 1, title: '熟悉不同字眼代表的不等式', color: 'blue' },
+        { id: 'applications', num: 2, title: '會考核（文字轉換及畫圖）', color: 'green' },
+        { id: 'range', num: 3, title: '找不等式範圍的可能值', color: 'purple' },
+        { id: 'calculation', num: 4, title: '不等式混算', color: 'red' },
+      ]
+    }
+  ],
   F3: [
     {
       id: 'factorization',
@@ -2390,6 +2403,7 @@ const FunctionNotes = ({ activeSub }) => {
 // 筆記內容映射
 // ========================================
 const NOTES_COMPONENTS = {
+  'inequality': InequalityNotes,
   'factorization': FactorizationNotes,
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,
@@ -2405,16 +2419,43 @@ const NOTES_COMPONENTS = {
 // Notes 主頁面
 // ========================================
 const Notes = () => {
-  const [selectedLevel, setSelectedLevel] = useState('F1');
-  const [expandedTopics, setExpandedTopics] = useState({});
-  const [activeTopic, setActiveTopic] = useState(null);
-  const [activeSubtopic, setActiveSubtopic] = useState(null);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const requestedTopic = searchParams.get('topic');
+
+  const getInitialState = () => {
+    if (requestedTopic) {
+      for (const [lvl, topics] of Object.entries(NOTES_DATA)) {
+        const found = topics.find(t => t.id === requestedTopic);
+        if (found) {
+          return {
+            level: lvl,
+            topic: found.id,
+            subtopic: found.subtopics && found.subtopics.length > 0 ? found.subtopics[0].id : null
+          };
+        }
+      }
+    }
+    return { level: 'F1', topic: null, subtopic: null };
+  };
+
+  const initState = getInitialState();
+
+  const [selectedLevel, setSelectedLevel] = useState(initState.level);
+  const [expandedTopics, setExpandedTopics] = useState(initState.topic ? { [initState.topic]: true } : {});
+  const [activeTopic, setActiveTopic] = useState(initState.topic);
+  const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
   const notes = getNotesForLevel(selectedLevel);
+  const isFirstMount = useRef(true);
 
   // 當切換級別時，自動選第一個 topic 及 subtopic，但目錄保持收起
   useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      if (initState.topic) return;
+    }
     const levelNotes = getNotesForLevel(selectedLevel);
     if (levelNotes.length > 0) {
       const firstTopic = levelNotes[0];

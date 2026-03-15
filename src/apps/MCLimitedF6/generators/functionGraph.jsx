@@ -5,17 +5,20 @@ import { shuffle, randInt } from '../utils.js';
 export const ParabolaSVG = ({ aSign, yIntSign, vertexSide, className = '' }) => {
   const W = 140, H = 130;
   const axisY = aSign > 0 ? 70 : 60;
-  const axisX = vertexSide === 'right' ? 40 : vertexSide === 'left' ? 100 : 70;
-  const vx = vertexSide === 'right' ? 95 : vertexSide === 'left' ? 35 : 70;
-  const vy = aSign > 0 ? axisY + 25 : axisY - 25;
-  const yIntY = yIntSign < 0 ? axisY + 18 : yIntSign > 0 ? axisY - 22 : axisY;
+  const axisX = vertexSide === 'right' ? 50 : vertexSide === 'left' ? 90 : 70;
+  const vx = vertexSide === 'right' ? 85 : vertexSide === 'left' ? 55 : 70;
+  const vy = aSign > 0 ? axisY + 40 : axisY - 40;
+  const yIntY = yIntSign < 0 ? axisY + 15 : yIntSign > 0 ? axisY - 15 : axisY;
   const distSq = (axisX - vx) * (axisX - vx);
-  let k = distSq > 0.1 ? (yIntY - vy) / distSq : (aSign > 0 ? -0.02 : 0.02);
+  let k = distSq > 0.1 ? (yIntY - vy) / distSq : (aSign > 0 ? -0.04 : 0.04);
   let exactYIntY = yIntY;
+  
+  // Double check consistency just in case
   if ((aSign > 0 && k > 0) || (aSign < 0 && k < 0)) {
-    k = aSign > 0 ? -0.03 : 0.03;
+    k = aSign > 0 ? -0.04 : 0.04;
     exactYIntY = vy + k * distSq;
   }
+  
   const pts = [];
   for (let sx = 5; sx <= W - 5; sx += 3) {
     const dx = sx - vx;

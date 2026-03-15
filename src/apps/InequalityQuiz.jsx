@@ -390,7 +390,21 @@ export default function InequalityQuiz() {
           
           {page === 'menu' && (
             <div className="flex flex-col justify-center flex-1 gap-6 animate-in fade-in zoom-in duration-300">
-              <div className="text-center space-y-2 mb-4">
+              
+              <Link 
+                to="/notes?topic=inequality"
+                className="group relative overflow-hidden w-full p-6 bg-white border-2 border-yellow-100 hover:border-yellow-300 rounded-2xl shadow-sm hover:shadow-md transition-all text-left flex items-center gap-5"
+              >
+                <div className="bg-yellow-50 text-yellow-600 p-4 rounded-full group-hover:scale-110 transition-transform">
+                  <span className="text-2xl">📚</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-xl text-slate-800 mb-1">課程筆記</h3>
+                  <p className="text-sm text-slate-500">不等式的重點概念與技巧</p>
+                </div>
+              </Link>
+
+              <div className="text-center space-y-2 mb-4 mt-2">
                 <p className="text-2xl font-bold text-slate-700">準備好挑戰了嗎？</p>
                 <p className="text-slate-500">請選擇挑戰模式</p>
               </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, XCircle, RefreshCw, ArrowRight, Plus, X, Lightbulb, Home as HomeIcon, BookOpen, Calculator } from 'lucide-react';
+import { CheckCircle, XCircle, RefreshCw, ArrowRight, ArrowLeft, Plus, X, Lightbulb, Home as HomeIcon, BookOpen, Calculator } from 'lucide-react';
 
 // --- 輔助函數 ---
 
@@ -1442,32 +1442,10 @@ const ProbabilityNotes = () => {
         </div>
       </div>
 
-      {/* 2. 概率 */}
+      {/* 2. 排列與組合 */}
       <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
         <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
           <span className="bg-purple-100 text-purple-700 w-8 h-8 rounded-full flex items-center justify-center text-lg shrink-0">2</span>
-          概率
-        </h3>
-        <div className="flex flex-wrap gap-4 mb-4">
-          <div className="bg-purple-50 px-4 py-3 rounded-xl border border-purple-100">
-            <span className="text-slate-600">一定發生 = </span>
-            <span className="font-bold text-xl text-purple-700">1</span>
-          </div>
-          <div className="bg-purple-50 px-4 py-3 rounded-xl border border-purple-100">
-            <span className="text-slate-600">一定不會發生 = </span>
-            <span className="font-bold text-xl text-purple-700">0</span>
-          </div>
-        </div>
-        <div className="bg-red-50 p-4 rounded-xl border border-red-100 text-red-800 font-bold flex items-center gap-2">
-           概率範圍： 0 至 1
-           <span className="text-slate-500 text-sm font-normal ml-2">(如計到負數或 &gt;1 的數，則必定錯誤)</span>
-        </div>
-      </div>
-
-      {/* 3. 排列與組合 */}
-      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
-        <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
-          <span className="bg-teal-100 text-teal-700 w-8 h-8 rounded-full flex items-center justify-center text-lg shrink-0">3</span>
           排列與組合 <span className="text-sm font-normal text-slate-500 ml-2 hidden sm:inline">(常見於 DSE 乙部 Q15/16 + 每年 MC 必出)</span>
         </h3>
         
@@ -1619,14 +1597,15 @@ const ProbabilityNotes = () => {
               <div className="border-l-4 border-teal-400 pl-4 py-1">
                 <p className="font-bold text-slate-800 mb-1">(a) 選出 <span className="ring-2 ring-green-400 ring-offset-1 rounded-full px-1">3</span> 隻蒼鼠和 3 隻白兔。</p>
                 <div className="text-base sm:text-lg font-serif mt-4">
-                  <div className="flex items-start text-green-700 font-bold mb-2 text-sm sm:text-base">
-                    <span>a. 組合 <ArrowRight className="inline w-4 h-4 mx-1"/></span>
+                  <div className="flex items-center text-green-700 font-bold mb-2 text-sm sm:text-base">
+                    <span>a. 使用組合 </span>
+                    <span className="font-normal text-slate-500 text-xs sm:text-sm mx-2">(因不注重次序)</span> 
+                    <ArrowRight className="inline w-4 h-4 mx-1"/>
                   </div>
                   <div className="flex items-start flex-wrap gap-2">
                     <AnnotatedMath 
                       math={<span className="text-xl"> <MathNotation type="C" n="8" r="3" /> </span>}
                       annotation="蒼鼠8簡3"
-                      subAnnotation="(因不注重次序)"
                       braceColor="border-green-600"
                       textColor="text-green-700"
                       brace={false}
@@ -1749,6 +1728,89 @@ const ProbabilityNotes = () => {
                 </div>
               </div>
 
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. 概率 */}
+      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+        <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b pb-3">
+          <span className="bg-emerald-100 text-emerald-700 w-8 h-8 rounded-full flex items-center justify-center text-lg shrink-0">3</span>
+          概率
+        </h3>
+        
+        <p className="text-slate-700 mb-6 font-bold text-lg">DSE 問排列組合時可能會問到其概率 <ArrowRight className="inline mx-2 w-5 h-5 text-emerald-600"/> 要用分數表示答案</p>
+
+        <div className="flex flex-col items-center justify-center bg-emerald-50 p-6 rounded-2xl border-2 border-emerald-100 mb-8 mx-auto w-fit shadow-sm">
+          <div className="flex items-center gap-4 text-xl sm:text-2xl">
+            <span className="font-bold text-slate-800">概率 <span className="italic font-serif">P</span> =</span>
+            <div className="flex flex-col items-center font-bold">
+              <span className="text-blue-700 border-b-[3px] border-slate-800 px-4 pb-1 mb-1">想要目標的情況</span>
+              <span className="text-green-700 px-4 pt-1 mt-1">題目原本沒限制的情況</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-slate-50 p-6 rounded-xl border border-slate-200 mb-10 space-y-4">
+          <div className="flex items-center text-slate-700 font-bold text-lg sm:text-xl">
+            <span className="mr-3 text-slate-400">-</span>一定發生的概率 = <span className="ml-3 font-bold text-slate-900 text-2xl">1</span>
+          </div>
+          <div className="flex items-center text-slate-700 font-bold text-lg sm:text-xl">
+            <span className="mr-3 text-slate-400">-</span>一定不會發生的概率 = <span className="ml-3 font-bold text-slate-900 text-2xl">0</span>
+          </div>
+          <div className="mt-6 pt-4 border-t-2 border-slate-200 border-dashed flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+           <span className="font-bold text-slate-800 text-lg">概率的可能範圍： 0 - 1</span>
+           <span className="text-emerald-700 font-bold text-sm sm:text-base">(如計到負數 / &gt;1的數，則必定錯誤)</span>
+          </div>
+        </div>
+
+        {/* 例題：子健企右 */}
+        <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-emerald-200 shadow-sm">
+          <h4 className="font-bold text-emerald-800 text-lg sm:text-xl mb-4">例題 3：概率</h4>
+          <p className="text-slate-800 font-medium mb-6 bg-emerald-50/50 p-4 rounded-lg text-base sm:text-lg border border-emerald-100">
+            <span className="font-bold mr-2 text-emerald-700"></span>子健和 6 位朋友隨機排成一行拍照。
+          </p>
+          
+          <div className="space-y-6">
+            <div className="border-l-4 border-emerald-400 pl-4 sm:pl-6 py-2">
+              <p className="font-bold text-slate-800 mb-6 text-base sm:text-lg">(a) 求子健必須站在最右方的概率。</p>
+              
+              <div className="flex flex-col sm:flex-row items-start sm:items-center font-serif text-lg sm:text-xl pl-2 sm:pl-4 overflow-x-auto pb-4">
+                <span className="mr-4 font-bold text-slate-800 mt-2 self-start sm:self-center">=</span>
+                <div className="flex items-center">
+                  <Fraction 
+                    num={
+                      <div className="flex items-center justify-center gap-1 sm:gap-2 mb-2 w-[140px]">
+                        <MathNotation type="P" n="1" r="1" />
+                        <span className="font-bold mx-1 sm:mx-2 text-slate-800">x</span>
+                        <MathNotation type="P" n="6" r="6" />
+                      </div>
+                    }
+                    den={
+                      <div className="flex items-center justify-center gap-1 sm:gap-2 mt-2 w-[140px]">
+                        <MathNotation type="P" n="7" r="7" />
+                      </div>
+                    }
+                  />
+                  <div className="flex flex-col gap-5 ml-4 sm:ml-8 mt-1">
+                    <div className="flex items-center text-green-700 text-sm sm:text-base font-bold bg-green-50 px-2 py-1 rounded border border-green-200">
+                      <ArrowLeft className="w-4 h-4 mr-2"/> 目標：子健企最右的情況
+                    </div>
+                    <div className="flex items-center text-green-700 text-sm sm:text-base font-bold bg-green-50 px-2 py-1 rounded border border-green-200">
+                      <ArrowLeft className="w-4 h-4 mr-2"/> 無限制 (7人隨機排列，子健沒限制企位) 的情況
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center font-serif text-lg sm:text-xl pl-2 sm:pl-4 mt-2">
+                <span className="mr-4 font-bold text-slate-800">=</span>
+                <Fraction 
+                  num={<span className="font-bold text-slate-800 px-4">1</span>}
+                  den={<span className="font-bold text-slate-800 px-4">7</span>}
+                />
+              </div>
             </div>
           </div>
         </div>
