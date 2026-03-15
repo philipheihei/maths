@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, XCircle, RefreshCw, ArrowRight, Plus, X, Lightbulb, Home as HomeIcon } from 'lucide-react';
+import { CheckCircle, XCircle, RefreshCw, ArrowRight, Plus, X, Lightbulb, Home as HomeIcon, BookOpen, Calculator } from 'lucide-react';
 
 // --- 輔助函數 ---
 
@@ -45,6 +45,20 @@ const Fraction = ({ num, den }) => (
     <span className="border-b border-gray-800 leading-normal px-1 pb-0.5 text-center w-full">{num}</span>
     <span className="leading-normal px-1 pt-0.5 text-center w-full">{den}</span>
   </span>
+);
+
+// 註解括號組件 (用於還原手寫筆記的下括號和文字對齊)
+const AnnotatedMath = ({ math, annotation, subAnnotation, braceColor = "border-purple-600", textColor = "text-purple-700", brace = true }) => (
+  <div className="inline-flex flex-col items-center mx-2 my-1 align-top">
+    <div className="mb-0.5">{math}</div>
+    {brace && (
+      <div className={`w-full h-2 border-b-2 border-l-2 border-r-2 rounded-b-md ${braceColor} mb-1 opacity-70`}></div>
+    )}
+    <div className={`text-xs font-medium text-center whitespace-nowrap ${textColor}`}>{annotation}</div>
+    {subAnnotation && (
+      <div className="text-[10px] text-slate-500 text-center whitespace-nowrap mt-0.5">{subAnnotation}</div>
+    )}
+  </div>
 );
 
 // --- 通用組件 ---
@@ -1385,10 +1399,373 @@ const Task5 = ({ onComplete, score = 0 }) => {
 };
 
 
+// --- 教學筆記 ---
+const ProbabilityNotes = () => {
+  return (
+    <div className="max-w-4xl mx-auto space-y-8 animate-fade-in text-left pb-16">
+      {/* 1. 二分法 */}
+      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+        <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
+          <span className="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center text-lg shrink-0">1</span>
+          二分法
+        </h3>
+        <p className="mb-4 text-slate-700 font-medium">有些情景只有兩種可能性：</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          <div className="bg-indigo-50 p-3 rounded-xl text-center font-bold text-indigo-800">男 / 女</div>
+          <div className="bg-indigo-50 p-3 rounded-xl text-center font-bold text-indigo-800">成人 / 小童</div>
+          <div className="bg-indigo-50 p-3 rounded-xl text-center font-bold text-indigo-800">下雨 / 沒有下雨</div>
+          <div className="bg-indigo-50 p-3 rounded-xl text-center font-bold text-indigo-800">答案 <span className="text-green-600 mx-0.5">✓</span> / <span className="text-red-600 mx-0.5">✗</span></div>
+        </div>
+        
+        <h4 className="font-bold text-red-600 mb-3">二分法推想：</h4>
+        <div className="space-y-3">
+          <div className="flex gap-3 bg-slate-50 p-4 rounded-xl items-start">
+            <span className="font-bold text-slate-500 mt-0.5">e.g.</span>
+            <div>
+              <p className="text-slate-700 mb-1">已知全班人數為 30，女生人數為 18</p>
+              <p className="text-green-700 font-bold flex items-center gap-2">
+                <ArrowRight className="w-4 h-4 shrink-0" /> 
+                能計算出男生為 30 − 18 = 12人
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3 bg-slate-50 p-4 rounded-xl items-start">
+            <span className="font-bold text-slate-500 mt-0.5">e.g.</span>
+            <div>
+              <p className="text-slate-700 mb-1">袋中總共有球 20 個，其中 7 個為紅色球</p>
+              <p className="text-green-700 font-bold flex items-center gap-2">
+                <ArrowRight className="w-4 h-4 shrink-0" /> 
+                能推論出非紅色球有 20 - 7 = 13個
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. 概率 */}
+      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+        <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
+          <span className="bg-purple-100 text-purple-700 w-8 h-8 rounded-full flex items-center justify-center text-lg shrink-0">2</span>
+          概率
+        </h3>
+        <div className="flex flex-wrap gap-4 mb-4">
+          <div className="bg-purple-50 px-4 py-3 rounded-xl border border-purple-100">
+            <span className="text-slate-600">一定發生 = </span>
+            <span className="font-bold text-xl text-purple-700">1</span>
+          </div>
+          <div className="bg-purple-50 px-4 py-3 rounded-xl border border-purple-100">
+            <span className="text-slate-600">一定不會發生 = </span>
+            <span className="font-bold text-xl text-purple-700">0</span>
+          </div>
+        </div>
+        <div className="bg-red-50 p-4 rounded-xl border border-red-100 text-red-800 font-bold flex items-center gap-2">
+           概率範圍： 0 至 1
+           <span className="text-slate-500 text-sm font-normal ml-2">(如計到負數或 &gt;1 的數，則必定錯誤)</span>
+        </div>
+      </div>
+
+      {/* 3. 排列與組合 */}
+      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
+        <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
+          <span className="bg-teal-100 text-teal-700 w-8 h-8 rounded-full flex items-center justify-center text-lg shrink-0">3</span>
+          排列與組合 <span className="text-sm font-normal text-slate-500 ml-2 hidden sm:inline">(常見於 DSE 乙部 Q15/16 + 每年 MC 必出)</span>
+        </h3>
+        
+        <div className="bg-yellow-50 p-4 sm:p-5 rounded-xl border border-yellow-200 mb-6 font-medium">
+          <div className="flex items-center gap-2 text-yellow-800 font-bold mb-3 pb-2 border-b border-yellow-200 border-dashed">
+            <Calculator className="text-yellow-600 w-5 h-5 shrink-0"/>
+            學習使用計算機計算排列 (nPr) / 組合 (nCr)
+          </div>
+          <div className="space-y-4 text-sm sm:text-base text-slate-700 mt-4">
+            <div className="flex items-start gap-3">
+              <span className="bg-yellow-200 text-yellow-800 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">例</span>
+              <div>
+                <p className="font-bold text-slate-800 mb-2">計算 10 個抽 3 個的排列 = <MathNotation type="P" n="10" r="3" /></p>
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-sm sm:text-base mt-3 mb-1">
+                  <span className="font-bold text-slate-800 text-lg">10</span>
+                  <span className="text-slate-400">👉</span>
+                  
+                  <span className="bg-gray-400 text-amber-900 font-bold px-3 py-1 rounded-md text-xs sm:text-sm tracking-wider flex items-center justify-center h-[28px]">
+                    SHIFT
+                  </span>
+                  
+                  <span className="text-slate-400">👉</span>
+                  
+                  <span className="inline-flex flex-col items-center justify-end -mt-4">
+                    <span className="text-[10px] sm:text-xs text-amber-600 font-bold leading-none mb-1">nPr</span>
+                    <span className="bg-gray-800 text-white font-bold px-3 py-1 rounded-md text-lg leading-none flex items-center justify-center">
+                      ×
+                    </span>
+                  </span>
+                  
+                  <span className="text-slate-400">👉</span>
+                  <span className="font-bold text-slate-800 text-lg">3</span>
+                  <span className="text-slate-400">👉</span>
+                  
+                  <span className="bg-gray-800 text-white font-bold px-3 py-1 rounded-md text-xs sm:text-sm tracking-wider flex items-center justify-center h-[28px]">
+                    EXE
+                  </span>
+                  
+                  <span className="ml-2 font-bold text-indigo-700 text-lg">= <span className="text-xl">720</span></span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3 border-t border-yellow-200/50 pt-4 mt-2">
+              <span className="bg-yellow-200 text-yellow-800 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">例</span>
+              <div>
+                <p className="font-bold text-slate-800 mb-2">計算 8 個抽 3 個的組合 = <MathNotation type="C" n="8" r="3" /></p>
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-sm sm:text-base mt-3 mb-1">
+                  <span className="font-bold text-slate-800 text-lg">8</span>
+                  <span className="text-slate-400">👉</span>
+                  
+                  <span className="bg-gray-400 text-amber-900 font-bold px-3 py-1 rounded-md text-xs sm:text-sm tracking-wider flex items-center justify-center h-[28px]">
+                    SHIFT
+                  </span>
+                  
+                  <span className="text-slate-400">👉</span>
+                  
+                  <span className="inline-flex flex-col items-center justify-end -mt-4">
+                    <span className="text-[10px] sm:text-xs text-amber-600 font-bold leading-none mb-1">nCr</span>
+                    <span className="bg-gray-800 text-white font-bold px-3 py-1 rounded-md text-lg leading-none flex items-center justify-center">
+                      ÷
+                    </span>
+                  </span>
+                  
+                  <span className="text-slate-400">👉</span>
+                  <span className="font-bold text-slate-800 text-lg">3</span>
+                  <span className="text-slate-400">👉</span>
+                  
+                  <span className="bg-gray-800 text-white font-bold px-3 py-1 rounded-md text-xs sm:text-sm tracking-wider flex items-center justify-center h-[28px]">
+                    EXE
+                  </span>
+                  
+                  <span className="ml-2 font-bold text-teal-700 text-lg">= <span className="text-xl">56</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="border-2 border-indigo-200 rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-indigo-100 p-3 font-bold text-indigo-800 text-lg flex items-center justify-between">
+              <span>計次序 <ArrowRight className="inline mx-2 w-4 h-4"/> 排列 P</span>
+            </div>
+            <div className="p-4 bg-white text-slate-700">
+              <span className="text-indigo-600 font-bold block mb-2">例子：</span>
+              排隊、拍照、密碼...
+            </div>
+          </div>
+          <div className="border-2 border-teal-200 rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-teal-100 p-3 font-bold text-teal-800 text-lg flex items-center justify-between">
+              <span>不計次序 <ArrowRight className="inline mx-2 w-4 h-4"/> 組合 C</span>
+            </div>
+            <div className="p-4 bg-white text-slate-700">
+              <span className="text-teal-600 font-bold block mb-2">例子：</span>
+              選拔、分發、抽取...
+            </div>
+          </div>
+        </div>
+
+        {/* 題目示範 */}
+        <div className="grid gap-6">
+          <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-blue-200">
+            <h4 className="font-bold text-blue-800 text-lg mb-2">例題 1：排列 P</h4>
+            <p className="text-slate-700 mb-4 bg-blue-50 p-3 rounded-lg text-sm sm:text-base">某店鋪中，有 10 個不同的手袋可放在櫥窗上。求下列各情況中擺放手袋的方法的總數。</p>
+            
+            <div className="space-y-4">
+              <div className="border-l-4 border-indigo-400 pl-4 py-1">
+                <p className="font-bold text-slate-800 mb-1">(a) 把 3 個手袋<span className="ring-2 ring-green-400 rounded-full px-1">排</span>成一列。<span className="text-blue-700 font-normal text-sm ml-2">(10個抽3個，計次序)</span></p>
+                <div className="text-base sm:text-lg font-serif mt-3 flex items-start text-blue-700">
+                  <span className="mr-2">a. 排列 <ArrowRight className="inline w-4 h-4 text-slate-400"/></span>
+                  <div className="flex flex-col items-center">
+                    <div className="flex">
+                      <span className="italic mr-1 text-xl">P</span>
+                      <div className="flex flex-col text-xs leading-tight ml-0.5 gap-1">
+                        <div className="flex items-center">
+                          <span>10</span>
+                          <span className="text-[10px] text-red-600 font-bold ml-1 flex items-center"><ArrowRight className="w-3 h-3 transform rotate-180"/> 總數</span>
+                        </div>
+                        <div className="flex items-center">
+                          <span>3</span>
+                          <span className="text-[10px] text-red-600 font-bold ml-1 flex items-center"><ArrowRight className="w-3 h-3 transform rotate-180"/> 要抽</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span className="ml-2 font-bold mt-1">= 720</span>
+                </div>
+              </div>
+              
+              <div className="border-l-4 border-indigo-400 pl-4 py-1">
+                <p className="font-bold text-slate-800 mb-1">(b) 把 5 個手袋排成一列。<span className="text-blue-700 font-normal text-sm ml-2">(10個抽5個，計次序)</span></p>
+                <div className="text-base sm:text-lg font-serif mt-3 text-blue-700">
+                  b. 排列 <ArrowRight className="inline w-4 h-4 text-slate-400"/> <MathNotation type="P" n="10" r="5" /> = <span className="font-bold text-slate-800">30240</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-teal-200">
+            <h4 className="font-bold text-teal-800 text-lg mb-2">例題 2：組合 C</h4>
+            <div className="text-slate-700 leading-relaxed bg-teal-50 p-3 rounded-lg mb-4 text-sm sm:text-base relative border-l-4 border-green-400">
+              <div className="absolute -left-[52px] top-4 text-green-600 font-bold text-xs bg-white px-1 rounded shadow-sm border border-green-200 hidden sm:block">挑選<ArrowRight className="inline w-3 h-3"/> C</div>
+              某寵物店有 8 隻蒼鼠和 6 隻白兔。求下列各情況中<span className="ring-2 ring-green-400 rounded-full px-1 mx-1">選</span>出動物的組合的總數。<br/>
+              <span className="text-red-600 font-bold text-xs sm:text-sm mt-3 flex items-center gap-1">💡 試想想可能情況？ <ArrowRight className="inline w-3 h-3 transform rotate-45 ml-2 mr-1 text-slate-400"/> 0, 1, 2... 隻蒼鼠等組合</span>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="border-l-4 border-teal-400 pl-4 py-1">
+                <p className="font-bold text-slate-800 mb-1">(a) 選出 <span className="ring-2 ring-green-400 ring-offset-1 rounded-full px-1">3</span> 隻蒼鼠和 3 隻白兔。</p>
+                <div className="text-base sm:text-lg font-serif mt-4">
+                  <div className="flex items-start text-green-700 font-bold mb-2 text-sm sm:text-base">
+                    <span>a. 組合 <ArrowRight className="inline w-4 h-4 mx-1"/></span>
+                  </div>
+                  <div className="flex items-start flex-wrap gap-2">
+                    <AnnotatedMath 
+                      math={<span className="text-xl"> <MathNotation type="C" n="8" r="3" /> </span>}
+                      annotation="蒼鼠8簡3"
+                      subAnnotation="(因不注重次序)"
+                      braceColor="border-green-600"
+                      textColor="text-green-700"
+                      brace={false}
+                    />
+                    <span className="font-bold text-slate-800 self-start mt-2 mx-2">X</span>
+                    <AnnotatedMath 
+                      math={<span className="text-xl"> <MathNotation type="C" n="6" r="3" /> </span>}
+                      annotation="白兔6簡3"
+                      braceColor="border-red-600"
+                      textColor="text-red-600"
+                      brace={false}
+                    />
+                    <span className="self-start mt-2 ml-4">= <span className="font-bold text-slate-800">1120</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-l-4 border-teal-400 pl-4 py-1">
+                <p className="font-bold text-slate-800 mb-2">(b) 選出 5 隻動物，其中<span className="border-b-2 border-red-500">至多有 2 隻蒼鼠</span>。</p>
+                <div className="overflow-x-auto pb-4 pt-2">
+                  <div className="flex gap-1 sm:gap-2 min-w-max text-center text-sm font-serif items-start">
+                    <div className="flex items-start">
+                      <span className="mr-3 font-bold text-slate-700 mt-2">b.</span>
+                      <AnnotatedMath 
+                        math={<span className="text-base sm:text-lg flex items-center justify-center gap-1"><MathNotation type="C" n="8" r="0" /> X <MathNotation type="C" n="6" r="5" /></span>}
+                        annotation="5隻沒蒼鼠 → 即選了5兔"
+                        subAnnotation="情況1 : 0蒼鼠+5兔"
+                        braceColor="border-purple-600"
+                        textColor="text-purple-700"
+                      />
+                    </div>
+                    
+                    <span className="font-bold text-slate-400 self-start mt-2">+</span>
+                    
+                    <AnnotatedMath 
+                      math={<span className="text-base sm:text-lg flex items-center justify-center gap-1"><MathNotation type="C" n="8" r="1" /> X <MathNotation type="C" n="6" r="4" /></span>}
+                      annotation="抽1蒼 → 剩餘抽4兔"
+                      subAnnotation="情況2 : 1蒼鼠+4兔"
+                      braceColor="border-purple-600"
+                      textColor="text-purple-700"
+                    />
+
+                    <span className="font-bold text-slate-400 self-start mt-2">+</span>
+
+                    <AnnotatedMath 
+                      math={<span className="text-base sm:text-lg flex items-center justify-center gap-1"><MathNotation type="C" n="8" r="2" /> X <MathNotation type="C" n="6" r="3" /></span>}
+                      annotation="抽2蒼 → 剩餘抽3兔"
+                      subAnnotation="情況3 : 2蒼鼠+3兔"
+                      braceColor="border-purple-600"
+                      textColor="text-purple-700"
+                    />
+                    
+                    <span className="self-start mt-2 ml-2 text-base sm:text-lg">= <span className="font-bold text-slate-800">686</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-l-4 border-teal-400 pl-4 py-1">
+                <p className="font-bold text-slate-800 mb-2">(c) 選出 6 隻動物，其中<span className="border-b-2 border-purple-500">至少有 1 隻白兔</span>。 <span className="text-purple-700 text-sm font-normal">← 運用二分法, 1 - P(0兔)</span></p>
+                <div className="overflow-x-auto pb-4 pt-2">
+                  <div className="flex gap-2 min-w-max text-center text-sm font-serif items-start">
+                    <div className="flex items-start">
+                      <span className="mr-3 font-bold text-slate-700 mt-2">c.</span>
+                      <AnnotatedMath 
+                        math={<span className="text-lg"><MathNotation type="C" n="14" r="6" /></span>}
+                        annotation={<span className="text-blue-700">全部情況</span>}
+                        subAnnotation={<span className="text-slate-500 whitespace-normal w-32 break-words leading-tight">沒限制: 總共14隻<br/>動物選6隻</span>}
+                        braceColor="border-transparent"
+                        textColor="text-blue-700"
+                        brace={false}
+                      />
+                    </div>
+                    
+                    <span className="font-bold text-slate-800 self-start mt-2">-</span>
+                    
+                    <AnnotatedMath 
+                      math={<span className="text-base sm:text-lg flex items-center justify-center gap-1"><MathNotation type="C" n="6" r="0" /> X <MathNotation type="C" n="8" r="6" /></span>}
+                      annotation={<span className="text-red-600">沒兔 → 即6隻全部為蒼</span>}
+                      subAnnotation={<span className="text-slate-500 whitespace-normal w-40 break-words leading-tight">只有0兔6倉這情況<br/>沒有至少一隻白兔</span>}
+                      braceColor="border-red-500"
+                      textColor="text-red-600"
+                      brace={false}
+                    />
+                    
+                    <span className="self-start mt-2 ml-2 text-base sm:text-lg flex flex-col items-center">
+                      <span>= <span className="font-bold text-slate-800">2975</span></span>
+                      <span className="text-green-600 font-bold text-xs mt-3 flex flex-col items-center">
+                        <ArrowRight className="w-3 h-3 transform -rotate-90"/>運用二分法<br/><span className="font-normal mt-1">比由 P(1兔) 至 P(6兔) 數得快</span>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-l-4 border-teal-400 pl-4 py-1">
+                <p className="font-bold text-slate-800 mb-2">(d) 選出 6 隻動物，且<span className="border-b-2 border-slate-500">蒼鼠與白兔的數目不同</span>。</p>
+                <div className="mb-4 text-xs sm:text-sm">
+                  <span className="text-slate-700">d. 需<span className="bg-yellow-200">列出</span>倉鼠和兔 不同數量 的組合，但因逐一計算太麻煩，</span><br/>
+                  <span className="text-slate-700 ml-4">可想：</span>
+                </div>
+                <div className="flex gap-2 text-sm font-serif items-start pl-6">
+                  <AnnotatedMath 
+                    math={<span className="text-lg"><MathNotation type="C" n="14" r="6" /></span>}
+                    annotation={<span className="text-red-600 font-bold">總數</span>}
+                    braceColor="border-transparent"
+                    brace={false}
+                  />
+                  
+                  <span className="font-bold text-slate-800 self-start mt-2">-</span>
+                  
+                  <AnnotatedMath 
+                    math={<span className="text-base sm:text-lg flex items-center justify-center gap-1"><MathNotation type="C" n="8" r="3" /> X <MathNotation type="C" n="6" r="3" /></span>}
+                    annotation={<span className="text-red-600 font-bold">使用 (a) 答案</span>}
+                    subAnnotation="(相同數量)"
+                    braceColor="border-transparent"
+                    brace={false}
+                  />
+                  
+                  <span className="self-start mt-2 ml-2 text-base sm:text-lg">= <span className="font-bold text-slate-800">1883</span></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="text-center pt-8 pb-4">
+        <p className="text-slate-400 text-sm">準備好挑戰了嗎？切換到上方「互動測驗」開始練習吧！</p>
+      </div>
+    </div>
+  );
+};
+
 // --- 主程式框架 ---
 const ProbabilityQuiz = () => {
   const [activeTab, setActiveTab] = useState('task5');
   const [taskStatus, setTaskStatus] = useState({});
+  const [viewMode, setViewMode] = useState('quiz'); // 'quiz' or 'notes'
 
   const handleTaskComplete = (taskId, isCorrect) => {
     setTaskStatus(prev => ({
@@ -1447,37 +1824,59 @@ const ProbabilityQuiz = () => {
           <p className="text-gray-500 text-base sm:text-lg">透過五大核心任務，掌握概率計算的基礎與 DSE 實戰技巧。</p>
         </header>
 
-        {/* 導航 Tabs */}
-        <div className="flex justify-center gap-2 mb-8 flex-wrap bg-white/50 p-2 rounded-2xl backdrop-blur-sm shadow-sm w-fit mx-auto">
-          {[
-            {id: 'task1', label: '1. nPr vs nCr'},
-            {id: 'task2', label: '2. 潛規則邏輯'},
-            {id: 'task3', label: '3. 列出可能性'},
-            {id: 'task4', label: '4. 加法 vs 乘法'},
-            {id: 'task5', label: '5. DSE 實戰'},
-          ].map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-xl font-bold transition-all ${
-                activeTab === tab.id 
-                  ? 'bg-blue-600 text-white shadow-lg scale-105' 
-                  : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200/50'
-              }`}
-            >
-              {tab.label} <span className="opacity-60 text-xs ml-1">(答對: {taskStatus[tab.id] || 0})</span>
-            </button>
-          ))}
+        {/* 主要模式切換 */}
+        <div className="flex justify-center gap-4 mb-6">
+          <button 
+            onClick={() => setViewMode('notes')}
+            className={`px-6 py-2.5 rounded-full font-bold text-base sm:text-lg transition-all flex items-center gap-2 ${viewMode === 'notes' ? 'bg-indigo-600 text-white shadow-md scale-105' : 'bg-white text-indigo-600 border-2 border-indigo-200 hover:bg-indigo-50'}`}
+          >
+            <BookOpen className="w-5 h-5"/> 教學筆記
+          </button>
+          <button 
+            onClick={() => setViewMode('quiz')}
+            className={`px-6 py-2.5 rounded-full font-bold text-base sm:text-lg transition-all flex items-center gap-2 ${viewMode === 'quiz' ? 'bg-indigo-600 text-white shadow-md scale-105' : 'bg-white text-indigo-600 border-2 border-indigo-200 hover:bg-indigo-50'}`}
+          >
+            <Calculator className="w-5 h-5"/> 互動測驗
+          </button>
         </div>
 
-        {/* 內容區域 */}
-        <main className="transition-all duration-300 ease-in-out">
-          {activeTab === 'task1' && <Task1 onComplete={(c) => handleTaskComplete('task1', c)} score={taskStatus['task1'] || 0} />}
-          {activeTab === 'task2' && <Task2 onComplete={(c) => handleTaskComplete('task2', c)} score={taskStatus['task2'] || 0} />}
-          {activeTab === 'task3' && <Task3 onComplete={(c) => handleTaskComplete('task3', c)} score={taskStatus['task3'] || 0} />}
-          {activeTab === 'task4' && <Task4 onComplete={(c) => handleTaskComplete('task4', c)} score={taskStatus['task4'] || 0} />}
-          {activeTab === 'task5' && <Task5 onComplete={(c) => handleTaskComplete('task5', c)} score={taskStatus['task5'] || 0} />}
-        </main>
+        {viewMode === 'notes' ? (
+          <ProbabilityNotes />
+        ) : (
+          <>
+            {/* 導航 Tabs */}
+            <div className="flex justify-center gap-2 mb-8 flex-wrap bg-white/50 p-2 rounded-2xl backdrop-blur-sm shadow-sm w-fit mx-auto animate-fade-in">
+              {[
+                {id: 'task1', label: '1. nPr vs nCr'},
+                {id: 'task2', label: '2. 潛規則邏輯'},
+                {id: 'task3', label: '3. 列出可能性'},
+                {id: 'task4', label: '4. 加法 vs 乘法'},
+                {id: 'task5', label: '5. DSE 實戰'},
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-3 sm:px-4 py-2 text-xs sm:text-sm rounded-xl font-bold transition-all ${
+                    activeTab === tab.id 
+                      ? 'bg-blue-600 text-white shadow-lg scale-105' 
+                      : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200/50'
+                  }`}
+                >
+                  {tab.label} <span className="opacity-60 text-xs ml-1">(答對: {taskStatus[tab.id] || 0})</span>
+                </button>
+              ))}
+            </div>
+
+            {/* 內容區域 */}
+            <main className="transition-all duration-300 ease-in-out animate-fade-in">
+              {activeTab === 'task1' && <Task1 onComplete={(c) => handleTaskComplete('task1', c)} score={taskStatus['task1'] || 0} />}
+              {activeTab === 'task2' && <Task2 onComplete={(c) => handleTaskComplete('task2', c)} score={taskStatus['task2'] || 0} />}
+              {activeTab === 'task3' && <Task3 onComplete={(c) => handleTaskComplete('task3', c)} score={taskStatus['task3'] || 0} />}
+              {activeTab === 'task4' && <Task4 onComplete={(c) => handleTaskComplete('task4', c)} score={taskStatus['task4'] || 0} />}
+              {activeTab === 'task5' && <Task5 onComplete={(c) => handleTaskComplete('task5', c)} score={taskStatus['task5'] || 0} />}
+            </main>
+          </>
+        )}
       </div>
     </div>
   );
