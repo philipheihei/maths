@@ -87,7 +87,7 @@ const genFindZ = () => {
       question: `求${name}在該考試的標準分。`,
       answer: z,
       steps: [
-        `\\text{標準分} = \\dfrac{\\text{得分} - \\text{平均分}}{\\text{標準差}}`,
+        `\\text{標準分} = \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}}`,
         `= \\dfrac{${x} - ${mu}}{${sigma}}`,
         `= \\dfrac{${diff}}{${sigma}}`,
         `= ${fmtZ(z)}`,
@@ -113,10 +113,12 @@ const genFindX = () => {
       question: `求${name}在該考試的得分。`,
       answer: x,
       steps: [
-        `\\text{得分} = \\text{平均分} + \\text{標準分} \\times \\text{標準差}`,
-        `= ${mu} + (${fmtZ(z)}) \\times ${sigma}`,
-        `= ${addTerm(mu, zSigma)}`,
-        `= ${x}`,
+        `\\begin{aligned}` +
+        `\\text{標準分} &= \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}} \\\\[8pt]` +
+        `${fmtZ(z)} &= \\dfrac{\\text{個人得分} - ${mu}}{${sigma}} \\\\[8pt]` +
+        `${zSigma} &= \\text{個人得分} - ${mu} \\\\[4pt]` +
+        `\\text{個人得分} &= ${x}` +
+        `\\end{aligned}`,
       ],
     }],
   };
@@ -146,7 +148,7 @@ const genFindSigmaThenX = () => {
         question: `求該考試成績的標準差。`,
         answer: sigma,
         steps: [
-          `\\text{標準分} = \\dfrac{\\text{得分} - \\text{平均分}}{\\text{標準差}}`,
+          `\\text{標準分} = \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}}`,
           `${fmtZ(z1)} = \\dfrac{${x1} - ${mu}}{\\sigma}`,
           `\\sigma = \\dfrac{${diff1}}{${fmtZ(z1)}} = ${sigma}`,
         ],
@@ -156,9 +158,12 @@ const genFindSigmaThenX = () => {
         question: `若${name2}在該考試的標準分為 ${fmtZ(z2)}，求${name2}的得分。`,
         answer: x2,
         steps: [
-          `\\text{得分} = ${mu} + (${fmtZ(z2)}) \\times ${sigma}`,
-          `= ${addTerm(mu, zSigma2)}`,
-          `= ${x2}`,
+          `\\begin{aligned}` +
+          `\\text{標準分} &= \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}} \\\\[8pt]` +
+          `${fmtZ(z2)} &= \\dfrac{\\text{個人得分} - ${mu}}{${sigma}} \\\\[8pt]` +
+          `${zSigma2} &= \\text{個人得分} - ${mu} \\\\[4pt]` +
+          `\\text{個人得分} &= ${x2}` +
+          `\\end{aligned}`,
         ],
       },
     ],
@@ -177,13 +182,13 @@ const genFindSigmaFromDiff = () => {
   const exam = pick(EXAM_CONTEXTS);
   const dZStr = fmtZ(deltaZ);
   return {
-    context: `在某次${exam}中，某兩學生的測驗得分之差及標準分之差分別為 ${deltaX} 分及 ${dZStr}。`,
+    context: `在某次${exam}中，某兩學生的測驗個人得分之差及標準分之差分別為 ${deltaX} 分及 ${dZStr}。`,
     parts: [{
       label: '',
-      question: `求該考試得分的標準差。`,
+      question: `求該考試個人得分的標準差。`,
       answer: sigma,
       steps: [
-        `\\text{標準分之差} = \\dfrac{\\text{得分之差}}{\\text{標準差}}`,
+        `\\text{標準分之差} = \\dfrac{\\text{個人得分之差}}{\\text{標準差}}`,
         `${dZStr} = \\dfrac{${deltaX}}{\\sigma}`,
         `\\sigma = \\dfrac{${deltaX}}{${dZStr}} = ${sigma}`,
       ],
@@ -212,16 +217,16 @@ const genFindMuThenX = () => {
     ? `\\mu = ${x1} - ${z1Sigma} = ${mu}`
     : `\\mu = ${x1} + ${-z1Sigma} = ${mu}`;
   return {
-    context: `在某次${exam}中，成績的標準差為 ${sigma} 分。${name1}的得分為 ${x1} 分且標準分為 ${fmtZ(z1)}。`,
+    context: `在某次${exam}中，成績的標準差為 ${sigma} 分。${name1}的個人得分為 ${x1} 分且標準分為 ${fmtZ(z1)}。`,
     parts: [
       {
         label: '(a)',
         question: `求該考試成績的平均分。`,
         answer: mu,
         steps: [
-          `\\text{得分} = \\text{平均分} + \\text{標準分} \\times \\text{標準差}`,
-          `${x1} = \\mu + (${fmtZ(z1)}) \\times ${sigma}`,
-          `${x1} = \\mu + ${z1Sigma}`,
+          `\\text{標準分} = \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}}`,
+          `${fmtZ(z1)} = \\dfrac{${x1} - \\mu}{${sigma}}`,
+          `${x1} - \\mu = (${fmtZ(z1)}) \\times ${sigma} = ${z1Sigma}`,
           muStep,
         ],
       },
@@ -230,9 +235,12 @@ const genFindMuThenX = () => {
         question: `若${name2}在該考試的標準分為 ${fmtZ(z2)}，求${name2}的得分。`,
         answer: x2,
         steps: [
-          `\\text{得分} = ${mu} + (${fmtZ(z2)}) \\times ${sigma}`,
-          `= ${addTerm(mu, z2Sigma)}`,
-          `= ${x2}`,
+          `\\begin{aligned}` +
+          `\\text{標準分} &= \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}} \\\\[8pt]` +
+          `${fmtZ(z2)} &= \\dfrac{\\text{個人得分} - ${mu}}{${sigma}} \\\\[8pt]` +
+          `${z2Sigma} &= \\text{個人得分} - ${mu} \\\\[4pt]` +
+          `\\text{個人得分} &= ${x2}` +
+          `\\end{aligned}`,
         ],
       },
     ],
@@ -262,6 +270,7 @@ const genTwoSubjects = () => {
   const subjectA = pick(['數學', '物理', '化學']);
   const subjectB = pick(['英語', '生物', '歷史', '地理'].filter(s => s !== subjectA));
   const diffA = xA - muA;
+  const zSigmaA = z * sigmaA;
   const zSigmaB2 = z2 * sigmaB;
 
   return {
@@ -276,9 +285,12 @@ const genTwoSubjects = () => {
         question: `${name}在${subjectA}科的標準分為 ${fmtZ(z)}，求其${subjectA}科得分。`,
         answer: xA,
         steps: [
-          `\\text{得分} = ${muA} + (${fmtZ(z)}) \\times ${sigmaA}`,
-          `= ${addTerm(muA, z * sigmaA)}`,
-          `= ${xA}`,
+          `\\begin{aligned}` +
+          `\\text{標準分} &= \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}} \\\\[8pt]` +
+          `${fmtZ(z)} &= \\dfrac{\\text{個人得分} - ${muA}}{${sigmaA}} \\\\[8pt]` +
+          `${zSigmaA} &= \\text{個人得分} - ${muA} \\\\[4pt]` +
+          `\\text{個人得分} &= ${xA}` +
+          `\\end{aligned}`,
         ],
       },
       {
@@ -286,9 +298,12 @@ const genTwoSubjects = () => {
         question: `若某同學在${subjectB}科的標準分為 ${fmtZ(z2)}，求其${subjectB}科得分。`,
         answer: xB,
         steps: [
-          `\\text{得分} = ${muB} + (${fmtZ(z2)}) \\times ${sigmaB}`,
-          `= ${addTerm(muB, zSigmaB2)}`,
-          `= ${xB}`,
+          `\\begin{aligned}` +
+          `\\text{標準分} &= \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}} \\\\[8pt]` +
+          `${fmtZ(z2)} &= \\dfrac{\\text{個人得分} - ${muB}}{${sigmaB}} \\\\[8pt]` +
+          `${zSigmaB2} &= \\text{個人得分} - ${muB} \\\\[4pt]` +
+          `\\text{個人得分} &= ${xB}` +
+          `\\end{aligned}`,
         ],
       },
     ],

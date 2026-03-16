@@ -404,10 +404,127 @@ const TeachingPage = ({ onStartQuiz }) => {
                 <p className="text-sm text-slate-700 mb-2">
                   形式：<Latex math="ax^2 + bxy + cy^2" />
                 </p>
+
+                {/* 方法概覽 */}
+                <div className="bg-white rounded-lg p-3 mb-3">
+                  <p className="text-sm font-bold text-slate-700 mb-2">💡 方法（4步）：</p>
+                  <div className="space-y-1.5 text-sm">
+                    <div className="flex gap-2 items-start">
+                      <span className="bg-blue-500 text-white px-1.5 py-0.5 rounded text-xs font-bold shrink-0">1</span>
+                      <span>暫時忽略第二個代數（s），只用第一個代數（r）的係數識別 a, b, c</span>
+                    </div>
+                    <div className="flex gap-2 items-start">
+                      <span className="bg-blue-500 text-white px-1.5 py-0.5 rounded text-xs font-bold shrink-0">2</span>
+                      <span>用 FMLA 01 輸入 a, b, c，得兩個根</span>
+                    </div>
+                    <div className="flex gap-2 items-start">
+                      <span className="bg-blue-500 text-white px-1.5 py-0.5 rounded text-xs font-bold shrink-0">3</span>
+                      <span>將每個根寫成分數 <Latex math="\frac{p}{q}" />，組成括號 <Latex math="(q \cdot r - p)" /></span>
+                    </div>
+                    <div className="flex gap-2 items-start">
+                      <span className="bg-blue-500 text-white px-1.5 py-0.5 rounded text-xs font-bold shrink-0">4</span>
+                      <span>在每個括號中，數字後面補上 s</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 例子 */}
                 <div className="bg-white rounded-lg p-3">
-                  <p className="text-xs text-slate-500 mb-2">💡 方法：先當只有前面的代數 x 用FMLA01去組成括號，最後再在每個括號後補上後面的代數 y</p>
-                  <p className="text-sm text-slate-600 mb-1">例子：</p>
-                  <Latex math="\begin{aligned} &6r^2 - 13rs - 28s^2 \\ &= (2r-7s)(3r+4s) \end{aligned}" block />
+                  <p className="text-sm font-bold text-slate-700 mb-3">例子：<Latex math="6r^2 - 13rs - 28s^2" /></p>
+
+                  {/* Step 1 */}
+                  <div className="mb-3 rounded-lg overflow-hidden border border-blue-200">
+                    <div className="bg-blue-500 text-white text-xs font-bold px-3 py-1.5">Step 1　暫時忽略 s</div>
+                    <div className="bg-blue-50 px-3 py-2 text-sm text-slate-700">
+                      <p>把 <Latex math="6r^2 - 13rs - 28s^2" /> 當作 <Latex math="6r^2 - 13r - 28" /></p>
+                      <p className="mt-1 text-xs text-slate-500">→ a = 6，b = −13，c = −28</p>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="mb-3 rounded-lg overflow-hidden border border-green-200">
+                    <div className="bg-green-600 text-white text-xs font-bold px-3 py-1.5">Step 2　FMLA 01 輸入</div>
+                    <div className="bg-green-50 px-3 py-2">
+                      <div className="flex items-center gap-1 flex-wrap text-sm mb-3">
+                        <span className="text-slate-600 text-xs">輸入：</span>
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">6</span>
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">(−)13</span>
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">(−)28</span>
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-white rounded border p-2 text-center">
+                          <p className="text-xs text-slate-500 mb-1">答案 1</p>
+                          <p className="text-2xl font-mono font-bold text-slate-800">3.5</p>
+                        </div>
+                        <div className="bg-white rounded border p-2 text-center">
+                          <p className="text-xs text-slate-500 mb-1">答案 2</p>
+                          <p className="text-2xl font-mono font-bold text-slate-800">−1.333...</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="mb-3 rounded-lg overflow-hidden border border-amber-200">
+                    <div className="bg-amber-500 text-white text-xs font-bold px-3 py-1.5">Step 3　組成括號（分母配 r 放前，分子取相反）</div>
+                    <div className="bg-amber-50 px-3 py-2">
+                      <div className="grid grid-cols-2 gap-3">
+                        {/* Answer 1 */}
+                        <div className="bg-white rounded border border-amber-200 p-2">
+                          <p className="text-xs font-bold text-amber-700 mb-1 text-center">答案 1：3.5</p>
+                          <p className="text-xs text-center text-slate-500 mb-2">
+                            按 <span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded">a b/c</span> → <Latex math="\frac{7}{2}" />
+                          </p>
+                          <div className="text-xs text-slate-600 space-y-0.5">
+                            <p>分母 <span className="font-bold text-blue-700">2</span> 配 r 放前</p>
+                            <p>分子 <span className="font-bold">7</span> 取相反 → <span className="font-bold text-red-600">−7</span></p>
+                          </div>
+                          <p className="text-sm font-bold text-center text-blue-700 mt-2"><Latex math="(2r - 7)" /></p>
+                        </div>
+                        {/* Answer 2 */}
+                        <div className="bg-white rounded border border-amber-200 p-2">
+                          <p className="text-xs font-bold text-amber-700 mb-1 text-center">答案 2：−1.333...</p>
+                          <p className="text-xs text-center text-slate-500 mb-2">
+                            按 <span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded">a b/c</span> → <Latex math="-\frac{4}{3}" />
+                          </p>
+                          <div className="text-xs text-slate-600 space-y-0.5">
+                            <p>分母 <span className="font-bold text-blue-700">3</span> 配 r 放前</p>
+                            <p>分子 <span className="font-bold">−4</span> 取相反 → <span className="font-bold text-red-600">+4</span></p>
+                          </div>
+                          <p className="text-sm font-bold text-center text-blue-700 mt-2"><Latex math="(3r + 4)" /></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 4 */}
+                  <div className="mb-3 rounded-lg overflow-hidden border border-purple-200">
+                    <div className="bg-purple-500 text-white text-xs font-bold px-3 py-1.5">Step 4　在每個括號的數字後補上 s</div>
+                    <div className="bg-purple-50 px-3 py-2">
+                      <div className="grid grid-cols-2 gap-3 text-center text-sm">
+                        <div>
+                          <Latex math="(2r - 7)" />
+                          <p className="text-xs text-slate-500 my-1">7 後加 s</p>
+                          <p className="text-base font-bold text-purple-700"><Latex math="(2r - 7s)" /></p>
+                        </div>
+                        <div>
+                          <Latex math="(3r + 4)" />
+                          <p className="text-xs text-slate-500 my-1">4 後加 s</p>
+                          <p className="text-base font-bold text-purple-700"><Latex math="(3r + 4s)" /></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 最終答案 */}
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
+                    <p className="text-sm font-bold text-green-700">
+                      ∴ 答案 <Latex math="= (2r - 7s)(3r + 4s)" />
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
