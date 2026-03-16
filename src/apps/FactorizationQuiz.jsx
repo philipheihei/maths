@@ -476,9 +476,9 @@ const TeachingPage = ({ onStartQuiz }) => {
                         <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span>
                         <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
                         <span className="text-slate-400 text-xs mx-1">｜</span>
-                        <span className="text-slate-500 text-xs italic">如按 FMLA 沒反應，先按</span>
+                        <span className="text-slate-500 text-xs italic">(如按 FMLA 沒反應，先按</span>
                         <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span>
-                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span>
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span>)
                       </div>
                       <div className="flex items-center gap-1 flex-wrap mb-3">
                         <span className="text-slate-600 text-xs">輸入：</span>
@@ -600,28 +600,43 @@ const TeachingPage = ({ onStartQuiz }) => {
                   </div>
 
                   {/* 解題步驟 */}
-                  <div className="bg-yellow-50 p-2 rounded">
-                    <p className="text-slate-700 text-sm mb-2">
-                      ➜ 找 (a) 題目部分（黃色 highlight），套用 (a) 部答案：
-                    </p>
-                    {/* Line 1: first substitution */}
-                    <div className="text-center my-1 text-sm">
-                      <Latex math="= 4r - 14s + (2r-7s)(3r+4s)" />
-                    </div>
-                    {/* Line 2: factor out 2(2r-7s), highlight both (2r-7s) */}
-                    <div className="flex items-center justify-center flex-wrap gap-0.5 my-1 text-sm">
-                      <Latex math="=" />
-                      <span className="mx-0.5">2</span>
-                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
-                      <span className="mx-0.5">+</span>
-                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
-                      <Latex math="(3r+4s)" />
-                    </div>
-                    {/* Line 3: final answer, highlight (2r-7s) */}
-                    <div className="flex items-center justify-center flex-wrap gap-0.5 my-1 text-sm">
-                      <Latex math="=" />
-                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
-                      <Latex math="(2 + 3r + 4s)" />
+                  <div className="bg-yellow-50 p-3 rounded">
+                    {/* Column layout: = sign anchor | expression | annotation */}
+                    <div className="space-y-2">
+
+                      {/* Line 1 */}
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                        <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
+                          <Latex math="4r - 14s + " />
+                          <span className="bg-yellow-200 rounded px-0.5"><Latex math="(2r-7s)(3r+4s)" /></span>
+                        </div>
+                        <div className="text-xs text-slate-500 italic shrink-0">← 套用 (a) 部答案</div>
+                      </div>
+
+                      {/* Line 2 */}
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                        <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
+                          <Latex math="2" />
+                          <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
+                          <Latex math="+" />
+                          <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
+                          <Latex math="(3r+4s)" />
+                        </div>
+                        <div className="text-xs text-slate-500 italic shrink-0">← 非 (a) 部答案 抽公因式，應看到有最少兩個相同括號</div>
+                      </div>
+
+                      {/* Line 3 */}
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                        <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
+                          <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
+                          <Latex math="(2 + 3r + 4s)" />
+                        </div>
+                        <div className="text-xs text-slate-500 italic shrink-0">← 相同的括號放前，不同的項順序放後面括號內</div>
+                      </div>
+
                     </div>
                   </div>
                 </div>

@@ -150,7 +150,8 @@ const genFindSigmaThenX = () => {
         steps: [
           `\\text{標準分} = \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}}`,
           `${fmtZ(z1)} = \\dfrac{${x1} - ${mu}}{\\sigma}`,
-          `\\sigma = \\dfrac{${diff1}}{${fmtZ(z1)}} = ${sigma}`,
+          `\\sigma = \\dfrac{${diff1}}{${fmtZ(z1)}}`,
+          `\\sigma = ${sigma}`,
         ],
       },
       {
@@ -190,7 +191,8 @@ const genFindSigmaFromDiff = () => {
       steps: [
         `\\text{標準分之差} = \\dfrac{\\text{個人得分之差}}{\\text{標準差}}`,
         `${dZStr} = \\dfrac{${deltaX}}{\\sigma}`,
-        `\\sigma = \\dfrac{${deltaX}}{${dZStr}} = ${sigma}`,
+        `\\sigma = \\dfrac{${deltaX}}{${dZStr}}`,
+        `\\sigma = ${sigma}`,
       ],
     }],
   };
@@ -213,9 +215,10 @@ const genFindMuThenX = () => {
   const z1Sigma = z1 * sigma;
   const z2Sigma = z2 * sigma;
   // For showing μ = x1 - z1·σ step cleanly
-  const muStep = z1Sigma >= 0
-    ? `\\mu = ${x1} - ${z1Sigma} = ${mu}`
-    : `\\mu = ${x1} + ${-z1Sigma} = ${mu}`;
+  const muArith = z1Sigma >= 0
+    ? `\\mu = ${x1} - ${z1Sigma}`
+    : `\\mu = ${x1} + ${-z1Sigma}`;
+  const muFinal = `\\mu = ${mu}`;
   return {
     context: `在某次${exam}中，成績的標準差為 ${sigma} 分。${name1}的個人得分為 ${x1} 分且標準分為 ${fmtZ(z1)}。`,
     parts: [
@@ -226,8 +229,10 @@ const genFindMuThenX = () => {
         steps: [
           `\\text{標準分} = \\dfrac{\\text{個人得分} - \\text{平均分}}{\\text{標準差}}`,
           `${fmtZ(z1)} = \\dfrac{${x1} - \\mu}{${sigma}}`,
-          `${x1} - \\mu = (${fmtZ(z1)}) \\times ${sigma} = ${z1Sigma}`,
-          muStep,
+          `${x1} - \\mu = (${fmtZ(z1)}) \\times ${sigma}`,
+          `${x1} - \\mu = ${z1Sigma}`,
+          muArith,
+          muFinal,
         ],
       },
       {
