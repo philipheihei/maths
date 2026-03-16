@@ -306,8 +306,27 @@ const TeachingPage = ({ onStartQuiz }) => {
               </div>
 
               <div className="bg-white rounded-lg p-4 border border-blue-200">
-                <p className="text-sm text-slate-600 mb-2">例子 1：標準四項</p>
-                <Latex math="\begin{aligned} bm + bn + 5m + 5n &= b(m+n) + 5(m+n) \\ &= (m+n)(b+5) \end{aligned}" block />
+                <p className="text-sm text-slate-600 mb-3">例子 1：標準四項</p>
+                <div className="space-y-2">
+                  {/* Line 1: starting expression */}
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 shrink-0" />
+                    <div className="text-sm w-40 shrink-0"><Latex math="bm + bn + 5m + 5n" /></div>
+                    <div className="text-xs text-slate-500 italic">← 通常出4個項，前2項找相同，後2項找相同</div>
+                  </div>
+                  {/* Line 2 */}
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                    <div className="text-sm w-40 shrink-0"><Latex math="b(m+n) + 5(m+n)" /></div>
+                    <div className="text-xs text-slate-500 italic">← 將相同括號抽出</div>
+                  </div>
+                  {/* Line 3 */}
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                    <div className="text-sm w-40 shrink-0"><Latex math="(m+n)(b+5)" /></div>
+                    <div className="text-xs text-slate-500 italic">← 不是相同括號的按順序放另一個括號</div>
+                  </div>
+                </div>
               </div>
 
               <div className="bg-white rounded-lg p-4 border border-blue-200">
@@ -332,7 +351,7 @@ const TeachingPage = ({ onStartQuiz }) => {
               <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                 <h3 className="font-bold text-green-800 mb-3">🖩 計算機 FMLA 01 方法</h3>
                 <p className="text-sm text-slate-700 mb-3">
-                  如沒相同代數/因數，出動 <span className="bg-orange-500 text-white px-2 py-0.5 rounded font-mono">FMLA 01</span>（二次方）
+                  如二次多項式沒相同代數/因數，出動 <span className="bg-orange-500 text-white px-2 py-0.5 rounded font-mono">FMLA</span> 01
                 </p>
                 
                 <div className="bg-white rounded-lg p-3 mb-3">
@@ -593,14 +612,16 @@ const TeachingPage = ({ onStartQuiz }) => {
                     <Latex math="6r^2 - 13rs - 28s^2 = (2r-7s)(3r+4s)" block />
                   </div>
 
-                  {/* (b) 答案 */}
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-2 mb-3">
-                    <p className="text-sm font-bold text-green-700 mb-1">📝 (b) 部答案：</p>
-                    <Latex math="4r - 14s + 6r^2 - 13rs - 28s^2" block />
-                  </div>
-
                   {/* 解題步驟 */}
                   <div className="bg-yellow-50 p-3 rounded">
+                    <p className="text-sm font-bold text-green-700 mb-2">📝 (b) 部答案：</p>
+                    {/* Starting expression (no = prefix) */}
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-4 shrink-0" />
+                      <div className="text-sm min-w-0">
+                        <Latex math="4r - 14s + 6r^2 - 13rs - 28s^2" />
+                      </div>
+                    </div>
                     {/* Column layout: = sign anchor | expression | annotation */}
                     <div className="space-y-2">
 
