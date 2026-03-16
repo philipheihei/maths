@@ -475,18 +475,9 @@ const TeachingPage = ({ onStartQuiz }) => {
                 <div className="bg-white rounded-lg p-3">
                   <p className="text-sm font-bold text-slate-700 mb-3">例子：<Latex math="6r^2 - 13rs - 28s^2" /></p>
 
-                  {/* Step 1 */}
-                  <div className="mb-3 rounded-lg overflow-hidden border border-blue-200">
-                    <div className="bg-blue-500 text-white text-xs font-bold px-3 py-1.5">Step 1　暫時忽略 s</div>
-                    <div className="bg-blue-50 px-3 py-2 text-sm text-slate-700">
-                      <p>把 <Latex math="6r^2 - 13rs - 28s^2" /> 當作 <Latex math="6r^2 - 13r - 28" /></p>
-                      <p className="mt-1 text-xs text-slate-500">→ a = 6，b = −13，c = −28</p>
-                    </div>
-                  </div>
-
-                  {/* Step 2 */}
+                  {/* Step 2 (merged with Step 1) */}
                   <div className="mb-3 rounded-lg overflow-hidden border border-green-200">
-                    <div className="bg-green-600 text-white text-xs font-bold px-3 py-1.5">Step 2　FMLA 01 輸入</div>
+                    <div className="bg-green-600 text-white text-xs font-bold px-3 py-1.5">Step 1　FMLA 01 輸入</div>
                     <div className="bg-green-50 px-3 py-2">
                       <div className="flex items-center gap-1 flex-wrap mb-1">
                         <span className="text-slate-600 text-xs">開啟：</span>
@@ -499,6 +490,10 @@ const TeachingPage = ({ onStartQuiz }) => {
                         <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span>
                         <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span>)
                       </div>
+                      <div className="text-xs text-slate-600 mb-1 pl-1">
+                        把 <Latex math="6r^2 - 13rs - 28s^2" /> 當作 <Latex math="6r^2 - 13r - 28" />
+                      </div>
+                      <div className="text-xs text-slate-500 mb-2 pl-1">→ a = 6，b = −13，c = −28</div>
                       <div className="flex items-center gap-1 flex-wrap mb-3">
                         <span className="text-slate-600 text-xs">輸入：</span>
                         <span className="text-slate-700 text-xs font-mono">6</span>
@@ -525,7 +520,7 @@ const TeachingPage = ({ onStartQuiz }) => {
 
                   {/* Step 3 */}
                   <div className="mb-3 rounded-lg overflow-hidden border border-amber-200">
-                    <div className="bg-amber-500 text-white text-xs font-bold px-3 py-1.5">Step 3　組成括號（分母配 r 放前，分子取相反）</div>
+                    <div className="bg-amber-500 text-white text-xs font-bold px-3 py-1.5">Step 2　組成括號（分母配 r 放前，分子取相反）</div>
                     <div className="bg-amber-50 px-3 py-2">
                       <div className="grid grid-cols-2 gap-3">
                         {/* Answer 1 */}
@@ -552,7 +547,7 @@ const TeachingPage = ({ onStartQuiz }) => {
 
                   {/* Step 4 */}
                   <div className="mb-3 rounded-lg overflow-hidden border border-purple-200">
-                    <div className="bg-purple-500 text-white text-xs font-bold px-3 py-1.5">Step 4　在每個括號的數字後補上 s</div>
+                    <div className="bg-purple-500 text-white text-xs font-bold px-3 py-1.5">Step 3　在每個括號的數字後補上 s</div>
                     <div className="bg-purple-50 px-3 py-2">
                       <div className="grid grid-cols-2 gap-3 text-center text-sm">
                         <div>
