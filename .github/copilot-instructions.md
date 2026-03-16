@@ -141,7 +141,8 @@ When displaying CASIO fx-50FH II keys in notes or instructions, **always** use t
 
 | Key | Examples | Classes |
 |-----|----------|---------|
-| Black key (standard) | EXE, 0-9, +, −, ×, ÷, log, sin, cos, tan, ln, x², ENG, EXP, Ans, (−), x⁻¹, a b/c | `bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded` |
+| Black key (standard) | EXE, 0-9, +, −, ×, ÷, log, sin, cos, tan, ln, x², ENG, EXP, Ans, (−), x⁻¹ | `bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded` |
+| Gray key — a b/c | a b/c | `bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded` |
 | Gray key — MODE/SETUP | MODE | `bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded` |
 | Gray key — SHIFT | SHIFT | `bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded` |
 | Gray key — ALPHA | ALPHA | `bg-gray-300 text-red-600 text-xs font-mono px-2 py-0.5 rounded` |
