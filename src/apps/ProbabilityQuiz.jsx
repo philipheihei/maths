@@ -1585,6 +1585,80 @@ const ProbabilityNotes = () => {
             </div>
           </div>
 
+          {/* 技巧筆記 */}
+          <div className="bg-white p-5 sm:p-6 rounded-2xl border-base shadow-sm relative overflow-hidden my-2" style={{ borderColor: '#ffe4e6', borderWidth: '2px' }}>
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-rose-400"></div>
+            <h4 className="font-bold text-slate-800 text-lg sm:text-xl mb-5 flex items-start gap-2">
+              <span className="text-slate-800 mt-0.5 font-black">-</span>
+              技巧：出現兩個/多個 nPr / nCr 時，何時使用 × 或 + 呢？
+            </h4>
+            
+            <div className="ml-4 sm:ml-8 space-y-3 mb-8">
+              <div className="flex items-center gap-3">
+                <span className="text-red-600 font-bold text-xl sm:text-2xl w-6 text-center">×</span>
+                <ArrowRight className="inline w-5 h-5 text-slate-800 shrink-0" />
+                <span className="text-red-600 font-bold text-lg sm:text-xl tracking-wide">可以同時發生 <span className="text-purple-700">(兩者並存)</span></span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-red-600 font-bold text-xl sm:text-2xl w-6 text-center">+</span>
+                <ArrowRight className="inline w-5 h-5 text-slate-800 shrink-0" />
+                <span className="text-red-600 font-bold text-lg sm:text-xl tracking-wide">不能同時發生</span>
+              </div>
+            </div>
+
+            <div className="border-t border-slate-100 pt-6">
+              <p className="text-blue-900 font-bold text-lg mb-6 sm:mb-8 flex gap-2 items-center">
+                <span className="text-blue-900">舉例：</span>
+                7 個人，3 男 4 女，抽獎抽兩份相同禮物
+              </p>
+              
+              <div className="space-y-8">
+                <div className="flex flex-col xl:flex-row xl:items-center gap-3 xl:gap-6">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                    <span className="text-green-700 font-bold text-lg">1男1女中獎組合：</span>
+                    <div className="flex items-center text-xl text-blue-900 font-serif bg-blue-50/50 px-2 rounded-lg">
+                      <MathNotation type="C" n="3" r="1" /> 
+                      <span className="bg-yellow-300 text-black font-bold px-2 py-0.5 rounded mx-1 leading-none shadow-sm">×</span> 
+                      <MathNotation type="C" n="4" r="1" /> 
+                      <span className="ml-3 font-bold">= 12</span>
+                    </div>
+                  </div>
+                  <div className="flex text-purple-700 font-bold text-base items-center">
+                    <ArrowLeft className="inline w-5 h-5 ml-4 mr-2 shrink-0 text-purple-700" />
+                    <span>1個男同1個女中獎可同時發生 (<span className="text-red-600">×</span>)</span>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col xl:flex-row gap-3 xl:gap-6 pt-6 border-t border-dashed border-slate-200">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                    <span className="text-green-700 font-bold text-lg">最少1男中獎組合：</span>
+                    <div className="flex items-center text-xl text-blue-900 font-serif flex-wrap bg-blue-50/50 px-2 py-2 rounded-lg gap-y-3">
+                      <div className="flex items-center">
+                        <MathNotation type="C" n="3" r="1" /> 
+                        <span className="bg-yellow-300 text-black font-bold px-2 py-0.5 rounded mx-1 leading-none shadow-sm">×</span> 
+                        <MathNotation type="C" n="4" r="1" /> 
+                      </div>
+                      <span className="bg-cyan-300 text-black font-bold px-2 py-0.5 rounded mx-2 sm:mx-3 leading-none shadow-sm">+</span> 
+                      <div className="flex items-center">
+                        <MathNotation type="C" n="3" r="2" /> 
+                        <span className="bg-yellow-300 text-black font-bold px-2 py-0.5 rounded mx-1 leading-none shadow-sm">×</span> 
+                        <MathNotation type="C" n="4" r="0" /> 
+                      </div>
+                      <span className="ml-3 font-bold">= 12 + 3 = 15</span>
+                    </div>
+                  </div>
+                  <div className="flex text-purple-700 font-bold text-base items-start">
+                    <ArrowLeft className="inline w-5 h-5 ml-4 mr-3 mt-1 shrink-0 text-purple-700" />
+                    <div className="leading-relaxed">
+                      一係一個男 (<span className="text-green-700">1男1女</span>)，一係兩個男 (<span className="text-green-700">2男0女</span>) 中獎，<br className="hidden sm:block"/>
+                      兩個情況不能同時發生 (<span className="text-red-600">+</span>)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-white p-5 sm:p-6 rounded-2xl border-2 border-teal-200">
             <h4 className="font-bold text-teal-800 text-lg mb-2">例題 2：組合 C</h4>
             <div className="text-slate-700 leading-relaxed bg-teal-50 p-3 rounded-lg mb-4 text-sm sm:text-base relative border-l-4 border-green-400">
