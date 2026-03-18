@@ -46,8 +46,15 @@ export default function IndexLawsNotes() {
 
       {/* 1. 拆括號 */}
       <section>
-        <h2 className="text-xl font-bold text-red-600 mb-4 tracking-wide">
-          1. 有括號就次方乘，沒括號就次方加
+        <h2 className="text-xl font-bold text-red-600 mb-4 tracking-wide flex flex-wrap items-center gap-1">
+          <span>1. </span>
+          <span className="bg-green-200 text-red-600 px-1 rounded">有括號</span>
+          <span>就次方</span>
+          <span className="bg-green-200 text-red-600 px-1 rounded">乘</span>
+          <span>，</span>
+          <span className="bg-yellow-200 text-red-600 px-1 rounded">沒括號</span>
+          <span>就次方</span>
+          <span className="bg-yellow-200 text-red-600 px-1 rounded">加</span>
         </h2>
         <div className="space-y-6 ml-4">
           
@@ -68,7 +75,7 @@ export default function IndexLawsNotes() {
 
           <div>
             <span className="text-blue-900 font-bold mr-2 text-xl italic">e.g.</span>
-            <Latex math="(y^{\colorbox{#bbf7d0}{2}})^{\colorbox{#bbf7d0}{3}} = y^{\colorbox{#bbf7d0}{2 \times 3}} = y^{\colorbox{#bbf7d0}{6}}" />
+            <Latex math="(y^{\colorbox{#bbf7d0}{2}})^{\colorbox{#bbf7d0}{3}} = y^{\colorbox{#bbf7d0}{2{\times}3}} = y^{\colorbox{#bbf7d0}{6}}" />
           </div>
 
         </div>
@@ -88,35 +95,28 @@ export default function IndexLawsNotes() {
         <div className="space-y-8 ml-4">
           <div className="flex flex-wrap items-center gap-4">
             <span className="text-blue-900 font-bold text-xl italic">e.g.</span>
-            <Latex math="x^{\colorbox{#fef08a}{$-4$}} = \frac{1}{x^{\colorbox{#fef08a}{4}}}" />
-            <span className="text-green-700 font-bold">負指數：上轉下</span>
+            <span className="text-2xl"><Latex math="x^{\colorbox{#fef08a}{$-4$}} = \frac{1}{x^{\colorbox{#fef08a}{4}}}" /></span>
+            <span className="text-green-700 font-bold text-lg">負指數：上轉下</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 pl-10">
-            <Latex math="\frac{1}{y^{\colorbox{#fef08a}{$-3$}}} = y^{\colorbox{#fef08a}{3}}" />
-            <span className="text-green-700 font-bold">負指數：下轉上</span>
+            <span className="text-2xl"><Latex math="\frac{1}{y^{\colorbox{#fef08a}{$-3$}}} = y^{\colorbox{#fef08a}{3}}" /></span>
+            <span className="text-green-700 font-bold text-lg">負指數：下轉上</span>
           </div>
 
-          <div className="relative pl-10 pt-2 pb-2">
-            <Latex math="\frac{x^{\colorbox{#fef08a}{$-2$}}}{y^{\colorbox{#fef08a}{$-5$}}} = \frac{y^{\colorbox{#fef08a}{5}}}{x^{\colorbox{#fef08a}{2}}}" />
-            <span className="text-green-700 font-bold absolute bottom-2 ml-4">負指數：上下調轉</span>
-            {/* SVG Cross Arrows */}
-            <svg className="absolute left-[8.5rem] top-4 w-8 h-8 text-red-500" viewBox="0 0 30 30" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M 5,5 L 25,25" />
-              <path d="M 20,25 L 25,25 L 25,20" />
-              <path d="M 5,25 L 25,5" />
-              <path d="M 25,10 L 25,5 L 20,5" />
-            </svg>
+          <div className="flex flex-wrap items-center gap-4 pl-10 pt-2">
+            <span className="text-2xl"><Latex math="\frac{x^{\colorbox{#fef08a}{$-2$}}}{y^{\colorbox{#fef08a}{$-5$}}} = \frac{y^{\colorbox{#fef08a}{5}}}{x^{\colorbox{#fef08a}{2}}}" /></span>
+            <span className="text-green-700 font-bold text-lg">負指數：上下調轉</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 pl-10 pt-4">
-            <Latex math="\frac{a^{\colorbox{#fef08a}{$-11$}}b^7}{b^5} = \frac{b^7}{a^{11}b^5}" />
-            <span className="text-green-700 font-bold max-w-[200px] leading-tight">負指數上下調轉, 正指數不動</span>
+            <span className="text-2xl"><Latex math="\frac{a^{\colorbox{#fef08a}{$-11$}}b^7}{b^5} = \frac{b^7}{a^{11}b^5}" /></span>
+            <span className="text-green-700 font-bold text-lg max-w-[220px] leading-tight">負指數上下調轉, 正指數不動</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 pl-10 pt-4">
-            <Latex math="(ab)^{-2} = \frac{1}{a^2b^2}" />
-            <span className="text-green-700 font-bold">← 上面沒有 需補 1</span>
+            <span className="text-2xl"><Latex math="(ab)^{-2} = \frac{1}{a^2b^2}" /></span>
+            <span className="text-green-700 font-bold text-lg">← 上面沒有 需補 1</span>
           </div>
         </div>
       </section>
@@ -244,24 +244,13 @@ export default function IndexLawsNotes() {
               </div>
               <div className="flex flex-wrap md:flex-nowrap items-center gap-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <div className="flex items-center gap-4 relative">
-                  <Latex math="\frac{12^{\colorbox{#fef08a}{444}}}{(2^2)^{\colorbox{#fef08a}{222}}}" />
-                  <span className="text-green-700 font-bold whitespace-nowrap hidden sm:block">2 × 222 = 444</span>
-                  
-                  <svg className="absolute -left-5 top-10 w-8 h-10 text-green-500 hidden sm:block" viewBox="0 0 20 40" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M 20,0 Q 5,10 5,20 Q 5,30 20,40" />
-                    <path d="M 15,35 L 20,40 L 15,45" />
-                  </svg>
-                </div>
+                <Latex math="\frac{12^{\colorbox{#fef08a}{444}}}{(2^2)^{\colorbox{#fef08a}{222}}}" />
+                <span className="text-green-700 font-bold whitespace-nowrap">2 × 222 = 444</span>
               </div>
-              <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mt-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                  <Latex math="\frac{12^{\colorbox{#fef08a}{444}}}{2^{\colorbox{#fef08a}{444}}}" />
-                </div>
-                <span className="text-green-700 font-bold ml-12 md:ml-4">
-                  次方相同，合成指數： <Latex math="\frac{a^n}{b^n} = \left(\frac{a}{b}\right)^n" />
-                </span>
+              <div className="flex flex-wrap md:flex-nowrap items-center gap-2 mt-2">
+                <span className="font-bold w-4 mr-6 flex justify-end">=</span>
+                <Latex math="\frac{12^{\colorbox{#fef08a}{444}}}{2^{\colorbox{#fef08a}{444}}}" />
+                <span className="text-green-700 font-bold ml-2">← 次方相同，合成指數：<Latex math="\frac{a^n}{b^n} = \left(\frac{a}{b}\right)^n" /></span>
               </div>
               <div className="flex flex-wrap items-center gap-4 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
