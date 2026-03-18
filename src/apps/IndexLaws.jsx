@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, CheckCircle, XCircle, HelpCircle, Calculator, ChevronRight, Eraser, Delete, ArrowRight, Check, Trophy, Home as HomeIcon } from 'lucide-react';
 import { loadKatexOnce } from '../utils/katexLoader';
+import IndexLawsNotes from '../components/IndexLawsNotes';
 
 // --- KaTeX Loader & Component ---
 const useKatex = () => {
@@ -96,6 +97,7 @@ export default function IndexLaws() {
   const [activeField, setActiveField] = useState('final');
   const [hasChecked, setHasChecked] = useState(false);
   const [score, setScore] = useState(0);
+  const [showNotes, setShowNotes] = useState(false);
 
   // 初始化：載入第一道題目
   useEffect(() => {
@@ -678,9 +680,18 @@ export default function IndexLaws() {
             <HomeIcon size={20} />
           </Link>
           <h1 className="font-bold text-slate-700">指數定律特訓</h1>
-          <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
-            <Trophy size={16} className="text-yellow-600" />
-            <span className="font-bold text-yellow-700">{score}</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowNotes(true)}
+              className="flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-full border border-blue-200 transition-colors"
+            >
+              <BookOpen size={16} className="text-blue-600" />
+              <span className="font-bold text-blue-700 text-sm hidden sm:inline">筆記</span>
+            </button>
+            <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
+              <Trophy size={16} className="text-yellow-600" />
+              <span className="font-bold text-yellow-700">{score}</span>
+            </div>
           </div>
         </div>
 
@@ -720,9 +731,18 @@ export default function IndexLaws() {
             </button>
           </div>
         </div>
-        <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200">
-          <Trophy size={16} className="text-yellow-600" />
-          <span className="font-bold text-yellow-700">{score}</span>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowNotes(true)}
+            className="flex items-center gap-1 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-full border border-blue-200 transition-colors shadow-sm"
+          >
+            <BookOpen size={16} className="text-blue-600" />
+            <span className="font-bold text-blue-700 text-sm hidden sm:inline">筆記</span>
+          </button>
+          <div className="flex items-center gap-1 bg-yellow-50 px-3 py-1 rounded-full border border-yellow-200 shadow-sm">
+            <Trophy size={16} className="text-yellow-600" />
+            <span className="font-bold text-yellow-700">{score}</span>
+          </div>
         </div>
       </div>
 
@@ -917,6 +937,25 @@ export default function IndexLaws() {
       </div>
 
       <Keypad />
+
+      {showNotes && (
+        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
+          <div className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-gray-200 px-4 py-3 flex items-center justify-between z-10 shadow-sm">
+            <h1 className="font-bold text-lg text-slate-700 md:text-xl flex items-center gap-2">
+              <BookOpen className="text-blue-600" />
+              指數定律筆記
+            </h1>
+            <button
+              onClick={() => setShowNotes(false)}
+              className="p-2 text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors flex items-center gap-1"
+            >
+              <XCircle size={20} />
+              <span className="font-medium text-sm hidden md:inline">關閉</span>
+            </button>
+          </div>
+          <IndexLawsNotes />
+        </div>
+      )}
     </div>
   );
 }

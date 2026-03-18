@@ -1625,7 +1625,7 @@ const ProbabilityNotes = () => {
                   </div>
                   <div className="flex text-purple-700 font-bold text-base items-center">
                     <ArrowLeft className="inline w-5 h-5 ml-4 mr-2 shrink-0 text-purple-700" />
-                    <span>1個男同1個女中獎可同時發生 (<span className="text-red-600">×</span>)</span>
+                    <span>1個男同1個女中獎可同時發生 <span className="text-red-600">(×)</span></span>
                   </div>
                 </div>
                 
@@ -1650,8 +1650,8 @@ const ProbabilityNotes = () => {
                   <div className="flex text-purple-700 font-bold text-base items-start">
                     <ArrowLeft className="inline w-5 h-5 ml-4 mr-3 mt-1 shrink-0 text-purple-700" />
                     <div className="leading-relaxed">
-                      一係一個男 (<span className="text-green-700">1男1女</span>)，一係兩個男 (<span className="text-green-700">2男0女</span>) 中獎，<br className="hidden sm:block"/>
-                      兩個情況不能同時發生 (<span className="text-red-600">+</span>)
+                      一係一個男 <span className="text-green-700">(1男1女)</span>，一係兩個男 <span className="text-green-700">(2男0女)</span> 中獎，<br className="hidden sm:block"/>
+                      兩個情況不能同時發生 <span className="text-red-600">(+)</span>
                     </div>
                   </div>
                 </div>

@@ -613,8 +613,9 @@ const TeachingPage = ({ onStartQuiz }) => {
                     {/* Starting expression (no = prefix) */}
                     <div className="flex items-center gap-2 mb-2">
                       <div className="w-4 shrink-0" />
-                      <div className="text-sm min-w-0">
-                        <Latex math="4r - 14s + 6r^2 - 13rs - 28s^2" />
+                      <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
+                        <Latex math="4r - 14s + " />
+                        <span className="bg-yellow-200 rounded px-0.5"><Latex math="6r^2 - 13rs - 28s^2" /></span>
                       </div>
                     </div>
                     {/* Column layout: = sign anchor | expression | annotation */}
@@ -634,13 +635,13 @@ const TeachingPage = ({ onStartQuiz }) => {
                       <div className="flex items-center gap-2">
                         <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
                         <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
-                          <Latex math="2" />
+                          <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="2" /></span>
                           <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
-                          <Latex math="+" />
+                          <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="+" /></span>
                           <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
-                          <Latex math="(3r+4s)" />
+                          <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(3r+4s)" /></span>
                         </div>
-                        <div className="text-xs text-slate-500 italic shrink-0">← 非 (a) 部答案 抽公因式，應看到有最少兩個相同括號</div>
+                        <div className="text-xs text-slate-500 italic shrink-0">← 非 (a) 部答案 抽公因式，應看到有最少兩個 <span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同括號</span></div>
                       </div>
 
                       {/* Line 3 */}
@@ -648,9 +649,9 @@ const TeachingPage = ({ onStartQuiz }) => {
                         <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
                         <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
                           <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
-                          <Latex math="(2 + 3r + 4s)" />
+                          <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(2 + 3r + 4s)" /></span>
                         </div>
-                        <div className="text-xs text-slate-500 italic shrink-0">← 相同的括號放前，不同的項順序放後面括號內</div>
+                        <div className="text-xs text-slate-500 italic shrink-0">← 抽<span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同的括號</span>放前，<span className="bg-green-100 text-green-800 px-0.5 rounded">剩餘部份</span>放後括號</div>
                       </div>
 
                     </div>
