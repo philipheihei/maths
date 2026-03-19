@@ -1231,6 +1231,46 @@ const Task5 = ({ onComplete, score = 0 }) => {
             b: { text: `(b) 抽出不多於 2 枝綠筆的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
           }
         };
+      },
+      // Template 7: 排列 (教師+學生 / 無學生相鄰)
+      () => {
+        const configs = [
+          { T: 5, S: 2 },
+          { T: 5, S: 3 },
+          { T: 6, S: 2 },
+          { T: 6, S: 3 },
+          { T: 7, S: 2 },
+          { T: 7, S: 3 },
+        ];
+        const { T, S } = configs[Math.floor(Math.random() * configs.length)];
+        const total = T + S;
+
+        // Part (a): total arrangements = total!
+        const factTotal = nPr(total, total);
+        const formulaA7 = <span className="font-serif">{total}! = {factTotal.toLocaleString()}</span>;
+        const hintA7 = `${total} 人全排列 = ${total}! = ${factTotal.toLocaleString()}。`;
+
+        // Part (b): no students adjacent
+        // Arrange T teachers (T! ways), then place S students into T+1 gaps (P(T+1,S) ways)
+        const factT = nPr(T, T);
+        const gapsArrange = nPr(T + 1, S);
+        const numB7 = factT * gapsArrange;
+        const denB7 = factTotal;
+        const formulaB7 = (
+          <Fraction
+            num={<><span>{T}!</span> × <MathNotation type="P" n={T+1} r={S}/></>}
+            den={<span>{total}!</span>}
+          />
+        );
+        const hintB7 = `先排 ${T} 名教師（${T}! 種），形成 ${T+1} 個空隙（含首尾），再從中選 ${S} 個給學生（P₂ = P(${T+1},${S}) 種）。分子 = ${T}! × P(${T+1},${S}) = ${numB7.toLocaleString()}，分母 = ${total}! = ${factTotal.toLocaleString()}。`;
+
+        return {
+          text: `${T} 名教師與 ${S} 名學生隨機排成一隊。`,
+          questions: {
+            a: { text: `(a) 可排成多少不同的隊？`, num: factTotal, den: 1, type: 'count', formula: formulaA7, hint: hintA7 },
+            b: { text: `(b) 求沒有學生在該隊中相鄰而排的概率。`, num: numB7, den: denB7, formula: formulaB7, hint: hintB7 }
+          }
+        };
       }
     ];
 
@@ -1250,7 +1290,17 @@ const Task5 = ({ onComplete, score = 0 }) => {
   const checkAnswer = () => {
     if (!problem) return;
     const currentQ = problem.questions[currentPart];
-    
+
+    if (currentQ.type === 'count') {
+      const uNum = parseInt(userNum);
+      if (isNaN(uNum)) return;
+      const isCorrect = uNum === currentQ.num;
+      const feedbackObj = { correct: isCorrect, simpleNum: currentQ.num, simpleDen: 1, formula: currentQ.formula, type: 'count' };
+      if (currentPart === 'a') { setPartAFeedback(feedbackObj); }
+      else { setPartBFeedback(feedbackObj); onComplete(isCorrect); }
+      return;
+    }
+
     const uNum = parseInt(userNum);
     const uDen = parseInt(userDenom);
     
@@ -1307,12 +1357,21 @@ const Task5 = ({ onComplete, score = 0 }) => {
             {!partAFeedback ? (
               <>
                 <div className="flex items-center gap-4 bg-white p-3 rounded-lg border w-fit">
-                  <span className="font-serif italic text-lg">P = </span>
-                  <div className="flex flex-col items-center gap-1">
-                    <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分子"/>
-                    <div className="w-full h-px bg-black"></div>
-                    <input type="number" value={userDenom} onChange={e=>setUserDenom(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分母"/>
-                  </div>
+                  {problem.questions.a.type === 'count' ? (
+                    <>
+                      <span className="font-serif italic text-lg">答 = </span>
+                      <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-32 text-center border rounded p-1 no-spinners" placeholder="排列總數"/>
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-serif italic text-lg">P = </span>
+                      <div className="flex flex-col items-center gap-1">
+                        <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分子"/>
+                        <div className="w-full h-px bg-black"></div>
+                        <input type="number" value={userDenom} onChange={e=>setUserDenom(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分母"/>
+                      </div>
+                    </>
+                  )}
                   <button onClick={checkAnswer} className="ml-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">提交 (a)</button>
                 </div>
                 <HintSection text={problem.questions.a.hint} isOpen={isHintAOpen} setIsOpen={setIsHintAOpen} />
@@ -1326,12 +1385,15 @@ const Task5 = ({ onComplete, score = 0 }) => {
                 <div className="text-base mt-2">
                   {partAFeedback.correct ? (
                     <div className="flex flex-wrap items-center gap-2">
-                      答案是 {partAFeedback.formula} = <Fraction num={partAFeedback.simpleNum} den={partAFeedback.simpleDen} />
+                      答案是 {partAFeedback.formula}
+                      {partAFeedback.type !== 'count' && <> = <Fraction num={partAFeedback.simpleNum} den={partAFeedback.simpleDen} /></>}
                     </div>
                   ) : (
                     <div className="flex flex-col gap-1">
-                      <div className="flex items-center">
-                        正確答案是 <Fraction num={partAFeedback.simpleNum} den={partAFeedback.simpleDen}/>
+                      <div className="flex items-center gap-1">
+                        正確答案是 {partAFeedback.type === 'count'
+                          ? <span className="font-bold ml-1">{partAFeedback.simpleNum.toLocaleString()}</span>
+                          : <Fraction num={partAFeedback.simpleNum} den={partAFeedback.simpleDen}/>}
                       </div>
                       <div className="flex flex-wrap items-center gap-2 mt-1 text-sm opacity-90">
                         參考算式： {partAFeedback.formula}
