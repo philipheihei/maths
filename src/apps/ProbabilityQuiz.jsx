@@ -1043,8 +1043,8 @@ const Task5 = ({ onComplete, score = 0 }) => {
         return {
           text: `某袋子內有 ${R} 個紅色杯及 ${W} 個白色杯。若從該袋子中隨機同時抽出 ${draw} 個杯，求`,
           questions: {
-            a: { text: `(a) 抽出恰好 1 個白色杯的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA },
-            b: { text: `(b) 抽出至多 3 個紅色杯的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
+            a: { text: `(a) 抽出恰好 1 個白色杯的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` },
+            b: { text: `(b) 抽出至多 3 個紅色杯的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` }
           }
         };
       },
@@ -1078,8 +1078,8 @@ const Task5 = ({ onComplete, score = 0 }) => {
         return {
           text: `某班有 ${B} 名男生及 ${G} 名女生。若從該班中隨機選出 ${select} 名學生組成一個委員會，`,
           questions: {
-            a: { text: `(a) 求該委員會有 2 名男生及 2 名女生的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA },
-            b: { text: `(b) 求該委員會男生人數與女生人數不同的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
+            a: { text: `(a) 求該委員會有 2 名男生及 2 名女生的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「選舉」（順序不重要），所以使用 C（組合）` },
+            b: { text: `(b) 求該委員會男生人數與女生人數不同的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「選舉」（順序不重要），所以使用 C（組合）` }
           }
         };
       },
@@ -1114,8 +1114,8 @@ const Task5 = ({ onComplete, score = 0 }) => {
         return {
           text: `某箱子內有 ${B} 隻藍色碟、${G} 隻綠色碟及 ${P} 隻紫色碟。若從該箱子中隨機同時抽出 ${draw} 隻碟，求`,
           questions: {
-            a: { text: `(a) 抽出 4 隻相同顏色的碟的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA },
-            b: { text: `(b) 抽出至少 2 隻不同顏色的碟的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
+            a: { text: `(a) 抽出 4 隻相同顏色的碟的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` },
+            b: { text: `(b) 抽出至少 2 隻不同顏色的碟的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` }
           }
         };
       },
@@ -1148,10 +1148,10 @@ const Task5 = ({ onComplete, score = 0 }) => {
         const hintB = `「至少3個藍色」 = 3藍3白, 4藍2白, 5藍1白, 6藍0白。`;
 
         return {
-          text: `某盒子內有 ${W} 個白色杯及 ${B} 個藍色杯。若從該盒子中隨機同時由出 ${draw} 個杯，求`,
+          text: `某盒子內有 ${W} 個白色杯及 ${B} 個藍色杯。若從該盒子中隨機同時抽出 ${draw} 個杯，求`,
           questions: {
-            a: { text: `(a) 抽出至少 4 個白色杯的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA },
-            b: { text: `(b) 抽出至少 3 個藍色杯的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
+            a: { text: `(a) 抽出至少 4 個白色杯的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「抽取」（順序不重要），所以使用 C（組合）` },
+            b: { text: `(b) 抽出至少 3 個藍色杯的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「抽取」（順序不重要），所以使用 C（組合）` }
           }
         };
       },
@@ -1185,8 +1185,8 @@ const Task5 = ({ onComplete, score = 0 }) => {
         return {
           text: `某盒子內有 ${R} 個紅色碗、${Y} 個黃色碗及 ${W} 個白色碗。若從該盒子中隨機同時抽出 ${draw} 個碗，求`,
           questions: {
-            a: { text: `(a) 抽出恰好 2 個紅色碗的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA },
-            b: { text: `(b) 抽出至少 2 個紅色碗的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
+            a: { text: `(a) 抽出恰好 2 個紅色碗的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` },
+            b: { text: `(b) 抽出至少 2 個紅色碗的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` }
           }
         };
       },
@@ -1227,48 +1227,81 @@ const Task5 = ({ onComplete, score = 0 }) => {
         return {
           text: `某袋子內有 ${G} 枝綠筆、${Bl} 枝藍筆及 ${Bk} 枝黑筆。若從該袋子中隨機同時抽出 ${draw} 枝筆，求`,
           questions: {
-            a: { text: `(a) 抽出恰好 3 枝綠筆的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA },
-            b: { text: `(b) 抽出不多於 2 枝綠筆的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
+            a: { text: `(a) 抽出恰好 3 枝綠筆的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` },
+            b: { text: `(b) 抽出不多於 2 枝綠筆的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` }
           }
         };
       },
-      // Template 7: 排列 (教師+學生 / 無學生相鄰)
+      // Template 7: 排列 (教師+學生 / 男生+女生 / 無B相鄰)
       () => {
         const configs = [
-          { T: 5, S: 2 },
-          { T: 5, S: 3 },
-          { T: 6, S: 2 },
-          { T: 6, S: 3 },
-          { T: 7, S: 2 },
-          { T: 7, S: 3 },
+          { typeA: '教師', typeB: '學生', nA: 5, nB: 2 },
+          { typeA: '教師', typeB: '學生', nA: 5, nB: 3 },
+          { typeA: '教師', typeB: '學生', nA: 6, nB: 2 },
+          { typeA: '教師', typeB: '學生', nA: 6, nB: 3 },
+          { typeA: '教師', typeB: '學生', nA: 7, nB: 2 },
+          { typeA: '教師', typeB: '學生', nA: 7, nB: 3 },
+          { typeA: '男生', typeB: '女生', nA: 5, nB: 2 },
+          { typeA: '男生', typeB: '女生', nA: 5, nB: 3 },
+          { typeA: '男生', typeB: '女生', nA: 6, nB: 2 },
+          { typeA: '男生', typeB: '女生', nA: 6, nB: 3 },
+          { typeA: '男生', typeB: '女生', nA: 7, nB: 2 },
+          { typeA: '男生', typeB: '女生', nA: 7, nB: 3 },
         ];
-        const { T, S } = configs[Math.floor(Math.random() * configs.length)];
+        const { typeA, typeB, nA: T, nB: S } = configs[Math.floor(Math.random() * configs.length)];
         const total = T + S;
 
-        // Part (a): total arrangements = total!
         const factTotal = nPr(total, total);
-        const formulaA7 = <span className="font-serif">{total}! = {factTotal.toLocaleString()}</span>;
-        const hintA7 = `${total} 人全排列 = ${total}! = ${factTotal.toLocaleString()}。`;
+        const formulaA7 = <span className="font-serif flex items-center gap-1"><MathNotation type="P" n={total} r={total}/> = {factTotal.toLocaleString()}</span>;
+        const hintA7 = `${total} 人全排列 = ${total}P${total} = ${factTotal.toLocaleString()}。`;
+        const reasonA7 = `因為題目性質是「排隊」（有順序），所以使用 P（排列）`;
 
-        // Part (b): no students adjacent
-        // Arrange T teachers (T! ways), then place S students into T+1 gaps (P(T+1,S) ways)
         const factT = nPr(T, T);
         const gapsArrange = nPr(T + 1, S);
         const numB7 = factT * gapsArrange;
         const denB7 = factTotal;
         const formulaB7 = (
           <Fraction
-            num={<><span>{T}!</span> × <MathNotation type="P" n={T+1} r={S}/></>}
-            den={<span>{total}!</span>}
+            num={<><MathNotation type="P" n={T} r={T}/> × <MathNotation type="P" n={T+1} r={S}/></>}
+            den={<MathNotation type="P" n={total} r={total}/>}
           />
         );
-        const hintB7 = `先排 ${T} 名教師（${T}! 種），形成 ${T+1} 個空隙（含首尾），再從中選 ${S} 個給學生（P₂ = P(${T+1},${S}) 種）。分子 = ${T}! × P(${T+1},${S}) = ${numB7.toLocaleString()}，分母 = ${total}! = ${factTotal.toLocaleString()}。`;
+        const hintB7 = `先排 ${T} 名${typeA}（${T}P${T} 種），形成 ${T+1} 個空隙（含首尾），再從中選 ${S} 個給${typeB}（P(${T+1},${S}) 種）。分子 = ${numB7.toLocaleString()}，分母 = ${factTotal.toLocaleString()}。`;
+        const reasonB7 = `因為題目性質是「排隊」（有順序），所以使用 P（排列）`;
 
         return {
-          text: `${T} 名教師與 ${S} 名學生隨機排成一隊。`,
+          text: `${T} 名${typeA}與 ${S} 名${typeB}隨機排成一隊。`,
           questions: {
-            a: { text: `(a) 可排成多少不同的隊？`, num: factTotal, den: 1, type: 'count', formula: formulaA7, hint: hintA7 },
-            b: { text: `(b) 求沒有學生在該隊中相鄰而排的概率。`, num: numB7, den: denB7, formula: formulaB7, hint: hintB7 }
+            a: { text: `(a) 可排成多少不同的隊？`, num: factTotal, den: 1, type: 'count', formula: formulaA7, hint: hintA7, reason: reasonA7 },
+            b: { text: `(b) 求沒有${typeB}在該隊中相鄰而排的概率。`, num: numB7, den: denB7, formula: formulaB7, hint: hintB7, reason: reasonB7 }
+          }
+        };
+      },
+      // Template 8: 電話號碼排列
+      () => {
+        const n = 8; // distinct digits: 2,3,4,5,6,7,8,9
+        const totalArrangements = nPr(n, n); // 8! = 40320
+        const formulaA8 = <span className="font-serif flex items-center gap-1"><MathNotation type="P" n={n} r={n}/> = {totalArrangements.toLocaleString()}</span>;
+        const hintA8 = `8個不同數字全部排列 = 8P8 = ${totalArrangements.toLocaleString()}。`;
+        const reasonA8 = `因為題目性質是「排列電話號碼」（每個位置的數字有順序），所以使用 P（排列）`;
+
+        // (b) First and last digit both odd: {3,5,7,9} = 4 odd digits
+        const oddCount = 4;
+        const middleArrange = nPr(n - 2, n - 2); // 6P6 = 720
+        const numB8 = oddCount * (oddCount - 1) * middleArrange; // 4×3×720 = 8640
+        const formulaB8 = (
+          <span className="flex items-center gap-1 flex-wrap">
+            4 × 3 × <MathNotation type="P" n={n-2} r={n-2}/> = {numB8.toLocaleString()}
+          </span>
+        );
+        const hintB8 = `奇數位有 {3,5,7,9} 共4個。首位選奇數：4種；尾位選不同奇數：3種；中間6位從剩餘6個數字排列：6P6 = ${middleArrange}種。共 4 × 3 × ${middleArrange} = ${numB8.toLocaleString()}。`;
+        const reasonB8 = `因為題目性質是「排列電話號碼（限首尾為奇數）」（有順序），所以使用 P（排列）`;
+
+        return {
+          text: `一個八位電話號碼由 2、3、4、5、6、7、8 及 9 的排列所組成。`,
+          questions: {
+            a: { text: `(a) 可組成多少個不同的八位電話號碼？`, num: totalArrangements, den: 1, type: 'count', formula: formulaA8, hint: hintA8, reason: reasonA8 },
+            b: { text: `(b) 若八位電話號碼的第一個位及最後一個位均為奇數，則可組成多少個不同的八位電話號碼？`, num: numB8, den: 1, type: 'count', formula: formulaB8, hint: hintB8, reason: reasonB8 }
           }
         };
       }
@@ -1295,7 +1328,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
       const uNum = parseInt(userNum);
       if (isNaN(uNum)) return;
       const isCorrect = uNum === currentQ.num;
-      const feedbackObj = { correct: isCorrect, simpleNum: currentQ.num, simpleDen: 1, formula: currentQ.formula, type: 'count' };
+      const feedbackObj = { correct: isCorrect, simpleNum: currentQ.num, simpleDen: 1, formula: currentQ.formula, type: 'count', reason: currentQ.reason };
       if (currentPart === 'a') { setPartAFeedback(feedbackObj); }
       else { setPartBFeedback(feedbackObj); onComplete(isCorrect); }
       return;
@@ -1316,7 +1349,8 @@ const Task5 = ({ onComplete, score = 0 }) => {
       correct: isCorrect,
       simpleNum,
       simpleDen,
-      formula: currentQ.formula
+      formula: currentQ.formula,
+      reason: currentQ.reason
     };
 
     if (currentPart === 'a') {
@@ -1418,12 +1452,21 @@ const Task5 = ({ onComplete, score = 0 }) => {
               {!partBFeedback ? (
                 <>
                   <div className="flex items-center gap-4 bg-white p-3 rounded-lg border w-fit">
-                    <span className="font-serif italic text-lg">P = </span>
-                    <div className="flex flex-col items-center gap-1">
-                      <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分子"/>
-                      <div className="w-full h-px bg-black"></div>
-                      <input type="number" value={userDenom} onChange={e=>setUserDenom(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分母"/>
-                    </div>
+                    {problem.questions.b.type === 'count' ? (
+                      <>
+                        <span className="font-serif italic text-lg">答 = </span>
+                        <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-32 text-center border rounded p-1 no-spinners" placeholder="排列總數"/>
+                      </>
+                    ) : (
+                      <>
+                        <span className="font-serif italic text-lg">P = </span>
+                        <div className="flex flex-col items-center gap-1">
+                          <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分子"/>
+                          <div className="w-full h-px bg-black"></div>
+                          <input type="number" value={userDenom} onChange={e=>setUserDenom(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分母"/>
+                        </div>
+                      </>
+                    )}
                     <button onClick={checkAnswer} className="ml-2 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">提交 (b)</button>
                   </div>
                   <HintSection text={problem.questions.b.hint} isOpen={isHintBOpen} setIsOpen={setIsHintBOpen} />
@@ -1435,16 +1478,24 @@ const Task5 = ({ onComplete, score = 0 }) => {
                     <div>
                       {partBFeedback.correct ? (
                         <div className="flex flex-wrap items-center gap-2">
-                          答案是 {partBFeedback.formula} = <Fraction num={partBFeedback.simpleNum} den={partBFeedback.simpleDen} />
+                          答案是 {partBFeedback.formula}
+                          {partBFeedback.type !== 'count' && <> = <Fraction num={partBFeedback.simpleNum} den={partBFeedback.simpleDen} /></>}
                         </div>
                       ) : (
                         <div className="flex flex-col gap-1">
-                          <div className="flex items-center">
-                            正確答案是 <Fraction num={partBFeedback.simpleNum} den={partBFeedback.simpleDen}/>
+                          <div className="flex items-center gap-1">
+                            正確答案是 {partBFeedback.type === 'count'
+                              ? <span className="font-bold ml-1">{partBFeedback.simpleNum.toLocaleString()}</span>
+                              : <Fraction num={partBFeedback.simpleNum} den={partBFeedback.simpleDen}/>}
                           </div>
                           <div className="flex flex-wrap items-center gap-2 mt-1 text-sm opacity-90">
                             參考算式： {partBFeedback.formula}
                           </div>
+                        </div>
+                      )}
+                      {partBFeedback.reason && (
+                        <div className="mt-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded text-blue-800 text-sm">
+                          <span className="font-bold">📌 選擇原因：</span>{partBFeedback.reason}
                         </div>
                       )}
                     </div>
