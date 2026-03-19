@@ -1327,13 +1327,13 @@ const generateLV2FreqMedianS = () => {
           answer: sMin,
           steps: [
             `\\text{想像全班按數目排隊：}`,
-            `\\underbrace{\\text{前 }${cB}\\text{ 人}}_{\\leq ${values[1]}\\text{ 本}} \\;\\Bigg|\\; \\underbrace{\\text{第 }${cB+1}\\text{–}${cM}\\text{ 人}}_{${medianVal}\\text{ 本，共}${freqMedian}\\text{人}} \\;\\Bigg|\\; \\underbrace{\\text{後面 }s\\text{ 人}}_{${values[3]}\\text{ 本}} \\;\\Bigg|\\; \\underbrace{\\text{最後 }${knownFreqs[4]}\\text{ 人}}_{${values[4]}\\text{ 本}}`,
+            `\\underbrace{\\text{前 }${cB}\\text{ 人}}_{\\leq ${values[1]}\\text{ ${ctx.unit}}} \\;\\Bigg|\\; \\underbrace{\\text{第 }${cB+1}\\text{–}${cM}\\text{ 人}}_{${medianVal}\\text{ ${ctx.unit}，共}${freqMedian}\\text{人}} \\;\\Bigg|\\; \\underbrace{\\text{後面 }s\\text{ 人}}_{${values[3]}\\text{ ${ctx.unit}}} \\;\\Bigg|\\; \\underbrace{\\text{最後 }${knownFreqs[4]}\\text{ 人}}_{${values[4]}\\text{ ${ctx.unit}}}`,
             `\\text{要中位數}=${medianVal}\\text{，正中間的人要站在第 }${cB+1}\\text{–}${cM}\\text{ 位}`,
-            `\\text{如果 }s\\text{ 太少，全班人數太少，中間的人反而站在「}${values[1]}\\text{ 本」組 → 中位數}\\neq ${medianVal}`,
+            `\\text{如果 }s\\text{ 太少，全班人數太少，中間的人反而站在「}${values[1]}\\text{ ${ctx.unit}」組 → 中位數}\\neq ${medianVal}`,
             `\\text{全班共 }${T}+s\\text{ 人，正中間在第}\\dfrac{${T}+s}{2}\\text{位}`,
             `\\text{要讓中間位置}\\textbf{超過}\\text{前 }${cB}\\text{ 人：}\\dfrac{${T}+s}{2} > ${cB}`,
             `s > ${2*cB} - ${T} = ${2*cB-T}`,
-            `\\therefore s_{\\min} = ${sMin}`,
+            `\\therefore s\\text{ 的最小可取值是 }${sMin}`,
           ]
         },
         {
@@ -1341,10 +1341,10 @@ const generateLV2FreqMedianS = () => {
           question: `寫出 s 的最大可取值`,
           answer: sMax,
           steps: [
-            `\\text{如果 }s\\text{ 太多，全班人數太多，中間的人反而落入「}${values[3]}\\text{ 本」組 → 中位數}\\neq ${medianVal}`,
+            `\\text{如果 }s\\text{ 太多，中間的人(中位數)反而落入「}${values[3]}\\text{ ${ctx.unit}」組}\\neq ${medianVal}`,
             `\\text{要讓中間位置}\\textbf{不超過}\\text{第 }${cM}\\text{ 位：}\\dfrac{${T}+s}{2} \\leq ${cM}`,
             `s \\leq ${2*cM} - ${T} = ${sMax}`,
-            `\\therefore s_{\\max} = ${sMax}`,
+            `\\therefore s\\text{ 的最大可取值是 }${sMax}`,
           ]
         }
       ]
@@ -1400,7 +1400,7 @@ const generateLV2FreqModeK = () => {
             `\\text{「${modeVal}\\text{」}的頻數} = ${modeFreq}`,
             `k < ${modeFreq}\\text{（讓眾數保持為 }${modeVal}\\text{）}`,
             `k \\geq 1\\text{（k 為正整數）}`,
-            `\\therefore k_{\\min} = ${kMin}`,
+            `\\therefore k\\text{ 的最小可取值是 }${kMin}`,
           ],
         },
         {
@@ -1410,7 +1410,7 @@ const generateLV2FreqModeK = () => {
           steps: [
             `\\text{眾數} = ${modeVal} \\Rightarrow k < ${modeFreq}`,
             `k \\leq ${modeFreq} - 1 = ${kMax}`,
-            `\\therefore k_{\\max} = ${kMax}`,
+            `\\therefore k\\text{ 的最大可取值是 }${kMax}`,
           ],
         },
       ],
