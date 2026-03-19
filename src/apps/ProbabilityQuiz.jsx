@@ -1078,8 +1078,8 @@ const Task5 = ({ onComplete, score = 0 }) => {
         return {
           text: `某班有 ${B} 名男生及 ${G} 名女生。若從該班中隨機選出 ${select} 名學生組成一個委員會，`,
           questions: {
-            a: { text: `(a) 求該委員會有 2 名男生及 2 名女生的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「選舉」（順序不重要），所以使用 C（組合）` },
-            b: { text: `(b) 求該委員會男生人數與女生人數不同的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「選舉」（順序不重要），所以使用 C（組合）` }
+            a: { text: `(a) 求該委員會有 2 名男生及 2 名女生的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「選出委員」（順序不重要），所以使用 C（組合）` },
+            b: { text: `(b) 求該委員會男生人數與女生人數不同的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
           }
         };
       },
@@ -1115,7 +1115,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
           text: `某箱子內有 ${B} 隻藍色碟、${G} 隻綠色碟及 ${P} 隻紫色碟。若從該箱子中隨機同時抽出 ${draw} 隻碟，求`,
           questions: {
             a: { text: `(a) 抽出 4 隻相同顏色的碟的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` },
-            b: { text: `(b) 抽出至少 2 隻不同顏色的碟的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` }
+            b: { text: `(b) 抽出至少 2 隻不同顏色的碟的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
           }
         };
       },
@@ -1228,7 +1228,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
           text: `某袋子內有 ${G} 枝綠筆、${Bl} 枝藍筆及 ${Bk} 枝黑筆。若從該袋子中隨機同時抽出 ${draw} 枝筆，求`,
           questions: {
             a: { text: `(a) 抽出恰好 3 枝綠筆的概率。`, num: numA, den: denA, formula: formulaA, hint: hintA, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` },
-            b: { text: `(b) 抽出不多於 2 枝綠筆的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB, reason: `因為題目性質是「抽出」（順序不重要），所以使用 C（組合）` }
+            b: { text: `(b) 抽出不多於 2 枝綠筆的概率。`, num: numB, den: denB, formula: formulaB, hint: hintB }
           }
         };
       },
@@ -1435,6 +1435,11 @@ const Task5 = ({ onComplete, score = 0 }) => {
                     </div>
                   )}
                 </div>
+                {partAFeedback.reason && (
+                  <div className="mt-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded text-blue-800 text-sm">
+                    <span className="font-bold">📌 解釋：</span>{partAFeedback.reason}
+                  </div>
+                )}
                 {currentPart === 'a' && (
                   <button onClick={nextPart} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded flex items-center gap-2 text-sm font-bold">
                     繼續作答 Part (b) <ArrowRight size={16}/>
@@ -1495,7 +1500,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
                       )}
                       {partBFeedback.reason && (
                         <div className="mt-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded text-blue-800 text-sm">
-                          <span className="font-bold">📌 選擇原因：</span>{partBFeedback.reason}
+                          <span className="font-bold">📌 解釋：</span>{partBFeedback.reason}
                         </div>
                       )}
                     </div>
