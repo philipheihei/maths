@@ -1128,7 +1128,7 @@ const SimultaneousEqNotes = ({ onBack }) => {
             <h2 className="text-lg font-bold text-sky-800">代入消元法（Substitution）</h2>
           </div>
           <div className="bg-sky-100 rounded-lg px-4 py-3 mb-4 text-sm text-sky-800">
-            💡 <strong>原理：</strong>從一條方程中<strong>以一個未知數表示另一個</strong>，然後代入第二條方程，消去其中一個未知數。
+            💡 <strong>原理：</strong>從其中一條方程中<strong>以一個未知數作主項</strong>，然後代入另一條方程，消去其中一個未知數。
           </div>
 
           <div className="space-y-4">
@@ -1210,33 +1210,34 @@ const SimultaneousEqNotes = ({ onBack }) => {
 
               <div className="space-y-3 text-sm">
                 <div className="flex gap-2 items-start">
-                  <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0 mt-0.5">①+②</span>
-                  <div className="flex-1">
-                    <div className="bg-amber-50 rounded p-3">
-                      {/* Vertical addition layout */}
-                      <div className="font-mono text-sm text-slate-700 space-y-1">
-                        <div className="flex gap-2 items-center">
-                          <span className="w-4 text-slate-400"> </span>
-                          <Latex math="5x + 7y = -2" />
-                        </div>
-                        <div className="flex gap-2 items-center border-b border-slate-300 pb-1">
-                          <span className="w-4 text-slate-500 font-bold">+)</span>
-                          <Latex math="3x - 7y = 10" />
-                        </div>
-                        <div className="flex gap-2 items-center pt-1">
-                          <span className="w-4"> </span>
-                          <Latex math="8x \phantom{{}+7y} = 8" />
-                        </div>
-                      </div>
-                    </div>
+                  <div className="flex flex-col gap-1 shrink-0 mt-0.5">
+                    <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded text-center">①+②</span>
+                    <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded text-center">解 x</span>
                   </div>
-                </div>
+                  <div className="flex-1 bg-amber-50 rounded p-3">
+                    {/* CSS grid: [prefix] [LHS] [=] [RHS] */}
+                    <div className="inline-grid items-baseline gap-x-1" style={{ gridTemplateColumns: 'auto auto auto auto' }}>
+                      <span />
+                      <Latex math="5x + 7y" />
+                      <Latex math="=" />
+                      <Latex math="-2" />
 
-                <div className="flex gap-2 items-start">
-                  <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0 mt-0.5">解 x</span>
-                  <div className="flex-1">
-                    <div className="bg-amber-50 rounded p-2">
-                      <Latex math="x = 1 \quad \cdots\textcircled{3}" block />
+                      <span className="font-bold text-slate-500 pr-1">+)</span>
+                      <Latex math="3x - 7y" />
+                      <Latex math="=" />
+                      <Latex math="10" />
+
+                      <span className="col-span-4 border-b border-slate-400 my-1" />
+
+                      <span />
+                      <Latex math="8x" />
+                      <Latex math="=" />
+                      <Latex math="8" />
+
+                      <span />
+                      <Latex math="x" />
+                      <Latex math="=" />
+                      <span className="flex items-baseline gap-1"><Latex math="1" /><span className="text-slate-500 text-xs ml-1">···③</span></span>
                     </div>
                   </div>
                 </div>
@@ -1246,9 +1247,17 @@ const SimultaneousEqNotes = ({ onBack }) => {
                   <div className="flex-1">
                     <p className="text-slate-600 mb-1">代 <Latex math="x=1" /> 進①：</p>
                     <div className="bg-green-50 rounded p-2 border border-green-200">
-                      <Latex math="5(1) + 7y = -2" block />
-                      <Latex math="7y = -7" block />
-                      <Latex math="y = -1" block />
+                      <div className="inline-grid items-baseline gap-x-1" style={{ gridTemplateColumns: '1fr auto auto', justifyItems: 'end' }}>
+                        <Latex math="5(1) + 7y" />
+                        <Latex math="=" />
+                        <div style={{ justifySelf: 'start' }}><Latex math="-2" /></div>
+                        <Latex math="7y" />
+                        <Latex math="=" />
+                        <div style={{ justifySelf: 'start' }}><Latex math="-7" /></div>
+                        <Latex math="y" />
+                        <Latex math="=" />
+                        <div style={{ justifySelf: 'start' }}><Latex math="-1" /></div>
+                      </div>
                     </div>
                   </div>
                 </div>
