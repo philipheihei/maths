@@ -60,22 +60,12 @@ export default function IndexLawsNotes() {
           
           <div className="relative">
             <span className="text-blue-900 font-bold mr-2 text-xl italic">e.g.</span>
-            <Latex math="y^{\colorbox{#fef08a}{\small $2$}} \cdot y^{\colorbox{#fef08a}{\small $3$}} = y^{\colorbox{#fef08a}{\small $2+3$}} = y^{\colorbox{#fef08a}{\small $5$}}" />
-            
-            {/* Arrow & Text mapping */}
-            <div className="absolute -top-3 right-0 md:right-1/4 flex items-center text-green-700 font-bold text-base whitespace-nowrap">
-              <span className="mr-1">←</span> 沒括號
-            </div>
-            {/* Curve line representation */}
-            <svg className="absolute top-1 right-20 md:right-[30%] w-16 h-8 text-green-600" viewBox="0 0 50 30" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-               <path d="M 5,20 Q 25,-10 45,10" />
-               <path d="M 5,20 L 10,13 M 5,20 L 12,22" />
-            </svg>
+            <Latex math="\Large y^{\colorbox{#fef08a}{\scriptsize $2$}} \cdot y^{\colorbox{#fef08a}{\scriptsize $3$}} = y^{\colorbox{#fef08a}{\scriptsize $2+3$}} = y^{\colorbox{#fef08a}{\scriptsize $5$}}" />
           </div>
 
           <div>
             <span className="text-blue-900 font-bold mr-2 text-xl italic">e.g.</span>
-            <Latex math="(y^{\colorbox{#bbf7d0}{\small $2$}})^{\colorbox{#bbf7d0}{\small $3$}} = y^{\colorbox{#bbf7d0}{\small $2 \times 3$}} = y^{\colorbox{#bbf7d0}{\small $6$}}" />
+            <Latex math="\Large (y^{\colorbox{#bbf7d0}{\scriptsize $2$}})^{\colorbox{#bbf7d0}{\scriptsize $3$}} = y^{\colorbox{#bbf7d0}{\scriptsize $2 \times 3$}} = y^{\colorbox{#bbf7d0}{\scriptsize $6$}}" />
           </div>
 
         </div>
@@ -92,30 +82,41 @@ export default function IndexLawsNotes() {
           <span className="text-green-700 ml-2">(上下調轉)</span>
         </h2>
 
-        <div className="space-y-8 ml-4">
-          <div className="flex flex-wrap items-center gap-4">
+        <div className="ml-4 overflow-x-auto">
+          <div className="grid items-center gap-x-4 gap-y-6" style={{ gridTemplateColumns: 'auto auto auto auto 1fr' }}>
+            {/* Row 1 */}
             <span className="text-blue-900 font-bold text-xl italic">e.g.</span>
-            <span className="text-2xl"><Latex math="x^{\colorbox{#fef08a}{\small $-4$}} = \frac{1}{x^{\colorbox{#fef08a}{\small $4$}}}" /></span>
+            <Latex math="\Large x^{\colorbox{#fef08a}{\scriptsize $-4$}}" />
+            <span className="font-bold text-xl">=</span>
+            <Latex math="\Large \frac{1}{x^{\colorbox{#fef08a}{\scriptsize $4$}}}" />
             <span className="text-green-700 font-bold text-lg">負指數：上轉下</span>
-          </div>
 
-          <div className="flex flex-wrap items-center gap-4 pl-10">
-            <span className="text-2xl"><Latex math="\frac{1}{y^{\colorbox{#fef08a}{\small $-3$}}} = y^{\colorbox{#fef08a}{\small $3$}}" /></span>
+            {/* Row 2 */}
+            <span />
+            <Latex math="\Large \frac{1}{y^{\colorbox{#fef08a}{\scriptsize $-3$}}}" />
+            <span className="font-bold text-xl">=</span>
+            <Latex math="\Large y^{\colorbox{#fef08a}{\scriptsize $3$}}" />
             <span className="text-green-700 font-bold text-lg">負指數：下轉上</span>
-          </div>
 
-          <div className="flex flex-wrap items-center gap-4 pl-10 pt-2">
-            <span className="text-2xl"><Latex math="\frac{x^{\colorbox{#fef08a}{\small $-2$}}}{y^{\colorbox{#fef08a}{\small $-5$}}} = \frac{y^{\colorbox{#fef08a}{\small $5$}}}{x^{\colorbox{#fef08a}{\small $2$}}}" /></span>
+            {/* Row 3 */}
+            <span />
+            <Latex math="\Large \frac{x^{\colorbox{#fef08a}{\scriptsize $-2$}}}{y^{\colorbox{#fef08a}{\scriptsize $-5$}}}" />
+            <span className="font-bold text-xl">=</span>
+            <Latex math="\Large \frac{y^{\colorbox{#fef08a}{\scriptsize $5$}}}{x^{\colorbox{#fef08a}{\scriptsize $2$}}}" />
             <span className="text-green-700 font-bold text-lg">負指數：上下調轉</span>
-          </div>
 
-          <div className="flex flex-wrap items-center gap-4 pl-10 pt-4">
-            <span className="text-2xl"><Latex math="\frac{a^{\colorbox{#fef08a}{\small $-11$}}b^7}{b^5} = \frac{b^7}{a^{11}b^5}" /></span>
-            <span className="text-green-700 font-bold text-lg max-w-[220px] leading-tight">負指數上下調轉, 正指數不動</span>
-          </div>
+            {/* Row 4 */}
+            <span />
+            <Latex math="\Large \frac{a^{\colorbox{#fef08a}{\scriptsize $-11$}}b^7}{b^5}" />
+            <span className="font-bold text-xl">=</span>
+            <Latex math="\Large \frac{b^7}{a^{11}b^5}" />
+            <span className="text-green-700 font-bold text-lg leading-tight">負指數上下調轉，正指數不動</span>
 
-          <div className="flex flex-wrap items-center gap-4 pl-10 pt-4">
-            <span className="text-2xl"><Latex math="(ab)^{-2} = \frac{1}{a^2b^2}" /></span>
+            {/* Row 5 */}
+            <span />
+            <Latex math="\Large (ab)^{-2}" />
+            <span className="font-bold text-xl">=</span>
+            <Latex math="\Large \frac{1}{a^2b^2}" />
             <span className="text-green-700 font-bold text-lg">← 上面沒有 需補 1</span>
           </div>
         </div>
@@ -137,12 +138,12 @@ export default function IndexLawsNotes() {
               <div className="flex flex-wrap lg:flex-nowrap items-center gap-2">
                 <span className="text-green-700 font-bold whitespace-nowrap">情況 1 : 上面次方較大, 次方留在上</span>
                 <span className="text-blue-900 font-bold italic ml-2 mr-1">e.g.</span>
-                <Latex math="\frac{a^7}{a^5} = \frac{a^{7-5}}{1} = a^2" />
+                <Latex math="\Large \frac{a^7}{a^5} = \frac{a^{7-5}}{1} = a^2" />
               </div>
               <div className="flex flex-wrap lg:flex-nowrap items-center gap-2">
                 <span className="text-green-700 font-bold whitespace-nowrap">情況 2 : 下面次方較大, 次方留在下</span>
                 <span className="text-blue-900 font-bold italic ml-2 mr-1">e.g.</span>
-                <Latex math="\frac{a^5}{a^7} = \frac{1}{a^{7-5}} = \frac{1}{a^2}" />
+                <Latex math="\Large \frac{a^5}{a^7} = \frac{1}{a^{7-5}} = \frac{1}{a^2}" />
               </div>
             </div>
           </div>
@@ -152,20 +153,20 @@ export default function IndexLawsNotes() {
             <div className="space-y-3 pl-8">
               <div className="flex items-center gap-4">
                 <span className="text-blue-900 font-bold italic w-8 text-right">e.g.</span>
-                <Latex math="(ab^5)(a^2b^3)^2" />
+                <Latex math="\Large (ab^5)(a^2b^3)^2" />
               </div>
               <div className="flex items-center gap-4">
                 <span className="w-8 flex justify-end font-bold">=</span>
-                <Latex math="ab^5 \cdot a^4b^6" />
+                <Latex math="\Large ab^5 \cdot a^4b^6" />
               </div>
               <div className="flex items-center gap-4">
                 <span className="w-8 flex justify-end font-bold">=</span>
-                <Latex math="\colorbox{#fef08a}{\small $a$} \cdot \colorbox{#fef08a}{\small $a^4$} \cdot \colorbox{#bbf7d0}{\small $b^5$} \cdot \colorbox{#bbf7d0}{\small $b^6$}" />
+                <Latex math="\Large \colorbox{#fef08a}{$a$} \cdot \colorbox{#fef08a}{$a^4$} \cdot \colorbox{#bbf7d0}{$b^5$} \cdot \colorbox{#bbf7d0}{$b^6$}" />
                 <span className="text-green-700 font-bold ml-2">← 分類</span>
               </div>
               <div className="flex items-center gap-4">
                 <span className="w-8 flex justify-end font-bold">=</span>
-                <Latex math="\colorbox{#fef08a}{\small $a^5$} \cdot \colorbox{#bbf7d0}{\small $b^{11}$}" />
+                <Latex math="\Large \colorbox{#fef08a}{$a^5$} \cdot \colorbox{#bbf7d0}{$b^{11}$}" />
               </div>
             </div>
           </div>
@@ -189,28 +190,28 @@ export default function IndexLawsNotes() {
 
           <div className="flex flex-col ml-6 space-y-4 pt-1 relative">
             <div className="flex items-center">
-              <Latex math="\frac{\colorbox{#fef08a}{\small $(x^{-3}y^5)^2$}}{y^2}" />
+              <Latex math="\Large \frac{\colorbox{#fef08a}{\scriptsize $(x^{-3}y^5)^2$}}{y^2}" />
             </div>
             <div className="px-4">
               <CornerDownRight size={24} className="text-green-600 mx-auto transform" />
             </div>
             <div className="flex items-center">
               <span className="mr-2 font-bold">=</span>
-              <Latex math="\frac{\colorbox{#fef08a}{\small $x^{-6}y^{10}$}}{y^2}" />
+              <Latex math="\Large \frac{\colorbox{#fef08a}{\scriptsize $x^{-6}y^{10}$}}{y^2}" />
             </div>
             <div className="px-4">
               <CornerDownRight size={24} className="text-green-600 mx-auto" />
             </div>
             <div className="flex items-center">
               <span className="mr-2 font-bold">=</span>
-              <Latex math="\frac{y^{10}}{x^6y^2}" />
+              <Latex math="\Large \frac{y^{10}}{x^6y^2}" />
             </div>
             <div className="px-4">
               <CornerDownRight size={24} className="text-green-600 mx-auto" />
             </div>
             <div className="flex items-center">
               <span className="mr-2 font-bold">=</span>
-              <Latex math="\frac{y^8}{x^6}" />
+              <Latex math="\Large \frac{y^8}{x^6}" />
             </div>
           </div>
         </div>
@@ -239,26 +240,26 @@ export default function IndexLawsNotes() {
             <div className="space-y-4 pl-4 md:pl-8">
               <div className="flex flex-wrap lg:flex-nowrap items-center gap-2">
                 <span className="text-blue-900 font-bold italic w-8 mr-2">e.g.</span>
-                <Latex math="\left(\frac{1}{4^{\colorbox{#fef08a}{\small $222$}}}\right)(12^{\colorbox{#fef08a}{\small $444$}})" />
+                <Latex math="\Large \left(\frac{1}{4^{\colorbox{#fef08a}{\scriptsize $222$}}}\right)(12^{\colorbox{#fef08a}{\scriptsize $444$}})" />
                 <span className="text-green-700 font-bold ml-2">← 適用於指數有倍數關係的題目</span>
               </div>
               <div className="flex flex-wrap md:flex-nowrap items-center gap-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="\frac{12^{\colorbox{#fef08a}{\small $444$}}}{(2^2)^{\colorbox{#fef08a}{\small $222$}}}" />
+                <Latex math="\Large \frac{12^{\colorbox{#fef08a}{\scriptsize $444$}}}{(2^2)^{\colorbox{#fef08a}{\scriptsize $222$}}}" />
                 <span className="text-green-700 font-bold whitespace-nowrap">2 × 222 = 444</span>
               </div>
               <div className="flex flex-wrap md:flex-nowrap items-center gap-2 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="\frac{12^{\colorbox{#fef08a}{\small $444$}}}{2^{\colorbox{#fef08a}{\small $444$}}}" />
-                <span className="text-green-700 font-bold ml-2">← 次方相同，合成指數：<Latex math="\frac{a^n}{b^n} = \left(\frac{a}{b}\right)^n" /></span>
+                <Latex math="\Large \frac{12^{\colorbox{#fef08a}{\scriptsize $444$}}}{2^{\colorbox{#fef08a}{\scriptsize $444$}}}" />
+                <span className="text-green-700 font-bold ml-2">← 次方相同，合成指數：<Latex math="\Large \frac{a^n}{b^n} = \left(\frac{a}{b}\right)^n" /></span>
               </div>
               <div className="flex flex-wrap items-center gap-4 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="\left(\frac{12}{2}\right)^{\colorbox{#fef08a}{\small $444$}}" />
+                <Latex math="\Large \left(\frac{12}{2}\right)^{\colorbox{#fef08a}{\scriptsize $444$}}" />
               </div>
               <div className="flex flex-wrap items-center gap-4 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="6^{\colorbox{#fef08a}{\small $444$}}" />
+                <Latex math="\Large 6^{\colorbox{#fef08a}{\scriptsize $444$}}" />
               </div>
             </div>
           </div>
@@ -268,29 +269,29 @@ export default function IndexLawsNotes() {
             <div className="space-y-4 pl-4 md:pl-8">
               <div className="flex flex-wrap md:flex-nowrap items-center gap-2">
                 <span className="text-blue-900 font-bold italic w-8 mr-2">e.g.</span>
-                <Latex math="\colorbox{#fef08a}{\small $3$}^{3n+9} \cdot \colorbox{#fef08a}{\small $27$}^{n-2}" />
+                <Latex math="\Large \colorbox{#fef08a}{\scriptsize $3$}^{3n+9} \cdot \colorbox{#fef08a}{\scriptsize $27$}^{n-2}" />
                 <span className="text-green-700 font-bold ml-2">← 適用於兩者為次方的關係 <span className="font-sans">(3³=27)</span></span>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="\colorbox{#fef08a}{\small $3$}^{3n+9} \cdot (\colorbox{#fef08a}{\small $3$}^3)^{n-2}" />
+                <Latex math="\Large \colorbox{#fef08a}{\scriptsize $3$}^{3n+9} \cdot (\colorbox{#fef08a}{\scriptsize $3$}^3)^{n-2}" />
               </div>
               <div className="flex flex-wrap md:flex-nowrap items-center gap-2 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="\colorbox{#fef08a}{\small $3$}^{3n+9} \cdot \colorbox{#fef08a}{\small $3$}^{3(n-2)}" />
+                <Latex math="\Large \colorbox{#fef08a}{\scriptsize $3$}^{3n+9} \cdot \colorbox{#fef08a}{\scriptsize $3$}^{3(n-2)}" />
                 <span className="text-green-700 font-bold ml-2">← 底數相同，可合併次方加減</span>
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="3^{3n+9+3(n-2)}" />
+                <Latex math="\Large 3^{3n+9+3(n-2)}" />
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="3^{3n+9+3n-6}" />
+                <Latex math="\Large 3^{3n+9+3n-6}" />
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <span className="font-bold w-4 mr-6 flex justify-end">=</span>
-                <Latex math="3^{6n+3}" />
+                <Latex math="\Large 3^{6n+3}" />
               </div>
             </div>
           </div>
