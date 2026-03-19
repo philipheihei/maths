@@ -160,7 +160,7 @@ export default function IndexLaws() {
         ans = formatPositiveIndex(base, finalExp);
         steps = [
           `${base}^{${n1}} \\times ${base}^{${n2}}`,
-          `${base}^{${n1}+${n2}}`,
+          `${base}^{${n1}+${n2 < 0 ? `(${n2})` : n2}}`,
           `${base}^{${finalExp}}`
         ];
         break;
@@ -170,7 +170,7 @@ export default function IndexLaws() {
         ans = formatPositiveIndex(base, finalExp);
         steps = [
           `\\frac{${base}^{${n1}}}{${base}^{${n2}}}`,
-          `${base}^{${n1}-${n2}}`,
+          `${base}^{${n1}-${n2 < 0 ? `(${n2})` : n2}}`,
           `${base}^{${finalExp}}`
         ];
         break;
@@ -180,7 +180,7 @@ export default function IndexLaws() {
         ans = formatPositiveIndex(base, finalExp);
         steps = [
           `(${base}^{${n1}})^{${n2}}`,
-          `${base}^{${n1} \\times ${n2}}`,
+          `${base}^{${n1} \\times ${n2 < 0 ? `(${n2})` : n2}}`,
           `${base}^{${finalExp}}`
         ];
         break;
