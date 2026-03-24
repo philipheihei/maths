@@ -305,7 +305,7 @@ const Home = () => {
     {
       id: 'mc-limited-f6',
       title: 'DSE MC限定',
-      description: 'DSE 歷屆 MC 模擬練習：自動生成仿 DSE 選擇題，涵蓋 F3–F5 重點，附筆記',
+      description: 'DSE 歷屆 MC 模擬練習：自動生成仿 DSE 選擇題，附筆記',
       icon: Calculator,
       color: 'bg-slate-800',
       hoverColor: 'hover:bg-slate-900',
