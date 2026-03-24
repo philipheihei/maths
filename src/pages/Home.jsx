@@ -329,9 +329,10 @@ const Home = () => {
       color: 'bg-cyan-600',
       hoverColor: 'hover:bg-cyan-700',
       path: '/solid-geometry',
-      level: 'F1',
+      level: 'F2',
       badges: [
-        { level: 'F1', chapter: 'CH05', subject: '面積和體積（一）' }
+        { level: 'F2', chapter: 'CH13', subject: '面積和體積（二）' },
+        { level: 'F3', chapter: 'CH04', subject: '面積和體積（三）' }
       ],
       category: '初中',
       topics: ['面積', '體積', '圓柱', '圓錐', '球體', '半球', '平截頭體'],

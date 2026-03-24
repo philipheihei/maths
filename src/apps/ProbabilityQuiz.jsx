@@ -1253,7 +1253,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
 
         const factTotal = nPr(total, total);
         const formulaA7 = <span className="font-serif flex items-center gap-1"><MathNotation type="P" n={total} r={total}/> = {factTotal.toLocaleString()}</span>;
-        const hintA7 = `${total} 人全排列 = ${total}P${total} = ${factTotal.toLocaleString()}。`;
+        const hintA7 = `全部 ${total} 人排成一排，每個位置都有順序，屬於全排列。`;
         const reasonA7 = `因為題目性質是「排隊」（有順序），所以使用 P（排列）`;
 
         const factT = nPr(T, T);
@@ -1266,7 +1266,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
             den={<MathNotation type="P" n={total} r={total}/>}
           />
         );
-        const hintB7 = `先排 ${T} 名${typeA}（${T}P${T} 種），形成 ${T+1} 個空隙（含首尾），再從中選 ${S} 個給${typeB}（P(${T+1},${S}) 種）。分子 = ${numB7.toLocaleString()}，分母 = ${factTotal.toLocaleString()}。`;
+        const hintB7 = `先排好 ${T} 名${typeA}，${typeA}之間及首尾會形成空隙，再把 ${S} 名${typeB}插入這些空隙位置。`;
         const reasonB7 = `因為題目性質是「排隊」（有順序），所以使用 P（排列）`;
 
         return {
@@ -1282,7 +1282,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
         const n = 8; // distinct digits: 2,3,4,5,6,7,8,9
         const totalArrangements = nPr(n, n); // 8! = 40320
         const formulaA8 = <span className="font-serif flex items-center gap-1"><MathNotation type="P" n={n} r={n}/> = {totalArrangements.toLocaleString()}</span>;
-        const hintA8 = `8個不同數字全部排列 = 8P8 = ${totalArrangements.toLocaleString()}。`;
+        const hintA8 = `8個不同數字全部排列，每個位置都有順序，屬於全排列。`;
         const reasonA8 = `因為題目性質是「排列電話號碼」（每個位置的數字有順序），所以使用 P（排列）`;
 
         // (b) First and last digit both odd: {3,5,7,9} = 4 odd digits
@@ -1294,7 +1294,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
             4 × 3 × <MathNotation type="P" n={n-2} r={n-2}/> = {numB8.toLocaleString()}
           </span>
         );
-        const hintB8 = `奇數位有 {3,5,7,9} 共4個。首位選奇數：4種；尾位選不同奇數：3種；中間6位從剩餘6個數字排列：6P6 = ${middleArrange}種。共 4 × 3 × ${middleArrange} = ${numB8.toLocaleString()}。`;
+        const hintB8 = `奇數位有 {3,5,7,9} 共4個。先考慮首位和末位各選一個不同的奇數，再排其餘中間位置的數字。`;
         const reasonB8 = `因為題目性質是「排列電話號碼（限首尾為奇數）」（有順序），所以使用 P（排列）`;
 
         return {

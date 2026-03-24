@@ -4,7 +4,7 @@ import { HomeIcon, ArrowLeft, BookOpen, ChevronDown, ChevronRight, CornerDownLef
 
 /* ====================================================================
    立體面積及體積 — SolidGeometryQuiz
-   F1 CH5  面積和體積（一）
+   F2 CH13 面積和體積（二） / F3 CH4 面積和體積（三）
    ==================================================================== */
 
 // ========== KaTeX 載入 ==========
@@ -483,7 +483,7 @@ const FormulaSheet = ({ onBack }) => {
                     <span className="font-bold text-blue-800">圓柱體</span>
                   </div>
                 </td>
-                <td className="p-3 border border-slate-200 text-center"><Latex math="2\pi r(r+h)" /></td>
+                <td className="p-3 border border-slate-200 text-center"><Latex math="2\pi r^2+2\pi rh" /></td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="\pi r^2 h" /></td>
               </tr>
               <tr className="bg-slate-50/50 hover:bg-slate-50 transition-colors">
@@ -505,7 +505,7 @@ const FormulaSheet = ({ onBack }) => {
                     <span className="font-bold text-orange-800">圓錐體</span>
                   </div>
                 </td>
-                <td className="p-3 border border-slate-200 text-center"><Latex math="\pi r(r+l)" /></td>
+                <td className="p-3 border border-slate-200 text-center"><Latex math="\pi r^2+\pi rl" /></td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="\frac{1}{3}\pi r^2 h" /></td>
               </tr>
               <tr className="hover:bg-slate-50 transition-colors">
