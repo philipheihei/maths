@@ -1057,7 +1057,23 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
               <li>輸入負數時要用 <span className="px-1 bg-gray-900 text-white rounded text-xs">(−)</span> 鍵（負號鍵），不是減號</li>
               <li>係數為 1 時也要輸入 <span className="px-1 bg-gray-900 text-white rounded text-xs">1</span></li>
               <li>注意輸入順序：先 x 係數，再 y 係數，最後常數</li>
-              <li>如方程要整理（如 4y + 3x = 10），先改寫成 3x + 4y = 10</li>
+              <li>
+                如方程未整理，先改寫成 <strong>Ax + By = C</strong> 標準形式：
+                <div className="mt-2 space-y-1.5 pl-3 border-l-2 border-red-300">
+                  {[
+                    { before: '4y + 3x = 10', after: '3x + 4y = 10', note: '調換左右項順序' },
+                    { before: 'n = 2m',        after: '−2m + n = 0',  note: '移項，常數為 0' },
+                    { before: '5m = 4n − 7',   after: '5m − 4n = 7',  note: '移項' },
+                  ].map((ex, i) => (
+                    <div key={i} className="flex flex-wrap items-center gap-1.5 text-xs font-mono bg-white rounded px-2 py-1 border border-red-200">
+                      <span className="text-gray-500">{ex.before}</span>
+                      <span className="text-red-400 font-sans">→</span>
+                      <span className="text-red-700 font-bold">{ex.after}</span>
+                      <span className="text-gray-400 font-sans text-[10px] ml-auto">（{ex.note}）</span>
+                    </div>
+                  ))}
+                </div>
+              </li>
             </ul>
           </div>
           
@@ -1081,7 +1097,7 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
 };
 
 // ========== 聯立方程筆記 ==========
-const SimultaneousEqNotes = ({ onBack }) => {
+const SimultaneousEqNotes = ({ onBack, onShowCalcProgram }) => {
   const [katexLoaded, setKatexLoaded] = React.useState(false);
   React.useEffect(() => {
     loadKatexOnce().then(() => setKatexLoaded(true)).catch(() => {});
@@ -1104,7 +1120,7 @@ const SimultaneousEqNotes = ({ onBack }) => {
         <ArrowLeft className="w-5 h-5" /> 返回
       </button>
       <h1 className="text-2xl font-bold text-slate-800 mb-2 border-b-2 border-blue-400 pb-3">
-        📐 筆記：二元一次聯立方程 — 兩種解法
+        📐 筆記：二元一次聯立方程
       </h1>
       <p className="text-sm text-slate-500 mb-6">F2 CH9 · 二元一次聯立方程</p>
 
@@ -1291,6 +1307,23 @@ const SimultaneousEqNotes = ({ onBack }) => {
             </div>
           </div>
         </section>
+
+        {/* Prog 01 Calculator Link */}
+        {onShowCalcProgram && (
+          <div className="bg-yellow-50 border border-yellow-300 rounded-xl p-4 flex items-start gap-3">
+            <span className="text-yellow-500 text-lg mt-0.5">⚠️</span>
+            <p className="text-sm text-slate-700">
+              解聯立方程時可使用到計算機{' '}
+              <button
+                onClick={onShowCalcProgram}
+                className="text-blue-600 underline hover:text-blue-800 font-medium"
+              >
+                Prog 01 解聯立方程
+              </button>
+              。
+            </p>
+          </div>
+        )}
 
       </div>
     </div>
@@ -1869,7 +1902,8 @@ export default function SimultaneousEqQuiz() {
           <span className="font-medium">返回首頁</span>
         </Link>
         <div className="pt-16 pb-12">
-          <SimultaneousEqNotes onBack={() => setMode(null)} />
+          <SimultaneousEqNotes onBack={() => setMode(null)} onShowCalcProgram={() => setShowCalcProgram(true)} />
+          <CalculatorProgramModal isOpen={showCalcProgram} onClose={() => setShowCalcProgram(false)} />
         </div>
       </div>
     );

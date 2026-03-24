@@ -320,6 +320,22 @@ const Home = () => {
       category: '高中',
       topics: ['H.C.F.', 'L.C.M.', '多項式', 'DSE MC'],
       inDevelopment: true
+    },
+    {
+      id: 'solid-geometry',
+      title: '立體面積及體積',
+      description: '圓柱、圓錐、角錐、球體、半球、平截頭體的面積和體積計算',
+      icon: Calculator,
+      color: 'bg-cyan-600',
+      hoverColor: 'hover:bg-cyan-700',
+      path: '/solid-geometry',
+      level: 'F1',
+      badges: [
+        { level: 'F1', chapter: 'CH05', subject: '面積和體積（一）' }
+      ],
+      category: '初中',
+      topics: ['面積', '體積', '圓柱', '圓錐', '球體', '半球', '平截頭體'],
+      inDevelopment: false
     }
   ];
 
