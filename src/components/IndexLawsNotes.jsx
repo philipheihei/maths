@@ -1,6 +1,5 @@
 import React from 'react';
 import { loadKatexOnce } from '../utils/katexLoader';
-import { CornerDownRight, ArrowRight, CornerRightDown } from 'lucide-react';
 
 const Latex = ({ math, block = false }) => {
   const containerRef = React.useRef(null);
@@ -180,39 +179,29 @@ export default function IndexLawsNotes() {
         <h2 className="inline-block text-xl font-bold text-red-600 border-b-2 border-red-600 mb-6 pb-1">
           總結 : 按次序
         </h2>
-        
-        <div className="flex items-start">
-          <div className="flex flex-col justify-between items-end space-y-12 text-green-700 font-bold text-lg mt-4 w-40">
-            <div>1. 拆括號</div>
-            <div>2. 負指數 → 正指數</div>
-            <div>3. 上下 / 左右化簡</div>
+
+        <div className="grid items-start gap-x-6 gap-y-4 ml-2" style={{ gridTemplateColumns: '11rem 1fr' }}>
+          <div className="text-green-700 font-bold text-lg text-right pt-1">1. 拆括號</div>
+          <div className="flex items-center">
+            <Latex math="\Large \frac{\colorbox{#fef08a}{\scriptsize $(x^{-3}y^5)^2$}}{y^2}" />
           </div>
 
-          <div className="flex flex-col ml-6 space-y-4 pt-1 relative">
-            <div className="flex items-center">
-              <Latex math="\Large \frac{\colorbox{#fef08a}{\scriptsize $(x^{-3}y^5)^2$}}{y^2}" />
-            </div>
-            <div className="px-4">
-              <CornerDownRight size={24} className="text-green-600 mx-auto transform" />
-            </div>
-            <div className="flex items-center">
-              <span className="mr-2 font-bold">=</span>
-              <Latex math="\Large \frac{\colorbox{#fef08a}{\scriptsize $x^{-6}y^{10}$}}{y^2}" />
-            </div>
-            <div className="px-4">
-              <CornerDownRight size={24} className="text-green-600 mx-auto" />
-            </div>
-            <div className="flex items-center">
-              <span className="mr-2 font-bold">=</span>
-              <Latex math="\Large \frac{y^{10}}{x^6y^2}" />
-            </div>
-            <div className="px-4">
-              <CornerDownRight size={24} className="text-green-600 mx-auto" />
-            </div>
-            <div className="flex items-center">
-              <span className="mr-2 font-bold">=</span>
-              <Latex math="\Large \frac{y^8}{x^6}" />
-            </div>
+          <div className="text-green-700 font-bold text-lg text-right pt-1">2. 負指數 → 正指數</div>
+          <div className="flex items-center">
+            <span className="mr-2 font-bold">=</span>
+            <Latex math="\Large \frac{\colorbox{#fef08a}{\scriptsize $x^{-6}y^{10}$}}{y^2}" />
+          </div>
+
+          <div className="text-green-700 font-bold text-lg text-right pt-1">3. 上下 / 左右化簡</div>
+          <div className="flex items-center">
+            <span className="mr-2 font-bold">=</span>
+            <Latex math="\Large \frac{y^{10}}{x^6y^2}" />
+          </div>
+
+          <div />
+          <div className="flex items-center">
+            <span className="mr-2 font-bold">=</span>
+            <Latex math="\Large \frac{y^8}{x^6}" />
           </div>
         </div>
       </section>
