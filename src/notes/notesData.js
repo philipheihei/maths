@@ -1,8 +1,8 @@
-import { ApproximationNotes } from './F1CH13Approximation';
-import { InequalityNotes } from './F2CH08Inequality';
+import { ApproximationNotes } from './F1Notes';
+import { InequalityNotes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes } from './F3Notes';
 import { QuadraticEquationNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
-import { VariationNotes } from './F5CH11Variation';
+import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
 export const NOTES_DATA = {
