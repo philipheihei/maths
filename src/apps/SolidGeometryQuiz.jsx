@@ -388,11 +388,11 @@ const FormulaSheet = ({ onBack }) => {
         <div className="bg-blue-50 rounded-xl p-5 border border-blue-100 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8 text-lg font-medium text-slate-700">
           <div className="font-bold text-blue-800 whitespace-nowrap">DSE會考：</div>
           <div className="flex items-stretch gap-4">
-            <div className="flex flex-col space-y-2 text-right">
-              <span>角錐</span>
-              <span>圓錐</span>
-              <span>球體 <span className="text-emerald-600 text-base">（半球體）</span></span>
-              <span>平截頭體 <span className="text-emerald-600 text-base">（圓錐/角錐）</span></span>
+            <div className="flex flex-col space-y-2">
+              <span className="whitespace-nowrap">角錐</span>
+              <span className="whitespace-nowrap">圓錐</span>
+              <span className="whitespace-nowrap">球體 <span className="text-emerald-600 text-base">（半球體）</span></span>
+              <span className="whitespace-nowrap">平截頭體 <span className="text-emerald-600 text-base">（圓錐/角錐）</span></span>
             </div>
             <div className="text-blue-300 text-7xl font-extralight flex items-center leading-none mt-[-5px]">
               {'{'}
@@ -468,32 +468,114 @@ const FormulaSheet = ({ onBack }) => {
             </thead>
             <tbody>
               <tr className="hover:bg-slate-50 transition-colors">
-                <td className="p-3 border border-slate-200 font-bold text-blue-800">圓柱體</td>
+                <td className="p-3 border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-36 h-36 shrink-0">
+                      <svg viewBox="0 0 100 100" className="w-full h-full">
+                        <path d="M25 30 L25 70 A 25 15 0 0 0 75 70 L75 30" fill="#dbeafe" stroke="#1e40af" strokeWidth="3"/>
+                        <ellipse cx="50" cy="30" rx="25" ry="15" fill="#bfdbfe" stroke="#1e40af" strokeWidth="3"/>
+                        <line x1="50" y1="30" x2="75" y2="30" stroke="#1e40af" strokeWidth="2" strokeDasharray="3,3"/>
+                        <text x="58" y="25" fill="#111" fontSize="16" fontStyle="italic" fontWeight="bold">r</text>
+                        <line x1="85" y1="30" x2="85" y2="70" stroke="#1e40af" strokeWidth="2" strokeDasharray="3,3"/>
+                        <text x="90" y="55" fill="#111" fontSize="16" fontStyle="italic" fontWeight="bold">h</text>
+                      </svg>
+                    </div>
+                    <span className="font-bold text-blue-800">圓柱體</span>
+                  </div>
+                </td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="2\pi r(r+h)" /></td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="\pi r^2 h" /></td>
               </tr>
               <tr className="bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                <td className="p-3 border border-slate-200 font-bold text-orange-800">圓錐體</td>
+                <td className="p-3 border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-36 h-36 shrink-0">
+                      <svg viewBox="0 0 100 100" className="w-full h-full">
+                        <path d="M25 75 A 25 12 0 0 0 75 75 L50 15 Z" fill="#ffedd5"/>
+                        <path d="M25 75 L50 15 L75 75" fill="none" stroke="#9a3412" strokeWidth="3"/>
+                        <path d="M25 75 A 25 12 0 0 0 75 75" fill="none" stroke="#9a3412" strokeWidth="3"/>
+                        <path d="M25 75 A 25 12 0 0 1 75 75" fill="none" stroke="#9a3412" strokeWidth="3" strokeDasharray="4,4"/>
+                        <line x1="50" y1="75" x2="75" y2="75" stroke="#9a3412" strokeWidth="2" strokeDasharray="3,3"/>
+                        <text x="58" y="70" fill="#111" fontSize="16" fontStyle="italic" fontWeight="bold">r</text>
+                        <line x1="50" y1="15" x2="50" y2="75" stroke="#9a3412" strokeWidth="2" strokeDasharray="3,3"/>
+                        <text x="35" y="50" fill="#111" fontSize="16" fontStyle="italic" fontWeight="bold">h</text>
+                        <text x="68" y="45" fill="#111" fontSize="16" fontStyle="italic" fontWeight="bold">l</text>
+                      </svg>
+                    </div>
+                    <span className="font-bold text-orange-800">圓錐體</span>
+                  </div>
+                </td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="\pi r(r+l)" /></td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="\frac{1}{3}\pi r^2 h" /></td>
               </tr>
               <tr className="hover:bg-slate-50 transition-colors">
-                <td className="p-3 border border-slate-200 font-bold text-red-800">直立角錐</td>
+                <td className="p-3 border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-36 h-36 shrink-0">
+                      <svg viewBox="0 0 100 100" className="w-full h-full">
+                        <polygon points="15,75 45,85 85,70 50,15" fill="#fee2e2" />
+                        <polygon points="15,75 45,85 50,15" fill="#fecaca" />
+                        <polyline points="15,75 55,60 85,70" fill="none" stroke="#991b1b" strokeWidth="2" strokeDasharray="4,4"/>
+                        <line x1="55" y1="60" x2="50" y2="15" stroke="#991b1b" strokeWidth="2" strokeDasharray="4,4"/>
+                        <polyline points="15,75 45,85 85,70 50,15 15,75" fill="none" stroke="#991b1b" strokeWidth="3"/>
+                        <line x1="45" y1="85" x2="50" y2="15" stroke="#991b1b" strokeWidth="3"/>
+                        <text x="60" y="85" fill="#111" fontSize="14" fontStyle="italic" fontWeight="bold">A</text>
+                        <line x1="50" y1="15" x2="50" y2="70" stroke="#991b1b" strokeWidth="2" strokeDasharray="3,3"/>
+                        <text x="35" y="50" fill="#111" fontSize="16" fontStyle="italic" fontWeight="bold">h</text>
+                      </svg>
+                    </div>
+                    <span className="font-bold text-red-800">直立角錐</span>
+                  </div>
+                </td>
                 <td className="p-3 border border-slate-200 text-center text-slate-400">—</td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="\frac{1}{3}Ah" /></td>
               </tr>
               <tr className="bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                <td className="p-3 border border-slate-200 font-bold text-green-800">球體</td>
+                <td className="p-3 border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-36 h-36 shrink-0">
+                      <svg viewBox="0 0 100 100" className="w-full h-full">
+                        <circle cx="50" cy="50" r="40" fill="#dcfce7" stroke="#166534" strokeWidth="3"/>
+                        <path d="M10 50 A 40 15 0 0 0 90 50" fill="none" stroke="#166534" strokeWidth="3"/>
+                        <path d="M10 50 A 40 15 0 0 1 90 50" fill="none" stroke="#166534" strokeWidth="3" strokeDasharray="4,4"/>
+                        <circle cx="50" cy="50" r="2" fill="#166534"/>
+                        <line x1="50" y1="50" x2="90" y2="50" stroke="#166534" strokeWidth="2" strokeDasharray="4,4"/>
+                        <text x="65" y="45" fill="#111" fontSize="18" fontStyle="italic" fontWeight="bold">r</text>
+                      </svg>
+                    </div>
+                    <span className="font-bold text-green-800">球體</span>
+                  </div>
+                </td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="4\pi r^2" /></td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="\frac{4}{3}\pi r^3" /></td>
               </tr>
               <tr className="hover:bg-slate-50 transition-colors">
-                <td className="p-3 border border-slate-200 font-bold text-teal-800">半球體</td>
+                <td className="p-3 border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-36 h-36 shrink-0">
+                      <svg viewBox="0 0 100 100" className="w-full h-full">
+                        <path d="M10 40 A 40 15 0 0 0 90 40 A 40 40 0 0 1 10 40" fill="#ccfbf1" stroke="#115e59" strokeWidth="3"/>
+                        <ellipse cx="50" cy="40" rx="40" ry="15" fill="#99f6e4" stroke="#115e59" strokeWidth="3"/>
+                        <circle cx="50" cy="40" r="2" fill="#115e59"/>
+                        <line x1="50" y1="40" x2="90" y2="40" stroke="#115e59" strokeWidth="2" strokeDasharray="4,4"/>
+                        <text x="65" y="35" fill="#111" fontSize="18" fontStyle="italic" fontWeight="bold">r</text>
+                      </svg>
+                    </div>
+                    <span className="font-bold text-teal-800">半球體</span>
+                  </div>
+                </td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="3\pi r^2" /></td>
                 <td className="p-3 border border-slate-200 text-center"><Latex math="\frac{2}{3}\pi r^3" /></td>
               </tr>
             </tbody>
           </table>
+        </div>
+        {/* Legend */}
+        <div className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-sm text-slate-500 pl-1">
+          <span><span className="font-semibold italic text-slate-700">r</span> = 半徑</span>
+          <span><span className="font-semibold italic text-slate-700">h</span> = 高度</span>
+          <span><span className="font-semibold italic text-slate-700">l</span> = 斜高</span>
+          <span><span className="font-semibold italic text-slate-700">A</span> = 底面積</span>
         </div>
       </div>
     </div>
