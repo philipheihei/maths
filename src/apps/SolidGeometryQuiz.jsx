@@ -323,54 +323,68 @@ const generators = [
     );
   },
 
-  // ── 平截頭體（圓錐） ──
+  // ── 平截頭體（圓錐）— 大圓錐 − 小圓錐 ──
   () => {
-    const R = rand(5, 14), r = rand(2, R - 1), h = rand(4, 16);
-    const vol = round2(h * (R * R + R * r + r * r) / 3);
+    // r/R = p/q; m is multiple of 3 so all volumes are integers
+    const fracs = [[1,2],[1,3],[2,3],[1,4],[3,4],[2,5],[3,5]];
+    const [p, q] = pick(fracs);
+    const k = rand(1, 2);
+    const m = rand(1, 2) * 3;           // ×3 guarantees bigN/3 and smallN/3 are integers
+    const R  = q * k;
+    const r  = p * k;
+    const h_f = (q - p) * m;           // frustum height
+    const H   = q * m;                 // full cone height
+    const h_s = p * m;                 // small cone height
+    const bigN   = R * R * H;          // = 3 × large cone vol coefficient
+    const smallN = r * r * h_s;        // = 3 × small cone vol coefficient
+    const vol = (bigN - smallN) / 3;   // always integer
     return mkQ(
-      `一個圓錐平截頭體的大底半徑為 ${R} cm，小底半徑為 ${r} cm，高為 ${h} cm。求圓錐平截頭體的體積。（答案以 π 表示）`,
+      `一個圓錐平截頭體的大底半徑為 ${R} cm，小底半徑為 ${r} cm，高為 ${h_f} cm。求圓錐平截頭體的體積。（答案以 π 表示）`,
       vol,
       'π cm³',
       [
-        `\\text{圓錐平截頭體體積} = \\dfrac{1}{3}\\pi h(R^2 + Rr + r^2)`,
-        `= \\dfrac{1}{3}\\pi(${h})(${R}^2 + ${R} \\times ${r} + ${r}^2)`,
-        `= \\dfrac{1}{3}\\pi(${h})(${R * R} + ${R * r} + ${r * r})`,
-        `= \\dfrac{1}{3}\\pi(${h})(${R * R + R * r + r * r})`,
-        `= \\dfrac{${h * (R * R + R * r + r * r)}}{3}\\pi`,
-        `= ${vol}\\pi \\text{ cm}^3`
+        `\\text{設完整大圓錐的高為 } H \\text{ cm}`,
+        `\\dfrac{${r}}{${R}} = \\dfrac{H - ${h_f}}{H}`,
+        `${r}H = ${R}H - ${R * h_f}`,
+        `${R - r}H = ${R * h_f}`,
+        `H = ${H} \\text{ cm，小圓錐的高} = ${H} - ${h_f} = ${h_s} \\text{ cm}`,
+        `\\text{大圓錐體積} = \\dfrac{1}{3}\\pi(${R})^2(${H}) = \\dfrac{${bigN}}{3}\\pi = ${bigN / 3}\\pi`,
+        `\\text{小圓錐體積} = \\dfrac{1}{3}\\pi(${r})^2(${h_s}) = \\dfrac{${smallN}}{3}\\pi = ${smallN / 3}\\pi`,
+        `\\text{圓錐平截頭體體積} = (${bigN / 3} - ${smallN / 3})\\pi = ${vol}\\pi \\text{ cm}^3`
       ],
-      '\\text{圓錐平截頭體體積} = \\dfrac{1}{3}\\pi h(R^2 + Rr + r^2)'
+      '\\text{圓錐平截頭體體積} = \\text{大圓錐體積} - \\text{小圓錐體積}'
     );
   },
 
-  // ── 平截頭體（角錐）— 由完整角錐切割求體積 ──
+  // ── 平截頭體（角錐）— 大角錐 − 小角錐 ──
   () => {
-    // h_y/H = p/q; a1 is multiple of q so a2 = a1*p/q is integer
+    // a2/a1 = p/q; m is multiple of 3 so all volumes are integers
     const fracs = [[1,2],[1,3],[2,3],[1,4],[3,4],[2,5],[3,5]];
     const [p, q] = pick(fracs);
-    const a1 = q * rand(3, 6);          // large base side
-    const a2 = a1 * p / q;              // small (Y) base side — integer
-    const H  = q * rand(4, 8);          // total pyramid height
-    const h_y = H * p / q;              // Y height — integer
-    const h_f = H - h_y;                // frustum X height
-    const A1 = a1 * a1, A2 = a2 * a2;
-    const mid = a1 * a2;                // sqrt(A1*A2) = a1*a2 exactly (integer)
-    const vol = round2(h_f * (A1 + A2 + mid) / 3);
+    const k = rand(1, 2);
+    const m = rand(1, 2) * 3;
+    const a1  = q * k;
+    const a2  = p * k;
+    const H   = q * m;                 // full pyramid height
+    const h_y = p * m;                 // small pyramid (Y) height
+    const h_f = H - h_y;               // frustum (X) height
+    const A1  = a1 * a1;
+    const A2  = a2 * a2;
+    const bigN   = A1 * H;
+    const smallN = A2 * h_y;
+    const vol = (bigN - smallN) / 3;   // always integer
     return mkQ(
       `某實心直立正四角錐的底邊長為 ${a1} cm，高為 ${H} cm。將該角錐以一平行於底面的平面截成平截頭體 X（下）及角錐體 Y（上）。已知 Y 的高為 ${h_y} cm，求平截頭體 X 的體積。`,
       vol,
       'cm³',
       [
-        `\\text{由相似比：}\\dfrac{\\text{Y 底邊長}}{${a1}} = \\dfrac{${h_y}}{${H}}`,
+        `\\text{由相似比：} \\dfrac{\\text{Y 底邊長}}{${a1}} = \\dfrac{${h_y}}{${H}}`,
         `\\text{Y 底邊長} = ${a1} \\times \\dfrac{${h_y}}{${H}} = ${a2} \\text{ cm}`,
-        `A_1 = ${a1}^2 = ${A1},\\quad A_2 = ${a2}^2 = ${A2}`,
-        `\\text{X 的高} = ${H} - ${h_y} = ${h_f} \\text{ cm}`,
-        `\\text{X 體積} = \\dfrac{${h_f}}{3}\\left(${A1} + ${A2} + \\sqrt{${A1} \\times ${A2}}\\right)`,
-        `= \\dfrac{${h_f}}{3}\\left(${A1} + ${A2} + ${mid}\\right)`,
-        `= \\dfrac{${h_f}}{3} \\times ${A1 + A2 + mid}`,
-        `= ${vol} \\text{ cm}^3`
+        `\\text{大角錐體積} = \\dfrac{1}{3} \\times ${a1}^2 \\times ${H} = \\dfrac{${bigN}}{3} = ${bigN / 3} \\text{ cm}^3`,
+        `\\text{小角錐（Y）體積} = \\dfrac{1}{3} \\times ${a2}^2 \\times ${h_y} = \\dfrac{${smallN}}{3} = ${smallN / 3} \\text{ cm}^3`,
+        `\\text{平截頭體 X 體積} = ${bigN / 3} - ${smallN / 3} = ${vol} \\text{ cm}^3`
       ],
-      '\\text{角錐平截頭體體積} = \\dfrac{h}{3}(A_1 + A_2 + \\sqrt{A_1 A_2})'
+      '\\text{X 體積} = \\text{大角錐體積} - \\text{小角錐（Y）體積}'
     );
   },
 ];
