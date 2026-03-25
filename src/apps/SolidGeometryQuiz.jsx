@@ -64,11 +64,11 @@ const generators = [
       2 * r * h,
       'π cm²',
       [
-        `\\text{曲面面積} = 2\\pi r h`,
+        `\\text{圓柱體曲面面積} = 2\\pi r h`,
         `= 2\\pi(${r})(${h})`,
         `= ${2 * r * h}\\pi \\text{ cm}^2`
       ],
-      '\\text{曲面面積} = 2\\pi r h'
+      '\\text{圓柱體曲面面積} = 2\\pi r h'
     );
   },
   () => {
@@ -79,12 +79,12 @@ const generators = [
       2 * r * h + 2 * r * r,
       'π cm²',
       [
-        `\\text{總表面面積} = 2\\pi r h + 2\\pi r^2`,
+        `\\text{圓柱體總表面面積} = 2\\pi r h + 2\\pi r^2`,
         `= 2\\pi(${r})(${h}) + 2\\pi(${r})^2`,
         `= ${2 * r * h}\\pi + ${2 * r * r}\\pi`,
         `= ${2 * r * h + 2 * r * r}\\pi \\text{ cm}^2`
       ],
-      '\\text{總表面面積} = 2\\pi r h + 2\\pi r^2'
+      '\\text{圓柱體總表面面積} = 2\\pi r h + 2\\pi r^2'
     );
   },
   () => {
@@ -127,11 +127,11 @@ const generators = [
       r * l,
       'π cm²',
       [
-        `\\text{曲面面積} = \\pi r l`,
+        `\\text{圓錐體曲面面積} = \\pi r l`,
         `= \\pi(${r})(${l})`,
         `= ${r * l}\\pi \\text{ cm}^2`
       ],
-      '\\text{曲面面積} = \\pi r l'
+      '\\text{圓錐體曲面面積} = \\pi r l'
     );
   },
   () => {
@@ -141,12 +141,12 @@ const generators = [
       r * l + r * r,
       'π cm²',
       [
-        `\\text{總表面面積} = \\pi r l + \\pi r^2`,
+        `\\text{圓錐體總表面面積} = \\pi r l + \\pi r^2`,
         `= \\pi(${r})(${l}) + \\pi(${r})^2`,
         `= ${r * l}\\pi + ${r * r}\\pi`,
         `= ${r * l + r * r}\\pi \\text{ cm}^2`
       ],
-      '\\text{總表面面積} = \\pi r l + \\pi r^2'
+      '\\text{圓錐體總表面面積} = \\pi r l + \\pi r^2'
     );
   },
   () => {
@@ -250,11 +250,11 @@ const generators = [
       4 * r * r,
       'π cm²',
       [
-        `\\text{表面面積} = 4\\pi r^2`,
+        `\\text{球體表面面積} = 4\\pi r^2`,
         `= 4\\pi(${r})^2`,
         `= ${4 * r * r}\\pi \\text{ cm}^2`
       ],
-      '\text{表面面積} = 4\\pi r^2'
+      '\\text{球體表面面積} = 4\\pi r^2'
     );
   },
   () => {
@@ -282,12 +282,12 @@ const generators = [
       r,
       'cm',
       [
-        `\\text{表面面積} = 4\\pi r^2`,
+        `\\text{球體表面面積} = 4\\pi r^2`,
         `${S}\\pi = 4\\pi r^2`,
         `r^2 = \\dfrac{${S}}{4} = ${S / 4}`,
         `r = \\sqrt{${S / 4}} = ${r} \\text{ cm}`
       ],
-      '\text{表面面積} = 4\\pi r^2'
+      '\\text{球體表面面積} = 4\\pi r^2'
     );
   },
 
@@ -299,11 +299,11 @@ const generators = [
       3 * r * r,
       'π cm²',
       [
-        `\\text{總表面面積} = 2\\pi r^2 + \\pi r^2 = 3\\pi r^2`,
+        `\\text{半球體總表面面積} = 2\\pi r^2 + \\pi r^2 = 3\\pi r^2`,
         `= 3\\pi(${r})^2`,
         `= ${3 * r * r}\\pi \\text{ cm}^2`
       ],
-      '\\text{總表面面積} = 3\\pi r^2'
+      '\\text{半球體總表面面積} = 3\\pi r^2'
     );
   },
   () => {
@@ -343,23 +343,31 @@ const generators = [
     );
   },
 
-  // ── 平截頭體（角錐） ──
+  // ── 平截頭體（角錐）— 由完整角錐切割求體積 ──
   () => {
-    // 正方形底的角錐平截頭體
-    const a1 = rand(6, 15), a2 = rand(2, a1 - 1), h = rand(4, 16);
+    // h_y/H = p/q; a1 is multiple of q so a2 = a1*p/q is integer
+    const fracs = [[1,2],[1,3],[2,3],[1,4],[3,4],[2,5],[3,5]];
+    const [p, q] = pick(fracs);
+    const a1 = q * rand(3, 6);          // large base side
+    const a2 = a1 * p / q;              // small (Y) base side — integer
+    const H  = q * rand(4, 8);          // total pyramid height
+    const h_y = H * p / q;              // Y height — integer
+    const h_f = H - h_y;                // frustum X height
     const A1 = a1 * a1, A2 = a2 * a2;
-    const mid = Math.sqrt(A1 * A2);
-    const vol = round2(h * (A1 + A2 + mid) / 3);
+    const mid = a1 * a2;                // sqrt(A1*A2) = a1*a2 exactly (integer)
+    const vol = round2(h_f * (A1 + A2 + mid) / 3);
     return mkQ(
-      `一個正方形底角錐平截頭體的大底邊長為 ${a1} cm，小底邊長為 ${a2} cm，高為 ${h} cm。求角錐平截頭體的體積。`,
+      `某實心直立正四角錐的底邊長為 ${a1} cm，高為 ${H} cm。將該角錐以一平行於底面的平面截成平截頭體 X（下）及角錐體 Y（上）。已知 Y 的高為 ${h_y} cm，求平截頭體 X 的體積。`,
       vol,
       'cm³',
       [
-        `\\text{角錐平截頭體體積} = \\dfrac{h}{3}(A_1 + A_2 + \\sqrt{A_1 A_2})`,
+        `\\text{由相似比：}\\dfrac{\\text{Y 底邊長}}{${a1}} = \\dfrac{${h_y}}{${H}}`,
+        `\\text{Y 底邊長} = ${a1} \\times \\dfrac{${h_y}}{${H}} = ${a2} \\text{ cm}`,
         `A_1 = ${a1}^2 = ${A1},\\quad A_2 = ${a2}^2 = ${A2}`,
-        `\\sqrt{A_1 A_2} = \\sqrt{${A1} \\times ${A2}} = \\sqrt{${A1 * A2}} = ${round2(mid)}`,
-        `\\text{角錐平截頭體體積} = \\dfrac{${h}}{3}(${A1} + ${A2} + ${round2(mid)})`,
-        `= \\dfrac{${h}}{3}(${round2(A1 + A2 + mid)})`,
+        `\\text{X 的高} = ${H} - ${h_y} = ${h_f} \\text{ cm}`,
+        `\\text{X 體積} = \\dfrac{${h_f}}{3}\\left(${A1} + ${A2} + \\sqrt{${A1} \\times ${A2}}\\right)`,
+        `= \\dfrac{${h_f}}{3}\\left(${A1} + ${A2} + ${mid}\\right)`,
+        `= \\dfrac{${h_f}}{3} \\times ${A1 + A2 + mid}`,
         `= ${vol} \\text{ cm}^3`
       ],
       '\\text{角錐平截頭體體積} = \\dfrac{h}{3}(A_1 + A_2 + \\sqrt{A_1 A_2})'
