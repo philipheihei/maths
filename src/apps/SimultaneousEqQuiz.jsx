@@ -1218,7 +1218,7 @@ const SimultaneousEqNotes = ({ onBack, onShowCalcProgram }) => {
           <div className="space-y-4">
             {/* Example */}
             <div className="bg-white rounded-xl p-4 border border-violet-200 shadow-sm">
-              <p className="font-bold text-violet-700 mb-1">例題</p>
+              <p className="font-bold text-violet-700 mb-1">例題一 <span className="text-xs font-normal text-slate-400">（已有相同係數）</span></p>
               <div className="bg-slate-50 rounded-lg p-3 mb-4 text-center">
                 <Latex math="\begin{cases} 5x + 7y = -2 & \cdots\textcircled{1} \\ 3x - 7y = 10 & \cdots\textcircled{2} \end{cases}" block />
               </div>
@@ -1281,6 +1281,89 @@ const SimultaneousEqNotes = ({ onBack, onShowCalcProgram }) => {
                 <div className="bg-green-100 rounded-lg p-3 border border-green-300 text-center">
                   <span className="font-bold text-green-700">∴ </span>
                   <Latex math="x = 1,\quad y = -1" />
+                </div>
+              </div>
+            </div>
+
+            {/* Example 2: both equations need multiplying */}
+            <div className="bg-white rounded-xl p-4 border border-violet-200 shadow-sm">
+              <p className="font-bold text-violet-700 mb-1">例題二 <span className="text-xs font-normal text-slate-400">（沒有相同係數，需兩式各自乘倍數）</span></p>
+              <div className="bg-slate-50 rounded-lg p-3 mb-3 text-center">
+                <Latex math="\begin{cases} 11x + 8y + 6 = 0 & \cdots\textcircled{1} \\ 5x - 3y + 16 = 0 & \cdots\textcircled{2} \end{cases}" block />
+              </div>
+              <p className="text-xs text-slate-500 mb-4">觀察：<Latex math="y" /> 的係數為 8 和 −3，<strong>沒有相同或相反係數</strong> → 取 LCM(8, 3) = 24，①×3 及 ②×8，令 <Latex math="y" /> 係數變為 ±24，再相加消去 <Latex math="y" /></p>
+
+              <div className="space-y-3 text-sm">
+                <div className="flex gap-2 items-start">
+                  <div className="flex flex-col gap-1 shrink-0 mt-0.5">
+                    <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded text-center">①×3</span>
+                    <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded text-center">+②×8</span>
+                    <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded text-center">解 x</span>
+                  </div>
+                  <div className="flex-1 bg-amber-50 rounded p-3">
+                    <div className="inline-grid items-baseline gap-x-1" style={{ gridTemplateColumns: 'auto auto auto auto' }}>
+                      {/* Reference multiplications */}
+                      <span className="text-slate-400 text-xs pr-1">①×3：</span>
+                      <Latex math="33x + 24y + 18" />
+                      <Latex math="=" />
+                      <span className="flex items-baseline gap-1"><Latex math="0" /><span className="text-slate-500 text-xs ml-1">···③</span></span>
+
+                      <span className="text-slate-400 text-xs pr-1">②×8：</span>
+                      <Latex math="40x - 24y + 128" />
+                      <Latex math="=" />
+                      <span className="flex items-baseline gap-1"><Latex math="0" /><span className="text-slate-500 text-xs ml-1">···④</span></span>
+
+                      <span className="col-span-4 pb-1" />
+
+                      {/* Vertical calculation in ax+by+c=0 form */}
+                      <span />
+                      <Latex math="33x + 24y + 18" />
+                      <Latex math="=" />
+                      <Latex math="0" />
+
+                      <span className="font-bold text-slate-500 pr-1">+)</span>
+                      <Latex math="40x - 24y + 128" />
+                      <Latex math="=" />
+                      <Latex math="0" />
+
+                      <span className="col-span-4 border-b border-slate-400 my-1" />
+
+                      <span />
+                      <Latex math="73x + 146" />
+                      <Latex math="=" />
+                      <Latex math="0" />
+
+                      <span />
+                      <Latex math="x" />
+                      <Latex math="=" />
+                      <span className="flex items-baseline gap-1"><Latex math="-2" /><span className="text-slate-500 text-xs ml-1">···⑤</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 items-start">
+                  <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0 mt-0.5">代⑤進①</span>
+                  <div className="flex-1">
+                    <p className="text-slate-600 mb-1">代 <Latex math="x=-2" /> 進①：</p>
+                    <div className="bg-green-50 rounded p-2 border border-green-200">
+                      <div className="inline-grid items-baseline gap-x-1" style={{ gridTemplateColumns: '1fr auto auto', justifyItems: 'end' }}>
+                        <Latex math="11(-2) + 8y + 6" />
+                        <Latex math="=" />
+                        <div style={{ justifySelf: 'start' }}><Latex math="0" /></div>
+                        <Latex math="8y - 16" />
+                        <Latex math="=" />
+                        <div style={{ justifySelf: 'start' }}><Latex math="0" /></div>
+                        <Latex math="y" />
+                        <Latex math="=" />
+                        <div style={{ justifySelf: 'start' }}><Latex math="2" /></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-green-100 rounded-lg p-3 border border-green-300 text-center">
+                  <span className="font-bold text-green-700">∴ </span>
+                  <Latex math="x = -2,\quad y = 2" />
                 </div>
               </div>
             </div>

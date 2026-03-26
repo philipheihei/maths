@@ -1602,7 +1602,7 @@ const ProbabilityNotes = () => {
                     EXE
                   </span>
                   
-                  <span className="ml-2 font-bold text-indigo-700 text-lg">= <span className="text-xl">720</span></span>
+                  <span className="ml-2 font-bold text-gray-900 text-lg">= <span className="text-xl">720</span></span>
                 </div>
               </div>
             </div>
@@ -1636,7 +1636,7 @@ const ProbabilityNotes = () => {
                     EXE
                   </span>
                   
-                  <span className="ml-2 font-bold text-teal-700 text-lg">= <span className="text-xl">56</span></span>
+                  <span className="ml-2 font-bold text-gray-900 text-lg">= <span className="text-xl">56</span></span>
                 </div>
               </div>
             </div>

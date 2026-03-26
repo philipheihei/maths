@@ -407,7 +407,7 @@ const FormulaSheet = ({ onBack }) => {
         <h2 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-blue-400 pb-3">公式</h2>
         
         {/* Top section: DSE會考... */}
-        <div className="bg-blue-50 rounded-xl p-5 border border-blue-100 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8 text-lg font-medium text-slate-700">
+        <div className="bg-blue-50 rounded-xl p-5 border border-blue-100 flex flex-col sm:flex-row items-start justify-center gap-4 sm:gap-6 mb-8 text-lg font-medium text-slate-700">
           <div className="font-bold text-blue-800 whitespace-nowrap">DSE會考：</div>
           <div className="flex items-stretch gap-4">
             <div className="flex flex-col space-y-2">
@@ -417,11 +417,13 @@ const FormulaSheet = ({ onBack }) => {
               <span className="whitespace-nowrap">平截頭體 <span className="text-emerald-600 text-base">（圓錐/角錐）</span></span>
             </div>
             <div className="text-blue-300 text-7xl font-extralight flex items-center leading-none mt-[-5px]">
-              {'{'}
+              {'}'}
             </div>
-            <div className="flex flex-col justify-center space-y-6 font-bold text-blue-800">
-              <span>的 體積</span>
+            <div className="flex flex-col space-y-2 font-bold text-blue-800">
+              <span>的</span>
+              <span>體積</span>
               <span>表面面積</span>
+              <span className="invisible select-none" aria-hidden="true">x</span>
             </div>
           </div>
         </div>
@@ -826,7 +828,7 @@ export default function SolidGeometryQuiz() {
                 <div className="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">✏️</div>
                 <div>
                   <h2 className="text-xl font-bold text-slate-800">測驗模式</h2>
-                  <p className="text-sm text-slate-500 mt-1">隨機出題，計算面積和體積</p>
+                  <p className="text-sm text-slate-500 mt-1">溫習如何計算不同立體的面積和體積</p>
                 </div>
               </div>
             </button>
