@@ -287,6 +287,23 @@ const Home = () => {
       inDevelopment: true
     },
     {
+      id: 'trig-quiz',
+      title: '畢氏定理及三角比',
+      description: '畢氏定理求邊長、三角比 sin cos tan 求邊長及角度',
+      icon: Calculator,
+      color: 'bg-blue-500',
+      hoverColor: 'hover:bg-blue-600',
+      path: '/trig-quiz',
+      level: 'F3',
+      badges: [
+        { level: 'F3', chapter: 'CH7', subject: '畢氏定理' },
+        { level: 'F3', chapter: 'CH8', subject: '三角比' }
+      ],
+      category: '初中',
+      topics: ['畢氏定理', '三角比', 'sin', 'cos', 'tan'],
+      inDevelopment: true
+    },
+    {
       id: 'remainder-factor-quiz',
       title: '餘式定理 & 因式定理',
       description: '餘式定理與因式定理：找相應的 f(x) 值',
