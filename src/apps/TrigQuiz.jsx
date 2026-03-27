@@ -34,6 +34,9 @@ const Latex = ({ math, block = false }) => {
 
 // 混合文字+LaTeX 渲染
 const StepText = ({ text }) => {
+  if (text.startsWith('$$') && text.endsWith('$$')) {
+    return <Latex math={text.slice(2, -2)} block />;
+  }
   const parts = text.split(/(\$[^$]+\$)/g);
   return (
     <span className="text-sm text-slate-700 leading-relaxed">
@@ -59,28 +62,25 @@ const TrigKeyboard = ({ onInput, onDelete, onSubmit, disabled }) => {
 
   return (
     <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
-      <div className="grid grid-cols-5 gap-2">
+      <div className="grid grid-cols-4 gap-2">
         {[7,8,9].map(n => <button key={n} className={NUM} onClick={() => press(String(n))}>{n}</button>)}
-        <button className={OP} onClick={() => press('.')}>.</button>
         <button className={DEL} onClick={() => { if (!disabled) onDelete(); }}>DEL</button>
 
         {[4,5,6].map(n => <button key={n} className={NUM} onClick={() => press(String(n))}>{n}</button>)}
         <button className={OP} onClick={() => press('√')}>√</button>
-        <button className={`${KEY} bg-slate-200 text-slate-500 border-slate-300`} onClick={() => { if (!disabled) onInput('AC'); }}>AC</button>
 
         {[1,2,3].map(n => <button key={n} className={NUM} onClick={() => press(String(n))}>{n}</button>)}
-        <button className={OP} onClick={() => press('/')}>⁄</button>
+        <button className={`${KEY} bg-slate-200 text-slate-500 border-slate-300`} onClick={() => { if (!disabled) onInput('AC'); }}>AC</button>
+
+        <button className={NUM} onClick={() => press('0')}>0</button>
+        <button className={OP} onClick={() => press('.')}>.</button>
+        <button className={OP} onClick={() => press('^')}>^</button>
         <button
-          className={`${KEY} bg-blue-500 text-white border-blue-600 row-span-2`}
+          className={`${KEY} bg-blue-500 text-white border-blue-600`}
           onClick={() => { if (!disabled) onSubmit(); }}
         >
           ↵
         </button>
-
-        <button className={NUM} onClick={() => press('0')}>0</button>
-        <button className={NUM} onClick={() => press('00')}>00</button>
-        <button className={OP} onClick={() => press('-')}>−</button>
-        <button className={OP} onClick={() => press('^')}>^</button>
       </div>
     </div>
   );
@@ -89,7 +89,7 @@ const TrigKeyboard = ({ onInput, onDelete, onSubmit, disabled }) => {
 // ========================================
 // 三角形 SVG 繪圖
 // ========================================
-const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType }) => {
+const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSides = ['a','b','c'], visibleAngles = ['A','B'] }) => {
   // triangle: { a, b, c, A, B } where C=90°, a=BC, b=AC, c=AB (hypotenuse)
   // A is angle at vertex A (opposite side a), B is angle at vertex B (opposite side b)
   const { a, b } = triangle;
@@ -140,38 +140,81 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType }) => {
 
       {/* Side labels — show value or "?" */}
       {/* Side a = BC (bottom) */}
-      <text x={(bx + cx) / 2} y={by + 22} fontSize="14" fontWeight="bold" textAnchor="middle"
-        fill={unknownSide === 'a' ? '#dc2626' : '#334155'}>
-        {unknownSide === 'a' ? '?' : triangle.a}
-      </text>
+      {(unknownSide === 'a' || visibleSides.includes('a')) && (
+        <text x={(bx + cx) / 2} y={by + 22} fontSize="14" fontWeight="bold" textAnchor="middle"
+          fill={unknownSide === 'a' ? '#dc2626' : '#334155'}>
+          {unknownSide === 'a' ? '?' : triangle.a}
+        </text>
+      )}
 
       {/* Side b = AC (left) */}
-      <text x={ax - 24} y={(ay + cy) / 2 + 5} fontSize="14" fontWeight="bold" textAnchor="middle"
-        fill={unknownSide === 'b' ? '#dc2626' : '#334155'}>
-        {unknownSide === 'b' ? '?' : triangle.b}
-      </text>
+      {(unknownSide === 'b' || visibleSides.includes('b')) && (
+        <text x={ax - 24} y={(ay + cy) / 2 + 5} fontSize="14" fontWeight="bold" textAnchor="middle"
+          fill={unknownSide === 'b' ? '#dc2626' : '#334155'}>
+          {unknownSide === 'b' ? '?' : triangle.b}
+        </text>
+      )}
 
       {/* Side c = AB (hypotenuse) */}
-      <text x={(ax + bx) / 2 + 12} y={(ay + by) / 2 - 8} fontSize="14" fontWeight="bold" textAnchor="middle"
-        fill={unknownSide === 'c' ? '#dc2626' : '#334155'}>
-        {unknownSide === 'c' ? '?' : triangle.c}
-      </text>
+      {(unknownSide === 'c' || visibleSides.includes('c')) && (
+        <text x={(ax + bx) / 2 + 12} y={(ay + by) / 2 - 8} fontSize="14" fontWeight="bold" textAnchor="middle"
+          fill={unknownSide === 'c' ? '#dc2626' : '#334155'}>
+          {unknownSide === 'c' ? '?' : triangle.c}
+        </text>
+      )}
 
       {/* Angle labels for trig */}
       {quizType === 'trig' && (
         <>
-          {/* Angle A arc */}
-          {unknownAngle === 'A' ? (
-            <text x={ax + 8} y={ay + 30} fontSize="14" fontWeight="bold" fill="#dc2626">θ</text>
-          ) : triangle.A != null && (
-            <text x={ax + 8} y={ay + 30} fontSize="13" fontWeight="bold" fill="#334155">{triangle.A}°</text>
-          )}
-          {/* Angle B arc */}
-          {unknownAngle === 'B' ? (
-            <text x={bx - 32} y={by - 8} fontSize="14" fontWeight="bold" fill="#dc2626">θ</text>
-          ) : triangle.B != null && (
-            <text x={bx - 32} y={by - 8} fontSize="13" fontWeight="bold" fill="#334155">{triangle.B}°</text>
-          )}
+          {/* Angle A arc & text */}
+          {(unknownAngle === 'A' || visibleAngles.includes('A')) && (() => {
+            const arcRadius = 24;
+            const aAB = Math.atan2(by - ay, bx - ax);
+            const aAC = Math.PI / 2;
+            const xA1 = ax + arcRadius * Math.cos(aAB);
+            const yA1 = ay + arcRadius * Math.sin(aAB);
+            const xA2 = ax + arcRadius * Math.cos(aAC);
+            const yA2 = ay + arcRadius * Math.sin(aAC);
+            const arcA = `M ${xA1} ${yA1} A ${arcRadius} ${arcRadius} 0 0 1 ${xA2} ${yA2}`;
+            
+            const midA = (aAB + aAC) / 2;
+            const textAx = ax + (arcRadius + 14) * Math.cos(midA);
+            const textAy = ay + (arcRadius + 14) * Math.sin(midA) + 5;
+            
+            return (
+              <g>
+                <path d={arcA} fill="none" stroke={unknownAngle === 'A' ? "#dc2626" : "#4f46e5"} strokeWidth="1.5" />
+                <text x={textAx} y={textAy} fontSize="13" fontWeight="bold" textAnchor="middle" fill={unknownAngle === 'A' ? "#dc2626" : "#334155"}>
+                  {unknownAngle === 'A' ? 'θ' : `${triangle.A}°`}
+                </text>
+              </g>
+            );
+          })()}
+
+          {/* Angle B arc & text */}
+          {(unknownAngle === 'B' || visibleAngles.includes('B')) && (() => {
+            const arcRadius = 24;
+            const bBC = Math.PI;
+            const bBA = Math.atan2(ay - by, ax - bx);
+            const xB1 = bx + arcRadius * Math.cos(bBC);
+            const yB1 = by + arcRadius * Math.sin(bBC);
+            const xB2 = bx + arcRadius * Math.cos(bBA);
+            const yB2 = by + arcRadius * Math.sin(bBA);
+            const arcB = `M ${xB1} ${yB1} A ${arcRadius} ${arcRadius} 0 0 1 ${xB2} ${yB2}`;
+            
+            const midB = (-Math.PI + bBA) / 2;
+            const textBx = bx + (arcRadius + 16) * Math.cos(midB);
+            const textBy = by + (arcRadius + 16) * Math.sin(midB) + 5;
+
+            return (
+              <g>
+                <path d={arcB} fill="none" stroke={unknownAngle === 'B' ? "#dc2626" : "#4f46e5"} strokeWidth="1.5" />
+                <text x={textBx} y={textBy} fontSize="13" fontWeight="bold" textAnchor="middle" fill={unknownAngle === 'B' ? "#dc2626" : "#334155"}>
+                  {unknownAngle === 'B' ? 'θ' : `${triangle.B}°`}
+                </text>
+              </g>
+            );
+          })()}
         </>
       )}
     </svg>
@@ -184,6 +227,12 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType }) => {
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const round2 = (n) => Math.round(n * 100) / 100;
+const round3sf = (n) => {
+  if (n === 0) return 0;
+  const d = Math.floor(Math.log10(Math.abs(n))) + 1;
+  const factor = Math.pow(10, 3 - d);
+  return Math.round(n * factor) / factor;
+};
 const toRad = (deg) => deg * Math.PI / 180;
 
 // 常用的畢式三元數 (a, b, c) where a²+b²=c²
@@ -280,13 +329,13 @@ const generateTrigFindSide = () => {
     results.push({
       triangle: { a, b: round2(b), c, A: 30, B: 60 },
       unknownSide: 'a', unknownAngle: null,
+      visibleSides: ['c'], visibleAngles: ['A'],
       answer: a, answerAlt: [String(a)],
       questionText: '求 BC 的長度。',
       steps: [
-        `對於 $\\angle A = 30°$，BC 是對邊，AB 是斜邊`,
-        `$\\sin 30° = \\dfrac{BC}{AB}$`,
-        `$\\dfrac{1}{2} = \\dfrac{BC}{${c}}$`,
-        `$BC = ${c} \\times \\dfrac{1}{2} = ${a}$`
+        `已掌握資料如下：$\\angle BAC = 30°$，AB = ${c}（斜邊）。`,
+        `要找以下長度：BC（對邊）。`,
+        `$$\\begin{align*}\\sin 30° &= \\dfrac{BC}{AB} \\\\[4pt] \\dfrac{1}{2} &= \\dfrac{BC}{${c}} \\\\[4pt] BC &= ${c} \\times \\dfrac{1}{2} \\\\[2pt] &= ${a}\\end{align*}$$`
       ]
     });
   }
@@ -299,13 +348,13 @@ const generateTrigFindSide = () => {
     results.push({
       triangle: { a, b: round2(b), c, A: 30, B: 60 },
       unknownSide: 'b', unknownAngle: null,
+      visibleSides: ['c'], visibleAngles: ['A'],
       answer: round2(b), answerAlt: [String(round2(b))],
-      questionText: '求 AC 的長度。（答案取至小數點後兩位）',
+      questionText: '求 AC 的長度。（答案取至3位有效數字）',
       steps: [
-        `對於 $\\angle A = 30°$，AC 是鄰邊，AB 是斜邊`,
-        `$\\cos 30° = \\dfrac{AC}{AB}$`,
-        `$\\dfrac{\\sqrt{3}}{2} = \\dfrac{AC}{${c}}$`,
-        `$AC = ${c} \\times \\dfrac{\\sqrt{3}}{2} = ${round2(b)}$`
+        `已掌握資料如下：$\\angle BAC = 30°$，AB = ${c}（斜邊）。`,
+        `要找以下長度：AC（鄰邊）。`,
+        `$$\\begin{align*}\\cos 30° &= \\dfrac{AC}{AB} \\\\[4pt] \\dfrac{\\sqrt{3}}{2} &= \\dfrac{AC}{${c}} \\\\[4pt] AC &= ${c} \\times \\dfrac{\\sqrt{3}}{2} \\\\[2pt] &= ${round2(b)}\\end{align*}$$`
       ]
     });
   }
@@ -318,13 +367,13 @@ const generateTrigFindSide = () => {
     results.push({
       triangle: { a, b, c: round2(c), A: 45, B: 45 },
       unknownSide: 'a', unknownAngle: null,
+      visibleSides: ['b'], visibleAngles: ['A'],
       answer: a, answerAlt: [String(a)],
       questionText: '求 BC 的長度。',
       steps: [
-        `對於 $\\angle A = 45°$，BC 是對邊，AC 是鄰邊`,
-        `$\\tan 45° = \\dfrac{BC}{AC}$`,
-        `$1 = \\dfrac{BC}{${b}}$`,
-        `$BC = ${b} \\times 1 = ${a}$`
+        `已掌握資料如下：$\\angle BAC = 45°$，AC = ${b}（鄰邊）。`,
+        `要找以下長度：BC（對邊）。`,
+        `$$\\begin{align*}\\tan 45° &= \\dfrac{BC}{AC} \\\\[4pt] 1 &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times 1 \\\\[2pt] &= ${a}\\end{align*}$$`
       ]
     });
   }
@@ -337,13 +386,13 @@ const generateTrigFindSide = () => {
     results.push({
       triangle: { a: round2(a), b, c, A: 60, B: 30 },
       unknownSide: 'a', unknownAngle: null,
+      visibleSides: ['c'], visibleAngles: ['A'],
       answer: round2(a), answerAlt: [String(round2(a))],
-      questionText: '求 BC 的長度。（答案取至小數點後兩位）',
+      questionText: '求 BC 的長度。（答案取至3位有效數字）',
       steps: [
-        `對於 $\\angle A = 60°$，BC 是對邊，AB 是斜邊`,
-        `$\\sin 60° = \\dfrac{BC}{AB}$`,
-        `$\\dfrac{\\sqrt{3}}{2} = \\dfrac{BC}{${c}}$`,
-        `$BC = ${c} \\times \\dfrac{\\sqrt{3}}{2} = ${round2(a)}$`
+        `已掌握資料如下：$\\angle BAC = 60°$，AB = ${c}（斜邊）。`,
+        `要找以下長度：BC（對邊）。`,
+        `$$\\begin{align*}\\sin 60° &= \\dfrac{BC}{AB} \\\\[4pt] \\dfrac{\\sqrt{3}}{2} &= \\dfrac{BC}{${c}} \\\\[4pt] BC &= ${c} \\times \\dfrac{\\sqrt{3}}{2} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
   }
@@ -356,13 +405,13 @@ const generateTrigFindSide = () => {
     results.push({
       triangle: { a: round2(a), b, c, A: 60, B: 30 },
       unknownSide: 'b', unknownAngle: null,
+      visibleSides: ['c'], visibleAngles: ['A'],
       answer: b, answerAlt: [String(b)],
       questionText: '求 AC 的長度。',
       steps: [
-        `對於 $\\angle A = 60°$，AC 是鄰邊，AB 是斜邊`,
-        `$\\cos 60° = \\dfrac{AC}{AB}$`,
-        `$\\dfrac{1}{2} = \\dfrac{AC}{${c}}$`,
-        `$AC = ${c} \\times \\dfrac{1}{2} = ${b}$`
+        `已掌握資料如下：$\\angle BAC = 60°$，AB = ${c}（斜邊）。`,
+        `要找以下長度：AC（鄰邊）。`,
+        `$$\\begin{align*}\\cos 60° &= \\dfrac{AC}{AB} \\\\[4pt] \\dfrac{1}{2} &= \\dfrac{AC}{${c}} \\\\[4pt] AC &= ${c} \\times \\dfrac{1}{2} \\\\[2pt] &= ${b}\\end{align*}$$`
       ]
     });
   }
@@ -375,13 +424,13 @@ const generateTrigFindSide = () => {
     results.push({
       triangle: { a: round2(a), b, c: round2(c), A: 30, B: 60 },
       unknownSide: 'a', unknownAngle: null,
+      visibleSides: ['b'], visibleAngles: ['A'],
       answer: round2(a), answerAlt: [String(round2(a))],
-      questionText: '求 BC 的長度。（答案取至小數點後兩位）',
+      questionText: '求 BC 的長度。（答案取至3位有效數字）',
       steps: [
-        `對於 $\\angle A = 30°$，BC 是對邊，AC 是鄰邊`,
-        `$\\tan 30° = \\dfrac{BC}{AC}$`,
-        `$\\dfrac{1}{\\sqrt{3}} = \\dfrac{BC}{${b}}$`,
-        `$BC = ${b} \\times \\dfrac{1}{\\sqrt{3}} = ${round2(a)}$`
+        `已掌握資料如下：$\\angle BAC = 30°$，AC = ${b}（鄰邊）。`,
+        `要找以下長度：BC（對邊）。`,
+        `$$\\begin{align*}\\tan 30° &= \\dfrac{BC}{AC} \\\\[4pt] \\dfrac{1}{\\sqrt{3}} &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times \\dfrac{1}{\\sqrt{3}} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
   }
@@ -394,13 +443,13 @@ const generateTrigFindSide = () => {
     results.push({
       triangle: { a: round2(a), b, c: round2(c), A: 60, B: 30 },
       unknownSide: 'a', unknownAngle: null,
+      visibleSides: ['b'], visibleAngles: ['A'],
       answer: round2(a), answerAlt: [String(round2(a))],
-      questionText: '求 BC 的長度。（答案取至小數點後兩位）',
+      questionText: '求 BC 的長度。（答案取至3位有效數字）',
       steps: [
-        `對於 $\\angle A = 60°$，BC 是對邊，AC 是鄰邊`,
-        `$\\tan 60° = \\dfrac{BC}{AC}$`,
-        `$\\sqrt{3} = \\dfrac{BC}{${b}}$`,
-        `$BC = ${b} \\times \\sqrt{3} = ${round2(a)}$`
+        `已掌握資料如下：$\\angle BAC = 60°$，AC = ${b}（鄰邊）。`,
+        `要找以下長度：BC（對邊）。`,
+        `$$\\begin{align*}\\tan 60° &= \\dfrac{BC}{AC} \\\\[4pt] \\sqrt{3} &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times \\sqrt{3} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
   }
@@ -414,13 +463,13 @@ const generateTrigFindSide = () => {
     results.push({
       triangle: { a, b: round2(b), c: round2(c), A, B: 90 - A },
       unknownSide: 'c', unknownAngle: null,
+      visibleSides: ['a'], visibleAngles: ['A'],
       answer: round2(c), answerAlt: [String(round2(c))],
-      questionText: '求 AB 的長度。（答案取至小數點後兩位）',
+      questionText: '求 AB 的長度。（答案取至3位有效數字）',
       steps: [
-        `對於 $\\angle A = ${A}°$，BC = ${a} 是對邊，AB 是斜邊`,
-        `$\\sin ${A}° = \\dfrac{BC}{AB}$`,
-        `$AB = \\dfrac{BC}{\\sin ${A}°} = \\dfrac{${a}}{\\sin ${A}°}$`,
-        `$AB = ${round2(c)}$`
+        `已掌握資料如下：$\\angle BAC = ${A}°$，BC = ${a}（對邊）。`,
+        `要找以下長度：AB（斜邊）。`,
+        `$$\\begin{align*}\\sin ${A}° &= \\dfrac{BC}{AB} \\\\[4pt] AB &= \\dfrac{BC}{\\sin ${A}°} \\\\[4pt] &= \\dfrac{${a}}{\\sin ${A}°} \\\\[2pt] &= ${round2(c)}\\end{align*}$$`
       ]
     });
   }
@@ -441,13 +490,13 @@ const generateTrigFindAngle = () => {
     results.push({
       triangle: { a: round2(a), b, c: round2(c), A, B: 90 - A },
       unknownSide: null, unknownAngle: 'A',
+      visibleSides: ['a', 'b'], visibleAngles: [],
       answer: A, answerAlt: [String(A)],
-      questionText: '求 θ 的度數。（答案取至整數）',
+      questionText: '求 ∠BAC 的度數。（答案取至整數）',
       steps: [
-        `BC = ${round2(a)} 是 $\\theta$ 的對邊，AC = ${b} 是鄰邊`,
-        `$\\tan \\theta = \\dfrac{BC}{AC} = \\dfrac{${round2(a)}}{${b}}$`,
-        `$\\theta = \\tan^{-1}\\left(\\dfrac{${round2(a)}}{${b}}\\right)$`,
-        `$\\theta = ${A}°$`
+        `已掌握資料如下：BC = ${round2(a)}（對邊），AC = ${b}（鄰邊）。`,
+        `要找以下角度：$\\angle BAC$。`,
+        `$$\\begin{align*}\\tan \\angle BAC &= \\dfrac{BC}{AC} = \\dfrac{${round2(a)}}{${b}} \\\\[4pt] \\angle BAC &= \\tan^{-1}\\!\\left(\\dfrac{${round2(a)}}{${b}}\\right) \\\\[2pt] &= ${A}°\\end{align*}$$`
       ]
     });
   }
@@ -461,13 +510,13 @@ const generateTrigFindAngle = () => {
     results.push({
       triangle: { a: round2(a), b: round2(b), c, A, B: 90 - A },
       unknownSide: null, unknownAngle: 'A',
+      visibleSides: ['a', 'c'], visibleAngles: [],
       answer: A, answerAlt: [String(A)],
-      questionText: '求 θ 的度數。（答案取至整數）',
+      questionText: '求 ∠BAC 的度數。（答案取至整數）',
       steps: [
-        `BC = ${round2(a)} 是 $\\theta$ 的對邊，AB = ${c} 是斜邊`,
-        `$\\sin \\theta = \\dfrac{BC}{AB} = \\dfrac{${round2(a)}}{${c}}$`,
-        `$\\theta = \\sin^{-1}\\left(\\dfrac{${round2(a)}}{${c}}\\right)$`,
-        `$\\theta = ${A}°$`
+        `已掌握資料如下：BC = ${round2(a)}（對邊），AB = ${c}（斜邊）。`,
+        `要找以下角度：$\\angle BAC$。`,
+        `$$\\begin{align*}\\sin \\angle BAC &= \\dfrac{BC}{AB} = \\dfrac{${round2(a)}}{${c}} \\\\[4pt] \\angle BAC &= \\sin^{-1}\\!\\left(\\dfrac{${round2(a)}}{${c}}\\right) \\\\[2pt] &= ${A}°\\end{align*}$$`
       ]
     });
   }
@@ -481,13 +530,13 @@ const generateTrigFindAngle = () => {
     results.push({
       triangle: { a: round2(a), b: round2(b), c, A, B: 90 - A },
       unknownSide: null, unknownAngle: 'A',
+      visibleSides: ['b', 'c'], visibleAngles: [],
       answer: A, answerAlt: [String(A)],
-      questionText: '求 θ 的度數。（答案取至整數）',
+      questionText: '求 ∠BAC 的度數。（答案取至整數）',
       steps: [
-        `AC = ${round2(b)} 是 $\\theta$ 的鄰邊，AB = ${c} 是斜邊`,
-        `$\\cos \\theta = \\dfrac{AC}{AB} = \\dfrac{${round2(b)}}{${c}}$`,
-        `$\\theta = \\cos^{-1}\\left(\\dfrac{${round2(b)}}{${c}}\\right)$`,
-        `$\\theta = ${A}°$`
+        `已掌握資料如下：AC = ${round2(b)}（鄰邊），AB = ${c}（斜邊）。`,
+        `要找以下角度：$\\angle BAC$。`,
+        `$$\\begin{align*}\\cos \\angle BAC &= \\dfrac{AC}{AB} = \\dfrac{${round2(b)}}{${c}} \\\\[4pt] \\angle BAC &= \\cos^{-1}\\!\\left(\\dfrac{${round2(b)}}{${c}}\\right) \\\\[2pt] &= ${A}°\\end{align*}$$`
       ]
     });
   }
@@ -501,13 +550,13 @@ const generateTrigFindAngle = () => {
     results.push({
       triangle: { a, b: round2(b), c: round2(c), A: 90 - B, B },
       unknownSide: null, unknownAngle: 'B',
+      visibleSides: ['a', 'b'], visibleAngles: [],
       answer: B, answerAlt: [String(B)],
-      questionText: '求 θ 的度數。（答案取至整數）',
+      questionText: '求 ∠ABC 的度數。（答案取至整數）',
       steps: [
-        `AC = ${round2(b)} 是 $\\theta$ 的對邊，BC = ${a} 是鄰邊`,
-        `$\\tan \\theta = \\dfrac{AC}{BC} = \\dfrac{${round2(b)}}{${a}}$`,
-        `$\\theta = \\tan^{-1}\\left(\\dfrac{${round2(b)}}{${a}}\\right)$`,
-        `$\\theta = ${B}°$`
+        `已掌握資料如下：AC = ${round2(b)}（對邊），BC = ${a}（鄰邊）。`,
+        `要找以下角度：$\\angle ABC$。`,
+        `$$\\begin{align*}\\tan \\angle ABC &= \\dfrac{AC}{BC} = \\dfrac{${round2(b)}}{${a}} \\\\[4pt] \\angle ABC &= \\tan^{-1}\\!\\left(\\dfrac{${round2(b)}}{${a}}\\right) \\\\[2pt] &= ${B}°\\end{align*}$$`
       ]
     });
   }
@@ -812,14 +861,27 @@ const QuizPage = ({ onBackToTeaching }) => {
     setTimeout(() => inputRef.current?.focus(), 100);
   };
 
+  // Parse expressions like "√8", "2√3", "10" into a numeric value
+  const parseSurd = (str) => {
+    const s = str.trim().replace(/\s/g, '');
+    // Match: optional coefficient, √, radicand — e.g. "2√3", "√8", "10√2"
+    const m = s.match(/^(\d+(?:\.\d+)?)?√(\d+(?:\.\d+)?)$/);
+    if (m) {
+      const coeff = m[1] ? parseFloat(m[1]) : 1;
+      return coeff * Math.sqrt(parseFloat(m[2]));
+    }
+    const n = parseFloat(s);
+    return isNaN(n) ? null : n;
+  };
+
   const handleSubmit = () => {
     if (!userAnswer.trim() || isAnswered) return;
 
-    const userVal = parseFloat(userAnswer);
-    if (isNaN(userVal)) return;
+    const userVal = parseSurd(userAnswer);
+    if (userVal === null) return;
 
     const correctVal = currentQuestion.answer;
-    const isCorrect = Math.abs(userVal - correctVal) < 0.5;
+    const isCorrect = round3sf(userVal) === round3sf(correctVal);
 
     setIsAnswered(true);
 
@@ -991,6 +1053,8 @@ const QuizPage = ({ onBackToTeaching }) => {
                 unknownSide={currentQuestion.unknownSide}
                 unknownAngle={currentQuestion.unknownAngle}
                 quizType={quizType}
+                visibleSides={currentQuestion.visibleSides || ['a','b','c']}
+                visibleAngles={currentQuestion.visibleAngles || ['A','B']}
               />
             </div>
 
