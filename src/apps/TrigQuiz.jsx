@@ -673,30 +673,89 @@ const TeachingPage = ({ onStartQuiz }) => {
 
             <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
               <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                <p className="font-bold text-blue-700 mb-2">定理</p>
-                <p className="text-slate-700 mb-2">在直角三角形中，斜邊的平方等於其餘兩邊的平方和。</p>
-                <Latex math="c^2 = a^2 + b^2" block />
-                <p className="text-sm text-slate-500 mt-2">其中 c 是斜邊（最長邊，直角的對邊）</p>
+                <p className="font-bold text-blue-700 mb-4">定理</p>
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  <div className="flex-1 space-y-3">
+                    <p className="text-slate-700">在直角三角形中，斜邊的平方等於其餘兩邊的平方和。</p>
+                    <Latex math="c^2 = a^2 + b^2" block />
+                    <p className="text-sm text-slate-500">其中 c 是斜邊（最長邊，直角的對邊）</p>
+                  </div>
+                  <div className="w-56 flex-shrink-0">
+                    <svg viewBox="0 0 160 120" className="w-full">
+                      <polygon points="10,100 130,100 130,20" fill="rgba(99,102,241,0.08)" stroke="#4f46e5" strokeWidth="2.5" strokeLinejoin="round" />
+                      <polyline points="120,100 120,90 130,90" fill="none" stroke="#4f46e5" strokeWidth="1.5" />
+                      <text x="135" y="15" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#4f46e5">A</text>
+                      <text x="0" y="105" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#4f46e5">B</text>
+                      <text x="135" y="115" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#4f46e5">C</text>
+                      <text x="70" y="115" fontSize="14" fontStyle="italic" fill="#334155">a</text>
+                      <text x="140" y="65" fontSize="14" fontStyle="italic" fill="#334155">b</text>
+                      <text x="60" y="50" fontSize="14" fontStyle="italic" fill="#334155">c</text>
+                    </svg>
+                  </div>
+                </div>
               </div>
 
               <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
-                <p className="font-bold text-amber-700 mb-2">💡 重要提醒</p>
+                <p className="font-bold text-amber-700 mb-2">💡 步驟</p>
                 <ul className="list-disc pl-5 text-sm space-y-1 text-slate-700">
-                  <li>斜邊（hypotenuse）永遠是<strong>最長的邊</strong>，位於直角對面</li>
+                  <li><strong className="text-amber-800">1. 辨認最長的邊（斜邊）</strong>，其位於直角對面</li>
+                  <li><strong className="text-amber-800">2. 寫出 <Latex math="c^2 = a^2 + b^2" /></strong>，將相應的數字放入公式</li>
                   <li>找斜邊：兩邊平方<strong>相加</strong>再開方</li>
-                  <li>找短邊：斜邊平方<strong>減去</strong>另一邊平方再開方</li>
+                  <li>找短邊：斜邊平方<strong>減去</strong>另一邊平方再開方（需移項）</li>
                 </ul>
               </div>
 
-              <div className="bg-green-50 rounded-xl p-4 border border-green-200">
-                <p className="font-bold text-green-700 mb-2">例題</p>
-                <p className="text-slate-700 mb-2">直角三角形中，兩直角邊分別為 3 和 4，求斜邊長度。</p>
-                <div className="text-sm space-y-1 text-slate-600">
-                  <StepText text="$c^2 = 3^2 + 4^2$" />
-                  <br />
-                  <StepText text="$c^2 = 9 + 16 = 25$" />
-                  <br />
-                  <StepText text="$c = \sqrt{25} = 5$" />
+              <div className="bg-green-50 rounded-xl p-5 border border-green-200">
+                <div className="mb-4">
+                  <p className="font-bold text-green-700 text-lg mb-1">例子：</p>
+                  <p className="text-slate-700">求下列各三角形中的未知量。</p>
+                  <p className="text-sm text-slate-500">（如有需要，取答案準確至三位有效數字。）</p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Case 1 */}
+                  <div className="bg-white rounded-xl p-5 shadow-sm border border-green-100">
+                    <div className="flex gap-2 mb-4">
+                      <span className="font-bold text-slate-700">(a)</span>
+                      <div className="font-bold text-green-700">Case 1: 未知數為斜邊（最長）</div>
+                    </div>
+                    <div className="w-56 mx-auto mb-6">
+                      <svg viewBox="0 0 160 120" className="w-full">
+                        <polygon points="40,20 40,100 140,100" fill="rgba(34,197,94,0.08)" stroke="#16a34a" strokeWidth="2.5" strokeLinejoin="round" />
+                        <polyline points="40,90 50,90 50,100" fill="none" stroke="#16a34a" strokeWidth="1.5" />
+                        <text x="35" y="15" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#16a34a">A</text>
+                        <text x="25" y="110" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#16a34a">B</text>
+                        <text x="145" y="110" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#16a34a">C</text>
+                        <text x="5" y="65" fontSize="13" fill="#334155">6 m</text>
+                        <text x="85" y="115" fontSize="13" fill="#334155">8 m</text>
+                        <text x="95" y="50" fontSize="13" fill="#334155">x m</text>
+                      </svg>
+                    </div>
+                    <Latex math="\begin{align*} x^2 &= 6^2 + 8^2 \\ x &= \sqrt{6^2 + 8^2} \\ x &= 10 \end{align*}" block />
+                  </div>
+
+                  {/* Case 2 */}
+                  <div className="bg-white rounded-xl p-5 shadow-sm border border-green-100">
+                    <div className="flex gap-2 mb-4">
+                      <span className="font-bold text-slate-700">(b)</span>
+                      <div className="font-bold text-amber-600">Case 2: 未知數為直角邊（非斜邊）</div>
+                    </div>
+                    <div className="w-56 mx-auto mb-6">
+                      <svg viewBox="-20 0 180 120" className="w-full">
+                        <polygon points="20,20 140,20 20,100" fill="rgba(217,119,6,0.08)" stroke="#d97706" strokeWidth="2.5" strokeLinejoin="round" />
+                        <polyline points="20,30 30,30 30,20" fill="none" stroke="#d97706" strokeWidth="1.5" />
+                        <text x="5" y="15" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#d97706">R</text>
+                        <text x="145" y="15" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#d97706">Q</text>
+                        <text x="5" y="110" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#d97706">P</text>
+                        <text x="75" y="13" fontSize="13" fill="#334155">y cm</text>
+                        <text x="17" y="65" fontSize="13" fill="#334155" textAnchor="end">10 cm</text>
+                        <text x="85" y="70" fontSize="13" fill="#334155">22 cm</text>
+                      </svg>
+                    </div>
+                    <div className="text-center">
+                      <Latex math="\begin{align*} 10^2 + y^2 &= 22^2 \\ y^2 &= 22^2 - 10^2 \quad {\small\color{#d97706}(\text{需移項})} \\ y^2 &= 384 \\ y &= \sqrt{384} \\ y &= 19.6 \end{align*}" block />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -710,27 +769,38 @@ const TeachingPage = ({ onStartQuiz }) => {
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
-              <div className="bg-green-50 rounded-xl p-4 border border-green-200">
-                <p className="font-bold text-green-700 mb-3">SOH CAH TOA 口訣</p>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 bg-white p-3 rounded-lg border border-green-100">
-                    <span className="bg-red-500 text-white font-bold px-3 py-1 rounded text-sm">S</span>
-                    <div>
-                      <Latex math="\sin \theta = \dfrac{\text{對邊 (Opposite)}}{\text{斜邊 (Hypotenuse)}}" />
+              <div className="bg-red-50 rounded-xl p-4 border border-red-200">
+                <p className="font-bold text-red-600 text-center mb-4">三角比口訣：對斜鄰斜對鄰</p>
+                {/* 三欄公式 */}
+                <div className="grid grid-cols-3 gap-3 mb-5">
+                  {[
+                    { fn: '\\sin\\theta', num: '對', den: '斜' },
+                    { fn: '\\cos\\theta', num: '鄰', den: '斜' },
+                    { fn: '\\tan\\theta', num: '對', den: '鄰' },
+                  ].map(({ fn, num, den }) => (
+                    <div key={fn} className="bg-white rounded-xl p-3 border border-red-100 text-center shadow-sm">
+                      <Latex math={fn} block />
+                      <Latex math={`= \\dfrac{\\text{${num}}}{\\text{${den}}}`} block />
                     </div>
-                  </div>
-                  <div className="flex items-center gap-3 bg-white p-3 rounded-lg border border-green-100">
-                    <span className="bg-blue-500 text-white font-bold px-3 py-1 rounded text-sm">C</span>
-                    <div>
-                      <Latex math="\cos \theta = \dfrac{\text{鄰邊 (Adjacent)}}{\text{斜邊 (Hypotenuse)}}" />
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3 bg-white p-3 rounded-lg border border-green-100">
-                    <span className="bg-green-600 text-white font-bold px-3 py-1 rounded text-sm">T</span>
-                    <div>
-                      <Latex math="\tan \theta = \dfrac{\text{對邊 (Opposite)}}{\text{鄰邊 (Adjacent)}}" />
-                    </div>
-                  </div>
+                  ))}
+                </div>
+                {/* 三角形圖解 */}
+                <div className="bg-white rounded-xl p-3 border border-red-100 shadow-sm">
+                  <svg viewBox="0 0 260 180" className="w-full max-w-xs mx-auto">
+                    {/* triangle: right angle bottom-right, θ bottom-left */}
+                    <polygon points="30,150 230,150 230,30" fill="rgba(99,102,241,0.07)" stroke="#4f46e5" strokeWidth="2.5" strokeLinejoin="round" />
+                    {/* right-angle square */}
+                    <polyline points="218,150 218,138 230,138" fill="none" stroke="#4f46e5" strokeWidth="1.8" />
+                    {/* θ arc */}
+                    <path d="M 58,150 A 28,28 0 0 1 47.6,127" fill="none" stroke="#e11d48" strokeWidth="2" />
+                    <text x="60" y="143" fontSize="16" fontStyle="italic" fill="#e11d48" fontWeight="bold">θ</text>
+                    {/* 斜 label on hypotenuse */}
+                    <text x="118" y="82" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle" transform="rotate(-28 118 82)">斜</text>
+                    {/* 對 label on right vertical */}
+                    <text x="248" y="98" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle">對</text>
+                    {/* 鄰 label on bottom horizontal */}
+                    <text x="130" y="170" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle">鄰</text>
+                  </svg>
                 </div>
               </div>
 
