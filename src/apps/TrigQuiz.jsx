@@ -334,7 +334,7 @@ const generateTrigFindSide = () => {
       questionText: '求 BC 的長度。',
       steps: [
         `已掌握資料如下：$\\angle BAC = 30°$，AB = ${c}（斜邊）。`,
-        `要找以下長度：BC（對邊）。`,
+        `要找以下長度：BC（對邊）。對邊 + 斜邊的組合，使用 $\\sin$。`,
         `$$\\begin{align*}\\sin 30° &= \\dfrac{BC}{AB} \\\\[4pt] \\dfrac{1}{2} &= \\dfrac{BC}{${c}} \\\\[4pt] BC &= ${c} \\times \\dfrac{1}{2} \\\\[2pt] &= ${a}\\end{align*}$$`
       ]
     });
@@ -353,7 +353,7 @@ const generateTrigFindSide = () => {
       questionText: '求 AC 的長度。（答案取至3位有效數字）',
       steps: [
         `已掌握資料如下：$\\angle BAC = 30°$，AB = ${c}（斜邊）。`,
-        `要找以下長度：AC（鄰邊）。`,
+        `要找以下長度：AC（鄰邊）。鄰邊 + 斜邊的組合，使用 $\\cos$。`,
         `$$\\begin{align*}\\cos 30° &= \\dfrac{AC}{AB} \\\\[4pt] \\dfrac{\\sqrt{3}}{2} &= \\dfrac{AC}{${c}} \\\\[4pt] AC &= ${c} \\times \\dfrac{\\sqrt{3}}{2} \\\\[2pt] &= ${round2(b)}\\end{align*}$$`
       ]
     });
@@ -372,7 +372,7 @@ const generateTrigFindSide = () => {
       questionText: '求 BC 的長度。',
       steps: [
         `已掌握資料如下：$\\angle BAC = 45°$，AC = ${b}（鄰邊）。`,
-        `要找以下長度：BC（對邊）。`,
+        `要找以下長度：BC（對邊）。對邊 + 鄰邊的組合，使用 $\\tan$。`,
         `$$\\begin{align*}\\tan 45° &= \\dfrac{BC}{AC} \\\\[4pt] 1 &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times 1 \\\\[2pt] &= ${a}\\end{align*}$$`
       ]
     });
@@ -391,7 +391,7 @@ const generateTrigFindSide = () => {
       questionText: '求 BC 的長度。（答案取至3位有效數字）',
       steps: [
         `已掌握資料如下：$\\angle BAC = 60°$，AB = ${c}（斜邊）。`,
-        `要找以下長度：BC（對邊）。`,
+        `要找以下長度：BC（對邊）。對邊 + 斜邊的組合，使用 $\\sin$。`,
         `$$\\begin{align*}\\sin 60° &= \\dfrac{BC}{AB} \\\\[4pt] \\dfrac{\\sqrt{3}}{2} &= \\dfrac{BC}{${c}} \\\\[4pt] BC &= ${c} \\times \\dfrac{\\sqrt{3}}{2} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
@@ -410,7 +410,7 @@ const generateTrigFindSide = () => {
       questionText: '求 AC 的長度。',
       steps: [
         `已掌握資料如下：$\\angle BAC = 60°$，AB = ${c}（斜邊）。`,
-        `要找以下長度：AC（鄰邊）。`,
+        `要找以下長度：AC（鄰邊）。鄰邊 + 斜邊的組合，使用 $\\cos$。`,
         `$$\\begin{align*}\\cos 60° &= \\dfrac{AC}{AB} \\\\[4pt] \\dfrac{1}{2} &= \\dfrac{AC}{${c}} \\\\[4pt] AC &= ${c} \\times \\dfrac{1}{2} \\\\[2pt] &= ${b}\\end{align*}$$`
       ]
     });
@@ -429,7 +429,7 @@ const generateTrigFindSide = () => {
       questionText: '求 BC 的長度。（答案取至3位有效數字）',
       steps: [
         `已掌握資料如下：$\\angle BAC = 30°$，AC = ${b}（鄰邊）。`,
-        `要找以下長度：BC（對邊）。`,
+        `要找以下長度：BC（對邊）。對邊 + 鄰邊的組合，使用 $\\tan$。`,
         `$$\\begin{align*}\\tan 30° &= \\dfrac{BC}{AC} \\\\[4pt] \\dfrac{1}{\\sqrt{3}} &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times \\dfrac{1}{\\sqrt{3}} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
@@ -448,7 +448,7 @@ const generateTrigFindSide = () => {
       questionText: '求 BC 的長度。（答案取至3位有效數字）',
       steps: [
         `已掌握資料如下：$\\angle BAC = 60°$，AC = ${b}（鄰邊）。`,
-        `要找以下長度：BC（對邊）。`,
+        `要找以下長度：BC（對邊）。對邊 + 鄰邊的組合，使用 $\\tan$。`,
         `$$\\begin{align*}\\tan 60° &= \\dfrac{BC}{AC} \\\\[4pt] \\sqrt{3} &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times \\sqrt{3} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
@@ -495,7 +495,7 @@ const generateTrigFindAngle = () => {
       questionText: '求 ∠BAC 的度數。（答案取至整數）',
       steps: [
         `已掌握資料如下：BC = ${round2(a)}（對邊），AC = ${b}（鄰邊）。`,
-        `要找以下角度：$\\angle BAC$。`,
+        `要找以下角度：$\\angle BAC$。對邊 + 鄰邊的組合，使用 $\\tan$。`,
         `$$\\begin{align*}\\tan \\angle BAC &= \\dfrac{BC}{AC} \\\\[4pt] \\tan \\angle BAC &= \\dfrac{${round2(a)}}{${b}} \\\\[4pt] \\angle BAC &= ${A}°\\end{align*}$$`
       ]
     });
@@ -515,7 +515,7 @@ const generateTrigFindAngle = () => {
       questionText: '求 ∠BAC 的度數。（答案取至整數）',
       steps: [
         `已掌握資料如下：BC = ${round2(a)}（對邊），AB = ${c}（斜邊）。`,
-        `要找以下角度：$\\angle BAC$。`,
+        `要找以下角度：$\\angle BAC$。對邊 + 斜邊的組合，使用 $\\sin$。`,
         `$$\\begin{align*}\\sin \\angle BAC &= \\dfrac{BC}{AB} \\\\[4pt] \\sin \\angle BAC &= \\dfrac{${round2(a)}}{${c}} \\\\[4pt] \\angle BAC &= ${A}°\\end{align*}$$`
       ]
     });
@@ -535,7 +535,7 @@ const generateTrigFindAngle = () => {
       questionText: '求 ∠BAC 的度數。（答案取至整數）',
       steps: [
         `已掌握資料如下：AC = ${round2(b)}（鄰邊），AB = ${c}（斜邊）。`,
-        `要找以下角度：$\\angle BAC$。`,
+        `要找以下角度：$\\angle BAC$。鄰邊 + 斜邊的組合，使用 $\\cos$。`,
         `$$\\begin{align*}\\cos \\angle BAC &= \\dfrac{AC}{AB} \\\\[4pt] \\cos \\angle BAC &= \\dfrac{${round2(b)}}{${c}} \\\\[4pt] \\angle BAC &= ${A}°\\end{align*}$$`
       ]
     });
@@ -555,7 +555,7 @@ const generateTrigFindAngle = () => {
       questionText: '求 ∠ABC 的度數。（答案取至整數）',
       steps: [
         `已掌握資料如下：AC = ${round2(b)}（對邊），BC = ${a}（鄰邊）。`,
-        `要找以下角度：$\\angle ABC$。`,
+        `要找以下角度：$\\angle ABC$。對邊 + 鄰邊的組合，使用 $\\tan$。`,
         `$$\\begin{align*}\\tan \\angle ABC &= \\dfrac{AC}{BC} \\\\[4pt] \\tan \\angle ABC &= \\dfrac{${round2(b)}}{${a}} \\\\[4pt] \\angle ABC &= ${B}°\\end{align*}$$`
       ]
     });
@@ -762,7 +762,7 @@ const TeachingPage = ({ onStartQuiz }) => {
           <section ref={section3Ref} className="scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
               <span className="bg-amber-500 text-white font-black text-lg px-3 py-1 rounded-lg">3</span>
-              <h2 className="text-xl font-bold text-amber-800">特殊角的三角比</h2>
+              <h2 className="text-xl font-bold text-amber-800">特殊角的三角比 (F3)</h2>
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
