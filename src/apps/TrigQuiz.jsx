@@ -260,10 +260,7 @@ const generatePythagorasQuestion = () => {
     unknownSide = 'a';
     answer = a;
     steps = [
-      `由畢氏定理：$AB^2 = AC^2 + BC^2$`,
-      `$${c}^2 = ${b}^2 + BC^2$`,
-      `$BC^2 = ${c}^2 - ${b}^2 = ${c * c} - ${b * b} = ${c * c - b * b}$`,
-      `$BC = \\sqrt{${c * c - b * b}} = ${a}$`
+      `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\\\[4pt] ${c}^2 &= ${b}^2 + BC^2 \\\\[4pt] BC^2 &= ${c}^2 - ${b}^2 \\\\[4pt] &= ${c * c} - ${b * b} \\\\[4pt] &= ${c * c - b * b} \\\\[4pt] BC &= \\sqrt{${c * c - b * b}} \\\\[4pt] &= ${a}\\end{align*}$$`
     ];
   } else if (findIndex === 1) {
     // Find b (=leg2), given a=leg1, c=hyp
@@ -271,10 +268,7 @@ const generatePythagorasQuestion = () => {
     unknownSide = 'b';
     answer = b;
     steps = [
-      `由畢氏定理：$AB^2 = AC^2 + BC^2$`,
-      `$${c}^2 = AC^2 + ${a}^2$`,
-      `$AC^2 = ${c}^2 - ${a}^2 = ${c * c} - ${a * a} = ${c * c - a * a}$`,
-      `$AC = \\sqrt{${c * c - a * a}} = ${b}$`
+      `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\\\[4pt] ${c}^2 &= AC^2 + ${a}^2 \\\\[4pt] AC^2 &= ${c}^2 - ${a}^2 \\\\[4pt] &= ${c * c} - ${a * a} \\\\[4pt] &= ${c * c - a * a} \\\\[4pt] AC &= \\sqrt{${c * c - a * a}} \\\\[4pt] &= ${b}\\end{align*}$$`
     ];
   } else {
     // Find c (hyp), given a=leg1, b=leg2
@@ -282,9 +276,7 @@ const generatePythagorasQuestion = () => {
     unknownSide = 'c';
     answer = c;
     steps = [
-      `由畢氏定理：$AB^2 = AC^2 + BC^2$`,
-      `$AB^2 = ${b}^2 + ${a}^2 = ${b * b} + ${a * a} = ${b * b + a * a}$`,
-      `$AB = \\sqrt{${b * b + a * a}} = ${c}$`
+      `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\\\[4pt] &= ${b}^2 + ${a}^2 \\\\[4pt] &= ${b * b} + ${a * a} \\\\[4pt] &= ${b * b + a * a} \\\\[4pt] AB &= \\sqrt{${b * b + a * a}} \\\\[4pt] &= ${c}\\end{align*}$$`
     ];
   }
 
@@ -335,7 +327,7 @@ const generateTrigFindSide = () => {
       steps: [
         `已掌握資料如下：$\\angle BAC = 30°$，AB = ${c}（斜邊）。`,
         `要找以下長度：BC（對邊）。對邊 + 斜邊的組合，使用 $\\sin$。`,
-        `$$\\begin{align*}\\sin 30° &= \\dfrac{BC}{AB} \\\\[4pt] \\dfrac{1}{2} &= \\dfrac{BC}{${c}} \\\\[4pt] BC &= ${c} \\times \\dfrac{1}{2} \\\\[2pt] &= ${a}\\end{align*}$$`
+        `$$\\begin{align*}\\sin 30° &= \\dfrac{BC}{AB} \\\\[4pt] BC &= AB \\times \\sin 30° \\\\[4pt] &= ${c} \\times \\sin 30° \\\\[2pt] &= ${a}\\end{align*}$$`
       ]
     });
   }
@@ -354,7 +346,7 @@ const generateTrigFindSide = () => {
       steps: [
         `已掌握資料如下：$\\angle BAC = 30°$，AB = ${c}（斜邊）。`,
         `要找以下長度：AC（鄰邊）。鄰邊 + 斜邊的組合，使用 $\\cos$。`,
-        `$$\\begin{align*}\\cos 30° &= \\dfrac{AC}{AB} \\\\[4pt] \\dfrac{\\sqrt{3}}{2} &= \\dfrac{AC}{${c}} \\\\[4pt] AC &= ${c} \\times \\dfrac{\\sqrt{3}}{2} \\\\[2pt] &= ${round2(b)}\\end{align*}$$`
+        `$$\\begin{align*}\\cos 30° &= \\dfrac{AC}{AB} \\\\[4pt] AC &= AB \\times \\cos 30° \\\\[4pt] &= ${c} \\times \\cos 30° \\\\[2pt] &= ${round2(b)}\\end{align*}$$`
       ]
     });
   }
@@ -373,7 +365,7 @@ const generateTrigFindSide = () => {
       steps: [
         `已掌握資料如下：$\\angle BAC = 45°$，AC = ${b}（鄰邊）。`,
         `要找以下長度：BC（對邊）。對邊 + 鄰邊的組合，使用 $\\tan$。`,
-        `$$\\begin{align*}\\tan 45° &= \\dfrac{BC}{AC} \\\\[4pt] 1 &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times 1 \\\\[2pt] &= ${a}\\end{align*}$$`
+        `$$\\begin{align*}\\tan 45° &= \\dfrac{BC}{AC} \\\\[4pt] BC &= AC \\times \\tan 45° \\\\[4pt] &= ${b} \\times \\tan 45° \\\\[2pt] &= ${a}\\end{align*}$$`
       ]
     });
   }
@@ -392,7 +384,7 @@ const generateTrigFindSide = () => {
       steps: [
         `已掌握資料如下：$\\angle BAC = 60°$，AB = ${c}（斜邊）。`,
         `要找以下長度：BC（對邊）。對邊 + 斜邊的組合，使用 $\\sin$。`,
-        `$$\\begin{align*}\\sin 60° &= \\dfrac{BC}{AB} \\\\[4pt] \\dfrac{\\sqrt{3}}{2} &= \\dfrac{BC}{${c}} \\\\[4pt] BC &= ${c} \\times \\dfrac{\\sqrt{3}}{2} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
+        `$$\\begin{align*}\\sin 60° &= \\dfrac{BC}{AB} \\\\[4pt] BC &= AB \\times \\sin 60° \\\\[4pt] &= ${c} \\times \\sin 60° \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
   }
@@ -411,7 +403,7 @@ const generateTrigFindSide = () => {
       steps: [
         `已掌握資料如下：$\\angle BAC = 60°$，AB = ${c}（斜邊）。`,
         `要找以下長度：AC（鄰邊）。鄰邊 + 斜邊的組合，使用 $\\cos$。`,
-        `$$\\begin{align*}\\cos 60° &= \\dfrac{AC}{AB} \\\\[4pt] \\dfrac{1}{2} &= \\dfrac{AC}{${c}} \\\\[4pt] AC &= ${c} \\times \\dfrac{1}{2} \\\\[2pt] &= ${b}\\end{align*}$$`
+        `$$\\begin{align*}\\cos 60° &= \\dfrac{AC}{AB} \\\\[4pt] AC &= AB \\times \\cos 60° \\\\[4pt] &= ${c} \\times \\cos 60° \\\\[2pt] &= ${b}\\end{align*}$$`
       ]
     });
   }
@@ -430,7 +422,7 @@ const generateTrigFindSide = () => {
       steps: [
         `已掌握資料如下：$\\angle BAC = 30°$，AC = ${b}（鄰邊）。`,
         `要找以下長度：BC（對邊）。對邊 + 鄰邊的組合，使用 $\\tan$。`,
-        `$$\\begin{align*}\\tan 30° &= \\dfrac{BC}{AC} \\\\[4pt] \\dfrac{1}{\\sqrt{3}} &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times \\dfrac{1}{\\sqrt{3}} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
+        `$$\\begin{align*}\\tan 30° &= \\dfrac{BC}{AC} \\\\[4pt] BC &= AC \\times \\tan 30° \\\\[4pt] &= ${b} \\times \\tan 30° \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
   }
@@ -449,7 +441,7 @@ const generateTrigFindSide = () => {
       steps: [
         `已掌握資料如下：$\\angle BAC = 60°$，AC = ${b}（鄰邊）。`,
         `要找以下長度：BC（對邊）。對邊 + 鄰邊的組合，使用 $\\tan$。`,
-        `$$\\begin{align*}\\tan 60° &= \\dfrac{BC}{AC} \\\\[4pt] \\sqrt{3} &= \\dfrac{BC}{${b}} \\\\[4pt] BC &= ${b} \\times \\sqrt{3} \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
+        `$$\\begin{align*}\\tan 60° &= \\dfrac{BC}{AC} \\\\[4pt] BC &= AC \\times \\tan 60° \\\\[4pt] &= ${b} \\times \\tan 60° \\\\[2pt] &= ${round2(a)}\\end{align*}$$`
       ]
     });
   }
