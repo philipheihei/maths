@@ -468,7 +468,7 @@ const generateTrigFindSide = () => {
       questionText: '求 AB 的長度。（答案取至3位有效數字）',
       steps: [
         `已掌握資料如下：$\\angle BAC = ${A}°$，BC = ${a}（對邊）。`,
-        `要找以下長度：AB（斜邊）。`,
+        `要找以下長度：AB（斜邊）。對邊 + 斜邊的組合，使用 $\\sin$。`,
         `$$\\begin{align*}\\sin ${A}° &= \\dfrac{BC}{AB} \\\\[4pt] AB &= \\dfrac{BC}{\\sin ${A}°} \\\\[4pt] &= \\dfrac{${a}}{\\sin ${A}°} \\\\[2pt] &= ${round2(c)}\\end{align*}$$`
       ]
     });
@@ -496,7 +496,7 @@ const generateTrigFindAngle = () => {
       steps: [
         `已掌握資料如下：BC = ${round2(a)}（對邊），AC = ${b}（鄰邊）。`,
         `要找以下角度：$\\angle BAC$。`,
-        `$$\\begin{align*}\\tan \\angle BAC &= \\dfrac{BC}{AC} = \\dfrac{${round2(a)}}{${b}} \\\\[4pt] \\angle BAC &= \\tan^{-1}\\!\\left(\\dfrac{${round2(a)}}{${b}}\\right) \\\\[2pt] &= ${A}°\\end{align*}$$`
+        `$$\\begin{align*}\\tan \\angle BAC &= \\dfrac{BC}{AC} \\\\[4pt] \\tan \\angle BAC &= \\dfrac{${round2(a)}}{${b}} \\\\[4pt] \\angle BAC &= ${A}°\\end{align*}$$`
       ]
     });
   }
@@ -516,7 +516,7 @@ const generateTrigFindAngle = () => {
       steps: [
         `已掌握資料如下：BC = ${round2(a)}（對邊），AB = ${c}（斜邊）。`,
         `要找以下角度：$\\angle BAC$。`,
-        `$$\\begin{align*}\\sin \\angle BAC &= \\dfrac{BC}{AB} = \\dfrac{${round2(a)}}{${c}} \\\\[4pt] \\angle BAC &= \\sin^{-1}\\!\\left(\\dfrac{${round2(a)}}{${c}}\\right) \\\\[2pt] &= ${A}°\\end{align*}$$`
+        `$$\\begin{align*}\\sin \\angle BAC &= \\dfrac{BC}{AB} \\\\[4pt] \\sin \\angle BAC &= \\dfrac{${round2(a)}}{${c}} \\\\[4pt] \\angle BAC &= ${A}°\\end{align*}$$`
       ]
     });
   }
@@ -536,7 +536,7 @@ const generateTrigFindAngle = () => {
       steps: [
         `已掌握資料如下：AC = ${round2(b)}（鄰邊），AB = ${c}（斜邊）。`,
         `要找以下角度：$\\angle BAC$。`,
-        `$$\\begin{align*}\\cos \\angle BAC &= \\dfrac{AC}{AB} = \\dfrac{${round2(b)}}{${c}} \\\\[4pt] \\angle BAC &= \\cos^{-1}\\!\\left(\\dfrac{${round2(b)}}{${c}}\\right) \\\\[2pt] &= ${A}°\\end{align*}$$`
+        `$$\\begin{align*}\\cos \\angle BAC &= \\dfrac{AC}{AB} \\\\[4pt] \\cos \\angle BAC &= \\dfrac{${round2(b)}}{${c}} \\\\[4pt] \\angle BAC &= ${A}°\\end{align*}$$`
       ]
     });
   }
@@ -556,7 +556,7 @@ const generateTrigFindAngle = () => {
       steps: [
         `已掌握資料如下：AC = ${round2(b)}（對邊），BC = ${a}（鄰邊）。`,
         `要找以下角度：$\\angle ABC$。`,
-        `$$\\begin{align*}\\tan \\angle ABC &= \\dfrac{AC}{BC} = \\dfrac{${round2(b)}}{${a}} \\\\[4pt] \\angle ABC &= \\tan^{-1}\\!\\left(\\dfrac{${round2(b)}}{${a}}\\right) \\\\[2pt] &= ${B}°\\end{align*}$$`
+        `$$\\begin{align*}\\tan \\angle ABC &= \\dfrac{AC}{BC} \\\\[4pt] \\tan \\angle ABC &= \\dfrac{${round2(b)}}{${a}} \\\\[4pt] \\angle ABC &= ${B}°\\end{align*}$$`
       ]
     });
   }
