@@ -582,7 +582,7 @@ const MathRenderer = ({ expression, size = 'normal' }) => {
   );
 };
 
-const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = false, inputs = {}, onInputChange, onFocus, inputRefs, eqIndex }) => {
+const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = false, inputs = {}, onInputChange, onFocus, inputRefs, eqIndex, disabled = false }) => {
   if (showPlaceholders) {
     return (
       <div className="flex items-center gap-1 text-xl md:text-2xl font-sans flex-wrap">
@@ -591,9 +591,10 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
           type="text"
           inputMode="none"
           value={inputs.a || ''}
-          onChange={(e) => onInputChange && onInputChange('a', e.target.value)}
-          onFocus={() => onFocus && onFocus('a')}
-          className="w-12 h-10 text-center border-2 border-blue-300 rounded bg-blue-50 focus:border-blue-500 focus:outline-none"
+          onChange={(e) => !disabled && onInputChange && onInputChange('a', e.target.value)}
+          onFocus={() => !disabled && onFocus && onFocus('a')}
+          readOnly={disabled}
+          className={`w-12 h-10 text-center border-2 rounded focus:outline-none ${disabled ? 'border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed' : 'border-blue-300 bg-blue-50 focus:border-blue-500'}`}
           placeholder="?"
         />
         <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span>
@@ -603,9 +604,10 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
           type="text"
           inputMode="none"
           value={inputs.b || ''}
-          onChange={(e) => onInputChange && onInputChange('b', e.target.value)}
-          onFocus={() => onFocus && onFocus('b')}
-          className="w-12 h-10 text-center border-2 border-green-300 rounded bg-green-50 focus:border-green-500 focus:outline-none"
+          onChange={(e) => !disabled && onInputChange && onInputChange('b', e.target.value)}
+          onFocus={() => !disabled && onFocus && onFocus('b')}
+          readOnly={disabled}
+          className={`w-12 h-10 text-center border-2 rounded focus:outline-none ${disabled ? 'border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed' : 'border-green-300 bg-green-50 focus:border-green-500'}`}
           placeholder="?"
         />
         <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span>
@@ -615,9 +617,10 @@ const EquationDisplay = ({ a, b, c, varX = 'x', varY = 'y', showPlaceholders = f
           type="text"
           inputMode="none"
           value={inputs.c || ''}
-          onChange={(e) => onInputChange && onInputChange('c', e.target.value)}
-          onFocus={() => onFocus && onFocus('c')}
-          className="w-14 h-10 text-center border-2 border-purple-300 rounded bg-purple-50 focus:border-purple-500 focus:outline-none"
+          onChange={(e) => !disabled && onInputChange && onInputChange('c', e.target.value)}
+          onFocus={() => !disabled && onFocus && onFocus('c')}
+          readOnly={disabled}
+          className={`w-14 h-10 text-center border-2 rounded focus:outline-none ${disabled ? 'border-gray-300 bg-gray-100 text-gray-400 cursor-not-allowed' : 'border-purple-300 bg-purple-50 focus:border-purple-500'}`}
           placeholder="?"
         />
       </div>
@@ -1014,6 +1017,9 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
               <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold ml-1">1</span>
               <span className="text-gray-500 text-xs ml-2">→ 計算機顯示「A?」</span>
             </div>
+            <p className="text-xs text-gray-500 mb-3 bg-yellow-50 border border-yellow-200 rounded p-2">
+              💡 <span className="font-semibold text-yellow-700">提示：</span>程式已儲存後，直接按 <span className="px-1.5 py-0.5 bg-orange-500 text-white rounded text-xs font-bold">Prog</span> 便能使用。只有需要<strong>修改程式</strong>時，才需要 <span className="px-1.5 py-0.5 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span> <span className="px-1.5 py-0.5 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span> → <span className="px-1.5 py-0.5 bg-gray-900 text-white rounded text-xs font-bold">6</span>（PRGM）。
+            </p>
             
             <p className="font-bold text-sm mb-2">步驟二：依次輸入係數</p>
             <div className="bg-white p-2 rounded space-y-1 text-sm">
@@ -1301,40 +1307,53 @@ const SimultaneousEqNotes = ({ onBack, onShowCalcProgram }) => {
                     <span className="bg-violet-500 text-white text-xs font-bold px-2 py-0.5 rounded text-center">解 x</span>
                   </div>
                   <div className="flex-1 bg-amber-50 rounded p-3">
-                    <div className="inline-grid items-baseline gap-x-1" style={{ gridTemplateColumns: 'auto auto auto auto' }}>
-                      {/* Reference multiplications */}
+                    {/* 6-col grid: [prefix] [x-term] [y-term] [const-term] [=] [rhs+label] */}
+                    <div className="inline-grid items-baseline gap-x-1" style={{ gridTemplateColumns: 'auto auto auto auto auto auto' }}>
+                      {/* Reference rows */}
                       <span className="text-slate-400 text-xs pr-1">①×3：</span>
-                      <Latex math="33x + 24y + 18" />
+                      <Latex math="33x" />
+                      <Latex math="+ 24y" />
+                      <Latex math="+ 18" />
                       <Latex math="=" />
                       <span className="flex items-baseline gap-1"><Latex math="0" /><span className="text-slate-500 text-xs ml-1">···③</span></span>
 
                       <span className="text-slate-400 text-xs pr-1">②×8：</span>
-                      <Latex math="40x - 24y + 128" />
+                      <Latex math="40x" />
+                      <Latex math="-24y" />
+                      <Latex math="+ 128" />
                       <Latex math="=" />
                       <span className="flex items-baseline gap-1"><Latex math="0" /><span className="text-slate-500 text-xs ml-1">···④</span></span>
 
-                      <span className="col-span-4 pb-1" />
+                      <span className="col-span-6 pb-1" />
 
-                      {/* Vertical calculation in ax+by+c=0 form */}
+                      {/* Vertical calculation */}
                       <span />
-                      <Latex math="33x + 24y + 18" />
+                      <Latex math="33x" />
+                      <Latex math="+ 24y" />
+                      <Latex math="+ 18" />
                       <Latex math="=" />
                       <Latex math="0" />
 
                       <span className="font-bold text-slate-500 pr-1">+)</span>
-                      <Latex math="40x - 24y + 128" />
+                      <Latex math="40x" />
+                      <Latex math="-24y" />
+                      <Latex math="+ 128" />
                       <Latex math="=" />
                       <Latex math="0" />
 
-                      <span className="col-span-4 border-b border-slate-400 my-1" />
+                      <span className="col-span-6 border-b border-slate-400 my-1" />
 
                       <span />
-                      <Latex math="73x + 146" />
+                      <Latex math="73x" />
+                      <span />
+                      <Latex math="+ 146" />
                       <Latex math="=" />
                       <Latex math="0" />
 
                       <span />
                       <Latex math="x" />
+                      <span />
+                      <span />
                       <Latex math="=" />
                       <span className="flex items-baseline gap-1"><Latex math="-2" /><span className="text-slate-500 text-xs ml-1">···⑤</span></span>
                     </div>
@@ -1946,6 +1965,7 @@ export default function SimultaneousEqQuiz() {
   };
 
   const handleSubmit = () => {
+    if (feedback?.type === 'error') return;
     if (mode === 'prog01-lv1') {
       checkProg01Lv1Answer();
     } else if (mode === 'prog01-lv2') {
@@ -2088,16 +2108,17 @@ export default function SimultaneousEqQuiz() {
               ref={el => inputRefs.current['x'] = el}
               type="text"
               value={xAnswer}
-              onChange={(e) => setXAnswer(e.target.value)}
-              onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer })}
-              className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-blue-500 ${feedback?.xWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+              onChange={(e) => !feedback && setXAnswer(e.target.value)}
+              onFocus={() => !feedback && setActiveInput({ field: 'x', setter: setXAnswer })}
+              readOnly={!!feedback}
+              className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none ${feedback?.xWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-blue-500'}`}
               placeholder="?"
             />
           </div>
           
           <div 
-            className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'y' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-gray-50'}`}
-            onClick={() => inputRefs.current['y']?.focus()}
+            className={`p-4 rounded-xl border-2 transition-all ${!feedback && activeInput?.field === 'y' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-gray-50'}`}
+            onClick={() => !feedback && inputRefs.current['y']?.focus()}
           >
             <label className="block text-lg font-bold text-gray-600 mb-2">
               <span className="italic text-2xl" style={{ fontFamily: 'Times New Roman, serif' }}>y</span> =
@@ -2106,9 +2127,10 @@ export default function SimultaneousEqQuiz() {
               ref={el => inputRefs.current['y'] = el}
               type="text"
               value={yAnswer}
-              onChange={(e) => setYAnswer(e.target.value)}
-              onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer })}
-              className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-green-500 ${feedback?.yWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+              onChange={(e) => !feedback && setYAnswer(e.target.value)}
+              onFocus={() => !feedback && setActiveInput({ field: 'y', setter: setYAnswer })}
+              readOnly={!!feedback}
+              className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none ${feedback?.yWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-green-500'}`}
               placeholder="?"
             />
           </div>
@@ -2191,6 +2213,7 @@ export default function SimultaneousEqQuiz() {
                     }}
                     inputRefs={inputRefs}
                     eqIndex={1}
+                    disabled={feedback?.type === 'error'}
                   />
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
@@ -2216,6 +2239,7 @@ export default function SimultaneousEqQuiz() {
                     }}
                     inputRefs={inputRefs}
                     eqIndex={2}
+                    disabled={feedback?.type === 'error'}
                   />
                 </div>
               </div>
@@ -2287,16 +2311,17 @@ export default function SimultaneousEqQuiz() {
                     type="text"
                     inputMode="none"
                     value={xAnswer}
-                    onChange={(e) => setXAnswer(e.target.value)}
-                    onFocus={() => setActiveInput({ field: 'x', setter: setXAnswer })}
-                    className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-blue-500 ${feedback?.xWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+                    onChange={(e) => !feedback && setXAnswer(e.target.value)}
+                    onFocus={() => !feedback && setActiveInput({ field: 'x', setter: setXAnswer })}
+                    readOnly={!!feedback}
+                    className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none ${feedback?.xWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-blue-500'}`}
                     placeholder="?"
                   />
                 </div>
                 
                 <div 
-                  className={`p-4 rounded-xl border-2 transition-all ${activeInput?.field === 'y' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'}`}
-                  onClick={() => inputRefs.current['y2']?.focus()}
+                  className={`p-4 rounded-xl border-2 transition-all ${!feedback && activeInput?.field === 'y' ? 'border-green-500 bg-green-50' : 'border-gray-200 bg-white'}`}
+                  onClick={() => !feedback && inputRefs.current['y2']?.focus()}
                 >
                   <label className="block text-lg font-bold text-gray-600 mb-2">
                     <span className="italic text-2xl" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span> =
@@ -2306,9 +2331,10 @@ export default function SimultaneousEqQuiz() {
                     type="text"
                     inputMode="none"
                     value={yAnswer}
-                    onChange={(e) => setYAnswer(e.target.value)}
-                    onFocus={() => setActiveInput({ field: 'y', setter: setYAnswer })}
-                    className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none focus:border-green-500 ${feedback?.yWrong ? 'border-red-400 bg-red-50' : 'border-gray-300'}`}
+                    onChange={(e) => !feedback && setYAnswer(e.target.value)}
+                    onFocus={() => !feedback && setActiveInput({ field: 'y', setter: setYAnswer })}
+                    readOnly={!!feedback}
+                    className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none ${feedback?.yWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-green-500'}`}
                     placeholder="?"
                   />
                 </div>

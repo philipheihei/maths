@@ -194,7 +194,7 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
           {/* Angle B arc & text */}
           {(unknownAngle === 'B' || visibleAngles.includes('B')) && (() => {
             const arcRadius = 24;
-            const bBC = Math.PI;
+            const bBC = -Math.PI; // Use -PI so it is close to bBA (which is between -PI and -PI/2)
             const bBA = Math.atan2(ay - by, ax - bx);
             const xB1 = bx + arcRadius * Math.cos(bBC);
             const yB1 = by + arcRadius * Math.sin(bBC);
@@ -202,7 +202,7 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
             const yB2 = by + arcRadius * Math.sin(bBA);
             const arcB = `M ${xB1} ${yB1} A ${arcRadius} ${arcRadius} 0 0 1 ${xB2} ${yB2}`;
             
-            const midB = (-Math.PI + bBA) / 2;
+            const midB = (bBC + bBA) / 2;
             const textBx = bx + (arcRadius + 16) * Math.cos(midB);
             const textBy = by + (arcRadius + 16) * Math.sin(midB) + 5;
 
@@ -769,37 +769,38 @@ const TeachingPage = ({ onStartQuiz }) => {
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
-              <div className="bg-red-50 rounded-xl p-4 border border-red-200">
-                <p className="font-bold text-red-600 text-center mb-4">三角比口訣：對斜鄰斜對鄰</p>
-                {/* 三欄公式 */}
-                <div className="grid grid-cols-3 gap-3 mb-5">
-                  {[
-                    { fn: '\\sin\\theta', num: '對', den: '斜' },
-                    { fn: '\\cos\\theta', num: '鄰', den: '斜' },
-                    { fn: '\\tan\\theta', num: '對', den: '鄰' },
-                  ].map(({ fn, num, den }) => (
-                    <div key={fn} className="bg-white rounded-xl p-3 border border-red-100 text-center shadow-sm">
-                      <Latex math={fn} block />
-                      <Latex math={`= \\dfrac{\\text{${num}}}{\\text{${den}}}`} block />
+              <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+                <p className="font-bold text-green-700 mb-3">三角比口訣：對斜鄰斜對鄰</p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 bg-white p-3 rounded-lg border border-green-100">
+                    <span className="bg-red-500 text-white font-bold px-3 py-1 rounded text-sm">正弦</span>
+                    <div>
+                      <Latex math="\sin \theta = \dfrac{\text{對邊}}{\text{斜邊}}" />
                     </div>
-                  ))}
+                  </div>
+                  <div className="flex items-center gap-3 bg-white p-3 rounded-lg border border-green-100">
+                    <span className="bg-blue-500 text-white font-bold px-3 py-1 rounded text-sm">餘弦</span>
+                    <div>
+                      <Latex math="\cos \theta = \dfrac{\text{鄰邊}}{\text{斜邊}}" />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 bg-white p-3 rounded-lg border border-green-100">
+                    <span className="bg-green-600 text-white font-bold px-3 py-1 rounded text-sm">正切</span>
+                    <div>
+                      <Latex math="\tan \theta = \dfrac{\text{對邊}}{\text{鄰邊}}" />
+                    </div>
+                  </div>
                 </div>
                 {/* 三角形圖解 */}
-                <div className="bg-white rounded-xl p-3 border border-red-100 shadow-sm">
+                <div className="bg-white rounded-xl p-3 mt-3 border border-green-100">
                   <svg viewBox="0 0 260 180" className="w-full max-w-xs mx-auto">
-                    {/* triangle: right angle bottom-right, θ bottom-left */}
                     <polygon points="30,150 230,150 230,30" fill="rgba(99,102,241,0.07)" stroke="#4f46e5" strokeWidth="2.5" strokeLinejoin="round" />
-                    {/* right-angle square */}
                     <polyline points="218,150 218,138 230,138" fill="none" stroke="#4f46e5" strokeWidth="1.8" />
-                    {/* θ arc */}
-                    <path d="M 58,150 A 28,28 0 0 1 47.6,127" fill="none" stroke="#e11d48" strokeWidth="2" />
-                    <text x="60" y="143" fontSize="16" fontStyle="italic" fill="#e11d48" fontWeight="bold">θ</text>
-                    {/* 斜 label on hypotenuse */}
-                    <text x="118" y="82" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle" transform="rotate(-28 118 82)">斜</text>
-                    {/* 對 label on right vertical */}
+                    <path d="M 58 150 A 28 28 0 0 0 54.01 135.59" fill="none" stroke="#e11d48" strokeWidth="2" />
+                    <text x="64" y="142" fontSize="16" fontStyle="italic" fill="#e11d48" fontWeight="bold">θ</text>
+                    <text x="118" y="82" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle" transform="rotate(-31 118 82)">斜</text>
                     <text x="248" y="98" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle">對</text>
-                    {/* 鄰 label on bottom horizontal */}
-                    <text x="130" y="170" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle">鄰</text>
+                    <text x="130" y="173" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle">鄰</text>
                   </svg>
                 </div>
               </div>
