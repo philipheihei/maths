@@ -811,7 +811,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                     <text x="315" y="170" fill="#3b75a6" fontSize="24" fontWeight="bold" textAnchor="middle" fontStyle="italic">θ</text>
                     
                     {/* 兩條虛線箭頭 */}
-                    <line x1="325" y1="155" x2="195" y2="105" stroke="#3b75a6" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowBlue)" />
+                    <line x1="305" y1="150" x2="210" y2="112" stroke="#3b75a6" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowBlue)" />
                     <line x1="200" y1="155" x2="270" y2="105" stroke="#5ba678" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowGreen)" />
                     
                     {/* 左側文字 (對邊) */}
