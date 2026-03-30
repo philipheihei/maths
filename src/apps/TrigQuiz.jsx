@@ -784,15 +784,53 @@ const TeachingPage = ({ onStartQuiz }) => {
                   </div>
                 </div>
                 {/* 三角形圖解 */}
-                <div className="bg-white rounded-xl p-3 mt-3 border border-green-100">
-                  <svg viewBox="0 0 260 180" className="w-full max-w-xs mx-auto">
-                    <polygon points="30,150 230,150 230,30" fill="rgba(99,102,241,0.07)" stroke="#4f46e5" strokeWidth="2.5" strokeLinejoin="round" />
-                    <polyline points="218,150 218,138 230,138" fill="none" stroke="#4f46e5" strokeWidth="1.8" />
-                    <path d="M 58 150 A 28 28 0 0 0 54.01 135.59" fill="none" stroke="#e11d48" strokeWidth="2" />
-                    <text x="64" y="142" fontSize="16" fontStyle="italic" fill="#e11d48" fontWeight="bold">θ</text>
-                    <text x="118" y="82" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle" transform="rotate(-31 118 82)">斜</text>
-                    <text x="248" y="98" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle">對</text>
-                    <text x="130" y="173" fontSize="20" fontWeight="bold" fill="#4f46e5" textAnchor="middle">鄰</text>
+                <div className="bg-white rounded-xl mt-3 border border-green-100 overflow-hidden" style={{ background: '#ffffff' }}>
+                  <svg viewBox="0 0 600 260" className="w-full h-auto mx-auto" style={{ maxWidth: '600px' }}>
+                    <defs>
+                      <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                        <path d="M 0 2 L 10 6 L 0 10 z" fill="#3b75a6" />
+                      </marker>
+                      <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                        <path d="M 0 2 L 10 6 L 0 10 z" fill="#5ba678" />
+                      </marker>
+                    </defs>
+                    
+                    {/* 內部三角形填充 */}
+                    <polygon points="180,20 180,180 380,180" fill="rgba(59, 130, 246, 0.2)" />
+                    
+                    {/* 三條邊不同顏色 */}
+                    <line x1="180" y1="20" x2="180" y2="180" stroke="#3b75a6" strokeWidth="4" strokeLinecap="round" />
+                    <line x1="180" y1="180" x2="380" y2="180" stroke="#c9665e" strokeWidth="4" strokeLinecap="round" />
+                    <line x1="180" y1="20" x2="380" y2="180" stroke="#5ba678" strokeWidth="4" strokeLinecap="round" />
+                    
+                    {/* 直角符號 */}
+                    <polyline points="180,155 205,155 205,180" fill="none" stroke="#5ba678" strokeWidth="3" />
+                    
+                    {/* θ符號 */}
+                    <path d="M 330 180 A 50 50 0 0 1 341 149" fill="none" stroke="#475569" strokeWidth="2.5" />
+                    <text x="315" y="170" fill="#3b75a6" fontSize="24" fontWeight="bold" textAnchor="middle" fontStyle="italic">θ</text>
+                    
+                    {/* 兩條虛線箭頭 */}
+                    <line x1="325" y1="155" x2="195" y2="105" stroke="#3b75a6" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowBlue)" />
+                    <line x1="200" y1="155" x2="270" y2="105" stroke="#5ba678" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowGreen)" />
+                    
+                    {/* 左側文字 (對邊) */}
+                    <text x="165" y="90" textAnchor="end" fill="#3b75a6" fontSize="24" fontWeight="bold" fontFamily="sans-serif">
+                      <tspan x="165" dy="0"><tspan fontStyle="italic">θ</tspan> 對住個條邊</tspan>
+                      <tspan x="165" dy="35">(對邊)</tspan>
+                    </text>
+                    
+                    {/* 底部文字 (鄰邊) */}
+                    <text x="280" y="225" textAnchor="middle" fill="#c9665e" fontSize="24" fontWeight="bold" fontFamily="sans-serif">
+                      <tspan fontStyle="italic">θ</tspan>
+                      <tspan> 同直角夾住個條邊 (鄰邊)</tspan>
+                    </text>
+                    
+                    {/* 右側文字 (斜邊) */}
+                    <text x="435" y="80" textAnchor="middle" fill="#5ba678" fontSize="24" fontWeight="bold" fontFamily="sans-serif">
+                      <tspan x="435" dy="0">直角對住個條邊</tspan>
+                      <tspan x="435" dy="35">(斜邊)</tspan>
+                    </text>
                   </svg>
                 </div>
               </div>
