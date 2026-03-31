@@ -187,7 +187,7 @@ export default function IndexLaws() {
       case 'neg':
         const negVal = -1 * Math.abs(n1);
         qLatex = `${base}^{${negVal}}`;
-        ans = `1/${base}^${Math.abs(negVal)}`;
+        ans = formatPositiveIndex(base, negVal);
         steps = [
           `${base}^{${negVal}}`,
           `\\frac{1}{${base}^{${Math.abs(negVal)}}}`

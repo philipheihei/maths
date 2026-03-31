@@ -225,9 +225,11 @@ const generators = [
   },
   // 直立角錐 — 代數求 h
   () => {
-    const a = rand(3, 12), h = rand(3, 12);
+    // 確保 a²×h 整除 3，vol 為精確整數，步驟等式嚴格成立
+    let a, h;
+    do { a = rand(3, 12); h = rand(3, 12); } while ((a * a * h) % 3 !== 0);
     const base = a * a;
-    const vol = round2(base * h / 3);
+    const vol = base * h / 3;
     return mkQ(
       `一個正四角錐的底邊長為 ${a} cm，體積為 ${vol} cm³。求角錐的高 h。`,
       h,
@@ -235,8 +237,8 @@ const generators = [
       [
         `\\text{角錐體積} = \\dfrac{1}{3} \\times \\text{底面積} \\times h`,
         `${vol} = \\dfrac{1}{3} \\times ${base} \\times h`,
-        `${vol} \\times 3 = ${base} h`,
-        `h = ${h} \\text{ cm}`
+        `${3 * vol} = ${base} h`,
+        `h = \\dfrac{${3 * vol}}{${base}} = ${h} \\text{ cm}`
       ],
       '\\text{角錐體積} = \\dfrac{1}{3} \\times \\text{底面積} \\times h'
     );
@@ -712,7 +714,7 @@ const QuizMode = ({ onBack }) => {
             </span>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 overflow-x-auto mb-4">
-            <Latex math={`\\begin{aligned}${feedback.steps.map(s => s.replace('=', '&=')).join(' \\\\ ')}\\end{aligned}`} block />
+            <Latex math={`\\begin{aligned}${feedback.steps.map(s => s.replaceAll('=', '&=')).join(' \\\\ ')}\\end{aligned}`} block />
           </div>
           <button
             onClick={newQuestion}
