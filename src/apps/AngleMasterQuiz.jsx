@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronLeft, Pen, Eraser, Trash2, Home as HomeIcon, Lightbulb } from 'lucide-react';
+import { ChevronLeft, Pen, Eraser, Trash2, Home as HomeIcon, Lightbulb, BookOpen, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import AngleArc from '../components/AngleArc';
@@ -28,6 +28,7 @@ export default function AngleMasterQuiz() {
   const [showHint, setShowHint] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
   const ADMIN_PW = '1234';
 
   const handleAdminLogin = () => {
@@ -363,8 +364,17 @@ export default function AngleMasterQuiz() {
           <ChevronLeft className="w-6 h-6 text-gray-600" />
         </button>
         <div className="font-bold text-lg">[{q.id}] {q.level === 'Senior' ? 'F4-F6' : q.level} - {q.title} ({q.difficulty})</div>
-        <div className="font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
-          {currentQuestionIndex + 1} / {activeQuestions.length}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowNotes(true)}
+            className="flex items-center gap-1 bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-bold hover:bg-indigo-100 active:bg-indigo-200 transition-colors"
+          >
+            <BookOpen className="w-4 h-4" />
+            <span className="text-sm">筆記</span>
+          </button>
+          <div className="font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+            {currentQuestionIndex + 1} / {activeQuestions.length}
+          </div>
         </div>
       </div>
 
@@ -489,6 +499,158 @@ export default function AngleMasterQuiz() {
           </div>
         )}
       </div>
+
+      {/* ── 筆記 Modal ── */}
+      {showNotes && (
+        <div
+          className="fixed inset-0 z-50 bg-black/40 flex items-end md:items-center justify-center"
+          onClick={() => setShowNotes(false)}
+        >
+          <div
+            className="bg-white w-full max-w-lg max-h-[85vh] rounded-t-2xl md:rounded-2xl overflow-y-auto shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-slate-100 flex items-center justify-between px-5 py-4 rounded-t-2xl md:rounded-t-2xl z-10">
+              <h2 className="text-lg font-bold text-slate-800">📐 甲(一) 初中找角度</h2>
+              <button onClick={() => setShowNotes(false)} className="p-2 rounded-full hover:bg-slate-100">
+                <X className="w-5 h-5 text-slate-500" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-5">
+
+              {/* 0. 基礎知識 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-slate-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+                  基礎知識：線和角的命名
+                </h3>
+                <div className="space-y-2">
+                  <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                    <p className="text-sm font-bold text-green-800 mb-1">線段</p>
+                    <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-mono font-bold bg-white px-1 rounded">線段 AB</span>（從 A 到 B）</p>
+                    <svg viewBox="0 0 300 60" className="w-full max-w-sm mx-auto touch-none mt-2">
+                      <line x1="80" y1="30" x2="220" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                      <circle cx="80" cy="30" r="3" fill="#334155" />
+                      <circle cx="220" cy="20" r="3" fill="#334155" />
+                      <text x="60" y="35" fontSize="16" fill="#16a34a" fontFamily="sans-serif">A</text>
+                      <text x="230" y="25" fontSize="16" fill="#16a34a" fontFamily="sans-serif">B</text>
+                    </svg>
+                  </div>
+                  <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                    <p className="text-sm font-bold text-green-800 mb-1">角的命名（角的特徵）</p>
+                    <p className="text-sm text-slate-700 mb-2">由三個點命名，如 <span className="font-mono font-bold bg-white px-1 rounded">∠ABC</span>
+                      <span className="ml-2 text-xs text-amber-700 font-bold">⚠️ 頂點（vertex）在<span className="text-red-600">中間</span>的英文字母</span>
+                    </p>
+                    <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto touch-none">
+                      <path d="M 60 80 L 120 30 M 60 80 L 180 80" stroke="#334155" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                      <text x="125" y="25" fontSize="16" fill="#16a34a">A</text>
+                      <text x="40" y="85" fontSize="16" fill="#16a34a">B</text>
+                      <text x="185" y="85" fontSize="16" fill="#16a34a">C</text>
+                      <path d="M 90 80 A 30 30 0 0 0 83 61" stroke="#dc2626" strokeWidth="2" fill="none" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* 1. 直線上的鄰角 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">1</span>
+                  直線上的鄰角
+                  <span className="text-sm text-red-500 font-normal">（直線 → 180°）</span>
+                </h3>
+                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                  <p className="text-center text-xl font-bold text-blue-800 my-1">a + b + c = 180°</p>
+                  <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto my-3 touch-none">
+                    <line x1="40" y1="80" x2="260" y2="80" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="150" y1="80" x2="100" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="150" y1="80" x2="230" y2="35" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    {/* a arc (radius 22) */}
+                    <path d="M 128 80 A 22 22 0 0 1 133 60" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    {/* b arc (radius 17) */}
+                    <path d="M 139 67 A 17 17 0 0 1 165 72" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    {/* c arc (radius 22) */}
+                    <path d="M 169 70 A 22 22 0 0 1 172 80" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <text x="115" y="75" fontSize="14" fill="#1e3a8a">a</text>
+                    <text x="151" y="62" fontSize="14" fill="#1e3a8a">b</text>
+                    <text x="180" y="75" fontSize="14" fill="#1e3a8a">c</text>
+                    <text x="40" y="98" fontSize="14" fill="#dc2626">A</text>
+                    <text x="146" y="98" fontSize="14" fill="#dc2626">O</text>
+                    <text x="250" y="98" fontSize="14" fill="#dc2626">B</text>
+                  </svg>
+                  <p className="text-sm text-slate-600 text-center mt-2">
+                    <span className="bg-blue-200 px-1 rounded font-bold text-blue-900">在直線的所有角</span>之和 = 180°
+                  </p>
+                </div>
+              </div>
+
+              {/* 2. 同頂角 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">2</span>
+                  同頂角
+                  <span className="text-sm text-red-500 font-normal">（圓形 → 360°）</span>
+                </h3>
+                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                  <p className="text-center text-xl font-bold text-blue-800 my-1">a + b + c = 360°</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <g transform="translate(150, 70)">
+                      <line x1="0" y1="0" x2="0" y2="-60" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                      <line x1="0" y1="0" x2="55" y2="40" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                      <line x1="0" y1="0" x2="-45" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                      {/* a arc (radius 15) */}
+                      <path d="M 0 -15 A 15 15 0 0 1 12 9" stroke="#2563eb" strokeWidth="2" fill="none" />
+                      {/* b arc (radius 22) */}
+                      <path d="M 18 13 A 22 22 0 0 1 -15 16" stroke="#2563eb" strokeWidth="2" fill="none" />
+                      {/* c arc (radius 15) */}
+                      <path d="M -10 11 A 15 15 0 0 1 0 -15" stroke="#2563eb" strokeWidth="2" fill="none" />
+                      <text x="22" y="-5" fontSize="14" fill="#1e3a8a">a</text>
+                      <text x="-2" y="38" fontSize="14" fill="#1e3a8a">b</text>
+                      <text x="-32" y="-2" fontSize="14" fill="#1e3a8a">c</text>
+                    </g>
+                  </svg>
+                  <p className="text-sm text-slate-600 text-center mt-2">
+                    <span className="bg-blue-200 px-1 rounded font-bold text-blue-900">圍圍的所有角</span>之和 = 360°
+                  </p>
+                </div>
+              </div>
+
+              {/* 3. 對頂角 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">3</span>
+                  對頂角
+                  <span className="text-sm text-slate-500 font-normal">（對面頂住的角）</span>
+                </h3>
+                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                  <p className="text-center text-xl font-bold text-blue-800 my-1">a = b</p>
+                  <svg viewBox="0 0 300 120" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <line x1="70" y1="20" x2="230" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="70" y1="100" x2="230" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <g transform="translate(150, 60)">
+                      <path d="M -18 -8 A 20 20 0 0 0 -18 8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                      <path d="M 18 -8 A 20 20 0 0 1 18 8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                      <text x="-35" y="5" fontSize="16" fill="#1e3a8a">a</text>
+                      <text x="25" y="5" fontSize="16" fill="#1e3a8a">b</text>
+                    </g>
+                  </svg>
+                  <div className="bg-amber-50 rounded p-2 mt-2 border border-amber-200">
+                    <p className="text-sm text-amber-800">💡 <span className="font-bold">提示：</span>兩直線相交（打交叉）→ 對面的角<span className="font-bold text-red-600">相等</span></p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 持續更新提示 */}
+              <div className="text-center py-4 text-slate-500 font-bold opacity-80">
+                其他定理持續制作中...
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

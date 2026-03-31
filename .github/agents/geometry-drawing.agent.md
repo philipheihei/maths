@@ -22,7 +22,9 @@ model: Gemini 3.1 Pro (Preview) (copilot)
 - **標記文字**：頂點用大楷字母（A, B, C），邊長/角度用 `<text fontSize="13" fill="#475569">` 顯示在旁邊
 - **直角符號**：小正方形 `<polyline points="...">` 邊長 12px
 - **等邊 tick mark**：短垂直線段，置於邊中點
-- **角度弧**：用 `<path d="M... A... ">` 半徑 25–35px
+- **角度弧（arc）**：
+  - 一般情況半徑 25–35px
+  - **重要：當兩個或多個角相鄰時，必須使用不同的半徑（例如一個20px，一個30px），確保弧線錯開，不要連成一線。**
 
 ## 現有代碼風格（必須遵守）
 - `AngleQuiz.jsx` 的 `calculateArcPath()` 是角度弧的參考實現
