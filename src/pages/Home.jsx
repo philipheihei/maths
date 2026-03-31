@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Calculator, ArrowRight, BookOpen, Award, BarChart2, FileText
+  Calculator, ArrowRight, BookOpen, Award, BarChart2, FileText, Search, X
 } from 'lucide-react';
 
 const Home = () => {
   const [activeFilter, setActiveFilter] = useState('全部');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const apps = [
     {
@@ -361,12 +362,23 @@ const Home = () => {
   const filters = ['全部', '初中', '高中', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6'];
 
   const filteredApps = apps.filter(app => {
-    if (activeFilter === '全部') return true;
-    if (activeFilter === '初中' || activeFilter === '高中') {
-      return app.category === activeFilter;
-    }
-    // 檢查 app.level 或 badges 中是否有匹配的年級
-    return app.level === activeFilter || app.badges.some(badge => badge.level === activeFilter);
+    // 年級/類別篩選
+    const passesFilter = (() => {
+      if (activeFilter === '全部') return true;
+      if (activeFilter === '初中' || activeFilter === '高中') return app.category === activeFilter;
+      return app.level === activeFilter || app.badges.some(badge => badge.level === activeFilter);
+    })();
+    if (!passesFilter) return false;
+
+    // 關鍵字搜尋
+    if (searchQuery.trim() === '') return true;
+    const q = searchQuery.trim().toLowerCase();
+    return (
+      app.title.toLowerCase().includes(q) ||
+      app.description.toLowerCase().includes(q) ||
+      app.topics.some(t => t.toLowerCase().includes(q)) ||
+      app.badges.some(b => b.subject.toLowerCase().includes(q) || b.chapter.toLowerCase().includes(q))
+    );
   });
 
   return (
@@ -436,10 +448,12 @@ const Home = () => {
           </div>
         </div>
 
-        {/* ✅ 篩選器 Filter */}
+        {/* 篩選器 + 搜尋 */}
         <div className="mb-8">
-          <div className="bg-white rounded-xl shadow-md border border-slate-200 p-4">
-            <div className="flex flex-wrap gap-2 justify-center">
+          {/* 合併欄：篩選按鈕（左）+ 搜尋框（右） */}
+          <div className="bg-white rounded-xl shadow-md border border-slate-200 px-4 py-3 flex flex-wrap items-center gap-3">
+            {/* 年級篩選 */}
+            <div className="flex flex-wrap gap-2">
               {filters.map(filter => (
                 <button
                   key={filter}
@@ -454,7 +468,31 @@ const Home = () => {
                 </button>
               ))}
             </div>
+            {/* 分隔線 */}
+            <div className="hidden sm:block w-px h-8 bg-slate-200 mx-1" />
+            {/* 搜尋欄 */}
+            <div className="flex items-center gap-2 flex-1 min-w-[180px]">
+              <Search className="w-4 h-4 text-slate-400 flex-shrink-0" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="搜尋題目、主題或章節，例如：三角、圓形、F3..."
+                className="flex-1 text-sm text-slate-700 placeholder-slate-400 outline-none bg-transparent"
+              />
+              {searchQuery && (
+                <button onClick={() => setSearchQuery('')} className="text-slate-400 hover:text-slate-600">
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
           </div>
+          {/* 搜尋結果數量提示 */}
+          {searchQuery.trim() !== '' && (
+            <p className="text-sm text-slate-500 pl-1 mt-2">
+              找到 <span className="font-bold text-blue-600">{filteredApps.length}</span> 個結果，關鍵字：「{searchQuery}」
+            </p>
+          )}
         </div>
 
         {/* Apps Grid */}
