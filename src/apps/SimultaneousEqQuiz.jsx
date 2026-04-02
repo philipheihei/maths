@@ -136,164 +136,158 @@ const generateProg01Lv1Question = () => {
   };
 };
 
-const PROG01_LV2_TEMPLATES = [
-  {
-    id: 'A',
-    generate: () => {
-      // 使用能产生整数答案的k值和total组合
-      const combinations = [
-        { k: 2, total: 180 },     // x=120, y=60
-        { k: 3, total: 200 },     // x=150, y=50
-        { k: 1.5, total: 150 },   // x=90, y=60
-        { k: 0.5, total: 120 },   // x=40, y=80
-        { k: 2.5, total: 140 },   // x=100, y=40
-        { k: 1.4, total: 120 },   // x=70, y=50
-        { k: 0.8, total: 180 }    // x=80, y=100
-      ];
-      
-      const { k, total } = combinations[Math.floor(Math.random() * combinations.length)];
-      const y = total / (1 + k);
-      const x = k * y;
-      
-      // 确保答案是整数（以防万一）
-      const finalX = Math.round(x);
-      const finalY = Math.round(y);
-      
-      return {
-        eq1Display: `x + y = ${total}`,
-        eq2Display: k === Math.floor(k) ? `x = ${k}y` : `x = ${k}y`,
-        eq1Standard: { a: 1, b: 1, c: total },
-        eq2Standard: { a: 1, b: -k, c: 0 },
-        xVal: finalX,
-        yVal: finalY
-      };
+// ===== LV2 出題：隨機抽取兩種方程類型混合 =====
+// 每個候選方程接受整數解 (x, y)，返回 { display, standard: {a,b,c}, group }
+// standard 表示 ax + by = c 的標準式
+const buildEqCandidates = (x, y) => {
+  const candidates = [];
+
+  // 類型 1：總和 x + y = S
+  candidates.push({
+    group: 'sum',
+    display: `x + y = ${x + y}`,
+    standard: { a: 1, b: 1, c: x + y }
+  });
+
+  // 類型 2：差值（只有 x ≠ y 時有效）
+  if (x !== y) {
+    if (x > y) {
+      candidates.push({
+        group: 'diff',
+        display: `x − y = ${x - y}`,
+        standard: { a: 1, b: -1, c: x - y }
+      });
+    } else {
+      candidates.push({
+        group: 'diff',
+        display: `y − x = ${y - x}`,
+        standard: { a: -1, b: 1, c: y - x }
+      });
     }
-  },
-  {
-    id: 'B',
-    generate: () => {
-      // 使用能产生整数答案的参数组合
-      const n = Math.floor(Math.random() * 20) + 10;  // n: 10-29的整数
-      const a2 = Math.floor(Math.random() * 3) + 3;   // a2: 3-5
-      const b2 = Math.floor(Math.random() * 3) + 3;   // b2: 3-5
-      const m = (b2 * n) / a2;
-      
-      // 如果m不是整数，调整n使其成为整数
-      let finalN = n;
-      let finalM = m;
-      if (!Number.isInteger(m)) {
-        finalN = n * a2 / gcd(a2, b2);  // 调整n使m成为整数
-        finalM = (b2 * finalN) / a2;
+  }
+
+  // 類型 3：整數倍數關係 x = ky 或 y = kx（k 為 2–5 整數）
+  if (x % y === 0) {
+    const k = x / y;
+    if (k >= 2 && k <= 5) {
+      candidates.push({
+        group: 'ratio',
+        display: `x = ${k}y`,
+        standard: { a: 1, b: -k, c: 0 }
+      });
+    }
+  }
+  if (y % x === 0) {
+    const k = y / x;
+    if (k >= 2 && k <= 5) {
+      candidates.push({
+        group: 'ratio',
+        display: `y = ${k}x`,
+        standard: { a: k, b: -1, c: 0 }
+      });
+    }
+  }
+
+  // 類型 4：線性組合 ax + by = C（隨機小係數）
+  const comboPairs = [[2, 3], [3, 2], [2, 5], [3, 4], [4, 3], [3, 5], [1, 4], [4, 1]];
+  const [ca, cb] = comboPairs[Math.floor(Math.random() * comboPairs.length)];
+  candidates.push({
+    group: 'linear',
+    display: `${ca}x + ${cb}y = ${ca * x + cb * y}`,
+    standard: { a: ca, b: cb, c: ca * x + cb * y }
+  });
+
+  // 類型 5：斜截式 y = mx + b（整數斜率）
+  const slopes = [2, 3, -1, -2, 1, 4];
+  const m5 = slopes[Math.floor(Math.random() * slopes.length)];
+  const b5 = y - m5 * x;
+  const b5Str = b5 > 0 ? ` + ${b5}` : b5 < 0 ? ` − ${Math.abs(b5)}` : '';
+  candidates.push({
+    group: 'slope',
+    display: `y = ${m5}x${b5Str}`,
+    standard: { a: m5, b: -1, c: -b5 }
+  });
+
+  // 類型 6：帶括號 k(x − p) = y + q
+  if (x > 2) {
+    const k6 = 2 + Math.floor(Math.random() * 2); // 2 或 3
+    const maxP = Math.max(1, x - 2);
+    const p6 = 1 + Math.floor(Math.random() * maxP);
+    const q6 = k6 * (x - p6) - y;
+    const q6Str = q6 > 0 ? ` + ${q6}` : q6 < 0 ? ` − ${Math.abs(q6)}` : '';
+    candidates.push({
+      group: 'bracket',
+      display: `${k6}(x − ${p6}) = y${q6Str}`,
+      standard: { a: k6, b: -1, c: k6 * p6 + q6 }
+    });
+  }
+
+  // 類型 7：非標準式 ax − by + c = 0
+  const nsPairs = [[1, 2], [2, 3], [1, 3], [3, 4], [2, 5]];
+  const [na, nb] = nsPairs[Math.floor(Math.random() * nsPairs.length)];
+  const nc = nb * y - na * x; // ax − by + c = 0 → c = by − ax
+  const naStr = na === 1 ? '' : `${na}`;
+  const ncStr = nc > 0 ? ` + ${nc}` : nc < 0 ? ` − ${Math.abs(nc)}` : '';
+  candidates.push({
+    group: 'nonstd',
+    display: `${naStr}x − ${nb}y${ncStr} = 0`,
+    standard: { a: na, b: -nb, c: -nc }
+  });
+
+  return candidates;
+};
+
+const generateProg01Lv2Question = () => {
+  for (let attempt = 0; attempt < 30; attempt++) {
+    // 隨機整數解 (2–12)
+    const x = Math.floor(Math.random() * 11) + 2;
+    const y = Math.floor(Math.random() * 11) + 2;
+
+    const candidates = buildEqCandidates(x, y);
+
+    // 洗牌
+    for (let i = candidates.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+    }
+
+    // 從不同 group 中選兩條線性獨立的方程
+    let eq1 = null, eq2 = null;
+    for (const cand of candidates) {
+      if (!eq1) { eq1 = cand; continue; }
+      if (
+        cand.group !== eq1.group &&
+        eq1.standard.a * cand.standard.b !== cand.standard.a * eq1.standard.b
+      ) {
+        eq2 = cand;
+        break;
       }
-      
-      const a1 = Math.floor(Math.random() * 3) + 2;  // a1: 2-4
-      const b1 = Math.floor(Math.random() * 3) + 2;  // b1: 2-4
-      const c = a1 * finalM + b1 * finalN;
-      
-      return {
-        eq1Display: `${a1}m + ${b1}n = ${c}`,
-        eq2Display: `${a2}m = ${b2}n`,
-        eq1Standard: { a: a1, b: b1, c: c },
-        eq2Standard: { a: a2, b: -b2, c: 0 },
-        xVal: Math.round(finalM),
-        yVal: Math.round(finalN),
-        varX: 'm',
-        varY: 'n'
-      };
     }
-  },
-  {
-    id: 'C',
-    generate: () => {
-      // 使用能产生整数答案的参数组合
-      // 公式: kx = y, coef(y - offset) = x + offset
-      // 代入: coef(kx - offset) = x + offset
-      // coef*k*x - coef*offset = x + offset
-      // x(coef*k - 1) = offset(1 + coef)
-      // x = offset(1 + coef) / (coef*k - 1)
-      // 需要確保 (coef*k - 1) 能整除 offset(1 + coef)
-      const combinations = [
-        { k: 2, coef: 3, offset: 10 },  // x = 10(4)/5 = 8, y = 16
-        { k: 3, coef: 2, offset: 10 },  // x = 10(3)/5 = 6, y = 18
-        { k: 4, coef: 2, offset: 14 },  // x = 14(3)/7 = 6, y = 24
-        { k: 3, coef: 3, offset: 8 },   // x = 8(4)/8 = 4, y = 12
-        { k: 2, coef: 2, offset: 9 },   // x = 9(3)/3 = 9, y = 18
-        { k: 5, coef: 2, offset: 18 },  // x = 18(3)/9 = 6, y = 30
-        { k: 4, coef: 3, offset: 22 },  // x = 22(4)/11 = 8, y = 32
-        { k: 2, coef: 4, offset: 7 },   // x = 7(5)/7 = 5, y = 10
-        { k: 3, coef: 4, offset: 11 }   // x = 11(5)/11 = 5, y = 15
-      ];
-      
-      const { k, coef, offset } = combinations[Math.floor(Math.random() * combinations.length)];
-      const c2 = offset * (1 + coef);
-      const divisor = coef * k - 1;
-      const x = c2 / divisor;
-      const y = k * x;
-      
-      // 驗證答案是整數
-      if (!Number.isInteger(x) || !Number.isInteger(y)) {
-        // 備用方案：使用簡單的整數答案
-        return {
-          eq1Display: `2x = y`,
-          eq2Display: `3(y − 9) = x + 9`,
-          eq1Standard: { a: 2, b: -1, c: 0 },
-          eq2Standard: { a: -1, b: 3, c: 36 },
-          xVal: 9,
-          yVal: 18
-        };
-      }
-      
+
+    if (eq1 && eq2) {
       return {
-        eq1Display: `${k}x = y`,
-        eq2Display: `${coef}(y − ${offset}) = x + ${offset}`,
-        eq1Standard: { a: k, b: -1, c: 0 },
-        eq2Standard: { a: -1, b: coef, c: c2 },
-        xVal: Math.round(x),
-        yVal: Math.round(y)
-      };
-    }
-  },
-  {
-    id: 'D',
-    generate: () => {
-      // 題型: y = px + q 及 ax − by + c = 0（斜截式 + 非標準形式）
-      // 預設組合，保證整數解
-      const combinations = [
-        { xVal: 2, yVal: 8,  p: 3, q: 2,  a: 1, b: 2, c: 14 },  // y=3x+2,  x-2y+14=0
-        { xVal: 3, yVal: 9,  p: 2, q: 3,  a: 2, b: 3, c: 21 },  // y=2x+3,  2x-3y+21=0
-        { xVal: 1, yVal: 7,  p: 3, q: 4,  a: 1, b: 3, c: 20 },  // y=3x+4,  x-3y+20=0
-        { xVal: 2, yVal: 10, p: 4, q: 2,  a: 1, b: 3, c: 28 },  // y=4x+2,  x-3y+28=0
-        { xVal: 3, yVal: 12, p: 3, q: 3,  a: 1, b: 2, c: 21 },  // y=3x+3,  x-2y+21=0
-        { xVal: 4, yVal: 10, p: 2, q: 2,  a: 3, b: 5, c: 38 },  // y=2x+2,  3x-5y+38=0
-        { xVal: 1, yVal: 6,  p: 4, q: 2,  a: 1, b: 2, c: 11 },  // y=4x+2,  x-2y+11=0
-        { xVal: 2, yVal: 14, p: 5, q: 4,  a: 1, b: 3, c: 40 },  // y=5x+4,  x-3y+40=0
-        { xVal: 5, yVal: 9,  p: 2, q: -1, a: 1, b: 3, c: 22 },  // y=2x-1,  x-3y+22=0
-      ];
-
-      const { xVal, yVal, p, q, a, b, c } = combinations[Math.floor(Math.random() * combinations.length)];
-
-      const eq1Str = q > 0 ? `y = ${p}x + ${q}` : `y = ${p}x − ${Math.abs(q)}`;
-      const aStr = a === 1 ? '' : `${a}`;
-
-      return {
-        eq1Display: eq1Str,
-        eq2Display: `${aStr}x − ${b}y + ${c} = 0`,
-        // 標準形式: eq1 → -px + y = q; eq2 → ax - by = -c
-        eq1Standard: { a: -p, b: 1, c: q },
-        eq2Standard: { a: a, b: -b, c: -c },
-        xVal,
-        yVal
+        eq1Display: eq1.display,
+        eq2Display: eq2.display,
+        eq1Standard: eq1.standard,
+        eq2Standard: eq2.standard,
+        xVal: x,
+        yVal: y,
+        varX: 'x',
+        varY: 'y'
       };
     }
   }
 
-const generateProg01Lv2Question = () => {
-  const template = PROG01_LV2_TEMPLATES[Math.floor(Math.random() * PROG01_LV2_TEMPLATES.length)];
-  const question = template.generate();
+  // 安全後備
   return {
-    ...question,
-    varX: question.varX || 'x',
-    varY: question.varY || 'y'
+    eq1Display: 'x + y = 8',
+    eq2Display: 'y = 3x',
+    eq1Standard: { a: 1, b: 1, c: 8 },
+    eq2Standard: { a: 3, b: -1, c: 0 },
+    xVal: 2,
+    yVal: 6,
+    varX: 'x',
+    varY: 'y'
   };
 };
 
