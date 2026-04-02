@@ -87,9 +87,9 @@ export const InequalityNotes = () => {
           Part 2.1: 會考核
           ======================= */}
       <div>
-        <div className="flex gap-2 text-xl font-bold mb-4 font-serif">
+        <div className="flex flex-col text-xl font-bold mb-4 font-serif">
            <span>會考核：</span>
-           <div className="flex flex-col tracking-wider">
+           <div className="tracking-wider">
               <span>1. 文字轉數字 <span className="text-green-700 mx-1">(不等式表示)</span></span>
            </div>
         </div>

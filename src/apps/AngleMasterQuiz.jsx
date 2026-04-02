@@ -600,15 +600,15 @@ export default function AngleMasterQuiz() {
                       <line x1="0" y1="0" x2="0" y2="-60" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                       <line x1="0" y1="0" x2="55" y2="40" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                       <line x1="0" y1="0" x2="-45" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
-                      {/* a arc (radius 15) */}
-                      <path d="M 0 -15 A 15 15 0 0 1 12 9" stroke="#2563eb" strokeWidth="2" fill="none" />
+                      {/* a arc (radius 14) */}
+                      <path d="M 0 -14 A 14 14 0 0 1 11 9" stroke="#2563eb" strokeWidth="2" fill="none" />
                       {/* b arc (radius 22) */}
                       <path d="M 18 13 A 22 22 0 0 1 -15 16" stroke="#2563eb" strokeWidth="2" fill="none" />
-                      {/* c arc (radius 15) */}
-                      <path d="M -10 11 A 15 15 0 0 1 0 -15" stroke="#2563eb" strokeWidth="2" fill="none" />
-                      <text x="22" y="-5" fontSize="14" fill="#1e3a8a">a</text>
+                      {/* c arc (radius 18) */}
+                      <path d="M -11 14 A 18 18 0 0 1 0 -18" stroke="#2563eb" strokeWidth="2" fill="none" />
+                      <text x="17" y="-5" fontSize="14" fill="#1e3a8a">a</text>
                       <text x="-2" y="38" fontSize="14" fill="#1e3a8a">b</text>
-                      <text x="-32" y="-2" fontSize="14" fill="#1e3a8a">c</text>
+                      <text x="-32" y="-6" fontSize="14" fill="#1e3a8a">c</text>
                     </g>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">

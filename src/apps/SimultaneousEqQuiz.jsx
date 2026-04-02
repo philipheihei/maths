@@ -252,8 +252,40 @@ const PROG01_LV2_TEMPLATES = [
         yVal: Math.round(y)
       };
     }
+  },
+  {
+    id: 'D',
+    generate: () => {
+      // 題型: y = px + q 及 ax − by + c = 0（斜截式 + 非標準形式）
+      // 預設組合，保證整數解
+      const combinations = [
+        { xVal: 2, yVal: 8,  p: 3, q: 2,  a: 1, b: 2, c: 14 },  // y=3x+2,  x-2y+14=0
+        { xVal: 3, yVal: 9,  p: 2, q: 3,  a: 2, b: 3, c: 21 },  // y=2x+3,  2x-3y+21=0
+        { xVal: 1, yVal: 7,  p: 3, q: 4,  a: 1, b: 3, c: 20 },  // y=3x+4,  x-3y+20=0
+        { xVal: 2, yVal: 10, p: 4, q: 2,  a: 1, b: 3, c: 28 },  // y=4x+2,  x-3y+28=0
+        { xVal: 3, yVal: 12, p: 3, q: 3,  a: 1, b: 2, c: 21 },  // y=3x+3,  x-2y+21=0
+        { xVal: 4, yVal: 10, p: 2, q: 2,  a: 3, b: 5, c: 38 },  // y=2x+2,  3x-5y+38=0
+        { xVal: 1, yVal: 6,  p: 4, q: 2,  a: 1, b: 2, c: 11 },  // y=4x+2,  x-2y+11=0
+        { xVal: 2, yVal: 14, p: 5, q: 4,  a: 1, b: 3, c: 40 },  // y=5x+4,  x-3y+40=0
+        { xVal: 5, yVal: 9,  p: 2, q: -1, a: 1, b: 3, c: 22 },  // y=2x-1,  x-3y+22=0
+      ];
+
+      const { xVal, yVal, p, q, a, b, c } = combinations[Math.floor(Math.random() * combinations.length)];
+
+      const eq1Str = q > 0 ? `y = ${p}x + ${q}` : `y = ${p}x − ${Math.abs(q)}`;
+      const aStr = a === 1 ? '' : `${a}`;
+
+      return {
+        eq1Display: eq1Str,
+        eq2Display: `${aStr}x − ${b}y + ${c} = 0`,
+        // 標準形式: eq1 → -px + y = q; eq2 → ax - by = -c
+        eq1Standard: { a: -p, b: 1, c: q },
+        eq2Standard: { a: a, b: -b, c: -c },
+        xVal,
+        yVal
+      };
+    }
   }
-];
 
 const generateProg01Lv2Question = () => {
   const template = PROG01_LV2_TEMPLATES[Math.floor(Math.random() * PROG01_LV2_TEMPLATES.length)];
