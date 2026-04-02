@@ -612,7 +612,7 @@ export default function AngleMasterQuiz() {
                     </g>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
-                    <span className="bg-blue-200 px-1 rounded font-bold text-blue-900">圍圍的所有角</span>之和 = 360°
+                    <span className="bg-blue-200 px-1 rounded font-bold text-blue-900">圓圈的所有角</span>之和 = 360°
                   </p>
                 </div>
               </div>

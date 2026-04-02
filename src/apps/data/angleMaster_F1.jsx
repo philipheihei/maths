@@ -84,7 +84,7 @@ export const questionsF1 = [
         <text x="55" y="115" fontSize="14">C</text>
         <text x="168" y="102" fontSize="14">O</text>
         <AngleArc cx={160} cy={110} r={25} startAngle={270} endAngle={400} label="130°" labelOffset={15} />
-        <AngleArc cx={160} cy={110} r={18} startAngle={40} endAngle={180} label="140°" labelOffset={15} />
+        <AngleArc cx={160} cy={110} r={35} startAngle={40} endAngle={180} label="140°" labelOffset={15} />
         <AngleArc cx={160} cy={110} r={20} startAngle={180} endAngle={270} label="" labelOffset={15} isHighlighted={showHint} />
       </svg>
     )
