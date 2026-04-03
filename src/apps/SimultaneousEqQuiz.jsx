@@ -188,8 +188,8 @@ const buildEqCandidates = (x, y) => {
     }
   }
 
-  // 類型 4：線性組合 ax + by = C（隨機小係數）
-  const comboPairs = [[2, 3], [3, 2], [2, 5], [3, 4], [4, 3], [3, 5], [1, 4], [4, 1]];
+  // 類型 4：線性組合 ax + by = C（係數均 ≥ 2）
+  const comboPairs = [[2, 3], [3, 2], [2, 5], [3, 4], [4, 3], [3, 5], [5, 2], [4, 5], [2, 7], [3, 7]];
   const [ca, cb] = comboPairs[Math.floor(Math.random() * comboPairs.length)];
   candidates.push({
     group: 'linear',
@@ -197,8 +197,8 @@ const buildEqCandidates = (x, y) => {
     standard: { a: ca, b: cb, c: ca * x + cb * y }
   });
 
-  // 類型 5：斜截式 y = mx + b（整數斜率）
-  const slopes = [2, 3, -1, -2, 1, 4];
+  // 類型 5：斜截式 y = mx + b（斜率 |m| ≥ 2）
+  const slopes = [2, 3, -2, 4, -3, 5, -4];
   const m5 = slopes[Math.floor(Math.random() * slopes.length)];
   const b5 = y - m5 * x;
   const b5Str = b5 > 0 ? ` + ${b5}` : b5 < 0 ? ` − ${Math.abs(b5)}` : '';
@@ -208,29 +208,29 @@ const buildEqCandidates = (x, y) => {
     standard: { a: m5, b: -1, c: -b5 }
   });
 
-  // 類型 6：帶括號 k(x − p) = y + q
+  // 類型 6：帶括號 k(x − p) = my + q（兩邊係數均 ≥ 2）
   if (x > 2) {
-    const k6 = 2 + Math.floor(Math.random() * 2); // 2 或 3
+    const k6 = 2 + Math.floor(Math.random() * 3); // 2, 3 或 4
+    const m6 = 2 + Math.floor(Math.random() * 2); // 2 或 3（y 的係數）
     const maxP = Math.max(1, x - 2);
     const p6 = 1 + Math.floor(Math.random() * maxP);
-    const q6 = k6 * (x - p6) - y;
+    const q6 = k6 * (x - p6) - m6 * y;
     const q6Str = q6 > 0 ? ` + ${q6}` : q6 < 0 ? ` − ${Math.abs(q6)}` : '';
     candidates.push({
       group: 'bracket',
-      display: `${k6}(x − ${p6}) = y${q6Str}`,
-      standard: { a: k6, b: -1, c: k6 * p6 + q6 }
+      display: `${k6}(x − ${p6}) = ${m6}y${q6Str}`,
+      standard: { a: k6, b: -m6, c: k6 * p6 + q6 }
     });
   }
 
-  // 類型 7：非標準式 ax − by + c = 0
-  const nsPairs = [[1, 2], [2, 3], [1, 3], [3, 4], [2, 5]];
+  // 類型 7：非標準式 ax − by + c = 0（係數均 ≥ 2）
+  const nsPairs = [[2, 3], [3, 5], [2, 5], [3, 4], [4, 5], [2, 7], [3, 7], [4, 3]];
   const [na, nb] = nsPairs[Math.floor(Math.random() * nsPairs.length)];
   const nc = nb * y - na * x; // ax − by + c = 0 → c = by − ax
-  const naStr = na === 1 ? '' : `${na}`;
   const ncStr = nc > 0 ? ` + ${nc}` : nc < 0 ? ` − ${Math.abs(nc)}` : '';
   candidates.push({
     group: 'nonstd',
-    display: `${naStr}x − ${nb}y${ncStr} = 0`,
+    display: `${na}x − ${nb}y${ncStr} = 0`,
     standard: { a: na, b: -nb, c: -nc }
   });
 
@@ -239,9 +239,16 @@ const buildEqCandidates = (x, y) => {
 
 const generateProg01Lv2Question = () => {
   for (let attempt = 0; attempt < 30; attempt++) {
-    // 隨機整數解 (2–12)
-    const x = Math.floor(Math.random() * 11) + 2;
-    const y = Math.floor(Math.random() * 11) + 2;
+    // 約 1/3 機率強制生成倍數關係解，確保 ratio 題型有機會出現
+    let x, y;
+    if (Math.random() < 0.33) {
+      const k = 2 + Math.floor(Math.random() * 3); // k ∈ {2,3,4}
+      y = 2 + Math.floor(Math.random() * 5);       // y ∈ [2,6]
+      x = k * y;                                    // x = k*y，保證整除
+    } else {
+      x = Math.floor(Math.random() * 11) + 2;
+      y = Math.floor(Math.random() * 11) + 2;
+    }
 
     const candidates = buildEqCandidates(x, y);
 
