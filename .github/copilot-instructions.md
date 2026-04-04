@@ -183,6 +183,33 @@ When displaying CASIO fx-50FH II keys in notes or instructions, **always** use t
 - Always use `[...new Set([w1, w2, w3].filter(w => w !== correct))]` and pad with a `while` loop if fewer than 3 remain
 - Never rely on hardcoded wrongs being distinct — verify algebraically that no two wrongs can be equal for any valid input
 
+## TrigQuiz — 答案顯示規則（3位有效數字）
+
+`src/apps/TrigQuiz.jsx` 的所有非精確（irrational）答案必須**顯示為3位有效數字，並保留尾隨零**（如 `59.0`，而非 `59`）。
+
+### 實作模式
+使用 `format3sf(rawValue)` 函數（而非直接用 `round3sf`）生成顯示字串：
+```js
+const format3sf = (n) => {
+  if (n === 0) return '0';
+  if (Math.abs(n - Math.round(n)) < 0.001) return String(Math.round(n)); // exact integer
+  return n.toPrecision(3); // preserves trailing zeros e.g. "59.0", "17.3"
+};
+```
+
+### 使用規則
+- **角度／無理數邊長**：先算 raw float → `round3sf(raw)` 存為數值（用於 SVG 繪圖）→ `format3sf(raw)` 存為 `answer` 字串（用於顯示及步驟）
+- **精確整數答案**（如 `sin30° → a = c/2`）：直接儲存數值，`String(integer)` 顯示即可，無需 `format3sf`
+- `answer` 欄位改為字串後，比較時須用 `round3sf(Number(correctVal))`
+
+### 範例
+| raw | `format3sf` 輸出 | 顯示 |
+|-----|----------------|------|
+| 59.036° | `"59.0"` | 59.0° ✓ |
+| 45.000° | `"45"` | 45° ✓（精確值）|
+| 8.6602 | `"8.66"` | 8.66 ✓ |
+| 17.321 | `"17.3"` | 17.3 ✓ |
+
 ## Common Pitfalls
 1. **SVG coordinate system**: Remember Y-axis increases downward; angles calculated with `Math.atan2(y, x)`
 2. **Traditional Chinese**: Do not use Simplified Chinese (简体中文)
