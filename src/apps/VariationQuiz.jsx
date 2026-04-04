@@ -772,6 +772,45 @@ const VariationQuiz = () => {
                       <div className="bg-white border-2 border-red-200 rounded-xl p-4 w-full shadow-md flex justify-center items-center overflow-x-auto">
                         <MathDisplay latex={hint} className="text-2xl text-slate-800" />
                       </div>
+                      {/* Substitution explanation — only for f(x) label format */}
+                      {!given.indepVar && (() => {
+                        const indepVal = given.label.match(/\((.+?)\)/)?.[1] ?? '?';
+                        const depValStr = given.value;
+                        const indepVarName = currentQuestion.vars[1] ?? 'x';
+                        const depVarName = currentQuestion.vars[0] ?? 'f(x)';
+                        // Build colored formula: dep var → green, indep var → blue
+                        const placeholder = '__DEP__';
+                        const escapedDep = depVarName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        const escapedIndep = indepVarName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        let coloredF = currentQuestion.formula.replace(new RegExp(escapedDep, 'g'), placeholder);
+                        coloredF = coloredF.replace(new RegExp(`\\b${escapedIndep}\\b`, 'g'), `\\textcolor{#2563eb}{${indepVarName}}`);
+                        coloredF = coloredF.replace(new RegExp(placeholder, 'g'), `\\textcolor{#16a34a}{${depVarName}}`);
+                        return (
+                          <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 w-full">
+                            <p className="font-bold text-amber-800 text-sm mb-2">代入說明：</p>
+                            {/* Colored formula */}
+                            <div className="flex justify-center mb-3 bg-white rounded-lg py-2 px-3 border border-amber-100 overflow-x-auto no-scrollbar">
+                              <MathDisplay latex={coloredF} className="text-xl" />
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="bg-blue-100 text-blue-800 border border-blue-200 rounded-full px-2 py-0.5 font-bold text-sm flex items-center">
+                                  <MathDisplay latex={`\\textcolor{#2563eb}{${indepVarName}}`} inline={true} />
+                                </span>
+                                <span className="text-slate-500 text-sm">的位置 →</span>
+                                <span className="bg-blue-600 text-white rounded-full px-3 py-0.5 font-bold text-sm">{indepVal}</span>
+                              </div>
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="bg-green-100 text-green-800 border border-green-200 rounded-full px-2 py-0.5 font-bold text-sm flex items-center">
+                                  <MathDisplay latex={`\\textcolor{#16a34a}{${depVarName}}`} inline={true} />
+                                </span>
+                                <span className="text-slate-500 text-sm">的位置 →</span>
+                                <span className="bg-green-600 text-white rounded-full px-3 py-0.5 font-bold text-sm">{depValStr}</span>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </div>
                   )}
                   <button onClick={nextSubStep} className="mt-2 bg-slate-800 hover:bg-slate-700 text-white px-8 py-3 rounded-full font-bold flex items-center gap-2 transition-all shadow-lg active:scale-95 text-lg">

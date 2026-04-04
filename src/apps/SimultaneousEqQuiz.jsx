@@ -432,6 +432,20 @@ const escapeRegExp = (string) => {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
+// Convert standard form { a, b, c } → LaTeX string like "2x+3y=8"
+const standardToLatex = (a, b, c, varX = 'x', varY = 'y') => {
+  let s = '';
+  if (a === 1) s += varX;
+  else if (a === -1) s += `-${varX}`;
+  else if (a !== 0) s += `${a}${varX}`;
+  if (b === 1) s += (s ? '+' : '') + varY;
+  else if (b === -1) s += `-${varY}`;
+  else if (b > 0) s += `+${b}${varY}`;
+  else if (b < 0) s += `${b}${varY}`;
+  s += `=${c}`;
+  return s;
+};
+
 const renderTextWithItalics = (text) => {
   if (!text) return null;
   const parts = text.split(/([xy])/g);
@@ -2326,9 +2340,12 @@ export default function SimultaneousEqQuiz() {
                 求解：
               </h3>
               
-              <div className="space-y-2 ml-4 mb-4 text-lg font-mono">
-                <EquationDisplay a={eq1Standard.a} b={eq1Standard.b} c={eq1Standard.c} varX={varX} varY={varY} />
-                <EquationDisplay a={eq2Standard.a} b={eq2Standard.b} c={eq2Standard.c} varX={varX} varY={varY} />
+              <div className="mb-4">
+                <Prog01Lv2OriginalDisplay
+                  eq1={standardToLatex(eq1Standard.a, eq1Standard.b, eq1Standard.c, varX, varY)}
+                  eq2={standardToLatex(eq2Standard.a, eq2Standard.b, eq2Standard.c, varX, varY)}
+                  varX={varX} varY={varY}
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-4 mt-4">
