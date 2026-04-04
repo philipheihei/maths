@@ -507,7 +507,7 @@ export default function AngleMasterQuiz() {
           onClick={() => setShowNotes(false)}
         >
           <div
-            className="bg-white w-full max-w-lg max-h-[85vh] rounded-t-2xl md:rounded-2xl overflow-y-auto shadow-2xl"
+            className="bg-white w-full max-w-4xl max-h-[92vh] rounded-t-2xl md:rounded-2xl overflow-y-auto shadow-2xl"
             onClick={e => e.stopPropagation()}
           >
             {/* Modal Header */}
@@ -518,10 +518,10 @@ export default function AngleMasterQuiz() {
               </button>
             </div>
 
-            <div className="p-5 space-y-5">
+            <div className="p-5">
 
-              {/* 0. 基礎知識 */}
-              <div>
+              {/* 0. 基礎知識 — full width */}
+              <div className="mb-5">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-slate-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
                   基礎知識：線和角的命名
@@ -553,6 +553,9 @@ export default function AngleMasterQuiz() {
                   </div>
                 </div>
               </div>
+
+              {/* Theorems grid — 2 columns on md+ */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
               {/* 1. 直線上的鄰角 */}
               <div>
@@ -642,8 +645,207 @@ export default function AngleMasterQuiz() {
                 </div>
               </div>
 
+              {/* 4A. 同位角 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4A</span>
+                  同位角
+                  <span className="text-sm text-red-500 font-normal">（F 形 → 相等）</span>
+                </h3>
+                <div className="bg-red-50 rounded-lg p-3 border border-red-200">
+                  <p className="text-center text-xl font-bold text-red-800 my-1">a = b</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <line x1="40" y1="50" x2="260" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="168" y1="20" x2="102" y2="130" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    
+                    <polyline points="230,50 150,50 102,130" stroke="#ef4444" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
+                    <line x1="120" y1="100" x2="230" y2="100" stroke="#ef4444" strokeWidth="6" strokeLinecap="round" opacity="0.4" />
+                    
+                    <path d="M 195 45 L 205 50 L 195 55" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 195 95 L 205 100 L 195 105" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    
+                    <path d="M 165 50 A 15 15 0 0 1 142.3 62.8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <path d="M 135 100 A 15 15 0 0 1 112.3 112.8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    
+                    <text x="156" y="70" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                    <text x="126" y="120" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                    <text x="40" y="40" fontSize="16" fill="#334155">A</text>
+                    <text x="250" y="40" fontSize="16" fill="#334155">B</text>
+                    <text x="40" y="90" fontSize="16" fill="#334155">C</text>
+                    <text x="250" y="90" fontSize="16" fill="#334155">D</text>
+                  </svg>
+                  <p className="text-sm text-slate-600 text-center mt-2">
+                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-blue-900 font-bold">同位角, AB//CD</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* 4B. 內錯角 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4B</span>
+                  內錯角
+                  <span className="text-sm text-red-500 font-normal">（Z/N 形 → 相等）</span>
+                </h3>
+                <div className="bg-red-50 rounded-lg p-3 border border-red-200">
+                  <p className="text-center text-xl font-bold text-red-800 my-1">a = b</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <line x1="100" y1="20" x2="100" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="200" y1="20" x2="200" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="100" y1="40" x2="200" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    
+                    <polyline points="100,120 100,40 200,100 200,20" stroke="#ef4444" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
+                    
+                    <path d="M 92 85 L 100 75 L 108 85 M 92 95 L 100 85 L 108 95" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 192 65 L 200 55 L 208 65 M 192 75 L 200 65 L 208 75" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    
+                    <path d="M 112.8 47.7 A 15 15 0 0 1 100 55" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <path d="M 200 85 A 15 15 0 0 0 187.2 92.3" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    
+                    <text x="110" y="70" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                    <text x="180" y="80" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                    <text x="80" y="38" fontSize="16" fill="#334155">A</text>
+                    <text x="80" y="115" fontSize="16" fill="#334155">B</text>
+                    <text x="210" y="38" fontSize="16" fill="#334155">C</text>
+                    <text x="210" y="115" fontSize="16" fill="#334155">D</text>
+                  </svg>
+                  <p className="text-sm text-slate-600 text-center mt-2">
+                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-blue-900 font-bold">內錯角, AB//CD</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* 4C. 同旁內角 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4C</span>
+                  同旁內角
+                  <span className="text-sm text-red-500 font-normal">（C/U 形 → 180°）</span>
+                </h3>
+                <div className="bg-red-50 rounded-lg p-3 border border-red-200">
+                  <p className="text-center text-xl font-bold text-red-800 my-1">a + b = 180°</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <line x1="40" y1="50" x2="260" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="168" y1="20" x2="102" y2="130" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    
+                    <polyline points="230,50 150,50 120,100 230,100" stroke="#ef4444" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
+                    
+                    <path d="M 190 45 L 200 50 L 190 55 M 200 45 L 210 50 L 200 55" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 190 95 L 200 100 L 190 105 M 200 95 L 210 100 L 200 105" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    
+                    <path d="M 165 50 A 15 15 0 0 1 142.3 62.8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <path d="M 127.7 87.2 A 15 15 0 0 1 135 100" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    
+                    <text x="153" y="72" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                    <text x="135" y="85" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                    <text x="40" y="40" fontSize="16" fill="#334155">A</text>
+                    <text x="250" y="40" fontSize="16" fill="#334155">B</text>
+                    <text x="40" y="90" fontSize="16" fill="#334155">C</text>
+                    <text x="250" y="90" fontSize="16" fill="#334155">D</text>
+                  </svg>
+                  <p className="text-sm text-slate-600 text-center mt-2">
+                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-blue-900 font-bold">同旁內角, AB//CD</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* 5. 三角形內角和 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">5</span>
+                  三角形內角和
+                  <span className="text-sm text-red-500 font-normal">（△ → 180°）</span>
+                </h3>
+                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                  <p className="text-center text-xl font-bold text-green-800 my-1">a + b + c = 180°</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <polygon points="150,20 60,110 240,110" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                    <path d="M 135 35 A 20 20 0 0 0 165 35" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 75 95 A 20 20 0 0 0 80 110" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 220 110 A 20 20 0 0 0 225 95" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="145" y="55" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                    <text x="85" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                    <text x="205" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">c</text>
+                  </svg>
+                  <div className="bg-white rounded p-3 mt-2 border border-slate-200">
+                    <p className="text-sm text-green-800 font-bold mb-2">例子：</p>
+                    <div className="flex items-center gap-4">
+                      <svg viewBox="0 0 100 80" className="w-20 flex-none touch-none">
+                        <polygon points="50,10 10,70 90,70" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                        <path d="M 40 25 A 15 15 0 0 0 60 25" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 22 52 A 15 15 0 0 0 20 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 80 70 A 15 15 0 0 0 78 52" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <text x="40" y="38" fontSize="11" fill="#334155">70°</text>
+                        <text x="15" y="66" fontSize="11" fill="#334155">50°</text>
+                        <text x="65" y="66" fontSize="11" fill="#334155">2x</text>
+                      </svg>
+                      <div className="text-sm text-slate-700 font-mono">
+                        <p>2x = 180° - 50° - 70°</p>
+                        <p>2x = 60°</p>
+                        <p> x = 30°</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-600 text-center mt-3">
+                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-green-900 font-bold">△內角和, ∠ sum of △</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* 6. 等腰三角形底角 */}
+              <div>
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">6</span>
+                  等腰三角形底角
+                  <span className="text-sm text-red-500 font-normal">（等腰△ → 底角相等）</span>
+                </h3>
+                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                  <p className="text-center text-xl font-bold text-green-800 my-1">若 AB = AC，則 ∠B = ∠C</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <polygon points="150,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                    <line x1="105" y1="70" x2="120" y2="78" stroke="#9333ea" strokeWidth="2" />
+                    <line x1="110" y1="63" x2="125" y2="71" stroke="#9333ea" strokeWidth="2" />
+                    <line x1="180" y1="78" x2="195" y2="70" stroke="#9333ea" strokeWidth="2" />
+                    <line x1="175" y1="71" x2="190" y2="63" stroke="#9333ea" strokeWidth="2" />
+                    <path d="M 100 91 A 25 25 0 0 0 105 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 105 84 A 32 32 0 0 0 112 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 200 91 A 25 25 0 0 1 195 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 195 84 A 32 32 0 0 1 188 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="145" y="14" fontSize="16" fill="#334155">A</text>
+                    <text x="60" y="125" fontSize="16" fill="#334155">B</text>
+                    <text x="230" y="125" fontSize="16" fill="#334155">C</text>
+                  </svg>
+                  <div className="bg-white rounded p-3 mt-2 border border-slate-200">
+                    <p className="text-sm text-green-800 font-bold mb-2">例子：</p>
+                    <div className="flex items-center gap-4">
+                      <svg viewBox="0 0 100 80" className="w-20 flex-none touch-none">
+                        <polygon points="50,15 10,70 90,70" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                        <line x1="25" y1="42" x2="35" y2="47" stroke="#9333ea" strokeWidth="2" />
+                        <line x1="75" y1="42" x2="65" y2="47" stroke="#9333ea" strokeWidth="2" />
+                        <path d="M 22 53 A 15 15 0 0 0 20 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 78 53 A 15 15 0 0 1 80 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <text x="14" y="65" fontSize="11" fill="#334155">67°</text>
+                        <text x="75" y="65" fontSize="12" fill="#334155" fontStyle="italic">x</text>
+                      </svg>
+                      <div className="text-sm text-slate-700 font-mono">
+                        <p className="text-green-700 font-bold mb-1">底角 = 67°</p>
+                        <p>x = 180° - 67° - 67°</p>
+                        <p>x = 46°</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-600 text-center mt-3">
+                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-green-900 font-bold">等腰△底角, base ∠s, isos. △</span>
+                  </p>
+                </div>
+              </div>
+
+              </div>{/* end theorems grid */}
+
               {/* 持續更新提示 */}
-              <div className="text-center py-4 text-slate-500 font-bold opacity-80">
+              <div className="text-center py-4 text-slate-500 font-bold opacity-80 md:col-span-2">
                 其他定理持續制作中...
               </div>
 
