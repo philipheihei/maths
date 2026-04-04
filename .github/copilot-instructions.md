@@ -216,3 +216,5 @@ const format3sf = (n) => {
 3. **Route paths**: Must match exactly between App.jsx and Home.jsx `path` property
 4. **Answer validation**: Always provide multiple valid answer formats in `valid` arrays (e.g., `["x+y=10", "y+x=10"]`)
 5. **MC 4 options**: After building the options array, assert `opts.length === 4` mentally — if wrongs can collide or equal correct for any parameter value, add deduplication + padding
+6. **標記文字和arc不會重疊**: 在繪製SVG標記（文字a, b, c等）時，適當調整半徑和坐標，確保文字與角度arc保持足夠距離，不發生重疊。
+7. **SVG Arc 方向 (Sweep-flag)**: 畫角度 arc 時，特別是三角形的底角或內角，請留意 `<path d="M x y A rx ry x-axis-rotation large-arc-flag sweep-flag x y" />` 中 `sweep-flag` (即 `A` 指令的第5個參數) 是 `0` 還是 `1`。如果畫出來的 arc 反向了（凸向外或凹向內錯誤），請切換該值 (0 -> 1 或 1 -> 0)。

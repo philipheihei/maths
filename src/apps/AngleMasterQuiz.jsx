@@ -668,8 +668,8 @@ export default function AngleMasterQuiz() {
                     <path d="M 165 50 A 15 15 0 0 1 142.3 62.8" stroke="#2563eb" strokeWidth="2" fill="none" />
                     <path d="M 135 100 A 15 15 0 0 1 112.3 112.8" stroke="#2563eb" strokeWidth="2" fill="none" />
                     
-                    <text x="156" y="70" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
-                    <text x="126" y="120" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                    <text x="166" y="76" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                    <text x="136" y="126" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
                     <text x="40" y="40" fontSize="16" fill="#334155">A</text>
                     <text x="250" y="40" fontSize="16" fill="#334155">B</text>
                     <text x="40" y="90" fontSize="16" fill="#334155">C</text>
@@ -703,8 +703,8 @@ export default function AngleMasterQuiz() {
                     <path d="M 112.8 47.7 A 15 15 0 0 1 100 55" stroke="#2563eb" strokeWidth="2" fill="none" />
                     <path d="M 200 85 A 15 15 0 0 0 187.2 92.3" stroke="#2563eb" strokeWidth="2" fill="none" />
                     
-                    <text x="110" y="70" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
-                    <text x="180" y="80" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                    <text x="114" y="74" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                    <text x="176" y="76" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
                     <text x="80" y="38" fontSize="16" fill="#334155">A</text>
                     <text x="80" y="115" fontSize="16" fill="#334155">B</text>
                     <text x="210" y="38" fontSize="16" fill="#334155">C</text>
@@ -759,15 +759,15 @@ export default function AngleMasterQuiz() {
                   <span className="text-sm text-red-500 font-normal">（△ → 180°）</span>
                 </h3>
                 <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-                  <p className="text-center text-xl font-bold text-green-800 my-1">a + b + c = 180°</p>
+                  <p className="text-center text-xl font-bold text-green-800 my-1">三角形內， a + b + c = 180°</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="150,20 60,110 240,110" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                     <path d="M 135 35 A 20 20 0 0 0 165 35" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 75 95 A 20 20 0 0 0 80 110" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 220 110 A 20 20 0 0 0 225 95" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 75 95 A 20 20 0 0 1 80 110" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 220 110 A 20 20 0 0 1 225 95" stroke="#16a34a" strokeWidth="2" fill="none" />
                     <text x="145" y="55" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
-                    <text x="85" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
-                    <text x="205" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">c</text>
+                    <text x="90" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                    <text x="200" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">c</text>
                   </svg>
                   <div className="bg-white rounded p-3 mt-2 border border-slate-200">
                     <p className="text-sm text-green-800 font-bold mb-2">例子：</p>
@@ -809,10 +809,10 @@ export default function AngleMasterQuiz() {
                     <line x1="110" y1="63" x2="125" y2="71" stroke="#9333ea" strokeWidth="2" />
                     <line x1="180" y1="78" x2="195" y2="70" stroke="#9333ea" strokeWidth="2" />
                     <line x1="175" y1="71" x2="190" y2="63" stroke="#9333ea" strokeWidth="2" />
-                    <path d="M 100 91 A 25 25 0 0 0 105 120" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 105 84 A 32 32 0 0 0 112 120" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 200 91 A 25 25 0 0 1 195 120" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 195 84 A 32 32 0 0 1 188 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 100 91 A 25 25 0 0 1 105 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 105 84 A 32 32 0 0 1 112 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 200 91 A 25 25 0 0 0 195 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 195 84 A 32 32 0 0 0 188 120" stroke="#16a34a" strokeWidth="2" fill="none" />
                     <text x="145" y="14" fontSize="16" fill="#334155">A</text>
                     <text x="60" y="125" fontSize="16" fill="#334155">B</text>
                     <text x="230" y="125" fontSize="16" fill="#334155">C</text>
@@ -824,8 +824,8 @@ export default function AngleMasterQuiz() {
                         <polygon points="50,15 10,70 90,70" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                         <line x1="25" y1="42" x2="35" y2="47" stroke="#9333ea" strokeWidth="2" />
                         <line x1="75" y1="42" x2="65" y2="47" stroke="#9333ea" strokeWidth="2" />
-                        <path d="M 22 53 A 15 15 0 0 0 20 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
-                        <path d="M 78 53 A 15 15 0 0 1 80 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 22 53 A 15 15 0 0 1 20 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 78 53 A 15 15 0 0 0 80 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
                         <text x="14" y="65" fontSize="11" fill="#334155">67°</text>
                         <text x="75" y="65" fontSize="12" fill="#334155" fontStyle="italic">x</text>
                       </svg>
