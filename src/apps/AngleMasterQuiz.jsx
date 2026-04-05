@@ -487,7 +487,7 @@ export default function AngleMasterQuiz() {
             <div className="space-y-2 text-lg">
               <div className="font-bold text-gray-700 mb-2">解題步驟 Solution:</div>
               {q.steps.map((step, i) => (
-                <div key={i} className="text-gray-800 font-mono bg-white/50 p-2 rounded">{step}</div>
+                <div key={i} className="text-gray-800 bg-white/50 p-2 rounded">{step}</div>
               ))}
             </div>
             <button
@@ -676,7 +676,7 @@ export default function AngleMasterQuiz() {
                     <text x="250" y="90" fontSize="16" fill="#334155">D</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
-                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-blue-900 font-bold">同位角, AB//CD</span>
+                    <span className="bg-white border rounded px-2 py-0.5 text-sm text-blue-900 font-bold">同位角, AB//CD</span>
                   </p>
                 </div>
               </div>
@@ -711,7 +711,7 @@ export default function AngleMasterQuiz() {
                     <text x="210" y="115" fontSize="16" fill="#334155">D</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
-                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-blue-900 font-bold">內錯角, AB//CD</span>
+                    <span className="bg-white border rounded px-2 py-0.5 text-sm text-blue-900 font-bold">內錯角, AB//CD</span>
                   </p>
                 </div>
               </div>
@@ -746,7 +746,7 @@ export default function AngleMasterQuiz() {
                     <text x="250" y="90" fontSize="16" fill="#334155">D</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
-                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-blue-900 font-bold">同旁內角, AB//CD</span>
+                    <span className="bg-white border rounded px-2 py-0.5 text-sm text-blue-900 font-bold">同旁內角, AB//CD</span>
                   </p>
                 </div>
               </div>
@@ -762,9 +762,9 @@ export default function AngleMasterQuiz() {
                   <p className="text-center text-xl font-bold text-green-800 my-1">三角形內， a + b + c = 180°</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="150,20 60,110 240,110" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
-                    <path d="M 135 35 A 20 20 0 0 0 165 35" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 75 95 A 20 20 0 0 1 80 110" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 220 110 A 20 20 0 0 1 225 95" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 135.9 34.1 A 20 20 0 0 0 164.1 34.1" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 80 110 A 20 20 0 0 0 74.1 95.9" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 220 110 A 20 20 0 0 1 225.9 95.9" stroke="#16a34a" strokeWidth="2" fill="none" />
                     <text x="145" y="55" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
                     <text x="90" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
                     <text x="200" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">c</text>
@@ -774,14 +774,14 @@ export default function AngleMasterQuiz() {
                     <div className="flex items-center gap-4">
                       <svg viewBox="0 0 100 80" className="w-20 flex-none touch-none">
                         <polygon points="50,10 10,70 90,70" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
-                        <path d="M 40 25 A 15 15 0 0 0 60 25" stroke="#16a34a" strokeWidth="1.5" fill="none" />
-                        <path d="M 22 52 A 15 15 0 0 0 20 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
-                        <path d="M 80 70 A 15 15 0 0 0 78 52" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 41.7 22.5 A 15 15 0 0 0 58.3 22.5" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 25 70 A 15 15 0 0 0 18.3 57.5" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 75 70 A 15 15 0 0 1 81.7 57.5" stroke="#16a34a" strokeWidth="1.5" fill="none" />
                         <text x="40" y="38" fontSize="11" fill="#334155">70°</text>
                         <text x="15" y="66" fontSize="11" fill="#334155">50°</text>
                         <text x="65" y="66" fontSize="11" fill="#334155">2x</text>
                       </svg>
-                      <div className="text-sm text-slate-700 font-mono">
+                      <div className="text-sm text-slate-700">
                         <p>2x = 180° - 50° - 70°</p>
                         <p>2x = 60°</p>
                         <p> x = 30°</p>
@@ -789,7 +789,7 @@ export default function AngleMasterQuiz() {
                     </div>
                   </div>
                   <p className="text-sm text-slate-600 text-center mt-3">
-                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-green-900 font-bold">△內角和, ∠ sum of △</span>
+                    <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">△內角和</span>
                   </p>
                 </div>
               </div>
@@ -809,10 +809,10 @@ export default function AngleMasterQuiz() {
                     <line x1="110" y1="63" x2="125" y2="71" stroke="#9333ea" strokeWidth="2" />
                     <line x1="180" y1="78" x2="195" y2="70" stroke="#9333ea" strokeWidth="2" />
                     <line x1="175" y1="71" x2="190" y2="63" stroke="#9333ea" strokeWidth="2" />
-                    <path d="M 100 91 A 25 25 0 0 1 105 120" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 105 84 A 32 32 0 0 1 112 120" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 200 91 A 25 25 0 0 0 195 120" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <path d="M 195 84 A 32 32 0 0 0 188 120" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 100 120 A 20 20 0 0 0 91.5 103.6" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 106 120 A 26 26 0 0 0 94.9 98.7" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 200 120 A 20 20 0 0 1 208.5 103.6" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <path d="M 194 120 A 26 26 0 0 1 205.1 98.7" stroke="#16a34a" strokeWidth="2" fill="none" />
                     <text x="145" y="14" fontSize="16" fill="#334155">A</text>
                     <text x="60" y="125" fontSize="16" fill="#334155">B</text>
                     <text x="230" y="125" fontSize="16" fill="#334155">C</text>
@@ -824,12 +824,12 @@ export default function AngleMasterQuiz() {
                         <polygon points="50,15 10,70 90,70" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                         <line x1="25" y1="42" x2="35" y2="47" stroke="#9333ea" strokeWidth="2" />
                         <line x1="75" y1="42" x2="65" y2="47" stroke="#9333ea" strokeWidth="2" />
-                        <path d="M 22 53 A 15 15 0 0 1 20 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
-                        <path d="M 78 53 A 15 15 0 0 0 80 70" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 25 70 A 15 15 0 0 0 18.8 57.9" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                        <path d="M 75 70 A 15 15 0 0 1 81.2 57.9" stroke="#16a34a" strokeWidth="1.5" fill="none" />
                         <text x="14" y="65" fontSize="11" fill="#334155">67°</text>
                         <text x="75" y="65" fontSize="12" fill="#334155" fontStyle="italic">x</text>
                       </svg>
-                      <div className="text-sm text-slate-700 font-mono">
+                      <div className="text-sm text-slate-700">
                         <p className="text-green-700 font-bold mb-1">底角 = 67°</p>
                         <p>x = 180° - 67° - 67°</p>
                         <p>x = 46°</p>
@@ -837,7 +837,7 @@ export default function AngleMasterQuiz() {
                     </div>
                   </div>
                   <p className="text-sm text-slate-600 text-center mt-3">
-                    <span className="bg-white border rounded px-1.5 py-0.5 font-mono text-sm text-green-900 font-bold">等腰△底角, base ∠s, isos. △</span>
+                    <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">等腰△底角</span>
                   </p>
                 </div>
               </div>

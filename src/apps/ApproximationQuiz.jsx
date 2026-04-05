@@ -478,7 +478,7 @@ const NotesSection = () => {
 
       {/* 例子 I, II, III */}
       <div className="space-y-4 bg-slate-50 p-4 rounded-lg">
-        <div className="text-lg font-mono flex items-center gap-2">
+        <div className="text-lg flex items-center gap-2">
           <span className="text-blue-600 font-bold">I.</span>
           <span className="relative">
             8<span className="absolute -top-4 left-0 text-sm text-green-600 font-bold">1</span>
@@ -492,7 +492,7 @@ const NotesSection = () => {
           </span>
         </div>
         
-        <div className="text-lg font-mono flex items-center gap-2">
+        <div className="text-lg flex items-center gap-2">
           <span className="text-blue-600 font-bold">II.</span>
           <span className="relative">
             0<span className="absolute -top-4 left-0 text-sm text-red-600 font-bold">×</span>
@@ -510,7 +510,7 @@ const NotesSection = () => {
           <span className="text-red-600 text-sm ml-4">× 不是有效數字</span>
         </div>
         
-        <div className="text-lg font-mono flex items-center gap-2">
+        <div className="text-lg flex items-center gap-2">
           <span className="text-blue-600 font-bold">III.</span>
           <span className="relative">
             0<span className="absolute -top-4 left-0 text-sm text-red-600 font-bold">×</span>
@@ -547,19 +547,19 @@ const NotesSection = () => {
             <div className="flex items-center gap-3">
               <span className="text-red-600 text-xs">(必定進位)</span>
               <span className="text-blue-600 font-bold w-12">上捨</span>
-              <span className="font-mono">45.1 → <b>46</b></span>
+              <span>45.1 → <b>46</b></span>
             </div>
             
             <div className="flex items-center gap-3">
               <span className="text-red-600 text-xs">(4捨5入)</span>
               <span className="text-blue-600 font-bold w-12">捨入</span>
-              <span className="font-mono">45.1 → <b>45</b></span>
+              <span>45.1 → <b>45</b></span>
             </div>
             
             <div className="flex items-center gap-3">
               <span className="text-red-600 text-xs">(不需進位)</span>
               <span className="text-blue-600 font-bold w-12">下捨</span>
-              <span className="font-mono">45.9 → <b>45</b></span>
+              <span>45.9 → <b>45</b></span>
             </div>
           </div>
 
@@ -873,7 +873,7 @@ export default function ApproximationQuiz() {
               </div>
               <div className="text-center mb-8">
                 <h2 className="text-xl text-slate-600 mb-4">將</h2>
-                <div className="text-4xl font-bold text-slate-800 mb-4 font-mono">
+                <div className="text-4xl font-bold text-slate-800 mb-4">
                   {feedback 
                     ? renderHighlightedNumber(currentQuestion.number.toString(), currentQuestion.targetDigitIndex)
                     : currentQuestion.number
@@ -901,7 +901,7 @@ export default function ApproximationQuiz() {
                   onChange={(e) => setUserAnswer(e.target.value)}
                   onKeyDown={handleKeyDown}
                   disabled={feedback !== null}
-                  className={`w-full text-3xl font-mono text-center p-4 border-2 rounded-xl focus:outline-none transition-all
+                  className={`w-full text-3xl text-center p-4 border-2 rounded-xl focus:outline-none transition-all
                     ${feedback?.type === 'correct' ? 'border-green-500 bg-green-50' : 
                       feedback?.type === 'wrong' ? 'border-red-500 bg-red-50' : 
                       'border-slate-300 focus:border-blue-500'}`}
@@ -935,7 +935,7 @@ export default function ApproximationQuiz() {
                         <span className="inline-block bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold">正確答案</span>
                       </div>
                       <div className="text-slate-700 text-lg">
-                        <span className="font-bold font-mono text-2xl">
+                        <span className="font-bold text-2xl">
                           {renderHighlightedNumber(feedback.correctAnswer, currentQuestion.answerDigitIndex)}
                         </span>
                       </div>

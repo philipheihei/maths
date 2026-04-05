@@ -1186,7 +1186,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 onKeyDown={(e) => e.key === 'Enter' && (isAnswered ? handleNext() : handleSubmit())}
                 placeholder={currentQuestion.unknownAngle ? '輸入角度（度）' : '輸入長度'}
                 disabled={isAnswered}
-                className={`w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-lg focus:border-${color}-500 focus:outline-none disabled:bg-gray-100 font-mono`}
+                className={`w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-lg focus:border-${color}-500 focus:outline-none disabled:bg-gray-100`}
               />
             </div>
 
@@ -1208,7 +1208,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 </div>
                 <div className={`flex items-center gap-2 text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
                   <span className="font-medium">答案：</span>
-                  <span className="font-mono">{feedback.answer}{currentQuestion.unknownAngle ? '°' : ''}</span>
+                  <span className="font-bold">{feedback.answer}{currentQuestion.unknownAngle ? '°' : ''}</span>
                 </div>
                 {feedback.steps && feedback.steps.length > 0 && (
                   <div className={`mt-3 border-t pt-2 ${feedback.type === 'correct' ? 'border-green-300' : 'border-red-300'}`}>

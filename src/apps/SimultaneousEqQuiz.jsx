@@ -2191,10 +2191,10 @@ export default function SimultaneousEqQuiz() {
             {feedback.type === 'error' && (
               <div className="mt-3 space-y-1 text-gray-700">
                 <p>正確答案：</p>
-                <p className="ml-4 font-mono">
+                <p className="ml-4">
                   <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>x</span> = {feedback.correctX}
                 </p>
-                <p className="ml-4 font-mono">
+                <p className="ml-4">
                   <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>y</span> = {feedback.correctY}
                 </p>
               </div>
@@ -2364,7 +2364,7 @@ export default function SimultaneousEqQuiz() {
                     onChange={(e) => !feedback && setXAnswer(e.target.value)}
                     onFocus={() => !feedback && setActiveInput({ field: 'x', setter: setXAnswer })}
                     readOnly={!!feedback}
-                    className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none ${feedback?.xWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-blue-500'}`}
+                    className={`w-full text-2xl p-2 border-2 rounded-lg focus:outline-none ${feedback?.xWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-blue-500'}`}
                     placeholder="?"
                   />
                 </div>
@@ -2384,7 +2384,7 @@ export default function SimultaneousEqQuiz() {
                     onChange={(e) => !feedback && setYAnswer(e.target.value)}
                     onFocus={() => !feedback && setActiveInput({ field: 'y', setter: setYAnswer })}
                     readOnly={!!feedback}
-                    className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none ${feedback?.yWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-green-500'}`}
+                    className={`w-full text-2xl p-2 border-2 rounded-lg focus:outline-none ${feedback?.yWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-green-500'}`}
                     placeholder="?"
                   />
                 </div>
@@ -2399,10 +2399,10 @@ export default function SimultaneousEqQuiz() {
                 {feedback.type === 'error' && (
                   <div className="mt-3 space-y-1 text-gray-700">
                     <p>正確答案：</p>
-                    <p className="ml-4 font-mono">
+                    <p className="ml-4">
                       <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varX}</span> = {feedback.correctX}
                     </p>
-                    <p className="ml-4 font-mono">
+                    <p className="ml-4">
                       <span className="italic" style={{ fontFamily: 'Times New Roman, serif' }}>{varY}</span> = {feedback.correctY}
                     </p>
                   </div>

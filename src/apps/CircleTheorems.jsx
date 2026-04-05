@@ -765,11 +765,11 @@ const CircleTheorems = () => {
                   <>
                        <div className="flex justify-between items-center border-b pb-1">
                           <span>對角和 (∠ABC + ∠CDA)</span>
-                          <span className="font-mono font-bold">{angleQuadB}° + {angleQuadD}° = {(angleQuadB + angleQuadD).toFixed(0)}°</span>
+                          <span className="font-bold">{angleQuadB}° + {angleQuadD}° = {(angleQuadB + angleQuadD).toFixed(0)}°</span>
                       </div>
                       <div className="flex justify-between items-center border-b pb-1">
                           <span>外角 vs 內對角</span>
-                          <span className="font-mono font-bold text-green-600">∠CBE = {angleExtB}° / ∠CDA = {angleQuadD}°</span>
+                          <span className="font-bold text-green-600">∠CBE = {angleExtB}° / ∠CDA = {angleQuadD}°</span>
                       </div>
                   </>
               )}
@@ -784,15 +784,15 @@ const CircleTheorems = () => {
                   <>
                       <div className="flex justify-between items-center border-b pb-1">
                           <span className="font-bold">切線長度 (AT = BT)</span>
-                          <span className="font-mono">{lenTanA.toFixed(1)}</span>
+                          <span className="font-bold">{lenTanA.toFixed(1)}</span>
                       </div>
                       <div className="flex justify-between items-center border-b pb-1">
                           <span className="font-bold">切線夾角半角 (∠ATO = ∠BTO)</span>
-                          <span className="font-mono text-blue-600">{angleATO}°</span>
+                          <span className="font-bold text-blue-600">{angleATO}°</span>
                       </div>
                       <div className="flex justify-between items-center border-b pb-1">
                           <span className="font-bold">圓心夾角半角 (∠AOT = ∠BOT)</span>
-                          <span className="font-mono text-green-600">{angleAOT}°</span>
+                          <span className="font-bold text-green-600">{angleAOT}°</span>
                       </div>
                   </>
               )}
