@@ -1,0 +1,775 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Home as HomeIcon,
+  BookOpen,
+  PenTool,
+  GraduationCap,
+  Trophy,
+  ArrowRight,
+  Check,
+  X,
+  XCircle
+} from 'lucide-react';
+
+// ============= CONSTANTS =============
+const GRID_SIZE = 7;
+const SVG_SIZE = 400;
+const PADDING = 30;
+const UNIT = (SVG_SIZE - 2 * PADDING) / (GRID_SIZE * 2);
+const CENTER = SVG_SIZE / 2;
+
+const toSVG = (x, y) => ({
+  x: CENTER + x * UNIT,
+  y: CENTER - y * UNIT
+});
+
+const toGrid = (svgX, svgY) => ({
+  x: Math.round((svgX - CENTER) / UNIT),
+  y: Math.round((CENTER - svgY) / UNIT)
+});
+
+// ============= COORDINATE GRID =============
+const CoordinateGrid = ({ children, onMouseMove, onMouseUp, onMouseLeave }) => {
+  const gridLines = [];
+  for (let i = -GRID_SIZE; i <= GRID_SIZE; i++) {
+    const pos = CENTER + i * UNIT;
+    gridLines.push(
+      <line key={`v${i}`} x1={pos} y1={PADDING} x2={pos} y2={SVG_SIZE - PADDING}
+        stroke={i === 0 ? '#333' : '#e0e7ff'} strokeWidth={i === 0 ? 2 : 1} />
+    );
+    gridLines.push(
+      <line key={`h${i}`} x1={PADDING} y1={pos} x2={SVG_SIZE - PADDING} y2={pos}
+        stroke={i === 0 ? '#333' : '#e0e7ff'} strokeWidth={i === 0 ? 2 : 1} />
+    );
+  }
+
+  const labels = [];
+  for (let i = -GRID_SIZE; i <= GRID_SIZE; i++) {
+    if (i !== 0) {
+      labels.push(
+        <text key={`xl${i}`} x={CENTER + i * UNIT} y={CENTER + 18}
+          textAnchor="middle" fontSize="11" fill="#666">{i}</text>
+      );
+      labels.push(
+        <text key={`yl${i}`} x={CENTER - 15} y={CENTER - i * UNIT + 4}
+          textAnchor="middle" fontSize="11" fill="#666">{i}</text>
+      );
+    }
+  }
+
+  return (
+    <svg
+      width="100%" height="100%"
+      viewBox={`0 0 ${SVG_SIZE} ${SVG_SIZE}`}
+      className="bg-white rounded-xl border border-gray-200 shadow-sm"
+      style={{ touchAction: 'none' }}
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseLeave}
+      onTouchMove={onMouseMove}
+      onTouchEnd={onMouseUp}
+    >
+      {gridLines}
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+        </marker>
+      </defs>
+      <line x1={PADDING} y1={CENTER} x2={SVG_SIZE - PADDING + 5} y2={CENTER}
+        stroke="#333" strokeWidth="2" markerEnd="url(#arrowhead)" />
+      <line x1={CENTER} y1={SVG_SIZE - PADDING} x2={CENTER} y2={PADDING - 5}
+        stroke="#333" strokeWidth="2" markerEnd="url(#arrowhead)" />
+      {labels}
+      <text x={SVG_SIZE - PADDING + 15} y={CENTER + 5} fontSize="14" fontWeight="bold" fill="#333">x</text>
+      <text x={CENTER + 8} y={PADDING - 10} fontSize="14" fontWeight="bold" fill="#333">y</text>
+      {children}
+    </svg>
+  );
+};
+
+// ============= DRAGGABLE POINT =============
+const DraggablePoint = ({ point, onDragStart, isDragging, label, color = '#3b82f6' }) => {
+  const svgCoords = toSVG(point.x, point.y);
+  const handleMouseDown = (e) => { e.preventDefault(); e.stopPropagation(); onDragStart(); };
+  const handleTouchStart = (e) => { e.preventDefault(); e.stopPropagation(); onDragStart(); };
+
+  return (
+    <g>
+      <circle cx={svgCoords.x} cy={svgCoords.y} r="15" fill="transparent"
+        style={{ cursor: 'grab' }} onMouseDown={handleMouseDown} onTouchStart={handleTouchStart} />
+      <circle cx={svgCoords.x} cy={svgCoords.y} r={isDragging ? 10 : 8}
+        fill={isDragging ? '#2563eb' : color} stroke="white" strokeWidth="2"
+        style={{ cursor: 'grab', pointerEvents: 'none' }} />
+      <text x={svgCoords.x + 12} y={svgCoords.y - 10} fontSize="14" fontWeight="bold" fill={color}
+        style={{ pointerEvents: 'none' }}>{label}</text>
+      <text x={svgCoords.x + 12} y={svgCoords.y + 5} fontSize="12" fill="#666"
+        style={{ pointerEvents: 'none' }}>({point.x}, {point.y})</text>
+      {!isDragging && (
+        <text x={svgCoords.x} y={svgCoords.y + 26} fontSize="9" fill="#999"
+          textAnchor="middle" style={{ pointerEvents: 'none' }}>拖拽移動</text>
+      )}
+    </g>
+  );
+};
+
+// ============= QUIZ KEYBOARD =============
+const QuizKeyboard = ({ onInput, onDelete, onClear, onSubmit, disabled }) => {
+  const KEY = `h-12 rounded-lg font-medium text-lg flex items-center justify-center select-none transition-all shadow-[0_2px_0_0_rgba(0,0,0,0.12)] active:shadow-none active:translate-y-[1px] border`;
+  const NUM = `${KEY} bg-white text-slate-700 border-slate-200`;
+  const OP  = `${KEY} bg-slate-100 text-slate-600 border-slate-200`;
+  const DEL_CLS = `${KEY} bg-red-50 text-red-500 border-red-100`;
+
+  const press = (v) => { if (!disabled) onInput(v); };
+
+  return (
+    <div className="bg-slate-50 rounded-xl p-3 border border-slate-200">
+      <div className="grid grid-cols-4 gap-2">
+        {[7,8,9].map(n => <button key={n} className={NUM} onClick={() => press(String(n))}>{n}</button>)}
+        <button className={DEL_CLS} onClick={() => { if (!disabled) onDelete(); }}>DEL</button>
+
+        {[4,5,6].map(n => <button key={n} className={NUM} onClick={() => press(String(n))}>{n}</button>)}
+        <button className={OP} onClick={() => press('/')}>
+          <div className="flex flex-col items-center leading-none gap-0.5">
+            <span className="text-xs leading-none">□</span>
+            <span className="border-t border-slate-400 w-4"></span>
+            <span className="text-xs leading-none">□</span>
+          </div>
+        </button>
+
+        {[1,2,3].map(n => <button key={n} className={NUM} onClick={() => press(String(n))}>{n}</button>)}
+        <button className={`${KEY} bg-slate-200 text-slate-500 border-slate-300`}
+          onClick={() => { if (!disabled) onClear(); }}>AC</button>
+
+        <button className={NUM} onClick={() => press('-')}>−</button>
+        <button className={NUM} onClick={() => press('0')}>0</button>
+        <button className={OP} onClick={() => press('.')}>.</button>
+        <button className={`${KEY} bg-blue-500 text-white border-blue-600`}
+          onClick={() => { if (!disabled) onSubmit(); }}>提交</button>
+      </div>
+    </div>
+  );
+};
+
+// ============= HELPER FUNCTIONS =============
+const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+
+// 格式化距離
+const formatDistance = (a, b) => {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const sq = dx * dx + dy * dy;
+  const root = Math.sqrt(sq);
+  if (Number.isInteger(root)) return String(root);
+  return `√${sq}`;
+};
+
+// 格式化斜率為分數或整數
+const formatSlope = (a, b) => {
+  if (b.x === a.x) return '未定義（斜率不存在）';
+  const dy = b.y - a.y;
+  const dx = b.x - a.x;
+  if (dy === 0) return '0';
+  const g = gcd(Math.abs(dy), Math.abs(dx));
+  let num = dy / g;
+  let den = dx / g;
+  if (den < 0) { num = -num; den = -den; }
+  if (den === 1) return String(num);
+  return `${num}/${den}`;
+};
+
+// ============= 出題生成器 =============
+const generateQuizQuestion = () => {
+  const types = ['distance', 'slope'];
+  const type = types[Math.floor(Math.random() * types.length)];
+
+  let ax, ay, bx, by;
+  do {
+    ax = Math.floor(Math.random() * 13) - 6;
+    ay = Math.floor(Math.random() * 13) - 6;
+    bx = Math.floor(Math.random() * 13) - 6;
+    by = Math.floor(Math.random() * 13) - 6;
+  } while (ax === bx && ay === by);
+
+  const pointA = { x: ax, y: ay };
+  let pointB = { x: bx, y: by };
+
+  if (type === 'slope' && ax === bx) {
+    bx = ax + (Math.random() < 0.5 ? 1 : -1) * (Math.floor(Math.random() * 5) + 1);
+    bx = Math.max(-6, Math.min(6, bx));
+    pointB = { x: bx, y: by };
+  }
+
+  if (type === 'distance') {
+    const dx = pointB.x - pointA.x;
+    const dy = pointB.y - pointA.y;
+    const sq = dx * dx + dy * dy;
+    const root = Math.sqrt(sq);
+    const isInteger = Number.isInteger(root);
+    return {
+      type: 'distance',
+      pointA,
+      pointB,
+      answer: isInteger ? String(Math.round(root)) : String(sq),
+      displayAnswer: isInteger ? String(Math.round(root)) : `√${sq}`,
+      prompt: isInteger ? '求兩點之間的距離。' : '求兩點之間的距離。（輸入根號內的數值，例如：√13 則輸入 13）',
+      explanation: generateDistanceExplanation(pointA, pointB)
+    };
+  } else {
+    const dy = pointB.y - pointA.y;
+    const dx = pointB.x - pointA.x;
+    const g = gcd(Math.abs(dy), Math.abs(dx));
+    let num = dy / g;
+    let den = dx / g;
+    if (den < 0) { num = -num; den = -den; }
+    const answerStr = den === 1 ? String(num) : `${num}/${den}`;
+    return {
+      type: 'slope',
+      pointA,
+      pointB,
+      answer: answerStr,
+      displayAnswer: answerStr,
+      prompt: '求兩點所形成的直線斜率。（若為分數則以 a/b 輸入）',
+      explanation: generateSlopeExplanation(pointA, pointB)
+    };
+  }
+};
+
+const generateDistanceExplanation = (a, b) => {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const sq = dx * dx + dy * dy;
+  const root = Math.sqrt(sq);
+  const isInteger = Number.isInteger(root);
+  const lines = [
+    `距離公式：d = √[(x₂−x₁)² + (y₂−y₁)²]`,
+    `= √[(${b.x}−${a.x < 0 ? `(${a.x})` : a.x})² + (${b.y}−${a.y < 0 ? `(${a.y})` : a.y})²]`,
+    `= √[(${dx})² + (${dy})²]`,
+    `= √[${dx * dx} + ${dy * dy}]`,
+    `= √${sq}`,
+  ];
+  if (isInteger) lines.push(`= ${Math.round(root)}`);
+  return lines.join('\n');
+};
+
+const generateSlopeExplanation = (a, b) => {
+  const dy = b.y - a.y;
+  const dx = b.x - a.x;
+  const g = gcd(Math.abs(dy), Math.abs(dx));
+  let num = dy / g;
+  let den = dx / g;
+  if (den < 0) { num = -num; den = -den; }
+  const lines = [
+    `斜率公式：m = (y₂−y₁) / (x₂−x₁)`,
+    `= (${b.y}−${a.y < 0 ? `(${a.y})` : a.y}) / (${b.x}−${a.x < 0 ? `(${a.x})` : a.x})`,
+    `= ${dy} / ${dx}`,
+  ];
+  if (Math.abs(g) > 1 || dx < 0) {
+    lines.push(`= ${den === 1 ? num : `${num}/${den}`}`);
+  }
+  return lines.join('\n');
+};
+
+// ============= 教學頁面 =============
+const TeachingPage = ({ onGoToQuiz }) => {
+  const [pointA, setPointA] = useState({ x: -3, y: -2 });
+  const [pointB, setPointB] = useState({ x: 4, y: 3 });
+  const [dragging, setDragging] = useState(null);
+  const [showFormula, setShowFormula] = useState('both');
+
+  const handleMouseMove = (e) => {
+    if (!dragging) return;
+    const svg = e.currentTarget;
+    const rect = svg.getBoundingClientRect();
+    let clientX, clientY;
+    if (e.touches) { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; }
+    else { clientX = e.clientX; clientY = e.clientY; }
+    const svgX = ((clientX - rect.left) / rect.width) * SVG_SIZE;
+    const svgY = ((clientY - rect.top) / rect.height) * SVG_SIZE;
+    const grid = toGrid(svgX, svgY);
+    const cx = Math.max(-GRID_SIZE + 1, Math.min(GRID_SIZE - 1, grid.x));
+    const cy = Math.max(-GRID_SIZE + 1, Math.min(GRID_SIZE - 1, grid.y));
+    if (dragging === 'A') setPointA({ x: cx, y: cy });
+    else setPointB({ x: cx, y: cy });
+  };
+  const handleMouseUp = () => setDragging(null);
+
+  const dx = pointB.x - pointA.x;
+  const dy = pointB.y - pointA.y;
+  const distStr = formatDistance(pointA, pointB);
+  const slopeStr = formatSlope(pointA, pointB);
+  const svgA = toSVG(pointA.x, pointA.y);
+  const svgB = toSVG(pointB.x, pointB.y);
+
+  return (
+    <div className="max-w-4xl mx-auto p-4 space-y-6">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-teal-600 to-cyan-600 p-6 rounded-2xl text-white shadow-lg">
+        <h1 className="text-2xl font-bold mb-2 flex items-center gap-2">
+          <BookOpen size={28} />
+          兩點之間的距離及斜率
+        </h1>
+        <p className="opacity-90">拖動兩點，觀察距離和斜率的變化</p>
+      </div>
+
+      {/* 顯示選項 */}
+      <div className="bg-white rounded-xl shadow-sm border p-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <h3 className="font-bold text-gray-700">顯示公式</h3>
+          <div className="flex flex-wrap gap-2">
+            {[
+              { id: 'both', label: '全部' },
+              { id: 'distance', label: '距離' },
+              { id: 'slope', label: '斜率' }
+            ].map(opt => (
+              <button key={opt.id}
+                onClick={() => setShowFormula(opt.id)}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  showFormula === opt.id ? 'bg-teal-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}>
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* SVG */}
+        <div className="bg-white rounded-xl shadow-sm border p-4">
+          <CoordinateGrid onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
+            {/* 線段 */}
+            <line x1={svgA.x} y1={svgA.y} x2={svgB.x} y2={svgB.y}
+              stroke="#10b981" strokeWidth="2.5" />
+
+            {/* Δx / Δy 輔助虛線 */}
+            {(showFormula === 'distance' || showFormula === 'both') && dx !== 0 && dy !== 0 && (
+              <>
+                <line x1={svgA.x} y1={svgA.y} x2={svgB.x} y2={svgA.y}
+                  stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="5,4" />
+                <line x1={svgB.x} y1={svgA.y} x2={svgB.x} y2={svgB.y}
+                  stroke="#ef4444" strokeWidth="1.5" strokeDasharray="5,4" />
+                <text x={(svgA.x + svgB.x) / 2} y={svgA.y + (dy > 0 ? 18 : -8)}
+                  textAnchor="middle" fontSize="13" fontWeight="bold" fill="#3b82f6">
+                  Δx={dx}
+                </text>
+                <text x={svgB.x + (dx > 0 ? 10 : -10)} y={(svgA.y + svgB.y) / 2}
+                  textAnchor={dx > 0 ? 'start' : 'end'} fontSize="13" fontWeight="bold" fill="#ef4444">
+                  Δy={dy}
+                </text>
+                {(() => {
+                  const corner = toSVG(pointB.x, pointA.y);
+                  const s = 8;
+                  const sx = dx > 0 ? -s : s;
+                  const sy = dy > 0 ? s : -s;
+                  return (
+                    <path d={`M ${corner.x + sx} ${corner.y} L ${corner.x + sx} ${corner.y + sy} L ${corner.x} ${corner.y + sy}`}
+                      fill="none" stroke="#666" strokeWidth="1" />
+                  );
+                })()}
+              </>
+            )}
+
+            {/* 距離標籤（顯示在線段中點旁）*/}
+            {(showFormula === 'distance' || showFormula === 'both') && (
+              <text x={(svgA.x + svgB.x) / 2 + (dy >= 0 ? -12 : 12)}
+                y={(svgA.y + svgB.y) / 2 + (dx >= 0 ? -10 : 10)}
+                textAnchor="middle" fontSize="13" fontWeight="bold" fill="#10b981">
+                d = {distStr}
+              </text>
+            )}
+
+            <DraggablePoint point={pointA} label="A" color="#3b82f6"
+              isDragging={dragging === 'A'} onDragStart={() => setDragging('A')} />
+            <DraggablePoint point={pointB} label="B" color="#ef4444"
+              isDragging={dragging === 'B'} onDragStart={() => setDragging('B')} />
+          </CoordinateGrid>
+        </div>
+
+        {/* 公式說明 */}
+        <div className="space-y-4">
+          {/* 坐標顯示 */}
+          <div className="bg-white rounded-xl shadow-sm border p-4">
+            <h3 className="font-bold text-gray-700 mb-3">坐標</h3>
+            <div className="flex gap-6 text-lg">
+              <span><span className="text-blue-600 font-bold">A</span>({pointA.x}, {pointA.y})</span>
+              <span><span className="text-red-500 font-bold">B</span>({pointB.x}, {pointB.y})</span>
+            </div>
+          </div>
+
+          {/* 距離公式 */}
+          {(showFormula === 'distance' || showFormula === 'both') && (
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+              <h3 className="font-bold text-emerald-800 mb-3">📏 距離公式</h3>
+              <div className="bg-white rounded-lg p-3 mb-3 text-center">
+                <div className="text-lg text-slate-700 font-bold">
+                  d = √[(x₂−x₁)² + (y₂−y₁)²]
+                </div>
+              </div>
+              <pre className="whitespace-pre font-sans text-slate-700 text-sm leading-relaxed">
+{`d = √[(${pointB.x}−${pointA.x < 0 ? `(${pointA.x})` : pointA.x})² + (${pointB.y}−${pointA.y < 0 ? `(${pointA.y})` : pointA.y})²]
+  = √[(${dx})² + (${dy})²]
+  = √[${dx * dx} + ${dy * dy}]
+  = √${dx * dx + dy * dy}${Number.isInteger(Math.sqrt(dx * dx + dy * dy)) ? `\n  = ${Math.round(Math.sqrt(dx * dx + dy * dy))}` : ''}`}
+              </pre>
+              <div className="mt-3 text-center">
+                <span className="text-2xl font-bold text-emerald-700">d = {distStr}</span>
+              </div>
+            </div>
+          )}
+
+          {/* 斜率公式 */}
+          {(showFormula === 'slope' || showFormula === 'both') && (
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+              <h3 className="font-bold text-blue-800 mb-3">📐 斜率公式</h3>
+              <div className="bg-white rounded-lg p-3 mb-3 text-center">
+                <div className="text-lg text-slate-700 font-bold">
+                  m = (y₂−y₁) / (x₂−x₁)
+                </div>
+              </div>
+              {dx === 0 ? (
+                <div className="text-red-600 font-bold text-center">
+                  x₁ = x₂，斜率未定義（垂直線）
+                </div>
+              ) : (
+                <>
+                  <pre className="whitespace-pre font-sans text-slate-700 text-sm leading-relaxed">
+{`m = (${pointB.y}−${pointA.y < 0 ? `(${pointA.y})` : pointA.y}) / (${pointB.x}−${pointA.x < 0 ? `(${pointA.x})` : pointA.x})
+  = ${dy} / ${dx}${(() => {
+    const g = gcd(Math.abs(dy), Math.abs(dx));
+    if (g > 1 || dx < 0) {
+      let n = dy / g, d = dx / g;
+      if (d < 0) { n = -n; d = -d; }
+      return `\n  = ${d === 1 ? n : `${n}/${d}`}`;
+    }
+    return '';
+  })()}`}
+                  </pre>
+                  <div className="mt-3 text-center">
+                    <span className="text-2xl font-bold text-blue-700">m = {slopeStr}</span>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          <div className="text-center pt-2">
+            <button onClick={onGoToQuiz}
+              className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 rounded-full font-bold flex items-center gap-2 mx-auto transition-all shadow-lg">
+              開始測驗 <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============= 筆記內容 =============
+const NotesContent = () => (
+  <div className="space-y-6">
+    <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+      <h3 className="font-bold text-emerald-800 mb-3">📏 距離公式</h3>
+      <div className="bg-white rounded-lg p-3 text-center text-lg font-bold text-slate-700">
+        d = √[(x₂−x₁)² + (y₂−y₁)²]
+      </div>
+    </div>
+    <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+      <h3 className="font-bold text-blue-800 mb-3">📐 斜率公式</h3>
+      <div className="bg-white rounded-lg p-3 text-center text-lg font-bold text-slate-700">
+        m = (y₂−y₁) / (x₂−x₁)
+      </div>
+      <p className="mt-2 text-sm text-slate-600">* 當 x₁ = x₂ 時，斜率未定義（垂直線）</p>
+    </div>
+    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+      <h3 className="font-bold text-amber-800 mb-3">題目示例</h3>
+      <div className="space-y-3 text-sm text-slate-700">
+        <div>
+          <p className="font-bold">A(1, 2) 和 B(4, 6) 的距離：</p>
+          <pre className="whitespace-pre font-sans text-slate-600 mt-1">{`d = √[(4−1)² + (6−2)²]
+  = √[9 + 16]
+  = √25
+  = 5`}</pre>
+        </div>
+        <div>
+          <p className="font-bold">A(1, 2) 和 B(4, 6) 的斜率：</p>
+          <pre className="whitespace-pre font-sans text-slate-600 mt-1">{`m = (6−2) / (4−1)
+  = 4/3`}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ============= 主組件 =============
+export default function DistanceSlopeQuiz() {
+  const [mode, setMode] = useState(null);
+  const [score, setScore] = useState(0);
+  const [questionCount, setQuestionCount] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [feedback, setFeedback] = useState(null);
+  const [showNotes, setShowNotes] = useState(false);
+
+  const generateNewQuestion = useCallback(() => {
+    setCurrentQuestion(generateQuizQuestion());
+    setUserAnswer('');
+    setFeedback(null);
+  }, []);
+
+  useEffect(() => {
+    if (mode === 'quiz') generateNewQuestion();
+  }, [mode, generateNewQuestion]);
+
+  const checkAnswer = () => {
+    if (!currentQuestion || !userAnswer.trim()) return;
+    const ua = userAnswer.trim();
+    const ca = currentQuestion.answer;
+
+    let isCorrect = false;
+    if (currentQuestion.type === 'slope') {
+      const parseFrac = (s) => {
+        if (s.includes('/')) {
+          const [n, d] = s.split('/').map(Number);
+          return (d === 0 || isNaN(n) || isNaN(d)) ? NaN : n / d;
+        }
+        return parseFloat(s);
+      };
+      const uv = parseFrac(ua);
+      const cv = parseFrac(ca);
+      isCorrect = !isNaN(uv) && !isNaN(cv) && Math.abs(uv - cv) < 1e-9;
+    } else {
+      isCorrect = ua === ca;
+    }
+
+    if (isCorrect) {
+      setScore(s => s + 1);
+      setFeedback({ type: 'correct', message: '答對了！' });
+    } else {
+      setFeedback({
+        type: 'wrong',
+        message: '答錯了',
+        correctAnswer: currentQuestion.displayAnswer,
+        explanation: currentQuestion.explanation
+      });
+    }
+    setQuestionCount(c => c + 1);
+  };
+
+  const backToMenu = () => {
+    setMode(null);
+    setScore(0);
+    setQuestionCount(0);
+    setFeedback(null);
+    setCurrentQuestion(null);
+    setUserAnswer('');
+  };
+
+  const handleKeypadInput = (v) => { if (!feedback) setUserAnswer(prev => prev + v); };
+  const handleKeypadDelete = () => { if (!feedback) setUserAnswer(prev => prev.slice(0, -1)); };
+  const handleKeypadClear = () => { if (!feedback) setUserAnswer(''); };
+  const handleKeypadSubmit = () => { if (feedback) generateNewQuestion(); else checkAnswer(); };
+
+  // ========== 模式選擇 ==========
+  if (!mode) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col">
+        <Link to="/"
+          className="fixed top-4 right-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg">
+          <HomeIcon size={18} />
+          <span className="font-medium">首頁</span>
+        </Link>
+        <div className="flex-1 flex items-center justify-center p-6">
+          <div className="w-full max-w-lg">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-2xl shadow-lg mb-4">
+                <BookOpen className="w-10 h-10 text-white" />
+              </div>
+              <h1 className="text-3xl font-bold text-slate-800 mb-2">距離與斜率</h1>
+              <p className="text-slate-500">學習兩點之間的距離和斜率公式</p>
+            </div>
+            <div className="grid gap-4">
+              <button onClick={() => setMode('learn')}
+                className="group p-6 bg-gradient-to-br from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-white">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-white/20 rounded-lg"><GraduationCap className="w-8 h-8" /></div>
+                  <div className="text-left">
+                    <div className="text-xl font-bold mb-1">學習模式</div>
+                    <div className="text-sm opacity-80">拖拽兩點，觀察距離和斜率</div>
+                  </div>
+                </div>
+              </button>
+              <button onClick={() => setMode('quiz')}
+                className="group p-6 bg-gradient-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-white">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-white/20 rounded-lg"><PenTool className="w-8 h-8" /></div>
+                  <div className="text-left">
+                    <div className="text-xl font-bold mb-1">測驗模式</div>
+                    <div className="text-sm opacity-80">練習計算距離和斜率</div>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ========== 學習模式 ==========
+  if (mode === 'learn') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <button onClick={backToMenu}
+          className="fixed top-4 left-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg">
+          <ArrowRight size={18} className="rotate-180" />
+          <span className="font-medium">返回選單</span>
+        </button>
+        <Link to="/"
+          className="fixed top-4 right-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg">
+          <HomeIcon size={18} />
+          <span className="font-medium">首頁</span>
+        </Link>
+        <div className="flex-1 pt-16 pb-8 px-4">
+          <TeachingPage onGoToQuiz={() => setMode('quiz')} />
+        </div>
+      </div>
+    );
+  }
+
+  // ========== 測驗模式 ==========
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <button onClick={backToMenu}
+        className="fixed top-4 left-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg">
+        <ArrowRight size={18} className="rotate-180" />
+        <span className="font-medium">返回選單</span>
+      </button>
+      <Link to="/"
+        className="fixed top-4 right-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg">
+        <HomeIcon size={18} />
+        <span className="font-medium">首頁</span>
+      </Link>
+
+      <div className="flex-1 flex justify-center pt-20 pb-8 px-4">
+        <div className="w-full max-w-xl">
+          {/* 分數 */}
+          <div className="bg-white rounded-xl shadow-md p-4 mb-6 flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <Trophy className="w-6 h-6 text-yellow-500" />
+              <span className="text-slate-600">分數：</span>
+              <span className="text-2xl font-bold text-blue-600">{score}</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-slate-500">已完成: {questionCount} 題</span>
+              <button onClick={() => setShowNotes(true)}
+                className="p-2 hover:bg-slate-100 rounded-lg transition text-slate-600" title="查看筆記">
+                <BookOpen size={20} />
+              </button>
+            </div>
+          </div>
+
+          {/* 題目 */}
+          {currentQuestion && (
+            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+              <div className="mb-2">
+                <span className="inline-block bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-bold">題目</span>
+                <span className={`ml-2 inline-block px-3 py-1 rounded-md text-sm font-bold ${
+                  currentQuestion.type === 'distance' ? 'bg-emerald-100 text-emerald-700' : 'bg-indigo-100 text-indigo-700'
+                }`}>
+                  {currentQuestion.type === 'distance' ? '距離' : '斜率'}
+                </span>
+              </div>
+
+              <div className="text-center mb-6 mt-4">
+                <div className="text-lg text-slate-600 mb-2">
+                  已知&nbsp;
+                  <span className="font-bold text-blue-600">A({currentQuestion.pointA.x}, {currentQuestion.pointA.y})</span>
+                  &nbsp;和&nbsp;
+                  <span className="font-bold text-red-500">B({currentQuestion.pointB.x}, {currentQuestion.pointB.y})</span>
+                </div>
+                <p className="text-slate-500 text-sm">{currentQuestion.prompt}</p>
+              </div>
+
+              {/* 答案輸入 */}
+              <div className="mb-4">
+                <label className="block text-sm text-slate-500 mb-2 text-center">你的答案：</label>
+                <input
+                  type="text"
+                  value={userAnswer}
+                  readOnly
+                  className={`w-full text-3xl text-center p-4 border-2 rounded-xl focus:outline-none transition-all
+                    ${feedback?.type === 'correct' ? 'border-green-500 bg-green-50' :
+                      feedback?.type === 'wrong' ? 'border-red-500 bg-red-50' :
+                      'border-slate-300'}`}
+                  placeholder="輸入答案"
+                />
+              </div>
+
+              {/* 反饋 */}
+              {feedback && (
+                <div className={`p-4 rounded-xl mb-4 text-center ${
+                  feedback.type === 'correct' ? 'bg-green-100' : 'bg-red-100'
+                }`}>
+                  <div className={`flex items-center justify-center gap-2 text-lg font-bold ${
+                    feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'
+                  }`}>
+                    {feedback.type === 'correct'
+                      ? <><Check className="w-6 h-6" />{feedback.message}</>
+                      : <><X className="w-6 h-6" />{feedback.message}</>}
+                  </div>
+                  {feedback.correctAnswer && (
+                    <div className="mt-4 border-t border-slate-200 pt-4">
+                      <span className="inline-block bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold mb-2">正確答案</span>
+                      <div className="text-2xl font-bold text-slate-700">{feedback.correctAnswer}</div>
+                      {feedback.explanation && (
+                        <pre className="mt-3 whitespace-pre font-sans text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg text-left">
+                          {feedback.explanation}
+                        </pre>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* 鍵盤 */}
+              <QuizKeyboard
+                onInput={handleKeypadInput}
+                onDelete={handleKeypadDelete}
+                onClear={handleKeypadClear}
+                onSubmit={handleKeypadSubmit}
+                disabled={false}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 筆記彈窗 */}
+      {showNotes && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden">
+            <div className="p-4 border-b flex justify-between items-center bg-slate-50">
+              <h3 className="font-bold text-lg flex items-center gap-2 text-slate-800">
+                <BookOpen className="w-5 h-5 text-emerald-600" />
+                距離與斜率 筆記
+              </h3>
+              <button onClick={() => setShowNotes(false)} className="text-slate-400 hover:text-slate-600 transition-colors">
+                <XCircle className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="p-6 overflow-y-auto">
+              <NotesContent />
+            </div>
+            <div className="p-4 border-t bg-slate-50 text-center">
+              <button onClick={() => setShowNotes(false)}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full transition-all shadow-md">
+                明白
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
