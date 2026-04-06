@@ -23,6 +23,7 @@ import MCLimitedF6 from './apps/MCLimitedF6';
 import StandardScoreQuiz from './apps/StandardScoreQuiz';
 import SolidGeometryQuiz from './apps/SolidGeometryQuiz';
 import TrigQuiz from './apps/TrigQuiz';
+import DistanceSlopeQuiz from './apps/DistanceSlopeQuiz';
 import Notes from './pages/Notes';
 
 // ==========================================
@@ -58,6 +59,7 @@ function App() {
         <Route path="/standard-score-quiz" element={<StandardScoreQuiz />} />
         <Route path="/solid-geometry" element={<SolidGeometryQuiz />} />
         <Route path="/trig-quiz" element={<TrigQuiz />} />
+        <Route path="/distance-slope" element={<DistanceSlopeQuiz />} />
         <Route path="/notes" element={<Notes />} />
       </Routes>
       {isDev && Agentation && (

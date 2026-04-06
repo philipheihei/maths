@@ -541,8 +541,8 @@ export default function AngleMasterQuiz() {
                       <line x1="80" y1="30" x2="220" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                       <circle cx="80" cy="30" r="3" fill="#334155" />
                       <circle cx="220" cy="20" r="3" fill="#334155" />
-                      <text x="60" y="35" fontSize="16" fill="#16a34a" fontFamily="sans-serif">A</text>
-                      <text x="230" y="25" fontSize="16" fill="#16a34a" fontFamily="sans-serif">B</text>
+                      <text x="60" y="35" fontSize="16" fill="#16a34a" fontFamily="sans-serif" fontStyle="italic">A</text>
+                      <text x="230" y="25" fontSize="16" fill="#16a34a" fontFamily="sans-serif" fontStyle="italic">B</text>
                     </svg>
                   </div>
                   <div className="bg-green-50 rounded-lg p-3 border border-green-200">
@@ -552,9 +552,9 @@ export default function AngleMasterQuiz() {
                     </p>
                     <svg viewBox="0 0 300 100" className="w-full touch-none">
                       <path d="M 60 80 L 120 30 M 60 80 L 180 80" stroke="#334155" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                      <text x="125" y="25" fontSize="16" fill="#16a34a">A</text>
-                      <text x="40" y="85" fontSize="16" fill="#16a34a">B</text>
-                      <text x="185" y="85" fontSize="16" fill="#16a34a">C</text>
+                      <text x="125" y="25" fontSize="16" fill="#16a34a" fontStyle="italic">A</text>
+                      <text x="40" y="85" fontSize="16" fill="#16a34a" fontStyle="italic">B</text>
+                      <text x="185" y="85" fontSize="16" fill="#16a34a" fontStyle="italic">C</text>
                       <path d="M 90 80 A 30 30 0 0 0 83 61" stroke="#dc2626" strokeWidth="2" fill="none" />
                     </svg>
                   </div>
@@ -565,13 +565,13 @@ export default function AngleMasterQuiz() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
               {/* 1. 直線上的鄰角 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">1</span>
                   直線上的鄰角
                   <span className="text-sm text-red-500 font-normal">（直線 → 180°）</span>
                 </h3>
-                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200 flex-1">
                   <p className="text-center text-xl font-bold text-blue-800 my-1">a + b + c = 180°</p>
                   <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto my-3 touch-none">
                     <line x1="40" y1="80" x2="260" y2="80" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -583,12 +583,12 @@ export default function AngleMasterQuiz() {
                     <path d="M 139 67 A 17 17 0 0 1 165 72" stroke="#2563eb" strokeWidth="2" fill="none" />
                     {/* c arc (radius 22) */}
                     <path d="M 169 70 A 22 22 0 0 1 172 80" stroke="#2563eb" strokeWidth="2" fill="none" />
-                    <text x="115" y="75" fontSize="14" fill="#1e3a8a">a</text>
-                    <text x="151" y="62" fontSize="14" fill="#1e3a8a">b</text>
-                    <text x="180" y="75" fontSize="14" fill="#1e3a8a">c</text>
-                    <text x="40" y="98" fontSize="14" fill="#dc2626">A</text>
-                    <text x="146" y="98" fontSize="14" fill="#dc2626">O</text>
-                    <text x="250" y="98" fontSize="14" fill="#dc2626">B</text>
+                    <text x="115" y="75" fontSize="14" fill="#1e3a8a" fontStyle="italic">a</text>
+                    <text x="151" y="62" fontSize="14" fill="#1e3a8a" fontStyle="italic">b</text>
+                    <text x="180" y="75" fontSize="14" fill="#1e3a8a" fontStyle="italic">c</text>
+                    <text x="40" y="98" fontSize="14" fill="#dc2626" fontStyle="italic">A</text>
+                    <text x="146" y="98" fontSize="14" fill="#dc2626" fontStyle="italic">O</text>
+                    <text x="250" y="98" fontSize="14" fill="#dc2626" fontStyle="italic">B</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
                     <span className="bg-blue-200 px-2 py-0.5 rounded font-bold text-blue-900">在直線的所有角</span>之和 = 180°
@@ -600,13 +600,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 2. 同頂角 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">2</span>
                   同頂角
                   <span className="text-sm text-red-500 font-normal">（圓形 → 360°）</span>
                 </h3>
-                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200 flex-1">
                   <p className="text-center text-xl font-bold text-blue-800 my-1">a + b + c = 360°</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <g transform="translate(150, 70)">
@@ -619,9 +619,9 @@ export default function AngleMasterQuiz() {
                       <path d="M 18 13 A 22 22 0 0 1 -15 16" stroke="#2563eb" strokeWidth="2" fill="none" />
                       {/* c arc (radius 18) */}
                       <path d="M -11 14 A 18 18 0 0 1 0 -18" stroke="#2563eb" strokeWidth="2" fill="none" />
-                      <text x="17" y="-5" fontSize="14" fill="#1e3a8a">a</text>
-                      <text x="-2" y="38" fontSize="14" fill="#1e3a8a">b</text>
-                      <text x="-32" y="-6" fontSize="14" fill="#1e3a8a">c</text>
+                      <text x="17" y="-5" fontSize="14" fill="#1e3a8a" fontStyle="italic">a</text>
+                      <text x="-2" y="38" fontSize="14" fill="#1e3a8a" fontStyle="italic">b</text>
+                      <text x="-32" y="-6" fontSize="14" fill="#1e3a8a" fontStyle="italic">c</text>
                     </g>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
@@ -634,13 +634,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 3. 對頂角 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">3</span>
                   對頂角
                   <span className="text-sm text-slate-500 font-normal">（對面頂住的角）</span>
                 </h3>
-                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                <div className="bg-blue-50 rounded-lg p-3 border border-blue-200 flex-1">
                   <p className="text-center text-xl font-bold text-blue-800 my-1">a = b</p>
                   <svg viewBox="0 0 300 120" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <line x1="70" y1="20" x2="230" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -648,8 +648,8 @@ export default function AngleMasterQuiz() {
                     <g transform="translate(150, 60)">
                       <path d="M -18 -8 A 20 20 0 0 0 -18 8" stroke="#2563eb" strokeWidth="2" fill="none" />
                       <path d="M 18 -8 A 20 20 0 0 1 18 8" stroke="#2563eb" strokeWidth="2" fill="none" />
-                      <text x="-35" y="5" fontSize="16" fill="#1e3a8a">a</text>
-                      <text x="25" y="5" fontSize="16" fill="#1e3a8a">b</text>
+                      <text x="-35" y="5" fontSize="16" fill="#1e3a8a" fontStyle="italic">a</text>
+                      <text x="25" y="5" fontSize="16" fill="#1e3a8a" fontStyle="italic">b</text>
                     </g>
                   </svg>
                   <div className="bg-amber-50 rounded p-2 mt-2 border border-amber-200">
@@ -662,13 +662,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 4A. 同位角 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4A</span>
                   同位角
                   <span className="text-sm text-red-500 font-normal">（F 形 → 相等）</span>
                 </h3>
-                <div className="bg-red-50 rounded-lg p-3 border border-red-200">
+                <div className="bg-red-50 rounded-lg p-3 border border-red-200 flex-1">
                   <p className="text-center text-xl font-bold text-red-800 my-1">a = b</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <line x1="40" y1="50" x2="260" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -686,10 +686,10 @@ export default function AngleMasterQuiz() {
                     
                     <text x="166" y="76" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
                     <text x="136" y="126" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
-                    <text x="40" y="40" fontSize="16" fill="#334155">A</text>
-                    <text x="250" y="40" fontSize="16" fill="#334155">B</text>
-                    <text x="40" y="90" fontSize="16" fill="#334155">C</text>
-                    <text x="250" y="90" fontSize="16" fill="#334155">D</text>
+                    <text x="23" y="55" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                    <text x="265" y="55" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                    <text x="23" y="95" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                    <text x="265" y="95" fontSize="16" fill="#334155" fontStyle="italic">D</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
                     <span className="bg-white border rounded px-2 py-0.5 text-sm text-blue-900 font-bold">(同位角, AB//CD)</span>
@@ -698,13 +698,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 4B. 內錯角 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4B</span>
                   內錯角
                   <span className="text-sm text-red-500 font-normal">（Z/N 形 → 相等）</span>
                 </h3>
-                <div className="bg-red-50 rounded-lg p-3 border border-red-200">
+                <div className="bg-red-50 rounded-lg p-3 border border-red-200 flex-1">
                   <p className="text-center text-xl font-bold text-red-800 my-1">a = b</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <line x1="100" y1="20" x2="100" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -721,10 +721,10 @@ export default function AngleMasterQuiz() {
                     
                     <text x="114" y="74" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
                     <text x="176" y="76" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
-                    <text x="80" y="38" fontSize="16" fill="#334155">A</text>
-                    <text x="80" y="115" fontSize="16" fill="#334155">B</text>
-                    <text x="210" y="38" fontSize="16" fill="#334155">C</text>
-                    <text x="210" y="115" fontSize="16" fill="#334155">D</text>
+                    <text x="84" y="17" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                    <text x="84" y="133" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                    <text x="204" y="17" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                    <text x="204" y="133" fontSize="16" fill="#334155" fontStyle="italic">D</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
                     <span className="bg-white border rounded px-2 py-0.5 text-sm text-blue-900 font-bold">(內錯角, AB//CD)</span>
@@ -733,13 +733,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 4C. 同旁內角 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4C</span>
                   同旁內角
                   <span className="text-sm text-red-500 font-normal">（C/U 形 → 180°）</span>
                 </h3>
-                <div className="bg-red-50 rounded-lg p-3 border border-red-200">
+                <div className="bg-red-50 rounded-lg p-3 border border-red-200 flex-1">
                   <p className="text-center text-xl font-bold text-red-800 my-1">a + b = 180°</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <line x1="40" y1="50" x2="260" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -756,10 +756,10 @@ export default function AngleMasterQuiz() {
                     
                     <text x="153" y="72" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
                     <text x="135" y="85" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
-                    <text x="40" y="40" fontSize="16" fill="#334155">A</text>
-                    <text x="250" y="40" fontSize="16" fill="#334155">B</text>
-                    <text x="40" y="90" fontSize="16" fill="#334155">C</text>
-                    <text x="250" y="90" fontSize="16" fill="#334155">D</text>
+                    <text x="23" y="55" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                    <text x="265" y="55" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                    <text x="40" y="90" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                    <text x="250" y="90" fontSize="16" fill="#334155" fontStyle="italic">D</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-2">
                     <span className="bg-white border rounded px-2 py-0.5 text-sm text-blue-900 font-bold">(同旁內角, AB//CD)</span>
@@ -768,13 +768,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 5. 三角形內角和 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">5</span>
                   三角形內角和
                   <span className="text-sm text-red-500 font-normal">（△ → 180°）</span>
                 </h3>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
                   <p className="text-center text-xl font-bold text-green-800 my-1">三角形內， a + b + c = 180°</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="150,20 60,110 240,110" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
@@ -795,7 +795,7 @@ export default function AngleMasterQuiz() {
                         <path d="M 86 78 A 14 14 0 0 1 92.4 66.2" stroke="#16a34a" strokeWidth="1.5" fill="none" />
                         <text x="43" y="36" fontSize="10" fill="#334155">70°</text>
                         <text x="27" y="73" fontSize="10" fill="#334155">50°</text>
-                        <text x="69" y="73" fontSize="10" fill="#334155">2x</text>
+                        <text x="69" y="73" fontSize="10" fill="#334155" fontStyle="italic">2x</text>
                       </svg>
                       <div className="text-sm text-slate-700 grid grid-cols-[auto_auto_1fr] gap-x-2">
                         <div className="text-right">2x</div>
@@ -819,13 +819,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 6. 等腰三角形底角 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">6</span>
                   等腰三角形底角
                   <span className="text-sm text-red-500 font-normal">（等腰△ → 底角相等）</span>
                 </h3>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
                   <p className="text-center text-xl font-bold text-green-800 my-1">若 AB = AC，則 ∠B = ∠C</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="150,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
@@ -837,9 +837,9 @@ export default function AngleMasterQuiz() {
                     <path d="M 106 120 A 26 26 0 0 0 94.9 98.7" stroke="#16a34a" strokeWidth="2" fill="none" />
                     <path d="M 200 120 A 20 20 0 0 1 208.5 103.6" stroke="#16a34a" strokeWidth="2" fill="none" />
                     <path d="M 194 120 A 26 26 0 0 1 205.1 98.7" stroke="#16a34a" strokeWidth="2" fill="none" />
-                    <text x="145" y="14" fontSize="16" fill="#334155">A</text>
-                    <text x="60" y="125" fontSize="16" fill="#334155">B</text>
-                    <text x="230" y="125" fontSize="16" fill="#334155">C</text>
+                    <text x="145" y="14" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                    <text x="60" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                    <text x="230" y="125" fontSize="16" fill="#334155" fontStyle="italic">C</text>
                   </svg>
                   <div className="bg-white rounded p-3 mt-2 border border-slate-200">
                     <p className="text-sm text-green-800 font-bold mb-2">例子：</p>
@@ -885,13 +885,13 @@ export default function AngleMasterQuiz() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
               {/* 7. 等角對邊相等 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">7</span>
                   等角對邊相等
                   <span className="text-sm text-slate-500 font-normal">（等底角 → 等腰）</span>
                 </h3>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
                   <p className="text-center text-xl font-bold text-green-800 my-1">若 ∠B = ∠C，則 AB = AC</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="150,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
@@ -901,9 +901,9 @@ export default function AngleMasterQuiz() {
                     <path d="M 194 120 A 26 26 0 0 1 205.1 98.7" stroke="#2563eb" strokeWidth="2" fill="none" />
                     <line x1="105" y1="70" x2="120" y2="78" stroke="#ef4444" strokeWidth="2" />
                     <line x1="180" y1="78" x2="195" y2="70" stroke="#ef4444" strokeWidth="2" />
-                    <text x="145" y="14" fontSize="16" fill="#334155">A</text>
-                    <text x="60" y="125" fontSize="16" fill="#334155">B</text>
-                    <text x="230" y="125" fontSize="16" fill="#334155">C</text>
+                    <text x="145" y="14" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                    <text x="60" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                    <text x="230" y="125" fontSize="16" fill="#334155" fontStyle="italic">C</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-3">
                     <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(等角對邊相等)</span>
@@ -912,13 +912,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 8. 三角形外角 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">8</span>
                   三角形外角
                   <span className="text-sm text-slate-500 font-normal">（外角 = 內對角之和）</span>
                 </h3>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
                   <p className="text-center text-xl font-bold text-green-800 my-1">其中 d = a + b</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="170,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
@@ -929,9 +929,9 @@ export default function AngleMasterQuiz() {
                     <text x="163" y="49" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
                     <text x="102" y="114" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
                     <text x="228.1" y="103.7" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">d</text>
-                    <text x="165" y="14" fontSize="16" fill="#334155">A</text>
-                    <text x="60" y="125" fontSize="16" fill="#334155">B</text>
-                    <text x="215" y="138" fontSize="16" fill="#334155">C</text>
+                    <text x="165" y="14" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                    <text x="60" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                    <text x="215" y="138" fontSize="16" fill="#334155" fontStyle="italic">C</text>
                   </svg>
                   <p className="text-sm text-slate-600 text-center mt-3">
                     <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(△外角)</span>
@@ -940,13 +940,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 9. 等腰三角形性質 */}
-              <div className="md:col-span-2">
+              <div className="md:col-span-2 flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">9</span>
                   等腰三角形性質
                   <span className="text-sm text-slate-500 font-normal">（頂角平分線、底邊中線、底邊高線：三線合一）</span>
                 </h3>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     
                     {/* case 1 */}
@@ -961,10 +961,10 @@ export default function AngleMasterQuiz() {
                         <line x1="53" y1="115" x2="53" y2="125" stroke="#ef4444" strokeWidth="2" />
                         <line x1="107" y1="115" x2="107" y2="125" stroke="#ef4444" strokeWidth="2" />
                         <line x1="103" y1="115" x2="103" y2="125" stroke="#ef4444" strokeWidth="2" />
-                        <text x="75" y="14" fontSize="14" fill="#334155">A</text>
-                        <text x="15" y="125" fontSize="14" fill="#334155">B</text>
-                        <text x="135" y="125" fontSize="14" fill="#334155">C</text>
-                        <text x="74" y="135" fontSize="14" fill="#334155">M</text>
+                        <text x="75" y="14" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                        <text x="15" y="125" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                        <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                        <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
                       </svg>
                       <p className="text-sm text-blue-800 font-bold">則 AM ⊥ BC 及 x = y</p>
                     </div>
@@ -978,10 +978,10 @@ export default function AngleMasterQuiz() {
                         <line x1="59.5" y1="67.8" x2="50.5" y2="72.2" stroke="#ef4444" strokeWidth="2" />
                         <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
                         <polyline points="70,120 70,110 80,110" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                        <text x="75" y="14" fontSize="14" fill="#334155">A</text>
-                        <text x="15" y="125" fontSize="14" fill="#334155">B</text>
-                        <text x="135" y="125" fontSize="14" fill="#334155">C</text>
-                        <text x="74" y="135" fontSize="14" fill="#334155">M</text>
+                        <text x="75" y="14" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                        <text x="15" y="125" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                        <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                        <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
                       </svg>
                       <p className="text-sm text-blue-800 font-bold">則 BM = CM 及 x = y</p>
                     </div>
@@ -998,10 +998,10 @@ export default function AngleMasterQuiz() {
                         <path d="M 80.0 40.0 A 20 20 0 0 0 88.9 37.9" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                         <text x="67.6" y="56.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
                         <text x="82.4" y="56.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">y</text>
-                        <text x="75" y="14" fontSize="14" fill="#334155">A</text>
-                        <text x="15" y="125" fontSize="14" fill="#334155">B</text>
-                        <text x="135" y="125" fontSize="14" fill="#334155">C</text>
-                        <text x="74" y="135" fontSize="14" fill="#334155">M</text>
+                        <text x="75" y="14" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                        <text x="15" y="125" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                        <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                        <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
                       </svg>
                       <p className="text-sm text-blue-800 font-bold">則 BM = CM 及 AM ⊥ BC</p>
                     </div>
@@ -1014,13 +1014,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 10. 等邊三角形性質 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">10</span>
                   等邊三角形性質
                   <span className="text-sm text-slate-500 font-normal">（三邊等長 ⟷ 三角均 60°）</span>
                 </h3>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+                <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
                   <p className="text-center text-xl font-bold text-green-800 my-1">若 AB = BC = AC</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="150,25 95,120 205,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
@@ -1037,9 +1037,9 @@ export default function AngleMasterQuiz() {
                     <text x="115" y="115" fontSize="12" fill="#1e3a8a">60°</text>
                     <text x="168" y="115" fontSize="12" fill="#1e3a8a">60°</text>
                     
-                    <text x="145" y="18" fontSize="16" fill="#334155">A</text>
-                    <text x="80" y="125" fontSize="16" fill="#334155">B</text>
-                    <text x="210" y="125" fontSize="16" fill="#334155">C</text>
+                    <text x="145" y="18" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                    <text x="80" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                    <text x="210" y="125" fontSize="16" fill="#334155" fontStyle="italic">C</text>
                   </svg>
                   <p className="text-center font-bold text-blue-800 my-1">則 ∠A = ∠B = ∠C = 60°</p>
                   <p className="text-sm text-slate-600 text-center mt-3">
@@ -1049,13 +1049,13 @@ export default function AngleMasterQuiz() {
               </div>
 
               {/* 11. 多邊形內角和 */}
-              <div>
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full">11</span>
                   多邊形內角和
                   <span className="text-sm text-slate-500 font-normal">（n 邊形內角和）</span>
                 </h3>
-                <div className="bg-orange-50 rounded-lg p-3 border border-orange-200">
+                <div className="bg-orange-50 rounded-lg p-3 border border-orange-200 flex-1">
                   <p className="text-center text-xl font-bold text-orange-800 my-1">內角和 = (n - 2) × 180°</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="120,30 200,20 250,70 230,120 70,90" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
@@ -1094,14 +1094,14 @@ export default function AngleMasterQuiz() {
                 </div>
               </div>
 
-              {/* 12. 多边形外角和 */}
-              <div>
+              {/* 12. 多邊形外角和 */}
+              <div className="flex flex-col">
                 <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
                   <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
                   多邊形外角和
                   <span className="text-sm text-slate-500 font-normal">（外角總和 = 360°）</span>
                 </h3>
-                <div className="bg-orange-50 rounded-lg p-3 border border-orange-200">
+                <div className="bg-orange-50 rounded-lg p-3 border border-orange-200 flex-1">
                   <p className="text-center text-xl font-bold text-orange-800 my-1">外角和 = 360°</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="130,40 120,90 200,110 260,60" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
@@ -1116,15 +1116,15 @@ export default function AngleMasterQuiz() {
                     <path d="M 211.6 112.9 A 12 12 0 0 0 209.2 102.3" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                     <path d="M 269.2 52.3 A 12 12 0 0 0 248.1 58.2" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                     
-                    <text x="107.0" y="57.6" fontSize="12" fill="#1e3a8a">95°</text>
+                    <text x="103.0" y="57.6" fontSize="12" fill="#1e3a8a">95°</text>
                     <text x="126.8" y="113.6" fontSize="12" fill="#1e3a8a">76°</text>
                     <text x="216.4" y="110.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
                     <text x="248.6" y="41.9" fontSize="12" fill="#1e3a8a">114°</text>
 
-                    <text x="135" y="32" fontSize="14" fill="#334155">A</text>
-                    <text x="100" y="85" fontSize="14" fill="#334155">B</text>
-                    <text x="195" y="125" fontSize="14" fill="#334155">C</text>
-                    <text x="265" y="75" fontSize="14" fill="#334155">D</text>
+                    <text x="135" y="32" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                    <text x="100" y="85" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                    <text x="195" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                    <text x="265" y="75" fontSize="14" fill="#334155" fontStyle="italic">D</text>
                   </svg>
                   <div className="bg-white rounded p-3 mt-2 border border-slate-200">
                     <p className="text-sm text-orange-800 font-bold mb-2">例子（四邊形 ABCD）：</p>
@@ -1144,6 +1144,222 @@ export default function AngleMasterQuiz() {
                   </div>
                   <p className="text-sm text-slate-600 text-center mt-3">
                     <span className="bg-white border rounded px-2 py-0.5 font-bold text-orange-900">(多邊形外角和)</span>
+                  </p>
+                </div>
+              </div>
+
+              </div>{/* end full theorems grid */}
+
+              {/* F5 section label */}
+              <div className="flex items-center gap-2 mt-8 mb-4">
+                <span className="bg-pink-600 text-white text-sm font-bold px-3 py-1 rounded-full">F5</span>
+                <span className="text-slate-500 text-sm">圓形性質</span>
+                <div className="flex-1 border-t border-slate-200" />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+              {/* 13. 圓心角兩倍於圓周角 */}
+              <div className="flex flex-col">
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">13</span>
+                  圓心角兩倍於圓周角
+                  <span className="text-sm text-pink-500 font-normal">（必記！）</span>
+                </h3>
+                <div className="bg-pink-50 rounded-lg p-3 border border-pink-200 flex-1">
+                  <p className="text-center text-xl font-bold text-pink-800 my-1">x = 2y</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-sm mx-auto my-3 touch-none">
+                    <g transform="translate(0, 10)">
+                      <circle cx="50" cy="60" r="40" stroke="#334155" strokeWidth="1.5" fill="none" />
+                      <circle cx="50" cy="60" r="2" fill="#334155" />
+                      <polygon points="26.5,92.4 50,20 73.5,92.4 50,60" stroke="#334155" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+                      <line x1="26.5" y1="92.4" x2="50" y2="60" stroke="#334155" strokeWidth="1.5" />
+                      <line x1="73.5" y1="92.4" x2="50" y2="60" stroke="#334155" strokeWidth="1.5" />
+                      <path d="M 44.5 28 A 9 9 0 0 0 55.5 28" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                      <path d="M 40 68 A 12 12 0 0 0 60 68" fill="none" stroke="#eab308" strokeWidth="1.5" />
+                      <text x="14" y="102" fontSize="12" fill="#334155" fontStyle="italic">A</text>
+                      <text x="80" y="102" fontSize="12" fill="#334155" fontStyle="italic">B</text>
+                      <text x="46" y="15" fontSize="12" fill="#334155" fontStyle="italic">C</text>
+                      <text x="50" y="54" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">O</text>
+                      <text x="48" y="40" fontSize="10" fill="#2563eb" fontStyle="italic">y</text>
+                      <text x="48" y="85" fontSize="10" fill="#eab308" fontStyle="italic">x</text>
+                    </g>
+                    <g transform="translate(100, 10)">
+                      <circle cx="50" cy="60" r="40" stroke="#334155" strokeWidth="1.5" fill="none" />
+                      <circle cx="50" cy="60" r="2" fill="#334155" />
+                      <polygon points="73.5,92.4 26.5,27.6 10,60 50,60" stroke="#334155" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+                      <line x1="10" y1="60" x2="50" y2="60" stroke="#334155" strokeWidth="1.5" />
+                      <line x1="73.5" y1="92.4" x2="50" y2="60" stroke="#334155" strokeWidth="1.5" />
+                      <path d="M 22 36 A 9 9 0 0 0 32.5 32.5" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                      <path d="M 38 60 A 12 12 0 0 0 43 69" fill="none" stroke="#eab308" strokeWidth="1.5" />
+                      <text x="78" y="104" fontSize="12" fill="#334155" fontStyle="italic">B</text>
+                      <text x="-1" y="64" fontSize="12" fill="#334155" fontStyle="italic">A</text>
+                      <text x="18" y="24" fontSize="12" fill="#334155" fontStyle="italic">C</text>
+                      <text x="54" y="56" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">O</text>
+                      <text x="32" y="50" fontSize="10" fill="#2563eb" fontStyle="italic">y</text>
+                      <text x="32" y="76" fontSize="10" fill="#eab308" fontStyle="italic">x</text>
+                    </g>
+                    <g transform="translate(200, 10)">
+                      <circle cx="50" cy="60" r="40" stroke="#334155" strokeWidth="1.5" fill="none" />
+                      <circle cx="50" cy="60" r="2" fill="#334155" />
+                      <path d="M 12 72.4 L 88 66.4 L 30 94.6 Z" stroke="#334155" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+                      <line x1="12" y1="72.4" x2="50" y2="60" stroke="#334155" strokeWidth="1.5" />
+                      <line x1="30" y1="94.6" x2="50" y2="60" stroke="#334155" strokeWidth="1.5" />
+                      <line x1="88" y1="66.4" x2="50" y2="60" stroke="#334155" strokeWidth="1.5" />
+                      <path d="M 80 68 A 9 9 0 0 0 81 71" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                      <path d="M 40 55 A 12 12 0 0 0 54 72" fill="none" stroke="#eab308" strokeWidth="1.5" />
+                      <text x="2" y="75" fontSize="12" fill="#334155" fontStyle="italic">A</text>
+                      <text x="24" y="108" fontSize="12" fill="#334155" fontStyle="italic">B</text>
+                      <text x="94" y="68" fontSize="12" fill="#334155" fontStyle="italic">C</text>
+                      <text x="54" y="54" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">O</text>
+                      <text x="70" y="74" fontSize="10" fill="#2563eb" fontStyle="italic">y</text>
+                      <text x="35" y="70" fontSize="10" fill="#eab308" fontStyle="italic">x</text>
+                    </g>
+                  </svg>
+                  <p className="text-sm text-slate-600 text-center mt-3">
+                    <span className="bg-white border rounded px-2 py-0.5 font-bold text-pink-900">(圓心角兩倍於圓周角)</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* 14. 半圓上的圓周角 */}
+              <div className="flex flex-col">
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">14</span>
+                  半圓上的圓周角
+                  <span className="text-sm text-pink-500 font-normal">（直徑 → 90°）</span>
+                </h3>
+                <div className="bg-pink-50 rounded-lg p-3 border border-pink-200 flex-1">
+                  <p className="text-center text-xl font-bold text-pink-800 my-1">若 AB 為直徑，則 ∠APB = 90°</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <circle cx="150" cy="80" r="50" stroke="#334155" strokeWidth="2" fill="none" />
+                    <circle cx="150" cy="80" r="3" fill="#334155" />
+                    <line x1="100" y1="80" x2="200" y2="80" stroke="#16a34a" strokeWidth="2" />
+                    <polygon points="100,80 175,36.7 200,80" stroke="#ea580c" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                    
+                    <!-- Right angle marker -->
+                    <path d="M 166.3 41.7 L 171.3 50.4 L 180 45.4" stroke="#ea580c" strokeWidth="1.5" fill="none" />
+                    <rect x="169" y="44" width="3" height="3" fill="#ea580c" transform="rotate(30 170.5 45.5)" />
+
+                    <text x="145" y="98" fontSize="12" fill="#334155" fontStyle="italic">O</text>
+                    <text x="85" y="85" fontSize="12" fill="#334155" fontStyle="italic">A</text>
+                    <text x="205" y="85" fontSize="12" fill="#334155" fontStyle="italic">B</text>
+                    <text x="175" y="26" fontSize="12" fill="#334155" fontStyle="italic">P</text>
+                  </svg>
+                  <div className="bg-white rounded p-3 mt-2 border border-slate-200">
+                    <p className="text-sm text-pink-800 font-bold text-center">關鍵字眼：直徑 → 90°</p>
+                    <p className="text-xs text-slate-500 text-center mt-1">逆定理：若 ∠APB = 90°，則 AB 為直徑。</p>
+                  </div>
+                  <p className="text-sm text-slate-600 text-center mt-3">
+                    <span className="bg-white border rounded px-2 py-0.5 font-bold text-pink-900">(半圓上的圓周角)</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* 15. 同弓形內的圓周角 */}
+              <div className="flex flex-col">
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">15</span>
+                  同弓形內的圓周角
+                  <span className="text-sm text-slate-500 font-normal">（同一弦拉出的角）</span>
+                </h3>
+                <div className="bg-pink-50 rounded-lg p-3 border border-pink-200 flex-1">
+                  <p className="text-center text-xl font-bold text-pink-800 my-1">x = y</p>
+                  <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                    <!-- Segment fill -->
+                    <path d="M 102 106.6 A 60 60 0 1 1 198 106.6 L 102 106.6 Z" fill="#dcfce3" />
+                    <path d="M 102 106.6 A 60 60 0 0 0 198 106.6 L 102 106.6 Z" fill="#fce7f3" />
+                    
+                    <circle cx="150" cy="70" r="60" stroke="#334155" strokeWidth="1.5" fill="none" />
+                    <line x1="102" y1="106.6" x2="198" y2="106.6" stroke="#22c55e" strokeWidth="2" />
+                    
+                    <polygon points="102,106.6 112,23.3 198,106.6" stroke="#334155" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+                    <polygon points="102,106.6 182,19 198,106.6" stroke="#334155" strokeWidth="1.5" fill="none" strokeLinejoin="round" />
+                    
+                    <path d="M 115 38 A 12 12 0 0 1 123 32" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 170 33 A 12 12 0 0 1 179 40" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+
+                    <text x="119" y="47" fontSize="12" fill="#2563eb" fontStyle="italic">x</text>
+                    <text x="170" y="48" fontSize="12" fill="#2563eb" fontStyle="italic">y</text>
+                    
+                    <text x="90" y="120" fontSize="12" fill="#334155" fontStyle="italic">A</text>
+                    <text x="202" y="120" fontSize="12" fill="#334155" fontStyle="italic">B</text>
+                    <text x="100" y="18" fontSize="12" fill="#334155" fontStyle="italic">C</text>
+                    <text x="185" y="12" fontSize="12" fill="#334155" fontStyle="italic">D</text>
+                    <circle cx="195" cy="110" r="4" fill="#ef4444" />
+
+                    <text x="115" y="70" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
+                    <text x="171" y="65" fontSize="12" fill="#1e3a8a" fontStyle="italic">y</text>
+
+                    <text x="90" y="125" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                    <text x="205" y="125" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                    <text x="85" y="45" fontSize="14" fill="#334155" fontStyle="italic">P</text>
+                    <text x="200" y="35" fontSize="14" fill="#334155" fontStyle="italic">Q</text>
+                  </svg>
+                  <p className="text-sm text-slate-600 text-center mt-3">
+                    <span className="bg-white border rounded px-2 py-0.5 font-bold text-pink-900">(同弓形內的圓周角)</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* 16. 等角/弧/弦 的組合 */}
+              <div className="flex flex-col">
+                <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                  <span className="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">16</span>
+                  等角對等弧/弦
+                  <span className="text-sm text-slate-500 font-normal">（角、弧、弦有互相相等的關係）</span>
+                </h3>
+                <div className="bg-pink-50 rounded-lg p-3 border border-pink-200 flex-1 flex flex-col justify-center">
+                  <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-4">
+                    <svg viewbox="0 0 160 140" className="w-[140px] touch-none">
+                      <!-- Fill for sectors -->
+                      <path d="M 80 70 L 32.5 35.8 A 58 58 0 0 0 32.5 104.2 Z" fill="#fef08a" opacity="0.4" />
+                      <path d="M 80 70 L 127.5 35.8 A 58 58 0 0 1 127.5 104.2 Z" fill="#fef08a" opacity="0.4" />
+                      <!-- Main Circle -->
+                      <circle cx="80" cy="70" r="58" stroke="#334155" strokeWidth="1.5" fill="none" />
+                      <circle cx="80" cy="70" r="3" fill="#334155" />
+                      <!-- Radii -->
+                      <line x1="80" y1="70" x2="32.5" y2="35.8" stroke="#334155" strokeWidth="1.5" />
+                      <line x1="80" y1="70" x2="32.5" y2="104.2" stroke="#334155" strokeWidth="1.5" />
+                      <line x1="80" y1="70" x2="127.5" y2="35.8" stroke="#334155" strokeWidth="1.5" />
+                      <line x1="80" y1="70" x2="127.5" y2="104.2" stroke="#334155" strokeWidth="1.5" />
+                      <!-- Chords -->
+                      <line x1="32.5" y1="35.8" x2="32.5" y2="104.2" stroke="#eab308" strokeWidth="2" />
+                      <line x1="127.5" y1="35.8" x2="127.5" y2="104.2" stroke="#eab308" strokeWidth="2" />
+                      <line x1="28" y1="67" x2="37" y2="73" stroke="#eab308" strokeWidth="1.5" />
+                      <line x1="28" y1="73" x2="37" y2="67" stroke="#eab308" strokeWidth="1.5" />
+                      <line x1="123" y1="67" x2="132" y2="73" stroke="#eab308" strokeWidth="1.5" />
+                      <line x1="123" y1="73" x2="132" y2="67" stroke="#eab308" strokeWidth="1.5" />
+                      <!-- Arc marks -->
+                      <path d="M 32.5 35.8 A 58 58 0 0 0 32.5 104.2" fill="none" stroke="#ef4444" strokeWidth="3" />
+                      <path d="M 127.5 35.8 A 58 58 0 0 1 127.5 104.2" fill="none" stroke="#ef4444" strokeWidth="3" />
+                      <path d="M 4 67 A 62 62 0 0 0 4 73" stroke="#ef4444" strokeWidth="1.5" fill="none" />
+                      <path d="M 7 67 A 62 62 0 0 0 7 73" stroke="#ef4444" strokeWidth="1.5" fill="none" />
+                      <path d="M 153 67 A 62 62 0 0 1 153 73" stroke="#ef4444" strokeWidth="1.5" fill="none" />
+                      <path d="M 156 67 A 62 62 0 0 1 156 73" stroke="#ef4444" strokeWidth="1.5" fill="none" />
+                      <path d="M 66 60 A 17 17 0 0 0 66 80" stroke="#3b82f6" strokeWidth="1.5" fill="none" />
+                      <path d="M 94 60 A 17 17 0 0 1 94 80" stroke="#3b82f6" strokeWidth="1.5" fill="none" />
+                      <text x="54" y="74" fontSize="12" fill="#3b82f6" fontStyle="italic">x</text>
+                      <text x="98" y="74" fontSize="12" fill="#3b82f6" fontStyle="italic">x</text>
+                      <!-- Labels -->
+                      <text x="16" y="32" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                      <text x="16" y="116" fontSize="14" fill="#3334155" fontStyle="italic">B</text>
+                      <text x="136" y="32" fontSize="14" fill="#334155" fontStyle="italic">D</text>
+                      <text x="136" y=!116" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                      <text x="75" y="58" fontSize="14" fill="#334155" fontStyle="italic">O</text>
+                    </svg>
+                    </svg>
+                    <div className="text-sm text-pink-900 border-l-2 border-pink-300 pl-3">
+                      <p className="font-bold">以下三項中，若一成立，則其餘兩項亦成立：</p>
+                      <ul className="list-decimal pl-4 mt-2 space-y-1">
+                        <li>∠AOB = ∠COD (角)</li>
+                        <li>弦 AB = 弦 CD (弦)</li>
+                        <li>弧 AB = 弧 CD (弧)</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-600 text-center mt-3">
+                    <span className="bg-white border rounded px-2 py-0.5 font-bold text-pink-900">(等角/弧/弦的互相轉換)</span>
                   </p>
                 </div>
               </div>

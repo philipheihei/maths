@@ -205,6 +205,22 @@ const Home = () => {
       inDevelopment: false
     },
     {
+      id: 'distance-slope',
+      title: '距離與斜率',
+      description: '直線的幾何坐標：兩點之間的距離公式和斜率公式',
+      icon: Calculator,
+      color: 'bg-teal-500',
+      hoverColor: 'hover:bg-teal-600',
+      path: '/distance-slope',
+      level: 'F3',
+      badges: [
+        { level: 'F3', chapter: 'CH9', subject: '直線的幾何坐標' }
+      ],
+      category: '初中',
+      topics: ['距離公式', '斜率', '直線的幾何坐標'],
+      inDevelopment: false
+    },
+    {
       id: 'algebraic-fractions',
       title: '代數分式',
       description: '續多項式：代數分式四則混算、通分母、展開分子、化簡',
