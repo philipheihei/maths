@@ -1237,7 +1237,7 @@ export default function AngleMasterQuiz() {
                     <line x1="100" y1="80" x2="200" y2="80" stroke="#16a34a" strokeWidth="2" />
                     <polygon points="100,80 175,36.7 200,80" stroke="#ea580c" strokeWidth="2" fill="none" strokeLinejoin="round" />
                     
-                    <!-- Right angle marker -->
+                    {/* Right angle marker */}
                     <path d="M 166.3 41.7 L 171.3 50.4 L 180 45.4" stroke="#ea580c" strokeWidth="1.5" fill="none" />
                     <rect x="169" y="44" width="3" height="3" fill="#ea580c" transform="rotate(30 170.5 45.5)" />
 
@@ -1266,7 +1266,7 @@ export default function AngleMasterQuiz() {
                 <div className="bg-pink-50 rounded-lg p-3 border border-pink-200 flex-1">
                   <p className="text-center text-xl font-bold text-pink-800 my-1">x = y</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
-                    <!-- Segment fill -->
+                    {/* Segment fill */}
                     <path d="M 102 106.6 A 60 60 0 1 1 198 106.6 L 102 106.6 Z" fill="#dcfce3" />
                     <path d="M 102 106.6 A 60 60 0 0 0 198 106.6 L 102 106.6 Z" fill="#fce7f3" />
                     
@@ -1311,26 +1311,26 @@ export default function AngleMasterQuiz() {
                 </h3>
                 <div className="bg-pink-50 rounded-lg p-3 border border-pink-200 flex-1 flex flex-col justify-center">
                   <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-4">
-                    <svg viewbox="0 0 160 140" className="w-[140px] touch-none">
-                      <!-- Fill for sectors -->
+                    <svg viewBox="0 0 160 140" className="w-[140px] touch-none">
+                      {/* Fill for sectors */}
                       <path d="M 80 70 L 32.5 35.8 A 58 58 0 0 0 32.5 104.2 Z" fill="#fef08a" opacity="0.4" />
                       <path d="M 80 70 L 127.5 35.8 A 58 58 0 0 1 127.5 104.2 Z" fill="#fef08a" opacity="0.4" />
-                      <!-- Main Circle -->
+                      {/* Main Circle */}
                       <circle cx="80" cy="70" r="58" stroke="#334155" strokeWidth="1.5" fill="none" />
                       <circle cx="80" cy="70" r="3" fill="#334155" />
-                      <!-- Radii -->
+                      {/* Radii */}
                       <line x1="80" y1="70" x2="32.5" y2="35.8" stroke="#334155" strokeWidth="1.5" />
                       <line x1="80" y1="70" x2="32.5" y2="104.2" stroke="#334155" strokeWidth="1.5" />
                       <line x1="80" y1="70" x2="127.5" y2="35.8" stroke="#334155" strokeWidth="1.5" />
                       <line x1="80" y1="70" x2="127.5" y2="104.2" stroke="#334155" strokeWidth="1.5" />
-                      <!-- Chords -->
+                      {/* Chords */}
                       <line x1="32.5" y1="35.8" x2="32.5" y2="104.2" stroke="#eab308" strokeWidth="2" />
                       <line x1="127.5" y1="35.8" x2="127.5" y2="104.2" stroke="#eab308" strokeWidth="2" />
                       <line x1="28" y1="67" x2="37" y2="73" stroke="#eab308" strokeWidth="1.5" />
                       <line x1="28" y1="73" x2="37" y2="67" stroke="#eab308" strokeWidth="1.5" />
                       <line x1="123" y1="67" x2="132" y2="73" stroke="#eab308" strokeWidth="1.5" />
                       <line x1="123" y1="73" x2="132" y2="67" stroke="#eab308" strokeWidth="1.5" />
-                      <!-- Arc marks -->
+                      {/* Arc marks */}
                       <path d="M 32.5 35.8 A 58 58 0 0 0 32.5 104.2" fill="none" stroke="#ef4444" strokeWidth="3" />
                       <path d="M 127.5 35.8 A 58 58 0 0 1 127.5 104.2" fill="none" stroke="#ef4444" strokeWidth="3" />
                       <path d="M 4 67 A 62 62 0 0 0 4 73" stroke="#ef4444" strokeWidth="1.5" fill="none" />
@@ -1341,13 +1341,12 @@ export default function AngleMasterQuiz() {
                       <path d="M 94 60 A 17 17 0 0 1 94 80" stroke="#3b82f6" strokeWidth="1.5" fill="none" />
                       <text x="54" y="74" fontSize="12" fill="#3b82f6" fontStyle="italic">x</text>
                       <text x="98" y="74" fontSize="12" fill="#3b82f6" fontStyle="italic">x</text>
-                      <!-- Labels -->
+                      {/* Labels */}
                       <text x="16" y="32" fontSize="14" fill="#334155" fontStyle="italic">A</text>
-                      <text x="16" y="116" fontSize="14" fill="#3334155" fontStyle="italic">B</text>
+                      <text x="16" y="116" fontSize="14" fill="#334155" fontStyle="italic">B</text>
                       <text x="136" y="32" fontSize="14" fill="#334155" fontStyle="italic">D</text>
-                      <text x="136" y=!116" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                      <text x="136" y="116" fontSize="14" fill="#334155" fontStyle="italic">C</text>
                       <text x="75" y="58" fontSize="14" fill="#334155" fontStyle="italic">O</text>
-                    </svg>
                     </svg>
                     <div className="text-sm text-pink-900 border-l-2 border-pink-300 pl-3">
                       <p className="font-bold">以下三項中，若一成立，則其餘兩項亦成立：</p>
