@@ -797,9 +797,19 @@ export default function AngleMasterQuiz() {
                         <text x="27" y="73" fontSize="10" fill="#334155">50°</text>
                         <text x="69" y="73" fontSize="10" fill="#334155">2x</text>
                       </svg>
-                      <pre className="text-sm text-slate-700 whitespace-pre font-sans">{`2x = 180° - 50° - 70°
-2x = 60°
- x = 30°`}</pre>
+                      <div className="text-sm text-slate-700 grid grid-cols-[auto_auto_1fr] gap-x-2">
+                        <div className="text-right">2x</div>
+                        <div className="text-center">=</div>
+                        <div className="text-left">180° - 50° - 70°</div>
+                        
+                        <div className="text-right">2x</div>
+                        <div className="text-center">=</div>
+                        <div className="text-left">60°</div>
+                        
+                        <div className="text-right">x</div>
+                        <div className="text-center">=</div>
+                        <div className="text-left">30°</div>
+                      </div>
                     </div>
                   </div>
                   <p className="text-sm text-slate-600 text-center mt-3">
@@ -845,8 +855,15 @@ export default function AngleMasterQuiz() {
                       </svg>
                       <div className="text-sm text-slate-700">
                         <p className="text-green-700 font-bold mb-1">底角 = 67°</p>
-                        <pre className="whitespace-pre font-sans">{`x = 180° - 67° - 67°
-x = 46°`}</pre>
+                        <div className="grid grid-cols-[auto_auto_1fr] gap-x-2">
+                          <div className="text-right">x</div>
+                          <div className="text-center">=</div>
+                          <div className="text-left">180° - 67° - 67°</div>
+                          
+                          <div className="text-right">x</div>
+                          <div className="text-center">=</div>
+                          <div className="text-left">46°</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -906,12 +923,12 @@ x = 46°`}</pre>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="170,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                     <line x1="220" y1="120" x2="280" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M 156.6 34.9 A 20 20 0 0 0 178.9 37.9" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 160.0 31.1 A 15 15 0 0 0 176.7 33.4" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                     <path d="M 100.0 120.0 A 20 20 0 0 0 93.4 105.1" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 232.0 120.0 A 12 12 0 0 1 214.6 109.3" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <text x="160" y="55" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
-                    <text x="93" y="115" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
-                    <text x="237" y="114" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">d</text>
+                    <path d="M 213.3 106.6 A 15 15 0 0 1 235.0 120.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <text x="163" y="49" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                    <text x="102" y="114" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                    <text x="228.1" y="103.7" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">d</text>
                     <text x="165" y="14" fontSize="16" fill="#334155">A</text>
                     <text x="60" y="125" fontSize="16" fill="#334155">B</text>
                     <text x="215" y="138" fontSize="16" fill="#334155">C</text>
@@ -938,12 +955,12 @@ x = 46°`}</pre>
                       <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                         <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                         <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
-                        <line x1="54.6" y1="57.3" x2="65.4" y2="62.7" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="44.6" y1="77.3" x2="55.4" y2="82.7" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="94.6" y1="62.7" x2="105.4" y2="57.3" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="104.6" y1="82.7" x2="115.4" y2="77.3" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="55" y1="115" x2="55" y2="125" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="105" y1="115" x2="105" y2="125" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="59.5" y1="67.8" x2="50.5" y2="72.2" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="57" y1="115" x2="57" y2="125" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="53" y1="115" x2="53" y2="125" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="107" y1="115" x2="107" y2="125" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="103" y1="115" x2="103" y2="125" stroke="#ef4444" strokeWidth="2" />
                         <text x="75" y="14" fontSize="14" fill="#334155">A</text>
                         <text x="15" y="125" fontSize="14" fill="#334155">B</text>
                         <text x="135" y="125" fontSize="14" fill="#334155">C</text>
@@ -958,11 +975,9 @@ x = 46°`}</pre>
                       <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                         <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                         <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
-                        <line x1="54.6" y1="57.3" x2="65.4" y2="62.7" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="44.6" y1="77.3" x2="55.4" y2="82.7" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="94.6" y1="62.7" x2="105.4" y2="57.3" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="104.6" y1="82.7" x2="115.4" y2="77.3" stroke="#ef4444" strokeWidth="2" />
-                        <polyline points="72,120 72,112 80,112" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                        <line x1="59.5" y1="67.8" x2="50.5" y2="72.2" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                        <polyline points="70,120 70,110 80,110" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                         <text x="75" y="14" fontSize="14" fill="#334155">A</text>
                         <text x="15" y="125" fontSize="14" fill="#334155">B</text>
                         <text x="135" y="125" fontSize="14" fill="#334155">C</text>
@@ -977,14 +992,12 @@ x = 46°`}</pre>
                       <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                         <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                         <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
-                        <line x1="54.6" y1="57.3" x2="65.4" y2="62.7" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="44.6" y1="77.3" x2="55.4" y2="82.7" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="94.6" y1="62.7" x2="105.4" y2="57.3" stroke="#ef4444" strokeWidth="2" />
-                        <line x1="104.6" y1="82.7" x2="115.4" y2="77.3" stroke="#ef4444" strokeWidth="2" />
-                        <path d="M 70.2 39.7 A 22 22 0 0 0 80.0 42.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                        <path d="M 80.0 42.0 A 22 22 0 0 0 89.8 39.7" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                        <text x="58" y="52" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
-                        <text x="87" y="52" fontSize="12" fill="#1e3a8a" fontStyle="italic">y</text>
+                        <line x1="59.5" y1="67.8" x2="50.5" y2="72.2" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                        <path d="M 71.1 37.9 A 20 20 0 0 0 80.0 40.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                        <path d="M 80.0 40.0 A 20 20 0 0 0 88.9 37.9" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                        <text x="67.6" y="56.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
+                        <text x="82.4" y="56.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">y</text>
                         <text x="75" y="14" fontSize="14" fill="#334155">A</text>
                         <text x="15" y="125" fontSize="14" fill="#334155">B</text>
                         <text x="135" y="125" fontSize="14" fill="#334155">C</text>
@@ -1010,23 +1023,23 @@ x = 46°`}</pre>
                 <div className="bg-green-50 rounded-lg p-3 border border-green-200">
                   <p className="text-center text-xl font-bold text-green-800 my-1">若 AB = BC = AC</p>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
-                    <polygon points="150,20 60,120 240,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                    <polygon points="150,25 95,120 205,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                     {/* Tick marks on edges */}
-                    <line x1="100" y1="70" x2="110" y2="70" stroke="#ef4444" strokeWidth="2" transform="rotate(45 105 70)" />
-                    <line x1="200" y1="70" x2="190" y2="70" stroke="#ef4444" strokeWidth="2" transform="rotate(-45 195 70)" />
-                    <line x1="150" y1="115" x2="150" y2="125" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="118.2" y1="70.0" x2="126.8" y2="75.0" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="173.2" y1="75.0" x2="181.8" y2="70.0" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="150.0" y1="115.0" x2="150.0" y2="125.0" stroke="#ef4444" strokeWidth="2" />
                     
-                    <path d="M 136.6 34.9 A 20 20 0 0 0 163.4 34.9" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 80.0 120.0 A 20 20 0 0 0 73.4 105.1" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 220.0 120.0 A 20 20 0 0 0 226.6 105.1" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 140.0 42.3 A 20 20 0 0 0 160.0 42.3" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 115.0 120.0 A 20 20 0 0 0 105.0 102.7" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 195.0 102.7 A 20 20 0 0 0 185.0 120.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                     
-                    <text x="143" y="48" fontSize="12" fill="#1e3a8a">60°</text>
-                    <text x="75" y="112" fontSize="12" fill="#1e3a8a">60°</text>
-                    <text x="207" y="110" fontSize="12" fill="#1e3a8a">60°</text>
+                    <text x="141" y="58" fontSize="12" fill="#1e3a8a">60°</text>
+                    <text x="115" y="115" fontSize="12" fill="#1e3a8a">60°</text>
+                    <text x="168" y="115" fontSize="12" fill="#1e3a8a">60°</text>
                     
-                    <text x="145" y="14" fontSize="16" fill="#334155">A</text>
-                    <text x="45" y="125" fontSize="16" fill="#334155">B</text>
-                    <text x="250" y="125" fontSize="16" fill="#334155">C</text>
+                    <text x="145" y="18" fontSize="16" fill="#334155">A</text>
+                    <text x="80" y="125" fontSize="16" fill="#334155">B</text>
+                    <text x="210" y="125" fontSize="16" fill="#334155">C</text>
                   </svg>
                   <p className="text-center font-bold text-blue-800 my-1">則 ∠A = ∠B = ∠C = 60°</p>
                   <p className="text-sm text-slate-600 text-center mt-3">
@@ -1047,25 +1060,33 @@ x = 46°`}</pre>
                   <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                     <polygon points="120,30 200,20 250,70 230,120 70,90" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                     
-                    <path d="M 111.7 40.0 A 13 13 0 0 0 132.9 28.4" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 187.1 21.6 A 13 13 0 0 0 209.2 29.2" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 240.8 60.8 A 13 13 0 0 0 245.2 82.1" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 234.8 107.9 A 13 13 0 0 0 217.2 117.6" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 82.8 92.4 A 13 13 0 0 0 78.3 80.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 112.3 39.2 A 12 12 0 0 0 131.9 28.5" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 188.1 21.5 A 12 12 0 0 0 208.5 28.5" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 241.5 61.5 A 12 12 0 0 0 245.5 81.1" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 234.5 108.9 A 12 12 0 0 0 218.2 117.8" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 81.8 92.2 A 12 12 0 0 0 77.7 80.8" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                     
-                    <text x="100" y="47" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
-                    <text x="186" y="44" fontSize="12" fill="#1e3a8a">133°</text>
-                    <text x="244" y="87" fontSize="12" fill="#1e3a8a">120°</text>
-                    <text x="200" y="110" fontSize="12" fill="#1e3a8a">80°</text>
-                    <text x="61" y="84" fontSize="12" fill="#1e3a8a">77°</text>
+                    <text x="125.6" y="52" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
+                    <text x="187.9" y="45.8" fontSize="12" fill="#1e3a8a">133°</text>
+                    <text x="212.0" y="76.0" fontSize="12" fill="#1e3a8a">120°</text>
+                    <text x="214.4" y="105.7" fontSize="12" fill="#1e3a8a">80°</text>
+                    <text x="85.7" y="87.6" fontSize="12" fill="#1e3a8a">77°</text>
                   </svg>
                   <div className="bg-white rounded p-3 mt-2 border border-slate-200">
                     <p className="text-sm text-orange-800 font-bold mb-2">例子（五邊形, n=5）：</p>
-                    <pre className="text-sm text-slate-700 whitespace-pre font-sans">
-{`x + 77° + 80° + 120° + 133° = (5 - 2) × 180°
-                    x + 410° = 540°
-                           x = 130°`}
-                    </pre>
+                    <div className="text-sm text-slate-700 grid grid-cols-[1fr_auto_1fr] gap-x-2">
+                      <div className="text-right">x + 77° + 80° + 120° + 133°</div>
+                      <div className="text-center">=</div>
+                      <div className="text-left">(5 - 2) × 180°</div>
+                      
+                      <div className="text-right">x + 410°</div>
+                      <div className="text-center">=</div>
+                      <div className="text-left">540°</div>
+                      
+                      <div className="text-right">x</div>
+                      <div className="text-center">=</div>
+                      <div className="text-left">130°</div>
+                    </div>
                   </div>
                   <p className="text-sm text-slate-600 text-center mt-3">
                     <span className="bg-white border rounded px-2 py-0.5 font-bold text-orange-900">(多邊形內角和)</span>
@@ -1090,15 +1111,15 @@ x = 46°`}</pre>
                     <line x1="200" y1="110" x2="240" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                     <line x1="260" y1="60" x2="284" y2="40" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                     
-                    <path d="M 117.2 38.0 A 13 13 0 0 1 127.5 52.7" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 117.5 102.7 A 13 13 0 0 1 132.6 93.2" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 212.6 113.2 A 13 13 0 0 1 210.0 101.7" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                    <path d="M 270.0 51.7 A 13 13 0 0 1 247.2 58.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 118.1 38.2 A 12 12 0 0 0 127.6 51.8" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 117.6 101.8 A 12 12 0 0 0 131.6 92.9" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 211.6 112.9 A 12 12 0 0 0 209.2 102.3" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 269.2 52.3 A 12 12 0 0 0 248.1 58.2" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                     
-                    <text x="96" y="42" fontSize="12" fill="#1e3a8a">95°</text>
-                    <text x="106" y="113" fontSize="12" fill="#1e3a8a">76°</text>
-                    <text x="216" y="120" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
-                    <text x="268" y="46" fontSize="12" fill="#1e3a8a">114°</text>
+                    <text x="107.0" y="57.6" fontSize="12" fill="#1e3a8a">95°</text>
+                    <text x="126.8" y="113.6" fontSize="12" fill="#1e3a8a">76°</text>
+                    <text x="216.4" y="110.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
+                    <text x="248.6" y="41.9" fontSize="12" fill="#1e3a8a">114°</text>
 
                     <text x="135" y="32" fontSize="14" fill="#334155">A</text>
                     <text x="100" y="85" fontSize="14" fill="#334155">B</text>
@@ -1107,11 +1128,19 @@ x = 46°`}</pre>
                   </svg>
                   <div className="bg-white rounded p-3 mt-2 border border-slate-200">
                     <p className="text-sm text-orange-800 font-bold mb-2">例子（四邊形 ABCD）：</p>
-                    <pre className="text-sm text-slate-700 whitespace-pre font-sans">
-{`x + 76° + 95° + 114° = 360°
-            x + 285° = 360°
-                   x = 75°`}
-                    </pre>
+                    <div className="text-sm text-slate-700 grid grid-cols-[1fr_auto_1fr] gap-x-2">
+                      <div className="text-right">x + 76° + 95° + 114°</div>
+                      <div className="text-center">=</div>
+                      <div className="text-left">360°</div>
+                      
+                      <div className="text-right">x + 285°</div>
+                      <div className="text-center">=</div>
+                      <div className="text-left">360°</div>
+                      
+                      <div className="text-right">x</div>
+                      <div className="text-center">=</div>
+                      <div className="text-left">75°</div>
+                    </div>
                   </div>
                   <p className="text-sm text-slate-600 text-center mt-3">
                     <span className="bg-white border rounded px-2 py-0.5 font-bold text-orange-900">(多邊形外角和)</span>
