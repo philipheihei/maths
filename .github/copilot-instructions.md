@@ -135,6 +135,22 @@ const QUESTIONS = [
   - Feedback: `green-600` (correct), `red-600` (incorrect)
   - Backgrounds: gradient `from-blue-50 via-indigo-50 to-purple-50`
 
+### Number / Answer Font Rule
+- **All numbers and answer displays use the default sans-serif font** (do NOT add `font-mono` to answer inputs, result spans, or math step `<div>`s)
+- **Exceptions — `font-mono` is ONLY allowed on:**
+  1. CASIO calculator key `<span>` badges (e.g. `bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded`)
+  2. Code blocks / terminal output
+- LaTeX/KaTeX rendered math is exempt (handled by KaTeX's own stylesheet)
+
+### Multi-line Equation Alignment Rule
+When displaying **consecutive calculation steps** (2+ lines), always align the `=` signs vertically using leading spaces or a monospace-friendly layout. Example:
+```
+2x = 180° - 50° - 70°
+2x = 60°
+ x = 30°
+```
+Use a `<pre className="whitespace-pre font-sans">` tag so leading spaces are respected while keeping sans-serif font. In plain `<p>` / `<div>` tags, use `&nbsp;` or pad with a thin `<span>` to push shorter left-hand sides into alignment.
+
 ## Calculator Key Styling (CASIO fx-50FH II)
 
 When displaying CASIO fx-50FH II keys in notes or instructions, **always** use these exact Tailwind classes. Every new notes page or instruction section must follow this standard.
@@ -217,4 +233,30 @@ const format3sf = (n) => {
 4. **Answer validation**: Always provide multiple valid answer formats in `valid` arrays (e.g., `["x+y=10", "y+x=10"]`)
 5. **MC 4 options**: After building the options array, assert `opts.length === 4` mentally — if wrongs can collide or equal correct for any parameter value, add deduplication + padding
 6. **標記文字和arc不會重疊**: 在繪製SVG標記（文字a, b, c等）時，適當調整半徑和坐標，確保文字與角度arc保持足夠距離，不發生重疊。
-7. **SVG Arc 方向 (Sweep-flag)**: 畫角度 arc 時，特別是三角形的底角或內角，請留意 `<path d="M x y A rx ry x-axis-rotation large-arc-flag sweep-flag x y" />` 中 `sweep-flag` (即 `A` 指令的第5個參數) 是 `0` 還是 `1`。如果畫出來的 arc 反向了（凸向外或凹向內錯誤），請切換該值 (0 -> 1 或 1 -> 0)。
+7. **SVG Arc 方向 (Sweep-flag) — 一步到位規則**:
+   - SVG arc 指令格式：`A rx ry 0 large-arc-flag sweep-flag ex ey`
+   - **sweep-flag = 1**：從起點**順時針**畫到終點（弧凸向右/向下）
+   - **sweep-flag = 0**：從起點**逆時針**畫到終點（弧凸向左/向上）
+   - SVG Y 軸向下，所以「角往內包」的規律為：
+     - **頂角（頂點在上，開口向下）**：起點在左邊斜線上，終點在右邊斜線上 → `sweep-flag = 0`
+       ```svg
+       <!-- 頂角，頂點 (150,20)，左邊到右邊 -->
+       <path d="M 135.9 34.1 A 20 20 0 0 0 164.1 34.1" />
+       ```
+     - **左底角（頂點在左下，開口向右上）**：起點在底線上，終點在斜線上 → `sweep-flag = 0`
+       ```svg
+       <!-- 左底角，頂點 (60,110) -->
+       <path d="M 80 110 A 20 20 0 0 0 74.1 95.9" />
+       ```
+     - **右底角（頂點在右下，開口向左上）**：起點在底線上，終點在斜線上 → `sweep-flag = 1`
+       ```svg
+       <!-- 右底角，頂點 (240,110) -->
+       <path d="M 220 110 A 20 20 0 0 1 225.9 95.9" />
+       ```
+   - **計算 arc 端點的正確方法**：從頂點出發，沿各邊方向移動 radius 距離
+     ```js
+     // 頂點 V，邊方向單位向量 (ux,uy)，半徑 r
+     startX = V.x + ux1 * r;  startY = V.y + uy1 * r;
+     endX   = V.x + ux2 * r;  endY   = V.y + uy2 * r;
+     ```
+   - 如弧看起來反了，優先檢查端點計算是否沿邊方向（而非垂直方向），再考慮切換 sweep-flag。
