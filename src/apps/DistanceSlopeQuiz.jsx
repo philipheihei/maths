@@ -133,7 +133,7 @@ const DraggablePoint = ({ point, onDragStart, isDragging, label, color = '#3b82f
 };
 
 // ============= QUIZ KEYBOARD =============
-const QuizKeyboard = ({ onInput, onDelete, onClear, onSubmit, disabled }) => {
+const QuizKeyboard = ({ onInput, onDelete, onClear, onSubmit, onNext, showNext, disabled }) => {
   const KEY = `h-12 rounded-lg font-medium text-lg flex items-center justify-center select-none transition-all shadow-[0_2px_0_0_rgba(0,0,0,0.12)] active:shadow-none active:translate-y-[1px] border`;
   const NUM = `${KEY} bg-white text-slate-700 border-slate-200`;
   const OP  = `${KEY} bg-slate-100 text-slate-600 border-slate-200`;
@@ -163,8 +163,12 @@ const QuizKeyboard = ({ onInput, onDelete, onClear, onSubmit, disabled }) => {
         <button className={NUM} onClick={() => press('-')}>−</button>
         <button className={NUM} onClick={() => press('0')}>0</button>
         <button className={OP} onClick={() => press('.')}>.</button>
-        <button className={`${KEY} bg-blue-500 text-white border-blue-600`}
-          onClick={() => { if (!disabled) onSubmit(); }}>提交</button>
+        {showNext
+          ? <button className={`${KEY} bg-teal-500 text-white border-teal-600`}
+              onClick={() => { if (!disabled) onNext(); }}>下一個 →</button>
+          : <button className={`${KEY} bg-blue-500 text-white border-blue-600`}
+              onClick={() => { if (!disabled) onSubmit(); }}>提交</button>
+        }
       </div>
     </div>
   );
@@ -328,6 +332,7 @@ const generateQuizQuestion = (enabledTypes = { distance: true, slope: true, midp
       answerX,
       answerY,
       answer: `${answerX},${answerY}`,
+      displayAnswer: `(${answerX}, ${answerY})`,
       displayAnswerLatex: `\\text{中點} = \\left(${mxL},\\; ${myL}\\right)`,
       prompt: '求兩點的中點坐標。（若為分數則以 a/b 輸入）',
       latexLines: [
@@ -862,7 +867,11 @@ export default function DistanceSlopeQuiz() {
 
     if (isCorrect) {
       setScore(s => s + 1);
-      setFeedback({ type: 'correct', message: '答對了！' });
+      setFeedback({
+        type: 'correct',
+        message: '答對了！',
+        latexLines: currentQuestion.latexLines
+      });
     } else {
       setFeedback({
         type: 'wrong',
@@ -915,6 +924,7 @@ export default function DistanceSlopeQuiz() {
       setUserAnswer('');
     }
   };
+  const handleKeypadNext = () => { setMidpointFocus('y'); };
   const handleKeypadSubmit = () => { if (feedback) generateNewQuestion(); else checkAnswer(); };
 
   // ========== 模式選擇 ==========
@@ -1120,12 +1130,16 @@ export default function DistanceSlopeQuiz() {
                       ? <><Check className="w-6 h-6" />{feedback.message}</>
                       : <><X className="w-6 h-6" />{feedback.message}</>}
                   </div>
-                  {feedback.correctAnswer && (
+                  {(feedback.correctAnswer || feedback.latexLines) && (
                     <div className="mt-4 border-t border-slate-200 pt-4">
-                      <span className="inline-block bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold mb-2">正確答案</span>
-                      <div className="text-2xl font-bold text-slate-700">
-                        <Latex math={feedback.correctAnswerLatex || feedback.correctAnswer} block />
-                      </div>
+                      {feedback.correctAnswer && (
+                        <>
+                          <span className="inline-block bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold mb-2">正確答案</span>
+                          <div className="text-2xl font-bold text-slate-700">
+                            <Latex math={feedback.correctAnswerLatex || feedback.correctAnswer} block />
+                          </div>
+                        </>
+                      )}
                       {feedback.latexLines && (
                         <div className="mt-3 text-purple-700 bg-purple-50 px-3 py-2 rounded-lg text-sm">
                           <Latex math={toAligned(feedback.latexLines)} block />
@@ -1142,6 +1156,8 @@ export default function DistanceSlopeQuiz() {
                 onDelete={handleKeypadDelete}
                 onClear={handleKeypadClear}
                 onSubmit={handleKeypadSubmit}
+                onNext={handleKeypadNext}
+                showNext={!feedback && currentQuestion?.type === 'midpoint' && midpointFocus === 'x'}
                 disabled={false}
               />
             </div>
