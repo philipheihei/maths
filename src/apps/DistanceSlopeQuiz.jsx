@@ -328,10 +328,10 @@ const generateQuizQuestion = (enabledTypes = { distance: true, slope: true, midp
       answerX,
       answerY,
       answer: `${answerX},${answerY}`,
-      displayAnswerLatex: `M = \\left(${mxL},\\; ${myL}\\right)`,
+      displayAnswerLatex: `\\text{中點} = \\left(${mxL},\\; ${myL}\\right)`,
       prompt: '求兩點的中點坐標。（若為分數則以 a/b 輸入）',
       latexLines: [
-        `M = \\left(\\dfrac{${fax}+${fbx}}{2},\\; \\dfrac{${fay}+${fby}}{2}\\right)`,
+        `\\text{中點} = \\left(\\dfrac{${fax}+${fbx}}{2},\\; \\dfrac{${fay}+${fby}}{2}\\right)`,
         `= \\left(\\dfrac{${sx}}{2},\\; \\dfrac{${sy}}{2}\\right)`,
         `= \\left(${mxL},\\; ${myL}\\right)`,
       ],
@@ -392,7 +392,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
   const [pointA, setPointA] = useState({ x: -3, y: -2 });
   const [pointB, setPointB] = useState({ x: 4, y: 3 });
   const [dragging, setDragging] = useState(null);
-  const [showFormula, setShowFormula] = useState('distance');
+  const [showFormula, setShowFormula] = useState('formulas');
 
   const handleMouseMove = (e) => {
     if (!dragging) return;
@@ -438,6 +438,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
           <h3 className="font-bold text-gray-700">顯示公式</h3>
           <div className="flex flex-wrap gap-2">
             {[
+              { id: 'formulas', label: '📋 公式表' },
               { id: 'distance', label: '距離' },
               { id: 'slope', label: '斜率' },
               { id: 'midpoint', label: '中點' }
@@ -445,7 +446,9 @@ const TeachingPage = ({ onGoToQuiz }) => {
               <button key={opt.id}
                 onClick={() => setShowFormula(opt.id)}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  showFormula === opt.id ? 'bg-teal-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  showFormula === opt.id
+                    ? opt.id === 'formulas' ? 'bg-purple-600 text-white' : 'bg-teal-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}>
                 {opt.label}
               </button>
@@ -454,6 +457,111 @@ const TeachingPage = ({ onGoToQuiz }) => {
         </div>
       </div>
 
+      {/* 公式表模式 */}
+      {showFormula === 'formulas' && (
+        <div className="space-y-5">
+          {/* 1. 距離公式 */}
+          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
+            <h3 className="font-bold text-emerald-800 mb-3 text-lg">1. 距離公式</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">公式</p>
+                <Latex math={"\\text{距離} = \\sqrt{(x_1-x_2)^2 + (y_1-y_2)^2}"} block />
+              </div>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">例：A(5, 8) 和 B(2, −10) 的距離</p>
+                <Latex math={"\\begin{aligned}AB &= \\sqrt{(\\textcolor{blue}{5}-\\textcolor{blue}{2})^2 + (\\textcolor{green}{8}-({\\textcolor{green}{-10}}))^2} \\\\ &= \\sqrt{\\textcolor{blue}{3}^2 + \\textcolor{green}{18}^2} \\\\ &= \\sqrt{333}\\end{aligned}"} block />
+              </div>
+            </div>
+          </div>
+
+          {/* 2. 斜率公式 */}
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+            <h3 className="font-bold text-blue-800 mb-3 text-lg">2. 斜率公式</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">公式</p>
+                <Latex math={"\\text{斜率} = \\dfrac{y_1-y_2}{x_1-x_2}"} block />
+                <p className="mt-3 text-xs text-slate-500">y上 x下</p>
+              </div>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">例：A(5, 8) 和 B(2, −10) 的斜率</p>
+                <Latex math={"\\begin{aligned}m_{AB} &= \\dfrac{\\textcolor{green}{8}-(\\textcolor{green}{-10})}{\\textcolor{blue}{5}-\\textcolor{blue}{2}} \\\\ &= \\dfrac{\\textcolor{green}{18}}{\\textcolor{blue}{3}} \\\\ &= 6\\end{aligned}"} block />
+              </div>
+            </div>
+          </div>
+
+          {/* 3. 平行 / 垂直 */}
+          <div className="bg-rose-50 border border-rose-200 rounded-xl p-5">
+            <h3 className="font-bold text-rose-800 mb-3 text-lg">3. 平行 / 垂直</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4 space-y-3">
+                <p className="text-xs text-slate-400 mb-1">定義</p>
+                <div>
+                  <p className="text-sm font-bold text-slate-700">平行：兩條線斜率相同</p>
+                  <Latex math={"L_1 \\mathbin{/\\!/} L_2 \\;\\Rightarrow\\; m_1 = m_2"} block />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-slate-700">垂直：兩條線斜率之積 = −1</p>
+                  <Latex math={"L_1 \\perp L_2 \\;\\Rightarrow\\; m_1 \\times m_2 = -1"} block />
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">例：若 AB ⊥ CD，求 CD 的斜率</p>
+                <p className="text-sm text-slate-600 mb-2">已知 AB 的斜率 = 6</p>
+                <Latex math={"\\begin{aligned}m_{AB} \\times m_{CD} &= -1 \\\\ 6 \\times m_{CD} &= -1 \\\\ m_{CD} &= -\\dfrac{1}{6}\\end{aligned}"} block />
+              </div>
+            </div>
+          </div>
+
+          {/* 4. 中點公式 */}
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
+            <h3 className="font-bold text-amber-800 mb-3 text-lg">4. 中點公式</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">公式（頭尾 ÷ 2 = 中間）</p>
+                <Latex math={"\\text{中點} = \\left(\\dfrac{x_1+x_2}{2},\\; \\dfrac{y_1+y_2}{2}\\right)"} block />
+              </div>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">例：A(5, 2) 和 B(2, −10) 的中點</p>
+                <Latex math={"\\begin{aligned}\\text{中點} &= \\left(\\dfrac{\\textcolor{blue}{5}+\\textcolor{blue}{2}}{2},\\; \\dfrac{\\textcolor{green}{8}+(\\textcolor{green}{-10})}{2}\\right) \\\\ &= \\left(3.5,\\; -1\\right)\\end{aligned}"} block />
+              </div>
+            </div>
+          </div>
+
+          {/* 5. 截點公式 */}
+          <div className="bg-violet-50 border border-violet-200 rounded-xl p-5">
+            <h3 className="font-bold text-violet-800 mb-3 text-lg">5. 截點公式 <span className="text-sm font-normal text-violet-500">（非基礎課程）</span></h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">公式（比例與點交叉乘！）</p>
+                <div className="space-y-1">
+                  <p className="text-sm text-slate-600 mb-1">P 將 AB 分成 r : s</p>
+                  <Latex math={"x = \\dfrac{s \\cdot x_1 + r \\cdot x_2}{r + s}"} block />
+                  <Latex math={"y = \\dfrac{s \\cdot y_1 + r \\cdot y_2}{r + s}"} block />
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">例：P 將 A(1, 3)、B(7, 9) 分成 2 : 1</p>
+                <Latex math={"\\begin{aligned}x &= \\dfrac{1 \\times \\textcolor{blue}{1} + 2 \\times \\textcolor{blue}{7}}{2+1} = \\dfrac{\\textcolor{blue}{15}}{3} = \\textcolor{blue}{5} \\\\ y &= \\dfrac{1 \\times \\textcolor{green}{3} + 2 \\times \\textcolor{green}{9}}{2+1} = \\dfrac{\\textcolor{green}{21}}{3} = \\textcolor{green}{7}\\end{aligned}"} block />
+                <div className="mt-2 text-center">
+                  <Latex math={"P = (\\textcolor{blue}{5},\\; \\textcolor{green}{7})"} block />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center pt-2">
+            <button onClick={onGoToQuiz}
+              className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 rounded-full font-bold flex items-center gap-2 mx-auto transition-all shadow-lg">
+              開始測驗 <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 互動模式（距離/斜率/中點）*/}
+      {showFormula !== 'formulas' && (
       <div className="grid md:grid-cols-2 gap-6">
         {/* SVG */}
         <div className="bg-white rounded-xl shadow-sm border p-4 self-start sticky top-4">
@@ -542,7 +650,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
                   const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
                   const lines = [
-                    `\\text{距離} &= \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
+                    `AB &= \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
                     `&= \\sqrt{(${dx})^2 + (${dy})^2}`,
                     `&= \\sqrt{${dx * dx} + ${dy * dy}}`,
                     `&= \\sqrt{${sq}}`,
@@ -552,7 +660,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 })()}
               </div>
               <div className="mt-3 text-center">
-                <Latex math={`\\text{距離} = ${distStrToLatex(distStr)}`} block />
+                <Latex math={`AB = ${distStrToLatex(distStr)}`} block />
               </div>
             </div>
           )}
@@ -578,7 +686,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                       const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
                       const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
                       const lines = [
-                        `\\text{斜率} &= \\dfrac{${pointB.y}-${fay}}{${pointB.x}-${fax}}`,
+                        `m_{AB} &= \\dfrac{${pointB.y}-${fay}}{${pointB.x}-${fax}}`,
                         `&= \\dfrac{${dy}}{${dx}}`,
                       ];
                       if (Math.abs(g) > 1 || dx < 0) {
@@ -588,7 +696,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     })()}
                   </div>
                   <div className="mt-3 text-center">
-                    <Latex math={`\\text{斜率} = ${slopeStrToLatex(slopeStr)}`} block />
+                    <Latex math={`m_{AB} = ${slopeStrToLatex(slopeStr)}`} block />
                   </div>
                 </>
               )}
@@ -600,7 +708,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
               <h3 className="font-bold text-amber-800 mb-3">📍 中點公式</h3>
               <div className="bg-white rounded-lg p-3 mb-3 text-center">
-                <Latex math={"M = \\left(\\dfrac{x_1+x_2}{2},\\; \\dfrac{y_1+y_2}{2}\\right)"} block />
+                <Latex math={"\\text{中點} = \\left(\\dfrac{x_1+x_2}{2},\\; \\dfrac{y_1+y_2}{2}\\right)"} block />
               </div>
               <div className="text-slate-700 text-sm leading-relaxed px-1">
                 {(() => {
@@ -613,7 +721,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   const mxL = sx % 2 === 0 ? String(sx / 2) : `\\dfrac{${sx}}{2}`;
                   const myL = sy % 2 === 0 ? String(sy / 2) : `\\dfrac{${sy}}{2}`;
                   const lines = [
-                    `M &= \\left(\\dfrac{${fax}+${fbx}}{2},\\; \\dfrac{${fay}+${fby}}{2}\\right)`,
+                    `\\text{中點} &= \\left(\\dfrac{${fax}+${fbx}}{2},\\; \\dfrac{${fay}+${fby}}{2}\\right)`,
                     `&= \\left(\\dfrac{${sx}}{2},\\; \\dfrac{${sy}}{2}\\right)`,
                     `&= \\left(${mxL},\\; ${myL}\\right)`,
                   ];
@@ -621,7 +729,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 })()}
               </div>
               <div className="mt-3 text-center">
-                <Latex math={`M = \\left(${midpointToLatex(pointA.x, pointB.x)},\\; ${midpointToLatex(pointA.y, pointB.y)}\\right)`} block />
+                <Latex math={`\\text{中點} = \\left(${midpointToLatex(pointA.x, pointB.x)},\\; ${midpointToLatex(pointA.y, pointB.y)}\\right)`} block />
               </div>
             </div>
           )}
@@ -634,6 +742,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 };
@@ -657,7 +766,7 @@ const NotesContent = () => (
     <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
       <h3 className="font-bold text-amber-800 mb-3">📍 中點公式</h3>
       <div className="bg-white rounded-lg p-3 text-center">
-        <Latex math={"M = \\left(\\dfrac{x_1+x_2}{2},\\; \\dfrac{y_1+y_2}{2}\\right)"} block />
+        <Latex math={"\\text{中點} = \\left(\\dfrac{x_1+x_2}{2},\\; \\dfrac{y_1+y_2}{2}\\right)"} block />
       </div>
     </div>
     <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
@@ -678,7 +787,7 @@ const NotesContent = () => (
         <div>
           <p className="font-bold">A(1, 2) 和 B(4, 6) 的中點：</p>
           <div className="space-y-1 mt-1 text-slate-600">
-            <Latex math={"\\begin{aligned}M &= \\left(\\dfrac{1+4}{2},\\; \\dfrac{2+6}{2}\\right) \\\\ &= \\left(\\dfrac{5}{2},\\; 4\\right)\\end{aligned}"} block />
+            <Latex math={"\\begin{aligned}\\text{中點} &= \\left(\\dfrac{1+4}{2},\\; \\dfrac{2+6}{2}\\right) \\\\ &= \\left(\\dfrac{5}{2},\\; 4\\right)\\end{aligned}"} block />
           </div>
         </div>
       </div>
