@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { loadKatexOnce } from '../utils/katexLoader';
 import {
   Home as HomeIcon,
   BookOpen,
@@ -11,6 +12,24 @@ import {
   X,
   XCircle
 } from 'lucide-react';
+
+// ============= LATEX COMPONENT =============
+const Latex = ({ math, block = false }) => {
+  const containerRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    loadKatexOnce().then(() => setIsLoaded(true)).catch(e => console.error('KaTeX load error:', e));
+  }, []);
+  useEffect(() => {
+    if (isLoaded && window.katex && containerRef.current) {
+      try {
+        containerRef.current.innerHTML = '';
+        window.katex.render(math, containerRef.current, { displayMode: block, throwOnError: false, output: 'html' });
+      } catch (e) { containerRef.current.innerText = math; }
+    }
+  }, [math, block, isLoaded]);
+  return <span ref={containerRef} className={block ? 'block text-center my-1' : 'inline-block'} />;
+};
 
 // ============= CONSTANTS =============
 const GRID_SIZE = 7;
@@ -178,6 +197,13 @@ const formatSlope = (a, b) => {
   return `${num}/${den}`;
 };
 
+// 將 distStr / slopeStr 轉換為 LaTeX 字串
+const distStrToLatex = (s) => s.startsWith('√') ? `\\sqrt{${s.slice(1)}}` : s;
+const slopeStrToLatex = (s) => {
+  if (s.includes('/')) { const [n, d] = s.split('/'); return `\\dfrac{${n}}{${d}}`; }
+  return s;
+};
+
 // ============= 出題生成器 =============
 const generateQuizQuestion = () => {
   const types = ['distance', 'slope'];
@@ -212,7 +238,20 @@ const generateQuizQuestion = () => {
       pointB,
       answer: isInteger ? String(Math.round(root)) : String(sq),
       displayAnswer: isInteger ? String(Math.round(root)) : `√${sq}`,
+      displayAnswerLatex: isInteger ? String(Math.round(root)) : `\\sqrt{${sq}}`,
       prompt: isInteger ? '求兩點之間的距離。' : '求兩點之間的距離。（輸入根號內的數值，例如：√13 則輸入 13）',
+      latexLines: (() => {
+        const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
+        const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
+        const lines = [
+          `d = \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
+          `= \\sqrt{(${dx})^2 + (${dy})^2}`,
+          `= \\sqrt{${dx * dx} + ${dy * dy}}`,
+          `= \\sqrt{${sq}}`,
+        ];
+        if (isInteger) lines.push(`= ${Math.round(root)}`);
+        return lines;
+      })(),
       explanation: generateDistanceExplanation(pointA, pointB)
     };
   } else {
@@ -229,7 +268,20 @@ const generateQuizQuestion = () => {
       pointB,
       answer: answerStr,
       displayAnswer: answerStr,
+      displayAnswerLatex: den === 1 ? String(num) : `\\dfrac{${num}}{${den}}`,
       prompt: '求兩點所形成的直線斜率。（若為分數則以 a/b 輸入）',
+      latexLines: (() => {
+        const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
+        const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
+        const lines = [
+          `m = \\dfrac{${pointB.y}-${fay}}{${pointB.x}-${fax}}`,
+          `= \\dfrac{${dy}}{${dx}}`,
+        ];
+        if (Math.abs(g) > 1 || dx < 0) {
+          lines.push(den === 1 ? `= ${num}` : `= \\dfrac{${num}}{${den}}`);
+        }
+        return lines;
+      })(),
       explanation: generateSlopeExplanation(pointA, pointB)
     };
   }
@@ -402,18 +454,30 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
               <h3 className="font-bold text-emerald-800 mb-3">📏 距離公式</h3>
               <div className="bg-white rounded-lg p-3 mb-3 text-center">
-                <div className="text-lg text-slate-700 font-bold">
-                  d = √[(x₂−x₁)² + (y₂−y₁)²]
-                </div>
+                <Latex math="d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}" block />
               </div>
-              <pre className="whitespace-pre font-sans text-slate-700 text-sm leading-relaxed">
-{`d = √[(${pointB.x}−${pointA.x < 0 ? `(${pointA.x})` : pointA.x})² + (${pointB.y}−${pointA.y < 0 ? `(${pointA.y})` : pointA.y})²]
-  = √[(${dx})² + (${dy})²]
-  = √[${dx * dx} + ${dy * dy}]
-  = √${dx * dx + dy * dy}${Number.isInteger(Math.sqrt(dx * dx + dy * dy)) ? `\n  = ${Math.round(Math.sqrt(dx * dx + dy * dy))}` : ''}`}
-              </pre>
+              <div className="text-slate-700 text-sm leading-relaxed space-y-1 px-1">
+                {(() => {
+                  const sq = dx * dx + dy * dy;
+                  const root = Math.sqrt(sq);
+                  const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
+                  const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
+                  const lines = [
+                    `d = \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
+                    `= \\sqrt{(${dx})^2 + (${dy})^2}`,
+                    `= \\sqrt{${dx * dx} + ${dy * dy}}`,
+                    `= \\sqrt{${sq}}`,
+                  ];
+                  if (Number.isInteger(root)) lines.push(`= ${Math.round(root)}`);
+                  return lines.map((line, i) => (
+                    <div key={i} className={i > 0 ? 'pl-6' : ''}>
+                      <Latex math={line} />
+                    </div>
+                  ));
+                })()}
+              </div>
               <div className="mt-3 text-center">
-                <span className="text-2xl font-bold text-emerald-700">d = {distStr}</span>
+                <Latex math={`d = ${distStrToLatex(distStr)}`} block />
               </div>
             </div>
           )}
@@ -423,9 +487,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
               <h3 className="font-bold text-blue-800 mb-3">📐 斜率公式</h3>
               <div className="bg-white rounded-lg p-3 mb-3 text-center">
-                <div className="text-lg text-slate-700 font-bold">
-                  m = (y₂−y₁) / (x₂−x₁)
-                </div>
+                <Latex math="m = \\dfrac{y_2-y_1}{x_2-x_1}" block />
               </div>
               {dx === 0 ? (
                 <div className="text-red-600 font-bold text-center">
@@ -433,20 +495,29 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 </div>
               ) : (
                 <>
-                  <pre className="whitespace-pre font-sans text-slate-700 text-sm leading-relaxed">
-{`m = (${pointB.y}−${pointA.y < 0 ? `(${pointA.y})` : pointA.y}) / (${pointB.x}−${pointA.x < 0 ? `(${pointA.x})` : pointA.x})
-  = ${dy} / ${dx}${(() => {
-    const g = gcd(Math.abs(dy), Math.abs(dx));
-    if (g > 1 || dx < 0) {
-      let n = dy / g, d = dx / g;
-      if (d < 0) { n = -n; d = -d; }
-      return `\n  = ${d === 1 ? n : `${n}/${d}`}`;
-    }
-    return '';
-  })()}`}
-                  </pre>
+                  <div className="text-slate-700 text-sm leading-relaxed space-y-1 px-1">
+                    {(() => {
+                      const g = gcd(Math.abs(dy), Math.abs(dx));
+                      let num = dy / g; let den = dx / g;
+                      if (den < 0) { num = -num; den = -den; }
+                      const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
+                      const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
+                      const lines = [
+                        `m = \\dfrac{${pointB.y}-${fay}}{${pointB.x}-${fax}}`,
+                        `= \\dfrac{${dy}}{${dx}}`,
+                      ];
+                      if (Math.abs(g) > 1 || dx < 0) {
+                        lines.push(den === 1 ? `= ${num}` : `= \\dfrac{${num}}{${den}}`);
+                      }
+                      return lines.map((line, i) => (
+                        <div key={i} className={i > 0 ? 'pl-6' : ''}>
+                          <Latex math={line} />
+                        </div>
+                      ));
+                    })()}
+                  </div>
                   <div className="mt-3 text-center">
-                    <span className="text-2xl font-bold text-blue-700">m = {slopeStr}</span>
+                    <Latex math={`m = ${slopeStrToLatex(slopeStr)}`} block />
                   </div>
                 </>
               )}
@@ -470,14 +541,14 @@ const NotesContent = () => (
   <div className="space-y-6">
     <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
       <h3 className="font-bold text-emerald-800 mb-3">📏 距離公式</h3>
-      <div className="bg-white rounded-lg p-3 text-center text-lg font-bold text-slate-700">
-        d = √[(x₂−x₁)² + (y₂−y₁)²]
+      <div className="bg-white rounded-lg p-3 text-center">
+        <Latex math="d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}" block />
       </div>
     </div>
     <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
       <h3 className="font-bold text-blue-800 mb-3">📐 斜率公式</h3>
-      <div className="bg-white rounded-lg p-3 text-center text-lg font-bold text-slate-700">
-        m = (y₂−y₁) / (x₂−x₁)
+      <div className="bg-white rounded-lg p-3 text-center">
+        <Latex math="m = \dfrac{y_2-y_1}{x_2-x_1}" block />
       </div>
       <p className="mt-2 text-sm text-slate-600">* 當 x₁ = x₂ 時，斜率未定義（垂直線）</p>
     </div>
@@ -486,15 +557,19 @@ const NotesContent = () => (
       <div className="space-y-3 text-sm text-slate-700">
         <div>
           <p className="font-bold">A(1, 2) 和 B(4, 6) 的距離：</p>
-          <pre className="whitespace-pre font-sans text-slate-600 mt-1">{`d = √[(4−1)² + (6−2)²]
-  = √[9 + 16]
-  = √25
-  = 5`}</pre>
+          <div className="space-y-1 mt-1 text-slate-600">
+            {[`d = \\sqrt{(4-1)^2 + (6-2)^2}`, `= \\sqrt{9 + 16}`, `= \\sqrt{25}`, `= 5`].map((line, i) => (
+              <div key={i} className={i > 0 ? 'pl-6' : ''}><Latex math={line} /></div>
+            ))}
+          </div>
         </div>
         <div>
           <p className="font-bold">A(1, 2) 和 B(4, 6) 的斜率：</p>
-          <pre className="whitespace-pre font-sans text-slate-600 mt-1">{`m = (6−2) / (4−1)
-  = 4/3`}</pre>
+          <div className="space-y-1 mt-1 text-slate-600">
+            {[`m = \\dfrac{6-2}{4-1}`, `= \\dfrac{4}{3}`].map((line, i) => (
+              <div key={i} className={i > 0 ? 'pl-6' : ''}><Latex math={line} /></div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -550,6 +625,8 @@ export default function DistanceSlopeQuiz() {
         type: 'wrong',
         message: '答錯了',
         correctAnswer: currentQuestion.displayAnswer,
+        correctAnswerLatex: currentQuestion.displayAnswerLatex,
+        latexLines: currentQuestion.latexLines,
         explanation: currentQuestion.explanation
       });
     }
@@ -721,11 +798,17 @@ export default function DistanceSlopeQuiz() {
                   {feedback.correctAnswer && (
                     <div className="mt-4 border-t border-slate-200 pt-4">
                       <span className="inline-block bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold mb-2">正確答案</span>
-                      <div className="text-2xl font-bold text-slate-700">{feedback.correctAnswer}</div>
-                      {feedback.explanation && (
-                        <pre className="mt-3 whitespace-pre font-sans text-sm text-purple-700 bg-purple-50 px-3 py-2 rounded-lg text-left">
-                          {feedback.explanation}
-                        </pre>
+                      <div className="text-2xl font-bold text-slate-700">
+                        <Latex math={feedback.correctAnswerLatex || feedback.correctAnswer} block />
+                      </div>
+                      {feedback.latexLines && (
+                        <div className="mt-3 space-y-1 text-purple-700 bg-purple-50 px-3 py-2 rounded-lg text-left text-sm">
+                          {feedback.latexLines.map((line, i) => (
+                            <div key={i} className={i > 0 ? 'pl-6' : ''}>
+                              <Latex math={line} />
+                            </div>
+                          ))}
+                        </div>
                       )}
                     </div>
                   )}
