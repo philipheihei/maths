@@ -197,6 +197,19 @@ const formatSlope = (a, b) => {
   return `${num}/${den}`;
 };
 
+// 格式化中點坐標分量
+const formatMidCoord = (v1, v2) => {
+  const sum = v1 + v2;
+  if (sum % 2 === 0) return String(sum / 2);
+  const neg = sum < 0;
+  return `${neg ? '-' : ''}${Math.abs(sum)}/2`;
+};
+const midpointToLatex = (v1, v2) => {
+  const sum = v1 + v2;
+  if (sum % 2 === 0) return String(sum / 2);
+  return `\\dfrac{${sum}}{2}`;
+};
+
 // 將 distStr / slopeStr 轉換為 LaTeX 字串
 const distStrToLatex = (s) => s.startsWith('√') ? `\\sqrt{${s.slice(1)}}` : s;
 const slopeStrToLatex = (s) => {
@@ -204,10 +217,22 @@ const slopeStrToLatex = (s) => {
   return s;
 };
 
+// 將多行 LaTeX lines 組合成 aligned 環境（對齊 = 號）
+const toAligned = (lines) => {
+  const cvt = lines.map((l, i) =>
+    i === 0 ? l.replace(' = ', ' &= ') : l.replace(/^= /, '&= ')
+  );
+  return `\\begin{aligned}${cvt.join(' \\\\ ')}\\end{aligned}`;
+};
+
 // ============= 出題生成器 =============
-const generateQuizQuestion = () => {
-  const types = ['distance', 'slope'];
-  const type = types[Math.floor(Math.random() * types.length)];
+const generateQuizQuestion = (enabledTypes = { distance: true, slope: true, midpoint: true }) => {
+  const allTypes = [];
+  if (enabledTypes.distance) allTypes.push('distance');
+  if (enabledTypes.slope) allTypes.push('slope');
+  if (enabledTypes.midpoint) allTypes.push('midpoint');
+  if (allTypes.length === 0) allTypes.push('distance');
+  const type = allTypes[Math.floor(Math.random() * allTypes.length)];
 
   let ax, ay, bx, by;
   do {
@@ -244,7 +269,7 @@ const generateQuizQuestion = () => {
         const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
         const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
         const lines = [
-          `d = \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
+          `\\text{距離} = \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
           `= \\sqrt{(${dx})^2 + (${dy})^2}`,
           `= \\sqrt{${dx * dx} + ${dy * dy}}`,
           `= \\sqrt{${sq}}`,
@@ -254,7 +279,7 @@ const generateQuizQuestion = () => {
       })(),
       explanation: generateDistanceExplanation(pointA, pointB)
     };
-  } else {
+  } else if (type === 'slope') {
     const dy = pointB.y - pointA.y;
     const dx = pointB.x - pointA.x;
     const g = gcd(Math.abs(dy), Math.abs(dx));
@@ -274,7 +299,7 @@ const generateQuizQuestion = () => {
         const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
         const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
         const lines = [
-          `m = \\dfrac{${pointB.y}-${fay}}{${pointB.x}-${fax}}`,
+          `\\text{斜率} = \\dfrac{${pointB.y}-${fay}}{${pointB.x}-${fax}}`,
           `= \\dfrac{${dy}}{${dx}}`,
         ];
         if (Math.abs(g) > 1 || dx < 0) {
@@ -283,6 +308,34 @@ const generateQuizQuestion = () => {
         return lines;
       })(),
       explanation: generateSlopeExplanation(pointA, pointB)
+    };
+  } else {
+    // midpoint — 同時問整個坐標 (x, y)
+    const answerX = formatMidCoord(pointA.x, pointB.x);
+    const answerY = formatMidCoord(pointA.y, pointB.y);
+    const sx = pointA.x + pointB.x;
+    const sy = pointA.y + pointB.y;
+    const mxL = sx % 2 === 0 ? String(sx / 2) : `\\dfrac{${sx}}{2}`;
+    const myL = sy % 2 === 0 ? String(sy / 2) : `\\dfrac{${sy}}{2}`;
+    const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
+    const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
+    const fbx = pointB.x < 0 ? `(${pointB.x})` : String(pointB.x);
+    const fby = pointB.y < 0 ? `(${pointB.y})` : String(pointB.y);
+    return {
+      type: 'midpoint',
+      pointA,
+      pointB,
+      answerX,
+      answerY,
+      answer: `${answerX},${answerY}`,
+      displayAnswerLatex: `M = \\left(${mxL},\\; ${myL}\\right)`,
+      prompt: '求兩點的中點坐標。（若為分數則以 a/b 輸入）',
+      latexLines: [
+        `M = \\left(\\dfrac{${fax}+${fbx}}{2},\\; \\dfrac{${fay}+${fby}}{2}\\right)`,
+        `= \\left(\\dfrac{${sx}}{2},\\; \\dfrac{${sy}}{2}\\right)`,
+        `= \\left(${mxL},\\; ${myL}\\right)`,
+      ],
+      explanation: generateMidpointExplanation(pointA, pointB)
     };
   }
 };
@@ -322,12 +375,24 @@ const generateSlopeExplanation = (a, b) => {
   return lines.join('\n');
 };
 
+const generateMidpointExplanation = (a, b) => {
+  const mx = formatMidCoord(a.x, b.x);
+  const my = formatMidCoord(a.y, b.y);
+  const lines = [
+    `中點公式：M = ((x₁+x₂)/2, (y₁+y₂)/2)`,
+    `= ((${a.x}+${b.x})/2, (${a.y}+${b.y})/2)`,
+    `= (${a.x + b.x}/2, ${a.y + b.y}/2)`,
+    `= (${mx}, ${my})`,
+  ];
+  return lines.join('\n');
+};
+
 // ============= 教學頁面 =============
 const TeachingPage = ({ onGoToQuiz }) => {
   const [pointA, setPointA] = useState({ x: -3, y: -2 });
   const [pointB, setPointB] = useState({ x: 4, y: 3 });
   const [dragging, setDragging] = useState(null);
-  const [showFormula, setShowFormula] = useState('both');
+  const [showFormula, setShowFormula] = useState('distance');
 
   const handleMouseMove = (e) => {
     if (!dragging) return;
@@ -352,6 +417,9 @@ const TeachingPage = ({ onGoToQuiz }) => {
   const slopeStr = formatSlope(pointA, pointB);
   const svgA = toSVG(pointA.x, pointA.y);
   const svgB = toSVG(pointB.x, pointB.y);
+  const midX = (pointA.x + pointB.x) / 2;
+  const midY = (pointA.y + pointB.y) / 2;
+  const svgM = toSVG(midX, midY);
 
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-6">
@@ -370,9 +438,9 @@ const TeachingPage = ({ onGoToQuiz }) => {
           <h3 className="font-bold text-gray-700">顯示公式</h3>
           <div className="flex flex-wrap gap-2">
             {[
-              { id: 'both', label: '全部' },
               { id: 'distance', label: '距離' },
-              { id: 'slope', label: '斜率' }
+              { id: 'slope', label: '斜率' },
+              { id: 'midpoint', label: '中點' }
             ].map(opt => (
               <button key={opt.id}
                 onClick={() => setShowFormula(opt.id)}
@@ -388,14 +456,14 @@ const TeachingPage = ({ onGoToQuiz }) => {
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* SVG */}
-        <div className="bg-white rounded-xl shadow-sm border p-4">
+        <div className="bg-white rounded-xl shadow-sm border p-4 self-start sticky top-4">
           <CoordinateGrid onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
             {/* 線段 */}
             <line x1={svgA.x} y1={svgA.y} x2={svgB.x} y2={svgB.y}
               stroke="#10b981" strokeWidth="2.5" />
 
             {/* Δx / Δy 輔助虛線 */}
-            {(showFormula === 'distance' || showFormula === 'both') && dx !== 0 && dy !== 0 && (
+            {showFormula === 'distance' && dx !== 0 && dy !== 0 && (
               <>
                 <line x1={svgA.x} y1={svgA.y} x2={svgB.x} y2={svgA.y}
                   stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="5,4" />
@@ -423,12 +491,23 @@ const TeachingPage = ({ onGoToQuiz }) => {
             )}
 
             {/* 距離標籤（顯示在線段中點旁）*/}
-            {(showFormula === 'distance' || showFormula === 'both') && (
+            {showFormula === 'distance' && (
               <text x={(svgA.x + svgB.x) / 2 + (dy >= 0 ? -12 : 12)}
                 y={(svgA.y + svgB.y) / 2 + (dx >= 0 ? -10 : 10)}
                 textAnchor="middle" fontSize="13" fontWeight="bold" fill="#10b981">
                 d = {distStr}
               </text>
+            )}
+
+            {/* 中點標記 */}
+            {showFormula === 'midpoint' && (
+              <>
+                <circle cx={svgM.x} cy={svgM.y} r={6} fill="#f59e0b" stroke="white" strokeWidth="2" />
+                <text x={svgM.x + 10} y={svgM.y - 8} fontSize="13" fontWeight="bold" fill="#d97706"
+                  style={{ pointerEvents: 'none' }}>中點</text>
+                <text x={svgM.x + 10} y={svgM.y + 6} fontSize="11" fill="#92400e"
+                  style={{ pointerEvents: 'none' }}>({formatMidCoord(pointA.x, pointB.x)}, {formatMidCoord(pointA.y, pointB.y)})</text>
+              </>
             )}
 
             <DraggablePoint point={pointA} label="A" color="#3b82f6"
@@ -450,44 +529,40 @@ const TeachingPage = ({ onGoToQuiz }) => {
           </div>
 
           {/* 距離公式 */}
-          {(showFormula === 'distance' || showFormula === 'both') && (
+          {showFormula === 'distance' && (
             <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
               <h3 className="font-bold text-emerald-800 mb-3">📏 距離公式</h3>
               <div className="bg-white rounded-lg p-3 mb-3 text-center">
-                <Latex math="d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}" block />
+                <Latex math={"\\text{距離} = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}"} block />
               </div>
-              <div className="text-slate-700 text-sm leading-relaxed space-y-1 px-1">
+              <div className="text-slate-700 text-sm leading-relaxed px-1">
                 {(() => {
                   const sq = dx * dx + dy * dy;
                   const root = Math.sqrt(sq);
                   const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
                   const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
                   const lines = [
-                    `d = \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
-                    `= \\sqrt{(${dx})^2 + (${dy})^2}`,
-                    `= \\sqrt{${dx * dx} + ${dy * dy}}`,
-                    `= \\sqrt{${sq}}`,
+                    `\\text{距離} &= \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
+                    `&= \\sqrt{(${dx})^2 + (${dy})^2}`,
+                    `&= \\sqrt{${dx * dx} + ${dy * dy}}`,
+                    `&= \\sqrt{${sq}}`,
                   ];
-                  if (Number.isInteger(root)) lines.push(`= ${Math.round(root)}`);
-                  return lines.map((line, i) => (
-                    <div key={i} className={i > 0 ? 'pl-6' : ''}>
-                      <Latex math={line} />
-                    </div>
-                  ));
+                  if (Number.isInteger(root)) lines.push(`&= ${Math.round(root)}`);
+                  return <Latex math={`\\begin{aligned}${lines.join(' \\\\ ')}\\end{aligned}`} block />;
                 })()}
               </div>
               <div className="mt-3 text-center">
-                <Latex math={`d = ${distStrToLatex(distStr)}`} block />
+                <Latex math={`\\text{距離} = ${distStrToLatex(distStr)}`} block />
               </div>
             </div>
           )}
 
           {/* 斜率公式 */}
-          {(showFormula === 'slope' || showFormula === 'both') && (
+          {showFormula === 'slope' && (
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
               <h3 className="font-bold text-blue-800 mb-3">📐 斜率公式</h3>
               <div className="bg-white rounded-lg p-3 mb-3 text-center">
-                <Latex math="m = \\dfrac{y_2-y_1}{x_2-x_1}" block />
+                <Latex math={"\\text{斜率} = \\dfrac{y_2-y_1}{x_2-x_1}"} block />
               </div>
               {dx === 0 ? (
                 <div className="text-red-600 font-bold text-center">
@@ -495,7 +570,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 </div>
               ) : (
                 <>
-                  <div className="text-slate-700 text-sm leading-relaxed space-y-1 px-1">
+                  <div className="text-slate-700 text-sm leading-relaxed px-1">
                     {(() => {
                       const g = gcd(Math.abs(dy), Math.abs(dx));
                       let num = dy / g; let den = dx / g;
@@ -503,24 +578,51 @@ const TeachingPage = ({ onGoToQuiz }) => {
                       const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
                       const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
                       const lines = [
-                        `m = \\dfrac{${pointB.y}-${fay}}{${pointB.x}-${fax}}`,
-                        `= \\dfrac{${dy}}{${dx}}`,
+                        `\\text{斜率} &= \\dfrac{${pointB.y}-${fay}}{${pointB.x}-${fax}}`,
+                        `&= \\dfrac{${dy}}{${dx}}`,
                       ];
                       if (Math.abs(g) > 1 || dx < 0) {
-                        lines.push(den === 1 ? `= ${num}` : `= \\dfrac{${num}}{${den}}`);
+                        lines.push(den === 1 ? `&= ${num}` : `&= \\dfrac{${num}}{${den}}`);
                       }
-                      return lines.map((line, i) => (
-                        <div key={i} className={i > 0 ? 'pl-6' : ''}>
-                          <Latex math={line} />
-                        </div>
-                      ));
+                      return <Latex math={`\\begin{aligned}${lines.join(' \\\\ ')}\\end{aligned}`} block />;
                     })()}
                   </div>
                   <div className="mt-3 text-center">
-                    <Latex math={`m = ${slopeStrToLatex(slopeStr)}`} block />
+                    <Latex math={`\\text{斜率} = ${slopeStrToLatex(slopeStr)}`} block />
                   </div>
                 </>
               )}
+            </div>
+          )}
+
+          {/* 中點公式 */}
+          {showFormula === 'midpoint' && (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+              <h3 className="font-bold text-amber-800 mb-3">📍 中點公式</h3>
+              <div className="bg-white rounded-lg p-3 mb-3 text-center">
+                <Latex math={"M = \\left(\\dfrac{x_1+x_2}{2},\\; \\dfrac{y_1+y_2}{2}\\right)"} block />
+              </div>
+              <div className="text-slate-700 text-sm leading-relaxed px-1">
+                {(() => {
+                  const fax = pointA.x < 0 ? `(${pointA.x})` : String(pointA.x);
+                  const fay = pointA.y < 0 ? `(${pointA.y})` : String(pointA.y);
+                  const fbx = pointB.x < 0 ? `(${pointB.x})` : String(pointB.x);
+                  const fby = pointB.y < 0 ? `(${pointB.y})` : String(pointB.y);
+                  const sx = pointA.x + pointB.x;
+                  const sy = pointA.y + pointB.y;
+                  const mxL = sx % 2 === 0 ? String(sx / 2) : `\\dfrac{${sx}}{2}`;
+                  const myL = sy % 2 === 0 ? String(sy / 2) : `\\dfrac{${sy}}{2}`;
+                  const lines = [
+                    `M &= \\left(\\dfrac{${fax}+${fbx}}{2},\\; \\dfrac{${fay}+${fby}}{2}\\right)`,
+                    `&= \\left(\\dfrac{${sx}}{2},\\; \\dfrac{${sy}}{2}\\right)`,
+                    `&= \\left(${mxL},\\; ${myL}\\right)`,
+                  ];
+                  return <Latex math={`\\begin{aligned}${lines.join(' \\\\ ')}\\end{aligned}`} block />;
+                })()}
+              </div>
+              <div className="mt-3 text-center">
+                <Latex math={`M = \\left(${midpointToLatex(pointA.x, pointB.x)},\\; ${midpointToLatex(pointA.y, pointB.y)}\\right)`} block />
+              </div>
             </div>
           )}
 
@@ -542,15 +644,21 @@ const NotesContent = () => (
     <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
       <h3 className="font-bold text-emerald-800 mb-3">📏 距離公式</h3>
       <div className="bg-white rounded-lg p-3 text-center">
-        <Latex math="d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}" block />
+        <Latex math={"\\text{距離} = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}"} block />
       </div>
     </div>
     <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
       <h3 className="font-bold text-blue-800 mb-3">📐 斜率公式</h3>
       <div className="bg-white rounded-lg p-3 text-center">
-        <Latex math="m = \dfrac{y_2-y_1}{x_2-x_1}" block />
+        <Latex math={"\\text{斜率} = \\dfrac{y_2-y_1}{x_2-x_1}"} block />
       </div>
       <p className="mt-2 text-sm text-slate-600">* 當 x₁ = x₂ 時，斜率未定義（垂直線）</p>
+    </div>
+    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+      <h3 className="font-bold text-amber-800 mb-3">📍 中點公式</h3>
+      <div className="bg-white rounded-lg p-3 text-center">
+        <Latex math={"M = \\left(\\dfrac{x_1+x_2}{2},\\; \\dfrac{y_1+y_2}{2}\\right)"} block />
+      </div>
     </div>
     <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
       <h3 className="font-bold text-amber-800 mb-3">題目示例</h3>
@@ -558,17 +666,19 @@ const NotesContent = () => (
         <div>
           <p className="font-bold">A(1, 2) 和 B(4, 6) 的距離：</p>
           <div className="space-y-1 mt-1 text-slate-600">
-            {[`d = \\sqrt{(4-1)^2 + (6-2)^2}`, `= \\sqrt{9 + 16}`, `= \\sqrt{25}`, `= 5`].map((line, i) => (
-              <div key={i} className={i > 0 ? 'pl-6' : ''}><Latex math={line} /></div>
-            ))}
+            <Latex math={"\\begin{aligned}\\text{距離} &= \\sqrt{(4-1)^2 + (6-2)^2} \\\\ &= \\sqrt{9 + 16} \\\\ &= \\sqrt{25} \\\\ &= 5\\end{aligned}"} block />
           </div>
         </div>
         <div>
           <p className="font-bold">A(1, 2) 和 B(4, 6) 的斜率：</p>
           <div className="space-y-1 mt-1 text-slate-600">
-            {[`m = \\dfrac{6-2}{4-1}`, `= \\dfrac{4}{3}`].map((line, i) => (
-              <div key={i} className={i > 0 ? 'pl-6' : ''}><Latex math={line} /></div>
-            ))}
+            <Latex math={"\\begin{aligned}\\text{斜率} &= \\dfrac{6-2}{4-1} \\\\ &= \\dfrac{4}{3}\\end{aligned}"} block />
+          </div>
+        </div>
+        <div>
+          <p className="font-bold">A(1, 2) 和 B(4, 6) 的中點：</p>
+          <div className="space-y-1 mt-1 text-slate-600">
+            <Latex math={"\\begin{aligned}M &= \\left(\\dfrac{1+4}{2},\\; \\dfrac{2+6}{2}\\right) \\\\ &= \\left(\\dfrac{5}{2},\\; 4\\right)\\end{aligned}"} block />
           </div>
         </div>
       </div>
@@ -583,38 +693,62 @@ export default function DistanceSlopeQuiz() {
   const [questionCount, setQuestionCount] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [userAnswer, setUserAnswer] = useState('');
+  const [midpointX, setMidpointX] = useState('');
+  const [midpointY, setMidpointY] = useState('');
+  const [midpointFocus, setMidpointFocus] = useState('x');
   const [feedback, setFeedback] = useState(null);
   const [showNotes, setShowNotes] = useState(false);
+  const [enabledTypes, setEnabledTypes] = useState({ distance: true, slope: true, midpoint: true });
+
+  const toggleType = (id) => {
+    setEnabledTypes(prev => {
+      const next = { ...prev, [id]: !prev[id] };
+      if (!next.distance && !next.slope && !next.midpoint) return prev;
+      return next;
+    });
+  };
 
   const generateNewQuestion = useCallback(() => {
-    setCurrentQuestion(generateQuizQuestion());
+    setCurrentQuestion(generateQuizQuestion(enabledTypes));
     setUserAnswer('');
+    setMidpointX('');
+    setMidpointY('');
+    setMidpointFocus('x');
     setFeedback(null);
-  }, []);
+  }, [enabledTypes]);
 
   useEffect(() => {
     if (mode === 'quiz') generateNewQuestion();
   }, [mode, generateNewQuestion]);
 
   const checkAnswer = () => {
-    if (!currentQuestion || !userAnswer.trim()) return;
-    const ua = userAnswer.trim();
-    const ca = currentQuestion.answer;
+    if (!currentQuestion) return;
+    if (currentQuestion.type === 'midpoint') {
+      if (!midpointX.trim() || !midpointY.trim()) return;
+    } else if (!userAnswer.trim()) return;
+
+    const parseFrac = (s) => {
+      s = s.trim();
+      if (s.includes('/')) {
+        const [n, d] = s.split('/').map(Number);
+        return (d === 0 || isNaN(n) || isNaN(d)) ? NaN : n / d;
+      }
+      return parseFloat(s);
+    };
 
     let isCorrect = false;
-    if (currentQuestion.type === 'slope') {
-      const parseFrac = (s) => {
-        if (s.includes('/')) {
-          const [n, d] = s.split('/').map(Number);
-          return (d === 0 || isNaN(n) || isNaN(d)) ? NaN : n / d;
-        }
-        return parseFloat(s);
-      };
-      const uv = parseFrac(ua);
-      const cv = parseFrac(ca);
+    if (currentQuestion.type === 'midpoint') {
+      const ux = parseFrac(midpointX);
+      const uy = parseFrac(midpointY);
+      const cx = parseFrac(currentQuestion.answerX);
+      const cy = parseFrac(currentQuestion.answerY);
+      isCorrect = !isNaN(ux) && !isNaN(uy) && Math.abs(ux - cx) < 1e-9 && Math.abs(uy - cy) < 1e-9;
+    } else if (currentQuestion.type === 'slope') {
+      const uv = parseFrac(userAnswer.trim());
+      const cv = parseFrac(currentQuestion.answer);
       isCorrect = !isNaN(uv) && !isNaN(cv) && Math.abs(uv - cv) < 1e-9;
     } else {
-      isCorrect = ua === ca;
+      isCorrect = userAnswer.trim() === currentQuestion.answer;
     }
 
     if (isCorrect) {
@@ -640,11 +774,38 @@ export default function DistanceSlopeQuiz() {
     setFeedback(null);
     setCurrentQuestion(null);
     setUserAnswer('');
+    setMidpointX('');
+    setMidpointY('');
+    setMidpointFocus('x');
   };
 
-  const handleKeypadInput = (v) => { if (!feedback) setUserAnswer(prev => prev + v); };
-  const handleKeypadDelete = () => { if (!feedback) setUserAnswer(prev => prev.slice(0, -1)); };
-  const handleKeypadClear = () => { if (!feedback) setUserAnswer(''); };
+  const handleKeypadInput = (v) => {
+    if (feedback) return;
+    if (currentQuestion?.type === 'midpoint') {
+      if (midpointFocus === 'x') setMidpointX(prev => prev + v);
+      else setMidpointY(prev => prev + v);
+    } else {
+      setUserAnswer(prev => prev + v);
+    }
+  };
+  const handleKeypadDelete = () => {
+    if (feedback) return;
+    if (currentQuestion?.type === 'midpoint') {
+      if (midpointFocus === 'x') setMidpointX(prev => prev.slice(0, -1));
+      else setMidpointY(prev => prev.slice(0, -1));
+    } else {
+      setUserAnswer(prev => prev.slice(0, -1));
+    }
+  };
+  const handleKeypadClear = () => {
+    if (feedback) return;
+    if (currentQuestion?.type === 'midpoint') {
+      if (midpointFocus === 'x') setMidpointX('');
+      else setMidpointY('');
+    } else {
+      setUserAnswer('');
+    }
+  };
   const handleKeypadSubmit = () => { if (feedback) generateNewQuestion(); else checkAnswer(); };
 
   // ========== 模式選擇 ==========
@@ -663,7 +824,7 @@ export default function DistanceSlopeQuiz() {
                 <BookOpen className="w-10 h-10 text-white" />
               </div>
               <h1 className="text-3xl font-bold text-slate-800 mb-2">距離與斜率</h1>
-              <p className="text-slate-500">學習兩點之間的距離和斜率公式</p>
+              <p className="text-slate-500">學習兩點之間的距離、斜率和中點公式</p>
             </div>
             <div className="grid gap-4">
               <button onClick={() => setMode('learn')}
@@ -672,7 +833,7 @@ export default function DistanceSlopeQuiz() {
                   <div className="p-3 bg-white/20 rounded-lg"><GraduationCap className="w-8 h-8" /></div>
                   <div className="text-left">
                     <div className="text-xl font-bold mb-1">學習模式</div>
-                    <div className="text-sm opacity-80">拖拽兩點，觀察距離和斜率</div>
+                    <div className="text-sm opacity-80">拖拽兩點，觀察距離、斜率和中點</div>
                   </div>
                 </div>
               </button>
@@ -682,7 +843,7 @@ export default function DistanceSlopeQuiz() {
                   <div className="p-3 bg-white/20 rounded-lg"><PenTool className="w-8 h-8" /></div>
                   <div className="text-left">
                     <div className="text-xl font-bold mb-1">測驗模式</div>
-                    <div className="text-sm opacity-80">練習計算距離和斜率</div>
+                    <div className="text-sm opacity-80">練習計算距離、斜率和中點</div>
                   </div>
                 </div>
               </button>
@@ -731,7 +892,7 @@ export default function DistanceSlopeQuiz() {
       <div className="flex-1 flex justify-center pt-20 pb-8 px-4">
         <div className="w-full max-w-xl">
           {/* 分數 */}
-          <div className="bg-white rounded-xl shadow-md p-4 mb-6 flex justify-between items-center">
+          <div className="bg-white rounded-xl shadow-md p-4 mb-4 flex justify-between items-center">
             <div className="flex items-center gap-2">
               <Trophy className="w-6 h-6 text-yellow-500" />
               <span className="text-slate-600">分數：</span>
@@ -746,15 +907,39 @@ export default function DistanceSlopeQuiz() {
             </div>
           </div>
 
+          {/* 題目類型選擇 */}
+          <div className="bg-white rounded-xl shadow-sm border p-4 mb-6">
+            <h3 className="font-bold text-gray-700 mb-3">選擇題目類型</h3>
+            <div className="flex flex-wrap gap-4">
+              {[
+                { id: 'distance', label: '距離' },
+                { id: 'slope', label: '斜率' },
+                { id: 'midpoint', label: '中點' }
+              ].map(t => (
+                <label key={t.id} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={enabledTypes[t.id]}
+                    onChange={() => toggleType(t.id)}
+                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span className="font-medium">{t.label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
           {/* 題目 */}
           {currentQuestion && (
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
               <div className="mb-2">
                 <span className="inline-block bg-blue-600 text-white px-3 py-1 rounded-md text-sm font-bold">題目</span>
                 <span className={`ml-2 inline-block px-3 py-1 rounded-md text-sm font-bold ${
-                  currentQuestion.type === 'distance' ? 'bg-emerald-100 text-emerald-700' : 'bg-indigo-100 text-indigo-700'
+                  currentQuestion.type === 'distance' ? 'bg-emerald-100 text-emerald-700' :
+                  currentQuestion.type === 'slope' ? 'bg-indigo-100 text-indigo-700' :
+                  'bg-amber-100 text-amber-700'
                 }`}>
-                  {currentQuestion.type === 'distance' ? '距離' : '斜率'}
+                  {currentQuestion.type === 'distance' ? '距離' : currentQuestion.type === 'slope' ? '斜率' : '中點'}
                 </span>
               </div>
 
@@ -769,19 +954,50 @@ export default function DistanceSlopeQuiz() {
               </div>
 
               {/* 答案輸入 */}
-              <div className="mb-4">
-                <label className="block text-sm text-slate-500 mb-2 text-center">你的答案：</label>
-                <input
-                  type="text"
-                  value={userAnswer}
-                  readOnly
-                  className={`w-full text-3xl text-center p-4 border-2 rounded-xl focus:outline-none transition-all
-                    ${feedback?.type === 'correct' ? 'border-green-500 bg-green-50' :
-                      feedback?.type === 'wrong' ? 'border-red-500 bg-red-50' :
-                      'border-slate-300'}`}
-                  placeholder="輸入答案"
-                />
-              </div>
+              {currentQuestion.type === 'midpoint' ? (
+                <div className="mb-4">
+                  <p className="text-sm text-slate-500 mb-3 text-center">輸入中點坐標（點擊方框後輸入）：</p>
+                  <div className="flex items-center justify-center gap-2 text-2xl font-bold text-slate-700">
+                    <span className="text-3xl">(</span>
+                    <button
+                      onClick={() => !feedback && setMidpointFocus('x')}
+                      className={`w-24 text-center p-3 border-2 rounded-xl text-2xl transition-all ${
+                        feedback?.type === 'correct' ? 'border-green-500 bg-green-50' :
+                        feedback?.type === 'wrong' ? 'border-red-500 bg-red-50' :
+                        midpointFocus === 'x' ? 'border-blue-500 bg-blue-50 shadow-md' : 'border-slate-300 bg-white'
+                      }`}
+                    >
+                      {midpointX || <span className="text-slate-300 text-xl">x</span>}
+                    </button>
+                    <span className="text-slate-400">,</span>
+                    <button
+                      onClick={() => !feedback && setMidpointFocus('y')}
+                      className={`w-24 text-center p-3 border-2 rounded-xl text-2xl transition-all ${
+                        feedback?.type === 'correct' ? 'border-green-500 bg-green-50' :
+                        feedback?.type === 'wrong' ? 'border-red-500 bg-red-50' :
+                        midpointFocus === 'y' ? 'border-blue-500 bg-blue-50 shadow-md' : 'border-slate-300 bg-white'
+                      }`}
+                    >
+                      {midpointY || <span className="text-slate-300 text-xl">y</span>}
+                    </button>
+                    <span className="text-3xl">)</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="mb-4">
+                  <label className="block text-sm text-slate-500 mb-2 text-center">你的答案：</label>
+                  <input
+                    type="text"
+                    value={userAnswer}
+                    readOnly
+                    className={`w-full text-3xl text-center p-4 border-2 rounded-xl focus:outline-none transition-all
+                      ${feedback?.type === 'correct' ? 'border-green-500 bg-green-50' :
+                        feedback?.type === 'wrong' ? 'border-red-500 bg-red-50' :
+                        'border-slate-300'}`}
+                    placeholder="輸入答案"
+                  />
+                </div>
+              )}
 
               {/* 反饋 */}
               {feedback && (
@@ -802,12 +1018,8 @@ export default function DistanceSlopeQuiz() {
                         <Latex math={feedback.correctAnswerLatex || feedback.correctAnswer} block />
                       </div>
                       {feedback.latexLines && (
-                        <div className="mt-3 space-y-1 text-purple-700 bg-purple-50 px-3 py-2 rounded-lg text-left text-sm">
-                          {feedback.latexLines.map((line, i) => (
-                            <div key={i} className={i > 0 ? 'pl-6' : ''}>
-                              <Latex math={line} />
-                            </div>
-                          ))}
+                        <div className="mt-3 text-purple-700 bg-purple-50 px-3 py-2 rounded-lg text-sm">
+                          <Latex math={toAligned(feedback.latexLines)} block />
                         </div>
                       )}
                     </div>
