@@ -473,6 +473,59 @@ const TeachingPage = ({ onGoToQuiz }) => {
       {/* 公式表模式 */}
       {showFormula === 'formulas' && (
         <div className="space-y-5">
+          {/* 符號說明 */}
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+            <h3 className="font-bold text-slate-700 mb-4 text-base">📌 符號說明</h3>
+            <div className="grid md:grid-cols-2 gap-5 items-center">
+              <div className="flex justify-center">
+                <svg viewBox="0 0 280 130" width="280" height="130" className="overflow-visible">
+                  {/* 連線（線段，無箭頭） */}
+                  <line x1="60" y1="75" x2="220" y2="30" stroke="#3b82f6" strokeWidth="2" />
+                  {/* 點 1 — 較小黑色交叉 */}
+                  <line x1="53" y1="68" x2="67" y2="82" stroke="#222" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="67" y1="68" x2="53" y2="82" stroke="#222" strokeWidth="2" strokeLinecap="round" />
+                  {/* ① 在交叉下面 */}
+                  <text x="60" y="100" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">①</text>
+                  {/* 坐標標籤 */}
+                  <text x="18" y="118" textAnchor="middle" fontSize="12" fill="#1d4ed8">(</text>
+                  <text x="29" y="118" textAnchor="middle" fontSize="12" fill="#3b82f6" fontWeight="bold">x</text>
+                  <text x="36" y="121" fontSize="9" fill="#3b82f6">1</text>
+                  <text x="41" y="118" textAnchor="middle" fontSize="12" fill="#555">,</text>
+                  <text x="50" y="118" textAnchor="middle" fontSize="12" fill="#16a34a" fontWeight="bold">y</text>
+                  <text x="57" y="121" fontSize="9" fill="#16a34a">1</text>
+                  <text x="63" y="118" textAnchor="middle" fontSize="12" fill="#1d4ed8">)</text>
+                  {/* 點 2 — 較小黑色交叉 */}
+                  <line x1="213" y1="23" x2="227" y2="37" stroke="#222" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="227" y1="23" x2="213" y2="37" stroke="#222" strokeWidth="2" strokeLinecap="round" />
+                  {/* ② 在交叉下面 */}
+                  <text x="220" y="55" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">②</text>
+                  {/* 坐標標籤 */}
+                  <text x="178" y="15" textAnchor="middle" fontSize="12" fill="#1d4ed8">(</text>
+                  <text x="189" y="15" textAnchor="middle" fontSize="12" fill="#3b82f6" fontWeight="bold">x</text>
+                  <text x="196" y="18" fontSize="9" fill="#3b82f6">2</text>
+                  <text x="201" y="15" textAnchor="middle" fontSize="12" fill="#555">,</text>
+                  <text x="210" y="15" textAnchor="middle" fontSize="12" fill="#16a34a" fontWeight="bold">y</text>
+                  <text x="217" y="18" fontSize="9" fill="#16a34a">2</text>
+                  <text x="223" y="15" textAnchor="middle" fontSize="12" fill="#1d4ed8">)</text>
+                </svg>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-slate-600 w-6">L</span>
+                  <span>＝ Line，即一條直線</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-slate-600 w-6">m</span>
+                  <span>＝ slope，即斜率（直線的傾斜程度）</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-slate-600 w-6">AB</span>
+                  <span>＝ 由 A 點到 B 點的線段</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* 1. 距離公式 */}
           <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
             <h3 className="font-bold text-emerald-800 mb-3 text-lg">1. 距離公式</h3>
