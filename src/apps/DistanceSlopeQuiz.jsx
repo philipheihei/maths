@@ -486,27 +486,23 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   <line x1="67" y1="68" x2="53" y2="82" stroke="#222" strokeWidth="2" strokeLinecap="round" />
                   {/* ① 在交叉下面 */}
                   <text x="60" y="100" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">①</text>
-                  {/* 坐標標籤 */}
-                  <text x="18" y="118" textAnchor="middle" fontSize="12" fill="#1d4ed8">(</text>
-                  <text x="29" y="118" textAnchor="middle" fontSize="12" fill="#3b82f6" fontWeight="bold">x</text>
-                  <text x="36" y="121" fontSize="9" fill="#3b82f6">1</text>
-                  <text x="41" y="118" textAnchor="middle" fontSize="12" fill="#555">,</text>
-                  <text x="50" y="118" textAnchor="middle" fontSize="12" fill="#16a34a" fontWeight="bold">y</text>
-                  <text x="57" y="121" fontSize="9" fill="#16a34a">1</text>
-                  <text x="63" y="118" textAnchor="middle" fontSize="12" fill="#1d4ed8">)</text>
+                  {/* 坐標標籤 — KaTeX style */}
+                  <text x="18" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#1d4ed8">(</text>
+                  <text x="26" y="118" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#3b82f6">x<tspan dy="3" fontSize="9" fontStyle="normal">1</tspan></text>
+                  <text x="40" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#555">,</text>
+                  <text x="47" y="118" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y<tspan dy="3" fontSize="9" fontStyle="normal">1</tspan></text>
+                  <text x="60" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#1d4ed8">)</text>
                   {/* 點 2 — 較小黑色交叉 */}
                   <line x1="213" y1="23" x2="227" y2="37" stroke="#222" strokeWidth="2" strokeLinecap="round" />
                   <line x1="227" y1="23" x2="213" y2="37" stroke="#222" strokeWidth="2" strokeLinecap="round" />
                   {/* ② 在交叉下面 */}
                   <text x="220" y="55" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">②</text>
-                  {/* 坐標標籤 */}
-                  <text x="178" y="15" textAnchor="middle" fontSize="12" fill="#1d4ed8">(</text>
-                  <text x="189" y="15" textAnchor="middle" fontSize="12" fill="#3b82f6" fontWeight="bold">x</text>
-                  <text x="196" y="18" fontSize="9" fill="#3b82f6">2</text>
-                  <text x="201" y="15" textAnchor="middle" fontSize="12" fill="#555">,</text>
-                  <text x="210" y="15" textAnchor="middle" fontSize="12" fill="#16a34a" fontWeight="bold">y</text>
-                  <text x="217" y="18" fontSize="9" fill="#16a34a">2</text>
-                  <text x="223" y="15" textAnchor="middle" fontSize="12" fill="#1d4ed8">)</text>
+                  {/* 坐標標籤 — KaTeX style */}
+                  <text x="198" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#1d4ed8">(</text>
+                  <text x="206" y="16" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#3b82f6">x<tspan dy="3" fontSize="9" fontStyle="normal">2</tspan></text>
+                  <text x="220" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#555">,</text>
+                  <text x="227" y="16" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y<tspan dy="3" fontSize="9" fontStyle="normal">2</tspan></text>
+                  <text x="240" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#1d4ed8">)</text>
                 </svg>
               </div>
               <div className="space-y-2 text-sm">
@@ -553,6 +549,22 @@ const TeachingPage = ({ onGoToQuiz }) => {
               <div className="bg-white rounded-lg p-4">
                 <p className="text-sm font-semibold text-slate-600 mb-2">例：A(<span className="text-blue-600">5</span>, <span className="text-green-600">8</span>) 和 B(<span className="text-blue-600">2</span>, <span className="text-green-600">−10</span>) 的斜率</p>
                 <Latex math={"\\begin{aligned}m_{AB} &= \\dfrac{\\textcolor{green}{8}-(\\textcolor{green}{-10})}{\\textcolor{blue}{5}-\\textcolor{blue}{2}} \\\\ &= \\dfrac{\\textcolor{green}{18}}{\\textcolor{blue}{3}} \\\\ &= 6\\end{aligned}"} block />
+              </div>
+            </div>
+          </div>
+
+          {/* 共線 */}
+          <div className="bg-orange-50 border border-orange-200 rounded-xl p-5">
+            <h3 className="font-bold text-orange-800 mb-3 text-lg">共線</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4 space-y-2">
+                <p className="text-xs text-slate-400 mb-1">定義</p>
+                <p className="text-sm font-bold text-slate-700">若 A、B、C <span className="bg-orange-200 px-1 rounded">三點共線</span>，則任意兩對點之間的斜率相等</p>
+                <Latex math={"A,B,C\\text{ 共線} \\;\\Leftrightarrow\\; m_{AB} = m_{BC}"} block />
+              </div>
+              <div className="bg-white rounded-lg p-4">
+                <p className="text-xs text-slate-400 mb-2">例：判斷 A(1, 2)、B(3, 6)、C(5, 10) 是否共線</p>
+                <p className="text-sm text-slate-600 mt-2">試求 <Latex math={"m_{AB}"} /> 及 <Latex math={"m_{BC}"} />，比較兩者是否相等。</p>
               </div>
             </div>
           </div>
