@@ -355,10 +355,13 @@ const generateDistanceExplanation = (a, b) => {
     `距離公式：d = √[(x₂−x₁)² + (y₂−y₁)²]`,
     `= √[(${b.x}−${a.x < 0 ? `(${a.x})` : a.x})² + (${b.y}−${a.y < 0 ? `(${a.y})` : a.y})²]`,
     `= √[(${dx})² + (${dy})²]`,
-    `= √[${dx * dx} + ${dy * dy}]`,
-    `= √${sq}`,
   ];
-  if (isInteger) lines.push(`= ${Math.round(root)}`);
+  if (isInteger) {
+    lines.push(`= ${Math.round(root)}`);
+  } else {
+    lines.push(`= √[${dx * dx} + ${dy * dy}]`);
+    lines.push(`= √${sq}`);
+  }
   return lines.join('\n');
 };
 
@@ -383,12 +386,17 @@ const generateSlopeExplanation = (a, b) => {
 const generateMidpointExplanation = (a, b) => {
   const mx = formatMidCoord(a.x, b.x);
   const my = formatMidCoord(a.y, b.y);
+  const sumX = a.x + b.x;
+  const sumY = a.y + b.y;
+  const needsSimplify = (sumX % 2 === 0) || (sumY % 2 === 0);
   const lines = [
     `中點公式：M = ((x₁+x₂)/2, (y₁+y₂)/2)`,
     `= ((${a.x}+${b.x})/2, (${a.y}+${b.y})/2)`,
-    `= (${a.x + b.x}/2, ${a.y + b.y}/2)`,
-    `= (${mx}, ${my})`,
   ];
+  if (needsSimplify) {
+    lines.push(`= (${sumX}/2, ${sumY}/2)`);
+  }
+  lines.push(`= (${mx}, ${my})`);
   return lines.join('\n');
 };
 
@@ -657,10 +665,13 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   const lines = [
                     `AB &= \\sqrt{(${pointB.x}-${fax})^2 + (${pointB.y}-${fay})^2}`,
                     `&= \\sqrt{(${dx})^2 + (${dy})^2}`,
-                    `&= \\sqrt{${dx * dx} + ${dy * dy}}`,
-                    `&= \\sqrt{${sq}}`,
                   ];
-                  if (Number.isInteger(root)) lines.push(`&= ${Math.round(root)}`);
+                  if (Number.isInteger(root)) {
+                    lines.push(`&= ${Math.round(root)}`);
+                  } else {
+                    lines.push(`&= \\sqrt{${dx * dx} + ${dy * dy}}`);
+                    lines.push(`&= \\sqrt{${sq}}`);
+                  }
                   return <Latex math={`\\begin{aligned}${lines.join(' \\\\ ')}\\end{aligned}`} block />;
                 })()}
               </div>
@@ -725,11 +736,14 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   const sy = pointA.y + pointB.y;
                   const mxL = sx % 2 === 0 ? String(sx / 2) : `\\dfrac{${sx}}{2}`;
                   const myL = sy % 2 === 0 ? String(sy / 2) : `\\dfrac{${sy}}{2}`;
+                  const needsSimplify = (sx % 2 === 0) || (sy % 2 === 0);
                   const lines = [
                     `\\text{中點} &= \\left(\\dfrac{${fax}+${fbx}}{2},\\; \\dfrac{${fay}+${fby}}{2}\\right)`,
-                    `&= \\left(\\dfrac{${sx}}{2},\\; \\dfrac{${sy}}{2}\\right)`,
-                    `&= \\left(${mxL},\\; ${myL}\\right)`,
                   ];
+                  if (needsSimplify) {
+                    lines.push(`&= \\left(\\dfrac{${sx}}{2},\\; \\dfrac{${sy}}{2}\\right)`);
+                  }
+                  lines.push(`&= \\left(${mxL},\\; ${myL}\\right)`);
                   return <Latex math={`\\begin{aligned}${lines.join(' \\\\ ')}\\end{aligned}`} block />;
                 })()}
               </div>
