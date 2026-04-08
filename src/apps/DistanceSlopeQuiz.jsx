@@ -532,10 +532,10 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
                 <p className="text-xs text-slate-400 mb-2">公式</p>
-                <Latex math={"\\text{距離} = \\sqrt{(x_1-x_2)^2 + (y_1-y_2)^2}"} block />
+                <Latex math={"\\text{距離} = \\sqrt{(\\textcolor{blue}{x_1}-\\textcolor{blue}{x_2})^2 + (\\textcolor{green}{y_1}-\\textcolor{green}{y_2})^2}"} block />
               </div>
               <div className="bg-white rounded-lg p-4">
-                <p className="text-xs text-slate-400 mb-2">例：A(5, 8) 和 B(2, −10) 的距離</p>
+                <p className="text-sm font-semibold text-slate-600 mb-2">例：A(<span className="text-blue-600">5</span>, <span className="text-green-600">8</span>) 和 B(<span className="text-blue-600">2</span>, <span className="text-green-600">−10</span>) 的距離</p>
                 <Latex math={"\\begin{aligned}AB &= \\sqrt{(\\textcolor{blue}{5}-\\textcolor{blue}{2})^2 + (\\textcolor{green}{8}-({\\textcolor{green}{-10}}))^2} \\\\ &= \\sqrt{\\textcolor{blue}{3}^2 + \\textcolor{green}{18}^2} \\\\ &= \\sqrt{333}\\end{aligned}"} block />
               </div>
             </div>
@@ -547,11 +547,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
                 <p className="text-xs text-slate-400 mb-2">公式</p>
-                <Latex math={"\\text{斜率} = \\dfrac{y_1-y_2}{x_1-x_2}"} block />
-                <p className="mt-3 text-xs text-slate-500">y上 x下</p>
+                <Latex math={"\\text{斜率} = \\dfrac{\\textcolor{green}{y_1}-\\textcolor{green}{y_2}}{\\textcolor{blue}{x_1}-\\textcolor{blue}{x_2}}"} block />
+                <p className="mt-3 text-xs text-slate-500"><span className="text-green-600 font-bold">y</span> 上 <span className="text-blue-500 font-bold">x</span> 下</p>
               </div>
               <div className="bg-white rounded-lg p-4">
-                <p className="text-xs text-slate-400 mb-2">例：A(5, 8) 和 B(2, −10) 的斜率</p>
+                <p className="text-sm font-semibold text-slate-600 mb-2">例：A(<span className="text-blue-600">5</span>, <span className="text-green-600">8</span>) 和 B(<span className="text-blue-600">2</span>, <span className="text-green-600">−10</span>) 的斜率</p>
                 <Latex math={"\\begin{aligned}m_{AB} &= \\dfrac{\\textcolor{green}{8}-(\\textcolor{green}{-10})}{\\textcolor{blue}{5}-\\textcolor{blue}{2}} \\\\ &= \\dfrac{\\textcolor{green}{18}}{\\textcolor{blue}{3}} \\\\ &= 6\\end{aligned}"} block />
               </div>
             </div>
@@ -564,11 +564,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
               <div className="bg-white rounded-lg p-4 space-y-3">
                 <p className="text-xs text-slate-400 mb-1">定義</p>
                 <div>
-                  <p className="text-sm font-bold text-slate-700">平行：兩條線斜率相同</p>
+                  <p className="text-sm font-bold text-slate-700"><span className="bg-yellow-200 px-1 rounded">平行</span>：兩條線斜率<span className="bg-yellow-200 px-1 rounded">相同</span></p>
                   <Latex math={"L_1 \\mathbin{/\\!/} L_2 \\;\\Rightarrow\\; m_1 = m_2"} block />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-slate-700">垂直：兩條線斜率之積 = −1</p>
+                  <p className="text-sm font-bold text-slate-700"><span className="bg-green-200 px-1 rounded">垂直</span>：兩條線斜率之積 = <span className="bg-green-200 px-1 rounded">−1</span></p>
                   <Latex math={"L_1 \\perp L_2 \\;\\Rightarrow\\; m_1 \\times m_2 = -1"} block />
                 </div>
               </div>
@@ -586,11 +586,11 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
                 <p className="text-xs text-slate-400 mb-2">公式（頭尾 ÷ 2 = 中間）</p>
-                <Latex math={"\\text{中點} = \\left(\\dfrac{x_1+x_2}{2},\\; \\dfrac{y_1+y_2}{2}\\right)"} block />
+                <Latex math={"\\text{中點} = \\left(\\dfrac{\\textcolor{blue}{x_1}+\\textcolor{blue}{x_2}}{2},\\; \\dfrac{\\textcolor{green}{y_1}+\\textcolor{green}{y_2}}{2}\\right)"} block />
               </div>
               <div className="bg-white rounded-lg p-4">
-                <p className="text-xs text-slate-400 mb-2">例：A(5, 2) 和 B(2, −10) 的中點</p>
-                <Latex math={"\\begin{aligned}\\text{中點} &= \\left(\\dfrac{\\textcolor{blue}{5}+\\textcolor{blue}{2}}{2},\\; \\dfrac{\\textcolor{green}{8}+(\\textcolor{green}{-10})}{2}\\right) \\\\ &= \\left(3.5,\\; -1\\right)\\end{aligned}"} block />
+                <p className="text-sm font-semibold text-slate-600 mb-2">例：A(<span className="text-blue-600">5</span>, <span className="text-green-600">2</span>) 和 B(<span className="text-blue-600">2</span>, <span className="text-green-600">−10</span>) 的中點</p>
+                <Latex math={"\\begin{aligned}\\text{中點} &= \\left(\\dfrac{\\textcolor{blue}{5}+\\textcolor{blue}{2}}{2},\\; \\dfrac{\\textcolor{green}{2}+(\\textcolor{green}{-10})}{2}\\right) \\\\ &= \\left(3.5,\\; -4\\right)\\end{aligned}"} block />
               </div>
             </div>
           </div>
