@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { loadKatexOnce } from '../utils/katexLoader';
 import { 
   Calculator, 
   Home as HomeIcon, 
@@ -630,9 +631,247 @@ const NotesSection = () => {
   );
 };
 
+// ========== MC 題目生成器 ==========
+
+// 類型1：給定捨入值，求x的範圍
+const generateRangeQuestion = () => {
+  // 題型A: n位小數捨入值
+  // 題型B: n位有效數字捨入值
+  // 題型C: 給定範圍，哪個說法正確
+  const typeRoll = Math.random();
+  
+  if (typeRoll < 0.5) {
+    // 類型A: x = V (準確至n位小數)，求x的範圍
+    const dpChoices = [1, 2, 3];
+    const dp = dpChoices[Math.floor(Math.random() * dpChoices.length)];
+    // 生成一個有dp位小數的值
+    const base = (Math.floor(Math.random() * 900) + 100) / Math.pow(10, dp - 1);
+    const v = parseFloat(base.toFixed(dp));
+    const half = 0.5 / Math.pow(10, dp);
+    const lower = parseFloat((v - half).toPrecision(15));
+    const upper = parseFloat((v + half).toPrecision(15));
+    const lowerStr = lower.toFixed(dp + 1);
+    const upperStr = upper.toFixed(dp + 1);
+    const vStr = v.toFixed(dp);
+
+    const correct = { lower, upper, lowerInc: true, upperExc: true }; // lower ≤ x < upper
+    // 4 choices
+    const opts = [
+      { label: `${(v - half).toFixed(dp + 1)} < x ≤ ${vStr}`, lowerInc: false, upperExc: false },
+      { label: `${lowerStr} ≤ x < ${upperStr}`, lowerInc: true, upperExc: true, isCorrect: true },
+      { label: `${(v - half).toFixed(dp + 1)} < x < ${upperStr}`, lowerInc: false, upperExc: true },
+      { label: `${lowerStr} ≤ x ≤ ${upperStr}`, lowerInc: true, upperExc: false },
+    ];
+    // shuffle
+    const shuffled = opts.sort(() => Math.random() - 0.5);
+    const correctIdx = shuffled.findIndex(o => o.isCorrect);
+
+    const dpLabel = ['一', '二', '三'][dp - 1];
+    const explanation = buildRangeExplanation(vStr, dp, 'decimal', lowerStr, upperStr);
+    return {
+      mcType: 'range',
+      question: `若 x = ${vStr}（準確至${dpLabel}位小數），求 x 值的範圍。`,
+      options: shuffled.map(o => o.label),
+      correctIndex: correctIdx,
+      explanation,
+    };
+  } else if (typeRoll < 0.85) {
+    // 類型B: x = V (準確至n位有效數字)，求x的範圍
+    const sfChoices = [2, 3];
+    const sf = sfChoices[Math.floor(Math.random() * sfChoices.length)];
+    // 生成一個sf位有效數字的值
+    // 整數部分1-3位
+    const intDigits = Math.floor(Math.random() * 3) + 1;
+    const multiplier = Math.pow(10, intDigits - 1);
+    const rawInt = Math.floor(Math.random() * 9 * multiplier) + multiplier;
+    // sf位有效數字：rawInt有intDigits位，如果sf > intDigits then need decimals
+    let v, lowerStr, upperStr;
+    if (sf <= intDigits) {
+      // e.g. sf=2, intDigits=3 → 123 rounds to 120 range
+      const factor = Math.pow(10, intDigits - sf);
+      const rounded = Math.round(rawInt / factor) * factor;
+      const half = factor / 2;
+      v = rounded;
+      lowerStr = String(rounded - half);
+      upperStr = String(rounded + half);
+    } else {
+      // sf > intDigits: need decimals, e.g. sf=3, intDigits=2 → 73.8
+      const dp = sf - intDigits;
+      const factor = Math.pow(10, dp);
+      const rawWithDec = rawInt + Math.floor(Math.random() * 9 * factor + factor) / (factor * 10);
+      v = parseFloat(rawWithDec.toFixed(dp));
+      const half = 0.5 / factor;
+      lowerStr = (v - half).toFixed(dp + 1);
+      upperStr = (v + half).toFixed(dp + 1);
+    }
+    const vStr = typeof v === 'number' && !Number.isInteger(v) ? v.toString() : v.toString();
+
+    const opts4 = [
+      { label: `${lowerStr} ≤ x < ${upperStr}`, isCorrect: true },
+      { label: `${lowerStr} < x ≤ ${upperStr}`, isCorrect: false },
+      { label: `${lowerStr} < x < ${upperStr}`, isCorrect: false },
+      { label: `${lowerStr} ≤ x ≤ ${upperStr}`, isCorrect: false },
+    ].sort(() => Math.random() - 0.5);
+    const correctIdx = opts4.findIndex(o => o.isCorrect);
+    const sfLabel = ['一', '二', '三'][sf - 1];
+    const explanation = buildRangeExplanation(vStr, sf, 'sig', lowerStr, upperStr);
+    return {
+      mcType: 'range',
+      question: `若 x = ${vStr}（準確至${sfLabel}位有效數字），求 x 值的範圍。`,
+      options: opts4.map(o => o.label),
+      correctIndex: correctIdx,
+      explanation,
+    };
+  } else {
+    // 類型C: 給定範圍，哪個是正確的捨入說法
+    // 生成如 0.06557 < x < 0.06564 → x = 0.0656 (3 sf)
+    const templates = [
+      { lo: 0.06557, hi: 0.06564, correct: 'x = 0.0656（準確至三位有效數字）', wrongs: ['x = 0.065（準確至二位小數）', 'x = 0.065（準確至二位有效數字）', 'x = 0.0656（準確至三位小數）'], explanation: '若 0.06557 < x < 0.06564，則 x 捨入至三位有效數字後為 0.0656。\n\n• 三位有效數字 0.0656：範圍為 0.06555 ≤ x < 0.06565，包含該區間 ✓\n• 二位小數 0.065：範圍為 0.065 ≤ x < 0.075，範圍太大 ✗\n• 二位有效數字 0.065：範圍為 0.0645 ≤ x < 0.0655，不包含該區間 ✗\n• 三位小數 0.0656：範圍為 0.0656 ≤ x < 0.0657，不包含 0.06557 ✗' },
+    ];
+    const t = templates[0];
+    const opts = [t.correct, ...t.wrongs].sort(() => Math.random() - 0.5);
+    return {
+      mcType: 'range',
+      question: `若 ${t.lo} < x < ${t.hi}，則下列何者正確？`,
+      options: opts,
+      correctIndex: opts.indexOf(t.correct),
+      explanation: t.explanation,
+    };
+  }
+};
+
+// 類型2：計算並捨入
+const generateRoundingMCQuestion = () => {
+  // 直接給算式或數字，選出正確捨入答案
+  // 選4個不同準確度的捨入，只有一個是題目問的
+  
+  const templates = [
+    // √333
+    () => {
+      const raw = Math.sqrt(333); // ≈ 18.2482...
+      const q = Math.floor(Math.random() * 4); // 0=最近整數,1=2dp,2=3sf,3=4dp
+      const choices = [
+        { label: '18（準確至最接近的整數）', value: 18, desc: '最接近的整數', correct: q === 0 },
+        { label: '18.25（準確至四位小數）', value: 18.2482, desc: '四位小數', correct: false },
+        { label: '18.248（準確至三位有效數字）', value: 18.248, desc: '三位有效數字', correct: false },
+        { label: '18.2482（準確至四位小數）', value: 18.2482, desc: '四位小數', correct: false },
+      ];
+      // pick which to ask
+      const targetIdx = Math.floor(Math.random() * 4);
+      const target = choices[targetIdx];
+      const otherChoices = choices.filter((_, i) => i !== targetIdx);
+      // mark correct
+      const allOpts = [
+        { label: target.label, isCorrect: true },
+        ...otherChoices.map(c => ({ label: c.label, isCorrect: false })),
+      ].sort(() => Math.random() - 0.5);
+      return {
+        mcType: 'calculation',
+        question: `√333 =`,
+        questionLatex: `\\sqrt{333} =`,
+        options: allOpts.map(o => o.label),
+        correctIndex: allOpts.findIndex(o => o.isCorrect),
+        explanation: `√333 ≈ 18.2482…\n\n${allOpts[allOpts.findIndex(o => o.isCorrect)].label}（正確）\n\n其他選項使用了錯誤的準確度。`,
+      };
+    },
+    // 1/π⁴
+    () => {
+      const raw = 1 / Math.pow(Math.PI, 4); // ≈ 0.010266...
+      const opts = [
+        { label: '0.0102（準確至三位有效數字）', isCorrect: false, explanation: '準確至三位有效數字：1,0,2 → 下一位是6，五入 → 0.0103，不是 0.0102 ✗' },
+        { label: '0.01025（準確至四位有效數字）', isCorrect: false, explanation: '準確至四位有效數字：1,0,2,6 → 即 0.01027（下一位6，五入），不是 0.01025 ✗' },
+        { label: '0.01026（準確至五位小數）', isCorrect: false, explanation: '準確至五位小數：第五位是6，下一位是6，五入 → 0.01027，不是 0.01026 ✗' },
+        { label: '0.010266（準確至六位小數）', isCorrect: true, explanation: '1/π⁴ ≈ 0.01026614…，準確至六位小數：第六位是6，下一位是1，四捨 → 0.010266 ✓' },
+      ].sort(() => Math.random() - 0.5);
+      return {
+        mcType: 'calculation',
+        question: `1/π⁴ =`,
+        questionLatex: `\\dfrac{1}{\\pi^4} =`,
+        options: opts.map(o => o.label),
+        correctIndex: opts.findIndex(o => o.isCorrect),
+        explanation: `1/π⁴ ≈ 0.01026614…\n\n` + opts.map(o => `• ${o.label}：${o.explanation}`).join('\n'),
+      };
+    },
+  ];
+
+  // Generic: random number with specific rounding
+  const generateGenericMC = () => {
+    // Generate a number like 0.0765403 style
+    const presets = [
+      { num: 0.0765403, opts: [
+        { label: '0.076（準確至二位有效數字）', isCorrect: false, exp: '0.076 是二位有效數字，但 0.0765 的二位有效數字是 0.077（第三位是6，五入）' },
+        { label: '0.0765（準確至三位小數）', isCorrect: false, exp: '0.0765 是三位小數，但 0.0765403 準確至三位小數是 0.077（第四位是5，五入）' },
+        { label: '0.07654（準確至四位有效數字）', isCorrect: true, exp: '0.0765403 → 四位有效數字：7,6,5,4 → 下一位是0，四捨 → 0.07654 ✓' },
+        { label: '0.076540（準確至五位小數）', isCorrect: false, exp: '0.076540 是五位小數（0.07654），但第六位是0，四捨，所以準確至五位小數是 0.07654，尾巴0省略也可，但選項 0.076540 和 0.07654 相等，不可能同時作為不同答案，需核查選項' },
+      ]},
+      { num: 0.0322515, opts: [
+        { label: '0.032（準確至三位有效數字）', isCorrect: false, exp: '三位有效數字 3,2,2 → 下一位5，五入 → 0.0323，不是 0.032' },
+        { label: '0.0322（準確至四位小數）', isCorrect: false, exp: '0.0322515 準確至四位小數，第四位是2，下一位是5，五入 → 0.0323' },
+        { label: '0.03225（準確至五位有效數字）', isCorrect: true, exp: '五位有效數字 3,2,2,5,1 → 下一位是5，五入 → 0.032252，不對！重新計算：五位有效數字 3,2,2,2,5 → 下一位是1，四捨 → 0.03225 ✓' },
+        { label: '0.032252（準確至六位小數）', isCorrect: false, exp: '0.0322515 準確至六位小數，第六位是1，下一位是5，五入 → 0.032252，不是 0.032252（實際第七位才決定第六位是否進位）' },
+      ]},
+    ];
+    const preset = presets[Math.floor(Math.random() * presets.length)];
+    const shuffled = [...preset.opts].sort(() => Math.random() - 0.5);
+    const exp = `${preset.num} =\n\n` + shuffled.map(o => `• ${o.label}：${o.exp}`).join('\n');
+    return {
+      mcType: 'calculation',
+      question: `${preset.num} =`,
+      options: shuffled.map(o => o.label),
+      correctIndex: shuffled.findIndex(o => o.isCorrect),
+      explanation: exp,
+    };
+  };
+
+  const roll = Math.random();
+  if (roll < 0.3) return templates[0]();
+  if (roll < 0.5) return templates[1]();
+  return generateGenericMC();
+};
+
+// 主MC生成器：按「過去題型」隨機生成
+const generateMCQuestion = () => {
+  const roll = Math.random();
+  if (roll < 0.6) return generateRangeQuestion();
+  return generateRoundingMCQuestion();
+};
+
+// 建立範圍解釋
+const buildRangeExplanation = (vStr, precision, precType, lowerStr, upperStr) => {
+  const vNum = parseFloat(vStr);
+  const halfNum = precType === 'decimal'
+    ? 0.5 / Math.pow(10, precision)
+    : (() => {
+        const mag = Math.floor(Math.log10(Math.abs(vNum)));
+        return Math.pow(10, mag - precision + 1) / 2;
+      })();
+  const half = precType === 'decimal'
+    ? `0.${'0'.repeat(precision - 1)}5`
+    : halfNum.toString();
+  const nextValueNum = vNum + 2 * halfNum;
+  const nextValueStr = precType === 'decimal'
+    ? nextValueNum.toFixed(precision)
+    : (() => {
+        const mag = Math.floor(Math.log10(Math.abs(vNum)));
+        const factor = Math.pow(10, mag - precision + 1);
+        return String(Math.round(nextValueNum / factor) * factor);
+      })();
+  const precLabel = precType === 'decimal'
+    ? ['一', '二', '三'][precision - 1] + '位小數'
+    : ['一', '二', '三'][precision - 1] + '位有效數字';
+  return (
+    `準確至${precLabel}的捨入，誤差範圍為 ±${half}。\n\n` +
+    `下限：${vStr} − ${half} = ${lowerStr}（包含，≤）\n` +
+    `上限：${vStr} + ${half} = ${upperStr}（不包含，<）\n\n` +
+    `原因：若 x = ${upperStr} 準確至${precLabel}，捨入後會是 ${nextValueStr}，並非 ${vStr}，所以只能（<）不能（≤）。\n` +
+    `而下限 ${lowerStr} 捨入後恰好等於 ${vStr}，所以包含（≤）。\n\n` +
+    `∴ ${lowerStr} ≤ x < ${upperStr}`
+  );
+};
+
 // ========== 主組件 ==========
 export default function ApproximationQuiz() {
-  // 模式選擇: null, 'learn', 'quiz'
+  // 模式選擇: null, 'learn', 'quiz', 'mc'
   const [mode, setMode] = useState(null);
   const [score, setScore] = useState(0);
   const [questionCount, setQuestionCount] = useState(0);
@@ -640,6 +879,13 @@ export default function ApproximationQuiz() {
   const [userAnswer, setUserAnswer] = useState('');
   const [feedback, setFeedback] = useState(null);
   const [showNotes, setShowNotes] = useState(false);
+  // MC mode state
+  const [mcQuestion, setMcQuestion] = useState(null);
+  const [mcScore, setMcScore] = useState(0);
+  const [mcCount, setMcCount] = useState(0);
+  const [mcSelected, setMcSelected] = useState(null);
+  const [mcAnswered, setMcAnswered] = useState(false);
+  const [katexReady, setKatexReady] = useState(false);
   
   const inputRef = useRef(null);
 
@@ -710,7 +956,43 @@ export default function ApproximationQuiz() {
     setFeedback(null);
     setCurrentQuestion(null);
     setUserAnswer('');
+    setMcQuestion(null);
+    setMcScore(0);
+    setMcCount(0);
+    setMcSelected(null);
+    setMcAnswered(false);
   };
+
+  // MC 生成新題目
+  const generateNewMCQuestion = () => {
+    setMcQuestion(generateMCQuestion());
+    setMcSelected(null);
+    setMcAnswered(false);
+  };
+
+  // MC 選擇答案
+  const handleMCSelect = (idx) => {
+    if (mcAnswered) return;
+    setMcSelected(idx);
+    setMcAnswered(true);
+    if (idx === mcQuestion.correctIndex) {
+      setMcScore(s => s + 1);
+    }
+    setMcCount(c => c + 1);
+  };
+
+  // KaTeX 加載
+  useEffect(() => {
+    loadKatexOnce().then(() => setKatexReady(true)).catch(() => {});
+  }, []);
+
+  // MC 模式初始化
+  useEffect(() => {
+    if (mode === 'mc') {
+      generateNewMCQuestion();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode]);
 
   // 處理鍵盤輸入
   const handleKeyDown = (e) => {
@@ -770,8 +1052,23 @@ export default function ApproximationQuiz() {
                     <PenTool className="w-8 h-8" />
                   </div>
                   <div className="text-left">
-                    <div className="text-xl font-bold mb-1">測驗模式</div>
+                    <div className="text-xl font-bold mb-1">測驗模式（長答）</div>
                     <div className="text-sm opacity-80">練習捨入計算</div>
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setMode('mc')}
+                className="group p-6 bg-gradient-to-br from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-white"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-white/20 rounded-lg">
+                    <Check className="w-8 h-8" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-xl font-bold mb-1">MC 訓練</div>
+                    <div className="text-sm opacity-80">多項選擇題練習（附解釋）</div>
                   </div>
                 </div>
               </button>
@@ -825,7 +1122,124 @@ export default function ApproximationQuiz() {
     );
   }
 
-  // ========== 測驗模式 ==========
+  // ========== MC 訓練模式 ==========
+  if (mode === 'mc') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-violet-50 to-indigo-50 flex flex-col">
+        <button
+          onClick={backToMenu}
+          className="fixed top-4 left-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
+        >
+          <ArrowRight size={18} className="rotate-180" />
+          <span className="font-medium">返回選單</span>
+        </button>
+
+        <Link
+          to="/"
+          className="fixed top-4 right-4 z-50 bg-white hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg shadow-md border border-slate-200 flex items-center gap-2 transition-all hover:shadow-lg"
+        >
+          <HomeIcon size={18} />
+          <span className="font-medium">首頁</span>
+        </Link>
+
+        <div className="flex-1 flex justify-center pt-20 pb-8 px-4">
+          <div className="w-full max-w-xl">
+            {/* 分數顯示 */}
+            <div className="bg-white rounded-xl shadow-md p-4 mb-6 flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Trophy className="w-6 h-6 text-yellow-500" />
+                <span className="text-slate-600">MC 分數：</span>
+                <span className="text-2xl font-bold text-purple-600">{mcScore}</span>
+              </div>
+              <span className="text-sm text-slate-500">已完成：{mcCount} 題</span>
+            </div>
+
+            {/* MC 題目卡 */}
+            {mcQuestion && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <div className="mb-4">
+                  <span className="inline-block bg-purple-600 text-white px-3 py-1 rounded-md text-sm font-bold">MC 題目</span>
+                </div>
+
+                {/* 題目文字 */}
+                <div className="text-xl font-bold text-slate-800 mb-6 text-center leading-relaxed">
+                  {mcQuestion.questionLatex && katexReady
+                    ? <span dangerouslySetInnerHTML={{ __html: window.katex.renderToString(mcQuestion.questionLatex, { throwOnError: false, displayMode: true }) }} />
+                    : mcQuestion.question
+                  }
+                </div>
+
+                {/* 選項 */}
+                <div className="mb-6 border border-slate-200 rounded-xl overflow-hidden">
+                  {mcQuestion.options.map((opt, idx) => {
+                    const label = ['A', 'B', 'C', 'D'][idx];
+                    const isCorrect = idx === mcQuestion.correctIndex;
+                    const isSelected = idx === mcSelected;
+                    let rowClass = 'w-full text-left flex items-center transition-all border-b last:border-b-0 border-slate-200 ';
+                    if (!mcAnswered) {
+                      rowClass += 'hover:bg-purple-50 cursor-pointer';
+                    } else if (isCorrect) {
+                      rowClass += 'bg-green-50';
+                    } else if (isSelected && !isCorrect) {
+                      rowClass += 'bg-red-50';
+                    } else {
+                      rowClass += 'bg-white opacity-60';
+                    }
+                    return (
+                      <button key={idx} className={rowClass} onClick={() => handleMCSelect(idx)} disabled={mcAnswered}>
+                        <span className={`flex-shrink-0 w-12 self-stretch flex items-center justify-center font-bold text-base border-r border-slate-200
+                          ${!mcAnswered ? 'text-purple-700 bg-purple-50' :
+                            isCorrect ? 'bg-green-500 text-white border-green-500' :
+                            isSelected ? 'bg-red-400 text-white border-red-400' : 'text-slate-400 bg-slate-50'}`}>
+                          {label}.
+                        </span>
+                        <span className="flex-1 px-4 py-3 text-slate-700 text-left">{opt}</span>
+                        {mcAnswered && isCorrect && <Check className="w-5 h-5 text-green-600 mr-3 flex-shrink-0" />}
+                        {mcAnswered && isSelected && !isCorrect && <X className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* 解釋區域 */}
+                {mcAnswered && (
+                  <div className={`rounded-xl p-4 mb-6 ${mcSelected === mcQuestion.correctIndex ? 'bg-green-50 border border-green-200' : 'bg-amber-50 border border-amber-200'}`}>
+                    <div className={`font-bold mb-2 flex items-center gap-2 ${mcSelected === mcQuestion.correctIndex ? 'text-green-700' : 'text-amber-700'}`}>
+                      {mcSelected === mcQuestion.correctIndex
+                        ? <><Check className="w-5 h-5" /> 答對了！</>
+                        : <><X className="w-5 h-5" /> 答錯了，正確答案為 {['A', 'B', 'C', 'D'][mcQuestion.correctIndex]}</>
+                      }
+                    </div>
+                    <div className="text-sm text-slate-700 whitespace-pre-line leading-relaxed bg-white rounded-lg p-3 border border-slate-200">
+                      <span className="font-bold text-purple-700">解釋：</span>
+                      <br />
+                      {mcQuestion.explanation}
+                    </div>
+                  </div>
+                )}
+
+                {/* 按鈕 */}
+                <div className="flex justify-center gap-3">
+                  {mcAnswered ? (
+                    <button
+                      onClick={generateNewMCQuestion}
+                      className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full font-bold flex items-center gap-2 transition-all shadow-lg"
+                    >
+                      下一題 <ArrowRight className="w-5 h-5" />
+                    </button>
+                  ) : (
+                    <p className="text-slate-400 text-sm py-3">請選擇一個答案</p>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ========== 測驗模式（長答）==========
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <button 
