@@ -466,6 +466,29 @@ const renderHighlightedText = (text) => {
   });
 };
 
+// MC 解釋逐行渲染：✓ 綠色、✗ 紅色
+const renderMCExplanation = (text) => {
+  const lines = text.split('\n');
+  return lines.map((line, idx) => {
+    if (line.trim() === '') {
+      return <div key={`mc-exp-${idx}`} className="h-2" />;
+    }
+
+    let lineClass = 'text-slate-700';
+    if (line.includes('✓')) {
+      lineClass = 'text-green-700';
+    } else if (line.includes('✗') || line.includes('X')) {
+      lineClass = 'text-red-700';
+    }
+
+    return (
+      <div key={`mc-exp-${idx}`} className={lineClass}>
+        {line}
+      </div>
+    );
+  });
+};
+
 // ========== 筆記組件 ==========
 const NotesSection = () => {
   return (
@@ -654,13 +677,21 @@ const generateRangeQuestion = () => {
     const upperStr = upper.toFixed(dp + 1);
     const vStr = v.toFixed(dp);
 
-    const correct = { lower, upper, lowerInc: true, upperExc: true }; // lower ≤ x < upper
-    // 4 choices
+    // 依照考評常見格式：兩組端點，每組各有「< x ≤」與「≤ x <」兩個選項
+    // set A（正確端點）：v ± 0.5 * 10^-dp
+    const setALower = lowerStr;
+    const setAUpper = upperStr;
+    // set B（干擾端點）：v ± 1 * 10^-dp
+    const altHalf = 1 / Math.pow(10, dp);
+    const setBLower = (v - altHalf).toFixed(dp);
+    const setBUpper = (v + altHalf).toFixed(dp);
+
+    // 4 choices = 2 sets x 2 inequality variants
     const opts = [
-      { label: `${(v - half).toFixed(dp + 1)} < x ≤ ${vStr}`, lowerInc: false, upperExc: false },
-      { label: `${lowerStr} ≤ x < ${upperStr}`, lowerInc: true, upperExc: true, isCorrect: true },
-      { label: `${(v - half).toFixed(dp + 1)} < x < ${upperStr}`, lowerInc: false, upperExc: true },
-      { label: `${lowerStr} ≤ x ≤ ${upperStr}`, lowerInc: true, upperExc: false },
+      { label: `${setBLower} < x ≤ ${setBUpper}`, isCorrect: false },
+      { label: `${setBLower} ≤ x < ${setBUpper}`, isCorrect: false },
+      { label: `${setALower} < x ≤ ${setAUpper}`, isCorrect: false },
+      { label: `${setALower} ≤ x < ${setAUpper}`, isCorrect: true },
     ];
     // shuffle
     const shuffled = opts.sort(() => Math.random() - 0.5);
@@ -706,11 +737,24 @@ const generateRangeQuestion = () => {
     }
     const vStr = typeof v === 'number' && !Number.isInteger(v) ? v.toString() : v.toString();
 
+    // 跟小數題型一致：兩組端點，每組兩個不等號版本
+    const setALower = lowerStr;
+    const setAUpper = upperStr;
+
+    const vNum = Number(vStr);
+    const magnitude = Math.floor(Math.log10(Math.abs(vNum)));
+    const step = Math.pow(10, magnitude - sf + 1); // 有效數字位值的 1 單位
+    const setBLowerNum = vNum - step;
+    const setBUpperNum = vNum + step;
+    const decimals = step < 1 ? Math.round(-Math.log10(step)) : 0;
+    const setBLower = decimals > 0 ? setBLowerNum.toFixed(decimals) : String(Math.round(setBLowerNum));
+    const setBUpper = decimals > 0 ? setBUpperNum.toFixed(decimals) : String(Math.round(setBUpperNum));
+
     const opts4 = [
-      { label: `${lowerStr} ≤ x < ${upperStr}`, isCorrect: true },
-      { label: `${lowerStr} < x ≤ ${upperStr}`, isCorrect: false },
-      { label: `${lowerStr} < x < ${upperStr}`, isCorrect: false },
-      { label: `${lowerStr} ≤ x ≤ ${upperStr}`, isCorrect: false },
+      { label: `${setBLower} < x ≤ ${setBUpper}`, isCorrect: false },
+      { label: `${setBLower} ≤ x < ${setBUpper}`, isCorrect: false },
+      { label: `${setALower} < x ≤ ${setAUpper}`, isCorrect: false },
+      { label: `${setALower} ≤ x < ${setAUpper}`, isCorrect: true },
     ].sort(() => Math.random() - 0.5);
     const correctIdx = opts4.findIndex(o => o.isCorrect);
     const sfLabel = ['一', '二', '三'][sf - 1];
@@ -726,16 +770,35 @@ const generateRangeQuestion = () => {
     // 類型C: 給定範圍，哪個是正確的捨入說法
     // 生成如 0.06557 < x < 0.06564 → x = 0.0656 (3 sf)
     const templates = [
-      { lo: 0.06557, hi: 0.06564, correct: 'x = 0.0656（準確至三位有效數字）', wrongs: ['x = 0.065（準確至二位小數）', 'x = 0.065（準確至二位有效數字）', 'x = 0.0656（準確至三位小數）'], explanation: '若 0.06557 < x < 0.06564，則 x 捨入至三位有效數字後為 0.0656。\n\n• 三位有效數字 0.0656：範圍為 0.06555 ≤ x < 0.06565，包含該區間 ✓\n• 二位小數 0.065：範圍為 0.065 ≤ x < 0.075，範圍太大 ✗\n• 二位有效數字 0.065：範圍為 0.0645 ≤ x < 0.0655，不包含該區間 ✗\n• 三位小數 0.0656：範圍為 0.0656 ≤ x < 0.0657，不包含 0.06557 ✗' },
+      {
+        lo: 0.06557,
+        hi: 0.06564,
+        correct: 'x = 0.0656（準確至三位有效數字）',
+        wrongs: ['x = 0.065（準確至二位小數）', 'x = 0.065（準確至二位有效數字）', 'x = 0.0656（準確至三位小數）'],
+      },
     ];
     const t = templates[0];
     const opts = [t.correct, ...t.wrongs].sort(() => Math.random() - 0.5);
+    const letters = ['A', 'B', 'C', 'D'];
+    const optionLines = opts.map((opt, idx) => {
+      const precisionText = (opt.match(/（準確至([^）]+)）/) || [])[1] || '';
+      const valueText = (opt.match(/x\s*=\s*([^（\s]+)/) || [])[1] || '';
+
+      if (precisionText !== '三位有效數字') {
+        return `${letters[idx]}. ${valueText} 是${precisionText}，不是三位有效數字，所以錯 ✗`;
+      }
+      if (opt !== t.correct) {
+        return `${letters[idx]}. ${valueText} 雖然是三位有效數字，但不符合此區間捨入結果，所以錯 ✗`;
+      }
+      return `${letters[idx]}. ${valueText} 是三位有效數字，且 ${t.lo} < x < ${t.hi} 會捨入到 ${valueText}，所以正確 ✓`;
+    });
+    const explanation = `直接篩選：題目要「三位有效數字」。\n\n${optionLines.join('\n')}`;
     return {
       mcType: 'range',
       question: `若 ${t.lo} < x < ${t.hi}，則下列何者正確？`,
       options: opts,
       correctIndex: opts.indexOf(t.correct),
-      explanation: t.explanation,
+      explanation,
     };
   }
 };
@@ -821,10 +884,11 @@ const generateRoundingMCQuestion = () => {
     const opts = optionConfigs.map((cfg) => buildOption(raw, cfg, cfg.key === correctCfg.key));
     const shuffled = [...opts].sort(() => Math.random() - 0.5);
     const correctIndex = shuffled.findIndex((o) => o.isCorrect);
-    const explanationLines = shuffled.map((o) => (
+    const letters = ['A', 'B', 'C', 'D'];
+    const explanationLines = shuffled.map((o, idx) => (
       o.isCorrect
-        ? `• ${o.label}：符合${o.precisionLabel}的捨入結果 ✓`
-        : `• ${o.label}：此準確度應為 ${o.correctText}，不是 ${o.shownText} ✗`
+        ? `${letters[idx]}. ${o.label}：符合${o.precisionLabel}的捨入結果 ✓`
+        : `${letters[idx]}. ${o.label}：此準確度應為 ${o.correctText}，不是 ${o.shownText} ✗`
     ));
 
     return {
@@ -888,20 +952,21 @@ const generateRoundingMCQuestion = () => {
     const presets = [
       { num: 0.0765403, opts: [
         { label: '0.076（準確至二位有效數字）', isCorrect: false, exp: '0.076 是二位有效數字，但 0.0765 的二位有效數字是 0.077（第三位是6，五入）' },
-        { label: '0.0765（準確至三位小數）', isCorrect: false, exp: '0.0765 是三位小數，但 0.0765403 準確至三位小數是 0.077（第四位是5，五入）' },
+        { label: '0.0765（準確至三位小數）', isCorrect: false, exp: '0.0765 是四位小數，不是三位小數；而且 0.0765403 準確至三位小數應為 0.077（第四位是5，五入）' },
         { label: '0.07654（準確至四位有效數字）', isCorrect: true, exp: '0.0765403 → 四位有效數字：7,6,5,4 → 下一位是0，四捨 → 0.07654 ✓' },
-        { label: '0.076540（準確至五位小數）', isCorrect: false, exp: '0.076540 是五位小數（0.07654），但第六位是0，四捨，所以準確至五位小數是 0.07654，尾巴0省略也可，但選項 0.076540 和 0.07654 相等，不可能同時作為不同答案，需核查選項' },
+        { label: '0.076540（準確至五位小數）', isCorrect: false, exp: '0.076540 有六位小數，不是五位小數；0.0765403 準確至五位小數應寫作 0.07654' },
       ]},
       { num: 0.0322515, opts: [
         { label: '0.032（準確至三位有效數字）', isCorrect: false, exp: '三位有效數字 3,2,2 → 下一位5，五入 → 0.0323，不是 0.032' },
-        { label: '0.0322（準確至四位小數）', isCorrect: false, exp: '0.0322515 準確至四位小數，第四位是2，下一位是5，五入 → 0.0323' },
-        { label: '0.03225（準確至五位有效數字）', isCorrect: true, exp: '五位有效數字 3,2,2,5,1 → 下一位是5，五入 → 0.032252，不對！重新計算：五位有效數字 3,2,2,2,5 → 下一位是1，四捨 → 0.03225 ✓' },
-        { label: '0.032252（準確至六位小數）', isCorrect: false, exp: '0.0322515 準確至六位小數，第六位是1，下一位是5，五入 → 0.032252，不是 0.032252（實際第七位才決定第六位是否進位）' },
+        { label: '0.0323（準確至四位小數）', isCorrect: true, exp: '0.0322515 準確至四位小數：第四位是2，下一位是5，五入 → 0.0323 ✓' },
+        { label: '0.03225（準確至五位有效數字）', isCorrect: false, exp: '五位有效數字為 3,2,2,5,1，下一位是5，五入後應為 0.032252，不是 0.03225' },
+        { label: '0.032252（準確至五位小數）', isCorrect: false, exp: '0.032252 是六位小數，不是五位小數；0.0322515 準確至五位小數應為 0.03225' },
       ]},
     ];
     const preset = presets[Math.floor(Math.random() * presets.length)];
     const shuffled = [...preset.opts].sort(() => Math.random() - 0.5);
-    const exp = `${preset.num} =\n\n` + shuffled.map(o => `• ${o.label}：${o.exp}`).join('\n');
+    const letters = ['A', 'B', 'C', 'D'];
+    const exp = `${preset.num} =\n\n` + shuffled.map((o, idx) => `${letters[idx]}. ${o.label}：${o.exp}`).join('\n');
     return {
       mcType: 'calculation',
       question: `${preset.num} =`,
@@ -1301,7 +1366,7 @@ export default function ApproximationQuiz() {
                     <div className="text-sm text-slate-700 whitespace-pre-line leading-relaxed bg-white rounded-lg p-3 border border-slate-200">
                       <span className="font-bold text-purple-700">解釋：</span>
                       <br />
-                      {mcQuestion.explanation}
+                      <div className="mt-2 space-y-1">{renderMCExplanation(mcQuestion.explanation)}</div>
                     </div>
                   </div>
                 )}
