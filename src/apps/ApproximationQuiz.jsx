@@ -999,7 +999,7 @@ const buildRangeExplanation = (vStr, precision, precType, lowerStr, upperStr) =>
         return Math.pow(10, mag - precision + 1) / 2;
       })();
   const half = precType === 'decimal'
-    ? `0.${'0'.repeat(precision - 1)}5`
+    ? `0.${'0'.repeat(precision)}5`
     : halfNum.toString();
   const nextValueNum = vNum + 2 * halfNum;
   const nextValueStr = precType === 'decimal'
