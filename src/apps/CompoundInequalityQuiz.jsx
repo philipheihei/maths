@@ -1693,6 +1693,34 @@ const CompoundInequalityQuiz = () => {
     // 根據當前階段選擇正確答案
     const currentQuestionToCheck = questionStage === 1 ? currentQuestion : stage2Question;
 
+    const normalizeIntegerList = (input) => {
+      const normalized = input
+        .replace(/[，、]/g, ',')
+        .replace(/且|及|和|或/g, ',');
+      const nums = normalized.match(/-?\d+/g);
+      if (!nums) return null;
+      return nums.map(Number).sort((a, b) => a - b);
+    };
+
+    // 整數列舉題：忽略順序比對，例如 -1,-2,-3 與 -3,-2,-1 視為同一組答案
+    const isIntegerQuestion = ['interval-integer', 'union-integer', 'integer-solution'].includes(currentQuestionToCheck.type);
+    if (isIntegerQuestion) {
+      const userNums = normalizeIntegerList(userAnswer);
+      const correctNums = normalizeIntegerList(currentQuestionToCheck.answer);
+
+      if (userNums && correctNums) {
+        const sameLength = userNums.length === correctNums.length;
+        const sameValues = sameLength && userNums.every((n, i) => n === correctNums[i]);
+
+        if (sameValues) {
+          setFeedback('correct');
+          setScore(score + 1);
+          setStreak(streak + 1);
+          return;
+        }
+      }
+    }
+
     const userNormalized = userAnswer
       .trim()
       .replace(/\s+/g, '')
