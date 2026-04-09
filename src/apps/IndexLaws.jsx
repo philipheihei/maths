@@ -66,76 +66,40 @@ const toLatex = (input) => {
   return latex;
 };
 
-const TERM_REGEX = /([a-zA-Z])(?:\^(\([^)]*\)|-?\d+(?:\.\d+)?))?/g;
-
-const getConvertedPositiveTermSet = (step1) => {
-  const set = new Set();
-  if (!step1) return set;
-
-  const matches = step1.matchAll(TERM_REGEX);
-  for (const match of matches) {
-    const base = match[1];
-    const expRaw = match[2] || '1';
-    const exp = Number(String(expRaw).replace(/[()]/g, ''));
-    if (!Number.isNaN(exp) && exp < 0) {
-      set.add(`${base}^${Math.abs(exp)}`);
-    }
-  }
-  return set;
-};
-
-const toLatexWithTermHighlight = (input, mode = 'none', sourceStep1 = '') => {
+const toLatexWithExponentHighlight = (input, highlightType = 'none') => {
   if (!input) return '';
 
-  const convertedSet = mode === 'step2-converted'
-    ? getConvertedPositiveTermSet(sourceStep1)
-    : new Set();
-
-  const convertPart = (part) => {
-    let result = '';
-    let lastIndex = 0;
-    const matches = part.matchAll(TERM_REGEX);
-
-    for (const match of matches) {
-      const full = match[0];
-      const base = match[1];
-      const expRaw = match[2] || '1';
-      const expStr = String(expRaw).replace(/[()]/g, '');
-      const expNum = Number(expStr);
-
-      result += part.slice(lastIndex, match.index);
-
-      let termLatex = expStr === '1' ? `${base}` : `${base}^{${expStr}}`;
-      const canonical = `${base}^${expStr}`;
-
-      let shouldHighlight = false;
-      if (mode === 'step1-negative' && !Number.isNaN(expNum) && expNum < 0) {
-        shouldHighlight = true;
-      }
-      if (mode === 'step2-converted' && convertedSet.has(canonical)) {
-        shouldHighlight = true;
-      }
-
-      if (shouldHighlight) {
-        termLatex = `\\bbox[yellow]{${termLatex}}`;
-      }
-
-      result += termLatex;
-      lastIndex = (match.index ?? 0) + full.length;
-    }
-
-    result += part.slice(lastIndex);
-    return result.replace(/\*/g, '\\times ');
+  const shouldHighlight = (expRaw) => {
+    const cleaned = String(expRaw).replace(/[()]/g, '');
+    const num = Number(cleaned);
+    if (Number.isNaN(num)) return false;
+    if (highlightType === 'negative') return num < 0;
+    if (highlightType === 'positive') return num > 0;
+    return false;
   };
 
-  if (input.includes('/')) {
-    const parts = input.split('/');
-    if (parts.length === 2) {
-      return `\\frac{${convertPart(parts[0])}}{${convertPart(parts[1])}}`;
+  const formatPower = (part) => part.replace(/\^(\([^)]*\)|-?\d+(?:\.\d+)?)/g, (_, expRaw) => {
+    const exp = String(expRaw).replace(/[()]/g, '');
+    if (shouldHighlight(exp)) {
+      return `^{\\colorbox{#fef08a}{${exp}}}`;
     }
+    return `^{${exp}}`;
+  });
+
+  let latex = input;
+  if (latex.includes('/')) {
+    const parts = latex.split('/');
+    if (parts.length === 2) {
+      latex = `\\frac{${formatPower(parts[0])}}{${formatPower(parts[1])}}`;
+    } else {
+      latex = formatPower(latex.replace(/\//g, '\\div '));
+    }
+  } else {
+    latex = formatPower(latex);
   }
 
-  return convertPart(input.replace(/\//g, '\\div '));
+  latex = latex.replace(/\*/g, '\\times ');
+  return latex;
 };
 
 // --- 輔助函數 ---
@@ -957,14 +921,14 @@ export default function IndexLaws() {
                     <div className="text-xs font-bold text-indigo-500 mb-1">步驟 1：拆括號</div>
                     <div className="text-lg font-bold text-slate-800 flex items-center gap-2">
                       <span className="text-xl font-semibold text-slate-500">=</span>
-                      <Latex>{toLatexWithTermHighlight(problem.expectations.step1, 'step1-negative')}</Latex>
+                      <Latex>{toLatexWithExponentHighlight(problem.expectations.step1, 'negative')}</Latex>
                     </div>
                   </div>
                   <div className="p-3 bg-white/60 rounded-xl border border-blue-100/50">
                     <div className="text-xs font-bold text-slate-600 mb-1">步驟 2：<span className="bg-yellow-200 text-slate-800 px-1 rounded">負指數</span>轉正指數</div>
                     <div className="text-lg font-bold text-slate-800 flex items-center gap-2">
                       <span className="text-xl font-semibold text-slate-500">=</span>
-                      <Latex>{toLatexWithTermHighlight(problem.expectations.step2, 'step2-converted', problem.expectations.step1)}</Latex>
+                      <Latex>{toLatexWithExponentHighlight(problem.expectations.step2, 'positive')}</Latex>
                     </div>
                   </div>
                   <div className="p-3 bg-white/60 rounded-xl border border-emerald-100">
