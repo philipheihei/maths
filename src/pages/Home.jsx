@@ -154,7 +154,7 @@ const Home = () => {
       ],
       category: '高中',
       topics: ['複合不等式', '圖解法', '整數解'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'variation-quiz',
@@ -318,7 +318,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['畢氏定理', '三角比', 'sin', 'cos', 'tan'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'remainder-factor-quiz',
@@ -374,13 +374,69 @@ const Home = () => {
     }
   ];
 
-  // 篩選邏輯
-  const filters = ['全部', '初中', '高中', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6'];
+  // 首頁預設顯示次序（按教學流程排列）
+  const DEFAULT_APP_ORDER = [
+    'index-laws',
+    'factorization-quiz',
+    'approximation-quiz',
+    'algebraic-fractions',
+    'percentage-quiz',
+    'simultaneous-eq',
+    'variation-quiz',
+    'coordinate-transform',
+    'distance-slope',
+    'remainder-factor-quiz',
+    'trig-quiz',
+    'dispersion-quiz',
+    'compound-inequality-quiz',
+    'inequality-quiz',
+    'subject',
+    'solid-geometry',
+    'angle-master-quiz',
+    'circle-theorems',
+    'identity',
+    'probability-quiz',
+    'mc-limited-f6',
+    'angle-quiz'
+  ];
 
-  const filteredApps = apps.filter(app => {
+  // 6ABGP3 專屬清單
+  const GP3_APP_IDS = new Set([
+    'index-laws',
+    'factorization-quiz',
+    'approximation-quiz',
+    'algebraic-fractions',
+    'percentage-quiz',
+    'simultaneous-eq',
+    'variation-quiz',
+    'coordinate-transform',
+    'distance-slope',
+    'remainder-factor-quiz',
+    'trig-quiz',
+    'dispersion-quiz',
+    'compound-inequality-quiz',
+    'subject',
+    'mc-limited-f6'
+  ]);
+
+  const orderedApps = [...apps].sort((a, b) => {
+    const ia = DEFAULT_APP_ORDER.indexOf(a.id);
+    const ib = DEFAULT_APP_ORDER.indexOf(b.id);
+    const ra = ia === -1 ? Number.MAX_SAFE_INTEGER : ia;
+    const rb = ib === -1 ? Number.MAX_SAFE_INTEGER : ib;
+    return ra - rb;
+  });
+
+  // 篩選邏輯
+  const filters = ['全部', '初中', '高中', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', '6ABGP3'];
+
+  const filteredApps = orderedApps.filter(app => {
+    // 6ABGP3: 只顯示指定題目
+    if (activeFilter === '6ABGP3' && !GP3_APP_IDS.has(app.id)) return false;
+
     // 年級/類別篩選
     const passesFilter = (() => {
-      if (activeFilter === '全部') return true;
+      if (activeFilter === '全部' || activeFilter === '6ABGP3') return true;
       if (activeFilter === '初中' || activeFilter === '高中') return app.category === activeFilter;
       return app.level === activeFilter || app.badges.some(badge => badge.level === activeFilter);
     })();

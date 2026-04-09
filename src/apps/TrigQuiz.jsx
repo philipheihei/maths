@@ -248,8 +248,108 @@ const PYTHAG_TRIPLES = [
   [10, 24, 26], [20, 21, 29], [9, 40, 41], [12, 35, 37]
 ];
 
+const isPerfectSquare = (n) => Number.isInteger(Math.sqrt(n));
+const simplifySqrt = (n) => {
+  let coeff = 1;
+  let radicand = n;
+  for (let i = 2; i * i <= radicand; i++) {
+    while (radicand % (i * i) === 0) {
+      coeff *= i;
+      radicand /= i * i;
+    }
+  }
+  if (radicand === 1) {
+    return { text: String(coeff), latex: String(coeff) };
+  }
+  if (coeff === 1) {
+    return { text: `√${radicand}`, latex: `\\sqrt{${radicand}}` };
+  }
+  return { text: `${coeff}√${radicand}`, latex: `${coeff}\\sqrt{${radicand}}` };
+};
+
 // 畢氏定理題目生成
 const generatePythagorasQuestion = () => {
+  // 少量題目改為無理數答案（根式），其餘維持整數題。
+  if (Math.random() < 0.25) {
+    const surdType = rand(0, 2); // 0: 找斜邊, 1: 找BC, 2: 找AC
+
+    if (surdType === 0) {
+      let a = rand(4, 14);
+      let b = rand(4, 14);
+      let sumSq = a * a + b * b;
+      let guard = 0;
+      while (isPerfectSquare(sumSq) && guard < 50) {
+        a = rand(4, 14);
+        b = rand(4, 14);
+        sumSq = a * a + b * b;
+        guard++;
+      }
+      const surd = simplifySqrt(sumSq);
+      return {
+        triangle: { a, b, c: round2(Math.sqrt(sumSq)), A: null, B: null },
+        unknownSide: 'c',
+        unknownAngle: null,
+        answer: Math.sqrt(sumSq),
+        answerDisplay: surd.text,
+        answerAlt: [surd.text],
+        steps: [
+          `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\[4pt] &= ${b}^2 + ${a}^2 \\[4pt] &= ${b * b} + ${a * a} \\[4pt] &= ${sumSq} \\[4pt] AB &= \\sqrt{${sumSq}} \\[4pt] &= ${surd.latex}\end{align*}$$`
+        ],
+        questionText: '求 AB 的長度。（可用根式作答）'
+      };
+    }
+
+    if (surdType === 1) {
+      let b = rand(4, 12);
+      let c = rand(b + 1, 18);
+      let diffSq = c * c - b * b;
+      let guard = 0;
+      while ((diffSq <= 0 || isPerfectSquare(diffSq)) && guard < 50) {
+        b = rand(4, 12);
+        c = rand(b + 1, 18);
+        diffSq = c * c - b * b;
+        guard++;
+      }
+      const surd = simplifySqrt(diffSq);
+      return {
+        triangle: { a: round2(Math.sqrt(diffSq)), b, c, A: null, B: null },
+        unknownSide: 'a',
+        unknownAngle: null,
+        answer: Math.sqrt(diffSq),
+        answerDisplay: surd.text,
+        answerAlt: [surd.text],
+        steps: [
+          `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\[4pt] ${c}^2 &= ${b}^2 + BC^2 \\[4pt] BC^2 &= ${c}^2 - ${b}^2 \\[4pt] &= ${c * c} - ${b * b} \\[4pt] &= ${diffSq} \\[4pt] BC &= \\sqrt{${diffSq}} \\[4pt] &= ${surd.latex}\end{align*}$$`
+        ],
+        questionText: '求 BC 的長度。（可用根式作答）'
+      };
+    }
+
+    let a = rand(4, 12);
+    let c = rand(a + 1, 18);
+    let diffSq = c * c - a * a;
+    let guard = 0;
+    while ((diffSq <= 0 || isPerfectSquare(diffSq)) && guard < 50) {
+      a = rand(4, 12);
+      c = rand(a + 1, 18);
+      diffSq = c * c - a * a;
+      guard++;
+    }
+    const surd = simplifySqrt(diffSq);
+    return {
+      triangle: { a, b: round2(Math.sqrt(diffSq)), c, A: null, B: null },
+      unknownSide: 'b',
+      unknownAngle: null,
+      answer: Math.sqrt(diffSq),
+      answerDisplay: surd.text,
+      answerAlt: [surd.text],
+      steps: [
+        `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\[4pt] ${c}^2 &= AC^2 + ${a}^2 \\[4pt] AC^2 &= ${c}^2 - ${a}^2 \\[4pt] &= ${c * c} - ${a * a} \\[4pt] &= ${diffSq} \\[4pt] AC &= \\sqrt{${diffSq}} \\[4pt] &= ${surd.latex}\end{align*}$$`
+      ],
+      questionText: '求 AC 的長度。（可用根式作答）'
+    };
+  }
+
   const triple = pick(PYTHAG_TRIPLES);
   // Randomly assign which sides are a (BC), b (AC), c (AB=hyp)
   // triple = [leg1, leg2, hyp]
@@ -999,6 +1099,7 @@ const QuizPage = ({ onBackToTeaching }) => {
 
     const correctVal = currentQuestion.answer;
     const isCorrect = round3sf(userVal) === round3sf(Number(correctVal));
+    const shownAnswer = currentQuestion.answerDisplay || String(correctVal);
 
     setIsAnswered(true);
 
@@ -1009,7 +1110,7 @@ const QuizPage = ({ onBackToTeaching }) => {
       }));
       setFeedback({
         type: 'correct', msg: '答案正確！',
-        answer: String(correctVal),
+        answer: shownAnswer,
         steps: currentQuestion.steps
       });
     } else {
@@ -1019,8 +1120,8 @@ const QuizPage = ({ onBackToTeaching }) => {
       }));
       setFeedback({
         type: 'incorrect',
-        msg: `答案是 ${correctVal}`,
-        answer: String(correctVal),
+        msg: `答案是 ${shownAnswer}`,
+        answer: shownAnswer,
         steps: currentQuestion.steps
       });
     }
