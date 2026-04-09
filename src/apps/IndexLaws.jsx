@@ -66,6 +66,78 @@ const toLatex = (input) => {
   return latex;
 };
 
+const TERM_REGEX = /([a-zA-Z])(?:\^(\([^)]*\)|-?\d+(?:\.\d+)?))?/g;
+
+const getConvertedPositiveTermSet = (step1) => {
+  const set = new Set();
+  if (!step1) return set;
+
+  const matches = step1.matchAll(TERM_REGEX);
+  for (const match of matches) {
+    const base = match[1];
+    const expRaw = match[2] || '1';
+    const exp = Number(String(expRaw).replace(/[()]/g, ''));
+    if (!Number.isNaN(exp) && exp < 0) {
+      set.add(`${base}^${Math.abs(exp)}`);
+    }
+  }
+  return set;
+};
+
+const toLatexWithTermHighlight = (input, mode = 'none', sourceStep1 = '') => {
+  if (!input) return '';
+
+  const convertedSet = mode === 'step2-converted'
+    ? getConvertedPositiveTermSet(sourceStep1)
+    : new Set();
+
+  const convertPart = (part) => {
+    let result = '';
+    let lastIndex = 0;
+    const matches = part.matchAll(TERM_REGEX);
+
+    for (const match of matches) {
+      const full = match[0];
+      const base = match[1];
+      const expRaw = match[2] || '1';
+      const expStr = String(expRaw).replace(/[()]/g, '');
+      const expNum = Number(expStr);
+
+      result += part.slice(lastIndex, match.index);
+
+      let termLatex = expStr === '1' ? `${base}` : `${base}^{${expStr}}`;
+      const canonical = `${base}^${expStr}`;
+
+      let shouldHighlight = false;
+      if (mode === 'step1-negative' && !Number.isNaN(expNum) && expNum < 0) {
+        shouldHighlight = true;
+      }
+      if (mode === 'step2-converted' && convertedSet.has(canonical)) {
+        shouldHighlight = true;
+      }
+
+      if (shouldHighlight) {
+        termLatex = `\\bbox[yellow]{${termLatex}}`;
+      }
+
+      result += termLatex;
+      lastIndex = (match.index ?? 0) + full.length;
+    }
+
+    result += part.slice(lastIndex);
+    return result.replace(/\*/g, '\\times ');
+  };
+
+  if (input.includes('/')) {
+    const parts = input.split('/');
+    if (parts.length === 2) {
+      return `\\frac{${convertPart(parts[0])}}{${convertPart(parts[1])}}`;
+    }
+  }
+
+  return convertPart(input.replace(/\//g, '\\div '));
+};
+
 // --- 輔助函數 ---
 const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const getRandomNonZero = (min, max) => {
@@ -827,7 +899,7 @@ export default function IndexLaws() {
                 className={`p-3 rounded-xl border-2 transition-all ${activeField === 'step2' && !hasChecked ? 'border-indigo-400 bg-white shadow-sm' : 'border-transparent bg-slate-50'}`}
               >
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-bold text-slate-600">步驟 2：負指數轉正指數</span>
+                  <span className="text-sm font-bold text-slate-600">步驟 2：<span className="bg-yellow-200 text-slate-800 px-1 rounded">負指數</span>轉正指數</span>
                   <span className="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-full border">過程分</span>
                 </div>
                 <div className="min-h-[3em] text-3xl flex items-center">
@@ -861,26 +933,19 @@ export default function IndexLaws() {
                 <div className="mt-2 space-y-3">
                   <div className="p-4 bg-white/60 rounded-xl border border-red-100/50">
                     <div className="text-sm font-bold text-red-600 mb-3">正確步驟：</div>
-                    <div className="flex gap-3">
-                      <div className="flex flex-col items-center pt-1">
-                        {problem.steps && problem.steps.map((step, idx) => (
-                          <div key={idx} className="h-[2.5em] flex items-center text-red-500 font-bold text-lg">
-                            {idx > 0 ? '=' : ''}
-                          </div>
-                        ))}
-                      </div>
-                      <div className="flex-1 flex flex-col">
-                        {problem.steps && problem.steps.map((step, idx) => (
-                          <div key={idx} className="text-lg font-bold text-slate-800 h-[2.5em] flex items-center">
-                            <Latex>{step}</Latex>
-                          </div>
-                        ))}
-                      </div>
+                    <div className="flex-1 flex flex-col">
+                      {problem.steps && problem.steps.map((step, idx) => (
+                        <div key={idx} className="text-lg font-bold text-slate-800 h-[2.5em] flex items-center gap-2">
+                          <span className="text-xl font-semibold text-slate-500">=</span>
+                          <Latex>{toLatex(step)}</Latex>
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div className="p-3 bg-white/60 rounded-xl border border-red-100/50">
                     <div className="text-xs font-bold text-red-600 mb-1">最終答案：</div>
-                    <div className="text-2xl font-bold text-slate-800">
+                    <div className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                      <span className="text-xl font-semibold text-slate-500">=</span>
                       <Latex>{toLatex(problem.ans)}</Latex>
                     </div>
                   </div>
@@ -890,19 +955,22 @@ export default function IndexLaws() {
                 <div className="mt-2 space-y-3">
                   <div className="p-3 bg-white/60 rounded-xl border border-blue-100/50">
                     <div className="text-xs font-bold text-indigo-500 mb-1">步驟 1：拆括號</div>
-                    <div className="text-lg font-bold text-slate-800">
-                      <Latex>{toLatex(problem.expectations.step1)}</Latex>
+                    <div className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                      <span className="text-xl font-semibold text-slate-500">=</span>
+                      <Latex>{toLatexWithTermHighlight(problem.expectations.step1, 'step1-negative')}</Latex>
                     </div>
                   </div>
                   <div className="p-3 bg-white/60 rounded-xl border border-blue-100/50">
-                    <div className="text-xs font-bold text-slate-600 mb-1">步驟 2：負指數轉正指數</div>
-                    <div className="text-lg font-bold text-slate-800">
-                      <Latex>{toLatex(problem.expectations.step2)}</Latex>
+                    <div className="text-xs font-bold text-slate-600 mb-1">步驟 2：<span className="bg-yellow-200 text-slate-800 px-1 rounded">負指數</span>轉正指數</div>
+                    <div className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                      <span className="text-xl font-semibold text-slate-500">=</span>
+                      <Latex>{toLatexWithTermHighlight(problem.expectations.step2, 'step2-converted', problem.expectations.step1)}</Latex>
                     </div>
                   </div>
                   <div className="p-3 bg-white/60 rounded-xl border border-emerald-100">
                     <div className="text-xs font-bold text-emerald-600 mb-1">步驟 3：指數約簡（正指數）</div>
-                    <div className="text-2xl font-bold text-slate-800">
+                    <div className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                      <span className="text-xl font-semibold text-slate-500">=</span>
                       <Latex>{toLatex(problem.expectations.step3)}</Latex>
                     </div>
                   </div>
