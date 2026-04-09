@@ -744,53 +744,141 @@ const generateRangeQuestion = () => {
 const generateRoundingMCQuestion = () => {
   // 直接給算式或數字，選出正確捨入答案
   // 選4個不同準確度的捨入，只有一個是題目問的
+  const toSuperscript = (value) => {
+    const map = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
+    return String(value).split('').map((ch) => map[ch] || ch).join('');
+  };
+
+  const roundToDp = (num, dp) => {
+    const factor = Math.pow(10, dp);
+    return Math.round(num * factor) / factor;
+  };
+
+  const truncateToDp = (num, dp) => {
+    const factor = Math.pow(10, dp);
+    return Math.floor(num * factor) / factor;
+  };
+
+  const roundToSf = (num, sf) => {
+    if (num === 0) return 0;
+    const magnitude = Math.floor(Math.log10(Math.abs(num)));
+    const factor = Math.pow(10, magnitude - sf + 1);
+    return Math.round(num / factor) * factor;
+  };
+
+  const truncateToSf = (num, sf) => {
+    if (num === 0) return 0;
+    const magnitude = Math.floor(Math.log10(Math.abs(num)));
+    const factor = Math.pow(10, magnitude - sf + 1);
+    return Math.floor(num / factor) * factor;
+  };
+
+  const formatSf = (num, sf) => {
+    if (num === 0) return '0';
+    return Number(num.toPrecision(sf)).toString();
+  };
+
+  const buildOption = (raw, cfg, isCorrect) => {
+    let correctVal;
+    let wrongVal;
+    let valueText;
+
+    if (cfg.kind === 'int') {
+      correctVal = Math.round(raw);
+      wrongVal = Math.floor(raw);
+      if (wrongVal === correctVal) wrongVal = correctVal + 1;
+      valueText = String(isCorrect ? correctVal : wrongVal);
+    } else if (cfg.kind === 'dp') {
+      const unit = Math.pow(10, -cfg.value);
+      correctVal = roundToDp(raw, cfg.value);
+      wrongVal = truncateToDp(raw, cfg.value);
+      if (Math.abs(wrongVal - correctVal) < unit / 10) wrongVal = correctVal + unit;
+      valueText = (isCorrect ? correctVal : wrongVal).toFixed(cfg.value);
+    } else {
+      const magnitude = raw === 0 ? 0 : Math.floor(Math.log10(Math.abs(raw)));
+      const unit = Math.pow(10, magnitude - cfg.value + 1);
+      correctVal = roundToSf(raw, cfg.value);
+      wrongVal = truncateToSf(raw, cfg.value);
+      if (Math.abs(wrongVal - correctVal) < Math.abs(unit) / 10) wrongVal = correctVal + unit;
+      valueText = formatSf(isCorrect ? correctVal : wrongVal, cfg.value);
+    }
+
+    return {
+      label: `${valueText}（準確至${cfg.label}）`,
+      isCorrect,
+      precisionLabel: cfg.label,
+      correctText: cfg.kind === 'int'
+        ? String(Math.round(raw))
+        : cfg.kind === 'dp'
+          ? roundToDp(raw, cfg.value).toFixed(cfg.value)
+          : formatSf(roundToSf(raw, cfg.value), cfg.value),
+      shownText: valueText,
+    };
+  };
+
+  const buildCalculationQuestion = ({ expressionText, expressionLatex, raw, optionConfigs }) => {
+    const correctCfg = optionConfigs[Math.floor(Math.random() * optionConfigs.length)];
+    const opts = optionConfigs.map((cfg) => buildOption(raw, cfg, cfg.key === correctCfg.key));
+    const shuffled = [...opts].sort(() => Math.random() - 0.5);
+    const correctIndex = shuffled.findIndex((o) => o.isCorrect);
+    const explanationLines = shuffled.map((o) => (
+      o.isCorrect
+        ? `• ${o.label}：符合${o.precisionLabel}的捨入結果 ✓`
+        : `• ${o.label}：此準確度應為 ${o.correctText}，不是 ${o.shownText} ✗`
+    ));
+
+    return {
+      mcType: 'calculation',
+      question: `${expressionText} =`,
+      questionLatex: `${expressionLatex} =`,
+      options: shuffled.map((o) => o.label),
+      correctIndex,
+      explanation: `${expressionText} ≈ ${raw.toFixed(8)}…\n\n${explanationLines.join('\n')}`,
+    };
+  };
   
   const templates = [
-    // √333
+    // surd 題：√n（n 隨機）
     () => {
-      const raw = Math.sqrt(333); // ≈ 18.2482...
-      const q = Math.floor(Math.random() * 4); // 0=最近整數,1=2dp,2=3sf,3=4dp
-      const choices = [
-        { label: '18（準確至最接近的整數）', value: 18, desc: '最接近的整數', correct: q === 0 },
-        { label: '18.25（準確至四位小數）', value: 18.2482, desc: '四位小數', correct: false },
-        { label: '18.248（準確至三位有效數字）', value: 18.248, desc: '三位有效數字', correct: false },
-        { label: '18.2482（準確至四位小數）', value: 18.2482, desc: '四位小數', correct: false },
-      ];
-      // pick which to ask
-      const targetIdx = Math.floor(Math.random() * 4);
-      const target = choices[targetIdx];
-      const otherChoices = choices.filter((_, i) => i !== targetIdx);
-      // mark correct
-      const allOpts = [
-        { label: target.label, isCorrect: true },
-        ...otherChoices.map(c => ({ label: c.label, isCorrect: false })),
-      ].sort(() => Math.random() - 0.5);
-      return {
-        mcType: 'calculation',
-        question: `√333 =`,
-        questionLatex: `\\sqrt{333} =`,
-        options: allOpts.map(o => o.label),
-        correctIndex: allOpts.findIndex(o => o.isCorrect),
-        explanation: `√333 ≈ 18.2482…\n\n${allOpts[allOpts.findIndex(o => o.isCorrect)].label}（正確）\n\n其他選項使用了錯誤的準確度。`,
-      };
+      const radicands = [347, 389, 421, 514, 587, 733, 915, 947];
+      const n = radicands[Math.floor(Math.random() * radicands.length)];
+      const raw = Math.sqrt(n);
+      return buildCalculationQuestion({
+        expressionText: `√${n}`,
+        expressionLatex: `\\sqrt{${n}}`,
+        raw,
+        optionConfigs: [
+          { key: 'int', kind: 'int', label: '最接近的整數' },
+          { key: 'dp2', kind: 'dp', value: 2, label: '二位小數' },
+          { key: 'sf3', kind: 'sf', value: 3, label: '三位有效數字' },
+          { key: 'dp4', kind: 'dp', value: 4, label: '四位小數' },
+        ],
+      });
     },
-    // 1/π⁴
+    // pi 題：a/π^n（a, n 隨機）
     () => {
-      const raw = 1 / Math.pow(Math.PI, 4); // ≈ 0.010266...
-      const opts = [
-        { label: '0.0102（準確至三位有效數字）', isCorrect: false, explanation: '準確至三位有效數字：1,0,2 → 下一位是6，五入 → 0.0103，不是 0.0102 ✗' },
-        { label: '0.01025（準確至四位有效數字）', isCorrect: false, explanation: '準確至四位有效數字：1,0,2,6 → 即 0.01027（下一位6，五入），不是 0.01025 ✗' },
-        { label: '0.01026（準確至五位小數）', isCorrect: false, explanation: '準確至五位小數：第五位是6，下一位是6，五入 → 0.01027，不是 0.01026 ✗' },
-        { label: '0.010266（準確至六位小數）', isCorrect: true, explanation: '1/π⁴ ≈ 0.01026614…，準確至六位小數：第六位是6，下一位是1，四捨 → 0.010266 ✓' },
-      ].sort(() => Math.random() - 0.5);
-      return {
-        mcType: 'calculation',
-        question: `1/π⁴ =`,
-        questionLatex: `\\dfrac{1}{\\pi^4} =`,
-        options: opts.map(o => o.label),
-        correctIndex: opts.findIndex(o => o.isCorrect),
-        explanation: `1/π⁴ ≈ 0.01026614…\n\n` + opts.map(o => `• ${o.label}：${o.explanation}`).join('\n'),
-      };
+      const variants = [
+        { coef: 1, power: 3 },
+        { coef: 2, power: 3 },
+        { coef: 2, power: 4 },
+        { coef: 3, power: 4 },
+        { coef: 1, power: 5 },
+        { coef: 3, power: 5 },
+      ];
+      const pick = variants[Math.floor(Math.random() * variants.length)];
+      const raw = pick.coef / Math.pow(Math.PI, pick.power);
+      const superscriptPower = toSuperscript(pick.power);
+      return buildCalculationQuestion({
+        expressionText: `${pick.coef}/π${superscriptPower}`,
+        expressionLatex: `\\dfrac{${pick.coef}}{\\pi^${pick.power}}`,
+        raw,
+        optionConfigs: [
+          { key: 'sf3', kind: 'sf', value: 3, label: '三位有效數字' },
+          { key: 'sf4', kind: 'sf', value: 4, label: '四位有效數字' },
+          { key: 'dp5', kind: 'dp', value: 5, label: '五位小數' },
+          { key: 'dp6', kind: 'dp', value: 6, label: '六位小數' },
+        ],
+      });
     },
   ];
 
