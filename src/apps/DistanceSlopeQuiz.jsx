@@ -563,10 +563,10 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <p className="text-sm text-slate-600">方法：分別找 AB、AC、BC 其中兩線段的斜率，再比較是否相等。</p>
               </div>
               <div className="bg-white rounded-lg p-4">
-                <p className="text-xs text-slate-400 mb-2">例：判斷 A(1, 2)、B(3, 6)、C(5, 10) 是否共線</p>
+                <p className="text-xs text-slate-400 mb-2">例：判斷 A(<span className="text-blue-600">1</span>, <span className="text-green-600">2</span>)、B(<span className="text-blue-600">3</span>, <span className="text-green-600">6</span>)、C(<span className="text-blue-600">5</span>, <span className="text-green-600">10</span>) 是否共線</p>
                 <div className="space-y-2 text-sm text-slate-700">
-                  <Latex math={"\\begin{aligned}m_{AB} &= \\dfrac{\\textcolor{green}{6}-\\textcolor{green}{2}}{\\textcolor{blue}{3}-\\textcolor{blue}{1}} = \\dfrac{\\textcolor{green}{4}}{\\textcolor{blue}{2}} = 2\\end{aligned}"} block />
-                  <Latex math={"\\begin{aligned}m_{BC} &= \\dfrac{\\textcolor{green}{10}-\\textcolor{green}{6}}{\\textcolor{blue}{5}-\\textcolor{blue}{3}} = \\dfrac{\\textcolor{green}{4}}{\\textcolor{blue}{2}} = 2\\end{aligned}"} block />
+                  <Latex math={"\\begin{aligned}m_{AB} &= \\dfrac{\\textcolor{green}{6}-\\textcolor{green}{2}}{\\textcolor{blue}{3}-\\textcolor{blue}{1}} = \\dfrac{4}{2} = 2\\end{aligned}"} block />
+                  <Latex math={"\\begin{aligned}m_{BC} &= \\dfrac{\\textcolor{green}{10}-\\textcolor{green}{6}}{\\textcolor{blue}{5}-\\textcolor{blue}{3}} = \\dfrac{4}{2} = 2\\end{aligned}"} block />
                   <div className="bg-orange-50 border border-orange-200 rounded-lg px-3 py-2 text-orange-800 font-semibold">
                     ∵ AB斜率 = BC斜率，∴ A、B、C 三點共線。
                   </div>
@@ -586,7 +586,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   <Latex math={"L_1 \\mathbin{/\\!/} L_2 \\;\\Rightarrow\\; m_1 = m_2"} block />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-slate-700"><span className="bg-green-200 px-1 rounded">垂直</span>：兩條線斜率之積 = <span className="bg-green-200 px-1 rounded">−1</span></p>
+                  <p className="text-sm font-bold text-slate-700"><span className="bg-green-200 px-1 rounded">垂直</span>：兩條線斜率相乘 = <span className="bg-green-200 px-1 rounded">−1</span></p>
                   <Latex math={"L_1 \\perp L_2 \\;\\Rightarrow\\; m_1 \\times m_2 = -1"} block />
                 </div>
               </div>
