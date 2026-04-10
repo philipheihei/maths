@@ -559,12 +559,18 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4 space-y-2">
                 <p className="text-xs text-slate-400 mb-1">定義</p>
-                <p className="text-sm font-bold text-slate-700">若 A、B、C <span className="bg-orange-200 px-1 rounded">三點共線</span>，則任意兩對點之間的斜率相等</p>
-                <Latex math={"A,B,C\\text{ 共線} \\;\\Leftrightarrow\\; m_{AB} = m_{BC}"} block />
+                <p className="text-sm font-bold text-slate-700">若 A、B、C 三點<span className="bg-orange-200 px-1 rounded">共線</span>，則 ABC 任意兩點的斜率都相等</p>
+                <p className="text-sm text-slate-600">方法：分別找 AB、AC、BC 其中兩線段的斜率，再比較是否相等。</p>
               </div>
               <div className="bg-white rounded-lg p-4">
                 <p className="text-xs text-slate-400 mb-2">例：判斷 A(1, 2)、B(3, 6)、C(5, 10) 是否共線</p>
-                <p className="text-sm text-slate-600 mt-2">試求 <Latex math={"m_{AB}"} /> 及 <Latex math={"m_{BC}"} />，比較兩者是否相等。</p>
+                <div className="space-y-2 text-sm text-slate-700">
+                  <Latex math={"\\begin{aligned}m_{AB} &= \\dfrac{\\textcolor{green}{6}-\\textcolor{green}{2}}{\\textcolor{blue}{3}-\\textcolor{blue}{1}} = \\dfrac{\\textcolor{green}{4}}{\\textcolor{blue}{2}} = 2\\end{aligned}"} block />
+                  <Latex math={"\\begin{aligned}m_{BC} &= \\dfrac{\\textcolor{green}{10}-\\textcolor{green}{6}}{\\textcolor{blue}{5}-\\textcolor{blue}{3}} = \\dfrac{\\textcolor{green}{4}}{\\textcolor{blue}{2}} = 2\\end{aligned}"} block />
+                  <div className="bg-orange-50 border border-orange-200 rounded-lg px-3 py-2 text-orange-800 font-semibold">
+                    ∵ AB斜率 = BC斜率，∴ A、B、C 三點共線。
+                  </div>
+                </div>
               </div>
             </div>
           </div>

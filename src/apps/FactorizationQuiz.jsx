@@ -587,7 +587,7 @@ const TeachingPage = ({ onStartQuiz }) => {
               <div className="bg-red-50 rounded-lg p-4 border border-red-200">
                 <h3 className="font-bold text-red-800 mb-3">📋 利用前題答案</h3>
                 <div className="bg-white rounded-lg p-3">
-                  <p className="text-sm text-slate-600 mb-3">DSE 常見：(a) 和 (b) 有關聯</p>
+                  <p className="text-sm text-slate-600 mb-3">DSE 常見：(a) 和 (b) 有關聯（如果出現 (c)，則 (a) + (b) 都和 (c) 有關聯）</p>
                   
                   {/* 題目 */}
                   <div className="space-y-2 text-sm mb-3">
