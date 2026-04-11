@@ -55,6 +55,44 @@ const mkQ = (text, answer, unit, steps, formulaLatex) => ({
 });
 
 const generators = [
+  // ── 弧長 ──
+  () => {
+    const r = rand(2, 15);
+    const angles = [30, 45, 60, 90, 120, 150, 180, 270];
+    const theta = pick(angles);
+    const coeff = round2(2 * r * theta / 360);
+    return mkQ(
+      `一個圓的半徑為 ${r} cm，圓心角為 ${theta}°。求弧長。（答案以 π 表示）`,
+      coeff,
+      'π cm',
+      [
+        `\\text{弧長} = 2\\pi r \\times \\dfrac{\\theta}{360^\\circ}`,
+        `= 2\\pi(${r}) \\times \\dfrac{${theta}^\\circ}{360^\\circ}`,
+        `= ${coeff}\\pi \\text{ cm}`,
+      ],
+      `\\text{弧長} = 2\\pi r \\times \\dfrac{\\theta}{360^\\circ}`
+    );
+  },
+
+  // ── 扇形面積 ──
+  () => {
+    const r = rand(2, 15);
+    const angles = [30, 45, 60, 90, 120, 150, 180, 270];
+    const theta = pick(angles);
+    const coeff = round2(r * r * theta / 360);
+    return mkQ(
+      `一個圓的半徑為 ${r} cm，圓心角為 ${theta}°。求扇形面積。（答案以 π 表示）`,
+      coeff,
+      'π cm²',
+      [
+        `\\text{扇形面積} = \\pi r^2 \\times \\dfrac{\\theta}{360^\\circ}`,
+        `= \\pi(${r})^2 \\times \\dfrac{${theta}^\\circ}{360^\\circ}`,
+        `= ${coeff}\\pi \\text{ cm}^2`,
+      ],
+      `\\text{扇形面積} = \\pi r^2 \\times \\dfrac{\\theta}{360^\\circ}`
+    );
+  },
+
   // ── 圓柱體 ──
   () => {
     const r = rand(2, 12), h = rand(3, 20);
@@ -426,6 +464,133 @@ const FormulaSheet = ({ onBack }) => {
               <span>體積</span>
               <span>表面面積</span>
               <span className="invisible select-none" aria-hidden="true">x</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 圓形基本公式 (2D) */}
+        <div className="mb-8">
+          <h3 className="font-bold text-slate-800 text-lg mb-4 flex items-center gap-2 border-b border-slate-200 pb-2">
+            <span className="w-2 h-6 bg-green-500 rounded-full"></span> 弧長和扇形
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* 1. 圓周 vs 2. 弧長 */}
+            <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+              <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <span className="text-blue-600">1.</span> 圓周
+              </h4>
+              <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-4">
+                <span className="text-lg">圓周 = </span>
+                <span className="bg-green-200 px-2 py-1 rounded font-bold text-lg">2<Latex math="\\pi" />r</span>
+                <span className="text-green-700 font-bold ml-2 text-sm italic">← r = 半徑</span>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
+                <p className="text-slate-600 mb-2 font-medium">例：圓周 (r = 8 cm)</p>
+                <div className="font-bold text-slate-800 text-lg">
+                  <Latex math="2\\pi(8) = 16\\pi \\text{ cm}" />
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+              <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <span className="text-red-600">2.</span> 弧長 <span className="text-slate-500 font-normal text-sm">（圓周的一部份）</span>
+              </h4>
+              <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-4">
+                <span className="text-lg">弧長 = </span>
+                <span className="bg-green-200 px-1 py-1 rounded-l font-bold text-lg">2<Latex math="\\pi" />r</span>
+                <span className="px-1 text-lg"><Latex math="\\times" /></span>
+                <span className="bg-yellow-200 px-1 py-1 rounded-r font-bold text-lg"><Latex math="\\frac{\\theta}{360^\\circ}" /></span>
+                <div className="mt-2 text-sm text-red-600 font-medium">
+                  📝 360° 當中只要 <Latex math="\\theta" />！<br/>例如只要 100° <Latex math="\\rightarrow \\frac{100^\\circ}{360^\\circ}" /> （按題目而變）
+                </div>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
+                <p className="text-slate-600 mb-2 font-medium">例：<Latex math="\\overparen{AB}" /> 或 弧 AB (r = 4 m, <Latex math="\\theta" /> = 100°)</p>
+                <div className="font-bold text-slate-800 text-lg">
+                  <Latex math="\\overparen{AB} = 2\\pi(4) \\times \\frac{100^\\circ}{360^\\circ} = 6.98 \\text{ m}" />
+                </div>
+              </div>
+            </div>
+
+            {/* 3. 圓面積 vs 4. 扇形 */}
+            <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 mt-2">
+              <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <span className="text-blue-600">3.</span> 圓面積
+              </h4>
+              <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-4">
+                <span className="text-lg">圓面積 = </span>
+                <span className="bg-blue-200 px-2 py-1 rounded font-bold text-lg"><Latex math="\\pi" />r²</span>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
+                <p className="text-slate-600 mb-2 font-medium">例：圓面積 (r = 3 cm)</p>
+                <div className="font-bold text-slate-800 text-lg">
+                  <Latex math="\\pi(3)^2 = 9\\pi \\text{ cm}^2" />
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 mt-2">
+              <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <span className="text-red-600">4.</span> 扇形 <span className="text-slate-500 font-normal text-sm">（圓面積的一部份）</span>
+              </h4>
+              <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-4">
+                <span className="text-lg">面積 = </span>
+                <span className="bg-blue-200 px-1 py-1 rounded-l font-bold text-lg"><Latex math="\\pi" />r²</span>
+                <span className="px-1 text-lg"><Latex math="\\times" /></span>
+                <span className="bg-yellow-200 px-1 py-1 rounded-r font-bold text-lg"><Latex math="\\frac{\\theta}{360^\\circ}" /></span>
+                <div className="mt-2 text-sm text-green-700 font-medium">
+                  💡 扇形像在整個 pizza cut 出一部份！<br/>360° 的 pizza 只要 120°！
+                </div>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
+                <p className="text-slate-600 mb-2 font-medium">例：扇形 SOT 面積 (r = 14 cm, <Latex math="\\theta" /> = 120°)</p>
+                <div className="font-bold text-slate-800 text-lg">
+                  <Latex math="\\pi(14)^2 \\times \\frac{120^\\circ}{360^\\circ} = 205 \\text{ cm}^2" />
+                </div>
+              </div>
+            </div>
+            
+            {/* 圖示 */}
+            <div className="col-span-1 md:col-span-2 flex flex-col md:flex-row justify-center gap-12 bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+              {/* Circle Diagram */}
+              <div className="flex flex-col items-center">
+                <svg viewBox="0 0 120 120" className="w-32 h-32">
+                  <circle cx="60" cy="60" r="50" fill="#eff6ff" stroke="#3b82f6" strokeWidth="3" />
+                  <circle cx="60" cy="60" r="3" fill="#1e3a8a" />
+                  <line x1="60" y1="60" x2="110" y2="60" stroke="#1e3a8a" strokeWidth="2" strokeDasharray="3,3" />
+                  <text x="80" y="52" fill="#1e3a8a" fontSize="16" fontStyle="italic" fontWeight="bold">r</text>
+                  <text x="50" y="75" fill="#1e3a8a" fontSize="14" fontWeight="bold">O</text>
+                </svg>
+                <div className="mt-3 text-sm font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full">圓周 / 圓面積</div>
+              </div>
+
+              {/* Sector Diagram */}
+              <div className="flex flex-col items-center">
+                <svg viewBox="0 0 120 120" className="w-32 h-32">
+                  {/* Sector area */}
+                  <path d="M 60 60 L 110 60 A 50 50 0 0 0 24.6 24.6 Z" fill="#fef08a" />
+                  {/* Arc */}
+                  <path d="M 110 60 A 50 50 0 0 0 24.6 24.6" fill="none" stroke="#eab308" strokeWidth="4" />
+                  {/* Radius lines */}
+                  <line x1="60" y1="60" x2="110" y2="60" stroke="#ca8a04" strokeWidth="2" strokeDasharray="3,3" />
+                  <line x1="60" y1="60" x2="24.6" y2="24.6" stroke="#ca8a04" strokeWidth="2" strokeDasharray="3,3" />
+                  <circle cx="60" cy="60" r="3" fill="#ca8a04" />
+                  
+                  {/* Theta Arc */}
+                  <path d="M 75 60 A 15 15 0 0 0 49.4 49.4" fill="none" stroke="#ca8a04" strokeWidth="2" />
+                  <text x="65" y="48" fill="#ca8a04" fontSize="14" fontStyle="italic" fontWeight="bold">θ</text>
+
+                  <text x="80" y="75" fill="#ca8a04" fontSize="14" fontStyle="italic" fontWeight="bold">r</text>
+                  
+                  {/* A, B labels */}
+                  <text x="15" y="20" fill="#ca8a04" fontSize="14" fontWeight="bold">A</text>
+                  <text x="115" y="65" fill="#ca8a04" fontSize="14" fontWeight="bold">B</text>
+                  <text x="50" y="75" fill="#ca8a04" fontSize="14" fontWeight="bold">O</text>
+                </svg>
+                <div className="mt-3 text-sm font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-full">弧長 / 扇形面積</div>
+              </div>
             </div>
           </div>
         </div>
@@ -805,7 +970,6 @@ export default function SolidGeometryQuiz() {
           <div className="text-center mb-8">
             <span className="text-6xl mb-4 block">📐</span>
             <h1 className="text-3xl font-extrabold text-slate-800 mb-2">立體面積及體積</h1>
-            <p className="text-slate-500">F1 CH5 · 面積和體積（一）</p>
           </div>
 
           <div className="space-y-4">
