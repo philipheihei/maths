@@ -38,9 +38,7 @@ const Home = () => {
       hoverColor: 'hover:bg-blue-600',
       path: '/angle-quiz',
       level: 'F1',
-      badges: [
-        { level: 'F1', chapter: 'CH5', subject: '面積和體積（一）' }
-      ],
+      badges: [],
       category: '初中',
       topics: ['角度命名', '幾何圖形', '三點標記法']
     },
