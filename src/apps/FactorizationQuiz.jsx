@@ -711,10 +711,14 @@ const QuizPage = ({ onBackToTeaching }) => {
   const [levelData, setLevelData] = useState({
     common: { 1: { score: 0, total: 0 }, 2: { score: 0, total: 0 } },
     grouping: { 1: { score: 0, total: 0 } },
-    quadratic: { 1: { score: 0, total: 0 }, 2: { score: 0, total: 0 } }
+    quadratic: { 1: { score: 0, total: 0 }, 2: { score: 0, total: 0 } },
+    dse: { 1: { score: 0, total: 0 } }
   });
   const [isAnswered, setIsAnswered] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
+  const [dseFlow, setDseFlow] = useState(null);
+  const [dseInputStage, setDseInputStage] = useState('answer');
+  const [stageNotice, setStageNotice] = useState('');
 
   const inputRef = useRef(null);
 
@@ -1165,13 +1169,274 @@ const QuizPage = ({ onBackToTeaching }) => {
     }
   };
 
+  // =====================
+  // DSE 實戰題目生成
+  // 目前先做兩類：
+  // 1) (a), (b)；作答 (b)
+  // 2) (a), (b), (c)；作答 (c)
+  // =====================
+  const termAbs = (n, v) => `${Math.abs(n) === 1 ? '' : Math.abs(n)}${v}`;
+  const signedJoin = (terms) => {
+    const valid = terms.filter(t => t.coef !== 0);
+    if (valid.length === 0) return '0';
+    return valid.map((t, i) => {
+      const body = `${Math.abs(t.coef) === 1 ? '' : Math.abs(t.coef)}${t.var}`;
+      if (i === 0) return t.coef < 0 ? `-${body}` : body;
+      return t.coef < 0 ? ` - ${body}` : ` + ${body}`;
+    }).join('');
+  };
+
+  const generateDSEQuestionSet = () => {
+    const scenarios = [
+      // (a), (b) 題型：用 (a) 的因式分解代入 (b)
+      () => {
+        const varPairs = [['r', 's'], ['p', 'q'], ['m', 'n']];
+        const [v1, v2] = varPairs[Math.floor(Math.random() * varPairs.length)];
+
+        const a1 = Math.floor(Math.random() * 3) + 2; // 2..4
+        const b1Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        const b1Sign = Math.random() > 0.5 ? 1 : -1;
+        const b1 = b1Sign * b1Abs;
+
+        const a2 = Math.floor(Math.random() * 3) + 2; // 2..4
+        const b2Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        const b2Sign = b1Sign === 1 ? -1 : 1; // 避免太單調
+        const b2 = b2Sign * b2Abs;
+
+        const A = a1 * a2;
+        const B = a1 * b2 + b1 * a2;
+        const C = b1 * b2;
+
+        const factor1Inner = `${termAbs(a1, v1)} ${b1 >= 0 ? '+' : '-'} ${termAbs(b1, v2)}`;
+        const factor2Inner = `${termAbs(a2, v1)} ${b2 >= 0 ? '+' : '-'} ${termAbs(b2, v2)}`;
+        const factor1 = `(${factor1Inner})`;
+        const factor2 = `(${factor2Inner})`;
+        const aExpr = signedJoin([
+          { coef: A, var: `${v1}^2` },
+          { coef: B, var: `${v1}${v2}` },
+          { coef: C, var: `${v2}^2` }
+        ]);
+
+        const t = Math.floor(Math.random() * 4) + 2; // 2..5
+        const bExpr = signedJoin([
+          { coef: t * a2, var: v1 },
+          { coef: t * b2, var: v2 },
+          { coef: A, var: `${v1}^2` },
+          { coef: B, var: `${v1}${v2}` },
+          { coef: C, var: `${v2}^2` }
+        ]);
+
+        const finalSecond = `(${factor1Inner} + ${t})`;
+        const answer = `${factor2}${finalSecond}`;
+        const stem = `\\begin{aligned}&\\text{(a)}\\; ${aExpr},\\\\&\\text{(b)}\\; ${bExpr}.\\end{aligned}`;
+
+        return {
+          vars: [v1, v2],
+          parts: [
+            {
+              label: 'a',
+              question: stem,
+              prompt: '因式分解 (a)',
+              answer: `${factor1}${factor2}`,
+              answerAlt: [
+                `${factor2}${factor1}`,
+                `${factor1}${factor2}`.replace(/\s/g, ''),
+                `${factor2}${factor1}`.replace(/\s/g, '')
+              ],
+              hint: '先把 (a) 因式分解',
+              steps: [
+                `先看 (a)：$${aExpr}$`,
+                `可視作二元二次式：$A${v1}^2 + B${v1}${v2} + C${v2}^2$，其中 $A=${A},\ B=${B},\ C=${C}$`,
+                `(a) 答案：$${aExpr} = ${factor1}${factor2}$`
+              ],
+              requiresSetup: false
+            },
+            {
+              label: 'b',
+              question: stem,
+              prompt: '因式分解 (b)',
+              answer,
+              answerAlt: [
+                `${finalSecond}${factor2}`,
+                answer.replace(/\s/g, ''),
+                `${finalSecond}${factor2}`.replace(/\s/g, '')
+              ],
+              hint: '用 (a) 的答案直接代入 (b)',
+              steps: [
+                `(a) 答案：$${aExpr} = ${factor1}${factor2}$`,
+                `原式：$${bExpr}$`,
+                `代入 (a)：$${bExpr} = ${t}${factor2} + ${factor1}${factor2}$`,
+                `抽公因式：$= ${factor2}(${factor1Inner} + ${t})$`
+              ],
+              requiresSetup: true,
+              setupPrompt: '先輸入代入列式（用 (a) 的答案）',
+              setupAnswer: `${bExpr} = ${t}${factor2} + ${factor1}${factor2}`,
+              setupAnswerAlt: [
+                `${t}${factor2} + ${factor1}${factor2} = ${bExpr}`,
+                `${bExpr}=${t}${factor2}+${factor1}${factor2}`
+              ],
+              setupHint: '列式要見到「(a) 的因式」被代入到 (b)'
+            }
+          ]
+        };
+      },
+
+      // (a), (b), (c) 題型：用 (a) 的答案代入 (c)
+      () => {
+        const p = 'p';
+        const q = 'q';
+        const r = 'r';
+
+        const x1 = Math.floor(Math.random() * 3) + 2; // 2..4
+        const x2Abs = Math.floor(Math.random() * 3) + 2; // 2..4
+        const x2Sign = Math.random() > 0.5 ? 1 : -1;
+        const x2 = x2Sign * x2Abs;
+        const xInner = `${termAbs(x1, p)} ${x2 >= 0 ? '+' : '-'} ${termAbs(x2, q)}`;
+
+        const k = Math.floor(Math.random() * 4) + 2; // 2..5
+        const aExpr = signedJoin([
+          { coef: k * x1, var: `${p}${r}` },
+          { coef: k * x2, var: `${q}${r}` }
+        ]);
+
+        const y1 = Math.floor(Math.random() * 4) + 2; // 2..5
+        const y2Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        const y2Sign = x2Sign === 1 ? -1 : 1;
+        const y2 = y2Sign * y2Abs;
+        const yInner = `${termAbs(y1, p)} ${y2 >= 0 ? '+' : '-'} ${termAbs(y2, q)}`;
+
+        const bExpr = signedJoin([
+          { coef: x1 * y1, var: `${p}^2` },
+          { coef: x1 * y2 + x2 * y1, var: `${p}${q}` },
+          { coef: x2 * y2, var: `${q}^2` }
+        ]);
+
+        const cExpr = signedJoin([
+          { coef: x1 * y1, var: `${p}^2` },
+          { coef: x1 * y2 + x2 * y1, var: `${p}${q}` },
+          { coef: x2 * y2, var: `${q}^2` },
+          { coef: -(k * x1), var: `${p}${r}` },
+          { coef: -(k * x2), var: `${q}${r}` }
+        ]);
+
+        const xFactor = `(${xInner})`;
+        const yFactor = `(${yInner})`;
+        const bAnswer = `${xFactor}${yFactor}`;
+        const cAnswer = `${xFactor}(${yInner} - ${k}${r})`;
+        const stem = `\\begin{aligned}&\\text{(a)}\\; ${aExpr},\\\\&\\text{(b)}\\; ${bExpr},\\\\&\\text{(c)}\\; ${cExpr}.\\end{aligned}`;
+
+        return {
+          vars: [p, q, r],
+          parts: [
+            {
+              label: 'a',
+              question: stem,
+              prompt: '因式分解 (a)',
+              answer: `${k}${r}${xFactor}`,
+              answerAlt: [`${xFactor}${k}${r}`, `${k}${r}${xFactor}`.replace(/\s/g, ''), `${xFactor}${k}${r}`.replace(/\s/g, '')],
+              hint: '先把 (a) 因式分解',
+              steps: [
+                `先看 (a)：$${aExpr}$`,
+                `先抽公因式 $${k}${r}$`,
+                `(a) 答案：$${aExpr} = ${k}${r}${xFactor}$`
+              ],
+              requiresSetup: false
+            },
+            {
+              label: 'b',
+              question: stem,
+              prompt: '因式分解 (b)',
+              answer: bAnswer,
+              answerAlt: [
+                `${yFactor}${xFactor}`,
+                `${bAnswer}`.replace(/\s/g, ''),
+                `${yFactor}${xFactor}`.replace(/\s/g, '')
+              ],
+              hint: '直接因式分解 (b)',
+              steps: [
+                `先看 (b)：$${bExpr}$`,
+                `作二元二次因式分解`,
+                `(b) 答案：$${bExpr} = ${bAnswer}$`
+              ],
+              requiresSetup: false
+            },
+            {
+              label: 'c',
+              question: stem,
+              prompt: '因式分解 (c)',
+              answer: cAnswer,
+              answerAlt: [
+                `(${yInner} - ${k}${r})${xFactor}`,
+                cAnswer.replace(/\s/g, ''),
+                `(${yInner} - ${k}${r})${xFactor}`.replace(/\s/g, '')
+              ],
+              hint: '先寫出 (a) 答案，再代入 (c)',
+              steps: [
+                `(a) 答案：$${aExpr} = ${k}${r}${xFactor}$`,
+                `(b) 答案：$${bExpr} = ${bAnswer}$`,
+                `原式：$${cExpr}$`,
+                `代入 (a) 和 (b)：$${cExpr} = ${bAnswer} - ${k}${r}${xFactor}$`,
+                `抽公因式：$= ${xFactor}(${yInner} - ${k}${r})$`
+              ],
+              requiresSetup: true,
+              setupPrompt: '先輸入代入列式（要同時用 (a) + (b) 的答案）',
+              setupAnswer: `${cExpr} = ${bAnswer} - ${k}${r}${xFactor}`,
+              setupAnswerAlt: [
+                `${bAnswer} - ${k}${r}${xFactor} = ${cExpr}`,
+                `${cExpr}=${bAnswer}-${k}${r}${xFactor}`
+              ],
+              setupHint: '列式要同時見到 (a) 與 (b) 的答案被代入'
+            }
+          ]
+        };
+      }
+    ];
+
+    return scenarios[Math.floor(Math.random() * scenarios.length)]();
+  };
+
+  const buildDSEPartQuestion = (setData, partIndex) => {
+    const part = setData.parts[partIndex];
+    return {
+      question: part.question,
+      prompt: part.prompt,
+      answer: part.answer,
+      answerAlt: part.answerAlt,
+      hint: part.hint,
+      steps: part.steps,
+      vars: setData.vars,
+      partLabel: part.label,
+      requiresSetup: !!part.requiresSetup,
+      setupPrompt: part.setupPrompt || '',
+      setupAnswer: part.setupAnswer || '',
+      setupAnswerAlt: part.setupAnswerAlt || [],
+      setupHint: part.setupHint || ''
+    };
+  };
+
+  const startNewDSESet = () => {
+    const setData = generateDSEQuestionSet();
+    setDseFlow({ setData, partIndex: 0 });
+    setCurrentQuestion(buildDSEPartQuestion(setData, 0));
+    setUserAnswer('');
+    setFeedback({ type: 'neutral', msg: '' });
+    setIsAnswered(false);
+    setDseInputStage(setData.parts[0].requiresSetup ? 'setup' : 'answer');
+    setStageNotice('');
+    setTimeout(() => inputRef.current?.focus(), 100);
+  };
+
   // 開始測驗（選擇類型）
   const selectQuizType = (type) => {
     setQuizType(type);
     // 對於只有一個等級的類型，直接開始
-    if (type === 'grouping') {
+    if (type === 'grouping' || type === 'dse') {
       setLevel(1);
-      generateNewQuestion(type, 1);
+      if (type === 'dse') {
+        startNewDSESet();
+      } else {
+        generateNewQuestion(type, 1);
+      }
     }
   };
 
@@ -1193,13 +1458,19 @@ const QuizPage = ({ onBackToTeaching }) => {
       case 'quadratic':
         question = generateQuadraticQuestion(lv);
         break;
+      case 'dse':
+        startNewDSESet();
+        break;
       default:
         question = generateCommonFactorQuestion(lv);
     }
+    if (type === 'dse') return;
     setCurrentQuestion(question);
     setUserAnswer('');
     setFeedback({ type: 'neutral', msg: '' });
     setIsAnswered(false);
+    setDseInputStage('answer');
+    setStageNotice('');
     setTimeout(() => inputRef.current?.focus(), 100);
   };
 
@@ -1218,6 +1489,35 @@ const QuizPage = ({ onBackToTeaching }) => {
   // 提交答案
   const handleSubmit = () => {
     if (!userAnswer.trim() || isAnswered) return;
+
+    if (quizType === 'dse' && dseInputStage === 'setup') {
+      const normalizedSetup = normalizeAnswer(userAnswer);
+      const setupCorrect = normalizeAnswer(currentQuestion.setupAnswer || '') === normalizedSetup;
+      const setupAltCorrect = currentQuestion.setupAnswerAlt?.some(
+        alt => normalizeAnswer(alt) === normalizedSetup
+      );
+
+      if (setupCorrect || setupAltCorrect) {
+        setDseInputStage('answer');
+        setUserAnswer('');
+        setFeedback({ type: 'neutral', msg: '' });
+        setStageNotice('列式正確，現在請輸入最終因式分解答案。');
+      } else {
+        setFeedback({
+          type: 'incorrect',
+          msg: `列式可寫成 ${currentQuestion.setupAnswer}`,
+          hint: currentQuestion.setupHint || '先把前題答案代入再整理',
+          answerLabel: '參考列式',
+          answer: currentQuestion.setupAnswer,
+          steps: [
+            `參考列式：$${currentQuestion.setupAnswer}$`
+          ]
+        });
+      }
+      return;
+    }
+
+    setStageNotice('');
 
     const normalized = normalizeAnswer(userAnswer);
     const correctNormalized = normalizeAnswer(currentQuestion.answer);
@@ -1262,6 +1562,22 @@ const QuizPage = ({ onBackToTeaching }) => {
 
   // 下一題
   const handleNext = () => {
+    if (quizType === 'dse' && dseFlow) {
+      const nextPartIndex = dseFlow.partIndex + 1;
+      if (nextPartIndex < dseFlow.setData.parts.length) {
+        setDseFlow({ ...dseFlow, partIndex: nextPartIndex });
+        setCurrentQuestion(buildDSEPartQuestion(dseFlow.setData, nextPartIndex));
+        setUserAnswer('');
+        setFeedback({ type: 'neutral', msg: '' });
+        setIsAnswered(false);
+        setDseInputStage(dseFlow.setData.parts[nextPartIndex].requiresSetup ? 'setup' : 'answer');
+        setStageNotice('');
+        setTimeout(() => inputRef.current?.focus(), 100);
+        return;
+      }
+      startNewDSESet();
+      return;
+    }
     generateNewQuestion(quizType, level);
   };
 
@@ -1270,6 +1586,9 @@ const QuizPage = ({ onBackToTeaching }) => {
     setQuizType(null);
     setCurrentQuestion(null);
     setLevel(1);
+    setDseFlow(null);
+    setDseInputStage('answer');
+    setStageNotice('');
   };
 
   // 返回等級選擇（對於有多等級的類型）
@@ -1363,6 +1682,26 @@ const QuizPage = ({ onBackToTeaching }) => {
                 <ArrowRight className="w-6 h-6 text-slate-400 group-hover:text-green-600 transition-colors" />
               </div>
             </button>
+
+            {/* DSE 實戰 */}
+            <button
+              onClick={() => selectQuizType('dse')}
+              className="bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent hover:border-red-400 transition-all group text-left"
+            >
+              <div className="flex items-center gap-4">
+                <div className="bg-red-100 p-4 rounded-xl group-hover:bg-red-200 transition-colors">
+                  <GraduationCap className="w-8 h-8 text-red-600" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-xl font-bold text-slate-800">DSE 實戰</h2>
+                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold">開發中</span>
+                  </div>
+                  <p className="text-slate-600 text-sm">(a)(b) / (a)(b)(c) 代入題</p>
+                </div>
+                <ArrowRight className="w-6 h-6 text-slate-400 group-hover:text-red-600 transition-colors" />
+              </div>
+            </button>
           </div>
         </div>
       </div>
@@ -1370,7 +1709,7 @@ const QuizPage = ({ onBackToTeaching }) => {
   }
 
   // 等級選擇界面（第二層，對於有多個等級的類型）
-  if (!currentQuestion && quizType !== 'grouping') {
+  if (!currentQuestion && quizType !== 'grouping' && quizType !== 'dse') {
     const typeConfig = {
       common: {
         title: '提取公因式',
@@ -1453,13 +1792,15 @@ const QuizPage = ({ onBackToTeaching }) => {
   const quizTypeNames = {
     common: '提取公因式',
     grouping: '併項法',
-    quadratic: '二次多項式'
+    quadratic: '二次多項式',
+    dse: 'DSE 實戰'
   };
 
   const quizTypeColors = {
     common: 'purple',
     grouping: 'blue',
-    quadratic: 'green'
+    quadratic: 'green',
+    dse: 'red'
   };
 
   const color = quizTypeColors[quizType];
@@ -1467,7 +1808,7 @@ const QuizPage = ({ onBackToTeaching }) => {
 
   // 返回按鈕處理
   const handleBack = () => {
-    if (quizType === 'grouping') {
+    if (quizType === 'grouping' || quizType === 'dse') {
       backToSelection();
     } else {
       backToLevelSelection();
@@ -1484,7 +1825,7 @@ const QuizPage = ({ onBackToTeaching }) => {
             className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span className="text-sm font-medium">{quizType === 'grouping' ? '返回選擇' : '返回等級'}</span>
+            <span className="text-sm font-medium">{(quizType === 'grouping' || quizType === 'dse') ? '返回選擇' : '返回等級'}</span>
           </button>
           <div className="flex items-center gap-4">
             <button
@@ -1504,7 +1845,7 @@ const QuizPage = ({ onBackToTeaching }) => {
         {/* 題目類型標題 */}
         <div className={`rounded-xl p-4 mb-4 bg-${color}-100`}>
           <h2 className={`text-lg font-bold text-${color}-700`}>
-            📐 {quizTypeNames[quizType]} {quizType !== 'grouping' && level > 0 ? `LV${level}` : ''}
+            📐 {quizTypeNames[quizType]} {!['grouping', 'dse'].includes(quizType) && level > 0 ? `LV${level}` : ''}
           </h2>
         </div>
 
@@ -1519,9 +1860,32 @@ const QuizPage = ({ onBackToTeaching }) => {
         {currentQuestion && (
           <div className="bg-white rounded-2xl shadow-lg p-6 mb-4">
             <p className="text-sm text-slate-500 mb-2">因式分解：</p>
-            <div className="text-2xl text-center py-4 font-mono">
-              <Latex math={isAnswered && currentQuestion.highlightedQuestion ? currentQuestion.highlightedQuestion : currentQuestion.question} />
-            </div>
+            {quizType === 'dse' ? (
+              <div className="py-3">
+                <div className="text-2xl text-center font-mono">
+                  <Latex
+                    math={isAnswered && currentQuestion.highlightedQuestion ? currentQuestion.highlightedQuestion : currentQuestion.question}
+                    block
+                  />
+                </div>
+                <p className="text-sm text-slate-500 text-left mt-1">{currentQuestion.prompt}</p>
+                {dseInputStage === 'setup' && currentQuestion.requiresSetup && (
+                  <div className="mt-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                    <p className="text-xs text-amber-700 font-bold">列式步驟 Session</p>
+                    <p className="text-xs text-amber-700 mt-0.5">{currentQuestion.setupPrompt}</p>
+                  </div>
+                )}
+                {stageNotice && (
+                  <div className="mt-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                    <p className="text-xs text-green-700 font-bold">✅ {stageNotice}</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-2xl text-center py-4 font-mono">
+                <Latex math={isAnswered && currentQuestion.highlightedQuestion ? currentQuestion.highlightedQuestion : currentQuestion.question} />
+              </div>
+            )}
 
             {/* 輸入區 */}
             <div className="flex flex-col gap-3 mb-4">
@@ -1531,7 +1895,11 @@ const QuizPage = ({ onBackToTeaching }) => {
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && (isAnswered ? handleNext() : handleSubmit())}
-                placeholder="輸入答案，例如：(x+2)(x-3)"
+                placeholder={
+                  quizType === 'dse' && dseInputStage === 'setup'
+                    ? '先輸入列式，例如：原式=代入後式'
+                    : '輸入答案，例如：(x+2)(x-3)'
+                }
                 disabled={isAnswered}
                 className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-lg focus:border-purple-500 focus:outline-none disabled:bg-gray-100 font-mono"
               />
@@ -1557,7 +1925,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 </div>
                 {/* 答案（LaTeX 渲染） */}
                 <div className={`flex items-center gap-2 text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
-                  <span className="font-medium">答案：</span>
+                  <span className="font-medium">{feedback.answerLabel || '答案'}：</span>
                   <span className="font-mono"><Latex math={feedback.answer || ''} /></span>
                 </div>
                 {/* 解題步驟 */}
@@ -1587,7 +1955,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                   disabled={!userAnswer.trim()}
                   className={`flex-1 bg-${color}-500 text-white py-3 rounded-lg font-bold hover:bg-${color}-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed`}
                 >
-                  提交答案
+                  {quizType === 'dse' && dseInputStage === 'setup' ? '提交列式' : '提交答案'}
                 </button>
               ) : (
                 <button
