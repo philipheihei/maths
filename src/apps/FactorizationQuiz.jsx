@@ -1193,13 +1193,19 @@ const QuizPage = ({ onBackToTeaching }) => {
         const varPairs = [['r', 's'], ['p', 'q'], ['m', 'n']];
         const [v1, v2] = varPairs[Math.floor(Math.random() * varPairs.length)];
 
-        const a1 = Math.floor(Math.random() * 3) + 2; // 2..4
-        const b1Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        let a1, b1Abs;
+        do {
+          a1 = Math.floor(Math.random() * 3) + 2; // 2..4
+          b1Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        } while (gcd(a1, b1Abs) !== 1);
         const b1Sign = Math.random() > 0.5 ? 1 : -1;
         const b1 = b1Sign * b1Abs;
 
-        const a2 = Math.floor(Math.random() * 3) + 2; // 2..4
-        const b2Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        let a2, b2Abs;
+        do {
+          a2 = Math.floor(Math.random() * 3) + 2; // 2..4
+          b2Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        } while (gcd(a2, b2Abs) !== 1);
         const b2Sign = b1Sign === 1 ? -1 : 1; // 避免太單調
         const b2 = b2Sign * b2Abs;
 
@@ -1287,8 +1293,11 @@ const QuizPage = ({ onBackToTeaching }) => {
         const q = 'q';
         const r = 'r';
 
-        const x1 = Math.floor(Math.random() * 3) + 2; // 2..4
-        const x2Abs = Math.floor(Math.random() * 3) + 2; // 2..4
+        let x1, x2Abs;
+        do {
+          x1 = Math.floor(Math.random() * 3) + 2; // 2..4
+          x2Abs = Math.floor(Math.random() * 3) + 2; // 2..4
+        } while (x1 === x2Abs || gcd(x1, x2Abs) !== 1);
         const x2Sign = Math.random() > 0.5 ? 1 : -1;
         const x2 = x2Sign * x2Abs;
         const xInner = `${termAbs(x1, p)} ${x2 >= 0 ? '+' : '-'} ${termAbs(x2, q)}`;
@@ -1385,14 +1394,21 @@ const QuizPage = ({ onBackToTeaching }) => {
                 `${bAnswer} - ${k}${r}${xFactor} = ${cExpr}`,
                 `${cExpr}=${bAnswer}-${k}${r}${xFactor}`
               ],
-              setupHint: '列式要同時見到 (a) 與 (b) 的答案被代入'
+              setupHint: '列式要同時見到 (a) 與 (b) 的答案被代入',
+              carryAnswers: [
+                { label: '(a) 正確答案', value: `${k}${r}${xFactor}` },
+                { label: '(b) 正確答案', value: bAnswer }
+              ]
             }
           ]
         };
       }
     ];
 
-    return scenarios[Math.floor(Math.random() * scenarios.length)]();
+    // 歷屆大約 (含 c 題) : (不含 c 題) = 3 : 10
+    // 即含 c 題約 3/13 機率
+    const includePartC = Math.random() < (3 / 13);
+    return includePartC ? scenarios[1]() : scenarios[0]();
   };
 
   const buildDSEPartQuestion = (setData, partIndex) => {
@@ -1410,7 +1426,8 @@ const QuizPage = ({ onBackToTeaching }) => {
       setupPrompt: part.setupPrompt || '',
       setupAnswer: part.setupAnswer || '',
       setupAnswerAlt: part.setupAnswerAlt || [],
-      setupHint: part.setupHint || ''
+      setupHint: part.setupHint || '',
+      carryAnswers: part.carryAnswers || []
     };
   };
 
@@ -1873,6 +1890,16 @@ const QuizPage = ({ onBackToTeaching }) => {
                   <div className="mt-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
                     <p className="text-xs text-amber-700 font-bold">列式步驟 Session</p>
                     <p className="text-xs text-amber-700 mt-0.5">{currentQuestion.setupPrompt}</p>
+                  </div>
+                )}
+                {currentQuestion.carryAnswers && currentQuestion.carryAnswers.length > 0 && (
+                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {currentQuestion.carryAnswers.map((item, idx) => (
+                      <div key={idx} className="bg-blue-50 border border-blue-200 rounded-lg px-3 py-2">
+                        <p className="text-xs text-blue-700 font-bold mb-1">{item.label}</p>
+                        <p className="text-sm text-blue-800 font-mono"><Latex math={item.value} /></p>
+                      </div>
+                    ))}
                   </div>
                 )}
                 {stageNotice && (
