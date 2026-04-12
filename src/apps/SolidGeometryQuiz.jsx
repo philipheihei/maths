@@ -480,7 +480,7 @@ const FormulaSheet = ({ onBack }) => {
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
                 <p className="text-slate-600 mb-2 font-medium">例：圓周 (r = 8 cm)</p>
                 <div className="font-bold text-slate-800 text-lg">
-                  <Latex math="2\\pi(8) = 16\\pi \\text{ cm}" />
+                  <Latex math="2\pi(8) = 16\pi \text{ cm}" />
                 </div>
               </div>
             </div>
@@ -499,9 +499,9 @@ const FormulaSheet = ({ onBack }) => {
                 </div>
               </div>
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
-                <p className="text-slate-600 mb-2 font-medium">例：<Latex math="\overparen{AB}" /> 或 弧 AB (r = 4 m, <Latex math="\theta" /> = 100°)</p>
+                <p className="text-slate-600 mb-2 font-medium">例：<Latex math="\overset{\frown}{AB}" /> 或 弧 AB (r = 4 m, <Latex math="\theta" /> = 100°)</p>
                 <div className="font-bold text-slate-800 text-lg">
-                  <Latex math="\overparen{AB} = 2\pi(4) \times \frac{100^\circ}{360^\circ} = 6.98 \text{ m}" />
+                  <Latex math="\overset{\frown}{AB} = 2\pi(4) \times \frac{100^\circ}{360^\circ} = 6.98 \text{ m}" />
                 </div>
               </div>
             </div>
