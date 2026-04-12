@@ -474,7 +474,7 @@ const FormulaSheet = ({ onBack }) => {
               </h4>
               <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-4">
                 <span className="text-lg">圓周 = </span>
-                <span className="bg-green-200 px-2 py-1 rounded font-bold text-lg">2<Latex math="\\pi" />r</span>
+                <span className="bg-green-200 px-2 py-1 rounded font-bold text-lg">2<Latex math="\pi" />r</span>
                 <span className="text-green-700 font-bold ml-2 text-sm italic">← r = 半徑</span>
               </div>
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
@@ -491,17 +491,17 @@ const FormulaSheet = ({ onBack }) => {
               </h4>
               <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-4">
                 <span className="text-lg">弧長 = </span>
-                <span className="bg-green-200 px-1 py-1 rounded-l font-bold text-lg">2<Latex math="\\pi" />r</span>
-                <span className="px-1 text-lg"><Latex math="\\times" /></span>
-                <span className="bg-yellow-200 px-1 py-1 rounded-r font-bold text-lg"><Latex math="\\frac{\\theta}{360^\\circ}" /></span>
+                <span className="bg-green-200 px-1 py-1 rounded-l font-bold text-lg">2<Latex math="\pi" />r</span>
+                <span className="px-1 text-lg"><Latex math="\times" /></span>
+                <span className="bg-yellow-200 px-1 py-1 rounded-r font-bold text-lg"><Latex math="\frac{\theta}{360^\circ}" /></span>
                 <div className="mt-2 text-sm text-red-600 font-medium">
-                  📝 360° 當中只要 <Latex math="\\theta" />！<br/>例如只要 100° <Latex math="\\rightarrow \\frac{100^\\circ}{360^\\circ}" /> （按題目而變）
+                  📝 360° 當中只要 <Latex math="\theta" />！<br/>例如只要 100° <Latex math="\rightarrow \frac{100^\circ}{360^\circ}" /> （按題目而變）
                 </div>
               </div>
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
-                <p className="text-slate-600 mb-2 font-medium">例：<Latex math="\\overparen{AB}" /> 或 弧 AB (r = 4 m, <Latex math="\\theta" /> = 100°)</p>
+                <p className="text-slate-600 mb-2 font-medium">例：<Latex math="\overparen{AB}" /> 或 弧 AB (r = 4 m, <Latex math="\theta" /> = 100°)</p>
                 <div className="font-bold text-slate-800 text-lg">
-                  <Latex math="\\overparen{AB} = 2\\pi(4) \\times \\frac{100^\\circ}{360^\\circ} = 6.98 \\text{ m}" />
+                  <Latex math="\overparen{AB} = 2\pi(4) \times \frac{100^\circ}{360^\circ} = 6.98 \text{ m}" />
                 </div>
               </div>
             </div>
@@ -513,12 +513,12 @@ const FormulaSheet = ({ onBack }) => {
               </h4>
               <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-4">
                 <span className="text-lg">圓面積 = </span>
-                <span className="bg-blue-200 px-2 py-1 rounded font-bold text-lg"><Latex math="\\pi" />r²</span>
+                <span className="bg-blue-200 px-2 py-1 rounded font-bold text-lg"><Latex math="\pi" />r²</span>
               </div>
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
                 <p className="text-slate-600 mb-2 font-medium">例：圓面積 (r = 3 cm)</p>
                 <div className="font-bold text-slate-800 text-lg">
-                  <Latex math="\\pi(3)^2 = 9\\pi \\text{ cm}^2" />
+                  <Latex math="\pi(3)^2 = 9\pi \text{ cm}^2" />
                 </div>
               </div>
             </div>
@@ -529,17 +529,17 @@ const FormulaSheet = ({ onBack }) => {
               </h4>
               <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm mb-4">
                 <span className="text-lg">面積 = </span>
-                <span className="bg-blue-200 px-1 py-1 rounded-l font-bold text-lg"><Latex math="\\pi" />r²</span>
-                <span className="px-1 text-lg"><Latex math="\\times" /></span>
-                <span className="bg-yellow-200 px-1 py-1 rounded-r font-bold text-lg"><Latex math="\\frac{\\theta}{360^\\circ}" /></span>
+                <span className="bg-blue-200 px-1 py-1 rounded-l font-bold text-lg"><Latex math="\pi" />r²</span>
+                <span className="px-1 text-lg"><Latex math="\times" /></span>
+                <span className="bg-yellow-200 px-1 py-1 rounded-r font-bold text-lg"><Latex math="\frac{\theta}{360^\circ}" /></span>
                 <div className="mt-2 text-sm text-green-700 font-medium">
                   💡 扇形像在整個 pizza cut 出一部份！<br/>360° 的 pizza 只要 120°！
                 </div>
               </div>
               <div className="bg-blue-50 rounded-lg p-4 border border-blue-100 text-sm">
-                <p className="text-slate-600 mb-2 font-medium">例：扇形 SOT 面積 (r = 14 cm, <Latex math="\\theta" /> = 120°)</p>
+                <p className="text-slate-600 mb-2 font-medium">例：扇形 SOT 面積 (r = 14 cm, <Latex math="\theta" /> = 120°)</p>
                 <div className="font-bold text-slate-800 text-lg">
-                  <Latex math="\\pi(14)^2 \\times \\frac{120^\\circ}{360^\\circ} = 205 \\text{ cm}^2" />
+                  <Latex math="\pi(14)^2 \times \frac{120^\circ}{360^\circ} = 205 \text{ cm}^2" />
                 </div>
               </div>
             </div>
