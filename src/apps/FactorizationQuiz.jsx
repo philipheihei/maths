@@ -1224,13 +1224,11 @@ const QuizPage = ({ onBackToTeaching }) => {
         ]);
 
         const t = Math.floor(Math.random() * 4) + 2; // 2..5
-        const bExpr = signedJoin([
+        const bLeadExpr = signedJoin([
           { coef: t * a2, var: v1 },
-          { coef: t * b2, var: v2 },
-          { coef: A, var: `${v1}^2` },
-          { coef: B, var: `${v1}${v2}` },
-          { coef: C, var: `${v2}^2` }
+          { coef: t * b2, var: v2 }
         ]);
+        const bExpr = `${bLeadExpr} + ${aExpr}`;
 
         const finalSecond = `(${factor1Inner} + ${t})`;
         const answer = `${factor2}${finalSecond}`;
@@ -1275,13 +1273,30 @@ const QuizPage = ({ onBackToTeaching }) => {
                 `抽公因式：$= ${factor2}(${factor1Inner} + ${t})$`
               ],
               requiresSetup: true,
-              setupPrompt: '先輸入代入列式（用 (a) 的答案）',
+              setupPrompt: '先輸入代入列式（相應位置套用 (a) 答案，其餘照抄）',
+              setupPlaceholder: '先輸入列式：相應位置套用 (a) 答案，其他照抄',
               setupAnswer: `${bExpr} = ${t}${factor2} + ${factor1}${factor2}`,
               setupAnswerAlt: [
                 `${t}${factor2} + ${factor1}${factor2} = ${bExpr}`,
                 `${bExpr}=${t}${factor2}+${factor1}${factor2}`
               ],
-              setupHint: '列式要見到「(a) 的因式」被代入到 (b)'
+              setupHint: '在對應位置套用 (a) 答案，其餘項照抄',
+              carryAnswers: [
+                { label: '(a) 正確答案', value: `${factor1}${factor2}` }
+              ],
+              setupEquationHighlight: {
+                left: bExpr,
+                topSegments: [
+                  { kind: 'plain', tex: bLeadExpr },
+                  { kind: 'op', tex: '+' },
+                  { kind: 'a', tex: aExpr }
+                ],
+                segments: [
+                  { kind: 'plain', tex: `${t}${factor2}` },
+                  { kind: 'op', tex: '+' },
+                  { kind: 'a', tex: `${factor1}${factor2}` }
+                ]
+              }
             }
           ]
         };
@@ -1388,13 +1403,14 @@ const QuizPage = ({ onBackToTeaching }) => {
                 `抽公因式：$= ${xFactor}(${yInner} - ${k}${r})$`
               ],
               requiresSetup: true,
-              setupPrompt: '先輸入代入列式（要同時用 (a) + (b) 的答案）',
+              setupPrompt: '先輸入代入列式（相應位置套用 (a) + (b) 答案，其餘照抄）',
+              setupPlaceholder: '先輸入列式：相應位置套用 (a) 和 (b) 答案，其他照抄',
               setupAnswer: `${cExpr} = ${bExpr} - (${aExpr})`,
               setupAnswerAlt: [
                 `${bExpr} - (${aExpr}) = ${cExpr}`,
                 `${cExpr}=${bExpr}-(${aExpr})`
               ],
-              setupHint: '列式要同時見到 (a) 與 (b) 的答案被代入',
+              setupHint: '在對應位置套用 (a) 與 (b) 答案，其餘項照抄',
               carryAnswers: [
                 { label: '(a) 正確答案', value: `${k}${r}${xFactor}` },
                 { label: '(b) 正確答案', value: bAnswer }
@@ -1432,6 +1448,7 @@ const QuizPage = ({ onBackToTeaching }) => {
       partLabel: part.label,
       requiresSetup: !!part.requiresSetup,
       setupPrompt: part.setupPrompt || '',
+      setupPlaceholder: part.setupPlaceholder || '',
       setupAnswer: part.setupAnswer || '',
       setupAnswerAlt: part.setupAnswerAlt || [],
       setupHint: part.setupHint || '',
@@ -1540,6 +1557,9 @@ const QuizPage = ({ onBackToTeaching }) => {
             `參考列式：$${currentQuestion.setupAnswer}$`
           ]
         });
+        setDseInputStage('answer');
+        setUserAnswer('');
+        setStageNotice('已顯示參考列式，請繼續完成最終答案（併項）。');
       }
       return;
     }
@@ -1934,7 +1954,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 onKeyDown={(e) => e.key === 'Enter' && (isAnswered ? handleNext() : handleSubmit())}
                 placeholder={
                   quizType === 'dse' && dseInputStage === 'setup'
-                    ? '先輸入列式，例如：原式=代入後式'
+                    ? (currentQuestion.setupPlaceholder || '先輸入列式：相應位置套用答案，其他照抄')
                     : '輸入答案，例如：(x+2)(x-3)'
                 }
                 disabled={isAnswered}
@@ -1967,7 +1987,30 @@ const QuizPage = ({ onBackToTeaching }) => {
                     <div className="font-mono text-sm">
                       <div className="flex items-center gap-2">
                         <span className="w-4 shrink-0" />
-                        <Latex math={feedback.equationHighlight.left} />
+                        {feedback.equationHighlight.topSegments?.length > 0 ? (
+                          <div className="flex items-center flex-wrap gap-1">
+                            {feedback.equationHighlight.topSegments.map((seg, idx) => (
+                              seg.kind === 'op' ? (
+                                <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                              ) : seg.kind === 'plain' ? (
+                                <span key={idx} className="px-1 text-slate-700">
+                                  <Latex math={seg.tex} />
+                                </span>
+                              ) : (
+                                <span
+                                  key={idx}
+                                  className={seg.kind === 'a'
+                                    ? 'bg-amber-200 text-amber-900 rounded px-1'
+                                    : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                >
+                                  <Latex math={seg.tex} />
+                                </span>
+                              )
+                            ))}
+                          </div>
+                        ) : (
+                          <Latex math={feedback.equationHighlight.left} />
+                        )}
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <span className="w-4 shrink-0 text-right font-mono">=</span>
@@ -1975,6 +2018,10 @@ const QuizPage = ({ onBackToTeaching }) => {
                           {feedback.equationHighlight.segments.map((seg, idx) => (
                             seg.kind === 'op' ? (
                               <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                            ) : seg.kind === 'plain' ? (
+                              <span key={idx} className="px-1 text-slate-700">
+                                <Latex math={seg.tex} />
+                              </span>
                             ) : (
                               <span
                                 key={idx}
