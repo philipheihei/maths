@@ -948,16 +948,62 @@ const TeachingPage = ({ onStartQuiz }) => {
                 </ul>
               </div>
 
-              <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                <p className="font-bold text-blue-700 mb-2">求角度（反三角函數）</p>
-                <div className="text-sm space-y-1 text-slate-700">
-                  <p>已知兩邊的比例，可以用反三角函數求角度：</p>
-                  <div className="mt-2 space-y-1">
-                    <Latex math="\theta = \sin^{-1}\left(\dfrac{\text{對邊}}{\text{斜邊}}\right)" block />
-                    <Latex math="\theta = \cos^{-1}\left(\dfrac{\text{鄰邊}}{\text{斜邊}}\right)" block />
-                    <Latex math="\theta = \tan^{-1}\left(\dfrac{\text{對邊}}{\text{鄰邊}}\right)" block />
+              <div className="bg-purple-50 rounded-xl p-5 border border-purple-200">
+                <h3 className="font-bold text-purple-800 text-lg mb-4 flex items-center flex-wrap gap-2">
+                  <span className="text-xl">🤔</span> 
+                  <span>如何區別何時使用</span>
+                  <span className="text-red-600 inline-flex items-baseline leading-none">
+                    <Latex math="\sin" />
+                  </span>
+                  <span>/</span>
+                  <span className="text-red-600 inline-flex items-baseline leading-none">
+                    <Latex math="\sin^{-1}" />
+                  </span>
+                  <span>？</span>
+                </h3>
+                <div className="space-y-4">
+                  {/* Rule 1 */}
+                  <div className="bg-white p-4 rounded-xl shadow-sm border border-purple-100 flex flex-col md:flex-row md:items-center gap-4">
+                    <div className="w-40 flex-shrink-0 flex justify-center text-xl">
+                      <div className="flex items-center gap-2 whitespace-nowrap">
+                        <span className="inline-block bg-yellow-200 px-1 rounded-sm">
+                          <Latex math="\sin\,x" />
+                        </span>
+                        <Latex math="=" />
+                        <Latex math="0.5" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-green-700 font-bold mb-2 text-lg tracking-wide">sin 與數字分開</p>
+                      <div className="text-slate-600 flex items-center flex-wrap gap-2 text-base">
+                        計算機按：
+                        <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded shadow-sm">SHIFT</span>
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded shadow-sm">sin</span>
+                        <span className="font-bold text-slate-800">0.5</span>
+                      </div>
+                    </div>
                   </div>
-                  <p className="mt-2 text-slate-500">計算機按法：<span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded">SHIFT</span> + <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">sin</span> / <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">cos</span> / <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">tan</span></p>
+
+                  {/* Rule 2 */}
+                  <div className="bg-white p-4 rounded-xl shadow-sm border border-purple-100 flex flex-col md:flex-row md:items-center gap-4">
+                    <div className="w-40 flex-shrink-0 flex justify-center text-xl">
+                      <div className="flex items-center gap-2 whitespace-nowrap">
+                        <span className="inline-block bg-yellow-200 px-1 rounded-sm">
+                          <Latex math="\sin\,0.5" />
+                        </span>
+                        <Latex math="=" />
+                        <Latex math="x" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-green-700 font-bold mb-2 text-lg tracking-wide">sin 與數字痴在一起</p>
+                      <div className="text-slate-600 flex items-center flex-wrap gap-2 text-base">
+                        計算機按：
+                        <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded shadow-sm">sin</span>
+                        <span className="font-bold text-slate-800">0.5</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
