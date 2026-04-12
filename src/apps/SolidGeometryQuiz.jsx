@@ -1,41 +1,33 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { HomeIcon, ArrowLeft, BookOpen, ChevronDown, ChevronRight, CornerDownLeft, Delete } from 'lucide-react';
+import { loadKatexOnce } from '../utils/katexLoader';
 
 /* ====================================================================
    立體面積及體積 — SolidGeometryQuiz
    F2 CH13 面積和體積（二） / F3 CH4 面積和體積（三）
    ==================================================================== */
 
-// ========== KaTeX 載入 ==========
-let katexPromise = null;
-const loadKatexOnce = () => {
-  if (katexPromise) return katexPromise;
-  katexPromise = new Promise((resolve, reject) => {
-    if (window.katex) { resolve(); return; }
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css';
-    document.head.appendChild(link);
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js';
-    script.onload = () => resolve();
-    script.onerror = () => reject();
-    document.head.appendChild(script);
-  });
-  return katexPromise;
-};
-
 const Latex = ({ math, block = false }) => {
-  const ref = useRef(null);
-  const [ready, setReady] = useState(!!window.katex);
-  useEffect(() => { if (!ready) loadKatexOnce().then(() => setReady(true)).catch(() => {}); }, [ready]);
+  const containerRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    if (!ready || !ref.current) return;
-    try { window.katex.render(math, ref.current, { throwOnError: false, displayMode: block }); }
-    catch { if (ref.current) ref.current.textContent = math; }
-  }, [math, block, ready]);
-  return <span ref={ref} className={block ? 'block text-center my-2' : 'inline-block align-middle'} />;
+    loadKatexOnce().then(() => setIsLoaded(true)).catch(e => console.error("KaTeX load error:", e));
+  }, []);
+  useEffect(() => {
+    if (isLoaded && window.katex && containerRef.current) {
+      try {
+        window.katex.render(math, containerRef.current, {
+          throwOnError: false,
+          displayMode: block,
+          strict: false
+        });
+      } catch (e) {
+        containerRef.current.textContent = math;
+      }
+    }
+  }, [math, block, isLoaded]);
+  return <span ref={containerRef} className={block ? 'block text-center my-2' : 'inline-block'} />;
 };
 
 // ========== 題目生成器 ==========
