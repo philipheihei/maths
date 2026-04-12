@@ -1389,16 +1389,24 @@ const QuizPage = ({ onBackToTeaching }) => {
               ],
               requiresSetup: true,
               setupPrompt: '先輸入代入列式（要同時用 (a) + (b) 的答案）',
-              setupAnswer: `${cExpr} = ${bAnswer} - ${k}${r}${xFactor}`,
+              setupAnswer: `${cExpr} = ${bExpr} - (${aExpr})`,
               setupAnswerAlt: [
-                `${bAnswer} - ${k}${r}${xFactor} = ${cExpr}`,
-                `${cExpr}=${bAnswer}-${k}${r}${xFactor}`
+                `${bExpr} - (${aExpr}) = ${cExpr}`,
+                `${cExpr}=${bExpr}-(${aExpr})`
               ],
               setupHint: '列式要同時見到 (a) 與 (b) 的答案被代入',
               carryAnswers: [
                 { label: '(a) 正確答案', value: `${k}${r}${xFactor}` },
                 { label: '(b) 正確答案', value: bAnswer }
-              ]
+              ],
+              setupEquationHighlight: {
+                left: cExpr,
+                segments: [
+                  { kind: 'b', tex: bExpr },
+                  { kind: 'op', tex: '-' },
+                  { kind: 'a', tex: aExpr }
+                ]
+              }
             }
           ]
         };
@@ -1427,7 +1435,8 @@ const QuizPage = ({ onBackToTeaching }) => {
       setupAnswer: part.setupAnswer || '',
       setupAnswerAlt: part.setupAnswerAlt || [],
       setupHint: part.setupHint || '',
-      carryAnswers: part.carryAnswers || []
+      carryAnswers: part.carryAnswers || [],
+      setupEquationHighlight: part.setupEquationHighlight || null
     };
   };
 
@@ -1526,6 +1535,7 @@ const QuizPage = ({ onBackToTeaching }) => {
           hint: currentQuestion.setupHint || '先把前題答案代入再整理',
           answerLabel: '參考列式',
           answer: currentQuestion.setupAnswer,
+          equationHighlight: currentQuestion.setupEquationHighlight || null,
           steps: [
             `參考列式：$${currentQuestion.setupAnswer}$`
           ]
@@ -1953,7 +1963,35 @@ const QuizPage = ({ onBackToTeaching }) => {
                 {/* 答案（LaTeX 渲染） */}
                 <div className={`flex items-center gap-2 text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
                   <span className="font-medium">{feedback.answerLabel || '答案'}：</span>
-                  <span className="font-mono"><Latex math={feedback.answer || ''} /></span>
+                  {feedback.equationHighlight ? (
+                    <div className="font-mono text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="w-4 shrink-0" />
+                        <Latex math={feedback.equationHighlight.left} />
+                      </div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="w-4 shrink-0 text-right font-mono">=</span>
+                        <div className="flex items-center flex-wrap gap-1">
+                          {feedback.equationHighlight.segments.map((seg, idx) => (
+                            seg.kind === 'op' ? (
+                              <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                            ) : (
+                              <span
+                                key={idx}
+                                className={seg.kind === 'a'
+                                  ? 'bg-amber-200 text-amber-900 rounded px-1'
+                                  : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                              >
+                                <Latex math={seg.tex} />
+                              </span>
+                            )
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <span className="font-mono"><Latex math={feedback.answer || ''} /></span>
+                  )}
                 </div>
                 {/* 解題步驟 */}
                 {feedback.steps && feedback.steps.length > 0 && (
