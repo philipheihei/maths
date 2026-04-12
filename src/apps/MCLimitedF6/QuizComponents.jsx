@@ -1,18 +1,57 @@
-import React, { useState, useCallback } from 'react';
+<Latex math="\\frac{\\theta}{360^\\circ}" />  // double backslash in JSX stringimport React, { useState, useCallback } from 'react';
 import { ArrowLeft, Star, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
 import { InlineMath, LeftBlockMath, AlignedSteps, OptionBtn } from './shared';
 import { generateQuestion } from './generators/hcfLcm';
 import { generateFunctionGraphQuestion, ParabolaSVG } from './generators/functionGraph';
 
+const normalizeMCQuestion = (question) => {
+  if (!question || typeof question !== 'object') return question;
+
+  let options = Array.isArray(question.options)
+    ? question.options.filter(opt => opt !== null && opt !== undefined && String(opt).trim() !== '')
+    : [];
+
+  let correctIndex = Number.isInteger(question.correctIndex) ? question.correctIndex : 0;
+
+  if (options.length === 0) {
+    options = ['\\text{未提供選項}'];
+    correctIndex = 0;
+  }
+
+  if (correctIndex < 0 || correctIndex >= options.length) {
+    correctIndex = 0;
+  }
+
+  if (options.length > 4) {
+    const correctOption = options[correctIndex];
+    options = options.slice(0, 4);
+    if (!options.includes(correctOption)) {
+      options[3] = correctOption;
+      correctIndex = 3;
+    }
+  }
+
+  while (options.length < 4) {
+    const fallback = `\\text{備用選項 ${options.length + 1}}`;
+    options.push(fallback);
+  }
+
+  return {
+    ...question,
+    options,
+    correctIndex,
+  };
+};
+
 // ─── HCF/LCM Quiz ─────────────────────────────────────────────────────────────
 export const HCFLCMQuiz = ({ onBack }) => {
-  const [question, setQuestion] = useState(() => generateQuestion());
+  const [question, setQuestion] = useState(() => normalizeMCQuestion(generateQuestion()));
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [streak, setStreak] = useState(0);
 
   const nextQuestion = useCallback(() => {
-    setQuestion(generateQuestion());
+    setQuestion(normalizeMCQuestion(generateQuestion()));
     setSelected(null);
   }, []);
 
@@ -113,13 +152,13 @@ export const HCFLCMQuiz = ({ onBack }) => {
 
 // ─── Function Graph Quiz ───────────────────────────────────────────────────────
 export const FunctionGraphQuiz = ({ onBack }) => {
-  const [question, setQuestion] = useState(() => generateFunctionGraphQuestion());
+  const [question, setQuestion] = useState(() => normalizeMCQuestion(generateFunctionGraphQuestion()));
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [streak, setStreak] = useState(0);
 
   const nextQuestion = useCallback(() => {
-    setQuestion(generateFunctionGraphQuestion());
+    setQuestion(normalizeMCQuestion(generateFunctionGraphQuestion()));
     setSelected(null);
   }, []);
 
@@ -220,13 +259,13 @@ export const FunctionGraphQuiz = ({ onBack }) => {
 
 // ─── Generic Topic Quiz ───────────────────────────────────────────────────────
 export const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
-  const [question, setQuestion] = useState(() => generateFn());
+  const [question, setQuestion] = useState(() => normalizeMCQuestion(generateFn()));
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [streak, setStreak] = useState(0);
 
   const nextQuestion = useCallback(() => {
-    setQuestion(generateFn());
+    setQuestion(normalizeMCQuestion(generateFn()));
     setSelected(null);
   }, [generateFn]);
 
