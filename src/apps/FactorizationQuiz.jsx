@@ -1553,9 +1553,8 @@ const QuizPage = ({ onBackToTeaching }) => {
           answerLabel: '參考列式',
           answer: currentQuestion.setupAnswer,
           equationHighlight: currentQuestion.setupEquationHighlight || null,
-          steps: [
-            `參考列式：$${currentQuestion.setupAnswer}$`
-          ]
+          stepEquationHighlight: currentQuestion.setupEquationHighlight || null,
+          steps: []
         });
         setDseInputStage('answer');
         setUserAnswer('');
@@ -1985,35 +1984,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                   <span className="font-medium">{feedback.answerLabel || '答案'}：</span>
                   {feedback.equationHighlight ? (
                     <div className="font-mono text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="w-4 shrink-0" />
-                        {feedback.equationHighlight.topSegments?.length > 0 ? (
-                          <div className="flex items-center flex-wrap gap-1">
-                            {feedback.equationHighlight.topSegments.map((seg, idx) => (
-                              seg.kind === 'op' ? (
-                                <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
-                              ) : seg.kind === 'plain' ? (
-                                <span key={idx} className="px-1 text-slate-700">
-                                  <Latex math={seg.tex} />
-                                </span>
-                              ) : (
-                                <span
-                                  key={idx}
-                                  className={seg.kind === 'a'
-                                    ? 'bg-amber-200 text-amber-900 rounded px-1'
-                                    : 'bg-cyan-200 text-cyan-900 rounded px-1'}
-                                >
-                                  <Latex math={seg.tex} />
-                                </span>
-                              )
-                            ))}
-                          </div>
-                        ) : (
-                          <Latex math={feedback.equationHighlight.left} />
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="w-4 shrink-0 text-right font-mono">=</span>
+                      {feedback.equationHighlight.topSegments?.length > 0 ? (
                         <div className="flex items-center flex-wrap gap-1">
                           {feedback.equationHighlight.segments.map((seg, idx) => (
                             seg.kind === 'op' ? (
@@ -2034,7 +2005,37 @@ const QuizPage = ({ onBackToTeaching }) => {
                             )
                           ))}
                         </div>
-                      </div>
+                      ) : (
+                        <>
+                          <div className="flex items-center gap-2">
+                            <span className="w-4 shrink-0" />
+                            <Latex math={feedback.equationHighlight.left} />
+                          </div>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="w-4 shrink-0 text-right font-mono">=</span>
+                            <div className="flex items-center flex-wrap gap-1">
+                              {feedback.equationHighlight.segments.map((seg, idx) => (
+                                seg.kind === 'op' ? (
+                                  <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                ) : seg.kind === 'plain' ? (
+                                  <span key={idx} className="px-1 text-slate-700">
+                                    <Latex math={seg.tex} />
+                                  </span>
+                                ) : (
+                                  <span
+                                    key={idx}
+                                    className={seg.kind === 'a'
+                                      ? 'bg-amber-200 text-amber-900 rounded px-1'
+                                      : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                  >
+                                    <Latex math={seg.tex} />
+                                  </span>
+                                )
+                              ))}
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   ) : (
                     <span className="font-mono"><Latex math={feedback.answer || ''} /></span>
@@ -2044,6 +2045,40 @@ const QuizPage = ({ onBackToTeaching }) => {
                 {feedback.steps && feedback.steps.length > 0 && (
                   <div className={`mt-3 border-t pt-2 ${feedback.type === 'correct' ? 'border-green-300' : 'border-red-300'}`}>
                     <p className={`text-xs font-bold mb-1 ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>解題步驟：</p>
+                    {feedback.stepEquationHighlight?.topSegments?.length > 0 && (
+                      <div className="mb-2 space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="w-4 shrink-0" />
+                          <div className="flex items-center flex-wrap gap-1">
+                            {feedback.stepEquationHighlight.topSegments.map((seg, idx) => (
+                              <span
+                                key={idx}
+                                className={seg.kind === 'op'
+                                  ? 'px-1 text-red-700 font-bold'
+                                  : 'bg-yellow-200 text-slate-800 rounded px-1'}
+                              >
+                                {seg.kind === 'op' ? seg.tex : <Latex math={seg.tex} />}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="w-4 shrink-0 text-right font-mono text-slate-700">=</span>
+                          <div className="flex items-center flex-wrap gap-1">
+                            {feedback.stepEquationHighlight.segments.map((seg, idx) => (
+                              <span
+                                key={idx}
+                                className={seg.kind === 'op'
+                                  ? 'px-1 text-red-700 font-bold'
+                                  : 'bg-yellow-200 text-slate-800 rounded px-1'}
+                              >
+                                {seg.kind === 'op' ? seg.tex : <Latex math={seg.tex} />}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     {feedback.steps.map((step, i) => (
                       <div key={i} className="mb-1">
                         <StepText text={step} className={`text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`} />
