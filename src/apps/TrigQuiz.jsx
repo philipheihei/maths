@@ -288,37 +288,40 @@ const GeneralTriangleSVG = ({ sides, label, rotation = 0 }) => {
         {edges.map(({ from, to, len }, i) => {
           const mx = (from.x + to.x) / 2;
           const my = (from.y + to.y) / 2;
-          // Nudge from centroid outward so label sits just outside the edge
-          const dx = mx - gcx;
-          const dy = my - gcy;
-          const d = Math.sqrt(dx * dx + dy * dy) || 1;
-          const off = 14;
-          const lx = mx + dx / d * off;
-          const ly = my + dy / d * off;
-          const labelStr = String(len);
-          const tw = labelStr.length * 8 + 6;
+          
+          // 計算邊向量
+          const vx = to.x - from.x;
+          const vy = to.y - from.y;
+          
+          // 產生法向量 (垂直於邊)
+          let nx = -vy;
+          let ny = vx;
+          
+          // 確保法向量指向三角形外側 (與重心到中點的向量同向)
+          if (nx * (mx - gcx) + ny * (my - gcy) < 0) {
+            nx = -nx;
+            ny = -ny;
+          }
+          
+          // 正規化法向量並加上偏移量
+          const nLen = Math.sqrt(nx * nx + ny * ny) || 1;
+          const off = 16;
+          const lx = mx + (nx / nLen) * off;
+          const ly = my + (ny / nLen) * off;
+          
           return (
-            <g key={i}>
-              <rect
-                x={lx - tw / 2}
-                y={ly - 9}
-                width={tw}
-                height={18}
-                fill="white"
-                rx="3"
-              />
-              <text
-                x={lx}
-                y={ly}
-                fontSize="13"
-                fontWeight="bold"
-                textAnchor="middle"
-                dominantBaseline="central"
-                fill="#1e3a5f"
-              >
-                {len}
-              </text>
-            </g>
+            <text
+              key={i}
+              x={lx}
+              y={ly}
+              fontSize="13"
+              fontWeight="bold"
+              textAnchor="middle"
+              dominantBaseline="central"
+              fill="#1e3a5f"
+            >
+              {len}
+            </text>
           );
         })}
       </svg>

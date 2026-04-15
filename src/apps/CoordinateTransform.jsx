@@ -1164,12 +1164,126 @@ const TeachingPage = ({ onGoToQuiz }) => {
   );
 };
 
+// ============= PARSE LINEAR EXPRESSION in r =============
+// Returns { r: rCoeff, c: constant } or null if unparseable
+const parseLinear = (str) => {
+  const s = str.trim().replace(/\s+/g, '');
+  if (!s) return null;
+  if (/^-?\d+$/.test(s)) return { r: 0, c: parseInt(s) };
+  if (s === 'r') return { r: 1, c: 0 };
+  if (s === '-r') return { r: -1, c: 0 };
+  // e.g. "5+r", "5-r", "-6+r", "-6-r"
+  let m = s.match(/^(-?\d+)([+-])r$/);
+  if (m) return { r: m[2] === '+' ? 1 : -1, c: parseInt(m[1]) };
+  // e.g. "r+5", "r-6", "-r+5", "-r-6"
+  m = s.match(/^(-?)r([+-]\d+)$/);
+  if (m) return { r: m[1] === '-' ? -1 : 1, c: parseInt(m[2]) };
+  return null;
+};
+
+// ============= R-EXPRESSION COORDINATE INPUT =============
+const RCoordinateInput = ({ value, onChange, onSubmit, disabled = false }) => {
+  const [activeField, setActiveField] = useState('x');
+
+  useEffect(() => {
+    if (value.x === '' && value.y === '') setActiveField('x');
+  }, [value]);
+
+  const append = (ch) => {
+    if (disabled) return;
+    const cur = value[activeField];
+    onChange({ ...value, [activeField]: cur + ch });
+  };
+  const del = () => {
+    if (disabled) return;
+    const cur = value[activeField];
+    onChange({ ...value, [activeField]: cur.slice(0, -1) });
+  };
+  const clear = () => {
+    if (disabled) return;
+    onChange({ x: '', y: '' });
+    setActiveField('x');
+  };
+
+  const KEY = `h-11 rounded-lg font-medium text-base flex items-center justify-center select-none transition-all shadow-sm border active:opacity-70`;
+  const NUM = `${KEY} bg-white text-slate-700 border-slate-200`;
+  const OP  = `${KEY} bg-slate-100 text-slate-600 border-slate-200`;
+
+  const canSubmit = value.x !== '' && value.y !== '';
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-center gap-2">
+        <span className="text-gray-600 text-2xl">(</span>
+        <input
+          readOnly
+          value={value.x}
+          onClick={() => setActiveField('x')}
+          className={`w-20 h-12 text-center border-2 rounded-lg text-base font-bold ${
+            activeField === 'x' ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+          }`}
+          placeholder="x"
+          disabled={disabled}
+        />
+        <span className="text-gray-600 text-2xl">,</span>
+        <input
+          readOnly
+          value={value.y}
+          onClick={() => setActiveField('y')}
+          className={`w-20 h-12 text-center border-2 rounded-lg text-base font-bold ${
+            activeField === 'y' ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+          }`}
+          placeholder="y"
+          disabled={disabled}
+        />
+        <span className="text-gray-600 text-2xl">)</span>
+      </div>
+
+      {!disabled && (
+        <>
+          <div className="grid grid-cols-4 gap-2">
+            {[7, 8, 9].map(n => (
+              <button key={n} onClick={() => append(String(n))} className={NUM}>{n}</button>
+            ))}
+            <button onClick={del} className={`${KEY} bg-red-50 text-red-500 border-red-100`}>DEL</button>
+
+            {[4, 5, 6].map(n => (
+              <button key={n} onClick={() => append(String(n))} className={NUM}>{n}</button>
+            ))}
+            <button onClick={() => append('r')} className={`${KEY} bg-purple-100 text-purple-700 border-purple-200 font-bold text-lg`}>r</button>
+
+            {[1, 2, 3].map(n => (
+              <button key={n} onClick={() => append(String(n))} className={NUM}>{n}</button>
+            ))}
+            <button onClick={() => append('+')} className={OP}>+</button>
+
+            <button onClick={() => append('-')} className={OP}>−</button>
+            <button onClick={() => append('0')} className={NUM}>0</button>
+            <button onClick={clear} className={`${KEY} bg-slate-200 text-slate-500 border-slate-300 col-span-2`}>AC</button>
+          </div>
+
+          <button
+            onClick={onSubmit}
+            disabled={!canSubmit}
+            className={`w-full py-3 rounded-xl font-bold text-white transition-colors ${
+              canSubmit ? 'bg-green-600 hover:bg-green-700' : 'bg-gray-300 cursor-not-allowed'
+            }`}
+          >
+            確認答案
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
+
 // ============= QUIZ PAGE =============
 const QuizPage = ({ score, setScore, onGoToLearn }) => {
   const [enabledTypes, setEnabledTypes] = useState({
     translation: true,
     rotation: true,
-    reflection: true
+    reflection: true,
+    translationR: false
   });
   const [question, setQuestion] = useState(null);
   const [answer, setAnswer] = useState({ x: '', y: '' });
@@ -1373,7 +1487,35 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       
       return { type, from, to, label, description, explanation, axis, axisValue };
     }
-    
+
+    if (type === 'translationR') {
+      const dirs = [
+        { dir: 'right', xSign: 1,  ySign: 0,  text: '向右平移 r 單位' },
+        { dir: 'left',  xSign: -1, ySign: 0,  text: '向左平移 r 單位' },
+        { dir: 'up',    xSign: 0,  ySign: 1,  text: '向上平移 r 單位' },
+        { dir: 'down',  xSign: 0,  ySign: -1, text: '向下平移 r 單位' }
+      ];
+      const chosen = dirs[Math.floor(Math.random() * dirs.length)];
+      from = {
+        x: Math.floor(Math.random() * 11) - 5,
+        y: Math.floor(Math.random() * 11) - 5
+      };
+      // Build expression string: coord then +r / -r, or just r / -r if coord is 0
+      const makeExpr = (coord, sign) => {
+        if (sign === 0) return String(coord);
+        if (coord === 0) return sign === 1 ? 'r' : '-r';
+        return sign === 1 ? `${coord}+r` : `${coord}-r`;
+      };
+      const answerX = makeExpr(from.x, chosen.xSign);
+      const answerY = makeExpr(from.y, chosen.ySign);
+      description = `${label}(${from.x}, ${from.y}) ${chosen.text}至 ${label}'。以 r 表示 ${label}' 的坐標。`;
+      explanation =
+        `${chosen.text}：x 坐標 ${ chosen.xSign === 1 ? '+r' : chosen.xSign === -1 ? '−r' : '不變' }，` +
+        `y 坐標 ${ chosen.ySign === 1 ? '+r' : chosen.ySign === -1 ? '−r' : '不變' }。\n` +
+        `${label}' = (${answerX}, ${answerY})`;
+      return { type, from, label, answerX, answerY, description, explanation };
+    }
+
     return null;
   }, [enabledTypes]);
 
@@ -1411,10 +1553,24 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
 
   const handleSubmit = () => {
     if (!question) return;
-    
-    const userX = parseInt(answer.x);
-    const userY = parseInt(answer.y);
-    const correct = userX === question.to.x && userY === question.to.y;
+
+    let correct = false;
+    if (question.type === 'translationR') {
+      const parsedX = parseLinear(answer.x);
+      const parsedY = parseLinear(answer.y);
+      correct =
+        parsedX !== null && parsedY !== null &&
+        parseLinear(question.answerX) !== null &&
+        parseLinear(question.answerY) !== null &&
+        parsedX.r === parseLinear(question.answerX).r &&
+        parsedX.c === parseLinear(question.answerX).c &&
+        parsedY.r === parseLinear(question.answerY).r &&
+        parsedY.c === parseLinear(question.answerY).c;
+    } else {
+      const userX = parseInt(answer.x);
+      const userY = parseInt(answer.y);
+      correct = userX === question.to.x && userY === question.to.y;
+    }
 
     if (correct) {
       setScore(s => s + 1);
@@ -1480,6 +1636,7 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
         <div className="flex flex-wrap gap-3">
           {[
             { id: 'translation', label: '平移' },
+            { id: 'translationR', label: '平移（+r）' },
             { id: 'rotation', label: '旋轉' },
             { id: 'reflection', label: '反射' }
           ].map(type => (
@@ -1509,40 +1666,42 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
             <p className="text-lg text-gray-800 leading-relaxed">{question.description}</p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border p-4">
-            <CoordinateGrid>
-              {question.type === 'translation' && (
-                <AnimatedPoint
-                  from={question.from}
-                  to={question.to}
-                  label={question.label}
-                  labelPrime={`${question.label}'`}
-                  progress={showAnimation ? animProgress : 0}
-                  showPath={true}
-                />
-              )}
-              {question.type === 'rotation' && (
-                <RotationPoint
-                  from={question.from}
-                  angle={question.angle}
-                  label={question.label}
-                  labelPrime={`${question.label}'`}
-                  progress={showAnimation ? animProgress : 0}
-                  clockwise={question.clockwise}
-                />
-              )}
-              {question.type === 'reflection' && (
-                <ReflectionPoint
-                  from={question.from}
-                  axis={question.axis}
-                  axisValue={question.axisValue || 0}
-                  label={question.label}
-                  labelPrime={`${question.label}'`}
-                  progress={showAnimation ? animProgress : 0}
-                />
-              )}
-            </CoordinateGrid>
-          </div>
+          {question.type !== 'translationR' && (
+            <div className="bg-white rounded-xl shadow-sm border p-4">
+              <CoordinateGrid>
+                {question.type === 'translation' && (
+                  <AnimatedPoint
+                    from={question.from}
+                    to={question.to}
+                    label={question.label}
+                    labelPrime={`${question.label}'`}
+                    progress={showAnimation ? animProgress : 0}
+                    showPath={true}
+                  />
+                )}
+                {question.type === 'rotation' && (
+                  <RotationPoint
+                    from={question.from}
+                    angle={question.angle}
+                    label={question.label}
+                    labelPrime={`${question.label}'`}
+                    progress={showAnimation ? animProgress : 0}
+                    clockwise={question.clockwise}
+                  />
+                )}
+                {question.type === 'reflection' && (
+                  <ReflectionPoint
+                    from={question.from}
+                    axis={question.axis}
+                    axisValue={question.axisValue || 0}
+                    label={question.label}
+                    labelPrime={`${question.label}'`}
+                    progress={showAnimation ? animProgress : 0}
+                  />
+                )}
+              </CoordinateGrid>
+            </div>
+          )}
         </div>
 
         {/* Answer Input */}
@@ -1551,12 +1710,21 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
             輸入 {question.label}' 的坐標
           </h3>
 
-          <CoordinateInput
-            value={answer}
-            onChange={setAnswer}
-            onSubmit={handleSubmit}
-            disabled={feedback !== null}
-          />
+          {question.type === 'translationR' ? (
+            <RCoordinateInput
+              value={answer}
+              onChange={setAnswer}
+              onSubmit={handleSubmit}
+              disabled={feedback !== null}
+            />
+          ) : (
+            <CoordinateInput
+              value={answer}
+              onChange={setAnswer}
+              onSubmit={handleSubmit}
+              disabled={feedback !== null}
+            />
+          )}
 
           {/* Feedback */}
           {feedback && (

@@ -231,25 +231,38 @@ const format3sf = (n) => {
 
 ## GeneralTriangleSVG — 邊長標記規則
 
-`GeneralTriangleSVG`（用於畢氏定理逆定理）的邊長標記必須放置在**邊的中點，並向外偏移（遠離重心）**，並在文字後方加白色背景矩形，使標籤在邊線外側清晰可讀：
+`GeneralTriangleSVG`（用於畢氏定理逆定理等）的邊長標記必須放置在**邊的中點，並沿著「垂直於該邊」的法向量向外偏移**，避免標籤與線段重疊或擠在狹長三角形兩側：
 ```jsx
-// Centroid
+// 1. 計算重心
 const gcx = (pts[0].x + pts[1].x + pts[2].x) / 3;
 const gcy = (pts[0].y + pts[1].y + pts[2].y) / 3;
-// For each edge midpoint, offset AWAY from centroid
-const mx = (from.x + to.x) / 2; const my = (from.y + to.y) / 2;
-const dx = mx - gcx; const dy = my - gcy;
-const d = Math.sqrt(dx*dx+dy*dy)||1; const off = 14;
-const lx = mx + dx/d*off; const ly = my + dy/d*off;
-const tw = String(len).length * 8 + 6;
-<g key={i}>
-  <rect x={lx - tw/2} y={ly - 9} width={tw} height={18} fill="white" rx="3" />
-  <text x={lx} y={ly} fontSize="13" fontWeight="bold"
-    textAnchor="middle" dominantBaseline="central" fill="#1e3a5f">{len}</text>
-</g>
+
+// 2. 針對每條邊 (from, to) 計算中點與法向量
+const mx = (from.x + to.x) / 2;
+const my = (from.y + to.y) / 2;
+const vx = to.x - from.x;
+const vy = to.y - from.y;
+
+// 3. 產生垂直法向量 (-vy, vx)
+let nx = -vy;
+let ny = vx;
+
+// 4. 確保法向量指向三角形外側（藉由與「重心到中點」向量的內積測試）
+if (nx * (mx - gcx) + ny * (my - gcy) < 0) {
+  nx = -nx; ny = -ny;
+}
+
+// 5. 正規化並乘上固定偏移量 (off = 16)
+const nLen = Math.sqrt(nx * nx + ny * ny) || 1;
+const off = 16;
+const lx = mx + (nx / nLen) * off;
+const ly = my + (ny / nLen) * off;
+
+<text x={lx} y={ly} fontSize="13" fontWeight="bold" textAnchor="middle" dominantBaseline="central" fill="#1e3a5f">{len}</text>
 ```
-- SVG 尺寸：`svgW=240, svgH=210, pad=48`，`maxHeight: 190`
-- **不使用** 單純 centroid-outward（無白底，舊方法）或單純置中（無偏移，壓線）
+- 這種做法依賴「法向量」，能保證文字**確實平行且垂直推遠於邊線**，不會在鈍角或狹長圖形中被擠進去。
+- SVG 尺寸建議加寬增加 padding 以免出界（例如：`svgW=240, svgH=210, pad=48`）。
+- **不要**使用單純的從重心往外推（偏移角度不等於垂直線段）或加白色背景蓋住線段（易造成視覺不連貫）。
 
 ---
 
