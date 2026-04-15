@@ -228,6 +228,32 @@ const format3sf = (n) => {
 
 ## Common Pitfalls
 1. **SVG coordinate system**: Remember Y-axis increases downward; angles calculated with `Math.atan2(y, x)`
+
+## GeneralTriangleSVG — 邊長標記規則
+
+`GeneralTriangleSVG`（用於畢氏定理逆定理）的邊長標記必須放置在**邊的中點，並向外偏移（遠離重心）**，並在文字後方加白色背景矩形，使標籤在邊線外側清晰可讀：
+```jsx
+// Centroid
+const gcx = (pts[0].x + pts[1].x + pts[2].x) / 3;
+const gcy = (pts[0].y + pts[1].y + pts[2].y) / 3;
+// For each edge midpoint, offset AWAY from centroid
+const mx = (from.x + to.x) / 2; const my = (from.y + to.y) / 2;
+const dx = mx - gcx; const dy = my - gcy;
+const d = Math.sqrt(dx*dx+dy*dy)||1; const off = 14;
+const lx = mx + dx/d*off; const ly = my + dy/d*off;
+const tw = String(len).length * 8 + 6;
+<g key={i}>
+  <rect x={lx - tw/2} y={ly - 9} width={tw} height={18} fill="white" rx="3" />
+  <text x={lx} y={ly} fontSize="13" fontWeight="bold"
+    textAnchor="middle" dominantBaseline="central" fill="#1e3a5f">{len}</text>
+</g>
+```
+- SVG 尺寸：`svgW=240, svgH=210, pad=48`，`maxHeight: 190`
+- **不使用** 單純 centroid-outward（無白底，舊方法）或單純置中（無偏移，壓線）
+
+---
+
+1. **SVG coordinate system**: Remember Y-axis increases downward; angles calculated with `Math.atan2(y, x)`
 2. **Traditional Chinese**: Do not use Simplified Chinese (简体中文)
 3. **Route paths**: Must match exactly between App.jsx and Home.jsx `path` property
 4. **Answer validation**: Always provide multiple valid answer formats in `valid` arrays (e.g., `["x+y=10", "y+x=10"]`)

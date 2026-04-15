@@ -255,7 +255,7 @@ const GeneralTriangleSVG = ({ sides, label, rotation = 0 }) => {
   const rangeX = maxX - minX || 1;
   const rangeY = maxY - minY || 1;
 
-  const svgW = 200, svgH = 180, pad = 44;
+  const svgW = 240, svgH = 210, pad = 48;
   const scale = Math.min((svgW - 2 * pad) / rangeX, (svgH - 2 * pad) / rangeY);
 
   const pts = rotated.map(p => ({
@@ -263,11 +263,11 @@ const GeneralTriangleSVG = ({ sides, label, rotation = 0 }) => {
     y: pad + (p.y - minY) * scale
   }));
 
-  // Centroid — used to push labels outward
-  const cx = (pts[0].x + pts[1].x + pts[2].x) / 3;
-  const cy = (pts[0].y + pts[1].y + pts[2].y) / 3;
+  // Centroid — used to push labels outward from each edge
+  const gcx = (pts[0].x + pts[1].x + pts[2].x) / 3;
+  const gcy = (pts[0].y + pts[1].y + pts[2].y) / 3;
 
-  // Edge midpoints with outward offset from centroid
+  // Edge midpoints — labels at midpoint, nudged outward from centroid, with white backing
   const edges = [
     { from: pts[0], to: pts[1], len: s1 },
     { from: pts[1], to: pts[2], len: s3 },
@@ -277,7 +277,7 @@ const GeneralTriangleSVG = ({ sides, label, rotation = 0 }) => {
   return (
     <div className="flex flex-col items-center w-full">
       <p className="text-sm font-bold text-slate-700 mb-1">三角形 {label}</p>
-      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full" style={{ maxHeight: 160 }}>
+      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full" style={{ maxHeight: 190 }}>
         <polygon
           points={pts.map(p => `${p.x},${p.y}`).join(' ')}
           fill="rgba(99,102,241,0.08)"
@@ -288,24 +288,37 @@ const GeneralTriangleSVG = ({ sides, label, rotation = 0 }) => {
         {edges.map(({ from, to, len }, i) => {
           const mx = (from.x + to.x) / 2;
           const my = (from.y + to.y) / 2;
-          // Direction from centroid → edge midpoint (outward)
-          const dx = mx - cx;
-          const dy = my - cy;
+          // Nudge from centroid outward so label sits just outside the edge
+          const dx = mx - gcx;
+          const dy = my - gcy;
           const d = Math.sqrt(dx * dx + dy * dy) || 1;
-          const off = 18;
+          const off = 14;
+          const lx = mx + dx / d * off;
+          const ly = my + dy / d * off;
+          const labelStr = String(len);
+          const tw = labelStr.length * 8 + 6;
           return (
-            <text
-              key={i}
-              x={mx + dx / d * off}
-              y={my + dy / d * off}
-              fontSize="13"
-              fontWeight="bold"
-              textAnchor="middle"
-              dominantBaseline="central"
-              fill="#1e3a5f"
-            >
-              {len}
-            </text>
+            <g key={i}>
+              <rect
+                x={lx - tw / 2}
+                y={ly - 9}
+                width={tw}
+                height={18}
+                fill="white"
+                rx="3"
+              />
+              <text
+                x={lx}
+                y={ly}
+                fontSize="13"
+                fontWeight="bold"
+                textAnchor="middle"
+                dominantBaseline="central"
+                fill="#1e3a5f"
+              >
+                {len}
+              </text>
+            </g>
           );
         })}
       </svg>
