@@ -222,6 +222,102 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
 };
 
 // ========================================
+// 一般三角形 SVG（用於畢氏定理逆定理）
+// 支援旋轉以呈現不同朝向
+// ========================================
+const GeneralTriangleSVG = ({ sides, label, isRight, selected, onClick, rotation = 0 }) => {
+  // sides = [s1, s2, s3] 三邊長度（s3 為最長邊）
+  const [s1, s2, s3] = sides;
+
+  // 用餘弦定理求各角
+  const cosC = (s1 * s1 + s2 * s2 - s3 * s3) / (2 * s1 * s2);
+  const angC = Math.acos(Math.max(-1, Math.min(1, cosC)));
+
+  // 頂點座標：C 在原點，s1 沿 x 軸到 A，s2 以 angC 方向到 B
+  const rawPts = [
+    { x: 0, y: 0 },                                    // C
+    { x: s1, y: 0 },                                    // A
+    { x: s2 * Math.cos(angC), y: -s2 * Math.sin(angC) } // B
+  ];
+
+  // 旋轉
+  const rad = rotation * Math.PI / 180;
+  const rotated = rawPts.map(p => ({
+    x: p.x * Math.cos(rad) - p.y * Math.sin(rad),
+    y: p.x * Math.sin(rad) + p.y * Math.cos(rad)
+  }));
+
+  // 計算 bounding box 並歸一化到 SVG 空間
+  const xs = rotated.map(p => p.x);
+  const ys = rotated.map(p => p.y);
+  const minX = Math.min(...xs), maxX = Math.max(...xs);
+  const minY = Math.min(...ys), maxY = Math.max(...ys);
+  const rangeX = maxX - minX || 1;
+  const rangeY = maxY - minY || 1;
+
+  const svgW = 160, svgH = 140, pad = 30;
+  const scale = Math.min((svgW - 2 * pad) / rangeX, (svgH - 2 * pad) / rangeY);
+
+  const pts = rotated.map(p => ({
+    x: pad + (p.x - minX) * scale,
+    y: pad + (p.y - minY) * scale
+  }));
+
+  // 邊中點位置（用於標示邊長）
+  const edgeMids = [
+    { from: pts[0], to: pts[1], len: s1 },  // C→A
+    { from: pts[1], to: pts[2], len: s3 },  // A→B (最長邊)
+    { from: pts[2], to: pts[0], len: s2 }   // B→C
+  ];
+
+  const borderColor = selected === true ? 'border-green-400 ring-2 ring-green-300' :
+                       selected === false ? 'border-red-400 ring-2 ring-red-300' :
+                       'border-slate-200 hover:border-blue-400';
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`bg-white rounded-xl border-2 p-2 transition-all ${borderColor} flex flex-col items-center`}
+    >
+      <p className="text-sm font-bold text-slate-700 mb-1">三角形 {label}</p>
+      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full" style={{ maxHeight: 130 }}>
+        <polygon
+          points={pts.map(p => `${p.x},${p.y}`).join(' ')}
+          fill="rgba(99,102,241,0.08)"
+          stroke="#4f46e5"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+        {edgeMids.map(({ from, to, len }, i) => {
+          const mx = (from.x + to.x) / 2;
+          const my = (from.y + to.y) / 2;
+          // 偏移標籤使其不與邊重疊
+          const dx = to.y - from.y;
+          const dy = from.x - to.x;
+          const d = Math.sqrt(dx * dx + dy * dy) || 1;
+          const off = 12;
+          return (
+            <text
+              key={i}
+              x={mx + dx / d * off}
+              y={my + dy / d * off}
+              fontSize="12"
+              fontWeight="bold"
+              textAnchor="middle"
+              dominantBaseline="central"
+              fill="#334155"
+            >
+              {len}
+            </text>
+          );
+        })}
+      </svg>
+    </button>
+  );
+};
+
+// ========================================
 // 題目生成器
 // ========================================
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -293,7 +389,7 @@ const generatePythagorasQuestion = () => {
         answerDisplay: surd.text,
         answerAlt: [surd.text],
         steps: [
-          `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\[4pt] &= ${b}^2 + ${a}^2 \\[4pt] &= ${b * b} + ${a * a} \\[4pt] &= ${sumSq} \\[4pt] AB &= \\sqrt{${sumSq}} \\[4pt] &= ${surd.latex}\end{align*}$$`
+          `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\\\[4pt] &= ${b}^2 + ${a}^2 \\\\[4pt] &= ${b * b} + ${a * a} \\\\[4pt] &= ${sumSq} \\\\[4pt] AB &= \\sqrt{${sumSq}} \\\\[4pt] &= ${surd.latex}\\end{align*}$$`
         ],
         questionText: '求 AB 的長度。（可用根式作答）'
       };
@@ -319,7 +415,7 @@ const generatePythagorasQuestion = () => {
         answerDisplay: surd.text,
         answerAlt: [surd.text],
         steps: [
-          `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\[4pt] ${c}^2 &= ${b}^2 + BC^2 \\[4pt] BC^2 &= ${c}^2 - ${b}^2 \\[4pt] &= ${c * c} - ${b * b} \\[4pt] &= ${diffSq} \\[4pt] BC &= \\sqrt{${diffSq}} \\[4pt] &= ${surd.latex}\end{align*}$$`
+          `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\\\[4pt] ${c}^2 &= ${b}^2 + BC^2 \\\\[4pt] BC^2 &= ${c}^2 - ${b}^2 \\\\[4pt] &= ${c * c} - ${b * b} \\\\[4pt] &= ${diffSq} \\\\[4pt] BC &= \\sqrt{${diffSq}} \\\\[4pt] &= ${surd.latex}\\end{align*}$$`
         ],
         questionText: '求 BC 的長度。（可用根式作答）'
       };
@@ -344,7 +440,7 @@ const generatePythagorasQuestion = () => {
       answerDisplay: surd.text,
       answerAlt: [surd.text],
       steps: [
-        `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\[4pt] ${c}^2 &= AC^2 + ${a}^2 \\[4pt] AC^2 &= ${c}^2 - ${a}^2 \\[4pt] &= ${c * c} - ${a * a} \\[4pt] &= ${diffSq} \\[4pt] AC &= \\sqrt{${diffSq}} \\[4pt] &= ${surd.latex}\end{align*}$$`
+        `$$\\begin{align*}AB^2 &= AC^2 + BC^2 \\\\[4pt] ${c}^2 &= AC^2 + ${a}^2 \\\\[4pt] AC^2 &= ${c}^2 - ${a}^2 \\\\[4pt] &= ${c * c} - ${a * a} \\\\[4pt] &= ${diffSq} \\\\[4pt] AC &= \\sqrt{${diffSq}} \\\\[4pt] &= ${surd.latex}\\end{align*}$$`
       ],
       questionText: '求 AC 的長度。（可用根式作答）'
     };
@@ -658,6 +754,88 @@ const generateTrigFindAngle = () => {
   }
 
   return results;
+};
+
+// ========================================
+// 畢氏定理逆定理題目生成
+// 生成3個三角形，1-2個為直角三角形
+// ========================================
+const generateConverseQuestion = () => {
+  const labels = ['P', 'Q', 'R'];
+  const rotations = [0, 45, 90, 135, 180, 225, 270, 315];
+
+  // 生成直角三角形（從畢式三元數）
+  const makeRight = () => {
+    const triple = pick(PYTHAG_TRIPLES);
+    const k = pick([1, 2]); // 倍數
+    const sides = triple.map(s => s * k);
+    // 隨機打亂顯示順序
+    const shuffled = [...sides].sort(() => Math.random() - 0.5);
+    return { sides: shuffled, isRight: true };
+  };
+
+  // 生成非直角三角形
+  const makeNonRight = () => {
+    let a, b, c;
+    let attempts = 0;
+    do {
+      a = rand(5, 30);
+      b = rand(5, 30);
+      c = rand(5, 30);
+      attempts++;
+    } while (
+      attempts < 100 && (
+        // 三角不等式
+        a + b <= c || a + c <= b || b + c <= a ||
+        // 不能是直角三角形
+        (() => {
+          const sorted = [a, b, c].sort((x, y) => x - y);
+          return sorted[0] * sorted[0] + sorted[1] * sorted[1] === sorted[2] * sorted[2];
+        })() ||
+        // 避免退化三角形（太扁）
+        Math.min(a, b, c) < Math.max(a, b, c) * 0.2
+      )
+    );
+    return { sides: [a, b, c], isRight: false };
+  };
+
+  // 決定 1 或 2 個直角三角形
+  const rightCount = pick([1, 2]);
+  const triangles = [];
+  const usedRotations = [];
+
+  for (let i = 0; i < 3; i++) {
+    const isRight = i < rightCount;
+    const tri = isRight ? makeRight() : makeNonRight();
+    let rot;
+    do { rot = pick(rotations); } while (usedRotations.includes(rot));
+    usedRotations.push(rot);
+    triangles.push({ ...tri, rotation: rot, label: labels[i] });
+  }
+
+  // 隨機打亂順序
+  triangles.sort(() => Math.random() - 0.5);
+  triangles.forEach((t, i) => { t.label = labels[i]; });
+
+  // 生成每個三角形的步驟
+  const steps = triangles.map(t => {
+    const sorted = [...t.sides].sort((a, b) => a - b);
+    const [s1, s2, s3] = sorted;
+    const sumSq = s1 * s1 + s2 * s2;
+    const maxSq = s3 * s3;
+    const isR = sumSq === maxSq;
+    return {
+      label: t.label,
+      text: `三角形 ${t.label}：三邊 = ${t.sides.join(', ')}，最長邊 = ${s3}\n` +
+        `$${s1}^2 + ${s2}^2 = ${s1 * s1} + ${s2 * s2} = ${sumSq}$\n` +
+        `$${s3}^2 = ${maxSq}$\n` +
+        (isR
+          ? `∵ $${s1}^2 + ${s2}^2 = ${s3}^2$，∴ 三角形 ${t.label} **是**直角三角形 ✓`
+          : `∵ $${s1}^2 + ${s2}^2 \\neq ${s3}^2$，∴ 三角形 ${t.label} **不是**直角三角形 ✗`)
+    };
+  });
+
+  return { triangles, steps };
 };
 
 // ========================================
@@ -1085,16 +1263,21 @@ const TeachingPage = ({ onStartQuiz }) => {
 // 測驗頁面
 // ========================================
 const QuizPage = ({ onBackToTeaching }) => {
-  const [quizType, setQuizType] = useState(null); // 'pythag' | 'trig'
+  const [quizType, setQuizType] = useState(null); // 'pythag' | 'trig' | 'converse'
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [userAnswer, setUserAnswer] = useState('');
   const [feedback, setFeedback] = useState({ type: 'neutral', msg: '' });
   const [scoreData, setScoreData] = useState({
     pythag: { score: 0, total: 0 },
-    trig: { score: 0, total: 0 }
+    trig: { score: 0, total: 0 },
+    converse: { score: 0, total: 0 }
   });
   const [isAnswered, setIsAnswered] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
+
+  // 逆定理專用狀態
+  const [converseData, setConverseData] = useState(null);
+  const [selectedTriangles, setSelectedTriangles] = useState(new Set());
 
   const inputRef = useRef(null);
   const lastQuestionKey = useRef(null);
@@ -1102,12 +1285,26 @@ const QuizPage = ({ onBackToTeaching }) => {
   const selectQuizType = (type) => {
     lastQuestionKey.current = null;
     setQuizType(type);
-    generateNewQuestion(type);
+    if (type === 'converse') {
+      setConverseData(generateConverseQuestion());
+      setSelectedTriangles(new Set());
+      setFeedback({ type: 'neutral', msg: '' });
+      setIsAnswered(false);
+    } else {
+      generateNewQuestion(type);
+    }
   };
 
   const generateNewQuestion = (type) => {
     let question;
     let attempts = 0;
+    if (type === 'converse') {
+      setConverseData(generateConverseQuestion());
+      setSelectedTriangles(new Set());
+      setFeedback({ type: 'neutral', msg: '' });
+      setIsAnswered(false);
+      return;
+    }
     do {
       question = type === 'pythag' ? generatePythagorasQuestion() : generateTrigQuestion();
       attempts++;
@@ -1192,6 +1389,55 @@ const QuizPage = ({ onBackToTeaching }) => {
   const backToSelection = () => {
     setQuizType(null);
     setCurrentQuestion(null);
+    setConverseData(null);
+    setSelectedTriangles(new Set());
+  };
+
+  // 逆定理：切換選擇
+  const toggleTriangle = (label) => {
+    if (isAnswered) return;
+    setSelectedTriangles(prev => {
+      const next = new Set(prev);
+      if (next.has(label)) next.delete(label); else next.add(label);
+      return next;
+    });
+  };
+
+  // 逆定理：提交答案
+  const handleConverseSubmit = () => {
+    if (isAnswered || !converseData) return;
+    setIsAnswered(true);
+
+    const correctLabels = new Set(
+      converseData.triangles.filter(t => t.isRight).map(t => t.label)
+    );
+    const isCorrect =
+      selectedTriangles.size === correctLabels.size &&
+      [...selectedTriangles].every(l => correctLabels.has(l));
+
+    const correctStr = [...correctLabels].join('、');
+
+    if (isCorrect) {
+      setScoreData(prev => ({
+        ...prev,
+        converse: { score: prev.converse.score + 1, total: prev.converse.total + 1 }
+      }));
+      setFeedback({ type: 'correct', msg: '答案正確！' });
+    } else {
+      setScoreData(prev => ({
+        ...prev,
+        converse: { ...prev.converse, total: prev.converse.total + 1 }
+      }));
+      setFeedback({ type: 'incorrect', msg: `正確答案：三角形 ${correctStr}` });
+    }
+  };
+
+  // 逆定理：下一題
+  const handleConverseNext = () => {
+    setConverseData(generateConverseQuestion());
+    setSelectedTriangles(new Set());
+    setFeedback({ type: 'neutral', msg: '' });
+    setIsAnswered(false);
   };
 
   const getCurrentScore = () => {
@@ -1260,6 +1506,163 @@ const QuizPage = ({ onBackToTeaching }) => {
                 <ArrowRight className="w-6 h-6 text-slate-400 group-hover:text-green-600 transition-colors" />
               </div>
             </button>
+
+            {/* 畢氏定理逆定理 */}
+            <button
+              onClick={() => selectQuizType('converse')}
+              className="bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent hover:border-amber-400 transition-all group text-left"
+            >
+              <div className="flex items-center gap-4">
+                <div className="bg-amber-100 p-4 rounded-xl group-hover:bg-amber-200 transition-colors">
+                  <Calculator className="w-8 h-8 text-amber-600" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-xl font-bold text-slate-800">畢氏定理的逆定理</h2>
+                  <p className="text-slate-600 text-sm">判斷哪些是直角三角形</p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    得分：{scoreData.converse.score}/{scoreData.converse.total}
+                  </p>
+                </div>
+                <ArrowRight className="w-6 h-6 text-slate-400 group-hover:text-amber-600 transition-colors" />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── 逆定理測驗界面 ───
+  if (quizType === 'converse' && converseData) {
+    const correctLabels = new Set(
+      converseData.triangles.filter(t => t.isRight).map(t => t.label)
+    );
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4">
+        <div className="max-w-2xl mx-auto">
+          {/* 頂部導航 */}
+          <div className="mb-4 flex items-center justify-between">
+            <button onClick={backToSelection} className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors">
+              <ArrowLeft className="w-5 h-5" />
+              <span className="text-sm font-medium">返回選擇</span>
+            </button>
+            <div className="flex items-center gap-2 bg-white px-3 py-1 rounded-full shadow">
+              <Trophy className="w-4 h-4 text-yellow-500" />
+              <span className="font-bold text-slate-700">{scoreData.converse.score}/{scoreData.converse.total}</span>
+            </div>
+          </div>
+
+          {/* 題目類型標題 */}
+          <div className="rounded-xl p-4 mb-4 bg-amber-100">
+            <h2 className="text-lg font-bold text-amber-700">📐 畢氏定理的逆定理</h2>
+          </div>
+
+          {/* 題目卡片 */}
+          <div className="bg-white rounded-2xl shadow-lg p-6 mb-4">
+            <p className="text-sm text-slate-600 mb-4">下列哪些是直角三角形？（可多於一個答案）</p>
+
+            {/* 三個三角形 */}
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              {converseData.triangles.map(t => {
+                let sel = undefined; // unresolved
+                if (isAnswered) {
+                  sel = t.isRight; // true=green, false=red
+                } else if (selectedTriangles.has(t.label)) {
+                  sel = 'selected';
+                }
+                const borderClass =
+                  sel === true ? 'border-green-400 ring-2 ring-green-300' :
+                  sel === false ? 'border-red-400 ring-2 ring-red-300' :
+                  sel === 'selected' ? 'border-blue-400 ring-2 ring-blue-300' :
+                  'border-slate-200 hover:border-blue-400';
+                const checkColor = isAnswered
+                  ? (t.isRight ? 'text-green-600' : 'text-red-400')
+                  : (selectedTriangles.has(t.label) ? 'text-blue-600' : 'text-slate-300');
+
+                return (
+                  <button
+                    key={t.label}
+                    type="button"
+                    onClick={() => toggleTriangle(t.label)}
+                    disabled={isAnswered}
+                    className={`bg-white rounded-xl border-2 p-2 transition-all ${borderClass} flex flex-col items-center relative`}
+                  >
+                    {/* 勾選標記 */}
+                    <div className={`absolute top-2 right-2 w-5 h-5 rounded border-2 flex items-center justify-center text-xs font-bold ${
+                      (selectedTriangles.has(t.label) || (isAnswered && t.isRight))
+                        ? `${checkColor} border-current bg-current/10`
+                        : 'border-slate-300'
+                    }`}>
+                      {(selectedTriangles.has(t.label) || (isAnswered && t.isRight)) && '✓'}
+                    </div>
+                    <GeneralTriangleSVG
+                      sides={t.sides}
+                      label={t.label}
+                      isRight={t.isRight}
+                      rotation={t.rotation}
+                      selected={undefined}
+                      onClick={null}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* 反饋 */}
+            {feedback.type !== 'neutral' && (
+              <div className={`rounded-lg p-4 mb-4 ${
+                feedback.type === 'correct'
+                  ? 'bg-green-100 border border-green-300'
+                  : 'bg-red-100 border border-red-300'
+              }`}>
+                <div className="flex items-center gap-2 mb-2">
+                  {feedback.type === 'correct'
+                    ? <Check className="w-5 h-5 text-green-600" />
+                    : <X className="w-5 h-5 text-red-600" />
+                  }
+                  <span className={`font-bold ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
+                    {feedback.type === 'correct' ? '正確！' : '不正確'}
+                  </span>
+                </div>
+                {feedback.type === 'incorrect' && (
+                  <p className={`text-sm font-medium text-red-700 mb-2`}>{feedback.msg}</p>
+                )}
+                {/* 步驟：顯示全部3個三角形的計算 */}
+                <div className="mt-3 border-t pt-3 border-green-300 space-y-3">
+                  <p className={`text-xs font-bold ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>解題步驟：</p>
+                  {converseData.steps.map((s, i) => (
+                    <div key={i} className="bg-white/60 rounded-lg p-3">
+                      {s.text.split('\n').map((line, j) => (
+                        <div key={j} className="mb-0.5">
+                          <StepText text={line} />
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 按鈕 */}
+            <div className="flex gap-3">
+              {!isAnswered ? (
+                <button
+                  onClick={handleConverseSubmit}
+                  disabled={selectedTriangles.size === 0}
+                  className="flex-1 bg-amber-500 text-white py-3 rounded-lg font-bold hover:bg-amber-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                >
+                  提交答案
+                </button>
+              ) : (
+                <button
+                  onClick={handleConverseNext}
+                  className="flex-1 bg-blue-500 text-white py-3 rounded-lg font-bold hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+                >
+                  下一題
+                  <RefreshCw className="w-5 h-5" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

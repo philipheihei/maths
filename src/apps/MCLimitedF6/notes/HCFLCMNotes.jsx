@@ -47,63 +47,63 @@ const HCFLCMNotes = ({ onBack }) => (
         </div>
 
         <div className="bg-green-50 rounded-lg p-4 mb-4 border border-green-200">
-          <p className="font-semibold mb-3">例題 1：求 <InlineMath math="3x^4y^2z" />、<InlineMath math="4xy^5z" />、<InlineMath math="6x^2y^3" /> 的 H.C.F.</p>
-          <p className="text-sm mb-2 text-green-700">係數：3、4、6 的公因數 = <strong>1</strong></p>
+          <p className="font-semibold mb-3">例題 1：求 <InlineMath math="4x^3y^2z^2" />、<InlineMath math="10x^5yz" />、<InlineMath math="8x^2y^4" /> 的 H.C.F.</p>
+          <p className="text-sm mb-2 text-green-700">係數：4、10、8 的公因數 = <strong>2</strong></p>
           <p className="text-sm mb-3 text-green-700">各字母分行比較（取<strong>最小</strong>次方）：</p>
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="font-bold text-blue-700 w-5">x</span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^4" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^1" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^3" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^5" /></span>
               <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^2" /></span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-blue-700">最小次方：<InlineMath math="x^1 = x" /></span>
+              <span className="font-bold text-blue-700">最小次方：<InlineMath math="x^2" /></span>
             </div>
             <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
               <span className="font-bold text-green-700 w-5">y</span>
               <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^2" /></span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^5" /></span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^3" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^1" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^4" /></span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-green-700">最小次方：<InlineMath math="y^2" /></span>
+              <span className="font-bold text-green-700">最小次方：<InlineMath math="y^1 = y" /></span>
             </div>
             <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
               <span className="font-bold text-amber-700 w-5">z</span>
-              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="z^1" /></span>
+              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="z^2" /></span>
               <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="z^1" /></span>
               <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-amber-700">最小次方：<InlineMath math="z^0" />（不含 z）</span>
             </div>
           </div>
-          <p className="text-xs text-amber-700 mt-2">⚠️ <InlineMath math="6x^2y^3" /> 沒有 z，視作 <InlineMath math="z^0" />，故 z 不出現在 H.C.F. 中</p>
-          <BlockMath math="\therefore \text{H.C.F.} = xy^2" />
+          <p className="text-xs text-amber-700 mt-2">⚠️ <InlineMath math="8x^2y^4" /> 沒有 z，視作 <InlineMath math="z^0" />，故 z 不出現在 H.C.F. 中</p>
+          <BlockMath math="\therefore \text{H.C.F.} = 2x^2y" />
         </div>
 
         <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
-          <p className="font-semibold mb-3">例題 2：求 <InlineMath math="9a^2b" />、<InlineMath math="12a^4b^3" />、<InlineMath math="15a^6" /> 的 L.C.M.</p>
-          <p className="text-sm mb-2 text-indigo-700">係數：9、12、15 的公倍數 = <strong>180</strong></p>
+          <p className="font-semibold mb-3">例題 2：求 <InlineMath math="6m^3n^2" />、<InlineMath math="8m^2n^4" />、<InlineMath math="4m^5" /> 的 L.C.M.</p>
+          <p className="text-sm mb-2 text-indigo-700">係數：6、8、4 的公倍數 = <strong>24</strong></p>
           <p className="text-sm mb-3 text-indigo-700">各字母分行比較（取<strong>最大</strong>次方）：</p>
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
-              <span className="font-bold text-blue-700 w-5">a</span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="a^2" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="a^4" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="a^6" /></span>
+              <span className="font-bold text-blue-700 w-5">m</span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="m^3" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="m^2" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="m^5" /></span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-blue-700">最大次方：<InlineMath math="a^6" /></span>
+              <span className="font-bold text-blue-700">最大次方：<InlineMath math="m^5" /></span>
             </div>
             <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
-              <span className="font-bold text-green-700 w-5">b</span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="b^1" /></span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="b^3" /></span>
+              <span className="font-bold text-green-700 w-5">n</span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="n^2" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="n^4" /></span>
               <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-green-700">最大次方：<InlineMath math="b^3" /></span>
+              <span className="font-bold text-green-700">最大次方：<InlineMath math="n^4" /></span>
             </div>
           </div>
-          <p className="text-xs text-green-700 mt-2">⚠️ <InlineMath math="15a^6" /> 沒有 b，但 L.C.M. 取最大次方，b 仍需包含</p>
-          <BlockMath math="\therefore \text{L.C.M.} = 180a^6b^3" />
+          <p className="text-xs text-green-700 mt-2">⚠️ <InlineMath math="4m^5" /> 沒有 n，但 L.C.M. 取最大次方，n 仍需包含</p>
+          <BlockMath math="\therefore \text{L.C.M.} = 24m^5n^4" />
         </div>
       </section>
 
@@ -120,54 +120,54 @@ const HCFLCMNotes = ({ onBack }) => (
         </div>
 
         <div className="bg-purple-100 rounded-lg p-4 mb-4">
-          <p className="font-semibold mb-2">例題 3：求 <InlineMath math="p^2+4p+4" /> 及 <InlineMath math="p^2-4" /> 的 L.C.M.</p>
-          <BlockMath math="p^2+4p+4 = (p+2)^2" />
-          <BlockMath math="p^2-4 = (p+2)(p-2)" />
+          <p className="font-semibold mb-2">例題 3：求 <InlineMath math="a^2+6a+9" /> 及 <InlineMath math="a^2-9" /> 的 L.C.M.</p>
+          <BlockMath math="a^2+6a+9 = (a+3)^2" />
+          <BlockMath math="a^2-9 = (a+3)(a-3)" />
           <div className="space-y-2 text-sm mt-2">
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
-              <span className="font-bold text-blue-700 w-16 text-xs">(p+2)</span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(p+2)^2" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(p+2)^1" /></span>
+              <span className="font-bold text-blue-700 w-16 text-xs">(a+3)</span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(a+3)^2" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(a+3)^1" /></span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-blue-700">最大：<InlineMath math="(p+2)^2" /></span>
+              <span className="font-bold text-blue-700">最大：<InlineMath math="(a+3)^2" /></span>
             </div>
             <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
-              <span className="font-bold text-green-700 w-16 text-xs">(p−2)</span>
+              <span className="font-bold text-green-700 w-16 text-xs">(a−3)</span>
               <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(p-2)^1" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(a-3)^1" /></span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-green-700">最大：<InlineMath math="(p-2)^1" /></span>
+              <span className="font-bold text-green-700">最大：<InlineMath math="(a-3)^1" /></span>
             </div>
           </div>
-          <BlockMath math="\therefore \text{L.C.M.} = (p+2)^2(p-2)" />
+          <BlockMath math="\therefore \text{L.C.M.} = (a+3)^2(a-3)" />
         </div>
 
         <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-          <p className="font-semibold mb-2">例題 4：求 <InlineMath math="x^2(x+1)(x+2)" /> 及 <InlineMath math="x(x+1)^3" /> 的 H.C.F.</p>
+          <p className="font-semibold mb-2">例題 4：求 <InlineMath math="x^3(x-1)^2(x+3)" /> 及 <InlineMath math="x^2(x-1)^4" /> 的 H.C.F.</p>
           <div className="space-y-2 text-sm mt-2">
             <div className="flex items-center gap-2 bg-blue-100 rounded-lg px-3 py-2">
               <span className="font-bold text-blue-700 w-8 text-xs">x</span>
+              <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^3" /></span>
               <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^2" /></span>
-              <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^1" /></span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-blue-700">最小：<InlineMath math="x^1" /></span>
+              <span className="font-bold text-blue-700">最小：<InlineMath math="x^2" /></span>
             </div>
             <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
-              <span className="font-bold text-green-700 w-8 text-xs">(x+1)</span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+1)^1" /></span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+1)^3" /></span>
+              <span className="font-bold text-green-700 w-8 text-xs">(x−1)</span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x-1)^2" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x-1)^4" /></span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-green-700">最小：<InlineMath math="(x+1)^1" /></span>
+              <span className="font-bold text-green-700">最小：<InlineMath math="(x-1)^2" /></span>
             </div>
             <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
-              <span className="font-bold text-amber-700 w-8 text-xs">(x+2)</span>
-              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+2)^1" /></span>
+              <span className="font-bold text-amber-700 w-8 text-xs">(x+3)</span>
+              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+3)^1" /></span>
               <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-amber-700">最小：<InlineMath math="(x+2)^0" />（不含）</span>
+              <span className="font-bold text-amber-700">最小：<InlineMath math="(x+3)^0" />（不含）</span>
             </div>
           </div>
-          <BlockMath math="\therefore \text{H.C.F.} = x(x+1)" />
+          <BlockMath math="\therefore \text{H.C.F.} = x^2(x-1)^2" />
         </div>
       </section>
 
@@ -184,40 +184,40 @@ const HCFLCMNotes = ({ onBack }) => (
         </div>
 
         <div className="bg-orange-100 rounded-lg p-4">
-          <p className="font-semibold mb-3">例題 5：H.C.F. = <InlineMath math="x^2y^2z" />，L.C.M. = <InlineMath math="x^3y^4z^5" />，第一式 = <InlineMath math="x^3y^2z^2" />，第二式 = <InlineMath math="x^2y^3z^5" />，求第三式</p>
+          <p className="font-semibold mb-3">例題 5：H.C.F. = <InlineMath math="a^2b^2c" />，L.C.M. = <InlineMath math="a^4b^5c^6" />，第一式 = <InlineMath math="a^4b^2c^2" />，第二式 = <InlineMath math="a^2b^4c^6" />，求第三式</p>
           <div className="space-y-2 text-sm">
             <div className="bg-blue-50 rounded-lg px-3 py-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-blue-700 w-5">x</span>
-                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="x^2" /></span>
-                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="x^3" /></span>
-                <span className="text-xs text-slate-500">式1:</span><span className="bg-blue-200 rounded px-1"><InlineMath math="x^3" /></span>
-                <span className="text-xs text-slate-500">式2:</span><span className="bg-blue-200 rounded px-1"><InlineMath math="x^2" /></span>
+                <span className="font-bold text-blue-700 w-5">a</span>
+                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="a^2" /></span>
+                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="a^4" /></span>
+                <span className="text-xs text-slate-500">式1:</span><span className="bg-blue-200 rounded px-1"><InlineMath math="a^4" /></span>
+                <span className="text-xs text-slate-500">式2:</span><span className="bg-blue-200 rounded px-1"><InlineMath math="a^2" /></span>
               </div>
-              <p className="text-xs mt-1 text-blue-700">式1有 x³，式2有 x²，已涵蓋 H.C.F.(x²) 和 L.C.M.(x³) → 第三式 x 次方自由（取 x² 或 x³ 均可）</p>
+              <p className="text-xs mt-1 text-blue-700">式1有 a⁴，式2有 a²，已涵蓋 H.C.F.(a²) 和 L.C.M.(a⁴) → 第三式 a 次方自由（取 a² 或 a⁴ 均可）</p>
             </div>
             <div className="bg-green-50 rounded-lg px-3 py-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-green-700 w-5">y</span>
-                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="y^2" /></span>
-                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="y^4" /></span>
-                <span className="text-xs text-slate-500">式1:</span><span className="bg-green-200 rounded px-1"><InlineMath math="y^2" /></span>
-                <span className="text-xs text-slate-500">式2:</span><span className="bg-green-200 rounded px-1"><InlineMath math="y^3" /></span>
+                <span className="font-bold text-green-700 w-5">b</span>
+                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="b^2" /></span>
+                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="b^5" /></span>
+                <span className="text-xs text-slate-500">式1:</span><span className="bg-green-200 rounded px-1"><InlineMath math="b^2" /></span>
+                <span className="text-xs text-slate-500">式2:</span><span className="bg-green-200 rounded px-1"><InlineMath math="b^4" /></span>
               </div>
-              <p className="text-xs mt-1 text-green-700">式1和式2的最大次方是 y³，未達到 L.C.M. 的 y⁴ → 第三式必須有 <strong>y⁴</strong></p>
+              <p className="text-xs mt-1 text-green-700">式1和式2的最大次方是 b⁴，未達到 L.C.M. 的 b⁵ → 第三式必須有 <strong>b⁵</strong></p>
             </div>
             <div className="bg-amber-50 rounded-lg px-3 py-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-amber-700 w-5">z</span>
-                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="z^1" /></span>
-                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="z^5" /></span>
-                <span className="text-xs text-slate-500">式1:</span><span className="bg-amber-200 rounded px-1"><InlineMath math="z^2" /></span>
-                <span className="text-xs text-slate-500">式2:</span><span className="bg-amber-200 rounded px-1"><InlineMath math="z^5" /></span>
+                <span className="font-bold text-amber-700 w-5">c</span>
+                <span className="text-xs text-slate-500">H.C.F.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="c^1" /></span>
+                <span className="text-xs text-slate-500">L.C.M.:</span><span className="bg-slate-200 rounded px-1"><InlineMath math="c^6" /></span>
+                <span className="text-xs text-slate-500">式1:</span><span className="bg-amber-200 rounded px-1"><InlineMath math="c^2" /></span>
+                <span className="text-xs text-slate-500">式2:</span><span className="bg-amber-200 rounded px-1"><InlineMath math="c^6" /></span>
               </div>
-              <p className="text-xs mt-1 text-amber-700">式1和式2的最小次方是 z²，高於 H.C.F. 的 z¹ → 第三式必須有 <strong>z¹</strong></p>
+              <p className="text-xs mt-1 text-amber-700">式1和式2的最小次方是 c²，高於 H.C.F. 的 c¹ → 第三式必須有 <strong>c¹</strong></p>
             </div>
           </div>
-          <BlockMath math="\therefore \text{第三式} = x^2y^4z \text{（由選項確認 x 取 } x^2\text{）}" />
+          <BlockMath math="\therefore \text{第三式} = a^2b^5c \text{（由選項確認 a 取 } a^2\text{）}" />
         </div>
       </section>
 
