@@ -398,25 +398,6 @@ const Home = () => {
     'angle-quiz'
   ];
 
-  // 6ABGP3 專屬清單
-  const GP3_APP_IDS = new Set([
-    'index-laws',
-    'factorization-quiz',
-    'approximation-quiz',
-    'algebraic-fractions',
-    'percentage-quiz',
-    'simultaneous-eq',
-    'variation-quiz',
-    'coordinate-transform',
-    'distance-slope',
-    'remainder-factor-quiz',
-    'trig-quiz',
-    'dispersion-quiz',
-    'compound-inequality-quiz',
-    'subject',
-    'mc-limited-f6'
-  ]);
-
   const orderedApps = [...apps].sort((a, b) => {
     const ia = DEFAULT_APP_ORDER.indexOf(a.id);
     const ib = DEFAULT_APP_ORDER.indexOf(b.id);
@@ -426,15 +407,12 @@ const Home = () => {
   });
 
   // 篩選邏輯
-  const filters = ['全部', '初中', '高中', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', '6ABGP3'];
+  const filters = ['全部', '初中', '高中', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6'];
 
   const filteredApps = orderedApps.filter(app => {
-    // 6ABGP3: 只顯示指定題目
-    if (activeFilter === '6ABGP3' && !GP3_APP_IDS.has(app.id)) return false;
-
     // 年級/類別篩選
     const passesFilter = (() => {
-      if (activeFilter === '全部' || activeFilter === '6ABGP3') return true;
+      if (activeFilter === '全部') return true;
       if (activeFilter === '初中' || activeFilter === '高中') return app.category === activeFilter;
       return app.level === activeFilter || app.badges.some(badge => badge.level === activeFilter);
     })();
