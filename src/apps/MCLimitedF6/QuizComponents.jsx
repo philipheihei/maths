@@ -1,4 +1,4 @@
-<Latex math="\\frac{\\theta}{360^\\circ}" />  // double backslash in JSX stringimport React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ArrowLeft, Star, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
 import { InlineMath, LeftBlockMath, AlignedSteps, OptionBtn } from './shared';
 import { generateQuestion } from './generators/hcfLcm';
