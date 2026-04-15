@@ -225,29 +225,29 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
 // 一般三角形 SVG（用於畢氏定理逆定理）
 // 支援旋轉以呈現不同朝向
 // ========================================
-const GeneralTriangleSVG = ({ sides, label, isRight, selected, onClick, rotation = 0 }) => {
-  // sides = [s1, s2, s3] 三邊長度（s3 為最長邊）
+const GeneralTriangleSVG = ({ sides, label, rotation = 0 }) => {
+  // sides = [s1, s2, s3] — the three side lengths as given (not necessarily sorted)
   const [s1, s2, s3] = sides;
 
-  // 用餘弦定理求各角
+  // Use cosine rule to find the angle opposite s3
   const cosC = (s1 * s1 + s2 * s2 - s3 * s3) / (2 * s1 * s2);
   const angC = Math.acos(Math.max(-1, Math.min(1, cosC)));
 
-  // 頂點座標：C 在原點，s1 沿 x 軸到 A，s2 以 angC 方向到 B
+  // Vertex coords before rotation: V0 at origin, V1 along x-axis (s1), V2 via angle (s2)
   const rawPts = [
-    { x: 0, y: 0 },                                    // C
-    { x: s1, y: 0 },                                    // A
-    { x: s2 * Math.cos(angC), y: -s2 * Math.sin(angC) } // B
+    { x: 0, y: 0 },
+    { x: s1, y: 0 },
+    { x: s2 * Math.cos(angC), y: -s2 * Math.sin(angC) }
   ];
 
-  // 旋轉
+  // Rotate all points
   const rad = rotation * Math.PI / 180;
   const rotated = rawPts.map(p => ({
     x: p.x * Math.cos(rad) - p.y * Math.sin(rad),
     y: p.x * Math.sin(rad) + p.y * Math.cos(rad)
   }));
 
-  // 計算 bounding box 並歸一化到 SVG 空間
+  // Normalize to SVG space with generous padding for labels outside
   const xs = rotated.map(p => p.x);
   const ys = rotated.map(p => p.y);
   const minX = Math.min(...xs), maxX = Math.max(...xs);
@@ -255,7 +255,7 @@ const GeneralTriangleSVG = ({ sides, label, isRight, selected, onClick, rotation
   const rangeX = maxX - minX || 1;
   const rangeY = maxY - minY || 1;
 
-  const svgW = 160, svgH = 140, pad = 30;
+  const svgW = 200, svgH = 180, pad = 44;
   const scale = Math.min((svgW - 2 * pad) / rangeX, (svgH - 2 * pad) / rangeY);
 
   const pts = rotated.map(p => ({
@@ -263,57 +263,53 @@ const GeneralTriangleSVG = ({ sides, label, isRight, selected, onClick, rotation
     y: pad + (p.y - minY) * scale
   }));
 
-  // 邊中點位置（用於標示邊長）
-  const edgeMids = [
-    { from: pts[0], to: pts[1], len: s1 },  // C→A
-    { from: pts[1], to: pts[2], len: s3 },  // A→B (最長邊)
-    { from: pts[2], to: pts[0], len: s2 }   // B→C
+  // Centroid — used to push labels outward
+  const cx = (pts[0].x + pts[1].x + pts[2].x) / 3;
+  const cy = (pts[0].y + pts[1].y + pts[2].y) / 3;
+
+  // Edge midpoints with outward offset from centroid
+  const edges = [
+    { from: pts[0], to: pts[1], len: s1 },
+    { from: pts[1], to: pts[2], len: s3 },
+    { from: pts[2], to: pts[0], len: s2 }
   ];
 
-  const borderColor = selected === true ? 'border-green-400 ring-2 ring-green-300' :
-                       selected === false ? 'border-red-400 ring-2 ring-red-300' :
-                       'border-slate-200 hover:border-blue-400';
-
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`bg-white rounded-xl border-2 p-2 transition-all ${borderColor} flex flex-col items-center`}
-    >
+    <div className="flex flex-col items-center w-full">
       <p className="text-sm font-bold text-slate-700 mb-1">三角形 {label}</p>
-      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full" style={{ maxHeight: 130 }}>
+      <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full" style={{ maxHeight: 160 }}>
         <polygon
           points={pts.map(p => `${p.x},${p.y}`).join(' ')}
           fill="rgba(99,102,241,0.08)"
           stroke="#4f46e5"
-          strokeWidth="2"
+          strokeWidth="2.5"
           strokeLinejoin="round"
         />
-        {edgeMids.map(({ from, to, len }, i) => {
+        {edges.map(({ from, to, len }, i) => {
           const mx = (from.x + to.x) / 2;
           const my = (from.y + to.y) / 2;
-          // 偏移標籤使其不與邊重疊
-          const dx = to.y - from.y;
-          const dy = from.x - to.x;
+          // Direction from centroid → edge midpoint (outward)
+          const dx = mx - cx;
+          const dy = my - cy;
           const d = Math.sqrt(dx * dx + dy * dy) || 1;
-          const off = 12;
+          const off = 18;
           return (
             <text
               key={i}
               x={mx + dx / d * off}
               y={my + dy / d * off}
-              fontSize="12"
+              fontSize="13"
               fontWeight="bold"
               textAnchor="middle"
               dominantBaseline="central"
-              fill="#334155"
+              fill="#1e3a5f"
             >
               {len}
             </text>
           );
         })}
       </svg>
-    </button>
+    </div>
   );
 };
 
@@ -826,12 +822,18 @@ const generateConverseQuestion = () => {
     const isR = sumSq === maxSq;
     return {
       label: t.label,
-      text: `三角形 ${t.label}：三邊 = ${t.sides.join(', ')}，最長邊 = ${s3}\n` +
-        `$${s1}^2 + ${s2}^2 = ${s1 * s1} + ${s2 * s2} = ${sumSq}$\n` +
-        `$${s3}^2 = ${maxSq}$\n` +
-        (isR
-          ? `∵ $${s1}^2 + ${s2}^2 = ${s3}^2$，∴ 三角形 ${t.label} **是**直角三角形 ✓`
-          : `∵ $${s1}^2 + ${s2}^2 \\neq ${s3}^2$，∴ 三角形 ${t.label} **不是**直角三角形 ✗`)
+      isRight: isR,
+      lines: [
+        `三角形 ${t.label}：三邊 = ${t.sides.join(', ')}，最長邊 = ${s3}`,
+        `$${s1}^2 + ${s2}^2 = ${s1 * s1} + ${s2 * s2} = ${sumSq}$`,
+        `$${s3}^2 = ${maxSq}$`,
+        isR
+          ? `∵ $${s1}^2 + ${s2}^2 = ${s3}^2$`
+          : `∵ $${s1}^2 + ${s2}^2 \\neq ${s3}^2$`,
+      ],
+      conclusion: isR
+        ? `∴ 三角形 ${t.label} 是直角三角形 ✓`
+        : `∴ 三角形 ${t.label} 不是直角三角形 ✗`,
     };
   });
 
@@ -1598,10 +1600,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                     <GeneralTriangleSVG
                       sides={t.sides}
                       label={t.label}
-                      isRight={t.isRight}
                       rotation={t.rotation}
-                      selected={undefined}
-                      onClick={null}
                     />
                   </button>
                 );
@@ -1632,11 +1631,14 @@ const QuizPage = ({ onBackToTeaching }) => {
                   <p className={`text-xs font-bold ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>解題步驟：</p>
                   {converseData.steps.map((s, i) => (
                     <div key={i} className="bg-white/60 rounded-lg p-3">
-                      {s.text.split('\n').map((line, j) => (
+                      {s.lines.map((line, j) => (
                         <div key={j} className="mb-0.5">
                           <StepText text={line} />
                         </div>
                       ))}
+                      <div className={`mt-1 font-bold text-sm ${s.isRight ? 'text-green-700' : 'text-red-600'}`}>
+                        {s.conclusion}
+                      </div>
                     </div>
                   ))}
                 </div>
