@@ -1283,9 +1283,8 @@ const QuizPage = ({ onBackToTeaching }) => {
               hint: '用 (a) 的答案直接代入 (b)',
               steps: [
                 `(a) 答案：$${aExpr} = ${factor1}${factor2}$`,
-                `原式：$${bExpr}$`,
-                `代入 (a)：$${bExpr} = ${t}${factor2} + ${factor1}${factor2}$`,
-                `抽公因式：$= ${factor2}(${factor1Inner} + ${t})$`
+                `先代入列式：$${bExpr} = ${t}${factor2} + ${factor1}${factor2}$`,
+                `抽共同括號並完成：$= ${factor2}(${factor1Inner} + ${t})$`
               ],
               requiresSetup: true,
               setupPrompt: '先輸入代入列式（相應位置套用 (a) 答案，其餘照抄）',
@@ -1436,9 +1435,8 @@ const QuizPage = ({ onBackToTeaching }) => {
               steps: [
                 `(a) 答案：$${aExpr} = ${k}${r}${xFactor}$`,
                 `(b) 答案：$${bExpr} = ${bAnswer}$`,
-                `原式：$${cExpr}$`,
-                `代入 (a) 和 (b)：$${cExpr} = ${cSubExpr}$`,
-                `抽公因式：$= ${xFactor}${cSecond}$`
+                `先代入列式：$${cExpr} = ${cSubExpr}$`,
+                `抽共同括號並完成：$= ${xFactor}${cSecond}$`
               ],
               requiresSetup: true,
               setupPrompt: '先輸入代入列式（相應位置套用 (a) + (b) 答案，其餘照抄）',
