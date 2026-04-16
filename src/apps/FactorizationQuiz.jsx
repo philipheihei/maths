@@ -1217,6 +1217,14 @@ const QuizPage = ({ onBackToTeaching }) => {
         const factor2Inner = `${termAbs(a2, v1)} ${b2 >= 0 ? '+' : '-'} ${termAbs(b2, v2)}`;
         const factor1 = `(${factor1Inner})`;
         const factor2 = `(${factor2Inner})`;
+        const rootTex = (num, den) => {
+          if (num === 0) return '0';
+          if (den === 1) return String(num);
+          if (num < 0) return `-\\dfrac{${Math.abs(num)}}{${den}}`;
+          return `\\dfrac{${num}}{${den}}`;
+        };
+        const root1Tex = rootTex(-b1, a1);
+        const root2Tex = rootTex(-b2, a2);
         const aExpr = signedJoin([
           { coef: A, var: `${v1}^2` },
           { coef: B, var: `${v1}${v2}` },
@@ -1231,6 +1239,7 @@ const QuizPage = ({ onBackToTeaching }) => {
         const bExpr = `${bLeadExpr} + ${aExpr}`;
 
         const finalSecond = `(${factor1Inner} + ${t})`;
+        const finalSecondAlt = `(${t} + ${factor1Inner})`;
         const answer = `${factor2}${finalSecond}`;
         const stem = `\\begin{aligned}&\\text{(a)}\\; ${aExpr},\\\\&\\text{(b)}\\; ${bExpr}.\\end{aligned}`;
 
@@ -1249,8 +1258,10 @@ const QuizPage = ({ onBackToTeaching }) => {
               ],
               hint: '先把 (a) 因式分解',
               steps: [
-                `先看 (a)：$${aExpr}$`,
-                `可視作二元二次式：$A${v1}^2 + B${v1}${v2} + C${v2}^2$，其中 $A=${A},\ B=${B},\ C=${C}$`,
+                `FMLA 01 輸入：$a=${A},\ b=${B},\ c=${C}$`,
+                `得出兩根：$${root1Tex}$ 和 $${root2Tex}$`,
+                `口訣：分母放前，分子放後變相反`,
+                `$${root1Tex}$ 對應 $${factor1}$，$${root2Tex}$ 對應 $${factor2}$`,
                 `(a) 答案：$${aExpr} = ${factor1}${factor2}$`
               ],
               requiresSetup: false
@@ -1262,8 +1273,12 @@ const QuizPage = ({ onBackToTeaching }) => {
               answer,
               answerAlt: [
                 `${finalSecond}${factor2}`,
+                `${factor2}${finalSecondAlt}`,
+                `${finalSecondAlt}${factor2}`,
                 answer.replace(/\s/g, ''),
-                `${finalSecond}${factor2}`.replace(/\s/g, '')
+                `${finalSecond}${factor2}`.replace(/\s/g, ''),
+                `${factor2}${finalSecondAlt}`.replace(/\s/g, ''),
+                `${finalSecondAlt}${factor2}`.replace(/\s/g, '')
               ],
               hint: '用 (a) 的答案直接代入 (b)',
               steps: [
@@ -1278,24 +1293,36 @@ const QuizPage = ({ onBackToTeaching }) => {
               setupAnswer: `${bExpr} = ${t}${factor2} + ${factor1}${factor2}`,
               setupAnswerAlt: [
                 `${t}${factor2} + ${factor1}${factor2} = ${bExpr}`,
-                `${bExpr}=${t}${factor2}+${factor1}${factor2}`
+                `${bExpr}=${t}${factor2}+${factor1}${factor2}`,
+                `${t}${factor2} + ${factor1}${factor2}`,
+                `${bLeadExpr} + ${factor1}${factor2}`,
+                `${bExpr} = ${factor1}${factor2} + ${t}${factor2}`,
+                `${factor1}${factor2} + ${t}${factor2}`
               ],
-              setupHint: '在對應位置套用 (a) 答案，其餘項照抄',
+              setupHint: '在對應位置套用 (a) 答案，其餘項照抄。(不要漏寫 "+")',
               carryAnswers: [
                 { label: '(a) 正確答案', value: `${factor1}${factor2}` }
               ],
               setupEquationHighlight: {
                 left: bExpr,
                 topSegments: [
-                  { kind: 'plain', tex: bLeadExpr },
+                  { kind: 'lead', tex: bLeadExpr },
                   { kind: 'op', tex: '+' },
                   { kind: 'a', tex: aExpr }
                 ],
-                segments: [
-                  { kind: 'plain', tex: `${t}${factor2}` },
+                topCaption: '原式（標示 (a) 對應位置）',
+                midSegments: [
+                  { kind: 'lead', tex: bLeadExpr },
                   { kind: 'op', tex: '+' },
                   { kind: 'a', tex: `${factor1}${factor2}` }
-                ]
+                ],
+                midCaption: '先套用 (a) 答案，照抄剩餘部份',
+                segments: [
+                  { kind: 'lead', tex: `${t}${factor2}` },
+                  { kind: 'op', tex: '+' },
+                  { kind: 'a', tex: `${factor1}${factor2}` }
+                ],
+                bottomCaption: '之後再抽剩餘部份的公因式，\n避免開頭抽錯失代入步驟分'
               }
             }
           ]
@@ -1346,7 +1373,14 @@ const QuizPage = ({ onBackToTeaching }) => {
         const xFactor = `(${xInner})`;
         const yFactor = `(${yInner})`;
         const bAnswer = `${xFactor}${yFactor}`;
-        const cAnswer = `${xFactor}(${yInner} - ${k}${r})`;
+        const bAnswerSwap = `${yFactor}${xFactor}`;
+        const cSecond = `(${yInner} - ${k}${r})`;
+        const cSecondAlt = `(-${k}${r} + ${yInner})`;
+        const cAnswer = `${xFactor}${cSecond}`;
+        const cSubExpr = `${bAnswer} - ${k}${r}${xFactor}`;
+        const cSubExprAlt1 = `${bAnswer} - ${xFactor}${k}${r}`;
+        const cSubExprAlt2 = `${bAnswerSwap} - ${k}${r}${xFactor}`;
+        const cSubExprAlt3 = `${bAnswerSwap} - ${xFactor}${k}${r}`;
         const stem = `\\begin{aligned}&\\text{(a)}\\; ${aExpr},\\\\&\\text{(b)}\\; ${bExpr},\\\\&\\text{(c)}\\; ${cExpr}.\\end{aligned}`;
 
         return {
@@ -1390,23 +1424,33 @@ const QuizPage = ({ onBackToTeaching }) => {
               prompt: '因式分解 (c)',
               answer: cAnswer,
               answerAlt: [
-                `(${yInner} - ${k}${r})${xFactor}`,
+                `${cSecond}${xFactor}`,
+                `${xFactor}${cSecondAlt}`,
+                `${cSecondAlt}${xFactor}`,
                 cAnswer.replace(/\s/g, ''),
-                `(${yInner} - ${k}${r})${xFactor}`.replace(/\s/g, '')
+                `${cSecond}${xFactor}`.replace(/\s/g, ''),
+                `${xFactor}${cSecondAlt}`.replace(/\s/g, ''),
+                `${cSecondAlt}${xFactor}`.replace(/\s/g, '')
               ],
               hint: '先寫出 (a) 答案，再代入 (c)',
               steps: [
                 `(a) 答案：$${aExpr} = ${k}${r}${xFactor}$`,
                 `(b) 答案：$${bExpr} = ${bAnswer}$`,
                 `原式：$${cExpr}$`,
-                `代入 (a) 和 (b)：$${cExpr} = ${bAnswer} - ${k}${r}${xFactor}$`,
-                `抽公因式：$= ${xFactor}(${yInner} - ${k}${r})$`
+                `代入 (a) 和 (b)：$${cExpr} = ${cSubExpr}$`,
+                `抽公因式：$= ${xFactor}${cSecond}$`
               ],
               requiresSetup: true,
               setupPrompt: '先輸入代入列式（相應位置套用 (a) + (b) 答案，其餘照抄）',
               setupPlaceholder: '先輸入列式：相應位置套用 (a) 和 (b) 答案，其他照抄',
-              setupAnswer: `${cExpr} = ${bExpr} - (${aExpr})`,
+              setupAnswer: `${cExpr} = ${cSubExpr}`,
               setupAnswerAlt: [
+                `${cSubExpr} = ${cExpr}`,
+                `${cExpr}=${cSubExpr}`,
+                `${cExpr} = ${cSubExprAlt1}`,
+                `${cExpr} = ${cSubExprAlt2}`,
+                `${cExpr} = ${cSubExprAlt3}`,
+                `${cExpr} = ${bExpr} - (${aExpr})`,
                 `${bExpr} - (${aExpr}) = ${cExpr}`,
                 `${cExpr}=${bExpr}-(${aExpr})`
               ],
@@ -1417,10 +1461,21 @@ const QuizPage = ({ onBackToTeaching }) => {
               ],
               setupEquationHighlight: {
                 left: cExpr,
-                segments: [
+                topSegments: [
                   { kind: 'b', tex: bExpr },
                   { kind: 'op', tex: '-' },
                   { kind: 'a', tex: aExpr }
+                ],
+                topCaption: '原式（標示 (b) 與 (a) 對應位置）',
+                midSegments: [
+                  { kind: 'b', tex: bAnswer },
+                  { kind: 'op', tex: '-' },
+                  { kind: 'a', tex: `${k}${r}${xFactor}` }
+                ],
+                midCaption: '先套用 (a) 與 (b) 答案，照抄剩餘部份',
+                segments: [
+                  { kind: 'plain', tex: xFactor },
+                  { kind: 'plain', tex: `(${yInner} - ${k}${r})` }
                 ]
               }
             }
@@ -1519,7 +1574,7 @@ const QuizPage = ({ onBackToTeaching }) => {
 
   // 正規化答案（移除空格、統一符號、處理係數1省略）
   const normalizeAnswer = (ans) => {
-    return ans
+    const base = ans
       .replace(/\s+/g, '')
       .replace(/²/g, '^2')
       .replace(/³/g, '^3')
@@ -1527,6 +1582,63 @@ const QuizPage = ({ onBackToTeaching }) => {
       .replace(/\(1([a-z])/g, '($1')  // 括號內 1y → y
       .replace(/([+\-])1([a-z])/g, '$1$2')  // +1y 或 -1y → +y 或 -y
       .replace(/^1([a-z])/g, '$1'); // 開頭的 1y → y
+
+    // 括號內若是線性加減式，將項目排序標準化，容許 2p-3q+2 / 2+2p-3q / -3q+2p+2 視為同一式
+    const canonicalizeLinearExpr = (expr) => {
+      if (!expr || /[^a-z0-9^+\-]/.test(expr)) return null;
+      const parts = expr.match(/[+\-]?[^+\-]+/g);
+      if (!parts || parts.length === 0) return null;
+
+      const acc = new Map();
+      for (const part of parts) {
+        const sign = part[0] === '-' ? -1 : 1;
+        const body = (part[0] === '+' || part[0] === '-') ? part.slice(1) : part;
+        if (!body) return null;
+
+        let coef;
+        let varPart;
+
+        if (/^\d+$/.test(body)) {
+          coef = Number(body);
+          varPart = '';
+        } else {
+          const m = body.match(/^(\d+)?([a-z][a-z0-9^]*)$/);
+          if (!m) return null;
+          coef = m[1] ? Number(m[1]) : 1;
+          varPart = m[2];
+        }
+
+        const prev = acc.get(varPart) || 0;
+        acc.set(varPart, prev + sign * coef);
+      }
+
+      const keys = [...acc.keys()].filter(k => (acc.get(k) || 0) !== 0);
+      if (keys.length === 0) return '0';
+
+      // 先排字母項，常數放最後，確保括號內同類式會歸一到同一字串
+      keys.sort((a, b) => {
+        if (a === '') return 1;
+        if (b === '') return -1;
+        return a.localeCompare(b);
+      });
+
+      const out = [];
+      for (const key of keys) {
+        const c = acc.get(key);
+        if (!c) continue;
+        const abs = Math.abs(c);
+        const term = key ? `${abs === 1 ? '' : abs}${key}` : `${abs}`;
+        const s = c < 0 ? '-' : '+';
+        out.push((out.length === 0 && s === '+') ? term : `${s}${term}`);
+      }
+
+      return out.join('');
+    };
+
+    return base.replace(/\(([^()]+)\)/g, (full, inner) => {
+      const canon = canonicalizeLinearExpr(inner);
+      return canon ? `(${canon})` : full;
+    });
   };
 
   // 提交答案
@@ -1863,7 +1975,7 @@ const QuizPage = ({ onBackToTeaching }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-indigo-50 p-4">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* 頂部導航 */}
         <div className="mb-4 flex items-center justify-between">
           <button
@@ -1980,31 +2092,101 @@ const QuizPage = ({ onBackToTeaching }) => {
                   </span>
                 </div>
                 {/* 答案（LaTeX 渲染） */}
-                <div className={`flex items-center gap-2 text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
-                  <span className="font-medium">{feedback.answerLabel || '答案'}：</span>
+                <div className={`flex items-start gap-2 text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
+                  <span className="font-medium shrink-0 whitespace-nowrap">{feedback.answerLabel || '答案'}：</span>
                   {feedback.equationHighlight ? (
                     <div className="font-mono text-sm">
                       {feedback.equationHighlight.topSegments?.length > 0 ? (
-                        <div className="flex items-center flex-wrap gap-1">
-                          {feedback.equationHighlight.segments.map((seg, idx) => (
-                            seg.kind === 'op' ? (
-                              <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
-                            ) : seg.kind === 'plain' ? (
-                              <span key={idx} className="px-1 text-slate-700">
-                                <Latex math={seg.tex} />
-                              </span>
-                            ) : (
-                              <span
-                                key={idx}
-                                className={seg.kind === 'a'
-                                  ? 'bg-amber-200 text-amber-900 rounded px-1'
-                                  : 'bg-cyan-200 text-cyan-900 rounded px-1'}
-                              >
-                                <Latex math={seg.tex} />
-                              </span>
-                            )
-                          ))}
-                        </div>
+                        <>
+                          <div className="flex items-center gap-2">
+                            <span className="w-4 shrink-0" />
+                            <div className="flex-1 min-w-0 overflow-x-auto">
+                              <div className="inline-flex items-center gap-1 whitespace-nowrap">
+                                {feedback.equationHighlight.topSegments.map((seg, idx) => (
+                                  seg.kind === 'op' ? (
+                                    <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                  ) : seg.kind === 'plain' ? (
+                                    <span key={idx} className="px-1 text-slate-700">
+                                      <Latex math={seg.tex} />
+                                    </span>
+                                  ) : (
+                                    <span
+                                      key={idx}
+                                      className={seg.kind === 'a'
+                                        ? 'bg-yellow-200 text-amber-900 rounded px-1'
+                                        : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                    >
+                                      <Latex math={seg.tex} />
+                                    </span>
+                                  )
+                                ))}
+                              </div>
+                            </div>
+                            {feedback.equationHighlight.topCaption && (
+                              <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {feedback.equationHighlight.topCaption}</span>
+                            )}
+                          </div>
+                          {feedback.equationHighlight.midSegments?.length > 0 && (
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="w-4 shrink-0 text-right font-mono">=</span>
+                              <div className="flex-1 min-w-0 overflow-x-auto">
+                                <div className="inline-flex items-center gap-1 whitespace-nowrap">
+                                  {feedback.equationHighlight.midSegments.map((seg, idx) => (
+                                    seg.kind === 'op' ? (
+                                      <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                    ) : seg.kind === 'plain' ? (
+                                      <span key={idx} className="px-1 text-slate-700">
+                                        <Latex math={seg.tex} />
+                                      </span>
+                                    ) : (
+                                      <span
+                                        key={idx}
+                                        className={seg.kind === 'a'
+                                          ? 'bg-yellow-200 text-amber-900 rounded px-1'
+                                          : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                      >
+                                        <Latex math={seg.tex} />
+                                      </span>
+                                    )
+                                  ))}
+                                </div>
+                              </div>
+                              {feedback.equationHighlight.midCaption && (
+                                <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {feedback.equationHighlight.midCaption}</span>
+                              )}
+                            </div>
+                          )}
+                          {feedback.answerLabel !== '參考列式' && (
+                            <div className="flex items-center gap-2 mt-1">
+                              <span className="w-4 shrink-0 text-right font-mono">=</span>
+                              <div className="flex-1 min-w-0 overflow-x-auto">
+                                <div className="inline-flex items-center gap-1 whitespace-nowrap">
+                                  {feedback.equationHighlight.segments.map((seg, idx) => (
+                                    seg.kind === 'op' ? (
+                                      <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                    ) : seg.kind === 'plain' ? (
+                                      <span key={idx} className="px-1 text-slate-700">
+                                        <Latex math={seg.tex} />
+                                      </span>
+                                    ) : (
+                                      <span
+                                        key={idx}
+                                        className={seg.kind === 'a'
+                                          ? 'bg-yellow-200 text-amber-900 rounded px-1'
+                                          : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                      >
+                                        <Latex math={seg.tex} />
+                                      </span>
+                                    )
+                                  ))}
+                                </div>
+                              </div>
+                              {feedback.equationHighlight.bottomCaption && (
+                                <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {feedback.equationHighlight.bottomCaption}</span>
+                              )}
+                            </div>
+                          )}
+                        </>
                       ) : (
                         <>
                           <div className="flex items-center gap-2">
@@ -2013,25 +2195,27 @@ const QuizPage = ({ onBackToTeaching }) => {
                           </div>
                           <div className="flex items-center gap-2 mt-1">
                             <span className="w-4 shrink-0 text-right font-mono">=</span>
-                            <div className="flex items-center flex-wrap gap-1">
-                              {feedback.equationHighlight.segments.map((seg, idx) => (
-                                seg.kind === 'op' ? (
-                                  <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
-                                ) : seg.kind === 'plain' ? (
-                                  <span key={idx} className="px-1 text-slate-700">
-                                    <Latex math={seg.tex} />
-                                  </span>
-                                ) : (
-                                  <span
-                                    key={idx}
-                                    className={seg.kind === 'a'
-                                      ? 'bg-amber-200 text-amber-900 rounded px-1'
-                                      : 'bg-cyan-200 text-cyan-900 rounded px-1'}
-                                  >
-                                    <Latex math={seg.tex} />
-                                  </span>
-                                )
-                              ))}
+                            <div className="flex-1 min-w-0 overflow-x-auto">
+                              <div className="inline-flex items-center gap-1 whitespace-nowrap">
+                                {feedback.equationHighlight.segments.map((seg, idx) => (
+                                  seg.kind === 'op' ? (
+                                    <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                  ) : seg.kind === 'plain' ? (
+                                    <span key={idx} className="px-1 text-slate-700">
+                                      <Latex math={seg.tex} />
+                                    </span>
+                                  ) : (
+                                    <span
+                                      key={idx}
+                                      className={seg.kind === 'a'
+                                        ? 'bg-yellow-200 text-amber-900 rounded px-1'
+                                        : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                    >
+                                      <Latex math={seg.tex} />
+                                    </span>
+                                  )
+                                ))}
+                              </div>
                             </div>
                           </div>
                         </>
