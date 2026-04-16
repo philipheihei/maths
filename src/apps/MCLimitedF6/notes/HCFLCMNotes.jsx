@@ -164,7 +164,7 @@ const HCFLCMNotes = ({ onBack }) => (
               <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+3)^1" /></span>
               <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
               <span className="text-slate-400">→</span>
-              <span className="font-bold text-amber-700">最小：<InlineMath math="(x+3)^0" />（不含）</span>
+              <span className="font-bold text-amber-700">最小：<InlineMath math="(x+3)^0" />（不含，即 H.C.F. 不含 <InlineMath math="(x+3)" />）</span>
             </div>
           </div>
           <BlockMath math="\therefore \text{H.C.F.} = x^2(x-1)^2" />
@@ -217,7 +217,7 @@ const HCFLCMNotes = ({ onBack }) => (
               <p className="text-xs mt-1 text-amber-700">式1和式2的最小次方是 c²，高於 H.C.F. 的 c¹ → 第三式必須有 <strong>c¹</strong></p>
             </div>
           </div>
-          <BlockMath math="\therefore \text{第三式} = a^2b^5c \text{（由選項確認 a 取 } a^2\text{）}" />
+          <BlockMath math="\therefore \text{第三式} = a^2b^5c" />
         </div>
       </section>
 
