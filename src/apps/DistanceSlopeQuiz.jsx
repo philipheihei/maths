@@ -621,13 +621,13 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <p className="text-xs text-slate-400 mb-2">公式（比例與點交叉乘！）</p>
                 <div className="space-y-1">
                   <p className="text-sm text-slate-600 mb-1">P 將 AB 分成 r : s</p>
-                  <Latex math={"x = \\dfrac{s \\cdot x_1 + r \\cdot x_2}{r + s}"} block />
-                  <Latex math={"y = \\dfrac{s \\cdot y_1 + r \\cdot y_2}{r + s}"} block />
+                  <Latex math={"\\textcolor{blue}{x} = \\dfrac{s \\cdot \\textcolor{blue}{x_1} + r \\cdot \\textcolor{blue}{x_2}}{r + s}"} block />
+                  <Latex math={"\\textcolor{green}{y} = \\dfrac{s \\cdot \\textcolor{green}{y_1} + r \\cdot \\textcolor{green}{y_2}}{r + s}"} block />
                 </div>
               </div>
               <div className="bg-white rounded-lg p-4">
-                <p className="text-xs text-slate-400 mb-2">例：P 將 A(1, 3)、B(7, 9) 分成 2 : 1</p>
-                <Latex math={"\\begin{aligned}x &= \\dfrac{1 \\times \\textcolor{blue}{1} + 2 \\times \\textcolor{blue}{7}}{2+1} = \\dfrac{\\textcolor{blue}{15}}{3} = \\textcolor{blue}{5} \\\\ y &= \\dfrac{1 \\times \\textcolor{green}{3} + 2 \\times \\textcolor{green}{9}}{2+1} = \\dfrac{\\textcolor{green}{21}}{3} = \\textcolor{green}{7}\\end{aligned}"} block />
+                <p className="text-sm font-semibold text-slate-600 mb-2">例：P 將 A(<span className="text-blue-600">1</span>, <span className="text-green-600">3</span>)、B(<span className="text-blue-600">7</span>, <span className="text-green-600">9</span>) 分成 2 : 1</p>
+                <Latex math={"\\begin{aligned}\\textcolor{blue}{x} &= \\dfrac{1 \\times \\textcolor{blue}{1} + 2 \\times \\textcolor{blue}{7}}{2+1} = \\dfrac{\\textcolor{blue}{15}}{3} = \\textcolor{blue}{5} \\\\ \\textcolor{green}{y} &= \\dfrac{1 \\times \\textcolor{green}{3} + 2 \\times \\textcolor{green}{9}}{2+1} = \\dfrac{\\textcolor{green}{21}}{3} = \\textcolor{green}{7}\\end{aligned}"} block />
                 <div className="mt-2 text-center">
                   <Latex math={"P = (\\textcolor{blue}{5},\\; \\textcolor{green}{7})"} block />
                 </div>

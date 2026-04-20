@@ -34,14 +34,31 @@ const Latex = ({ math, block = false }) => {
 
 // 混合文字+LaTeX 渲染（以 $...$ 標記 LaTeX 部分）
 const StepText = ({ text }) => {
-  const parts = text.split(/(\$[^$]+\$)/g);
+  const parts = text.split(/(\$[^$]+\$|\[\[[^\]]+\]\])/g);
+  const getKeyClass = (label) => {
+    const normalized = label.replace(/\s+/g, '').toLowerCase();
+    if (normalized === 'ab/c') {
+      return 'bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded';
+    }
+    return 'bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded';
+  };
+
   return (
     <span className="text-sm text-slate-700 leading-relaxed">
-      {parts.map((part, i) =>
-        part.startsWith('$') && part.endsWith('$')
-          ? <Latex key={i} math={part.slice(1, -1)} />
-          : <span key={i}>{part}</span>
-      )}
+      {parts.map((part, i) => {
+        if (part.startsWith('$') && part.endsWith('$')) {
+          return <Latex key={i} math={part.slice(1, -1)} />;
+        }
+        if (part.startsWith('[[') && part.endsWith(']]')) {
+          const label = part.slice(2, -2).trim();
+          return (
+            <span key={i} className="inline-block mx-0.5 align-middle">
+              <span className={getKeyClass(label)}>{label}</span>
+            </span>
+          );
+        }
+        return <span key={i}>{part}</span>;
+      })}
     </span>
   );
 };
@@ -1151,7 +1168,7 @@ const QuizPage = ({ onBackToTeaching }) => {
 
       const rootSteps = [
         `FMLA 01 輸入：$a=${A},\ b=${B},\ c=${C}$`,
-        `得出兩根：$${r1tex}$ 和 $${r2tex}$`,
+        `得出兩根：$${r1tex}$ 和 $${r2tex}$；小數需轉分數，按 [[a b/c]] [[EXE]]`,
         `口訣：分母放前，分子放後變相反`,
         rootLine(-p2, p1, ans1),
         rootLine(-q2, q1, ans2),
@@ -1259,7 +1276,7 @@ const QuizPage = ({ onBackToTeaching }) => {
               hint: '先把 (a) 因式分解',
               steps: [
                 `FMLA 01 輸入：$a=${A},\ b=${B},\ c=${C}$`,
-                `得出兩根：$${root1Tex}$ 和 $${root2Tex}$`,
+                `得出兩根：$${root1Tex}$ 和 $${root2Tex}$；小數需轉分數，按 [[a b/c]] [[EXE]]`,
                 `口訣：分母放前，分子放後變相反`,
                 `$${root1Tex}$ 對應 $${factor1}$，$${root2Tex}$ 對應 $${factor2}$`,
                 `(a) 答案：$${aExpr} = ${factor1}${factor2}$`
