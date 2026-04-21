@@ -311,8 +311,8 @@ const Home = () => {
       path: '/trig-quiz',
       level: 'F3',
       badges: [
-        { level: 'F3', chapter: 'CH7', subject: '畢氏定理' },
-        { level: 'F3', chapter: 'CH8', subject: '三角比' }
+        { level: 'F2', chapter: 'CH10', subject: '畢氏定理' },
+        { level: 'F3', chapter: 'CH7', subject: '三角比' }
       ],
       category: '初中',
       topics: ['畢氏定理', '三角比', 'sin', 'cos', 'tan'],

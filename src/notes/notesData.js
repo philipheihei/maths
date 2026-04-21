@@ -44,7 +44,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'trig-identities',
-      topic: 'CH7 三角恆等式',
+      topic: 'CH7 三角比',
       color: 'red',
       subtopics: [
         { id: 'pythagoras', num: 1, title: 'sin cos tan 輔以畢氏定理', color: 'green' },

@@ -186,7 +186,7 @@ export const FactorizationNotes = ({ activeSub }) => {
 };
 
 // ========================================
-// CH7 三角恆等式 (F3)
+// CH7 三角比 (F3)
 // ========================================
 export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
   const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
