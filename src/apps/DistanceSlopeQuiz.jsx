@@ -101,7 +101,7 @@ const CoordinateGrid = ({ children, onMouseMove, onMouseUp, onMouseLeave }) => {
         stroke="#333" strokeWidth="2" markerEnd="url(#arrowhead)" />
       {labels}
       <text x={SVG_SIZE - PADDING + 15} y={CENTER + 5} fontSize="14" fontWeight="bold" fill="#333">x</text>
-      <text x={CENTER + 8} y={PADDING - 10} fontSize="14" fontWeight="bold" fill="#333">y</text>
+      <text x={CENTER} y={PADDING - 15} textAnchor="middle" fontSize="14" fontWeight="bold" fill="#333">y</text>
       {children}
     </svg>
   );
@@ -561,6 +561,40 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <p className="text-xs text-slate-400 mb-1">定義</p>
                 <p className="text-sm font-bold text-slate-700">若 A、B、C 三點<span className="bg-orange-200 px-1 rounded">共線</span>，則 ABC 任意兩點的斜率都相等</p>
                 <p className="text-sm text-slate-600">方法：分別找 AB、AC、BC 其中兩線段的斜率，再比較是否相等。</p>
+
+                {/* 圖形：共線 */}
+                <div className="mt-4 flex justify-center">
+                  <svg viewBox="0 0 220 140" width="220" height="140" className="overflow-visible">
+                    <defs>
+                      <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                        <polygon points="0,0 6,3 0,6" fill="#16a34a" />
+                      </marker>
+                    </defs>
+                    <line x1="20" y1="65" x2="200" y2="65" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-green)" />
+                    <line x1="110" y1="125" x2="110" y2="10" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-green)" />
+                    <text x="95" y="82" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">O</text>
+                    <text x="205" y="70" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">x</text>
+                    <text x="110" y="2" textAnchor="middle" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y</text>
+
+                    {/* 共線虛線 */}
+                    <line x1="30" y1="15" x2="190" y2="115" stroke="#222" strokeWidth="1.5" strokeDasharray="5,4" />
+                    
+                    {/* 點 P (Center: 62, 35) */}
+                    <line x1="58" y1="31" x2="66" y2="39" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="66" y1="31" x2="58" y2="39" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
+                    <text x="67" y="25" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">P</text>
+                    
+                    {/* 點 Q (Center: 110, 65) */}
+                    <line x1="106" y1="61" x2="114" y2="69" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="114" y1="61" x2="106" y2="69" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
+                    <text x="125" y="56" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">Q</text>
+                    
+                    {/* 點 R (Center: 158, 95) */}
+                    <line x1="154" y1="91" x2="162" y2="99" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="162" y1="91" x2="154" y2="99" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
+                    <text x="165" y="87" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">R</text>
+                  </svg>
+                </div>
               </div>
               <div className="bg-white rounded-lg p-4">
                 <p className="text-xs text-slate-400 mb-2">例：判斷 A(<span className="text-blue-600">1</span>, <span className="text-green-600">2</span>)、B(<span className="text-blue-600">3</span>, <span className="text-green-600">6</span>)、C(<span className="text-blue-600">5</span>, <span className="text-green-600">10</span>) 是否共線</p>
@@ -597,7 +631,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                       <line x1="40" y1="115" x2="40" y2="10" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-green)" />
                       <text x="25" y="112" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">O</text>
                       <text x="185" y="100" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">x</text>
-                      <text x="48" y="18" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y</text>
+                      <text x="40" y="2" textAnchor="middle" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y</text>
 
                       <line x1="30" y1="75" x2="150" y2="15" stroke="#222" strokeWidth="1.5" />
                       <line x1="30" y1="115" x2="150" y2="55" stroke="#222" strokeWidth="1.5" />
@@ -620,7 +654,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                       <line x1="40" y1="115" x2="40" y2="10" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-green)" />
                       <text x="25" y="112" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">O</text>
                       <text x="185" y="100" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">x</text>
-                      <text x="48" y="18" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y</text>
+                      <text x="40" y="2" textAnchor="middle" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y</text>
 
                       <line x1="30" y1="125" x2="140" y2="15" stroke="#222" strokeWidth="1.5" />
                       <line x1="30" y1="5" x2="130" y2="105" stroke="#222" strokeWidth="1.5" />
