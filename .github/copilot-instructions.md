@@ -151,6 +151,17 @@ When displaying **consecutive calculation steps** (2+ lines), always align the `
 ```
 Use a `<pre className="whitespace-pre font-sans">` tag so leading spaces are respected while keeping sans-serif font. In plain `<p>` / `<div>` tags, use `&nbsp;` or pad with a thin `<span>` to push shorter left-hand sides into alignment.
 
+### Equal-Length Tick Mark Rule (SVG)
+- **相等長度標記（tick marks）必須與所屬線段垂直**。
+- 雙線標記的兩條短線間距要比預設再分開（約 +30%），避免視覺上黏在一起。
+- 每條短線長度用中短尺度（約 12-14px），不要過短或過長。
+- 顏色沿用幾何標記藍色（例如 `#0ea5e9`），保持全頁圖例一致。
+
+### Coordinate Label Spacing Rule (SVG)
+- 坐標標籤一律使用「字母 + 空格 + 括號」格式：`A (x, y)`、`B (x₂, y₂)`、`M (x, y)`、`P (x, y)`。
+- 禁止使用無空格寫法（例如 `A(x, y)`、`P(x, y)`）。
+- 此規則適用於所有教學圖示與示例 SVG，保持與出版社排版一致。
+
 ## Calculator Key Styling (CASIO fx-50FH II)
 
 When displaying CASIO fx-50FH II keys in notes or instructions, **always** use these exact Tailwind classes. Every new notes page or instruction section must follow this standard.

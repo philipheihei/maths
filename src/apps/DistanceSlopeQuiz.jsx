@@ -480,29 +480,29 @@ const TeachingPage = ({ onGoToQuiz }) => {
               <div className="flex justify-center">
                 <svg viewBox="0 0 280 130" width="280" height="130" className="overflow-visible">
                   {/* 連線（線段，無箭頭） */}
-                  <line x1="60" y1="75" x2="220" y2="30" stroke="#3b82f6" strokeWidth="2" />
-                  {/* 點 1 — 較小黑色交叉 */}
-                  <line x1="53" y1="68" x2="67" y2="82" stroke="#222" strokeWidth="2" strokeLinecap="round" />
-                  <line x1="67" y1="68" x2="53" y2="82" stroke="#222" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="60" y1="75" x2="220" y2="30" stroke="#374151" strokeWidth="2" />
+                  {/* 點 1 — 藍色交叉 */}
+                  <line x1="55" y1="70" x2="65" y2="80" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="65" y1="70" x2="55" y2="80" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
                   {/* ① 在交叉下面 */}
                   <text x="60" y="100" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">①</text>
                   {/* 坐標標籤 — KaTeX style */}
-                  <text x="18" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#1d4ed8">(</text>
-                  <text x="26" y="118" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#3b82f6">x<tspan dy="3" fontSize="9" fontStyle="normal">1</tspan></text>
-                  <text x="40" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#555">,</text>
+                  <text x="18" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151">(</text>
+                  <text x="26" y="118" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#2563eb">x<tspan dy="3" fontSize="9" fontStyle="normal">1</tspan></text>
+                  <text x="40" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151">,</text>
                   <text x="47" y="118" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y<tspan dy="3" fontSize="9" fontStyle="normal">1</tspan></text>
-                  <text x="60" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#1d4ed8">)</text>
-                  {/* 點 2 — 較小黑色交叉 */}
-                  <line x1="213" y1="23" x2="227" y2="37" stroke="#222" strokeWidth="2" strokeLinecap="round" />
-                  <line x1="227" y1="23" x2="213" y2="37" stroke="#222" strokeWidth="2" strokeLinecap="round" />
+                  <text x="60" y="118" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151">)</text>
+                  {/* 點 2 — 藍色交叉 */}
+                  <line x1="215" y1="25" x2="225" y2="35" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="225" y1="25" x2="215" y2="35" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
                   {/* ② 在交叉下面 */}
                   <text x="220" y="55" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">②</text>
                   {/* 坐標標籤 — KaTeX style */}
-                  <text x="198" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#1d4ed8">(</text>
-                  <text x="206" y="16" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#3b82f6">x<tspan dy="3" fontSize="9" fontStyle="normal">2</tspan></text>
-                  <text x="220" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#555">,</text>
+                  <text x="198" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151">(</text>
+                  <text x="206" y="16" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#2563eb">x<tspan dy="3" fontSize="9" fontStyle="normal">2</tspan></text>
+                  <text x="220" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151">,</text>
                   <text x="227" y="16" fontSize="13" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y<tspan dy="3" fontSize="9" fontStyle="normal">2</tspan></text>
-                  <text x="240" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#1d4ed8">)</text>
+                  <text x="240" y="16" fontSize="13" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151">)</text>
                 </svg>
               </div>
               <div className="space-y-2 text-sm">
@@ -584,10 +584,54 @@ const TeachingPage = ({ onGoToQuiz }) => {
                 <div>
                   <p className="text-sm font-bold text-slate-700"><span className="bg-yellow-200 px-1 rounded">平行</span>：兩條線斜率<span className="bg-yellow-200 px-1 rounded">相同</span></p>
                   <Latex math={"L_1 \\mathbin{/\\!/} L_2 \\;\\Rightarrow\\; m_1 = m_2"} block />
+                  
+                  {/* 圖形：平行 */}
+                  <div className="mt-3 flex justify-center">
+                    <svg viewBox="0 0 200 130" width="200" height="130" className="overflow-visible">
+                      <defs>
+                        <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                          <polygon points="0,0 6,3 0,6" fill="#16a34a" />
+                        </marker>
+                      </defs>
+                      <line x1="20" y1="95" x2="180" y2="95" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-green)" />
+                      <line x1="40" y1="115" x2="40" y2="10" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-green)" />
+                      <text x="25" y="112" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">O</text>
+                      <text x="185" y="100" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">x</text>
+                      <text x="48" y="18" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y</text>
+
+                      <line x1="30" y1="75" x2="150" y2="15" stroke="#222" strokeWidth="1.5" />
+                      <line x1="30" y1="115" x2="150" y2="55" stroke="#222" strokeWidth="1.5" />
+                      <polygon points="-6,-5 6,0 -6,5" fill="#ea580c" transform="translate(80, 50) rotate(-26.56)" />
+                      <polygon points="-6,-5 6,0 -6,5" fill="#ea580c" transform="translate(80, 90) rotate(-26.56)" />
+                      
+                      <text x="155" y="18" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222">L<tspan dy="3" fontSize="11" fontStyle="normal">1</tspan></text>
+                      <text x="155" y="58" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222">L<tspan dy="3" fontSize="11" fontStyle="normal">2</tspan></text>
+                    </svg>
+                  </div>
                 </div>
                 <div>
                   <p className="text-sm font-bold text-slate-700"><span className="bg-green-200 px-1 rounded">垂直</span>：兩條線斜率相乘 = <span className="bg-green-200 px-1 rounded">−1</span></p>
                   <Latex math={"L_1 \\perp L_2 \\;\\Rightarrow\\; m_1 \\times m_2 = -1"} block />
+                  
+                  {/* 圖形：垂直 */}
+                  <div className="mt-3 flex justify-center">
+                    <svg viewBox="0 0 200 130" width="200" height="130" className="overflow-visible">
+                      <line x1="20" y1="95" x2="180" y2="95" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-green)" />
+                      <line x1="40" y1="115" x2="40" y2="10" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-green)" />
+                      <text x="25" y="112" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">O</text>
+                      <text x="185" y="100" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">x</text>
+                      <text x="48" y="18" fontSize="15" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#16a34a">y</text>
+
+                      <line x1="30" y1="125" x2="140" y2="15" stroke="#222" strokeWidth="1.5" />
+                      <line x1="30" y1="5" x2="130" y2="105" stroke="#222" strokeWidth="1.5" />
+                      
+                      {/* 直角標記（橙色） */}
+                      <polyline points="83,58 90,51 97,58" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+
+                      <text x="145" y="18" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222">L<tspan dy="3" fontSize="11" fontStyle="normal">1</tspan></text>
+                      <text x="135" y="108" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222">L<tspan dy="3" fontSize="11" fontStyle="normal">2</tspan></text>
+                    </svg>
+                  </div>
                 </div>
               </div>
               <div className="bg-white rounded-lg p-4">
@@ -614,7 +658,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     <line x1="25" y1="65" x2="35" y2="75" stroke="#0ea5e9" strokeWidth="2" />
                     <line x1="35" y1="65" x2="25" y2="75" stroke="#0ea5e9" strokeWidth="2" />
                     <text x="25" y="55" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="end">
-                      <tspan fill="#374151">A(</tspan>
+                      <tspan fill="#374151">A (</tspan>
                       <tspan fill="#2563eb">x₁</tspan>
                       <tspan fill="#374151">, </tspan>
                       <tspan fill="#16a34a">y₁</tspan>
@@ -624,13 +668,13 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     {/* 點 M */}
                     <line x1="110" y1="45" x2="120" y2="55" stroke="#0ea5e9" strokeWidth="2" />
                     <line x1="120" y1="45" x2="110" y2="55" stroke="#0ea5e9" strokeWidth="2" />
-                    <text x="115" y="38" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="middle">M(x, y)</text>
+                    <text x="115" y="38" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="middle">M (x, y)</text>
                     
                     {/* 點 B */}
                     <line x1="195" y1="25" x2="205" y2="35" stroke="#0ea5e9" strokeWidth="2" />
                     <line x1="205" y1="25" x2="195" y2="35" stroke="#0ea5e9" strokeWidth="2" />
                     <text x="205" y="20" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="start">
-                      <tspan fill="#374151">B(</tspan>
+                      <tspan fill="#374151">B (</tspan>
                       <tspan fill="#2563eb">x₂</tspan>
                       <tspan fill="#374151">, </tspan>
                       <tspan fill="#16a34a">y₂</tspan>
@@ -638,12 +682,12 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     </text>
 
                     {/* 左段 AM 相等標記 (tick marks) */}
-                    <line x1="68" y1="52" x2="74" y2="68" stroke="#0ea5e9" strokeWidth="2" />
-                    <line x1="73" y1="51" x2="79" y2="67" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="69.2" y1="54.6" x2="71.9" y2="66.3" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="73.1" y1="53.7" x2="75.8" y2="65.4" stroke="#0ea5e9" strokeWidth="2" />
                     
                     {/* 右段 MB 相等標記 (tick marks) */}
-                    <line x1="153" y1="32" x2="159" y2="48" stroke="#0ea5e9" strokeWidth="2" />
-                    <line x1="158" y1="31" x2="164" y2="47" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="154.2" y1="34.6" x2="156.9" y2="46.3" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="158.1" y1="33.7" x2="160.8" y2="45.4" stroke="#0ea5e9" strokeWidth="2" />
                   </svg>
                 </div>
               </div>
@@ -674,7 +718,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     <line x1="25" y1="65" x2="35" y2="75" stroke="#0ea5e9" strokeWidth="2" />
                     <line x1="35" y1="65" x2="25" y2="75" stroke="#0ea5e9" strokeWidth="2" />
                     <text x="25" y="55" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="end">
-                      <tspan fill="#374151">A(</tspan>
+                      <tspan fill="#374151">A (</tspan>
                       <tspan fill="#2563eb">x₁</tspan>
                       <tspan fill="#374151">, </tspan>
                       <tspan fill="#16a34a">y₁</tspan>
@@ -684,13 +728,13 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     {/* 點 P */}
                     <line x1="85" y1="51" x2="95" y2="61" stroke="#0ea5e9" strokeWidth="2" />
                     <line x1="95" y1="51" x2="85" y2="61" stroke="#0ea5e9" strokeWidth="2" />
-                    <text x="85" y="44" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="middle">P(x, y)</text>
+                    <text x="85" y="44" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="middle">P (x, y)</text>
                     
                     {/* 點 B */}
                     <line x1="195" y1="25" x2="205" y2="35" stroke="#0ea5e9" strokeWidth="2" />
                     <line x1="205" y1="25" x2="195" y2="35" stroke="#0ea5e9" strokeWidth="2" />
                     <text x="205" y="20" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="start">
-                      <tspan fill="#374151">B(</tspan>
+                      <tspan fill="#374151">B (</tspan>
                       <tspan fill="#2563eb">x₂</tspan>
                       <tspan fill="#374151">, </tspan>
                       <tspan fill="#16a34a">y₂</tspan>
