@@ -603,8 +603,49 @@ const TeachingPage = ({ onGoToQuiz }) => {
             <h3 className="font-bold text-amber-800 mb-3 text-lg">4. 中點公式</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
-                <p className="text-xs text-slate-400 mb-2">公式（頭尾 ÷ 2 = 中間）</p>
+                <p className="text-xs text-slate-400 mb-2">公式（<Latex math={'\\dfrac{\\text{頭}+\\text{尾}}{2}=\\text{中間}'} />）</p>
                 <Latex math={"\\text{中點} = \\left(\\dfrac{\\textcolor{blue}{x_1}+\\textcolor{blue}{x_2}}{2},\\; \\dfrac{\\textcolor{green}{y_1}+\\textcolor{green}{y_2}}{2}\\right)"} block />
+                <div className="mt-4 flex justify-center">
+                  <svg viewBox="0 0 250 100" width="250" height="100" className="overflow-visible">
+                    {/* 線段 */}
+                    <line x1="30" y1="70" x2="200" y2="30" stroke="#374151" strokeWidth="2" />
+                    
+                    {/* 點 A */}
+                    <line x1="25" y1="65" x2="35" y2="75" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="35" y1="65" x2="25" y2="75" stroke="#0ea5e9" strokeWidth="2" />
+                    <text x="25" y="55" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="end">
+                      <tspan fill="#374151">A(</tspan>
+                      <tspan fill="#2563eb">x₁</tspan>
+                      <tspan fill="#374151">, </tspan>
+                      <tspan fill="#16a34a">y₁</tspan>
+                      <tspan fill="#374151">)</tspan>
+                    </text>
+                    
+                    {/* 點 M */}
+                    <line x1="110" y1="45" x2="120" y2="55" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="120" y1="45" x2="110" y2="55" stroke="#0ea5e9" strokeWidth="2" />
+                    <text x="115" y="38" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="middle">M(x, y)</text>
+                    
+                    {/* 點 B */}
+                    <line x1="195" y1="25" x2="205" y2="35" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="205" y1="25" x2="195" y2="35" stroke="#0ea5e9" strokeWidth="2" />
+                    <text x="205" y="20" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="start">
+                      <tspan fill="#374151">B(</tspan>
+                      <tspan fill="#2563eb">x₂</tspan>
+                      <tspan fill="#374151">, </tspan>
+                      <tspan fill="#16a34a">y₂</tspan>
+                      <tspan fill="#374151">)</tspan>
+                    </text>
+
+                    {/* 左段 AM 相等標記 (tick marks) */}
+                    <line x1="68" y1="52" x2="74" y2="68" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="73" y1="51" x2="79" y2="67" stroke="#0ea5e9" strokeWidth="2" />
+                    
+                    {/* 右段 MB 相等標記 (tick marks) */}
+                    <line x1="153" y1="32" x2="159" y2="48" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="158" y1="31" x2="164" y2="47" stroke="#0ea5e9" strokeWidth="2" />
+                  </svg>
+                </div>
               </div>
               <div className="bg-white rounded-lg p-4">
                 <p className="text-sm font-semibold text-slate-600 mb-2">例：A(<span className="text-blue-600">5</span>, <span className="text-green-600">2</span>) 和 B(<span className="text-blue-600">2</span>, <span className="text-green-600">−10</span>) 的中點</p>
@@ -623,6 +664,43 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   <p className="text-sm text-slate-600 mb-1">P 將 AB 分成 r : s</p>
                   <Latex math={"\\textcolor{blue}{x} = \\dfrac{s \\cdot \\textcolor{blue}{x_1} + r \\cdot \\textcolor{blue}{x_2}}{r + s}"} block />
                   <Latex math={"\\textcolor{green}{y} = \\dfrac{s \\cdot \\textcolor{green}{y_1} + r \\cdot \\textcolor{green}{y_2}}{r + s}"} block />
+                </div>
+                <div className="mt-4 flex justify-center">
+                  <svg viewBox="0 0 250 100" width="250" height="100" className="overflow-visible">
+                    {/* 線段 */}
+                    <line x1="30" y1="70" x2="200" y2="30" stroke="#374151" strokeWidth="2" />
+                    
+                    {/* 點 A */}
+                    <line x1="25" y1="65" x2="35" y2="75" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="35" y1="65" x2="25" y2="75" stroke="#0ea5e9" strokeWidth="2" />
+                    <text x="25" y="55" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="end">
+                      <tspan fill="#374151">A(</tspan>
+                      <tspan fill="#2563eb">x₁</tspan>
+                      <tspan fill="#374151">, </tspan>
+                      <tspan fill="#16a34a">y₁</tspan>
+                      <tspan fill="#374151">)</tspan>
+                    </text>
+                    
+                    {/* 點 P */}
+                    <line x1="85" y1="51" x2="95" y2="61" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="95" y1="51" x2="85" y2="61" stroke="#0ea5e9" strokeWidth="2" />
+                    <text x="85" y="44" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="middle">P(x, y)</text>
+                    
+                    {/* 點 B */}
+                    <line x1="195" y1="25" x2="205" y2="35" stroke="#0ea5e9" strokeWidth="2" />
+                    <line x1="205" y1="25" x2="195" y2="35" stroke="#0ea5e9" strokeWidth="2" />
+                    <text x="205" y="20" fontSize="14" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="start">
+                      <tspan fill="#374151">B(</tspan>
+                      <tspan fill="#2563eb">x₂</tspan>
+                      <tspan fill="#374151">, </tspan>
+                      <tspan fill="#16a34a">y₂</tspan>
+                      <tspan fill="#374151">)</tspan>
+                    </text>
+
+                    {/* 線段標示：r 在 AP 下方、s 在 PB 下方 */}
+                    <text x="60" y="80" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="middle">r</text>
+                    <text x="145" y="60" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#374151" textAnchor="middle">s</text>
+                  </svg>
                 </div>
               </div>
               <div className="bg-white rounded-lg p-4">
