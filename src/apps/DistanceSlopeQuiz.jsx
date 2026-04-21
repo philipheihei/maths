@@ -582,17 +582,17 @@ const TeachingPage = ({ onGoToQuiz }) => {
                     {/* 點 P (Center: 62, 35) */}
                     <line x1="58" y1="31" x2="66" y2="39" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
                     <line x1="66" y1="31" x2="58" y2="39" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
-                    <text x="67" y="25" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">P</text>
+                    <text x="67" y="25" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">A</text>
                     
                     {/* 點 Q (Center: 110, 65) */}
                     <line x1="106" y1="61" x2="114" y2="69" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
                     <line x1="114" y1="61" x2="106" y2="69" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
-                    <text x="125" y="56" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">Q</text>
+                    <text x="125" y="56" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">B</text>
                     
                     {/* 點 R (Center: 158, 95) */}
                     <line x1="154" y1="91" x2="162" y2="99" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
                     <line x1="162" y1="91" x2="154" y2="99" stroke="#0ea5e9" strokeWidth="2" strokeLinecap="round" />
-                    <text x="165" y="87" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">R</text>
+                    <text x="165" y="87" fontSize="16" fontStyle="italic" fontFamily="KaTeX_Math, 'Times New Roman', serif" fill="#222" textAnchor="end">C</text>
                   </svg>
                 </div>
               </div>
