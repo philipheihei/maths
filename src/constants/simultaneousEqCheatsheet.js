@@ -1,7 +1,7 @@
 export const SIMULTANEOUS_EQ_CHEATSHEET = [
   { key: '連續數', val: 'x,(x+1)', latex: 'x,(x+1)' },
-  { key: '大 / 多', val: '+', latex: '+' },
-  { key: '小 / 少', val: '-', latex: '-' },
+  { key: '大 / 多 / 高', val: '+', latex: '+' },
+  { key: '小 / 少 / 低', val: '-', latex: '-' },
   { key: '2倍 (n倍)', val: '× 2 (× n)', latex: '\\times 2\; (\\times n)' },
   { key: '較 / 比 / 是 / 為 / 相同', val: '=', latex: '=' },
   { key: 'x 與 y 之和', val: 'x + y', latex: 'x+y' },
