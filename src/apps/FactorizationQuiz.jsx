@@ -1255,8 +1255,8 @@ const QuizPage = ({ onBackToTeaching }) => {
         ]);
         const bExpr = `${bLeadExpr} + ${aExpr}`;
 
-        const finalSecond = `(${factor1Inner} + ${t})`;
-        const finalSecondAlt = `(${t} + ${factor1Inner})`;
+        const finalSecond = `(${t} + ${factor1Inner})`;
+        const finalSecondAlt = `(${factor1Inner} + ${t})`;
         const answer = `${factor2}${finalSecond}`;
         const stem = `\\begin{aligned}&\\text{(a)}\\; ${aExpr},\\\\&\\text{(b)}\\; ${bExpr}.\\end{aligned}`;
 
@@ -1301,7 +1301,7 @@ const QuizPage = ({ onBackToTeaching }) => {
               steps: [
                 `(a) 答案：$${aExpr} = ${factor1}${factor2}$`,
                 `先代入列式：$${bExpr} = ${t}${factor2} + ${factor1}${factor2}$`,
-                `抽共同括號並完成：$= ${factor2}(${factor1Inner} + ${t})$`
+                `抽共同括號並完成：$= ${factor2}(${t} + ${factor1Inner})$`
               ],
               requiresSetup: true,
               setupPrompt: '先輸入代入列式（相應位置套用 (a) 答案，其餘照抄）',
@@ -1350,17 +1350,17 @@ const QuizPage = ({ onBackToTeaching }) => {
                 midSegments: [
                   { kind: 'g', tex: `${t}` },
                   { kind: 'p', tex: factor2 },
-                  { kind: 'op', tex: '+' },
+                  { kind: 'g', tex: '+' },
                   { kind: 'g', tex: factor1 },
                   { kind: 'p', tex: factor2 }
                 ],
                 midCaption: '先套用 (a) 答案：紫色是相同括號，綠色是其餘部份',
                 segments: [
                   { kind: 'p', tex: factor2 },
-                  { kind: 'g', tex: `(${factor1Inner} + ${t})` }
+                  { kind: 'g', tex: `(${t} + ${factor1Inner})` }
                 ],
                 bottomCaptionSegments: [
-                  { text: '抽' },
+                  { text: '抽 ' },
                   { text: '相同括號', kind: 'p' },
                   { text: '放前；' },
                   { text: '剩餘部份', kind: 'g' },
@@ -1553,7 +1553,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                   { kind: 'g', tex: cSecond }
                 ],
                 bottomCaptionSegments: [
-                  { text: '抽' },
+                  { text: '抽 ' },
                   { text: '相同括號', kind: 'p' },
                   { text: '放前；' },
                   { text: '剩餘部份', kind: 'g' },
@@ -2204,7 +2204,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                               <div className="inline-flex items-center gap-1 whitespace-nowrap">
                                 {feedback.equationHighlight.topSegments.map((seg, idx) => (
                                   seg.kind === 'op' ? (
-                                    <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                    <span key={idx} className="px-1 text-red-700 font-bold"><Latex math={seg.tex} /></span>
                                   ) : seg.kind === 'plain' ? (
                                     <span key={idx} className="px-1 text-slate-700">
                                       <Latex math={seg.tex} />
@@ -2237,7 +2237,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                                 <div className="inline-flex items-center gap-1 whitespace-nowrap">
                                   {feedback.equationHighlight.midSegments.map((seg, idx) => (
                                     seg.kind === 'op' ? (
-                                      <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                      <span key={idx} className="px-1 text-red-700 font-bold"><Latex math={seg.tex} /></span>
                                     ) : seg.kind === 'plain' ? (
                                       <span key={idx} className="px-1 text-slate-700">
                                         <Latex math={seg.tex} />
@@ -2271,7 +2271,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                                 <div className="inline-flex items-center gap-1 whitespace-nowrap">
                                   {feedback.equationHighlight.segments.map((seg, idx) => (
                                     seg.kind === 'op' ? (
-                                      <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                      <span key={idx} className="px-1 text-red-700 font-bold"><Latex math={seg.tex} /></span>
                                     ) : seg.kind === 'plain' ? (
                                       <span key={idx} className="px-1 text-slate-700">
                                         <Latex math={seg.tex} />
@@ -2326,7 +2326,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                               <div className="inline-flex items-center gap-1 whitespace-nowrap">
                                 {feedback.equationHighlight.segments.map((seg, idx) => (
                                   seg.kind === 'op' ? (
-                                    <span key={idx} className="px-1 text-red-700 font-bold">{seg.tex}</span>
+                                    <span key={idx} className="px-1 text-red-700 font-bold"><Latex math={seg.tex} /></span>
                                   ) : seg.kind === 'plain' ? (
                                     <span key={idx} className="px-1 text-slate-700">
                                       <Latex math={seg.tex} />
@@ -2372,7 +2372,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                                   ? 'px-1 text-red-700 font-bold'
                                   : 'bg-yellow-200 text-slate-800 rounded px-1'}
                               >
-                                {seg.kind === 'op' ? seg.tex : <Latex math={seg.tex} />}
+                                {seg.kind === 'op' ? <Latex math={seg.tex} /> : <Latex math={seg.tex} />}
                               </span>
                             ))}
                           </div>
@@ -2387,7 +2387,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                                   ? 'px-1 text-red-700 font-bold'
                                   : 'bg-yellow-200 text-slate-800 rounded px-1'}
                               >
-                                {seg.kind === 'op' ? seg.tex : <Latex math={seg.tex} />}
+                                {seg.kind === 'op' ? <Latex math={seg.tex} /> : <Latex math={seg.tex} />}
                               </span>
                             ))}
                           </div>

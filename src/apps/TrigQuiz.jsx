@@ -168,7 +168,8 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
         <>
           {/* Angle A arc & text */}
           {(unknownAngle === 'A' || visibleAngles.includes('A')) && (() => {
-            const arcRadius = 24;
+            const minSide = Math.min(drawB, Math.hypot(drawA, drawB));
+            const arcRadius = Math.max(12, Math.min(24, minSide * 0.45));
             const aAB = Math.atan2(by - ay, bx - ax);
             const aAC = Math.PI / 2;
             const xA1 = ax + arcRadius * Math.cos(aAB);
@@ -178,8 +179,9 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
             const arcA = `M ${xA1} ${yA1} A ${arcRadius} ${arcRadius} 0 0 1 ${xA2} ${yA2}`;
             
             const midA = (aAB + aAC) / 2;
-            const textAx = ax + (arcRadius + 14) * Math.cos(midA);
-            const textAy = ay + (arcRadius + 14) * Math.sin(midA) + 5;
+            const textDist = arcRadius + (drawB < 45 ? 10 : 14);
+            const textAx = ax + textDist * Math.cos(midA);
+            const textAy = ay + textDist * Math.sin(midA) + (drawB < 45 ? 2 : 5);
             
             return (
               <g>
@@ -193,7 +195,8 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
 
           {/* Angle B arc & text */}
           {(unknownAngle === 'B' || visibleAngles.includes('B')) && (() => {
-            const arcRadius = 24;
+            const minSide = Math.min(drawA, Math.hypot(drawA, drawB));
+            const arcRadius = Math.max(12, Math.min(24, minSide * 0.45));
             const bBC = -Math.PI; // Use -PI so it is close to bBA (which is between -PI and -PI/2)
             const bBA = Math.atan2(ay - by, ax - bx);
             const xB1 = bx + arcRadius * Math.cos(bBC);
@@ -203,8 +206,9 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
             const arcB = `M ${xB1} ${yB1} A ${arcRadius} ${arcRadius} 0 0 1 ${xB2} ${yB2}`;
             
             const midB = (bBC + bBA) / 2;
-            const textBx = bx + (arcRadius + 16) * Math.cos(midB);
-            const textBy = by + (arcRadius + 16) * Math.sin(midB) + 5;
+            const textDist = arcRadius + (drawA < 45 ? 10 : 16);
+            const textBx = bx + textDist * Math.cos(midB);
+            const textBy = by + textDist * Math.sin(midB) + (drawA < 45 ? 2 : 5);
 
             return (
               <g>
@@ -505,15 +509,10 @@ const generatePythagorasQuestion = () => {
   };
 };
 
-// 三角比題目生成
+// 三角比題目生成 (Legacy function, no longer used directly since split)
 const generateTrigQuestion = () => {
-  // Common angles for clean values
-  const angles = [30, 45, 60];
-  // Nice side lengths that produce clean trig results
   const scenarios = [
-    // Find side given angle and one side
     ...generateTrigFindSide(),
-    // Find angle given two sides
     ...generateTrigFindAngle()
   ];
   return pick(scenarios);
@@ -1281,13 +1280,14 @@ const TeachingPage = ({ onStartQuiz }) => {
 // 測驗頁面
 // ========================================
 const QuizPage = ({ onBackToTeaching }) => {
-  const [quizType, setQuizType] = useState(null); // 'pythag' | 'trig' | 'converse'
+  const [quizType, setQuizType] = useState(null); // 'pythag' | 'trig_side' | 'trig_angle' | 'converse'
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [userAnswer, setUserAnswer] = useState('');
   const [feedback, setFeedback] = useState({ type: 'neutral', msg: '' });
   const [scoreData, setScoreData] = useState({
     pythag: { score: 0, total: 0 },
-    trig: { score: 0, total: 0 },
+    trig_side: { score: 0, total: 0 },
+    trig_angle: { score: 0, total: 0 },
     converse: { score: 0, total: 0 }
   });
   const [isAnswered, setIsAnswered] = useState(false);
@@ -1324,7 +1324,9 @@ const QuizPage = ({ onBackToTeaching }) => {
       return;
     }
     do {
-      question = type === 'pythag' ? generatePythagorasQuestion() : generateTrigQuestion();
+      if (type === 'pythag') question = generatePythagorasQuestion();
+      else if (type === 'trig_side') question = pick(generateTrigFindSide());
+      else if (type === 'trig_angle') question = pick(generateTrigFindAngle());
       attempts++;
     } while (
       attempts < 10 &&
@@ -1505,9 +1507,9 @@ const QuizPage = ({ onBackToTeaching }) => {
               </div>
             </button>
 
-            {/* 三角比 */}
+            {/* 三角比 - 求邊長 */}
             <button
-              onClick={() => selectQuizType('trig')}
+              onClick={() => selectQuizType('trig_side')}
               className="bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent hover:border-green-400 transition-all group text-left"
             >
               <div className="flex items-center gap-4">
@@ -1515,13 +1517,33 @@ const QuizPage = ({ onBackToTeaching }) => {
                   <Calculator className="w-8 h-8 text-green-600" />
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-xl font-bold text-slate-800">三角比 (sin, cos, tan)</h2>
-                  <p className="text-slate-600 text-sm">求邊長 / 求角度 θ</p>
+                  <h2 className="text-xl font-bold text-slate-800">三角比 (求邊長)</h2>
+                  <p className="text-slate-600 text-sm">已知一角和一邊求另一邊</p>
                   <p className="text-xs text-slate-400 mt-1">
-                    得分：{scoreData.trig.score}/{scoreData.trig.total}
+                    得分：{scoreData.trig_side.score}/{scoreData.trig_side.total}
                   </p>
                 </div>
                 <ArrowRight className="w-6 h-6 text-slate-400 group-hover:text-green-600 transition-colors" />
+              </div>
+            </button>
+
+            {/* 三角比 - 求角度 */}
+            <button
+              onClick={() => selectQuizType('trig_angle')}
+              className="bg-white rounded-2xl shadow-lg p-6 border-2 border-transparent hover:border-purple-400 transition-all group text-left"
+            >
+              <div className="flex items-center gap-4">
+                <div className="bg-purple-100 p-4 rounded-xl group-hover:bg-purple-200 transition-colors">
+                  <Calculator className="w-8 h-8 text-purple-600" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-xl font-bold text-slate-800">三角比 (求角度)</h2>
+                  <p className="text-slate-600 text-sm">已知兩邊長度求未知角 θ</p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    得分：{scoreData.trig_angle.score}/{scoreData.trig_angle.total}
+                  </p>
+                </div>
+                <ArrowRight className="w-6 h-6 text-slate-400 group-hover:text-purple-600 transition-colors" />
               </div>
             </button>
 
