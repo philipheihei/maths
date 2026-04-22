@@ -1,5 +1,5 @@
 import { ApproximationNotes } from './F1Notes';
-import { InequalityNotes } from './F2Notes';
+import { InequalityNotes, SimultaneousEqF2Notes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes } from './F3Notes';
 import { QuadraticEquationNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
@@ -27,6 +27,14 @@ export const NOTES_DATA = {
         { id: 'applications', num: 2, title: '會考核（文字轉換及畫圖）', color: 'green' },
         { id: 'range', num: 3, title: '找不等式範圍的可能值', color: 'purple' },
         { id: 'calculation', num: 4, title: '不等式混算', color: 'red' },
+      ]
+    },
+    {
+      id: 'simultaneous-eq-f2',
+      topic: 'CH9 二元一次聯立方程',
+      color: 'teal',
+      subtopics: [
+        { id: 'sim-eq-core', num: 1, title: '代入法、加減法與文字設式', color: 'teal' },
       ]
     }
   ],
@@ -134,6 +142,7 @@ export const getNotesForLevel = (level) => {
 
 export const NOTES_COMPONENTS = {
   'inequality': InequalityNotes,
+  'simultaneous-eq-f2': SimultaneousEqF2Notes,
   'factorization': FactorizationNotes,
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,

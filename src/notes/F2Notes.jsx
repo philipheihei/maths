@@ -1,5 +1,7 @@
 import React from 'react';
 import { loadKatexOnce } from '../utils/katexLoader';
+import { SimultaneousEqNotesContent } from '../components/SimultaneousEqNotesContent';
+import { SIMULTANEOUS_EQ_CHEATSHEET } from '../constants/simultaneousEqCheatsheet';
 
 const Latex = ({ math, block = false, left = false }) => {
   const containerRef = React.useRef(null);
@@ -401,4 +403,8 @@ export const InequalityNotes = () => {
 
     </div>
   );
+};
+
+export const SimultaneousEqF2Notes = () => {
+  return <SimultaneousEqNotesContent cheatsheet={SIMULTANEOUS_EQ_CHEATSHEET} />;
 };
