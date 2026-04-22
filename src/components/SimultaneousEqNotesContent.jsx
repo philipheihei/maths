@@ -4,6 +4,7 @@ import { loadKatexOnce } from '../utils/katexLoader';
 
 export const SimultaneousEqNotesContent = ({
   cheatsheet = [],
+  activeSub,
   showBack = false,
   onBack,
   onShowCalcProgram,
@@ -13,6 +14,14 @@ export const SimultaneousEqNotesContent = ({
   React.useEffect(() => {
     loadKatexOnce().then(() => setKatexLoaded(true)).catch(() => {});
   }, []);
+
+  React.useEffect(() => {
+    if (!activeSub) return;
+    const target = document.getElementById(activeSub);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [activeSub]);
 
   const Latex = ({ math, block = false }) => {
     const ref = React.useRef(null);
@@ -54,7 +63,7 @@ export const SimultaneousEqNotesContent = ({
           </p>
         </section>
 
-        <section className="bg-sky-50 rounded-xl p-5">
+        <section id="sim-eq-methods" className="bg-sky-50 rounded-xl p-5 scroll-mt-24">
           <div className="flex items-center gap-2 mb-4">
             <span className="bg-sky-600 text-white font-black text-lg px-3 py-1 rounded-lg">方法一</span>
             <h2 className="text-lg font-bold text-sky-800">代入消元法（Substitution）</h2>
@@ -302,7 +311,7 @@ export const SimultaneousEqNotesContent = ({
           </div>
         </section>
 
-        <section className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200">
+        <section id="sim-eq-word" className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200 scroll-mt-24">
           <div className="flex items-center gap-2 mb-4">
             <span className="bg-emerald-600 text-white font-black text-lg px-3 py-1 rounded-lg">文字題</span>
             <h2 className="text-lg font-bold text-emerald-800">文字轉數式 (組件)</h2>

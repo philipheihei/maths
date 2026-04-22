@@ -1,6 +1,7 @@
 import React from 'react';
 import { loadKatexOnce } from '../utils/katexLoader';
 import { SimultaneousEqNotesContent } from '../components/SimultaneousEqNotesContent';
+import { PythagorasNotesBlock, TrigRatiosNotesBlock } from '../components/F2TrigNotesShared';
 import { SIMULTANEOUS_EQ_CHEATSHEET } from '../constants/simultaneousEqCheatsheet';
 
 const Latex = ({ math, block = false, left = false }) => {
@@ -405,6 +406,22 @@ export const InequalityNotes = () => {
   );
 };
 
-export const SimultaneousEqF2Notes = () => {
-  return <SimultaneousEqNotesContent cheatsheet={SIMULTANEOUS_EQ_CHEATSHEET} />;
+export const SimultaneousEqF2Notes = ({ activeSub }) => {
+  return <SimultaneousEqNotesContent cheatsheet={SIMULTANEOUS_EQ_CHEATSHEET} activeSub={activeSub} />;
+};
+
+export const PythagorasF2Notes = () => {
+  return (
+    <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
+      <PythagorasNotesBlock />
+    </div>
+  );
+};
+
+export const TrigRatiosF2Notes = () => {
+  return (
+    <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
+      <TrigRatiosNotesBlock />
+    </div>
+  );
 };

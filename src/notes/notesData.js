@@ -1,6 +1,6 @@
 import { ApproximationNotes } from './F1Notes';
-import { InequalityNotes, SimultaneousEqF2Notes } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes } from './F3Notes';
+import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes } from './F2Notes';
+import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
@@ -34,20 +34,49 @@ export const NOTES_DATA = {
       topic: 'CH9 二元一次聯立方程',
       color: 'teal',
       subtopics: [
-        { id: 'sim-eq-core', num: 1, title: '代入法、加減法與文字設式', color: 'teal' },
+        { id: 'sim-eq-methods', num: 1, title: '代入法 + 加減法', color: 'teal' },
+        { id: 'sim-eq-word', num: 2, title: '文字轉數式', color: 'emerald' },
+      ]
+    },
+    {
+      id: 'pythagoras-f2',
+      topic: 'CH10 畢氏定理',
+      color: 'blue',
+      subtopics: [
+        { id: 'pythagoras-core', num: 1, title: '畢氏定理', color: 'blue' },
+      ]
+    },
+    {
+      id: 'trig-ratios-f2',
+      topic: 'CH12 三角比',
+      color: 'green',
+      subtopics: [
+        { id: 'trig-ratios-core', num: 1, title: '三角比（不包特殊角）', color: 'green' },
       ]
     }
   ],
   F3: [
     {
       id: 'factorization',
-      topic: '因式分解',
+      topic: 'CH1 因式分解',
       color: 'purple',
       subtopics: [
         { id: 'extract-common', num: 1, title: '提取公因式', color: 'purple' },
         { id: 'grouping', num: 2, title: '併項法', color: 'blue' },
         { id: 'quadratic', num: 3, title: '二次多項式', color: 'green' },
         { id: 'dse-tips', num: 4, title: 'DSE 題型技巧', color: 'red' },
+      ]
+    },
+    {
+      id: 'quadrilateral',
+      topic: 'CH5 四邊形',
+      color: 'blue',
+      subtopics: [
+        { id: 'parallelogram', num: 1, title: '平行四邊形的定義和性質', color: 'blue' },
+        { id: 'parallelogram-test', num: 2, title: '平行四邊形的判定條件', color: 'green' },
+        { id: 'special-shapes', num: 3, title: '菱形 / 長方形 / 正方形', color: 'orange' },
+        { id: 'midpoint-theorem', num: 4, title: '中點定理', color: 'purple' },
+        { id: 'intercept-theorem', num: 5, title: '截線定理', color: 'purple' },
       ]
     },
     {
@@ -62,15 +91,11 @@ export const NOTES_DATA = {
       ]
     },
     {
-      id: 'quadrilateral',
-      topic: 'CH5 四邊形',
-      color: 'blue',
+      id: 'coordinate-geometry-f3',
+      topic: 'CH9 直線的坐標幾何',
+      color: 'teal',
       subtopics: [
-        { id: 'parallelogram', num: 1, title: '平行四邊形的定義和性質', color: 'blue' },
-        { id: 'parallelogram-test', num: 2, title: '平行四邊形的判定條件', color: 'green' },
-        { id: 'special-shapes', num: 3, title: '菱形 / 長方形 / 正方形', color: 'orange' },
-        { id: 'midpoint-theorem', num: 4, title: '中點定理', color: 'purple' },
-        { id: 'intercept-theorem', num: 5, title: '截線定理', color: 'purple' },
+        { id: 'coordinate-geometry-core', num: 1, title: '公式表', color: 'teal' },
       ]
     }
   ],
@@ -143,9 +168,12 @@ export const getNotesForLevel = (level) => {
 export const NOTES_COMPONENTS = {
   'inequality': InequalityNotes,
   'simultaneous-eq-f2': SimultaneousEqF2Notes,
+  'pythagoras-f2': PythagorasF2Notes,
+  'trig-ratios-f2': TrigRatiosF2Notes,
   'factorization': FactorizationNotes,
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,
+  'coordinate-geometry-f3': CoordinateGeometryF3Notes,
   'quadratic-equation': QuadraticEquationNotes,
   'remainder-factor': RemainderFactorNotes,
   'variation': VariationNotes,

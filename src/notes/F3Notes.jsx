@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Latex, CollapsibleSection } from './shared';
+import { CoordinateGeometryFormulaTable } from '../components/CoordinateGeometryFormulaTable';
 
 // ========================================
 // 因式分解 (F3)
@@ -448,6 +449,21 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
           </div>
         </div>
       </CollapsibleSection>
+    </>
+  );
+};
+
+// ========================================
+// CH9 直線的坐標幾何 (F3)
+// ========================================
+export const CoordinateGeometryF3Notes = () => {
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH9 直線的坐標幾何</h1>
+        <p className="text-slate-600">距離、斜率、中點、共線、平行與垂直、截點公式</p>
+      </div>
+      <CoordinateGeometryFormulaTable />
     </>
   );
 };
