@@ -164,7 +164,7 @@ const TriangleSVG = ({ triangle, unknownSide, unknownAngle, quizType, visibleSid
       )}
 
       {/* Angle labels for trig */}
-      {quizType === 'trig' && (
+      {quizType?.startsWith('trig') && (
         <>
           {/* Angle A arc & text */}
           {(unknownAngle === 'A' || visibleAngles.includes('A')) && (() => {
@@ -1710,8 +1710,11 @@ const QuizPage = ({ onBackToTeaching }) => {
   }
 
   // 測驗界面
-  const color = quizType === 'pythag' ? 'blue' : 'green';
-  const typeName = quizType === 'pythag' ? '畢氏定理' : '三角比';
+  let color = 'blue';
+  let typeName = '畢氏定理';
+  if (quizType === 'pythag') { color = 'blue'; typeName = '畢氏定理'; }
+  else if (quizType === 'trig_side') { color = 'green'; typeName = '三角比 (求邊長)'; }
+  else if (quizType === 'trig_angle') { color = 'purple'; typeName = '三角比 (求角度)'; }
   const currentScoreData = getCurrentScore();
 
   return (
