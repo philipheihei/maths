@@ -1216,25 +1216,16 @@ const SimultaneousEqNotes = ({ onBack, onShowCalcProgram }) => {
                 </div>
 
                 <div className="flex gap-2 items-start">
-                  <span className="bg-sky-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0 mt-0.5">Step 2</span>
+                  <div className="flex flex-col gap-1 shrink-0 mt-0.5">
+                    <span className="bg-sky-500 text-white text-xs font-bold px-2 py-0.5 rounded text-center">Step 2</span>
+                    <span className="bg-sky-500 text-white text-xs font-bold px-2 py-0.5 rounded text-center">Step 3</span>
+                  </div>
                   <div className="flex-1">
-                    <p className="text-slate-600 mb-1">選<strong>已有主項</strong>的方程（式①），代入另一項方程</p>
+                    <p className="text-slate-600 mb-1">選<strong>已有主項</strong>的方程（式①），代入另一項方程，並計算該未知數的值</p>
                     <p className="text-xs text-slate-400 mb-2">（目的：2個代數的式 減至 1個代數）</p>
                     <p className="text-slate-600 mb-1">代①入②：</p>
-                    <div className="bg-amber-50 rounded p-2">
-                      <Latex math="(2y - 6) + 4y = 12" block />
-                      <Latex math="6y - 6 = 12" block />
-                      <Latex math="6y = 18" block />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-2 items-start">
-                  <span className="bg-sky-500 text-white text-xs font-bold px-2 py-0.5 rounded shrink-0 mt-0.5">Step 3</span>
-                  <div className="flex-1">
-                    <p className="text-slate-600 mb-1">計算其中一個未知數的值</p>
-                    <div className="bg-amber-50 rounded p-2">
-                      <Latex math="y = 3 \quad \cdots\textcircled{3}" block />
+                    <div className="bg-amber-50 rounded p-4">
+                      <Latex math={"\\begin{aligned} (2y - 6) + 4y &= 12 \\\\ 6y - 6 &= 12 \\\\ 6y &= 18 \\\\ y &= 3 \\quad & \\cdots\\textcircled{3} \\end{aligned}"} block />
                     </div>
                   </div>
                 </div>
