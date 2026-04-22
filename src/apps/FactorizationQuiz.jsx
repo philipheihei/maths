@@ -1168,7 +1168,7 @@ const QuizPage = ({ onBackToTeaching }) => {
 
       const rootSteps = [
         `FMLA 01 輸入：$a=${A},\ b=${B},\ c=${C}$`,
-        `得出兩根：$${r1tex}$ 和 $${r2tex}$；小數需轉分數，按 [[a b/c]] [[EXE]]`,
+        `得出兩根：$${r1tex}$ 和 $${r2tex}$（小數需轉分數，按 [[a b/c]] [[EXE]]）`,
         `口訣：分母放前，分子放後變相反`,
         rootLine(-p2, p1, ans1),
         rootLine(-q2, q1, ans2),
@@ -1276,7 +1276,7 @@ const QuizPage = ({ onBackToTeaching }) => {
               hint: '先把 (a) 因式分解',
               steps: [
                 `FMLA 01 輸入：$a=${A},\ b=${B},\ c=${C}$`,
-                `得出兩根：$${root1Tex}$ 和 $${root2Tex}$；小數需轉分數，按 [[a b/c]] [[EXE]]`,
+                `得出兩根：$${root1Tex}$ 和 $${root2Tex}$（小數需轉分數，按 [[a b/c]] [[EXE]]）`,
                 `口訣：分母放前，分子放後變相反`,
                 `$${root1Tex}$ 對應 $${factor1}$，$${root2Tex}$ 對應 $${factor2}$`,
                 `(a) 答案：$${aExpr} = ${factor1}${factor2}$`
@@ -1339,6 +1339,33 @@ const QuizPage = ({ onBackToTeaching }) => {
                   { kind: 'a', tex: `${factor1}${factor2}` }
                 ],
                 bottomCaption: '之後再抽剩餘部份的公因式，\n避免開頭抽錯失代入步驟分'
+              },
+              solutionEquationHighlight: {
+                left: bExpr,
+                topSegments: [
+                  { kind: 'plain', tex: bLeadExpr },
+                  { kind: 'plain', tex: `+ ${aExpr}` }
+                ],
+                topCaption: '原式',
+                midSegments: [
+                  { kind: 'g', tex: `${t}` },
+                  { kind: 'p', tex: factor2 },
+                  { kind: 'op', tex: '+' },
+                  { kind: 'g', tex: factor1 },
+                  { kind: 'p', tex: factor2 }
+                ],
+                midCaption: '先套用 (a) 答案：紫色是相同括號，綠色是其餘部份',
+                segments: [
+                  { kind: 'p', tex: factor2 },
+                  { kind: 'g', tex: `(${factor1Inner} + ${t})` }
+                ],
+                bottomCaptionSegments: [
+                  { text: '抽' },
+                  { text: '相同括號', kind: 'p' },
+                  { text: '放前；' },
+                  { text: '剩餘部份', kind: 'g' },
+                  { text: '放後括號' }
+                ]
               }
             }
           ]
@@ -1366,8 +1393,11 @@ const QuizPage = ({ onBackToTeaching }) => {
           { coef: k * x2, var: `${q}${r}` }
         ]);
 
-        const y1 = Math.floor(Math.random() * 4) + 2; // 2..5
-        const y2Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        let y1, y2Abs;
+        do {
+          y1 = Math.floor(Math.random() * 4) + 2; // 2..5
+          y2Abs = Math.floor(Math.random() * 4) + 2; // 2..5
+        } while (gcd(y1, y2Abs) !== 1);
         const y2Sign = x2Sign === 1 ? -1 : 1;
         const y2 = y2Sign * y2Abs;
         const yInner = `${termAbs(y1, p)} ${y2 >= 0 ? '+' : '-'} ${termAbs(y2, q)}`;
@@ -1397,6 +1427,14 @@ const QuizPage = ({ onBackToTeaching }) => {
         const cSubExprAlt1 = `${bAnswer} - ${xFactor}${k}${r}`;
         const cSubExprAlt2 = `${bAnswerSwap} - ${k}${r}${xFactor}`;
         const cSubExprAlt3 = `${bAnswerSwap} - ${xFactor}${k}${r}`;
+        const rootTex = (num, den) => {
+          if (num === 0) return '0';
+          if (den === 1) return String(num);
+          if (num < 0) return `-\\dfrac{${Math.abs(num)}}{${den}}`;
+          return `\\dfrac{${num}}{${den}}`;
+        };
+        const bRoot1Tex = rootTex(-x2, x1);
+        const bRoot2Tex = rootTex(-y2, y1);
         const stem = `\\begin{aligned}&\\text{(a)}\\; ${aExpr},\\\\&\\text{(b)}\\; ${bExpr},\\\\&\\text{(c)}\\; ${cExpr}.\\end{aligned}`;
 
         return {
@@ -1428,8 +1466,10 @@ const QuizPage = ({ onBackToTeaching }) => {
               ],
               hint: '直接因式分解 (b)',
               steps: [
-                `先看 (b)：$${bExpr}$`,
-                `作二元二次因式分解`,
+                `FMLA 01 輸入：$a=${x1 * y1},\ b=${x1 * y2 + x2 * y1},\ c=${x2 * y2}$`,
+                `得出兩根：$${bRoot1Tex}$ 和 $${bRoot2Tex}$（小數需轉分數，按 [[a b/c]] [[EXE]]）`,
+                `口訣：分母放前，分子放後變相反`,
+                `$${bRoot1Tex}$ 對應 $${xFactor}$，$${bRoot2Tex}$ 對應 $${yFactor}$`,
                 `(b) 答案：$${bExpr} = ${bAnswer}$`
               ],
               requiresSetup: false
@@ -1448,7 +1488,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 `${xFactor}${cSecondAlt}`.replace(/\s/g, ''),
                 `${cSecondAlt}${xFactor}`.replace(/\s/g, '')
               ],
-              hint: '先寫出 (a) 答案，再代入 (c)',
+              hint: '',
               steps: [
                 `(a) 答案：$${aExpr} = ${k}${r}${xFactor}$`,
                 `(b) 答案：$${bExpr} = ${bAnswer}$`,
@@ -1491,6 +1531,33 @@ const QuizPage = ({ onBackToTeaching }) => {
                 segments: [
                   { kind: 'plain', tex: xFactor },
                   { kind: 'plain', tex: `(${yInner} - ${k}${r})` }
+                ],
+                bottomCaption: '再抽共同括號完成最終答案'
+              },
+              solutionEquationHighlight: {
+                left: cExpr,
+                topSegments: [
+                  { kind: 'plain', tex: bExpr },
+                  { kind: 'plain', tex: `- ${aExpr}` }
+                ],
+                topCaption: '原式',
+                midSegments: [
+                  { kind: 'p', tex: xFactor },
+                  { kind: 'g', tex: yFactor },
+                  { kind: 'g', tex: `-${k}${r}` },
+                  { kind: 'p', tex: xFactor }
+                ],
+                midCaption: '先套用 (a) 與 (b) 答案：紫色是相同括號，綠色是其餘部份',
+                segments: [
+                  { kind: 'p', tex: xFactor },
+                  { kind: 'g', tex: cSecond }
+                ],
+                bottomCaptionSegments: [
+                  { text: '抽' },
+                  { text: '相同括號', kind: 'p' },
+                  { text: '放前；' },
+                  { text: '剩餘部份', kind: 'g' },
+                  { text: '放後括號' }
                 ]
               }
             }
@@ -1523,7 +1590,8 @@ const QuizPage = ({ onBackToTeaching }) => {
       setupAnswerAlt: part.setupAnswerAlt || [],
       setupHint: part.setupHint || '',
       carryAnswers: part.carryAnswers || [],
-      setupEquationHighlight: part.setupEquationHighlight || null
+      setupEquationHighlight: part.setupEquationHighlight || null,
+      solutionEquationHighlight: part.solutionEquationHighlight || null
     };
   };
 
@@ -1695,6 +1763,11 @@ const QuizPage = ({ onBackToTeaching }) => {
     const normalized = normalizeAnswer(userAnswer);
     const correctNormalized = normalizeAnswer(currentQuestion.answer);
     const altCorrect = currentQuestion.answerAlt?.some(alt => normalizeAnswer(alt) === normalized);
+    const isTargetDseFinalPart =
+      quizType === 'dse' && (
+        (dseFlow?.setData?.parts?.length === 2 && currentQuestion.partLabel === 'b') ||
+        (dseFlow?.setData?.parts?.length === 3 && currentQuestion.partLabel === 'c')
+      );
 
     const isCorrect = normalized === correctNormalized || altCorrect;
 
@@ -1711,7 +1784,16 @@ const QuizPage = ({ onBackToTeaching }) => {
           }
         }
       }));
-      setFeedback({ type: 'correct', msg: '答案正確！', answer: currentQuestion.answer, steps: currentQuestion.steps });
+      setFeedback({
+        type: 'correct',
+        msg: '答案正確！',
+        answer: currentQuestion.answer,
+        steps: currentQuestion.steps,
+        answerLabel: isTargetDseFinalPart ? '解題步驟' : undefined,
+        hideLegacyStepsBlock: isTargetDseFinalPart,
+        equationHighlight: currentQuestion.solutionEquationHighlight || null,
+        stepEquationHighlight: currentQuestion.solutionEquationHighlight || null
+      });
     } else {
       setLevelData(prev => ({
         ...prev,
@@ -1728,7 +1810,11 @@ const QuizPage = ({ onBackToTeaching }) => {
         msg: `答案是 ${currentQuestion.answer}`,
         hint: currentQuestion.hint,
         answer: currentQuestion.answer,
-        steps: currentQuestion.steps
+        steps: currentQuestion.steps,
+        answerLabel: isTargetDseFinalPart ? '解題步驟' : undefined,
+        hideLegacyStepsBlock: isTargetDseFinalPart,
+        equationHighlight: currentQuestion.solutionEquationHighlight || null,
+        stepEquationHighlight: currentQuestion.solutionEquationHighlight || null
       });
     }
   };
@@ -2127,9 +2213,13 @@ const QuizPage = ({ onBackToTeaching }) => {
                                   ) : (
                                     <span
                                       key={idx}
-                                      className={seg.kind === 'a'
-                                        ? 'bg-yellow-200 text-amber-900 rounded px-1'
-                                        : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                      className={seg.kind === 'p'
+                                        ? 'bg-purple-100 text-purple-800 rounded px-1'
+                                        : seg.kind === 'g'
+                                          ? 'bg-green-100 text-green-800 rounded px-1'
+                                          : seg.kind === 'a'
+                                            ? 'bg-yellow-200 text-amber-900 rounded px-1'
+                                            : 'bg-cyan-200 text-cyan-900 rounded px-1'}
                                     >
                                       <Latex math={seg.tex} />
                                     </span>
@@ -2156,9 +2246,13 @@ const QuizPage = ({ onBackToTeaching }) => {
                                     ) : (
                                       <span
                                         key={idx}
-                                        className={seg.kind === 'a'
-                                          ? 'bg-yellow-200 text-amber-900 rounded px-1'
-                                          : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                        className={seg.kind === 'p'
+                                          ? 'bg-purple-100 text-purple-800 rounded px-1'
+                                          : seg.kind === 'g'
+                                            ? 'bg-green-100 text-green-800 rounded px-1'
+                                            : seg.kind === 'a'
+                                              ? 'bg-yellow-200 text-amber-900 rounded px-1'
+                                              : 'bg-cyan-200 text-cyan-900 rounded px-1'}
                                       >
                                         <Latex math={seg.tex} />
                                       </span>
@@ -2186,9 +2280,13 @@ const QuizPage = ({ onBackToTeaching }) => {
                                     ) : (
                                       <span
                                         key={idx}
-                                        className={seg.kind === 'a'
-                                          ? 'bg-yellow-200 text-amber-900 rounded px-1'
-                                          : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                        className={seg.kind === 'p'
+                                          ? 'bg-purple-100 text-purple-800 rounded px-1'
+                                          : seg.kind === 'g'
+                                            ? 'bg-green-100 text-green-800 rounded px-1'
+                                            : seg.kind === 'a'
+                                              ? 'bg-yellow-200 text-amber-900 rounded px-1'
+                                              : 'bg-cyan-200 text-cyan-900 rounded px-1'}
                                       >
                                         <Latex math={seg.tex} />
                                       </span>
@@ -2196,9 +2294,24 @@ const QuizPage = ({ onBackToTeaching }) => {
                                   ))}
                                 </div>
                               </div>
-                              {feedback.equationHighlight.bottomCaption && (
+                              {feedback.equationHighlight.bottomCaptionSegments?.length > 0 ? (
+                                <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">
+                                  &larr; {feedback.equationHighlight.bottomCaptionSegments.map((seg, i) => (
+                                    <span
+                                      key={i}
+                                      className={seg.kind === 'p'
+                                        ? 'bg-purple-100 text-purple-800 rounded px-0.5'
+                                        : seg.kind === 'g'
+                                          ? 'bg-green-100 text-green-800 rounded px-0.5'
+                                          : ''}
+                                    >
+                                      {seg.text}
+                                    </span>
+                                  ))}
+                                </span>
+                              ) : feedback.equationHighlight.bottomCaption ? (
                                 <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {feedback.equationHighlight.bottomCaption}</span>
-                              )}
+                              ) : null}
                             </div>
                           )}
                         </>
@@ -2222,9 +2335,13 @@ const QuizPage = ({ onBackToTeaching }) => {
                                   ) : (
                                     <span
                                       key={idx}
-                                      className={seg.kind === 'a'
-                                        ? 'bg-yellow-200 text-amber-900 rounded px-1'
-                                        : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                      className={seg.kind === 'p'
+                                        ? 'bg-purple-100 text-purple-800 rounded px-1'
+                                        : seg.kind === 'g'
+                                          ? 'bg-green-100 text-green-800 rounded px-1'
+                                          : seg.kind === 'a'
+                                            ? 'bg-yellow-200 text-amber-900 rounded px-1'
+                                            : 'bg-cyan-200 text-cyan-900 rounded px-1'}
                                     >
                                       <Latex math={seg.tex} />
                                     </span>
@@ -2241,7 +2358,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                   )}
                 </div>
                 {/* 解題步驟 */}
-                {feedback.steps && feedback.steps.length > 0 && (
+                {feedback.steps && feedback.steps.length > 0 && !feedback.hideLegacyStepsBlock && (
                   <div className={`mt-3 border-t pt-2 ${feedback.type === 'correct' ? 'border-green-300' : 'border-red-300'}`}>
                     <p className={`text-xs font-bold mb-1 ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>解題步驟：</p>
                     {feedback.stepEquationHighlight?.topSegments?.length > 0 && (
