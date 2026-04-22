@@ -1954,7 +1954,6 @@ const QuizPage = ({ onBackToTeaching }) => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
                     <h2 className="text-xl font-bold text-slate-800">DSE 實戰</h2>
-                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold">開發中</span>
                   </div>
                   <p className="text-slate-600 text-sm">(a)(b) / (a)(b)(c) 代入題</p>
                 </div>
