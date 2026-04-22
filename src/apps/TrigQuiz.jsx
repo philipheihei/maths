@@ -664,85 +664,36 @@ const generateTrigFindSide = () => {
 };
 
 const generateTrigFindAngle = () => {
-  const results = [];
   const angles = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
   const sideLengths = [5, 6, 8, 10, 12, 15, 18, 20];
+  const hypSides = [10, 12, 14, 15, 16, 18, 20, 24, 25];
 
-  // tan A = BC/AC → find angle A
-  {
-    const A_target = pick(angles);
-    const b = pick(sideLengths);
-    const a = Math.max(1, Math.round(b * Math.tan(toRad(A_target))));
-    const rawA = Math.atan2(a, b) * 180 / Math.PI;
-    const A = round3sf(rawA);
-    const Astr = format3sf(rawA);
-    const c = round2(Math.sqrt(a * a + b * b));
-    results.push({
-      triangle: { a, b, c, A, B: 90 - A },
-      unknownSide: null, unknownAngle: 'A',
-      visibleSides: ['a', 'b'], visibleAngles: [],
-      answer: Astr,
-      questionText: '求 ∠BAC 的度數。（答案取至3位有效數字）',
-      steps: [
-        `已掌握資料如下：BC = ${a}（對邊），AC = ${b}（鄰邊）。`,
-        `要找以下角度：$\\angle BAC$。對邊 + 鄰邊的組合，使用 $\\tan$。`,
-        `$$\\begin{align*}\\tan \\angle BAC &= \\dfrac{BC}{AC} \\\\[4pt] \\tan \\angle BAC &= \\dfrac{${a}}{${b}} \\\\[4pt] \\angle BAC &= ${Astr}°\\end{align*}$$`
-      ]
-    });
-  }
+  const makeTanQuestion = () => {
+    // tan 題型會隨機出 A 或 B，整體仍視為 tan 一類
+    const targetAtA = Math.random() < 0.5;
 
-  // sin A = BC/AB → find angle A
-  {
-    const A_target = pick(angles);
-    const c = pick([10, 12, 14, 15, 16, 18, 20, 24, 25]);
-    const a = Math.max(1, Math.round(c * Math.sin(toRad(A_target))));
-    if (a < c) {
-      const rawA = Math.asin(a / c) * 180 / Math.PI;
+    if (targetAtA) {
+      const A_target = pick(angles);
+      const b = pick(sideLengths);
+      const a = Math.max(1, Math.round(b * Math.tan(toRad(A_target))));
+      const rawA = Math.atan2(a, b) * 180 / Math.PI;
       const A = round3sf(rawA);
       const Astr = format3sf(rawA);
-      const b = round2(Math.sqrt(c * c - a * a));
-      results.push({
+      const c = round2(Math.sqrt(a * a + b * b));
+      return {
         triangle: { a, b, c, A, B: 90 - A },
         unknownSide: null, unknownAngle: 'A',
-        visibleSides: ['a', 'c'], visibleAngles: [],
+        visibleSides: ['a', 'b'], visibleAngles: [],
         answer: Astr,
         questionText: '求 ∠BAC 的度數。（答案取至3位有效數字）',
         steps: [
-          `已掌握資料如下：BC = ${a}（對邊），AB = ${c}（斜邊）。`,
-          `要找以下角度：$\\angle BAC$。對邊 + 斜邊的組合，使用 $\\sin$。`,
-          `$$\\begin{align*}\\sin \\angle BAC &= \\dfrac{BC}{AB} \\\\[4pt] \\sin \\angle BAC &= \\dfrac{${a}}{${c}} \\\\[4pt] \\angle BAC &= ${Astr}°\\end{align*}$$`
+          `已掌握資料如下：BC = ${a}（對邊），AC = ${b}（鄰邊）。`,
+          `要找以下角度：$\\angle BAC$。對邊 + 鄰邊的組合，使用 $\\tan$。`,
+          `$$\\begin{align*}\\tan \\angle BAC &= \\dfrac{BC}{AC} \\\\[4pt] \\tan \\angle BAC &= \\dfrac{${a}}{${b}} \\\\[4pt] \\angle BAC &= ${Astr}°\\end{align*}$$`
         ]
-      });
+      };
     }
-  }
 
-  // cos A = AC/AB → find angle A
-  {
-    const A_target = pick(angles);
-    const c = pick([10, 12, 14, 15, 16, 18, 20, 24, 25]);
-    const b = Math.max(1, Math.round(c * Math.cos(toRad(A_target))));
-    if (b < c) {
-      const rawA = Math.acos(b / c) * 180 / Math.PI;
-      const A = round3sf(rawA);
-      const Astr = format3sf(rawA);
-      const a = round2(Math.sqrt(c * c - b * b));
-      results.push({
-        triangle: { a, b, c, A, B: 90 - A },
-        unknownSide: null, unknownAngle: 'A',
-        visibleSides: ['b', 'c'], visibleAngles: [],
-        answer: Astr,
-        questionText: '求 ∠BAC 的度數。（答案取至3位有效數字）',
-        steps: [
-          `已掌握資料如下：AC = ${b}（鄰邊），AB = ${c}（斜邊）。`,
-          `要找以下角度：$\\angle BAC$。鄰邊 + 斜邊的組合，使用 $\\cos$。`,
-          `$$\\begin{align*}\\cos \\angle BAC &= \\dfrac{AC}{AB} \\\\[4pt] \\cos \\angle BAC &= \\dfrac{${b}}{${c}} \\\\[4pt] \\angle BAC &= ${Astr}°\\end{align*}$$`
-        ]
-      });
-    }
-  }
-
-  // tan B = AC/BC → find angle B
-  {
     const B_target = pick(angles);
     const a = pick(sideLengths);
     const b = Math.max(1, Math.round(a * Math.tan(toRad(B_target))));
@@ -750,7 +701,7 @@ const generateTrigFindAngle = () => {
     const B = round3sf(rawB);
     const Bstr = format3sf(rawB);
     const c = round2(Math.sqrt(a * a + b * b));
-    results.push({
+    return {
       triangle: { a, b, c, A: 90 - B, B },
       unknownSide: null, unknownAngle: 'B',
       visibleSides: ['a', 'b'], visibleAngles: [],
@@ -761,8 +712,70 @@ const generateTrigFindAngle = () => {
         `要找以下角度：$\\angle ABC$。對邊 + 鄰邊的組合，使用 $\\tan$。`,
         `$$\\begin{align*}\\tan \\angle ABC &= \\dfrac{AC}{BC} \\\\[4pt] \\tan \\angle ABC &= \\dfrac{${b}}{${a}} \\\\[4pt] \\angle ABC &= ${Bstr}°\\end{align*}$$`
       ]
-    });
-  }
+    };
+  };
+
+  const makeSinQuestion = () => {
+    // 以 guard 確保分子 < 分母，避免退化成 90°
+    let tries = 0;
+    while (tries < 30) {
+      const A_target = pick(angles);
+      const c = pick(hypSides);
+      const a = Math.max(1, Math.round(c * Math.sin(toRad(A_target))));
+      if (a < c) {
+        const rawA = Math.asin(a / c) * 180 / Math.PI;
+        const A = round3sf(rawA);
+        const Astr = format3sf(rawA);
+        const b = round2(Math.sqrt(c * c - a * a));
+        return {
+          triangle: { a, b, c, A, B: 90 - A },
+          unknownSide: null, unknownAngle: 'A',
+          visibleSides: ['a', 'c'], visibleAngles: [],
+          answer: Astr,
+          questionText: '求 ∠BAC 的度數。（答案取至3位有效數字）',
+          steps: [
+            `已掌握資料如下：BC = ${a}（對邊），AB = ${c}（斜邊）。`,
+            `要找以下角度：$\\angle BAC$。對邊 + 斜邊的組合，使用 $\\sin$。`,
+            `$$\\begin{align*}\\sin \\angle BAC &= \\dfrac{BC}{AB} \\\\[4pt] \\sin \\angle BAC &= \\dfrac{${a}}{${c}} \\\\[4pt] \\angle BAC &= ${Astr}°\\end{align*}$$`
+          ]
+        };
+      }
+      tries++;
+    }
+    return null;
+  };
+
+  const makeCosQuestion = () => {
+    // 以 guard 確保鄰邊 < 斜邊，避免退化成 0°
+    let tries = 0;
+    while (tries < 30) {
+      const A_target = pick(angles);
+      const c = pick(hypSides);
+      const b = Math.max(1, Math.round(c * Math.cos(toRad(A_target))));
+      if (b < c) {
+        const rawA = Math.acos(b / c) * 180 / Math.PI;
+        const A = round3sf(rawA);
+        const Astr = format3sf(rawA);
+        const a = round2(Math.sqrt(c * c - b * b));
+        return {
+          triangle: { a, b, c, A, B: 90 - A },
+          unknownSide: null, unknownAngle: 'A',
+          visibleSides: ['b', 'c'], visibleAngles: [],
+          answer: Astr,
+          questionText: '求 ∠BAC 的度數。（答案取至3位有效數字）',
+          steps: [
+            `已掌握資料如下：AC = ${b}（鄰邊），AB = ${c}（斜邊）。`,
+            `要找以下角度：$\\angle BAC$。鄰邊 + 斜邊的組合，使用 $\\cos$。`,
+            `$$\\begin{align*}\\cos \\angle BAC &= \\dfrac{AC}{AB} \\\\[4pt] \\cos \\angle BAC &= \\dfrac{${b}}{${c}} \\\\[4pt] \\angle BAC &= ${Astr}°\\end{align*}$$`
+          ]
+        };
+      }
+      tries++;
+    }
+    return null;
+  };
+
+  const results = [makeTanQuestion(), makeSinQuestion(), makeCosQuestion()].filter(Boolean);
 
   return results;
 };

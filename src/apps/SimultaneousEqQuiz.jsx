@@ -1448,6 +1448,144 @@ const SimultaneousEqNotes = ({ onBack, onShowCalcProgram }) => {
           </div>
         </section>
 
+        {/* Word Problem Keywords */}
+        <section className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="bg-emerald-600 text-white font-black text-lg px-3 py-1 rounded-lg">應用題</span>
+            <h2 className="text-lg font-bold text-emerald-800">文字轉數式 (關鍵字)</h2>
+          </div>
+          
+          <div className="bg-white rounded-xl border border-emerald-200 overflow-hidden shadow-sm">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-emerald-100 text-emerald-800 text-sm">
+                  <th className="py-3 px-4 font-bold border-b border-emerald-200 w-1/2">關鍵字</th>
+                  <th className="py-3 px-4 font-bold border-b border-emerald-200 w-1/2">列式</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm text-slate-700 divide-y divide-emerald-50">
+                {CHEATSHEET.map((item, idx) => (
+                  <tr key={idx} className="hover:bg-emerald-50/50 transition-colors">
+                    <td className="py-3 px-4 font-medium">{item.key}</td>
+                    <td className="py-3 px-4 font-sans text-blue-700 bg-blue-50/50 rounded-r-lg"><span className="bg-blue-100 px-3 py-1 rounded-full">{item.val}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Word Problem Sentence Structures */}
+        <section className="bg-teal-50 rounded-xl p-5 border-2 border-teal-200 mt-6">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="bg-teal-600 text-white font-black text-lg px-3 py-1 rounded-lg">應用題</span>
+            <h2 className="text-lg font-bold text-teal-800">常見題目句式結構</h2>
+          </div>
+          
+          <div className="bg-white rounded-xl border border-teal-200 shadow-sm overflow-x-auto">
+            <table className="w-full text-left border-collapse min-w-[500px]">
+              <thead>
+                <tr className="bg-teal-100 text-teal-800 text-sm">
+                  <th className="py-3 px-4 font-bold border-b border-teal-200 w-[55%]">關鍵詞組 (題目)</th>
+                  <th className="py-3 px-4 font-bold border-b border-teal-200 w-[45%]">列式 (答案)</th>
+                </tr>
+              </thead>
+              <tbody className="text-sm md:text-base divide-y divide-teal-100">
+                {/* Row 1 */}
+                <tr className="hover:bg-teal-50 transition-colors">
+                  <td className="py-4 px-4 text-slate-700 leading-loose">
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">A</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-rose-100 text-rose-800">比</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-amber-100 text-amber-800">B</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-emerald-100 text-emerald-800">多</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-purple-100 text-purple-800">6</span>
+                  </td>
+                  <td className="py-4 px-4 text-slate-700 font-sans leading-loose whitespace-nowrap">
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">A</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800">=</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">B</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800">+</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800">6</span>
+                  </td>
+                </tr>
+
+                {/* Row 2 */}
+                <tr className="hover:bg-teal-50 transition-colors">
+                  <td className="py-4 px-4 text-slate-700 leading-loose">
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">A 和 B 之和 / 總值</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-rose-100 text-rose-800">是</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-purple-100 text-purple-800">24</span>
+                  </td>
+                  <td className="py-4 px-4 text-slate-700 font-sans leading-loose whitespace-nowrap">
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">A + B</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800">=</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800">24</span>
+                  </td>
+                </tr>
+
+                {/* Row 3 */}
+                <tr className="hover:bg-teal-50 transition-colors">
+                  <td className="py-4 px-4 text-slate-700 leading-loose">
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">A</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-rose-100 text-rose-800">是</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-amber-100 text-amber-800">B 的 5 倍</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-emerald-100 text-emerald-800">多</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-purple-100 text-purple-800">25</span>
+                  </td>
+                  <td className="py-4 px-4 text-slate-700 font-sans leading-loose whitespace-nowrap">
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">A</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800">=</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">B × 5</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800">+</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800">25</span>
+                  </td>
+                </tr>
+
+                {/* Row 4 */}
+                <tr className="hover:bg-teal-50 transition-colors">
+                  <td className="py-4 px-4 text-slate-700 leading-loose">
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">A</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-rose-100 text-rose-800">是</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-amber-100 text-amber-800">B 的 1/3</span>
+                  </td>
+                  <td className="py-4 px-4 text-slate-700 font-sans leading-loose whitespace-nowrap">
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">A</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800">=</span>
+                    <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">B × 1/3</span>
+                  </td>
+                </tr>
+
+                {/* Row 5 */}
+                <tr className="hover:bg-teal-50 transition-colors">
+                  <td className="py-4 px-4 text-slate-700 leading-loose">
+                    購買了
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-purple-100 text-purple-800">10 個</span>
+                    蘋果和香蕉，其中有
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">x 個</span>
+                    <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-red-100 text-red-800">蘋果</span>
+                  </td>
+                  <td className="py-4 px-4 text-slate-700 font-sans leading-loose">
+                    <div className="mb-2 whitespace-nowrap">
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-red-100 text-red-800">蘋果</span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold mx-1">=</span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">x</span>
+                      <span> 個</span>
+                    </div>
+                    <div className="whitespace-nowrap">
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">香蕉</span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold mx-1">= (</span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800">10</span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold mx-1">−</span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800">x</span>
+                      <span>) 個</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
         {/* Prog 01 Calculator Link */}
         {onShowCalcProgram && (
           <div className="bg-yellow-50 border border-yellow-300 rounded-xl p-4 flex items-start gap-3">
