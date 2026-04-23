@@ -1147,6 +1147,7 @@ const SimultaneousEqNotes = ({ onBack, onShowCalcProgram }) => {
       showBack
       onBack={onBack}
       onShowCalcProgram={onShowCalcProgram}
+      noteMode="compact"
     />
   );
 };

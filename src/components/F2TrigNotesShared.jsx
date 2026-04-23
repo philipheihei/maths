@@ -123,7 +123,7 @@ export const PythagorasNotesBlock = () => {
 
         <div className="bg-white rounded-xl p-5 shadow-sm border border-purple-100 mb-4">
           <p className="font-bold text-slate-700 mb-4">例子：給定三邊長度，證明 <Latex math="\triangle XYZ" /> 是一個直角三角形。</p>
-          <div className="flex flex-col md:flex-row items-center gap-6">
+          <div className="flex flex-col md:flex-row-reverse items-center gap-6">
             <div className="w-56 flex-shrink-0">
               <svg viewBox="0 0 160 120" className="w-full">
                 <polygon points="10,100 130,100 130,20" fill="rgba(168,85,247,0.08)" stroke="#9333ea" strokeWidth="2.5" strokeLinejoin="round" />

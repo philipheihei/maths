@@ -8,9 +8,11 @@ export const SimultaneousEqNotesContent = ({
   showBack = false,
   onBack,
   onShowCalcProgram,
+  noteMode = 'full',
 }) => {
   const [katexLoaded, setKatexLoaded] = React.useState(false);
   const rootRef = React.useRef(null);
+  const isCompactMode = noteMode === 'compact';
 
   React.useEffect(() => {
     loadKatexOnce().then(() => setKatexLoaded(true)).catch(() => {});
@@ -80,13 +82,22 @@ export const SimultaneousEqNotesContent = ({
           </p>
           <p className="text-sm text-center text-slate-600">
             聯立方程有兩條方程、兩個未知數。<br />
-            解法主要分為 <strong>A. 圖解法</strong> 和 <strong>B. 消元法</strong>（代入 / 加減）兩種。
+            {isCompactMode ? (
+              <>
+                訓練中心筆記重點：<strong>消元法</strong>（代入 / 加減）與 <strong>文字題設式</strong>。
+              </>
+            ) : (
+              <>
+                解法主要分為 <strong>A. 圖解法</strong> 和 <strong>B. 消元法</strong>（代入 / 加減）兩種。
+              </>
+            )}
           </p>
         </section>
 
         {/* =======================
             A. 圖解法
             ======================= */}
+        {!isCompactMode && (
         <section id="sim-eq-graph" className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200 scroll-mt-24">
           <div className="flex items-center gap-2 mb-4">
             <span className="bg-emerald-600 text-white font-black text-lg px-3 py-1 rounded-lg">A</span>
@@ -218,6 +229,7 @@ export const SimultaneousEqNotesContent = ({
             </div>
           </div>
         </section>
+        )}
 
         {/* =======================
             B. 消元法
@@ -611,6 +623,89 @@ export const SimultaneousEqNotesContent = ({
             </table>
           </div>
         </section>
+
+        {/* =======================
+            C. 解的數目
+            ======================= */}
+        {!isCompactMode && (
+        <section id="sim-eq-solutions" className="bg-orange-50 rounded-xl p-5 border-2 border-orange-200 scroll-mt-24 mt-6">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="bg-orange-600 text-white font-black text-lg px-3 py-1 rounded-lg">C</span>
+            <h2 className="text-lg font-bold text-orange-800">解的數目</h2>
+          </div>
+          
+          <div className="bg-white rounded-xl p-5 border border-orange-200 shadow-sm">
+            <p className="font-bold text-slate-700 mb-4">可能性有：</p>
+            <ul className="space-y-3 mb-6 ml-2">
+              <li className="flex items-center gap-3">
+                <span className="text-red-600 font-bold text-lg font-sans">1. 沒有解</span>
+                <span className="text-slate-500 text-sm">（0個答案）</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="text-green-600 font-bold text-lg font-sans">2. 一個解</span>
+                <span className="text-slate-500 text-sm">（1個答案）</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <span className="text-blue-600 font-bold text-lg font-sans">3. 無限個解</span>
+                <span className="text-slate-500 text-sm">（無限個答案）</span>
+              </li>
+            </ul>
+
+            <div className="space-y-6">
+              {/* e.g. 1 */}
+              <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                <div className="grid grid-cols-1 lg:grid-cols-[64px_minmax(0,1fr)_auto_minmax(0,1fr)_auto_92px] items-center justify-items-center gap-x-3 gap-y-3">
+                  <span className="font-bold text-blue-800 italic text-base">e.g. 1</span>
+
+                  <Latex math="\begin{cases} 12x + 15y = 5 & \cdots\textcircled{1} \\ 4x + 5y = 2 & \cdots\textcircled{2} \end{cases}" />
+
+                  <Latex math="\xrightarrow{\text{\textcircled{2}}\times 3}" />
+
+                  <Latex math="\begin{cases} 12x + 15y = \color{red}5 \\ 12x + 15y = \color{red}6 \end{cases}" />
+
+                  <span className="text-red-600 text-2xl leading-none">⇒</span>
+                  <span className="font-bold text-red-600 text-xl whitespace-nowrap">無解</span>
+                </div>
+                <p className="text-red-500 font-bold text-center mt-5 text-sm">原因：相同式 <Latex math="= 5" /> 又 <Latex math="= 6" />，不可能！</p>
+              </div>
+
+              {/* e.g. 2 */}
+              <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                <div className="grid grid-cols-1 lg:grid-cols-[64px_minmax(0,1fr)_auto_minmax(0,1fr)_auto_92px] items-center justify-items-center gap-x-3 gap-y-3">
+                  <span className="font-bold text-blue-800 italic text-base">e.g. 2</span>
+
+                  <Latex math="\begin{cases} 9x - 7y = 5 \\ 18x - 16y = 14 \end{cases}" />
+
+                  <span className="text-slate-500 text-2xl leading-none">⇒</span>
+
+                  <Latex math="\begin{cases} \color{red}{18x} - 14y = 10 \\ \color{red}{18x} - 16y = 14 \end{cases}" />
+
+                  <span className="text-green-600 text-2xl leading-none">⇒</span>
+                  <span className="font-bold text-green-600 text-xl whitespace-nowrap">一個解</span>
+                </div>
+                <p className="text-red-500 font-bold text-center mt-5 text-sm">原因：得一組數字變為相同，其他不一樣！</p>
+              </div>
+
+              {/* e.g. 3 */}
+              <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
+                <div className="grid grid-cols-1 lg:grid-cols-[64px_minmax(0,1fr)_auto_minmax(0,1fr)_auto_92px] items-center justify-items-center gap-x-3 gap-y-3">
+                  <span className="font-bold text-blue-800 italic text-base">e.g. 3</span>
+
+                  <Latex math="\begin{cases} 24x + 12y = -48 \\ 4x + 2y = -8 \end{cases}" />
+
+                  <Latex math="\xrightarrow{\text{\textcircled{2}}\times 6}" />
+
+                  <Latex math="\begin{cases} 24x + 12y = -48 \\ 24x + 12y = -48 \end{cases}" />
+
+                  <span className="text-blue-600 text-2xl leading-none">⇒</span>
+                  <span className="font-bold text-blue-600 text-xl whitespace-nowrap">無限解</span>
+                </div>
+                <p className="text-red-500 font-bold text-center mt-5 text-sm">原因：兩條式完全相同！</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        )}
 
         {onShowCalcProgram && (
           <div className="bg-yellow-50 border border-yellow-300 rounded-xl p-4 flex items-start gap-3">

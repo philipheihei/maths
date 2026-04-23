@@ -34,8 +34,10 @@ export const NOTES_DATA = {
       topic: 'CH9 二元一次聯立方程',
       color: 'teal',
       subtopics: [
-        { id: 'sim-eq-methods', num: 1, title: '代入法 + 加減法', color: 'teal' },
-        { id: 'sim-eq-word', num: 2, title: '文字轉數式', color: 'emerald' },
+        { id: 'sim-eq-graph', num: 1, title: '圖解法', color: 'teal' },
+        { id: 'sim-eq-methods', num: 2, title: '代入法 + 加減法', color: 'sky' },
+        { id: 'sim-eq-word', num: 3, title: '文字轉數式', color: 'emerald' },
+        { id: 'sim-eq-solutions', num: 4, title: '解的數目', color: 'orange' },
       ]
     },
     {
