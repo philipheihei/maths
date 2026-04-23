@@ -635,7 +635,7 @@ export const SimultaneousEqNotesContent = ({
           </div>
           
           <div className="bg-white rounded-xl p-5 border border-orange-200 shadow-sm">
-            <p className="font-bold text-slate-700 mb-4">可能性有：</p>
+            <p className="font-bold text-slate-700 mb-4">二元一次聯立方程 解的可能數目有：</p>
             <ul className="space-y-3 mb-6 ml-2">
               <li className="flex items-center gap-3">
                 <span className="text-red-600 font-bold text-lg font-sans">1. 沒有解</span>
@@ -661,7 +661,7 @@ export const SimultaneousEqNotesContent = ({
 
                   <Latex math="\xrightarrow{\text{\textcircled{2}}\times 3}" />
 
-                  <Latex math="\begin{cases} 12x + 15y = \color{red}5 \\ 12x + 15y = \color{red}6 \end{cases}" />
+                  <Latex math="\begin{cases} 12x + 15y = 5 \\ 12x + 15y = 6 \end{cases}" />
 
                   <span className="text-red-600 text-2xl leading-none">⇒</span>
                   <span className="font-bold text-red-600 text-xl whitespace-nowrap">無解</span>
@@ -678,7 +678,7 @@ export const SimultaneousEqNotesContent = ({
 
                   <span className="text-slate-500 text-2xl leading-none">⇒</span>
 
-                  <Latex math="\begin{cases} \color{red}{18x} - 14y = 10 \\ \color{red}{18x} - 16y = 14 \end{cases}" />
+                  <Latex math="\begin{cases} 18x - 14y = 10 \\ 18x - 16y = 14 \end{cases}" />
 
                   <span className="text-green-600 text-2xl leading-none">⇒</span>
                   <span className="font-bold text-green-600 text-xl whitespace-nowrap">一個解</span>
