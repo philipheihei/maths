@@ -142,14 +142,8 @@ export const InequalityNotes = () => {
                   <tbody>
                     {/* Step 1 */}
                     <tr className="border-t border-slate-200 hover:bg-slate-50 transition-colors">
-                      <td className="py-5 align-middle pr-2">
-                        <div className="flex items-start gap-2">
-                          <span className="bg-violet-100 text-violet-700 px-2 py-0.5 rounded text-xs font-bold whitespace-nowrap mt-0.5">Step 1</span>
-                          <div className="text-sm font-bold text-emerald-600 leading-relaxed">
-                            <div>畫數線</div>
-                            <div>+ 寫不等式數字</div>
-                          </div>
-                        </div>
+                      <td className="py-5 align-middle text-violet-800 font-bold pr-2 flex items-center gap-2">
+                        <span className="bg-violet-100 text-violet-700 px-2 py-0.5 rounded text-xs">Step 1</span> <span className="text-emerald-600">畫數線 + 寫不等式數字</span>
                       </td>
                       <td className="py-5 align-middle text-center text-slate-700">
                         <svg width="160" height="40" className="inline-block overflow-visible">
@@ -381,7 +375,10 @@ export const InequalityNotes = () => {
                   <div className="text-left"><Latex math="10" /></div>
 
                   <div className="text-right">
-                    <span className="bg-red-200 text-red-800 px-1 rounded inline-block"><Latex math="-3x" /></span>
+                    <span className="inline-flex items-center gap-0.5">
+                      <span className="bg-red-200 text-red-800 px-1 rounded inline-block"><Latex math="-3" /></span>
+                      <Latex math="x" />
+                    </span>
                   </div>
                   <div className="text-center font-bold px-2"><Latex math="\leq" /></div>
                   <div className="text-left"><Latex math="12" /></div>

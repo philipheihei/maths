@@ -248,8 +248,8 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                 <div className="flex flex-col lg:flex-row gap-4">
                   <div className="flex-1">
                     <p className="text-green-600 mb-2">因題目是直角△，可用畢氏定理得出剩下的邊</p>
-                    <div className="text-sm">
-                      <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\ RQ &= 5 \end{aligned}" block left />
+                    <div className="text-sm [&_.katex-display]:my-0.5">
+                      <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\[-3px] RQ &= 5 \end{aligned}" block left />
                     </div>
                     <p className="text-green-600 mt-3 text-sm">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold">sin θ / cos θ / tan θ</span></p>
                   </div>
@@ -285,8 +285,8 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                 <div>
                   <p className="text-slate-700 mb-2">1. 如果題目沒提供 △ 圖像，需自行繪畫</p>
                   <p className="text-slate-700 mb-3">2. 利用畢氏定理找未知邊的長度</p>
-                  <div className="text-green-600">
-                    <Latex math="\begin{aligned} x^2 + 3^2 &= 7^2 \\\\ x^2 &= 40 \\\\ x &= \sqrt{40} \end{aligned}" block left />
+                  <div className="text-green-600 [&_.katex-display]:my-0.5">
+                    <Latex math="\begin{aligned} x^2 + 3^2 &= 7^2 \\\\[-3px] x^2 &= 40 \\\\[-3px] x &= \sqrt{40} \end{aligned}" block left />
                   </div>
                 </div>
                   <div className="flex items-center justify-center md:justify-end mt-2 md:mt-0">
@@ -981,7 +981,7 @@ const BearingsSVG1 = () => (
 );
 
 const BearingsSVG2 = () => (
-  <svg width="400" height="200" viewBox="0 0 400 200" className="mx-auto block">
+  <svg width="400" height="240" viewBox="0 -20 400 240" className="mx-auto block">
     <defs>
       <marker id="arrow-bearings-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />

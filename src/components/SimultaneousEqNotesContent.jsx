@@ -10,6 +10,7 @@ export const SimultaneousEqNotesContent = ({
   onShowCalcProgram,
 }) => {
   const [katexLoaded, setKatexLoaded] = React.useState(false);
+  const rootRef = React.useRef(null);
 
   React.useEffect(() => {
     loadKatexOnce().then(() => setKatexLoaded(true)).catch(() => {});
@@ -17,11 +18,25 @@ export const SimultaneousEqNotesContent = ({
 
   React.useEffect(() => {
     if (!activeSub) return;
-    const target = document.getElementById(activeSub);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [activeSub]);
+
+    const scrollToActiveSub = () => {
+      const scopedTarget = rootRef.current?.querySelector(`[id="${activeSub}"]`);
+      const fallbackTarget = document.getElementById(activeSub);
+      const target = scopedTarget || fallbackTarget;
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    // 先做一次定位，再於版面穩定後補一次，避免 KaTeX 載入後高度改變造成偏位。
+    const t1 = window.setTimeout(scrollToActiveSub, 60);
+    const t2 = window.setTimeout(scrollToActiveSub, 260);
+
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
+  }, [activeSub, katexLoaded]);
 
   const Latex = ({ math, block = false }) => {
     const ref = React.useRef(null);
@@ -40,7 +55,7 @@ export const SimultaneousEqNotesContent = ({
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div ref={rootRef} className="max-w-3xl mx-auto px-4 py-8">
       {showBack && (
         <button onClick={onBack} className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6 font-medium">
           <ArrowLeft className="w-5 h-5" /> 返回
