@@ -105,6 +105,8 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'gradient-inclination', num: 1, title: '斜率與傾角', color: 'teal' },
         { id: 'contour-lines', num: 2, title: '地圖等高線', color: 'emerald' },
+        { id: 'bearings', num: 3, title: '方位角', color: 'blue' },
+        { id: 'elevation-depression', num: 4, title: '仰角 / 俯角', color: 'purple' },
       ]
     }
   ],

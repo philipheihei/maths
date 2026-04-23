@@ -803,8 +803,274 @@ export const QuadrilateralNotes = ({ activeSub }) => {
 // ========================================
 // CH8 三角學的應用 (F3)
 // ========================================
+
+const GradientInclinationSVG1 = () => (
+  <svg width="400" height="200" viewBox="0 0 400 200" className="mx-auto block">
+    <defs>
+      <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+      </marker>
+      <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#22c55e" />
+      </marker>
+    </defs>
+    {/* 直角三角形 */}
+    <path d="M 50,160 L 300,160 L 300,60 Z" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2.5" strokeLinejoin="round" />
+    
+    {/* 直角符號 */}
+    <polyline points="288,160 288,148 300,148" fill="none" stroke="#334155" strokeWidth="2" />
+    
+    {/* 傾角弧度 (計算 dy=-100, dx=250 -> 角度約 -21.8度) */}
+    <path d="M 90,160 A 40 40 0 0 0 87.1 145.2" fill="none" stroke="#3b82f6" strokeWidth="2" />
+    <text x="105" y="152" fill="#3b82f6" fontSize="16" fontWeight="bold">傾角</text>
+    
+    {/* 底邊：地下 */}
+    <text x="175" y="185" fill="#3b82f6" fontSize="16" fontWeight="bold">地下</text>
+    
+    {/* 垂直邊：斜坡頂的高度 */}
+    <text x="325" y="90" fill="#22c55e" fontSize="16" fontWeight="bold" textAnchor="middle">斜坡頂的高度</text>
+    <path d="M 325,100 L 305,110" fill="none" stroke="#22c55e" strokeWidth="2" markerEnd="url(#arrow-green)" />
+    
+    {/* 斜邊：斜坡 */}
+    <text x="145" y="70" fill="#ef4444" fontSize="16" fontWeight="bold" textAnchor="middle">斜坡</text>
+    <path d="M 145,80 L 165,100" fill="none" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrow-red)" />
+  </svg>
+);
+
+const GradientInclinationSVG2 = () => (
+  <svg width="400" height="200" viewBox="0 0 400 200" className="mx-auto block">
+    {/* 直角三角形 */}
+    <path d="M 80,160 L 280,160 L 280,60 Z" fill="none" stroke="#334155" strokeWidth="2.5" strokeLinejoin="round" />
+    
+    {/* 直角符號 */}
+    <polyline points="268,160 268,148 280,148" fill="none" stroke="#334155" strokeWidth="2" />
+    
+    {/* 底邊：橫 */}
+    <text x="180" y="185" fill="#22c55e" fontSize="20" fontWeight="bold" textAnchor="middle">橫</text>
+    
+    {/* 垂直邊：直 */}
+    <text x="300" y="115" fill="#22c55e" fontSize="20" fontWeight="bold" textAnchor="middle">直</text>
+  </svg>
+);
+
+const ContourLinesSVG = () => (
+  <svg width="400" height="250" viewBox="0 0 400 250" className="mx-auto block">
+    <defs>
+      <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#1d4ed8" />
+      </marker>
+      <marker id="arrow-green2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#15803d" />
+      </marker>
+    </defs>
+    
+    {/* 地圖背景 */}
+    <rect x="200" y="10" width="180" height="230" fill="#dcfce7" rx="10" />
+    
+    {/* 等高線 */}
+    <path d="M 210,40 Q 280,60 370,30" fill="none" stroke="#333" strokeWidth="1.5" />
+    <path d="M 205,95 Q 290,120 375,85" fill="none" stroke="#333" strokeWidth="1.5" />
+    <text x="350" y="105" fill="#333" fontSize="12" fontWeight="bold">450 m</text>
+    
+    <path d="M 215,155 Q 280,180 370,145" fill="none" stroke="#333" strokeWidth="1.5" />
+    <text x="350" y="165" fill="#333" fontSize="12" fontWeight="bold">400 m</text>
+    
+    <path d="M 225,215 Q 290,200 375,225" fill="none" stroke="#333" strokeWidth="1.5" />
+    <text x="350" y="215" fill="#333" fontSize="12" fontWeight="bold">350 m</text>
+    
+    {/* 點 A (在 450m 線上) */}
+    <g transform="translate(260, 105)">
+      <line x1="-4" y1="-4" x2="4" y2="4" stroke="#1d4ed8" strokeWidth="2" />
+      <line x1="-4" y1="4" x2="4" y2="-4" stroke="#1d4ed8" strokeWidth="2" />
+      <text x="-15" y="5" fill="#1d4ed8" fontSize="14" fontWeight="bold">A</text>
+    </g>
+    
+    {/* 點 B (在 400m 線上) */}
+    <g transform="translate(300, 162)">
+      <line x1="-4" y1="-4" x2="4" y2="4" stroke="#1d4ed8" strokeWidth="2" />
+      <line x1="-4" y1="4" x2="4" y2="-4" stroke="#1d4ed8" strokeWidth="2" />
+      <text x="12" y="5" fill="#1d4ed8" fontSize="14" fontWeight="bold">B</text>
+    </g>
+    
+    {/* 連接線 */}
+    <line x1="260" y1="105" x2="300" y2="162" stroke="#f97316" strokeWidth="2" strokeDasharray="4 4" />
+    
+    {/* 標示文字和箭頭 */}
+    <text x="170" y="80" fill="#1d4ed8" fontSize="12" fontWeight="bold" textAnchor="end">題目提供：實際水平距離 325m</text>
+    <path d="M 175,85 Q 230,105 270,125" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue)" />
+    
+    <text x="170" y="190" fill="#15803d" fontSize="12" fontWeight="bold" textAnchor="end">自己計出爬升了 450 - 400 = 50m</text>
+    <path d="M 175,185 Q 240,175 285,145" fill="none" stroke="#15803d" strokeWidth="1.5" markerEnd="url(#arrow-green2)" />
+  </svg>
+);
+
+const BearingsSVG1 = () => (
+  <svg width="400" height="200" viewBox="0 0 400 200" className="mx-auto block">
+    <defs>
+      <marker id="arrow-bearings-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+      </marker>
+    </defs>
+    {/* ===== 左圖 (真方位角) ===== */}
+    <g transform="translate(100, 100)">
+      {/* 十字軸 */}
+      <line x1="0" y1="-80" x2="0" y2="80" stroke="#94a3b8" strokeWidth="1.5" />
+      <line x1="-80" y1="0" x2="80" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
+      <text x="0" y="-85" fill="#334155" fontSize="14" fontWeight="bold" textAnchor="middle">N</text>
+      <text x="-8" y="-10" fill="#334155" fontSize="14" fontStyle="italic" textAnchor="end">O</text>
+
+      {/* 虛線 */}
+      <line x1="0" y1="0" x2="50" y2="-60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <text x="55" y="-60" fill="#334155" fontSize="14" fontStyle="italic">A</text>
+      
+      <line x1="0" y1="0" x2="40" y2="60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <text x="45" y="65" fill="#334155" fontSize="14" fontStyle="italic">B</text>
+
+      <line x1="0" y1="0" x2="-60" y2="40" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <text x="-70" y="45" fill="#334155" fontSize="14" fontStyle="italic">C</text>
+
+      {/* 弧度 */}
+      {/* A: 由N至A (35度) */}
+      <path d="M 0,-30 A 30 30 0 0 1 19.3,-23" fill="none" stroke="#2563eb" strokeWidth="2" />
+      <text x="25" y="-30" fill="#2563eb" fontSize="12" fontWeight="bold">35°</text>
+
+      {/* B: 由N至B (152度) -> 與S角為28度 */}
+      <path d="M 0,-40 A 40 40 0 0 1 22.2,33.3" fill="none" stroke="#2563eb" strokeWidth="2" />
+      <text x="35" y="15" fill="#2563eb" fontSize="12" fontWeight="bold">28°</text>
+
+      {/* C: 由N至C (245度) -> 與S角為65度, 剩餘25度 */}
+      <path d="M 0,-50 A 50 50 0 1 1 -42.4,28.3" fill="none" stroke="#2563eb" strokeWidth="2" />
+      <path d="M 0,35 A 35 35 0 0 1 -29.6,19.7" fill="none" stroke="#16a34a" strokeWidth="2" />
+      <text x="-15" y="45" fill="#16a34a" fontSize="12" fontWeight="bold">65°</text>
+      <text x="-35" y="15" fill="#2563eb" fontSize="12" fontWeight="bold">25°</text>
+    </g>
+
+    {/* ===== 右圖 (羅盤方位角) ===== */}
+    <g transform="translate(300, 100)">
+      {/* 十字軸 */}
+      <line x1="0" y1="-80" x2="0" y2="80" stroke="#94a3b8" strokeWidth="1.5" />
+      <line x1="-80" y1="0" x2="80" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
+      <text x="0" y="-85" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="middle">N</text>
+      <text x="0" y="95" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="middle">S</text>
+      <text x="-85" y="5" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="end">W</text>
+      <text x="85" y="5" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="start">E</text>
+      <text x="-8" y="-10" fill="#334155" fontSize="14" fontStyle="italic" textAnchor="end">O</text>
+
+      {/* 虛線 */}
+      <line x1="0" y1="0" x2="50" y2="-60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <text x="55" y="-60" fill="#334155" fontSize="14" fontStyle="italic">A</text>
+      
+      <line x1="0" y1="0" x2="40" y2="60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <text x="45" y="65" fill="#334155" fontSize="14" fontStyle="italic">B</text>
+
+      <line x1="0" y1="0" x2="-60" y2="40" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <text x="-70" y="45" fill="#334155" fontSize="14" fontStyle="italic">C</text>
+
+      {/* 弧度 */}
+      {/* A */}
+      <path d="M 0,-30 A 30 30 0 0 1 19.3,-23" fill="none" stroke="#2563eb" strokeWidth="2" />
+      <text x="18" y="-38" fill="#2563eb" fontSize="12" fontWeight="bold">35°</text>
+
+      {/* B */}
+      <path d="M 0,30 A 30 30 0 0 0 16.6,25" fill="none" stroke="#2563eb" strokeWidth="2" />
+      <text x="25" y="40" fill="#2563eb" fontSize="12" fontWeight="bold">28°</text>
+
+      {/* C */}
+      <path d="M 0,35 A 35 35 0 0 1 -29.6,19.7" fill="none" stroke="#16a34a" strokeWidth="2" />
+      <text x="-15" y="45" fill="#16a34a" fontSize="12" fontWeight="bold">65°</text>
+      
+      <path d="M -30,0 A 30 30 0 0 0 -25,16.7" fill="none" stroke="#2563eb" strokeWidth="2" />
+      <text x="-48" y="20" fill="#2563eb" fontSize="12" fontWeight="bold">25°</text>
+    </g>
+  </svg>
+);
+
+const BearingsSVG2 = () => (
+  <svg width="400" height="200" viewBox="0 0 400 200" className="mx-auto block">
+    <defs>
+      <marker id="arrow-bearings-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+      </marker>
+      <marker id="arrow-bearings2-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+      </marker>
+    </defs>
+    
+    <g transform="translate(200, 100)">
+      {/* 十字軸 */}
+      <line x1="0" y1="-80" x2="0" y2="80" stroke="#334155" strokeWidth="2" />
+      <line x1="-80" y1="0" x2="80" y2="0" stroke="#334155" strokeWidth="2" />
+      <text x="0" y="-85" fill="#334155" fontSize="18" fontWeight="bold" textAnchor="middle">N</text>
+      <text x="15" y="-5" fill="#334155" fontSize="18" fontWeight="bold" textAnchor="start">A</text>
+      <text x="90" y="-15" fill="#ef4444" fontSize="14" fontWeight="bold" textAnchor="start">←從這裡開始轉</text>
+      
+      {/* 直角符號 */}
+      <polyline points="-12,0 -12,12 0,12" stroke="#ef4444" strokeWidth="2" fill="none" />
+
+      {/* 線段B */}
+      <line x1="0" y1="0" x2="-80" y2="-32.36" stroke="#334155" strokeWidth="2" />
+      <text x="-90" y="-35" fill="#334155" fontSize="18" fontStyle="italic" textAnchor="end">B</text>
+
+      {/* 22度弧 (在-x軸以上) */}
+      <path d="M -50,0 A 50 50 0 0 1 -46.35,-18.75" fill="none" stroke="#2563eb" strokeWidth="2" />
+      <text x="-70" y="-5" fill="#334155" fontSize="16" fontWeight="bold">22°</text>
+
+      {/* 270度弧 (3格) */}
+      <path d="M 0,-40 A 40 40 0 1 1 -40,0" fill="none" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrow-bearings-red)" />
+      <text x="20" y="45" fill="#2563eb" fontSize="16" fontWeight="bold">270°(3格)</text>
+      <path d="M 20,38 Q 15,35 15,40" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+
+      {/* 90-22 弧 */}
+      <path d="M 0,-25 A 25 25 0 0 0 -23.18,-9.37" fill="none" stroke="#16a34a" strokeWidth="2" />
+      <text x="-40" y="-45" fill="#16a34a" fontSize="14" fontWeight="bold">90° - 22° = 68°</text>
+    </g>
+  </svg>
+);
+
+const ElevationSVG = () => (
+  <svg width="300" height="150" viewBox="0 0 300 150" className="mx-auto block">
+    <defs>
+      <marker id="arrow-red-e" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+      </marker>
+    </defs>
+    
+    {/* 角度填充 */}
+    <path d="M 50,110 L 80,110 A 30 30 0 0 0 76.8,96.6 Z" fill="rgba(37,99,235,0.8)" stroke="none" />
+    
+    {/* 線條 */}
+    <line x1="50" y1="110" x2="200" y2="110" stroke="#22c55e" strokeWidth="2.5" />
+    <line x1="50" y1="110" x2="150" y2="60" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrow-red-e)" />
+    
+    {/* 文字 */}
+    <text x="35" y="115" fill="#334155" fontSize="20" fontWeight="bold">A</text>
+    <text x="165" y="55" fill="#334155" fontSize="20" fontWeight="bold">B</text>
+  </svg>
+);
+
+const DepressionSVG = () => (
+  <svg width="300" height="150" viewBox="0 0 300 150" className="mx-auto block">
+    <defs>
+      <marker id="arrow-red-d" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+      </marker>
+    </defs>
+    
+    {/* 角度填充 */}
+    <path d="M 50,40 L 80,40 A 30 30 0 0 1 76.8,53.4 Z" fill="rgba(37,99,235,0.8)" stroke="none" />
+    
+    {/* 線條 */}
+    <line x1="50" y1="40" x2="200" y2="40" stroke="#22c55e" strokeWidth="2.5" />
+    <line x1="50" y1="40" x2="150" y2="90" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrow-red-d)" />
+    
+    {/* 文字 */}
+    <text x="35" y="35" fill="#334155" fontSize="20" fontWeight="bold">C</text>
+    <text x="160" y="105" fill="#334155" fontSize="20" fontWeight="bold">D</text>
+  </svg>
+);
+
 export const TrigonometryApplicationsNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
 
   return (
     <>
@@ -818,9 +1084,9 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-2">📐 斜坡上的應用</h3>
             <p className="text-sm text-slate-700 mb-3">- 三角學可應用在斜坡上。<br />- 傾角用來量度一個斜坡的斜率（斜坡即有幾斜）。</p>
-            {/* 📐 待繪製：斜坡與傾角（直角三角形） — 見下方繪圖規格單 #1 */}
-            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm mb-3">
-              圖示待加入（@數學繪圖師）
+            {/* 📐 繪製：斜坡與傾角（直角三角形） */}
+            <div className="flex justify-center mb-3">
+              <GradientInclinationSVG1 />
             </div>
           </div>
 
@@ -830,9 +1096,9 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
               <Latex math="\text{斜率} = \frac{\text{鉛垂距離 (打直)}}{\text{水平距離 (打橫)}}" block />
               <p className="text-sm text-slate-600 mt-2 text-red-600">斜率通常以 <span className="font-bold">1:n</span> 的形式表達</p>
             </div>
-            {/* 📐 待繪製：鉛垂與水平距離（直角三角形） — 見下方繪圖規格單 #2 */}
-            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm mb-3">
-              圖示待加入（@數學繪圖師）
+            {/* 📐 繪製：鉛垂與水平距離（直角三角形） */}
+            <div className="flex justify-center mb-3">
+              <GradientInclinationSVG2 />
             </div>
           </div>
 
@@ -873,9 +1139,9 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">🗺️ 實際應用例子</h3>
-            {/* 📐 待繪製：地圖等高線 — 見下方繪圖規格單 #3 */}
-            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm mb-3">
-              圖示待加入（@數學繪圖師）
+            {/* 📐 繪製：地圖等高線 */}
+            <div className="flex justify-center mb-3">
+              <ContourLinesSVG />
             </div>
             <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-3">
               <div className="flex items-start gap-2">
@@ -891,6 +1157,91 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
               </div>
               <div className="mt-3 p-2 bg-blue-100 rounded text-center text-sm font-bold text-blue-800 border border-blue-200">
                 ✔️ 可找 斜率 / 傾角！
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="bearings" title="3. 方位角" num={3} color="blue" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+            <h3 className="font-bold text-red-800 mb-3">📍 真方位角與羅盤方位角</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4 border border-red-200">
+                <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">真方位角</p>
+                <ul className="text-sm text-slate-700 space-y-1 mb-3">
+                  <li>• 0 - 360° 表達</li>
+                  <li>• 必定由 N 開始<span className="text-red-600 font-bold">量度</span> (順時針)</li>
+                  <li>• 答案<span className="text-red-600 font-bold">必定出現 3 位數字</span></li>
+                </ul>
+                <div className="bg-slate-50 p-2 rounded text-sm text-slate-700">
+                  <p className="font-bold mb-1">e.g.</p>
+                  <p>O 測得 A：035°</p>
+                  <p>O 測得 B：152°</p>
+                  <p>O 測得 C：245°</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-4 border border-red-200">
+                <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">羅盤方位角</p>
+                <ul className="text-sm text-slate-700 space-y-1 mb-3">
+                  <li>• 以 0° - 90° 表達</li>
+                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">①</span> 以 N/S 作開首 (論線/角度近 N/S)</li>
+                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">②</span> 配 0 - 90° (順/逆時針)</li>
+                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">③</span> 以 W/E 作結束 (想想角度向哪移動)</li>
+                </ul>
+                <div className="bg-slate-50 p-2 rounded text-sm space-y-1">
+                  <p className="font-bold mb-1">e.g.</p>
+                  <div className="flex items-center gap-2">O 測得 A：<span className="bg-yellow-200 px-1 font-bold">N</span><span className="text-red-500 font-bold">35°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
+                  <div className="flex items-center gap-2">O 測得 B：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="text-red-500 font-bold">28°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
+                  <div className="flex items-center gap-2">O 測得 C：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="text-red-500 font-bold">65°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">W</span></div>
+                </div>
+              </div>
+            </div>
+            {/* 📐 繪製：真方位角與羅盤方位角圖示 */}
+            <div className="flex justify-center mb-3 mt-3">
+              <BearingsSVG1 />
+            </div>
+          </div>
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">💡 提示：善用 90° / 180° / 270° 去篩選需找的角度</h3>
+            <div className="bg-white rounded-lg p-4 border border-slate-200 mt-2">
+              <p className="text-slate-700 font-bold mb-2">例：A 測得 B 的真方位角 / 羅盤方位角</p>
+              {/* 📐 繪製：方位角計算例題圖示 */}
+              <div className="flex justify-center mb-3 mt-2">
+                <BearingsSVG2 />
+              </div>
+              <div className="space-y-2 mt-3 text-sm">
+                <p className="text-slate-700"><span className="text-blue-600 font-bold">真方位角：</span>270° + 22° = <span className="font-bold">292°</span></p>
+                <p className="text-slate-700"><span className="text-green-600 font-bold">羅盤方位角：</span>90° - 22° = 68° <span className="text-slate-500">→</span> <span className="font-bold">N68°W</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="elevation-depression" title="4. 仰角 / 俯角" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <div className="bg-white p-3 rounded-lg border border-slate-200 mb-4 text-center">
+              <p className="text-green-700 font-bold">💡 技巧：出發點 ←加水平線，找夾角→</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                <h3 className="font-bold text-lg text-slate-800 mb-2">仰角</h3>
+                <p className="text-sm text-slate-600 mb-3">A 望 B (向上望)</p>
+                {/* 📐 繪製：仰角圖示 */}
+                <div className="flex justify-center mt-2">
+                  <ElevationSVG />
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                <h3 className="font-bold text-lg text-slate-800 mb-2">俯角</h3>
+                <p className="text-sm text-slate-600 mb-3">C 望 D (向下望)</p>
+                {/* 📐 繪製：俯角圖示 */}
+                <div className="flex justify-center mt-2">
+                  <DepressionSVG />
+                </div>
               </div>
             </div>
           </div>
