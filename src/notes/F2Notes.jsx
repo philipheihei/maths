@@ -22,7 +22,30 @@ const Latex = ({ math, block = false, left = false }) => {
   return <span ref={containerRef} className={block ? `block ${left ? 'text-left' : 'text-center'} my-1` : "inline-block align-middle"} />;
 };
 
-export const InequalityNotes = () => {
+export const InequalityNotes = ({ activeSub }) => {
+  const rootRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!activeSub) return;
+
+    const scrollToActiveSub = () => {
+      const scopedTarget = rootRef.current?.querySelector(`[id="${activeSub}"]`);
+      const fallbackTarget = document.getElementById(activeSub);
+      const target = scopedTarget || fallbackTarget;
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    const t1 = window.setTimeout(scrollToActiveSub, 60);
+    const t2 = window.setTimeout(scrollToActiveSub, 260);
+
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
+  }, [activeSub]);
+
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-violet-500">
@@ -30,11 +53,11 @@ export const InequalityNotes = () => {
         <p className="text-slate-600">熟悉不等號、畫數線、計算及可能範圍</p>
       </div>
 
-      <div className="space-y-8 text-slate-700">
+      <div ref={rootRef} className="space-y-8 text-slate-700">
         {/* =======================
             Part 1: 詞彙表 
             ======================= */}
-        <section className="bg-blue-50 rounded-xl p-5 border-2 border-blue-200 shadow-sm">
+        <section id="keywords" className="bg-blue-50 rounded-xl p-5 border-2 border-blue-200 shadow-sm scroll-mt-24">
           <div className="flex items-center gap-2 mb-4">
             <span className="bg-blue-600 text-white font-black text-lg px-3 py-1 rounded-lg">1</span>
             <h2 className="text-lg font-bold text-blue-800">熟悉不同字眼代表的不等式</h2>
@@ -99,7 +122,7 @@ export const InequalityNotes = () => {
         {/* =======================
             Part 2: 文字轉數字 & 畫圖表示不等式
             ======================= */}
-        <section className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200 shadow-sm">
+        <section id="applications" className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200 shadow-sm scroll-mt-24">
           <div className="flex items-center gap-2 mb-4">
             <span className="bg-emerald-600 text-white font-black text-lg px-3 py-1 rounded-lg">2</span>
             <h2 className="text-lg font-bold text-emerald-800">會考核題型</h2>
@@ -312,7 +335,7 @@ export const InequalityNotes = () => {
         {/* =======================
             Part 3: 找不等式範圍的可能值
             ======================= */}
-        <section className="bg-sky-50 rounded-xl p-5 border-2 border-sky-200 shadow-sm">
+        <section id="range" className="bg-sky-50 rounded-xl p-5 border-2 border-sky-200 shadow-sm scroll-mt-24">
           <div className="flex items-center gap-2 mb-4">
             <span className="bg-sky-600 text-white font-black text-lg px-3 py-1 rounded-lg">3</span>
             <h2 className="text-lg font-bold text-sky-800">找不等式範圍的可能值</h2>
@@ -348,7 +371,7 @@ export const InequalityNotes = () => {
         {/* =======================
             Part 4: 不等式混算
             ======================= */}
-        <section className="bg-amber-50 rounded-xl p-5 border-2 border-amber-200 shadow-sm">
+        <section id="calculation" className="bg-amber-50 rounded-xl p-5 border-2 border-amber-200 shadow-sm scroll-mt-24">
           <div className="flex items-center gap-2 mb-4">
             <span className="bg-amber-600 text-white font-black text-lg px-3 py-1 rounded-lg">4</span>
             <h2 className="text-lg font-bold text-amber-800">不等式解方程</h2>
