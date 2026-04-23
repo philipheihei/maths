@@ -91,14 +91,6 @@ export const NOTES_DATA = {
       ]
     },
     {
-      id: 'coordinate-geometry-f3',
-      topic: 'CH9 直線的坐標幾何',
-      color: 'teal',
-      subtopics: [
-        { id: 'coordinate-geometry-core', num: 1, title: '公式表', color: 'teal' },
-      ]
-    },
-    {
       id: 'trig-applications',
       topic: 'CH8 三角學的應用',
       color: 'teal',
@@ -107,6 +99,14 @@ export const NOTES_DATA = {
         { id: 'contour-lines', num: 2, title: '地圖等高線', color: 'emerald' },
         { id: 'bearings', num: 3, title: '方位角', color: 'blue' },
         { id: 'elevation-depression', num: 4, title: '仰角 / 俯角', color: 'purple' },
+      ]
+    },
+    {
+      id: 'coordinate-geometry-f3',
+      topic: 'CH9 直線的坐標幾何',
+      color: 'teal',
+      subtopics: [
+        { id: 'coordinate-geometry-core', num: 1, title: '公式表', color: 'teal' },
       ]
     }
   ],

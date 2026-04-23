@@ -1036,15 +1036,15 @@ const ElevationSVG = () => (
     </defs>
     
     {/* 角度填充 */}
-    <path d="M 50,110 L 80,110 A 30 30 0 0 0 76.8,96.6 Z" fill="rgba(37,99,235,0.8)" stroke="none" />
+    <path d="M 50,80 L 80,80 A 30 30 0 0 0 76.8,66.6 Z" fill="rgba(37,99,235,0.8)" stroke="none" />
     
     {/* 線條 */}
-    <line x1="50" y1="110" x2="200" y2="110" stroke="#22c55e" strokeWidth="2.5" />
-    <line x1="50" y1="110" x2="150" y2="60" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrow-red-e)" />
+    <line x1="50" y1="80" x2="200" y2="80" stroke="#22c55e" strokeWidth="2.5" />
+    <line x1="50" y1="80" x2="150" y2="30" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrow-red-e)" />
     
     {/* 文字 */}
-    <text x="35" y="115" fill="#334155" fontSize="20" fontWeight="bold">A</text>
-    <text x="165" y="55" fill="#334155" fontSize="20" fontWeight="bold">B</text>
+    <text x="35" y="85" fill="#334155" fontSize="20" fontWeight="bold">A</text>
+    <text x="165" y="25" fill="#334155" fontSize="20" fontWeight="bold">B</text>
   </svg>
 );
 
@@ -1057,15 +1057,15 @@ const DepressionSVG = () => (
     </defs>
     
     {/* 角度填充 */}
-    <path d="M 50,40 L 80,40 A 30 30 0 0 1 76.8,53.4 Z" fill="rgba(37,99,235,0.8)" stroke="none" />
+    <path d="M 50,80 L 80,80 A 30 30 0 0 1 76.8,93.4 Z" fill="rgba(37,99,235,0.8)" stroke="none" />
     
     {/* 線條 */}
-    <line x1="50" y1="40" x2="200" y2="40" stroke="#22c55e" strokeWidth="2.5" />
-    <line x1="50" y1="40" x2="150" y2="90" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrow-red-d)" />
+    <line x1="50" y1="80" x2="200" y2="80" stroke="#22c55e" strokeWidth="2.5" />
+    <line x1="50" y1="80" x2="150" y2="130" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrow-red-d)" />
     
     {/* 文字 */}
-    <text x="35" y="35" fill="#334155" fontSize="20" fontWeight="bold">C</text>
-    <text x="160" y="105" fill="#334155" fontSize="20" fontWeight="bold">D</text>
+    <text x="35" y="75" fill="#334155" fontSize="20" fontWeight="bold">C</text>
+    <text x="160" y="145" fill="#334155" fontSize="20" fontWeight="bold">D</text>
   </svg>
 );
 
@@ -1223,25 +1223,32 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
       <CollapsibleSection id="elevation-depression" title="4. 仰角 / 俯角" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <div className="bg-white p-3 rounded-lg border border-slate-200 mb-4 text-center">
-              <p className="text-green-700 font-bold">💡 技巧：出發點 ←加水平線，找夾角→</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-lg p-4 border border-slate-200 text-center">
-                <h3 className="font-bold text-lg text-slate-800 mb-2">仰角</h3>
-                <p className="text-sm text-slate-600 mb-3">A 望 B (向上望)</p>
-                {/* 📐 繪製：仰角圖示 */}
-                <div className="flex justify-center mt-2">
-                  <ElevationSVG />
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center">
+                
+                <div className="text-center">
+                  <h3 className="font-bold text-lg text-slate-800 mb-2">仰角</h3>
+                  <p className="text-sm text-slate-600 mb-2">A 望 B (向上望)</p>
+                  <div className="flex justify-center">
+                    <ElevationSVG />
+                  </div>
                 </div>
-              </div>
-              <div className="bg-white rounded-lg p-4 border border-slate-200 text-center">
-                <h3 className="font-bold text-lg text-slate-800 mb-2">俯角</h3>
-                <p className="text-sm text-slate-600 mb-3">C 望 D (向下望)</p>
-                {/* 📐 繪製：俯角圖示 */}
-                <div className="flex justify-center mt-2">
-                  <DepressionSVG />
+
+                <div className="text-center font-bold text-green-700 bg-green-50 rounded-lg p-3 shadow-sm border border-green-200 mx-auto md:mt-14 my-4 md:my-0">
+                  <p className="text-xs mb-1">💡 技巧：</p>
+                  <p>出發點</p>
+                  <p className="text-sm whitespace-nowrap hidden md:block">←加水平線，找夾角→</p>
+                  <p className="text-sm md:hidden">↑加水平線，找夾角↓</p>
                 </div>
+
+                <div className="text-center">
+                  <h3 className="font-bold text-lg text-slate-800 mb-2">俯角</h3>
+                  <p className="text-sm text-slate-600 mb-2">C 望 D (向下望)</p>
+                  <div className="flex justify-center">
+                    <DepressionSVG />
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
