@@ -1,6 +1,6 @@
 import { ApproximationNotes } from './F1Notes';
 import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes } from './F3Notes';
+import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes } from './F3Notes';
 import { QuadraticEquationNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
@@ -97,6 +97,15 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'coordinate-geometry-core', num: 1, title: '公式表', color: 'teal' },
       ]
+    },
+    {
+      id: 'trig-applications',
+      topic: 'CH8 三角學的應用',
+      color: 'teal',
+      subtopics: [
+        { id: 'gradient-inclination', num: 1, title: '斜率與傾角', color: 'teal' },
+        { id: 'contour-lines', num: 2, title: '地圖等高線', color: 'emerald' },
+      ]
     }
   ],
   F4: [
@@ -174,6 +183,7 @@ export const NOTES_COMPONENTS = {
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,
   'coordinate-geometry-f3': CoordinateGeometryF3Notes,
+  'trig-applications': TrigonometryApplicationsNotes,
   'quadratic-equation': QuadraticEquationNotes,
   'remainder-factor': RemainderFactorNotes,
   'variation': VariationNotes,

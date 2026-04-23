@@ -799,3 +799,103 @@ export const QuadrilateralNotes = ({ activeSub }) => {
     </>
   );
 };
+
+// ========================================
+// CH8 三角學的應用 (F3)
+// ========================================
+export const TrigonometryApplicationsNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">三角學的應用</h1>
+        <p className="text-slate-600">探討斜坡斜率與傾角的關係</p>
+      </div>
+
+      <CollapsibleSection id="gradient-inclination" title="1. 斜率與傾角" num={1} color="teal" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-2">📐 斜坡上的應用</h3>
+            <p className="text-sm text-slate-700 mb-3">- 三角學可應用在斜坡上。<br />- 傾角用來量度一個斜坡的斜率（斜坡即有幾斜）。</p>
+            {/* 📐 待繪製：斜坡與傾角（直角三角形） — 見下方繪圖規格單 #1 */}
+            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm mb-3">
+              圖示待加入（@數學繪圖師）
+            </div>
+          </div>
+
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+            <h3 className="font-bold text-red-800 mb-2">📝 斜率公式</h3>
+            <div className="bg-white rounded-lg p-3 mb-3 text-center">
+              <Latex math="\text{斜率} = \frac{\text{鉛垂距離 (打直)}}{\text{水平距離 (打橫)}}" block />
+              <p className="text-sm text-slate-600 mt-2 text-red-600">斜率通常以 <span className="font-bold">1:n</span> 的形式表達</p>
+            </div>
+            {/* 📐 待繪製：鉛垂與水平距離（直角三角形） — 見下方繪圖規格單 #2 */}
+            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm mb-3">
+              圖示待加入（@數學繪圖師）
+            </div>
+          </div>
+
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">💡 斜率關係</h3>
+            <ul className="text-sm text-slate-700 space-y-2 mb-3 list-none">
+              <li><span className="text-red-500">-</span> 斜坡的斜率<span className="text-red-600 font-bold">越大</span> → <span className="text-red-600 font-bold">越斜</span></li>
+              <li><span className="text-red-500">-</span> 斜坡的斜率<span className="text-red-600 font-bold">越小</span> → <span className="text-red-600 font-bold">越平坦</span></li>
+            </ul>
+            <p className="text-sm text-slate-600 bg-white p-2 rounded border border-amber-100">
+              斜率可以 1:4 / 1比4 / <Latex math="\frac{1}{4}" /> / 25% 的形式表達
+            </p>
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-2">✨ 結合三角比</h3>
+            <div className="bg-white rounded-lg p-3 text-center">
+              <p className="text-lg text-red-600 font-bold"><Latex math="\text{斜率} = \tan \text{傾角}" /></p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="contour-lines" title="2. 地圖等高線" num={2} color="emerald" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+            <h3 className="font-bold text-emerald-800 mb-3">📍 用途與特點</h3>
+            <ul className="text-sm text-slate-700 space-y-2 list-none">
+              <li><span className="text-emerald-600 font-bold">-</span> 遠足 / 測量地勢用</li>
+              <li>
+                <span className="text-emerald-600 font-bold">-</span> 題目會提供水平距離 <span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">(走多遠)</span>
+              </li>
+              <li>
+                <span className="text-emerald-600 font-bold">-</span> 能從地圖中找到鉛垂距離 <span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">(爬升高度)</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">🗺️ 實際應用例子</h3>
+            {/* 📐 待繪製：地圖等高線 — 見下方繪圖規格單 #3 */}
+            <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm mb-3">
+              圖示待加入（@數學繪圖師）
+            </div>
+            <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-3">
+              <div className="flex items-start gap-2">
+                <span className="text-blue-600 font-bold mt-0.5">🔹</span>
+                <p className="text-sm text-slate-700 font-bold text-blue-800">題目提供：實際水平距離 325m</p>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-green-600 font-bold mt-0.5">🔹</span>
+                <div className="text-sm text-slate-700">
+                  <p className="font-bold text-green-700 mb-1">自己計出爬升了（鉛垂距離）：</p>
+                  <p className="font-bold">450 - 400 = 50m</p>
+                </div>
+              </div>
+              <div className="mt-3 p-2 bg-blue-100 rounded text-center text-sm font-bold text-blue-800 border border-blue-200">
+                ✔️ 可找 斜率 / 傾角！
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
