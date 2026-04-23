@@ -69,20 +69,171 @@ export const SimultaneousEqNotesContent = ({
 
       <div className="space-y-8 text-slate-700">
         <section className="bg-blue-50 rounded-xl p-5 border-2 border-blue-200">
-          <div className="text-center mb-3">
-            <Latex math="\begin{cases} ax + by = c \\ dx + ey = f \end{cases}" block />
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xl">二元一次方程 ➡️</span>
+            <span className="text-rose-600 font-bold px-1 rounded border border-rose-200 bg-white">2 未知數</span>
+            <span className="text-green-600 font-bold px-1 rounded border border-green-200 bg-white">1 次方</span>
           </div>
+          <p className="text-slate-600 mb-4 bg-white p-3 border border-blue-100 rounded-lg flex items-center justify-center text-lg shadow-sm">
+            <span className="font-serif italic text-blue-800 mr-4 text-base">e.g.</span>
+            <Latex math="x + y = 3" />
+          </p>
           <p className="text-sm text-center text-slate-600">
             聯立方程有兩條方程、兩個未知數。<br />
-            解法主要有<strong>代入消元法</strong>和<strong>加減消元法</strong>兩種。
+            解法主要分為 <strong>A. 圖解法</strong> 和 <strong>B. 消元法</strong>（代入 / 加減）兩種。
           </p>
         </section>
 
-        <section id="sim-eq-methods" className="bg-sky-50 rounded-xl p-5 scroll-mt-24">
+        {/* =======================
+            A. 圖解法
+            ======================= */}
+        <section id="sim-eq-graph" className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200 scroll-mt-24">
           <div className="flex items-center gap-2 mb-4">
-            <span className="bg-sky-600 text-white font-black text-lg px-3 py-1 rounded-lg">方法一</span>
-            <h2 className="text-lg font-bold text-sky-800">代入消元法（Substitution）</h2>
+            <span className="bg-emerald-600 text-white font-black text-lg px-3 py-1 rounded-lg">A</span>
+            <h2 className="text-lg font-bold text-emerald-800">圖解法</h2>
           </div>
+          <p className="font-bold text-rose-600 mb-6 bg-white p-3 rounded-lg border border-red-100 shadow-sm">
+            💡 兩直線的交點為聯立方程答案 (解)
+          </p>
+
+          <div className="bg-white rounded-xl p-5 border border-emerald-200 shadow-sm mb-6">
+            <p className="text-slate-700 font-bold mb-4">
+              例如：利用圖解法解 <Latex math="\begin{cases} y = x + 2 \\ x + y = 4 \end{cases}" />。
+            </p>
+            
+            <div className="flex flex-col lg:flex-row items-center gap-6">
+              {/* 圖表 */}
+              <div className="w-full max-w-sm shrink-0 border border-slate-200 rounded-lg p-3 bg-slate-50 relative overflow-hidden aspect-square flex items-center justify-center">
+                <svg viewBox="-60 -180 240 240" className="w-full h-auto font-sans">
+                  <defs>
+                    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse" x="0" y="0">
+                      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#bae6fd" strokeWidth="1" />
+                    </pattern>
+                    <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                      <path d="M 0 0 L 6 3 L 0 6 Z" fill="#16a34a" />
+                    </marker>
+                  </defs>
+                  
+                  {/* 背景格線: x = -60 to 180, y = -180 to 60 */}
+                  <rect x="-60" y="-180" width="240" height="240" fill="url(#grid)" />
+                  <rect x="-60" y="-180" width="240" height="240" fill="none" stroke="#60a5fa" strokeWidth="2" />
+
+                  {/* x 軸和 y 軸 */}
+                  <line x1="-60" y1="0" x2="165" y2="0" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow)" />
+                  <line x1="0" y1="60" x2="0" y2="-165" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow)" />
+                  
+                  <text x="170" y="4" fill="#16a34a" fontSize="14" fontStyle="italic" fontWeight="bold">x</text>
+                  <text x="-4" y="-170" fill="#16a34a" fontSize="14" fontStyle="italic" fontWeight="bold">y</text>
+                  <text x="-12" y="14" fill="#16a34a" fontSize="12">0</text>
+
+                  {/* x 軸 Ticks */}
+                  {[-1, 1, 2, 3, 4, 5].map(i => (
+                    <g key={`x${i}`}>
+                      <line x1={i * 30} y1="-3" x2={i * 30} y2="3" stroke="#16a34a" strokeWidth="1.5" />
+                      <text x={i * 30} y="16" fill="#16a34a" fontSize="12" textAnchor="middle">{i}</text>
+                    </g>
+                  ))}
+                  
+                  {/* y 軸 Ticks */}
+                  {[-1, 1, 2, 3, 4, 5].map(i => (
+                    <g key={`y${i}`}>
+                      <line x1="-3" y1={-i * 30} x2="3" y2={-i * 30} stroke="#16a34a" strokeWidth="1.5" />
+                      <text x="-8" y={-i * 30 + 4} fill="#16a34a" fontSize="12" textAnchor="end">{i}</text>
+                    </g>
+                  ))}
+
+                  {/* 直線 x + y = 4  =>  y = -x + 4 (通過 (0,4)= y:-120 和 (4,0)= x:120) */}
+                  <line x1="-30" y1="-150" x2="165" y2="45" stroke="#334155" strokeWidth="2" />
+                  <text x="120" y="-35" fill="#334155" fontSize="12" fontStyle="italic" fontWeight="bold">x + y = 4</text>
+
+                  {/* 直線 y = x + 2 (通過 (0,2)= y:-60 和 (-2,0)= x:-60) */}
+                  <line x1="-60" y1="0" x2="100" y2="-160" stroke="#334155" strokeWidth="2" />
+                  <text x="75" y="-165" fill="#334155" fontSize="12" fontStyle="italic" fontWeight="bold">y = x + 2</text>
+
+                  {/* 交點 (1, 3) */}
+                  <line x1="30" y1="0" x2="30" y2="-90" stroke="#ef4444" strokeWidth="1" strokeDasharray="3,3" />
+                  <line x1="0" y1="-90" x2="30" y2="-90" stroke="#ef4444" strokeWidth="1" strokeDasharray="3,3" />
+                  <circle cx="30" cy="-90" r="4" fill="#ef4444" />
+                  <text x="40" y="-85" fill="#ef4444" fontSize="12" fontWeight="bold">(1, 3)</text>
+
+                  {/* 測試點 (3, 5) -> x:90, y:-150 */}
+                  <circle cx="90" cy="-150" r="4" fill="#2563eb" />
+                  <text x="100" y="-155" fill="#2563eb" fontSize="12" fontWeight="bold">(3, 5)</text>
+
+                  {/* 測試點 (3, 4) -> x:90, y:-120 */}
+                  <circle cx="90" cy="-120" r="4" fill="#16a34a" />
+                  <text x="100" y="-125" fill="#16a34a" fontSize="12" fontWeight="bold">(3, 4)</text>
+
+                  {/* 拉線說明：箭頭指向 (3,5) */}
+                  <path d="M 160 -120 Q 150 -150 100 -150" fill="none" stroke="#2563eb" strokeWidth="1.5" markerEnd="url(#arrow)" />
+                </svg>
+              </div>
+
+              {/* 右方解說 */}
+              <div className="flex-1 space-y-4">
+                <div className="bg-emerald-50 text-emerald-800 p-4 rounded-lg font-bold shadow-sm border border-emerald-200">
+                  由上圖可見，聯立方程的解是 <Latex math="(1, 3)" />。
+                </div>
+
+                <div className="bg-white p-4 rounded-lg border border-blue-200 shadow-sm relative pt-6">
+                  <div className="absolute top-0 left-0 bg-blue-600 text-white px-3 py-1 rounded-br-lg rounded-tl-lg font-bold text-sm">
+                    坐標與直線的關係
+                  </div>
+                  <p className="text-blue-800 font-bold mb-3 mt-1">如坐標在線上，則為該方程（直線）的解</p>
+                  
+                  <p className="text-slate-700 font-bold mb-2">例如：<Latex math="y = x + 2" /></p>
+                  <div className="space-y-2 mb-3 ml-2">
+                    <div className="flex items-center gap-3">
+                      <span className="bg-slate-100 px-2 py-1 rounded text-sm shrink-0"><Latex math="(3, 5)" /></span>
+                      <div className="flex-1 border-b border-dashed border-slate-300 relative h-0"></div>
+                      <span className="text-blue-700 font-bold shrink-0"><Latex math="5 = 3 + 2" /></span>
+                      <span className="text-green-600 font-bold text-lg shrink-0">✓</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="bg-slate-100 px-2 py-1 rounded text-sm shrink-0"><Latex math="(3, 4)" /></span>
+                      <div className="flex-1 border-b border-dashed border-slate-300 relative h-0"></div>
+                      <span className="text-slate-500 line-through decoration-red-500 decoration-2 shrink-0"><Latex math="4 = 3 + 2" /></span>
+                      <span className="text-red-500 font-bold text-lg shrink-0">✗</span>
+                    </div>
+                  </div>
+                  <p className="text-red-600 font-bold text-sm bg-red-50 p-2 rounded">
+                    ⚠️ 直線穿過該點（坐標）才能代入 <Latex math="(x, y)" /> 值！
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* 例題 */}
+            <div className="mt-6 bg-yellow-50 p-5 rounded-xl border border-yellow-200 shadow-sm">
+              <h3 className="font-bold text-teal-800 mb-3 flex items-center gap-2">
+                <span className="bg-teal-100 text-teal-700 px-2 py-0.5 rounded text-xs leading-none">例題</span>
+                求未知數
+              </h3>
+              <p className="text-slate-700 mb-4">
+                若方程 <Latex math="x - ky - 13 = 0" /> 的圖像通過 <Latex math="(-3, -4)" />，求 <Latex math="k" /> 的值。
+              </p>
+              <div className="bg-white rounded-lg p-4 text-center border border-yellow-100 shadow-sm flex flex-col items-center">
+                 <Latex math="\begin{align*} (-3) - k(-4) - 13 &= 0 \\ -3 + 4k - 13 &= 0 \\ 4k &= 16 \\ k &= 4 \end{align*}" block />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =======================
+            B. 消元法
+            ======================= */}
+        <section id="sim-eq-methods" className="scroll-mt-24">
+          <div className="flex items-center gap-2 mb-4 pl-1">
+            <span className="bg-sky-600 text-white font-black text-lg px-3 py-1 rounded-lg">B</span>
+            <h2 className="text-lg font-bold text-sky-800">消元法</h2>
+          </div>
+          
+          <div className="space-y-8">
+            <div className="bg-sky-50 rounded-xl p-5 border-2 border-sky-200">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="bg-slate-200 text-slate-800 font-black px-2 py-1 rounded-lg text-sm">B-1</span>
+                <h3 className="text-base font-bold text-sky-800">代入消元法（Substitution）</h3>
+              </div>
           <div className="bg-sky-100 rounded-lg px-4 py-3 mb-4 text-sm text-sky-800">
             💡 <strong>原理：</strong>從其中一條方程中<strong>以一個未知數作主項</strong>，然後代入另一條方程，消去其中一個未知數。
           </div>
@@ -133,12 +284,12 @@ export const SimultaneousEqNotesContent = ({
               </div>
             </div>
           </div>
-        </section>
+            </div>
 
-        <section className="bg-violet-50 rounded-xl p-5">
+        <div className="bg-violet-50 rounded-xl p-5 border-2 border-violet-200">
           <div className="flex items-center gap-2 mb-4">
-            <span className="bg-violet-600 text-white font-black text-lg px-3 py-1 rounded-lg">方法二</span>
-            <h2 className="text-lg font-bold text-violet-800">加減消元法（Elimination）</h2>
+            <span className="bg-slate-200 text-slate-800 font-black px-2 py-1 rounded-lg text-sm">B-2</span>
+            <h3 className="text-base font-bold text-violet-800">加減消元法（Elimination）</h3>
           </div>
           <div className="bg-violet-100 rounded-lg px-4 py-3 mb-4 text-sm text-violet-800">
             💡 <strong>原理：</strong>對齊位置後，分辨有沒有<strong>相同數字</strong>，將兩條方程相加或相減，消去其中一個未知數。
@@ -304,6 +455,8 @@ export const SimultaneousEqNotesContent = ({
               </div>
             </div>
           </div>
+        </div>
+        </div>
         </section>
 
         <section className="bg-slate-50 rounded-xl p-5 border border-slate-200">
