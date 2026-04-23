@@ -1186,8 +1186,8 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
               <div className="bg-white rounded-lg p-4 border border-red-200 h-full flex flex-col">
                 <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">真方位角</p>
                 <ul className="text-sm text-slate-700 space-y-1 mb-3">
-                  <li>• 0 - 360° 表達</li>
-                  <li>• 必定由 N 開始<span className="text-red-600 font-bold">量度</span> (順時針)</li>
+                  <li>• <span className="text-blue-600 font-bold">0 - 360° 表達</span></li>
+                  <li>• <span className="text-red-600 font-bold">必定由 N 開始量度</span> <span className="text-purple-600 font-bold">(順時針)</span></li>
                   <li>• 答案<span className="text-red-600 font-bold">必定出現 3 位數字</span></li>
                 </ul>
                 <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-700 mt-auto">
@@ -1200,10 +1200,10 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
               <div className="bg-white rounded-lg p-4 border border-red-200 h-full flex flex-col">
                 <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">羅盤方位角</p>
                 <ul className="text-sm text-slate-700 space-y-1 mb-3">
-                  <li>• 以 0° - 90° 表達</li>
-                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">①</span> 以 N/S 作開首 (諗線/角度近 N/S)</li>
-                  <li><span className="bg-pink-200 px-1 rounded text-red-600 font-bold">②</span> 配 0 - 90° (順/逆時針)</li>
-                  <li><span className="bg-blue-200 px-1 rounded text-red-600 font-bold">③</span> 以 W/E 作結束 (想想角度向哪移動)</li>
+                  <li>• <span className="text-blue-600 font-bold">以 0° - 90° 表達</span></li>
+                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">①</span> <span className="text-red-600 font-bold">以 N/S 作開首開始</span> <span className="text-green-600 font-bold">(諗線/角度近 N/S)</span></li>
+                  <li><span className="bg-pink-200 px-1 rounded text-red-600 font-bold">②</span> 配 0 - 90° <span className="text-purple-600 font-bold">(順/逆時針)</span></li>
+                  <li><span className="bg-blue-200 px-1 rounded text-red-600 font-bold">③</span> <span className="text-red-600 font-bold">以 W/E 作結束</span> <span className="text-green-600 font-bold">(想想角度向哪移動)</span></li>
                 </ul>
                 <div className="bg-slate-50 p-3 rounded-lg text-sm space-y-1 mt-auto">
                   <p className="font-bold mb-1">e.g.</p>
