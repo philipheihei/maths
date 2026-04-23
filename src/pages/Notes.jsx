@@ -67,6 +67,7 @@ const Notes = () => {
     const topic = notes.find(t => t.id === topicId);
     setActiveSubtopic(topic && topic.subtopics.length > 0 ? topic.subtopics[0].id : null);
     setExpandedTopics(prev => ({ ...prev, [topicId]: true }));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const selectSubtopic = (topicId, subId) => {
