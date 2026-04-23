@@ -253,21 +253,18 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                     </div>
                     <p className="text-green-600 mt-3 text-sm">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold">sin θ / cos θ / tan θ</span></p>
                   </div>
-                  <div className="flex-shrink-0 flex items-center justify-center">
-                    <svg width="350" height="250" viewBox="0 0 350 250" xmlns="http://www.w3.org/2000/svg">
-                      <style>{`.math-line { stroke: #5e35b1; stroke-width: 4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
-                        .math-text { font-family: sans-serif; font-size: 24px; fill: #5e35b1; font-weight: bold; }
-                        .math-label { font-family: sans-serif; font-size: 20px; fill: #5e35b1; }`}</style>
-                      <path d="M 40 200 L 280 200 L 280 100 Z" className="math-line" />
-                      <path d="M 280 180 L 260 180 L 260 200" className="math-line" strokeWidth="3" />
-                      <path d="M 280 135 Q 265 135 258 118" className="math-line" strokeWidth="2" />
-                      <text x="20" y="210" className="math-text">P</text>
-                      <text x="290" y="215" className="math-text">Q</text>
-                      <text x="290" y="90" className="math-text">R</text>
-                      <text x="150" y="230" className="math-text">12</text>
-                      <text x="300" y="160" className="math-text">5</text>
-                      <text x="130" y="130" className="math-text">13</text>
-                      <text x="245" y="155" className="math-text">θ</text>
+                  <div className="flex-shrink-0 flex items-center justify-center w-full lg:w-1/2">
+                    <svg width="100%" height="auto" viewBox="8 28 340 200" className="max-w-[300px] mx-auto block">
+                      <path d="M 40,160 L 280,160 L 280,60 Z" fill="rgba(147, 51, 234, 0.05)" stroke="#7e22ce" strokeWidth="3" strokeLinejoin="round" />
+                      <polyline points="268,160 268,148 280,148" fill="none" stroke="#7e22ce" strokeWidth="2" />
+                      <path d="M 280,90 A 30 30 0 0 1 252.3,71.5" fill="none" stroke="#7e22ce" strokeWidth="2" />
+                      <text x="256" y="112" fill="#7e22ce" fontSize="18" fontWeight="bold" fontStyle="italic">θ</text>
+                      <text x="22" y="166" fill="#7e22ce" fontSize="20" fontWeight="bold">P</text>
+                      <text x="286" y="176" fill="#7e22ce" fontSize="20" fontWeight="bold">Q</text>
+                      <text x="283" y="53" fill="#7e22ce" fontSize="20" fontWeight="bold">R</text>
+                      <text x="150" y="185" fill="#7e22ce" fontSize="20" fontWeight="bold" className="font-sans">12</text>
+                      <text x="290" y="120" fill="#22c55e" fontSize="20" fontWeight="bold" className="font-sans">5</text>
+                      <text x="140" y="98" fill="#7e22ce" fontSize="20" fontWeight="bold" className="font-sans">13</text>
                     </svg>
                   </div>
                 </div>
@@ -284,32 +281,27 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <p className="text-sm text-blue-700 font-bold mb-3">例 2：已知 <Latex math="\sin\theta = \frac{3}{7}" inline />。求 <Latex math="\frac{\tan\theta}{\cos\theta}" inline /> 的值。</p>
             <div className="bg-white rounded-lg p-4 mb-3">
-              <div className="flex flex-wrap gap-6 items-start">
-                <div className="flex-1 min-w-[200px]">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <div>
                   <p className="text-slate-700 mb-2">1. 如果題目沒提供 △ 圖像，需自行繪畫</p>
                   <p className="text-slate-700 mb-3">2. 利用畢氏定理找未知邊的長度</p>
                   <div className="text-green-600">
                     <Latex math="\begin{aligned} x^2 + 3^2 &= 7^2 \\\\ x^2 &= 40 \\\\ x &= \sqrt{40} \end{aligned}" block left />
                   </div>
                 </div>
-                <div className="flex-shrink-0">
-                  <svg width="400" height="250" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-                    <style>{`.line { fill: none; stroke: #0047AB; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-                    .angle-mark { fill: none; stroke: #0047AB; stroke-width: 3; }
-                    .text-green-svg { font-family: sans-serif; font-size: 32px; fill: #008000; font-weight: bold; }
-                    .text-blue-svg { font-family: sans-serif; font-size: 32px; fill: #00BFFF; font-weight: bold; }
-                    .text-angle { font-family: serif; font-size: 28px; fill: #0047AB; font-style: italic; }`}</style>
-                    <path d="M 90 200 L 300 200 L 300 100 Z" className="line" />
-                    <polyline points="280,200 280,180 300,180" className="angle-mark" />
-                    <path d="M 125 200 A 35 35 0 0 0 118 187" className="angle-mark" strokeWidth="2" />
-                    <text x="135" y="195" className="text-angle">θ</text>
-                    <text x="180" y="130" className="text-green-svg" textAnchor="middle">7</text>
-                    <text x="320" y="160" className="text-green-svg" textAnchor="start">3</text>
-                    <text x="195" y="240" className="text-blue-svg" textAnchor="middle">x</text>
-                  </svg>
+                  <div className="flex items-center justify-center md:justify-end mt-2 md:mt-0">
+                    <svg width="100%" height="auto" viewBox="10 28 320 205" className="max-w-[280px] mx-auto block">
+                      <path d="M 50,170 L 250,170 L 250,75 Z" fill="rgba(37, 99, 235, 0.05)" stroke="#1d4ed8" strokeWidth="3" strokeLinejoin="round" />
+                      <polyline points="238,170 238,158 250,158" fill="none" stroke="#1d4ed8" strokeWidth="2" />
+                      <path d="M 80,170 A 30 30 0 0 0 77.1,157.1" fill="none" stroke="#1d4ed8" strokeWidth="2" />
+                      <text x="88" y="165" fill="#1d4ed8" fontSize="18" fontWeight="bold" fontStyle="italic">θ</text>
+                      <text x="150" y="192" fill="#0ea5e9" fontSize="20" fontWeight="bold" className="font-sans">x</text>
+                      <text x="260" y="130" fill="#16a34a" fontSize="20" fontWeight="bold" className="font-sans">3</text>
+                      <text x="135" y="110" fill="#16a34a" fontSize="20" fontWeight="bold" className="font-sans">7</text>
+                    </svg>
+                  </div>
                 </div>
               </div>
-            </div>
             <div className="bg-white rounded-lg p-4">
               <p className="text-slate-700 mb-2">3. 已知三邊邊長，求 <span className="text-green-600 font-bold"><Latex math="\frac{\tan\theta}{\cos\theta}" inline /></span></p>
               <div className="text-blue-600">
@@ -805,7 +797,7 @@ export const QuadrilateralNotes = ({ activeSub }) => {
 // ========================================
 
 const GradientInclinationSVG1 = () => (
-  <svg width="100%" height="auto" viewBox="20 40 420 160" className="max-w-[420px] mx-auto block">
+  <svg width="400" height="200" viewBox="0 0 400 200" className="mx-auto block">
     <defs>
       <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
@@ -828,8 +820,8 @@ const GradientInclinationSVG1 = () => (
     <text x="175" y="185" fill="#3b82f6" fontSize="16" fontWeight="bold">地下</text>
     
     {/* 垂直邊：斜坡頂的高度 */}
-    <text x="370" y="105" fill="#22c55e" fontSize="16" fontWeight="bold" textAnchor="middle">斜坡頂的高度</text>
-    <path d="M 315,100 L 305,110" fill="none" stroke="#22c55e" strokeWidth="2" markerEnd="url(#arrow-green)" />
+    <text x="380" y="100" fill="#22c55e" fontSize="16" fontWeight="bold" textAnchor="middle">斜坡頂的高度</text>
+    <path d="M 325,100 L 305,110" fill="none" stroke="#22c55e" strokeWidth="2" markerEnd="url(#arrow-green)" />
     
     {/* 斜邊：斜坡 */}
     <text x="145" y="70" fill="#ef4444" fontSize="16" fontWeight="bold" textAnchor="middle">斜坡</text>
@@ -838,7 +830,7 @@ const GradientInclinationSVG1 = () => (
 );
 
 const GradientInclinationSVG2 = () => (
-  <svg width="100%" height="auto" viewBox="60 40 260 160" className="max-w-[260px] mx-auto block">
+  <svg width="400" height="200" viewBox="0 0 400 200" className="mx-auto block">
     {/* 直角三角形 */}
     <path d="M 80,160 L 280,160 L 280,60 Z" fill="none" stroke="#334155" strokeWidth="2.5" strokeLinejoin="round" />
     
@@ -854,7 +846,7 @@ const GradientInclinationSVG2 = () => (
 );
 
 const ContourLinesSVG = () => (
-  <svg width="100%" height="auto" viewBox="-120 0 520 250" className="max-w-[620px] mx-auto block">
+  <svg width="400" height="250" viewBox="0 0 400 250" className="mx-auto block">
     <defs>
       <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#1d4ed8" />
@@ -1005,7 +997,7 @@ const BearingsSVG2 = () => (
       <line x1="-80" y1="0" x2="80" y2="0" stroke="#334155" strokeWidth="2" markerEnd="url(#arrow-bearings2-p)" />
       <text x="0" y="-95" fill="#334155" fontSize="18" fontWeight="bold" textAnchor="middle">N</text>
       <text x="15" y="-5" fill="#334155" fontSize="18" fontWeight="bold" textAnchor="start">A</text>
-      <text x="15" y="-70" fill="#ef4444" fontSize="14" fontWeight="bold" textAnchor="start">←從這裡開始轉</text>
+      <text x="15" y="-80" fill="#ef4444" fontSize="14" fontWeight="bold" textAnchor="start">←從這裡開始轉</text>
       
       {/* 直角符號 */}
       <polyline points="-12,0 -12,12 0,12" stroke="#ef4444" strokeWidth="2" fill="none" />
@@ -1020,7 +1012,7 @@ const BearingsSVG2 = () => (
 
       {/* 270度弧 (3格) */}
       <path d="M 0,-40 A 40 40 0 1 1 -40,0" fill="none" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrow-bearings-red)" />
-      <text x="20" y="45" fill="#ef4444" fontSize="16" fontWeight="bold">270°(3格)</text>
+      <text x="20" y="45" fill="#2563eb" fontSize="16" fontWeight="bold">270°(3格)</text>
       <path d="M 20,38 Q 15,35 15,40" fill="none" stroke="#2563eb" strokeWidth="1.5" />
 
       {/* 90-22 弧 */}
@@ -1085,35 +1077,23 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
       <CollapsibleSection id="gradient-inclination" title="1. 斜率與傾角" num={1} color="teal" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-4 text-xl">📐 斜坡上的應用</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-              <div className="text-base text-slate-700 space-y-3">
-                <p>- 三角學可應用在斜坡上。</p>
-                <p>- 傾角用來量度一個斜坡的斜率（斜坡即有幾斜）。</p>
-                <p className="font-bold border-t border-blue-200 pt-3 mt-3">
-                  傾角：<span className="text-red-500">斜坡</span>和<span className="text-blue-500">地下</span>的夾角
-                </p>
-              </div>
-              {/* 📐 繪製：斜坡與傾角（直角三角形） */}
-              <div className="flex justify-center border-t md:border-t-0 md:border-l border-blue-200 pt-4 md:pt-0 pl-0 md:pl-4">
-                <GradientInclinationSVG1 />
-              </div>
+            <h3 className="font-bold text-blue-800 mb-2">📐 斜坡上的應用</h3>
+            <p className="text-sm text-slate-700 mb-3">- 三角學可應用在斜坡上。<br />- 傾角用來量度一個斜坡的斜率（斜坡即有幾斜）。</p>
+            {/* 📐 繪製：斜坡與傾角（直角三角形） */}
+            <div className="flex justify-center mb-3">
+              <GradientInclinationSVG1 />
             </div>
           </div>
 
           <div className="bg-red-50 rounded-lg p-4 border border-red-200">
             <h3 className="font-bold text-red-800 mb-2">📝 斜率公式</h3>
-            <div className="bg-white rounded-lg p-4 mb-3 border border-slate-200">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                <div className="text-center">
-                  <Latex math="\text{斜率} = \frac{\text{鉛垂距離 }\textcolor{blue}{\text{(打直)}}}{\text{水平距離 }\textcolor{blue}{\text{(打橫)}}}" block />
-                  <p className="text-sm text-slate-600 mt-4 text-red-600">斜率通常以 <span className="font-bold">1:n</span> 的形式表達</p>
-                </div>
-                {/* 📐 繪製：鉛垂與水平距離（直角三角形） */}
-                <div className="flex justify-center border-t md:border-t-0 border-slate-100 pt-4 md:pt-0 pl-0 md:pl-4">
-                  <GradientInclinationSVG2 />
-                </div>
-              </div>
+            <div className="bg-white rounded-lg p-3 mb-3 text-center">
+              <Latex math="\text{斜率} = \frac{\text{鉛垂距離 (打直)}}{\text{水平距離 (打橫)}}" block />
+              <p className="text-sm text-slate-600 mt-2 text-red-600">斜率通常以 <span className="font-bold">1:n</span> 的形式表達</p>
+            </div>
+            {/* 📐 繪製：鉛垂與水平距離（直角三角形） */}
+            <div className="flex justify-center mb-3">
+              <GradientInclinationSVG2 />
             </div>
           </div>
 
@@ -1183,48 +1163,33 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
           <div className="bg-red-50 rounded-lg p-4 border border-red-200">
             <h3 className="font-bold text-red-800 mb-3">📍 真方位角與羅盤方位角</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-lg p-4 border border-red-200 h-full flex flex-col">
+              <div className="bg-white rounded-lg p-4 border border-red-200">
                 <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">真方位角</p>
                 <ul className="text-sm text-slate-700 space-y-1 mb-3">
-                  <li>• <span className="text-blue-600 font-bold">0 - 360° 表達</span></li>
-                  <li>• <span className="text-red-600 font-bold">必定由 N 開始量度</span> <span className="text-purple-600 font-bold">(順時針)</span></li>
+                  <li>• 0 - 360° 表達</li>
+                  <li>• 必定由 N 開始<span className="text-red-600 font-bold">量度</span> (順時針)</li>
                   <li>• 答案<span className="text-red-600 font-bold">必定出現 3 位數字</span></li>
                 </ul>
-                <div className="bg-slate-50 p-3 rounded-lg text-sm text-slate-700 mt-auto">
+                <div className="bg-slate-50 p-2 rounded text-sm text-slate-700">
                   <p className="font-bold mb-1">e.g.</p>
                   <p>O 測得 A：035°</p>
                   <p>O 測得 B：152°</p>
                   <p>O 測得 C：245°</p>
                 </div>
               </div>
-              <div className="bg-white rounded-lg p-4 border border-red-200 h-full flex flex-col">
+              <div className="bg-white rounded-lg p-4 border border-red-200">
                 <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">羅盤方位角</p>
                 <ul className="text-sm text-slate-700 space-y-1 mb-3">
-                  <li>• <span className="text-blue-600 font-bold">以 0° - 90° 表達</span></li>
-                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">①</span> <span className="text-red-600 font-bold">以 N/S 作開首開始</span> <span className="text-green-600 font-bold">(諗線/角度近 N/S)</span></li>
-                  <li><span className="bg-pink-200 px-1 rounded text-red-600 font-bold">②</span> 配 0 - 90° <span className="text-purple-600 font-bold">(順/逆時針)</span></li>
-                  <li><span className="bg-blue-200 px-1 rounded text-red-600 font-bold">③</span> <span className="text-red-600 font-bold">以 W/E 作結束</span> <span className="text-green-600 font-bold">(想想角度向哪移動)</span></li>
+                  <li>• 以 0° - 90° 表達</li>
+                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">①</span> 以 N/S 作開首 (論線/角度近 N/S)</li>
+                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">②</span> 配 0 - 90° (順/逆時針)</li>
+                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">③</span> 以 W/E 作結束 (想想角度向哪移動)</li>
                 </ul>
-                <div className="bg-slate-50 p-3 rounded-lg text-sm space-y-1 mt-auto">
+                <div className="bg-slate-50 p-2 rounded text-sm space-y-1">
                   <p className="font-bold mb-1">e.g.</p>
-                  <div className="grid grid-cols-[6.25rem_1.75rem_2.75rem_1.75rem] items-center gap-2">
-                    <span>O 測得 A：</span>
-                    <span className="bg-yellow-200 px-1 font-bold text-center">N</span>
-                    <span className="bg-pink-200 px-1.5 rounded font-bold text-slate-900 text-center">35°</span>
-                    <span className="bg-blue-200 px-1 font-bold text-blue-800 text-center">E</span>
-                  </div>
-                  <div className="grid grid-cols-[6.25rem_1.75rem_2.75rem_1.75rem] items-center gap-2">
-                    <span>O 測得 B：</span>
-                    <span className="bg-yellow-200 px-1 font-bold text-center">S</span>
-                    <span className="bg-pink-200 px-1.5 rounded font-bold text-slate-900 text-center">28°</span>
-                    <span className="bg-blue-200 px-1 font-bold text-blue-800 text-center">E</span>
-                  </div>
-                  <div className="grid grid-cols-[6.25rem_1.75rem_2.75rem_1.75rem] items-center gap-2">
-                    <span>O 測得 C：</span>
-                    <span className="bg-yellow-200 px-1 font-bold text-center">S</span>
-                    <span className="bg-pink-200 px-1.5 rounded font-bold text-slate-900 text-center">65°</span>
-                    <span className="bg-blue-200 px-1 font-bold text-blue-800 text-center">W</span>
-                  </div>
+                  <div className="flex items-center gap-2">O 測得 A：<span className="bg-yellow-200 px-1 font-bold">N</span><span className="text-red-500 font-bold">35°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
+                  <div className="flex items-center gap-2">O 測得 B：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="text-red-500 font-bold">28°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
+                  <div className="flex items-center gap-2">O 測得 C：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="text-red-500 font-bold">65°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">W</span></div>
                 </div>
               </div>
             </div>
