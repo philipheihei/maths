@@ -113,6 +113,44 @@ export const PythagorasNotesBlock = () => {
           </div>
         </div>
       </div>
+
+      <div className="bg-purple-50 rounded-xl p-6 border border-purple-200 mt-8">
+        <h3 className="font-bold text-purple-800 text-xl mb-4">2. 畢氏定理的逆定理 (Converse of Pythagoras' Theorem)</h3>
+        <p className="text-slate-700 mb-4 whitespace-pre-wrap">
+          用處：<strong className="text-purple-700">用來證明直角</strong>。{"\n"}
+          逆定理的意思是起點和結論反轉：如果 <Latex math="a^2 + b^2 = c^2" /> 這個算式成立，那麼它就是一個直角三角形。
+        </p>
+
+        <div className="bg-white rounded-xl p-5 shadow-sm border border-purple-100 mb-4">
+          <p className="font-bold text-slate-700 mb-4">例子：給定三邊長度，證明 <Latex math="\triangle XYZ" /> 是一個直角三角形。</p>
+          <div className="flex flex-col md:flex-row-reverse items-center gap-6">
+            <div className="w-56 flex-shrink-0">
+              <svg viewBox="0 0 160 120" className="w-full">
+                <polygon points="10,100 130,100 130,20" fill="rgba(168,85,247,0.08)" stroke="#9333ea" strokeWidth="2.5" strokeLinejoin="round" />
+                <text x="135" y="15" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#9333ea">X</text>
+                <text x="0" y="105" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#9333ea">Y</text>
+                <text x="135" y="115" fontSize="14" fontStyle="italic" fontWeight="bold" fill="#9333ea">Z</text>
+                <text x="70" y="115" fontSize="13" fill="#334155">15</text>
+                <text x="140" y="65" fontSize="13" fill="#334155">8</text>
+                <text x="60" y="50" fontSize="13" fill="#334155">17</text>
+              </svg>
+            </div>
+            <div className="flex-1 space-y-3">
+              <div className="bg-purple-100/50 p-3 rounded-lg text-sm text-purple-900 mb-2 border border-purple-100">
+                ✏️ <strong>作答技巧：</strong> 先計算最長邊的平方，再計算其餘兩邊的平方和，最後比較結果。<br />
+                <span className="text-red-500 font-bold">切勿一開始就將它們強行用「=」連在一起寫！</span>
+              </div>
+              <div className="text-slate-800 text-[15px] leading-relaxed space-y-2">
+                <Latex math="\begin{align*} XY^2 &= 17^2 \\ &= 289 \end{align*}" block />
+                <Latex math="\begin{align*} XZ^2 + YZ^2 &= 8^2 + 15^2 \\ &= 64 + 225 \\ &= 289 \end{align*}" block />
+                <Latex math="\because\; XY^2 = XZ^2 + YZ^2" block />
+                <Latex math="\therefore\; \triangle XYZ\ \text{是一個直角三角形，其中}\ \angle XZY = 90^\circ" block />
+                <p className="text-center text-slate-600">（畢氏定理的逆定理）</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

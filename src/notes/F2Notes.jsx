@@ -477,6 +477,10 @@ export const SimultaneousEqF2Notes = ({ activeSub }) => {
 export const PythagorasF2Notes = () => {
   return (
     <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-violet-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH10 畢氏定理</h1>
+        <p className="text-slate-600">掌握畢氏定理與逆定理，並運用於直角三角形問題</p>
+      </div>
       <PythagorasNotesBlock />
     </div>
   );
@@ -485,6 +489,10 @@ export const PythagorasF2Notes = () => {
 export const TrigRatiosF2Notes = () => {
   return (
     <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-violet-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH12 三角比</h1>
+        <p className="text-slate-600">認識正弦、餘弦、正切，並分辨對邊、鄰邊、斜邊</p>
+      </div>
       <TrigRatiosNotesBlock />
     </div>
   );
