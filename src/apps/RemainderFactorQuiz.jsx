@@ -99,10 +99,11 @@ const TeachingPage = ({ onStartQuiz }) => {
   const [activeSection, setActiveSection] = useState(1);
   const section1Ref = useRef(null);
   const section2Ref = useRef(null);
+  const section3Ref = useRef(null);
 
   const scrollToSection = (sectionNum) => {
     setActiveSection(sectionNum);
-    const refs = { 1: section1Ref, 2: section2Ref };
+    const refs = { 1: section1Ref, 2: section2Ref, 3: section3Ref };
     refs[sectionNum]?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -111,7 +112,8 @@ const TeachingPage = ({ onStartQuiz }) => {
     const handleScroll = () => {
       const sections = [
         { num: 1, ref: section1Ref },
-        { num: 2, ref: section2Ref }
+        { num: 2, ref: section2Ref },
+        { num: 3, ref: section3Ref }
       ];
 
       for (const section of sections) {
@@ -131,7 +133,8 @@ const TeachingPage = ({ onStartQuiz }) => {
 
   const tocItems = [
     { num: 1, title: '餘式定理', color: 'teal' },
-    { num: 2, title: '因式定理', color: 'orange' }
+    { num: 2, title: '因式定理', color: 'orange' },
+    { num: 3, title: 'DSE實戰', color: 'blue' }
   ];
 
   return (
@@ -208,7 +211,7 @@ const TeachingPage = ({ onStartQuiz }) => {
           {/* Section 1: 餘式定理 */}
           <div ref={section1Ref} className="bg-white rounded-2xl shadow-lg p-6 mb-6 scroll-mt-24">
             <h2 className="text-xl font-bold text-teal-700 flex items-center gap-2 mb-4">
-              <span className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm">4.3</span>
+              <span className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm">1</span>
               餘式定理
             </h2>
 
@@ -297,7 +300,7 @@ const TeachingPage = ({ onStartQuiz }) => {
           {/* Section 2: 因式定理 */}
           <div ref={section2Ref} className="bg-white rounded-2xl shadow-lg p-6 mb-6 scroll-mt-24">
             <h2 className="text-xl font-bold text-orange-700 flex items-center gap-2 mb-4">
-              <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm">4.4</span>
+              <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm">2</span>
               因式定理
             </h2>
 
@@ -369,6 +372,79 @@ const TeachingPage = ({ onStartQuiz }) => {
                       <li>• ...的因式</li>
                       <li>• 可被...除盡</li>
                     </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 第 3 節 */}
+          <div ref={section3Ref} className="bg-white rounded-2xl shadow-lg p-6 mb-6 scroll-mt-24">
+            <h2 className="text-xl font-bold text-blue-700 flex items-center gap-2 mb-4">
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">3</span>
+              DSE實戰
+            </h2>
+
+            <div className="space-y-4">
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <h3 className="font-bold text-blue-800 mb-3">📝 經典題型</h3>
+                
+                <div className="bg-white rounded-lg p-4 border border-slate-200 mb-4 shadow-sm">
+                  <p className="text-slate-700 mb-2 leading-loose">
+                    設 <Latex math="f(x) = 2x^3 + hx^2 + kx - 5" />，其中 <Latex math="h" /> 及 <Latex math="k" /> 均為常數。
+                    當 <Latex math="f(x)" /> 除以 <Latex math="x + 1" /> 時，餘數為 <Latex math="-12" />。
+                    已知 <Latex math="f(x)" /> 可被 <Latex math="2x - 1" /> 整除。
+                  </p>
+                  <div className="text-slate-700 font-medium">
+                    <p>(a) 求 <Latex math="h" /> 及 <Latex math="k" />。</p>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-lg p-4 border border-slate-200">
+                  <h4 className="font-bold text-slate-700 border-b border-slate-200 pb-2 mb-3">建議步驟</h4>
+                  
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-slate-600 mb-1 flex items-center gap-2">
+                        <span className="bg-teal-100 text-teal-800 px-2 py-0.5 rounded text-xs font-bold">1</span>
+                        利用餘式定理，代入 <Latex math="x = -1" />：
+                      </p>
+                      <div className="pl-4 mt-2">
+                        <Latex
+                          block
+                          math={"\\begin{aligned}"
+                            + "f(-1) &= -12 \\\\"
+                            + "2(-1)^3 + h(-1)^2 + k(-1) - 5 &= -12 \\\\"
+                            + "-2 + h - k - 5 &= -12 \\\\"
+                            + "h - k &= -5 \\quad \\cdots\\,(1)"
+                            + "\\end{aligned}"}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="border-t border-slate-100 pt-3">
+                      <p className="text-slate-600 mb-1 flex items-center gap-2">
+                        <span className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded text-xs font-bold">2</span>
+                        利用因式定理，代入 <Latex math="x = \dfrac{1}{2}" />：
+                      </p>
+                      <div className="pl-4 mt-2">
+                        <Latex
+                          block
+                          math={"\\begin{aligned}"
+                            + "f\\left(\\frac{1}{2}\\right) &= 0 \\\\"
+                            + "2\\left(\\frac{1}{2}\\right)^3 + h\\left(\\frac{1}{2}\\right)^2 + k\\left(\\frac{1}{2}\\right) - 5 &= 0 \\\\"
+                            + "\\frac{1}{4} + \\frac{1}{4}h + \\frac{1}{2}k - 5 &= 0 \\\\"
+                            + "\\frac{1}{4}h + \\frac{1}{2}k &= \\frac{19}{4} \\quad \\cdots\\,(2)"
+                            + "\\end{aligned}"}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="border-t border-slate-100 pt-3">
+                      <p className="text-slate-800 font-semibold">
+                        答案：<Latex math="h=3" />，<Latex math="k=8" />
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
