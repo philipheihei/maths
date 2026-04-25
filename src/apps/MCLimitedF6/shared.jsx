@@ -130,18 +130,18 @@ export const SubstitutionSteps = ({ question }) => {
         const markCls = ok ? 'text-green-700' : 'text-red-700';
         const optionRules = buildOptionRules();
         return (
-          <div key={`${row.label}-${idx}`} className="leading-7">
-            <span className="font-semibold mr-1">{row.label}:</span>
+          <div key={`${row.label}-${idx}`} className="leading-8 text-[1.15rem]">
+            <span className="font-semibold mr-2">{row.label}:</span>
             {row.latex
-              ? <InlineMath math={row.latex} />
+              ? <InlineMath math={`\\quad ${row.latex}`} />
               : renderWithRules(row.text, optionRules)}
             <span className={`ml-2 font-bold ${markCls}`}>{mark}</span>
           </div>
         );
       })}
 
-      <div className="leading-7 font-semibold">
-        <InlineMath math={`\\therefore \\text{答案為 } \\mathrm{${view.answerLabel}}`} />
+      <div className="leading-6 text-sm font-medium text-slate-700">
+        <InlineMath math={`\\therefore \\text{比較所有代入的答案，只有 }\\mathrm{${view.answerLabel}}\\text{ 跟題目的數字相同，所以答案為 }\\mathrm{${view.answerLabel}}\\text{。}`} />
       </div>
     </div>
   );

@@ -198,7 +198,7 @@ const SubstitutionNotes = ({ onBack }) => {
           {/* 題型5 */}
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-3">
-              <span className="bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">⚠️ 要小心</span>
+              <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 可代入</span>
               <span className="font-bold text-lg text-gray-800">題型五：解方程（含兩個常數）</span>
             </div>
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200">
@@ -209,15 +209,22 @@ const SubstitutionNotes = ({ onBack }) => {
                 <div className="col-span-2 text-sm md:text-base md:col-span-1">D. <InlineMath math="x = -2s" /> 或 <InlineMath math="x = -t" /></div>
               </div>
             </div>
-            <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
-              <div className="font-bold text-indigo-800">📝 分析：此題不宜直接代入</div>
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-800 mb-2">
-                ⚠️ 選項混合了 <InlineMath math="x =" /> 單一值 vs 「或」兩個值，代入法無法直接判斷答案是否需要「或」。<br/>
-                <strong>建議：</strong>展開整理，<InlineMath math="(x+2s)(x+t) - sx - st = 0" />，因式分解求解。
+            <div className="border-l-4 border-emerald-400 bg-emerald-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
+              <div className="font-bold text-emerald-800">📝 分析：將選項的 x 值代入兩邊，check 左 = 右</div>
+              <div className="pl-2 space-y-1.5">
+                <div>代 <InlineMath math="x = -s" />：</div>
+                <div className="pl-4">左：<InlineMath math="(-s+2s)(-s+t) = s(t-s)" /></div>
+                <div className="pl-4">右：<InlineMath math="s(-s)+st = s(t-s)" /> ✓ 左 = 右，<InlineMath math="x=-s" /> 成立</div>
+                <div className="mt-1">代 <InlineMath math="x = -2s" />：</div>
+                <div className="pl-4">左：<InlineMath math="(-2s+2s)(-2s+t) = 0" /></div>
+                <div className="pl-4">右：<InlineMath math="s(-2s)+st = s(t-2s)" />，一般不等於 0 ✗</div>
+                <div className="mt-1">代 <InlineMath math="x = -t" />：</div>
+                <div className="pl-4">左：<InlineMath math="(-t+2s)(-t+t) = 0" /></div>
+                <div className="pl-4">右：<InlineMath math="s(-t)+st = 0" /> ✓ 左 = 右，<InlineMath math="x=-t" /> 成立</div>
               </div>
-              <div className="pl-2">展開：<InlineMath math="x^2 + tx + 2sx + 2st - sx - st = 0" /></div>
-              <div className="pl-2"><InlineMath math="x^2 + (t+s)x + st = 0" /></div>
-              <div className="pl-2"><InlineMath math="(x+s)(x+t) = 0" /></div>
+              <div className="bg-white border border-emerald-200 rounded-lg p-2 mt-2">
+                <InlineMath math="x=-s" /> ✓ 及 <InlineMath math="x=-t" /> ✓，即「或」兩個根 → 答案 C
+              </div>
               <div className="text-emerald-700 font-bold mt-2">答案：C（<InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" />）</div>
             </div>
           </div>
@@ -261,7 +268,7 @@ const SubstitutionNotes = ({ onBack }) => {
                 <tr className="hover:bg-gray-50"><td className="p-3">指數 / 對數運算</td><td className="p-3 text-center text-emerald-600 font-bold whitespace-nowrap">✅ 適用</td><td className="p-3 text-gray-600">代簡單整數</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">雙變數代數式</td><td className="p-3 text-center text-emerald-600 font-bold whitespace-nowrap">✅ 適用</td><td className="p-3 text-gray-600">兩變數代不同值</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">二次函數配方</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">⚠️ 小心</td><td className="p-3 text-gray-600">代兩個值排除</td></tr>
-                <tr className="hover:bg-gray-50"><td className="p-3">解方程（選項含「或」）</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">⚠️ 小心</td><td className="p-3 text-gray-600">無法判斷「或」，考慮直接計</td></tr>
+                <tr className="hover:bg-gray-50"><td className="p-3">解方程（選項含「或」）</td><td className="p-3 text-center text-emerald-600 font-bold whitespace-nowrap">✅ 適用</td><td className="p-3 text-gray-600">逐一代入兩邊 check 左 = 右</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">不等式範圍</td><td className="p-3 text-center text-red-600 font-bold whitespace-nowrap">❌ 不適用</td><td className="p-3 text-gray-600">必須解不等式</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">概率題</td><td className="p-3 text-center text-red-600 font-bold whitespace-nowrap">❌ 不適用</td><td className="p-3 text-gray-600">邏輯性強，需計算</td></tr>
               </tbody>
