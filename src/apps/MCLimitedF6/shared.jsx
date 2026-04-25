@@ -118,10 +118,10 @@ export const SubstitutionSteps = ({ question }) => {
   return (
     <div className="py-2 pl-2 text-left space-y-2">
       <div className="leading-7">
-        <InlineMath math={`\\text{題目： } ${view.questionLatex || question.questionLatex || ''}`} />
+        <InlineMath math={`\\text{題目：} ${view.questionHighlightLatex || view.questionLatex || question.questionLatex || ''}`} />
       </div>
       <div className="leading-7">
-        <InlineMath math={`\\text{題目：代 } ${view.substitutionLatex || ''}`} />
+        <InlineMath math={`\\text{題目：代 } ${view.substitutionHighlightLatex || view.substitutionLatex || ''}`} />
       </div>
 
       {(view.optionChecks || []).map((row, idx) => {
