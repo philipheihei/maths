@@ -56,6 +56,97 @@ export const AlignedSteps = ({ questionLatex, lines }) => {
   );
 };
 
+const HIGHLIGHT_CLASSES = [
+  'bg-amber-100 text-amber-900',
+  'bg-sky-100 text-sky-900',
+  'bg-emerald-100 text-emerald-900',
+  'bg-rose-100 text-rose-900',
+];
+
+const getVarClass = (varDefs, idx) => {
+  if (!Array.isArray(varDefs) || varDefs.length === 0) return HIGHLIGHT_CLASSES[0];
+  return HIGHLIGHT_CLASSES[idx % HIGHLIGHT_CLASSES.length];
+};
+
+const renderWithRules = (text, rules) => {
+  if (!text) return null;
+  if (!rules || rules.length === 0) return <>{text}</>;
+
+  const sorted = [...rules].sort((a, b) => b.token.length - a.token.length);
+  const out = [];
+  let i = 0;
+
+  while (i < text.length) {
+    let matched = null;
+    for (const r of sorted) {
+      if (text.slice(i, i + r.token.length) === r.token) {
+        matched = r;
+        break;
+      }
+    }
+    if (matched) {
+      out.push(
+        <span key={`${i}-${matched.token}`} className={`px-1 rounded ${matched.className}`}>
+          {matched.token}
+        </span>
+      );
+      i += matched.token.length;
+    } else {
+      out.push(<span key={i}>{text[i]}</span>);
+      i += 1;
+    }
+  }
+
+  return out;
+};
+
+export const SubstitutionSteps = ({ question }) => {
+  const view = question?.substitutionView;
+  if (!view) return null;
+
+  const vars = view.variables || [];
+
+  const buildOptionRules = () => {
+    const rules = [];
+    vars.forEach((v, i) => {
+      const cls = getVarClass(vars, i);
+      rules.push({ token: `(${v.value})`, className: cls });
+    });
+    return rules;
+  };
+
+  return (
+    <div className="py-2 pl-2 text-left space-y-2">
+      <div className="leading-7">
+        <InlineMath math={`\\text{題目： } ${view.questionLatex || question.questionLatex || ''}`} />
+      </div>
+      <div className="leading-7">
+        <InlineMath math={`\\text{題目：代 } ${view.substitutionLatex || ''}`} />
+      </div>
+
+      {(view.optionChecks || []).map((row, idx) => {
+        const ok = !!row.correct;
+        const mark = ok ? '✓' : '✗';
+        const markCls = ok ? 'text-green-700' : 'text-red-700';
+        const optionRules = buildOptionRules();
+        return (
+          <div key={`${row.label}-${idx}`} className="leading-7">
+            <span className="font-semibold mr-1">{row.label}:</span>
+            {row.latex
+              ? <InlineMath math={row.latex} />
+              : renderWithRules(row.text, optionRules)}
+            <span className={`ml-2 font-bold ${markCls}`}>{mark}</span>
+          </div>
+        );
+      })}
+
+      <div className="leading-7 font-semibold">
+        <InlineMath math={`\\therefore \\text{答案為 } \\mathrm{${view.answerLabel}}`} />
+      </div>
+    </div>
+  );
+};
+
 // ─── OptionBtn ────────────────────────────────────────────────────────────────
 export const OptionBtn = ({ label, optionLatex, state, onClick }) => {
   const base = 'w-full text-left flex items-start gap-3 px-4 py-4 rounded-xl border-2 transition-all duration-200 font-medium';

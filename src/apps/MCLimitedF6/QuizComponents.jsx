@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { ArrowLeft, Star, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
-import { InlineMath, LeftBlockMath, AlignedSteps, OptionBtn } from './shared';
+import { InlineMath, LeftBlockMath, AlignedSteps, OptionBtn, SubstitutionSteps } from './shared';
 import { generateQuestion } from './generators/hcfLcm';
 import { generateFunctionGraphQuestion, ParabolaSVG } from './generators/functionGraph';
 
@@ -128,13 +128,17 @@ export const HCFLCMQuiz = ({ onBack }) => {
               ? <CheckCircle className="w-5 h-5 text-green-600" />
               : <XCircle className="w-5 h-5 text-red-500" />}
             <span className={`font-bold ${selected === question.correctIndex ? 'text-green-700' : 'text-red-600'}`}>
-              {selected === question.correctIndex ? '正確！' : `錯誤！答案是 ${optionLabels[question.correctIndex]}`}
+              {selected === question.correctIndex
+                ? '正確！'
+                : <span className="inline-flex items-center gap-1"><span>錯誤！</span><InlineMath math={`\\text{答案是 } \\mathrm{${optionLabels[question.correctIndex]}}`} /></span>}
             </span>
           </div>
           <div className="bg-white rounded-lg px-4 py-3">
             {question.explanationAligned
               ? <LeftBlockMath math={question.explanationAligned} />
-              : <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />}
+              : question.explanationMode === 'substitution'
+                ? <SubstitutionSteps question={question} />
+                : <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />}
           </div>
         </div>
       )}
@@ -236,7 +240,9 @@ export const FunctionGraphQuiz = ({ onBack }) => {
               ? <CheckCircle className="w-5 h-5 text-green-600" />
               : <XCircle className="w-5 h-5 text-red-500" />}
             <span className={`font-bold ${selected === question.correctIndex ? 'text-green-700' : 'text-red-600'}`}>
-              {selected === question.correctIndex ? '正確！' : `錯誤！答案是 ${optionLabels[question.correctIndex]}`}
+              {selected === question.correctIndex
+                ? '正確！'
+                : <span className="inline-flex items-center gap-1"><span>錯誤！</span><InlineMath math={`\\text{答案是 } \\mathrm{${optionLabels[question.correctIndex]}}`} /></span>}
             </span>
           </div>
           <div className="bg-white rounded-lg px-4 py-3 space-y-1">
@@ -330,13 +336,17 @@ export const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
               ? <CheckCircle className="w-5 h-5 text-green-600" />
               : <XCircle className="w-5 h-5 text-red-500" />}
             <span className={`font-bold ${selected === question.correctIndex ? 'text-green-700' : 'text-red-600'}`}>
-              {selected === question.correctIndex ? '正確！' : `錯誤！答案是 ${optionLabels[question.correctIndex]}`}
+              {selected === question.correctIndex
+                ? '正確！'
+                : <span className="inline-flex items-center gap-1"><span>錯誤！</span><InlineMath math={`\\text{答案是 } \\mathrm{${optionLabels[question.correctIndex]}}`} /></span>}
             </span>
           </div>
           <div className="bg-white rounded-lg px-4 py-3">
             {question.explanationAligned
               ? <LeftBlockMath math={question.explanationAligned} />
-              : <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />}
+              : question.explanationMode === 'substitution'
+                ? <SubstitutionSteps question={question} />
+                : <AlignedSteps questionLatex={question.variationQ ? '' : question.questionLatex} lines={question.explanationLines || []} />}
           </div>
         </div>
       )}

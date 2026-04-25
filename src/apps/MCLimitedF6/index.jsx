@@ -7,14 +7,24 @@ import BinaryNotes from './notes/BinaryNotes';
 import VariationNotes from './notes/VariationNotes';
 import ComplexNotes from './notes/ComplexNotes';
 import FunctionGraphNotes from './notes/FunctionGraphNotes';
+import SubstitutionNotes from './notes/SubstitutionNotes';
 
 import { HCFLCMQuiz, TopicQuiz, FunctionGraphQuiz } from './QuizComponents';
 
 import { generateBinaryQuestion } from './generators/binary';
 import { generateVariationQuestion } from './generators/variation';
 import { generateComplexQuestion } from './generators/complex';
+import { generateSubstitutionQuestion } from './generators/substitution';
 
 const TOPICS = [
+  {
+    id: 'substitution-method',
+    title: '代數代入法',
+    desc: 'MC 應試技巧：代入簡單數值快速判斷選項，涵蓋分式、指數、展開與不適用題型識別',
+    icon: '📐',
+    color: 'from-pink-500 to-rose-600',
+    badges: [{ level: 'F6', chapter: 'MC', subject: '應試技巧' }],
+  },
   {
     id: 'binary',
     title: '二進制轉換',
@@ -62,6 +72,7 @@ const MCLimitedF6 = () => {
   const [activeTopic, setActiveTopic] = useState(null);
 
   if (view === 'quiz' && activeTopic) {
+    if (activeTopic.id === 'substitution-method') return <TopicQuiz onBack={() => setView('home')} generateFn={generateSubstitutionQuestion} topicLabel="代數代入法" />;
     if (activeTopic.id === 'binary')         return <TopicQuiz onBack={() => setView('home')} generateFn={generateBinaryQuestion} topicLabel="二進制轉換" />;
     if (activeTopic.id === 'hcf-lcm')        return <HCFLCMQuiz onBack={() => setView('home')} />;
     if (activeTopic.id === 'variation')      return <TopicQuiz onBack={() => setView('home')} generateFn={generateVariationQuestion} topicLabel="變分常數" />;
@@ -69,6 +80,7 @@ const MCLimitedF6 = () => {
     if (activeTopic.id === 'function-graph') return <FunctionGraphQuiz onBack={() => setView('home')} />;
   }
   if (view === 'notes' && activeTopic) {
+    if (activeTopic.id === 'substitution-method') return <SubstitutionNotes onBack={() => setView('home')} />;
     if (activeTopic.id === 'binary')         return <BinaryNotes onBack={() => setView('home')} />;
     if (activeTopic.id === 'hcf-lcm')        return <HCFLCMNotes onBack={() => setView('home')} />;
     if (activeTopic.id === 'variation')      return <VariationNotes onBack={() => setView('home')} />;
