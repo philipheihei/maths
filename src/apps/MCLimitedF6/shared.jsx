@@ -126,7 +126,7 @@ export const SubstitutionSteps = ({ question }) => {
 
       {(view.optionChecks || []).map((row, idx) => {
         const ok = !!row.correct;
-        const mark = ok ? '✓' : '✗';
+        const mark = ok ? '✅' : '❌';
         const markCls = ok ? 'text-green-700' : 'text-red-700';
         const optionRules = buildOptionRules();
         return (
@@ -141,7 +141,7 @@ export const SubstitutionSteps = ({ question }) => {
       })}
 
       <div className="leading-6 text-sm font-medium text-slate-700">
-        <InlineMath math={`\\therefore \\text{比較所有代入的答案，只有 }\\mathrm{${view.answerLabel}}\\text{ 跟題目的數字相同，所以答案為 }\\mathrm{${view.answerLabel}}\\text{。}`} />
+        <InlineMath math={`\\therefore \\text{比較所有代入的答案，只有 }\\mathrm{${view.answerLabel}}\\text{ 跟題目的代入答案相同，所以答案為 }\\mathrm{${view.answerLabel}}\\text{。}`} />
       </div>
     </div>
   );

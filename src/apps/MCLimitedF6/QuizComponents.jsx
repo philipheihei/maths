@@ -101,13 +101,13 @@ export const HCFLCMQuiz = ({ onBack }) => {
         </span>
       </div>
 
-      <div className="text-base font-semibold text-slate-700 mb-3">
+      <div className="text-base font-semibold text-slate-700 mb-3 text-left space-y-1">
         <div><InlineMath math={question.questionLatex} /></div>
         {question.questionLatex2 && <div><InlineMath math={question.questionLatex2} /></div>}
       </div>
 
       <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 mb-5">
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {question.options.map((opt, idx) => (
             <OptionBtn
               key={`${question.questionLatex}-${idx}`}
@@ -204,7 +204,7 @@ export const FunctionGraphQuiz = ({ onBack }) => {
         <span className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">{question.subtypeLabel}</span>
       </div>
 
-      <div className="text-base font-semibold text-slate-700 mb-3">
+      <div className="text-base font-semibold text-slate-700 mb-3 text-left">
         <InlineMath math={question.questionLatex} />
       </div>
 
@@ -219,7 +219,7 @@ export const FunctionGraphQuiz = ({ onBack }) => {
       )}
 
       <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 mb-5">
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {question.options.map((opt, idx) => (
             <OptionBtn
               key={`${idx}-${question.subtypeLabel}`}
@@ -311,12 +311,12 @@ export const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
       <div className="mb-3">
         <span className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">{question.subtypeLabel}</span>
       </div>
-      <div className="text-base font-semibold text-slate-700 mb-3">
+      <div className="text-base font-semibold text-slate-700 mb-3 text-left space-y-1">
         <div><InlineMath math={question.questionLatex} /></div>
         {question.questionLatex2 && <div><InlineMath math={question.questionLatex2} /></div>}
       </div>
       <div className="bg-white rounded-2xl shadow-md border border-slate-100 p-6 mb-5">
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {question.options.map((opt, idx) => (
             <OptionBtn
               key={`${idx}-${question.questionLatex.slice(0, 20)}`}

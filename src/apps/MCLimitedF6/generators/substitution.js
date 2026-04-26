@@ -21,7 +21,7 @@ const QUESTION_BANK = [
       questionLatex: '\\dfrac{(x+1)^2-(x-1)^2}{2} =',
       questionHighlightLatex: `\\dfrac{(${cb(C0,'x')}+1)^2-(${cb(C0,'x')}-1)^2}{2}=`,
       substitutionLatex: 'x = 2:\\ \\dfrac{(2+1)^2-(2-1)^2}{2}=\\dfrac{9-1}{2}=4',
-      substitutionHighlightLatex: `${cb(C0,'x = 2')}:\\ \\dfrac{(${cb(C0,'2')}+1)^2-(${cb(C0,'2')}-1)^2}{2}=\\dfrac{9-1}{2}=4`,
+      substitutionHighlightLatex: `${cb(C0,'\\textit{x} = 2')}:\\ \\dfrac{(${cb(C0,'2')}+1)^2-(${cb(C0,'2')}-1)^2}{2}=\\dfrac{9-1}{2}=4`,
       optionChecks: [
         { label: 'A', text: '2x = 2(2) = 4', latex: `2(${cb(C0,'2')})=4`, correct: true },
         { label: 'B', text: '2x^2 = 2(2)^2 = 8', latex: `2(${cb(C0,'2')})^2=8`, correct: false },
@@ -36,7 +36,7 @@ const QUESTION_BANK = [
       '\\text{B: }2x^2=8\\text{，與題目不同，錯}',
       '\\text{C: }x^2+1=5\\text{，與題目不同，錯}',
       '\\text{D: }4x=8\\text{，與題目不同，錯}',
-      '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的數字相同，所以答案為 A。}',
+      '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的代入答案相同，所以答案為 A。}',
     ],
   },
   {
@@ -52,7 +52,7 @@ const QUESTION_BANK = [
       questionLatex: '\\dfrac{4^{n+1}\\cdot 8^n}{2^{3n+2}} =',
       questionHighlightLatex: `\\dfrac{4^{${cb(C0,'n')}+1}\\cdot 8^{${cb(C0,'n')}}}{2^{3${cb(C0,'n')}+2}}=`,
       substitutionLatex: 'n = 2:\\ \\dfrac{4^{2+1}\\cdot 8^2}{2^{3(2)+2}}=\\dfrac{4^3\\cdot 8^2}{2^8}=16',
-      substitutionHighlightLatex: `${cb(C0,'n = 2')}:\\ \\dfrac{4^{${cb(C0,'2')}+1}\\cdot 8^{${cb(C0,'2')}}}{2^{3(${cb(C0,'2')})+2}}=\\dfrac{4^3\\cdot 8^2}{2^8}=16`,
+      substitutionHighlightLatex: `${cb(C0,'\\textit{n} = 2')}:\\ \\dfrac{4^{${cb(C0,'2')}+1}\\cdot 8^{${cb(C0,'2')}}}{2^{3(${cb(C0,'2')})+2}}=\\dfrac{4^3\\cdot 8^2}{2^8}=16`,
       optionChecks: [
         { label: 'A', text: '2^n = 2^2 = 4', latex: `2^n=2^{${cb(C0,'2')}}=4`, correct: false },
         { label: 'B', text: '2^(2n) = 2^(2(2)) = 16', latex: `2^{2n}=2^{2(${cb(C0,'2')})}=16`, correct: true },
@@ -68,7 +68,7 @@ const QUESTION_BANK = [
       '\\text{B: }2^{2n}=16\\text{，與題目相同，對}',
       '\\text{C: }2^{2n-1}=8\\text{，與 16 不同，錯}',
       '\\text{D: }4\\text{，與 16 不同，錯}',
-      '\\therefore \\text{比較所有代入的答案，只有 B 跟題目的數字相同，所以答案為 B。}',
+      '\\therefore \\text{比較所有代入的答案，只有 B 跟題目的代入答案相同，所以答案為 B。}',
     ],
   },
   {
@@ -89,7 +89,7 @@ const QUESTION_BANK = [
       questionLatex: '\\dfrac{1}{k+2}+\\dfrac{3}{5k-6} =',
       questionHighlightLatex: `\\dfrac{1}{${cb(C0,'k')}+2}+\\dfrac{3}{5${cb(C0,'k')}-6}=`,
       substitutionLatex: 'k = 2:\\ \\dfrac{1}{2+2}+\\dfrac{3}{5(2)-6}=\\dfrac14+\\dfrac34=1',
-      substitutionHighlightLatex: `${cb(C0,'k = 2')}:\\ \\dfrac{1}{${cb(C0,'2')}+2}+\\dfrac{3}{5(${cb(C0,'2')})-6}=\\dfrac14+\\dfrac34=1`,
+      substitutionHighlightLatex: `${cb(C0,'\\textit{k} = 2')}:\\ \\dfrac{1}{${cb(C0,'2')}+2}+\\dfrac{3}{5(${cb(C0,'2')})-6}=\\dfrac14+\\dfrac34=1`,
       optionChecks: [
         { label: 'A', text: '(-8k)/((k+2)(5k-6)) = -16/16 = -1', latex: `\\dfrac{-8${cb(C0,'k')}}{(${cb(C0,'k')}+2)(5${cb(C0,'k')}-6)}=\\dfrac{-16}{16}=-1`, correct: false },
         { label: 'B', text: '(-2k)/((k+2)(5k-6)) = -4/16 = -1/4', latex: `\\dfrac{-2${cb(C0,'k')}}{(${cb(C0,'k')}+2)(5${cb(C0,'k')}-6)}=\\dfrac{-4}{16}=-\\dfrac14`, correct: false },
@@ -104,7 +104,7 @@ const QUESTION_BANK = [
       '\\text{B: }\\dfrac{-2k}{(k+2)(5k-6)}=\\dfrac{-4}{16}=-\\dfrac14\\text{，錯}',
       '\\text{C: }\\dfrac{2k}{(k+2)(5k-6)}=\\dfrac{4}{16}=\\dfrac14\\text{，錯}',
       '\\text{D: }\\dfrac{8k}{(k+2)(5k-6)}=\\dfrac{16}{16}=1\\text{，對}',
-      '\\therefore \\text{比較所有代入的答案，只有 D 跟題目的數字相同，所以答案為 D。}',
+      '\\therefore \\text{比較所有代入的答案，只有 D 跟題目的代入答案相同，所以答案為 D。}',
     ],
   },
   {
@@ -143,7 +143,7 @@ const QUESTION_BANK = [
       '\\text{B: }3(2)^2-8(2)(3)+3(3)^2=-9\\text{，錯}',
       '\\text{C: }5(2)^2-4(2)(3)+5(3)^2=41\\text{，錯}',
       '\\text{D: }5(2)^2-8(2)(3)+5(3)^2=17\\text{，對}',
-      '\\therefore \\text{比較所有代入的答案，只有 D 跟題目的數字相同，所以答案為 D。}',
+      '\\therefore \\text{比較所有代入的答案，只有 D 跟題目的代入答案相同，所以答案為 D。}',
     ],
   },
   {
@@ -159,7 +159,7 @@ const QUESTION_BANK = [
       questionLatex: '\\dfrac{(27x)^5}{(3x^{-2})^4} =',
       questionHighlightLatex: `\\dfrac{(27${cb(C0,'x')})^5}{(3${cb(C0,'x')}^{-2})^4}=`,
       substitutionLatex: 'x = 3:\\ \\dfrac{(27\\cdot 3)^5}{(3\\cdot 3^{-2})^4}=\\dfrac{81^5}{3^{-4}}=3^{24}',
-      substitutionHighlightLatex: `${cb(C0,'x = 3')}:\\ \\dfrac{(27\\cdot ${cb(C0,'3')})^5}{(3\\cdot ${cb(C0,'3')}^{-2})^4}=\\dfrac{81^5}{3^{-4}}=3^{24}`,
+      substitutionHighlightLatex: `${cb(C0,'\\textit{x} = 3')}:\\ \\dfrac{(27\\cdot ${cb(C0,'3')})^5}{(3\\cdot ${cb(C0,'3')}^{-2})^4}=\\dfrac{81^5}{3^{-4}}=3^{24}`,
       optionChecks: [
         { label: 'A', text: '3^2x^3 = 3^2(3)^3 = 3^5', latex: `3^2${cb(C0,'x')}^3=3^2\\cdot(${cb(C0,'3')})^3=3^5`, correct: false },
         { label: 'B', text: '3^4x^3 = 3^4(3)^3 = 3^7', latex: `3^4${cb(C0,'x')}^3=3^4\\cdot(${cb(C0,'3')})^3=3^7`, correct: false },
@@ -174,7 +174,7 @@ const QUESTION_BANK = [
       '\\text{B: }3^4x^3=3^4\\cdot 3^3=3^7\\text{，錯}',
       '\\text{C: }3^{11}x^{13}=3^{11}\\cdot 3^{13}=3^{24}\\text{，對}',
       '\\text{D: }3^{14}x^{13}=3^{14}\\cdot 3^{13}=3^{27}\\text{，錯}',
-      '\\therefore \\text{比較所有代入的答案，只有 C 跟題目的數字相同，所以答案為 C。}',
+      '\\therefore \\text{比較所有代入的答案，只有 C 跟題目的代入答案相同，所以答案為 C。}',
     ],
   },
 ];
