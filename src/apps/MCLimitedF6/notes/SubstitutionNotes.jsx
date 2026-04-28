@@ -95,10 +95,10 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
               <LeftBlockMath math="\frac{1}{k+2} + \frac{3}{5k-6} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
-                <div className="whitespace-nowrap">A. <InlineMath math="\dfrac{-8k}{(k+2)(5k-6)}" /></div>
-                <div className="whitespace-nowrap">B. <InlineMath math="\dfrac{-2k}{(k+2)(5k-6)}" /></div>
-                <div className="whitespace-nowrap">C. <InlineMath math="\dfrac{2k}{(k+2)(5k-6)}" /></div>
-                <div className="whitespace-nowrap">D. <InlineMath math="\dfrac{8k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="\dfrac{-8k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap">B.&nbsp;<InlineMath math="\dfrac{-2k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="\dfrac{2k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap">D.&nbsp;<InlineMath math="\dfrac{8k}{(k+2)(5k-6)}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -125,8 +125,8 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
               <LeftBlockMath math="\frac{9^{3n+1}}{(3^{2n+3})(27^{2n+1})} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
-                <div className="whitespace-nowrap">A. <InlineMath math="9^{-n-2}" /></div><div className="whitespace-nowrap">B. <InlineMath math="9^{-n-1}" /></div>
-                <div className="whitespace-nowrap">C. <InlineMath math="9^{n-2}" /></div><div className="whitespace-nowrap">D. <InlineMath math="9^{n-1}" /></div>
+                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="9^{-n-2}" /></div><div className="whitespace-nowrap">B.&nbsp;<InlineMath math="9^{-n-1}" /></div>
+                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="9^{n-2}" /></div><div className="whitespace-nowrap">D.&nbsp;<InlineMath math="9^{n-1}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -155,10 +155,10 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 overflow-x-auto">
               <LeftBlockMath math="(2\alpha - \beta)^2 + (\alpha - 2\beta)^2 = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-sm text-left w-full">
-                <div className="whitespace-nowrap">A. <InlineMath math="3\alpha^2 - 4\alpha\beta + 3\beta^2" /></div>
-                <div className="whitespace-nowrap">B. <InlineMath math="3\alpha^2 - 8\alpha\beta + 3\beta^2" /></div>
-                <div className="whitespace-nowrap">C. <InlineMath math="5\alpha^2 - 4\alpha\beta + 5\beta^2" /></div>
-                <div className="whitespace-nowrap">D. <InlineMath math="5\alpha^2 - 8\alpha\beta + 5\beta^2" /></div>
+                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="3\alpha^2 - 4\alpha\beta + 3\beta^2" /></div>
+                <div className="whitespace-nowrap">B.&nbsp;<InlineMath math="3\alpha^2 - 8\alpha\beta + 3\beta^2" /></div>
+                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="5\alpha^2 - 4\alpha\beta + 5\beta^2" /></div>
+                <div className="whitespace-nowrap">D.&nbsp;<InlineMath math="5\alpha^2 - 8\alpha\beta + 5\beta^2" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -185,8 +185,8 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
               <LeftBlockMath math="\frac{(27x)^5}{(3x^{-2})^4} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
-                <div className="whitespace-nowrap">A. <InlineMath math="3^2 x^3" /></div><div className="whitespace-nowrap">B. <InlineMath math="3^4 x^3" /></div>
-                <div className="whitespace-nowrap">C. <InlineMath math="3^{11} x^{13}" /></div><div className="whitespace-nowrap">D. <InlineMath math="3^{14} x^{13}" /></div>
+                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="3^2 x^3" /></div><div className="whitespace-nowrap">B.&nbsp;<InlineMath math="3^4 x^3" /></div>
+                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="3^{11} x^{13}" /></div><div className="whitespace-nowrap">D.&nbsp;<InlineMath math="3^{14} x^{13}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -214,9 +214,9 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200">
               解 <InlineMath math="(x+2s)(x+t) = sx + st" />，其中 <InlineMath math="s" /> 及 <InlineMath math="t" /> 均為常數。
               <div className="grid grid-cols-2 gap-3 mt-4 text-base text-left w-full">
-                <div className="whitespace-nowrap">A. <InlineMath math="x = -s" /></div><div className="whitespace-nowrap">B. <InlineMath math="x = -2s" /></div>
-                <div className="whitespace-nowrap text-sm md:text-base">C. <InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" /></div>
-                <div className="whitespace-nowrap text-sm md:text-base">D. <InlineMath math="x = -2s" /> 或 <InlineMath math="x = -t" /></div>
+                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="x = -s" /></div><div className="whitespace-nowrap">B.&nbsp;<InlineMath math="x = -2s" /></div>
+                <div className="whitespace-nowrap text-sm md:text-base">C.&nbsp;<InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" /></div>
+                <div className="whitespace-nowrap text-sm md:text-base">D.&nbsp;<InlineMath math="x = -2s" /> 或 <InlineMath math="x = -t" /></div>
               </div>
             </div>
             <div className="border-l-4 border-emerald-400 bg-emerald-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -248,8 +248,8 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200 overflow-x-auto">
               <InlineMath math="x - 1 > \dfrac{2x-9}{3}" /> 或 <InlineMath math="3x + 12 \geq 0" /> 的解為？
               <div className="grid grid-cols-2 gap-3 mt-4 text-base text-left w-full">
-                <div className="whitespace-nowrap">A. <InlineMath math="x \leq -4" /></div><div className="whitespace-nowrap">B. <InlineMath math="x \geq -4" /></div>
-                <div className="whitespace-nowrap">C. <InlineMath math="x < -6" /></div><div className="whitespace-nowrap">D. <InlineMath math="x > -6" /></div>
+                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="x \leq -4" /></div><div className="whitespace-nowrap">B.&nbsp;<InlineMath math="x \geq -4" /></div>
+                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="x < -6" /></div><div className="whitespace-nowrap">D.&nbsp;<InlineMath math="x > -6" /></div>
               </div>
             </div>
             <div className="border-l-4 border-emerald-400 bg-emerald-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700 leading-relaxed">
