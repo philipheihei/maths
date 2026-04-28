@@ -1,8 +1,13 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { InlineMath, BlockMath } from '../shared';
+import { InlineMath, LeftBlockMath } from '../shared';
 
 const SubstitutionNotes = ({ onBack }) => {
+  const H0 = '#fef3c7';
+  const H1 = '#bae6fd';
+  const H2 = '#fecdd3';
+  const h = (c, v) => `\\colorbox{${c}}{${v}}`;
+
   return (
     <div className="bg-gray-50 text-gray-800 min-h-screen font-sans">
       {/* Header */}
@@ -87,25 +92,25 @@ const SubstitutionNotes = ({ onBack }) => {
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 適用</span>
               <span className="font-bold text-lg text-gray-800">題型一：分式化簡</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-center text-lg border border-gray-200">
-              <BlockMath math="\frac{1}{k+2} + \frac{3}{5k-6} = ?" />
-              <div className="grid grid-cols-2 gap-2 mt-3 text-base text-left max-w-sm mx-auto">
-                <div>A. <InlineMath math="\dfrac{-8k}{(k+2)(5k-6)}" /></div>
-                <div>B. <InlineMath math="\dfrac{-2k}{(k+2)(5k-6)}" /></div>
-                <div>C. <InlineMath math="\dfrac{2k}{(k+2)(5k-6)}" /></div>
-                <div>D. <InlineMath math="\dfrac{8k}{(k+2)(5k-6)}" /></div>
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
+              <LeftBlockMath math="\frac{1}{k+2} + \frac{3}{5k-6} = ?" />
+              <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
+                <div className="whitespace-nowrap">A. <InlineMath math="\dfrac{-8k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap">B. <InlineMath math="\dfrac{-2k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap">C. <InlineMath math="\dfrac{2k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap">D. <InlineMath math="\dfrac{8k}{(k+2)(5k-6)}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="k = 2" />（避免分母為0，檢查：<InlineMath math="k+2=4" />, <InlineMath math="5k-6=4" />，OK）</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 計題目：<InlineMath math="\dfrac{1}{4} + \dfrac{3}{4} = 1" /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`\\dfrac{1}{${h(H0, '2')}+2}+\\dfrac{3}{5(${h(H0, '2')})-6}=\\dfrac14+\\dfrac34=1`} /></div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項（分母 <InlineMath math="(4)(4)=16" />）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li>A: <InlineMath math="\dfrac{-16}{16} = -1" /> ❌</li>
-                  <li>B: <InlineMath math="\dfrac{-4}{16} = -0.25" /> ❌</li>
-                  <li>C: <InlineMath math="\dfrac{4}{16} = 0.25" /> ❌</li>
-                  <li className="text-emerald-700 font-bold">D: <InlineMath math="\dfrac{16}{16} = 1" /> ✅ ← 答案</li>
+                  <li>A: <InlineMath math={`\\dfrac{-8(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{-16}{15}`} /> ❌</li>
+                  <li>B: <InlineMath math={`\\dfrac{-2(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{-4}{15}`} /> ❌</li>
+                  <li>C: <InlineMath math={`\\dfrac{2(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{4}{15}`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold">D: <InlineMath math={`\\dfrac{8(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{16}{15}`} /> ✅ ← 答案</li>
                 </ul>
               </div>
             </div>
@@ -117,25 +122,25 @@ const SubstitutionNotes = ({ onBack }) => {
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 適用</span>
               <span className="font-bold text-lg text-gray-800">題型二：指數運算化簡</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-center text-lg border border-gray-200">
-              <BlockMath math="\frac{9^{3n+1}}{(3^{2n+3})(27^{2n+1})} = ?" />
-              <div className="grid grid-cols-2 gap-2 mt-3 text-base text-left max-w-xs mx-auto">
-                <div>A. <InlineMath math="9^{-n-2}" /></div><div>B. <InlineMath math="9^{-n-1}" /></div>
-                <div>C. <InlineMath math="9^{n-2}" /></div><div>D. <InlineMath math="9^{n-1}" /></div>
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
+              <LeftBlockMath math="\frac{9^{3n+1}}{(3^{2n+3})(27^{2n+1})} = ?" />
+              <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
+                <div className="whitespace-nowrap">A. <InlineMath math="9^{-n-2}" /></div><div className="whitespace-nowrap">B. <InlineMath math="9^{-n-1}" /></div>
+                <div className="whitespace-nowrap">C. <InlineMath math="9^{n-2}" /></div><div className="whitespace-nowrap">D. <InlineMath math="9^{n-1}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="n = 1" /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 計題目：
-                <InlineMath math="\dfrac{9^{4}}{(3^{5})(27^{3})} = \dfrac{6561}{243 \times 19683} = \dfrac{6561}{4782969} = \dfrac{1}{729} = 9^{-3}" />
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：
+                <InlineMath math={`\\dfrac{9^{3(${h(H0, '1')})+1}}{(3^{2(${h(H0, '1')})+3})(27^{2(${h(H0, '1')})+1})}=9^{-3}`} />
               </div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代 <InlineMath math="n=1" /> 入選項：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li className="text-emerald-700 font-bold">A: <InlineMath math="9^{-1-2} = 9^{-3}" /> ✅ ← 答案</li>
-                  <li>B: <InlineMath math="9^{-1-1} = 9^{-2}" /> ❌</li>
-                  <li>C: <InlineMath math="9^{1-2} = 9^{-1}" /> ❌</li>
-                  <li>D: <InlineMath math="9^{1-1} = 9^{0} = 1" /> ❌</li>
+                  <li className="text-emerald-700 font-bold">A: <InlineMath math={`9^{-${h(H0, '1')}-2}=9^{-3}`} /> ✅ ← 答案</li>
+                  <li>B: <InlineMath math={`9^{-${h(H0, '1')}-1}=9^{-2}`} /> ❌</li>
+                  <li>C: <InlineMath math={`9^{${h(H0, '1')}-2}=9^{-1}`} /> ❌</li>
+                  <li>D: <InlineMath math={`9^{${h(H0, '1')}-1}=9^0=1`} /> ❌</li>
                 </ul>
               </div>
             </div>
@@ -147,25 +152,25 @@ const SubstitutionNotes = ({ onBack }) => {
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 適用</span>
               <span className="font-bold text-lg text-gray-800">題型三：展開代數式（雙變數）</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-center text-lg border border-gray-200 overflow-x-auto">
-              <BlockMath math="(2\alpha - \beta)^2 + (\alpha - 2\beta)^2 = ?" />
-              <div className="grid grid-cols-2 gap-2 mt-3 text-sm text-left max-w-sm mx-auto">
-                <div>A. <InlineMath math="3\alpha^2 - 4\alpha\beta + 3\beta^2" /></div>
-                <div>B. <InlineMath math="3\alpha^2 - 8\alpha\beta + 3\beta^2" /></div>
-                <div>C. <InlineMath math="5\alpha^2 - 4\alpha\beta + 5\beta^2" /></div>
-                <div>D. <InlineMath math="5\alpha^2 - 8\alpha\beta + 5\beta^2" /></div>
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 overflow-x-auto">
+              <LeftBlockMath math="(2\alpha - \beta)^2 + (\alpha - 2\beta)^2 = ?" />
+              <div className="grid grid-cols-2 gap-3 mt-3 text-sm text-left w-full">
+                <div className="whitespace-nowrap">A. <InlineMath math="3\alpha^2 - 4\alpha\beta + 3\beta^2" /></div>
+                <div className="whitespace-nowrap">B. <InlineMath math="3\alpha^2 - 8\alpha\beta + 3\beta^2" /></div>
+                <div className="whitespace-nowrap">C. <InlineMath math="5\alpha^2 - 4\alpha\beta + 5\beta^2" /></div>
+                <div className="whitespace-nowrap">D. <InlineMath math="5\alpha^2 - 8\alpha\beta + 5\beta^2" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟（雙變數要代兩個不同值）</div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="\alpha = 2,\ \beta = 3" /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 計題目：<InlineMath math="(4-3)^2 + (2-6)^2 = 1 + 16 = 17" /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`(2(${h(H0, '2')})-${h(H1, '3')})^2+(${h(H0, '2')}-2(${h(H1, '3')}))^2=17`} /></div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li>A: <InlineMath math="12 - 24 + 27 = 15" /> ❌</li>
-                  <li>B: <InlineMath math="12 - 48 + 27 = -9" /> ❌</li>
-                  <li>C: <InlineMath math="20 - 24 + 45 = 41" /> ❌</li>
-                  <li className="text-emerald-700 font-bold">D: <InlineMath math="20 - 48 + 45 = 17" /> ✅ ← 答案</li>
+                  <li>A: <InlineMath math={`3(${h(H0, '2')})^2-4(${h(H0, '2')})(${h(H1, '3')})+3(${h(H1, '3')})^2=15`} /> ❌</li>
+                  <li>B: <InlineMath math={`3(${h(H0, '2')})^2-8(${h(H0, '2')})(${h(H1, '3')})+3(${h(H1, '3')})^2=-9`} /> ❌</li>
+                  <li>C: <InlineMath math={`5(${h(H0, '2')})^2-4(${h(H0, '2')})(${h(H1, '3')})+5(${h(H1, '3')})^2=41`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold">D: <InlineMath math={`5(${h(H0, '2')})^2-8(${h(H0, '2')})(${h(H1, '3')})+5(${h(H1, '3')})^2=17`} /> ✅ ← 答案</li>
                 </ul>
               </div>
             </div>
@@ -177,19 +182,24 @@ const SubstitutionNotes = ({ onBack }) => {
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 適用</span>
               <span className="font-bold text-lg text-gray-800">題型四：指數律化簡</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-center text-lg border border-gray-200">
-              <BlockMath math="\frac{(27x)^5}{(3x^{-2})^4} = ?" />
-              <div className="grid grid-cols-2 gap-2 mt-3 text-base text-left max-w-xs mx-auto">
-                <div>A. <InlineMath math="3^2 x^3" /></div><div>B. <InlineMath math="3^4 x^3" /></div>
-                <div>C. <InlineMath math="3^{11} x^{13}" /></div><div>D. <InlineMath math="3^{14} x^{13}" /></div>
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
+              <LeftBlockMath math="\frac{(27x)^5}{(3x^{-2})^4} = ?" />
+              <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
+                <div className="whitespace-nowrap">A. <InlineMath math="3^2 x^3" /></div><div className="whitespace-nowrap">B. <InlineMath math="3^4 x^3" /></div>
+                <div className="whitespace-nowrap">C. <InlineMath math="3^{11} x^{13}" /></div><div className="whitespace-nowrap">D. <InlineMath math="3^{14} x^{13}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="x = 1" />（選項只有 <InlineMath math="x" /> 的冪，代1可快速排除；但係數要靠計算驗證）</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 計題目：<InlineMath math="\dfrac{(27)^5}{(3)^4} = \dfrac{3^{15}}{3^4} = 3^{11}" /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> <InlineMath math="x=1" /> 時，A→<InlineMath math="9" /> ❌，B→<InlineMath math="81" /> ❌，C→<InlineMath math="3^{11}" /> ✅，D→<InlineMath math="3^{14}" /> ❌
-                <br/>→ 再代 <InlineMath math="x=3" /> 驗證C與D的 <InlineMath math="x" /> 次數：題目得 <InlineMath math="3^{11} \cdot 3^{13}" />，C得 <InlineMath math="3^{11}\cdot 3^{13}" /> ✅，D得 <InlineMath math="3^{14}\cdot 3^{13}" /> ❌
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="x = 3" /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`\\dfrac{(27\\cdot ${h(H0, '3')})^5}{(3\\cdot ${h(H0, '3')}^{-2})^4}=3^{24}`} /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項：
+                <ul className="mt-1.5 ml-5 space-y-1 list-none">
+                  <li>A: <InlineMath math={`3^2(${h(H0, '3')})^3=3^5`} /> ❌</li>
+                  <li>B: <InlineMath math={`3^4(${h(H0, '3')})^3=3^7`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold">C: <InlineMath math={`3^{11}(${h(H0, '3')})^{13}=3^{24}`} /> ✅ ← 答案</li>
+                  <li>D: <InlineMath math={`3^{14}(${h(H0, '3')})^{13}=3^{27}`} /> ❌</li>
+                </ul>
               </div>
               <div className="text-emerald-700 font-bold mt-2">答案：C（<InlineMath math="3^{11}x^{13}" />）</div>
             </div>
@@ -199,31 +209,31 @@ const SubstitutionNotes = ({ onBack }) => {
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-3">
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 可代入</span>
-              <span className="font-bold text-lg text-gray-800">題型五：解方程（含兩個常數）</span>
+              <span className="font-bold text-lg text-gray-800">題型五：解方程（有等式 , check左 = 右）</span>
             </div>
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200">
               解 <InlineMath math="(x+2s)(x+t) = sx + st" />，其中 <InlineMath math="s" /> 及 <InlineMath math="t" /> 均為常數。
-              <div className="grid grid-cols-2 gap-2 mt-4 text-base text-left max-w-xs mx-auto">
-                <div>A. <InlineMath math="x = -s" /></div><div>B. <InlineMath math="x = -2s" /></div>
-                <div className="col-span-2 text-sm md:text-base md:col-span-1">C. <InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" /></div>
-                <div className="col-span-2 text-sm md:text-base md:col-span-1">D. <InlineMath math="x = -2s" /> 或 <InlineMath math="x = -t" /></div>
+              <div className="grid grid-cols-2 gap-3 mt-4 text-base text-left w-full">
+                <div className="whitespace-nowrap">A. <InlineMath math="x = -s" /></div><div className="whitespace-nowrap">B. <InlineMath math="x = -2s" /></div>
+                <div className="whitespace-nowrap text-sm md:text-base">C. <InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" /></div>
+                <div className="whitespace-nowrap text-sm md:text-base">D. <InlineMath math="x = -2s" /> 或 <InlineMath math="x = -t" /></div>
               </div>
             </div>
             <div className="border-l-4 border-emerald-400 bg-emerald-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-emerald-800">📝 分析：將選項的 x 值代入兩邊，check 左 = 右</div>
               <div className="pl-2 space-y-1.5">
                 <div>代 <InlineMath math="x = -s" />：</div>
-                <div className="pl-4">左：<InlineMath math="(-s+2s)(-s+t) = s(t-s)" /></div>
-                <div className="pl-4">右：<InlineMath math="s(-s)+st = s(t-s)" /> ✓ 左 = 右，<InlineMath math="x=-s" /> 成立</div>
+                <div className="pl-4">左：<InlineMath math={`(${h(H0, '-s')}+2s)(${h(H0, '-s')}+t) = s(t-s)`} /></div>
+                <div className="pl-4">右：<InlineMath math={`s(${h(H0, '-s')})+st = s(t-s)`} /> ✅ 左 = 右，<InlineMath math="x=-s" /> 成立</div>
                 <div className="mt-1">代 <InlineMath math="x = -2s" />：</div>
-                <div className="pl-4">左：<InlineMath math="(-2s+2s)(-2s+t) = 0" /></div>
-                <div className="pl-4">右：<InlineMath math="s(-2s)+st = s(t-2s)" />，一般不等於 0 ✗</div>
+                <div className="pl-4">左：<InlineMath math={`(${h(H1, '-2s')}+2s)(${h(H1, '-2s')}+t) = 0`} /></div>
+                <div className="pl-4">右：<InlineMath math={`s(${h(H1, '-2s')})+st = s(t-2s)`} /> ❌ 左 ≠ 右，<InlineMath math="x=-2s" /> 不對!</div>
                 <div className="mt-1">代 <InlineMath math="x = -t" />：</div>
-                <div className="pl-4">左：<InlineMath math="(-t+2s)(-t+t) = 0" /></div>
-                <div className="pl-4">右：<InlineMath math="s(-t)+st = 0" /> ✓ 左 = 右，<InlineMath math="x=-t" /> 成立</div>
+                <div className="pl-4">左：<InlineMath math={`(${h(H2, '-t')}+2s)(${h(H2, '-t')}+t) = 0`} /></div>
+                <div className="pl-4">右：<InlineMath math={`s(${h(H2, '-t')})+st = 0`} /> ✅ 左 = 右，<InlineMath math="x=-t" /> 成立</div>
               </div>
               <div className="bg-white border border-emerald-200 rounded-lg p-2 mt-2">
-                <InlineMath math="x=-s" /> ✓ 及 <InlineMath math="x=-t" /> ✓，即「或」兩個根 → 答案 C
+                <InlineMath math="x=-s" /> ✅ 及 <InlineMath math="x=-t" /> ✅，即「或」兩個根 → 答案 C
               </div>
               <div className="text-emerald-700 font-bold mt-2">答案：C（<InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" />）</div>
             </div>
@@ -237,9 +247,9 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200 overflow-x-auto">
               <InlineMath math="x - 1 > \dfrac{2x-9}{3}" /> 或 <InlineMath math="3x + 12 \geq 0" /> 的解為？
-              <div className="grid grid-cols-2 gap-3 mt-4 text-base text-left max-w-xs mx-auto">
-                <div>A. <InlineMath math="x \leq -4" /></div><div>B. <InlineMath math="x \geq -4" /></div>
-                <div>C. <InlineMath math="x < -6" /></div><div>D. <InlineMath math="x > -6" /></div>
+              <div className="grid grid-cols-2 gap-3 mt-4 text-base text-left w-full">
+                <div className="whitespace-nowrap">A. <InlineMath math="x \leq -4" /></div><div className="whitespace-nowrap">B. <InlineMath math="x \geq -4" /></div>
+                <div className="whitespace-nowrap">C. <InlineMath math="x < -6" /></div><div className="whitespace-nowrap">D. <InlineMath math="x > -6" /></div>
               </div>
             </div>
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-800 leading-relaxed">
