@@ -68,8 +68,8 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="flex items-start gap-3 p-3 rounded-xl bg-red-50 text-red-800 border border-red-300">
               <span className="text-xl">❌</span>
               <div>
-                <div className="font-bold">呢一類先：參數式求變數（唔好亂代）</div>
-                <div className="text-sm mt-1 text-red-900">例如 <InlineMath math="(3c+1)(d-4)=2d(5c-1)" /> 呢類「由 <InlineMath math="d" /> 求 <InlineMath math="c" />」題。若胡亂同時代 <InlineMath math="c,d" /> 數值，好易令左邊 <InlineMath math="\neq" /> 右邊，前設已經錯，後面比較選項自然會誤判。</div>
+                <div className="font-bold">參數式求變數（初學者暫不建議靠代入）</div>
+                <div className="text-sm mt-1 text-red-900">例如 <InlineMath math="(3c+1)(d-4)=2d(5c-1)" /> 呢類「由 <InlineMath math="d" /> 求 <InlineMath math="c" />」題，對弱底同學太易亂。胡亂代值會令左邊 <InlineMath math="\neq" /> 右邊，前設錯誤，後面自然全錯。</div>
               </div>
             </div>
           </div>
@@ -275,6 +275,41 @@ const SubstitutionNotes = ({ onBack }) => {
               <div className="text-emerald-700 font-bold mt-2">答案：B（<InlineMath math="x \geq -4" />）</div>
             </div>
           </div>
+
+          {/* 題型7 */}
+          <div className="mb-2">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-red-100 text-red-800 border border-red-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">❌ 初學者先跳過</span>
+              <span className="font-bold text-lg text-gray-800">題型七：參數式求變數（由 <InlineMath math="d" /> 求 <InlineMath math="c" />）</span>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 [&>div]:pl-0 [&_.katex-display>.katex]:!ml-0 [&_.katex-display>.katex]:!text-left">
+              <LeftBlockMath math="\text{若 }(3c+1)(d-4)=2d(5c-1)\text{，則 }c=" />
+              <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
+                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="\dfrac{3d-4}{7d+12}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="\dfrac{3d+4}{7d-12}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="C" /><InlineMath math="\dfrac{7d-12}{3d+4}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="D" /><InlineMath math="\dfrac{7d+12}{3d-4}" /></div>
+              </div>
+            </div>
+            <div className="border-l-4 border-red-400 bg-red-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700 leading-relaxed">
+              <div className="font-bold text-red-800">📝 重點：呢類題唔用代入法</div>
+              <div>原因：題目本身係「有條件等式」，即 <InlineMath math="(3c+1)(d-4)=2d(5c-1)" /> 要成立。你一亂代 <InlineMath math="c,d" />，多數會破壞呢個條件。</div>
+              <div className="pl-2 space-y-1.5">
+                <div><span className="bg-red-200 text-red-800 rounded px-1.5 font-mono text-xs shadow-sm">例子</span> 你話代 <InlineMath math="c=2,d=3" />：</div>
+                <div className="pl-4">左：<InlineMath math="(3(2)+1)(3-4)=7(-1)=-7" /></div>
+                <div className="pl-4">右：<InlineMath math="2(3)(5(2)-1)=6(9)=54" /></div>
+                <div className="pl-4">左 <InlineMath math="\neq" /> 右，所以你代入嘅 <InlineMath math="(c,d)" /> 根本唔符合題目前設，用佢去比選項會誤導。</div>
+              </div>
+              <div className="bg-white border border-red-200 rounded-lg p-2 mt-2">
+                學生分辨特徵：
+                <br/>1. 題目有兩個字母（例如 <InlineMath math="c,d" />）
+                <br/>2. 前面寫「若 ... 則 ...」
+                <br/>3. 要求「其中一個字母用另一個字母表示」
+                <br/>見到以上 3 點，就當「唔用代入法題」。
+              </div>
+              <div className="text-red-700 font-bold mt-2">呢題重點係識別方法：唔用亂代，避免前設錯誤。</div>
+            </div>
+          </div>
         </section>
 
         {/* 總結表 */}
@@ -296,7 +331,7 @@ const SubstitutionNotes = ({ onBack }) => {
                 <tr className="hover:bg-gray-50"><td className="p-3">二次函數配方</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">⚠️ 小心</td><td className="p-3 text-gray-600">代兩個值排除</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">解方程（選項含「或」）</td><td className="p-3 text-center text-emerald-600 font-bold whitespace-nowrap">✅ 適用</td><td className="p-3 text-gray-600">逐一代入兩邊 check 左 = 右</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">不等式範圍</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">⚠️ 有技巧</td><td className="p-3 text-gray-600">試幾個 x 值，檢查不等號方向</td></tr>
-                <tr className="hover:bg-gray-50"><td className="p-3">參數式求變數（如由 <InlineMath math="d" /> 求 <InlineMath math="c" />）</td><td className="p-3 text-center text-red-600 font-bold whitespace-nowrap">❌ 不建議亂代</td><td className="p-3 text-gray-600">胡亂代值會令左 ≠ 右，前設錯誤</td></tr>
+                <tr className="hover:bg-gray-50"><td className="p-3">參數式求變數（如由 <InlineMath math="d" /> 求 <InlineMath math="c" />）</td><td className="p-3 text-center text-red-600 font-bold whitespace-nowrap">❌ 初學者先唔用代入法</td><td className="p-3 text-gray-600">用固定模板：搬項 → 抽 <InlineMath math="c" /> → 相除</td></tr>
               </tbody>
             </table>
           </div>
