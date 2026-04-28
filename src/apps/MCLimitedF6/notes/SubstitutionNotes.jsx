@@ -233,7 +233,7 @@ const SubstitutionNotes = ({ onBack }) => {
                 <div className="pl-4">右：<InlineMath math={`s(${h(H2, '-t')})+st = 0`} /> ✅ 左 = 右，<InlineMath math="x=-t" /> 成立</div>
               </div>
               <div className="bg-white border border-emerald-200 rounded-lg p-2 mt-2">
-                <InlineMath math="x=-s" /> ✅ 及 <InlineMath math="x=-t" /> ✅，即「或」兩個根 → 答案 C
+                <InlineMath math="x=-s" /> ✅ 及 <InlineMath math="x=-t" /> ✅ → 答案 C
               </div>
               <div className="text-emerald-700 font-bold mt-2">答案：C（<InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" />）</div>
             </div>
@@ -242,7 +242,7 @@ const SubstitutionNotes = ({ onBack }) => {
           {/* 題型6 */}
           <div className="mb-2">
             <div className="flex items-center gap-2 mb-3">
-              <span className="bg-red-100 text-red-800 border border-red-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">❌ 不適用</span>
+              <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 可用技巧</span>
               <span className="font-bold text-lg text-gray-800">題型六：不等式（取「或」）</span>
             </div>
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200 overflow-x-auto">
@@ -252,11 +252,25 @@ const SubstitutionNotes = ({ onBack }) => {
                 <div className="whitespace-nowrap">C. <InlineMath math="x < -6" /></div><div className="whitespace-nowrap">D. <InlineMath math="x > -6" /></div>
               </div>
             </div>
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-800 leading-relaxed">
-              ❌ <strong>為何不適用？</strong><br/>
-              選項是不等式範圍，無法靠代一個特定 <InlineMath math="x" /> 值來「驗證」哪個範圍正確。代入法在此完全失效，必須老老實實解不等式。<br/><br/>
-              <strong>正確做法：</strong>分別解兩個不等式，再取「或」（聯集）。<br/>
-              解得 <InlineMath math="x > -6" /> 或 <InlineMath math="x \geq -4" /> → 合併：<InlineMath math="x \geq -4" />，答案 <strong>B</strong>。
+            <div className="border-l-4 border-emerald-400 bg-emerald-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700 leading-relaxed">
+              <div className="font-bold text-emerald-800">📝 分析：唔識解不等式，都可以用「試數字」方法</div>
+              <div>做法好簡單：揀幾個 <InlineMath math="x" /> 值代入左右兩邊，睇住不等號方向有無成立（例如 <InlineMath math="左 > 右" /> 或 <InlineMath math="左 \geq 右" />）。</div>
+              <div>先找兩個分界位：<InlineMath math="x=-6" />、<InlineMath math="x=-4" />（即係答案可能會由「啱」變「唔啱」的轉折位），再試這兩個位附近的數字就得。</div>
+              <div className="pl-2 space-y-1.5">
+                <div><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 試 <InlineMath math="x=-5" />（介乎 -6 與 -4 之間）</div>
+                <div className="pl-4">第一條：<InlineMath math="-5-1 > \dfrac{2(-5)-9}{3}" />，即 <InlineMath math="-6 > -\dfrac{19}{3}" /> ✅</div>
+                <div className="pl-4">第二條：<InlineMath math="3(-5)+12 \geq 0" />，即 <InlineMath math="-3 \geq 0" /> ❌</div>
+                <div className="pl-4">因為是「或」，一條成立已經夠，所以 <InlineMath math="x=-5" /> 屬於答案範圍。</div>
+                <div className="mt-1"><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 試 <InlineMath math="x=-7" />（小於 -6）</div>
+                <div className="pl-4">第一條：<InlineMath math="-8 > -\dfrac{23}{3}" /> ❌；第二條：<InlineMath math="-9 \geq 0" /> ❌，兩條都不成立。</div>
+                <div className="pl-4"><InlineMath math="x=-7" /> 唔喺答案範圍，可排除 <InlineMath math="x < -6" />（選項 C）。</div>
+                <div className="mt-1"><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 試 <InlineMath math="x=0" />（大於 -4）</div>
+                <div className="pl-4">第二條：<InlineMath math="3(0)+12 \geq 0" /> ✅，所以所有 <InlineMath math="x \geq -4" /> 都會在「或」題中保留。</div>
+              </div>
+              <div className="bg-white border border-emerald-200 rounded-lg p-2 mt-2">
+                由測試可知：小於 -6 不行，而 -5、0 都可行，答案是 <strong>B</strong>（<InlineMath math="x \geq -4" />）。
+              </div>
+              <div className="text-emerald-700 font-bold mt-2">答案：B（<InlineMath math="x \geq -4" />）</div>
             </div>
           </div>
         </section>
@@ -279,7 +293,7 @@ const SubstitutionNotes = ({ onBack }) => {
                 <tr className="hover:bg-gray-50"><td className="p-3">雙變數代數式</td><td className="p-3 text-center text-emerald-600 font-bold whitespace-nowrap">✅ 適用</td><td className="p-3 text-gray-600">兩變數代不同值</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">二次函數配方</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">⚠️ 小心</td><td className="p-3 text-gray-600">代兩個值排除</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">解方程（選項含「或」）</td><td className="p-3 text-center text-emerald-600 font-bold whitespace-nowrap">✅ 適用</td><td className="p-3 text-gray-600">逐一代入兩邊 check 左 = 右</td></tr>
-                <tr className="hover:bg-gray-50"><td className="p-3">不等式範圍</td><td className="p-3 text-center text-red-600 font-bold whitespace-nowrap">❌ 不適用</td><td className="p-3 text-gray-600">必須解不等式</td></tr>
+                <tr className="hover:bg-gray-50"><td className="p-3">不等式範圍</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">⚠️ 有技巧</td><td className="p-3 text-gray-600">試幾個 x 值，檢查不等號方向</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">概率題</td><td className="p-3 text-center text-red-600 font-bold whitespace-nowrap">❌ 不適用</td><td className="p-3 text-gray-600">邏輯性強，需計算</td></tr>
               </tbody>
             </table>
