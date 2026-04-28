@@ -126,6 +126,16 @@ export const SubstitutionSteps = ({ question }) => {
     return out;
   };
 
+  const truncatePlainDecimals = (latex) => {
+    if (!latex) return latex;
+    // Non-scientific decimals longer than 10 places are truncated (no rounding)
+    return latex.replace(/(-?\d+)\.(\d{11,})(?!\d)(?!\s*\\times\s*10\^)/g, (_, intPart, fracPart) => (
+      `${intPart}.${fracPart.slice(0, 10)}`
+    ));
+  };
+
+  const normalizeLatex = (latex) => truncatePlainDecimals(renderSubstitutedHighlights(latex));
+
   const buildOptionRules = () => {
     const rules = [];
     vars.forEach((v, i) => {
@@ -138,10 +148,10 @@ export const SubstitutionSteps = ({ question }) => {
   return (
     <div className="py-2 pl-2 text-left space-y-2">
       <div className="leading-7">
-        <InlineMath math={`\\text{題目：} ${view.questionHighlightLatex || view.questionLatex || question.questionLatex || ''}`} />
+        <InlineMath math={`\\text{題目：} ${normalizeLatex(view.questionHighlightLatex || view.questionLatex || question.questionLatex || '')}`} />
       </div>
       <div className="leading-7">
-        <InlineMath math={`\\text{題目：代 } ${view.substitutionHighlightLatex || view.substitutionLatex || ''}`} />
+        <InlineMath math={`\\text{題目：代 } ${normalizeLatex(view.substitutionHighlightLatex || view.substitutionLatex || '')}`} />
       </div>
 
       {(view.optionChecks || []).map((row, idx) => {
@@ -157,12 +167,12 @@ export const SubstitutionSteps = ({ question }) => {
               <span className="inline-flex flex-col align-top">
                 {row.latexLines.map((line, lineIdx) => (
                   <span key={`${row.label}-line-${lineIdx}`}>
-                    <InlineMath math={`\\quad ${renderSubstitutedHighlights(line)}`} />
+                    <InlineMath math={`\\quad ${normalizeLatex(line)}`} />
                   </span>
                 ))}
               </span>
             ) : row.latex
-              ? <InlineMath math={`\\quad ${renderSubstitutedHighlights(row.latex)}`} />
+              ? <InlineMath math={`\\quad ${normalizeLatex(row.latex)}`} />
               : renderWithRules(row.text, optionRules)}
             <span className={`ml-2 font-bold ${markCls}`}>{mark}</span>
           </div>
