@@ -7,6 +7,8 @@ const SubstitutionNotes = ({ onBack }) => {
   const H1 = '#bae6fd';
   const H2 = '#fecdd3';
   const h = (c, v) => `\\colorbox{${c}}{${v}}`;
+  const ChoiceDot = ({ label }) => <span className="inline-block w-6">{label}.</span>;
+  const ChoiceColon = ({ label }) => <span className="inline-block w-6">{label}:</span>;
 
   return (
     <div className="bg-gray-50 text-gray-800 min-h-screen font-sans">
@@ -95,10 +97,10 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
               <LeftBlockMath math="\frac{1}{k+2} + \frac{3}{5k-6} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
-                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="\dfrac{-8k}{(k+2)(5k-6)}" /></div>
-                <div className="whitespace-nowrap">B.&nbsp;<InlineMath math="\dfrac{-2k}{(k+2)(5k-6)}" /></div>
-                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="\dfrac{2k}{(k+2)(5k-6)}" /></div>
-                <div className="whitespace-nowrap">D.&nbsp;<InlineMath math="\dfrac{8k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="\dfrac{-8k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="\dfrac{-2k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="C" /><InlineMath math="\dfrac{2k}{(k+2)(5k-6)}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="D" /><InlineMath math="\dfrac{8k}{(k+2)(5k-6)}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -107,10 +109,10 @@ const SubstitutionNotes = ({ onBack }) => {
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`\\dfrac{1}{${h(H0, '2')}+2}+\\dfrac{3}{5(${h(H0, '2')})-6}=\\dfrac14+\\dfrac34=1`} /></div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項（分母 <InlineMath math="(4)(4)=16" />）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li>A: <InlineMath math={`\\dfrac{-8(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{-16}{15}`} /> ❌</li>
-                  <li>B: <InlineMath math={`\\dfrac{-2(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{-4}{15}`} /> ❌</li>
-                  <li>C: <InlineMath math={`\\dfrac{2(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{4}{15}`} /> ❌</li>
-                  <li className="text-emerald-700 font-bold">D: <InlineMath math={`\\dfrac{8(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{16}{15}`} /> ✅ ← 答案</li>
+                  <li><ChoiceColon label="A" /><InlineMath math={`\\dfrac{-8(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{-16}{15}`} /> ❌</li>
+                  <li><ChoiceColon label="B" /><InlineMath math={`\\dfrac{-2(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{-4}{15}`} /> ❌</li>
+                  <li><ChoiceColon label="C" /><InlineMath math={`\\dfrac{2(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{4}{15}`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold"><ChoiceColon label="D" /><InlineMath math={`\\dfrac{8(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{16}{15}`} /> ✅ ← 答案</li>
                 </ul>
               </div>
             </div>
@@ -125,8 +127,8 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
               <LeftBlockMath math="\frac{9^{3n+1}}{(3^{2n+3})(27^{2n+1})} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
-                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="9^{-n-2}" /></div><div className="whitespace-nowrap">B.&nbsp;<InlineMath math="9^{-n-1}" /></div>
-                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="9^{n-2}" /></div><div className="whitespace-nowrap">D.&nbsp;<InlineMath math="9^{n-1}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="9^{-n-2}" /></div><div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="9^{-n-1}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="C" /><InlineMath math="9^{n-2}" /></div><div className="whitespace-nowrap"><ChoiceDot label="D" /><InlineMath math="9^{n-1}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -137,10 +139,10 @@ const SubstitutionNotes = ({ onBack }) => {
               </div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代 <InlineMath math="n=1" /> 入選項：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li className="text-emerald-700 font-bold">A: <InlineMath math={`9^{-${h(H0, '1')}-2}=9^{-3}`} /> ✅ ← 答案</li>
-                  <li>B: <InlineMath math={`9^{-${h(H0, '1')}-1}=9^{-2}`} /> ❌</li>
-                  <li>C: <InlineMath math={`9^{${h(H0, '1')}-2}=9^{-1}`} /> ❌</li>
-                  <li>D: <InlineMath math={`9^{${h(H0, '1')}-1}=9^0=1`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold"><ChoiceColon label="A" /><InlineMath math={`9^{-${h(H0, '1')}-2}=9^{-3}`} /> ✅ ← 答案</li>
+                  <li><ChoiceColon label="B" /><InlineMath math={`9^{-${h(H0, '1')}-1}=9^{-2}`} /> ❌</li>
+                  <li><ChoiceColon label="C" /><InlineMath math={`9^{${h(H0, '1')}-2}=9^{-1}`} /> ❌</li>
+                  <li><ChoiceColon label="D" /><InlineMath math={`9^{${h(H0, '1')}-1}=9^0=1`} /> ❌</li>
                 </ul>
               </div>
             </div>
@@ -155,10 +157,10 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 overflow-x-auto">
               <LeftBlockMath math="(2\alpha - \beta)^2 + (\alpha - 2\beta)^2 = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-sm text-left w-full">
-                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="3\alpha^2 - 4\alpha\beta + 3\beta^2" /></div>
-                <div className="whitespace-nowrap">B.&nbsp;<InlineMath math="3\alpha^2 - 8\alpha\beta + 3\beta^2" /></div>
-                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="5\alpha^2 - 4\alpha\beta + 5\beta^2" /></div>
-                <div className="whitespace-nowrap">D.&nbsp;<InlineMath math="5\alpha^2 - 8\alpha\beta + 5\beta^2" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="3\alpha^2 - 4\alpha\beta + 3\beta^2" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="3\alpha^2 - 8\alpha\beta + 3\beta^2" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="C" /><InlineMath math="5\alpha^2 - 4\alpha\beta + 5\beta^2" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="D" /><InlineMath math="5\alpha^2 - 8\alpha\beta + 5\beta^2" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -167,10 +169,10 @@ const SubstitutionNotes = ({ onBack }) => {
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`(2(${h(H0, '2')})-${h(H1, '3')})^2+(${h(H0, '2')}-2(${h(H1, '3')}))^2=17`} /></div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li>A: <InlineMath math={`3(${h(H0, '2')})^2-4(${h(H0, '2')})(${h(H1, '3')})+3(${h(H1, '3')})^2=15`} /> ❌</li>
-                  <li>B: <InlineMath math={`3(${h(H0, '2')})^2-8(${h(H0, '2')})(${h(H1, '3')})+3(${h(H1, '3')})^2=-9`} /> ❌</li>
-                  <li>C: <InlineMath math={`5(${h(H0, '2')})^2-4(${h(H0, '2')})(${h(H1, '3')})+5(${h(H1, '3')})^2=41`} /> ❌</li>
-                  <li className="text-emerald-700 font-bold">D: <InlineMath math={`5(${h(H0, '2')})^2-8(${h(H0, '2')})(${h(H1, '3')})+5(${h(H1, '3')})^2=17`} /> ✅ ← 答案</li>
+                  <li><ChoiceColon label="A" /><InlineMath math={`3(${h(H0, '2')})^2-4(${h(H0, '2')})(${h(H1, '3')})+3(${h(H1, '3')})^2=15`} /> ❌</li>
+                  <li><ChoiceColon label="B" /><InlineMath math={`3(${h(H0, '2')})^2-8(${h(H0, '2')})(${h(H1, '3')})+3(${h(H1, '3')})^2=-9`} /> ❌</li>
+                  <li><ChoiceColon label="C" /><InlineMath math={`5(${h(H0, '2')})^2-4(${h(H0, '2')})(${h(H1, '3')})+5(${h(H1, '3')})^2=41`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold"><ChoiceColon label="D" /><InlineMath math={`5(${h(H0, '2')})^2-8(${h(H0, '2')})(${h(H1, '3')})+5(${h(H1, '3')})^2=17`} /> ✅ ← 答案</li>
                 </ul>
               </div>
             </div>
@@ -185,8 +187,8 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
               <LeftBlockMath math="\frac{(27x)^5}{(3x^{-2})^4} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
-                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="3^2 x^3" /></div><div className="whitespace-nowrap">B.&nbsp;<InlineMath math="3^4 x^3" /></div>
-                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="3^{11} x^{13}" /></div><div className="whitespace-nowrap">D.&nbsp;<InlineMath math="3^{14} x^{13}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="3^2 x^3" /></div><div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="3^4 x^3" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="C" /><InlineMath math="3^{11} x^{13}" /></div><div className="whitespace-nowrap"><ChoiceDot label="D" /><InlineMath math="3^{14} x^{13}" /></div>
               </div>
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -195,10 +197,10 @@ const SubstitutionNotes = ({ onBack }) => {
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`\\dfrac{(27\\cdot ${h(H0, '3')})^5}{(3\\cdot ${h(H0, '3')}^{-2})^4}=3^{24}`} /></div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li>A: <InlineMath math={`3^2(${h(H0, '3')})^3=3^5`} /> ❌</li>
-                  <li>B: <InlineMath math={`3^4(${h(H0, '3')})^3=3^7`} /> ❌</li>
-                  <li className="text-emerald-700 font-bold">C: <InlineMath math={`3^{11}(${h(H0, '3')})^{13}=3^{24}`} /> ✅ ← 答案</li>
-                  <li>D: <InlineMath math={`3^{14}(${h(H0, '3')})^{13}=3^{27}`} /> ❌</li>
+                  <li><ChoiceColon label="A" /><InlineMath math={`3^2(${h(H0, '3')})^3=3^5`} /> ❌</li>
+                  <li><ChoiceColon label="B" /><InlineMath math={`3^4(${h(H0, '3')})^3=3^7`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold"><ChoiceColon label="C" /><InlineMath math={`3^{11}(${h(H0, '3')})^{13}=3^{24}`} /> ✅ ← 答案</li>
+                  <li><ChoiceColon label="D" /><InlineMath math={`3^{14}(${h(H0, '3')})^{13}=3^{27}`} /> ❌</li>
                 </ul>
               </div>
               <div className="text-emerald-700 font-bold mt-2">答案：C（<InlineMath math="3^{11}x^{13}" />）</div>
@@ -214,9 +216,9 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200">
               解 <InlineMath math="(x+2s)(x+t) = sx + st" />，其中 <InlineMath math="s" /> 及 <InlineMath math="t" /> 均為常數。
               <div className="grid grid-cols-2 gap-3 mt-4 text-base text-left w-full">
-                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="x = -s" /></div><div className="whitespace-nowrap">B.&nbsp;<InlineMath math="x = -2s" /></div>
-                <div className="whitespace-nowrap text-sm md:text-base">C.&nbsp;<InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" /></div>
-                <div className="whitespace-nowrap text-sm md:text-base">D.&nbsp;<InlineMath math="x = -2s" /> 或 <InlineMath math="x = -t" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="x = -s" /></div><div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="x = -2s" /></div>
+                <div className="whitespace-nowrap text-sm md:text-base"><ChoiceDot label="C" /><InlineMath math="x = -s" /> 或 <InlineMath math="x = -t" /></div>
+                <div className="whitespace-nowrap text-sm md:text-base"><ChoiceDot label="D" /><InlineMath math="x = -2s" /> 或 <InlineMath math="x = -t" /></div>
               </div>
             </div>
             <div className="border-l-4 border-emerald-400 bg-emerald-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
@@ -248,8 +250,8 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200 overflow-x-auto">
               <InlineMath math="x - 1 > \dfrac{2x-9}{3}" /> 或 <InlineMath math="3x + 12 \geq 0" /> 的解為？
               <div className="grid grid-cols-2 gap-3 mt-4 text-base text-left w-full">
-                <div className="whitespace-nowrap">A.&nbsp;<InlineMath math="x \leq -4" /></div><div className="whitespace-nowrap">B.&nbsp;<InlineMath math="x \geq -4" /></div>
-                <div className="whitespace-nowrap">C.&nbsp;<InlineMath math="x < -6" /></div><div className="whitespace-nowrap">D.&nbsp;<InlineMath math="x > -6" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="x \leq -4" /></div><div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="x \geq -4" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="C" /><InlineMath math="x < -6" /></div><div className="whitespace-nowrap"><ChoiceDot label="D" /><InlineMath math="x > -6" /></div>
               </div>
             </div>
             <div className="border-l-4 border-emerald-400 bg-emerald-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700 leading-relaxed">
