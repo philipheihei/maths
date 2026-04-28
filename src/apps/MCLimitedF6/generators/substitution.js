@@ -234,6 +234,7 @@ const uniqueWrongs = (correct, wrongCandidates, fillerFn) => {
 const buildAlgebraSimplifyVariant = (a) => {
   const xSub = 2;
   const qVal = ((xSub + a) ** 2 - (xSub - a) ** 2) / (2 * a);
+  const xv = cb(C0, String(xSub));
 
   const correct = '2x';
   const wrongs = uniqueWrongs(
@@ -254,6 +255,17 @@ const buildAlgebraSimplifyVariant = (a) => {
     return NaN;
   };
 
+  const optionSubLatex = (opt) => {
+    if (opt === '2x') return `2(${xv})=${2 * xSub}`;
+    if (opt === '2x^2') return `2(${xv})^2=${2 * (xSub ** 2)}`;
+    if (opt === `x^2+${a}`) return `(${xv})^2+${a}=${xSub ** 2 + a}`;
+    if (opt === `${2 * a}x`) return `${2 * a}(${xv})=${2 * a * xSub}`;
+    if (opt === 'x^2+2x') return `(${xv})^2+2(${xv})=${xSub ** 2 + 2 * xSub}`;
+    const m = opt.match(/^(\d+)x$/);
+    if (m) return `${m[1]}(${xv})=${Number(m[1]) * xSub}`;
+    return `${opt}=${optionValue(opt)}`;
+  };
+
   return {
     subtypeLabel: '代數式化簡（適用）',
     questionLatex: `\\dfrac{(x+${a})^2-(x-${a})^2}{${2 * a}} =`,
@@ -265,10 +277,12 @@ const buildAlgebraSimplifyVariant = (a) => {
       questionText: `((x+${a})^2-(x-${a})^2)/${2 * a} =`,
       substitutionText: `x = ${xSub}: ((2+${a})^2-(2-${a})^2)/${2 * a} = ${qVal}`,
       questionLatex: `\\dfrac{(x+${a})^2-(x-${a})^2}{${2 * a}} =`,
+      questionHighlightLatex: `\\dfrac{(${cb(C0, 'x')}+${a})^2-(${cb(C0, 'x')}-${a})^2}{${2 * a}}=`,
       substitutionLatex: `x=${xSub}:\\ \\dfrac{(${xSub}+${a})^2-(${xSub}-${a})^2}{${2 * a}}=${qVal}`,
+      substitutionHighlightLatex: `${cb(C0, `\\textit{x} = ${xSub}`)}:\\ \\dfrac{(${xv}+${a})^2-(${xv}-${a})^2}{${2 * a}}=${qVal}`,
       optionChecks: options.map((opt, idx) => ({
         label: labels[idx],
-        latex: `${opt}=${optionValue(opt)}`,
+        latex: optionSubLatex(opt),
         correct: idx === 0,
       })),
       answerLabel: 'A',
@@ -283,6 +297,7 @@ const buildAlgebraSimplifyVariant = (a) => {
 const buildExponentSimplifyVariant = (p, q) => {
   const nSub = 2;
   const c = 2 * p - q;
+  const nv = cb(C0, String(nSub));
   const correct = `2^{${formatNExp(1, c)}}`;
   const wrongs = uniqueWrongs(
     correct,
@@ -306,6 +321,15 @@ const buildExponentSimplifyVariant = (p, q) => {
 
   const qVal = 2 ** (nSub + c);
 
+  const optionSubLatex = (opt) => {
+    const m = opt.match(/^2\^\{(\d*)n([+-]\d+)?\}$/);
+    if (!m) return `${opt}=${evalExp(opt)}`;
+    const coefN = m[1] === '' ? 1 : Number(m[1]);
+    const k = m[2] ? Number(m[2]) : 0;
+    const expLatex = k === 0 ? `${coefN === 1 ? '' : coefN}(${nv})` : `${coefN === 1 ? '' : coefN}(${nv})${k >= 0 ? '+' : ''}${k}`;
+    return `2^{${coefN === 1 ? 'n' : `${coefN}n`}${k === 0 ? '' : (k > 0 ? `+${k}` : `${k}`)}}=2^{${expLatex}}=${2 ** (coefN * nSub + k)}`;
+  };
+
   return {
     subtypeLabel: '指數化簡（需代兩個值）',
     questionLatex: `\\dfrac{4^{n+${p}}\\cdot 8^n}{2^{3n+${q}}} =`,
@@ -317,10 +341,12 @@ const buildExponentSimplifyVariant = (p, q) => {
       questionText: `(4^(n+${p})*8^n)/(2^(3n+${q})) =`,
       substitutionText: `n = ${nSub}: (4^(${nSub}+${p})*8^${nSub})/2^(3(${nSub})+${q}) = ${qVal}`,
       questionLatex: `\\dfrac{4^{n+${p}}\\cdot 8^n}{2^{3n+${q}}} =`,
+      questionHighlightLatex: `\\dfrac{4^{${cb(C0, 'n')}+${p}}\\cdot 8^{${cb(C0, 'n')}}}{2^{3${cb(C0, 'n')}+${q}}}=`,
       substitutionLatex: `n=${nSub}:\\ \\dfrac{4^{${nSub}+${p}}\\cdot 8^{${nSub}}}{2^{3(${nSub})+${q}}}=${qVal}`,
+      substitutionHighlightLatex: `${cb(C0, `\\textit{n} = ${nSub}`)}:\\ \\dfrac{4^{${nv}+${p}}\\cdot 8^{${nv}}}{2^{3(${nv})+${q}}}=${qVal}`,
       optionChecks: options.map((opt, idx) => ({
         label: labels[idx],
-        latex: `${opt}=${evalExp(opt)}`,
+        latex: optionSubLatex(opt),
         correct: idx === 0,
       })),
       answerLabel: 'A',
@@ -334,6 +360,7 @@ const buildExponentSimplifyVariant = (p, q) => {
 
 const buildFractionSimplifyVariant = (a, b, c, d) => {
   const kSub = 2;
+  const kv = cb(C0, String(kSub));
   const denomAtSub = (kSub + a) * (c * kSub - d);
   const numA = c + b;
   const numB = a * b - d;
@@ -390,10 +417,12 @@ const buildFractionSimplifyVariant = (a, b, c, d) => {
       questionText: `1/(k+${a})+${b}/(${c}k-${d}) =`,
       substitutionText: `k = ${kSub}: 1/(${kSub}+${a})+${b}/(${c}(${kSub})-${d}) = ${qVal}`,
       questionLatex: `\\dfrac{1}{k+${a}}+\\dfrac{${b}}{${c}k-${d}} =`,
+      questionHighlightLatex: `\\dfrac{1}{${cb(C0, 'k')}+${a}}+\\dfrac{${b}}{${c}${cb(C0, 'k')}-${d}}=`,
       substitutionLatex: `k=${kSub}:\\ \\dfrac{1}{${kSub}+${a}}+\\dfrac{${b}}{${c}(${kSub})-${d}}=${qVal}`,
+      substitutionHighlightLatex: `${cb(C0, `\\textit{k} = ${kSub}`)}:\\ \\dfrac{1}{${kv}+${a}}+\\dfrac{${b}}{${c}(${kv})-${d}}=${qVal}`,
       optionChecks: optionNums.map((num, idx) => ({
         label: labels[idx],
-        latex: `${fracLatex(num)}=${evalNum(num) / denomAtSub}`,
+        latex: `\\dfrac{${num.A}(${kv})${num.B >= 0 ? '+' : ''}${num.B}}{((${kv})+${a})(${c}(${kv})-${d})}=\\dfrac{${evalNum(num)}}{${denomAtSub}}=${evalNum(num) / denomAtSub}`,
         correct: idx === 0,
       })),
       answerLabel: 'A',
@@ -408,6 +437,8 @@ const buildFractionSimplifyVariant = (a, b, c, d) => {
 const buildBivariateExpandVariant = (p, q, r, s) => {
   const alphaSub = 2;
   const betaSub = 3;
+  const av = cb(C0, String(alphaSub));
+  const bv = cb(C1, String(betaSub));
   const A = p * p + r * r;
   const B = -2 * (p * q + r * s);
   const C = q * q + s * s;
@@ -459,10 +490,12 @@ const buildBivariateExpandVariant = (p, q, r, s) => {
       questionText: `(${p}α-${q}β)^2+(${r}α-${s}β)^2 =`,
       substitutionText: `α = ${alphaSub}, β = ${betaSub}: (${p * alphaSub - q * betaSub})^2 + (${r * alphaSub - s * betaSub})^2 = ${qVal}`,
       questionLatex: `(${p}\\alpha-${q}\\beta)^2+(${r}\\alpha-${s}\\beta)^2 =`,
+      questionHighlightLatex: `(${p}${cb(C0, 'α')}-${q}${cb(C1, 'β')})^2+(${r}${cb(C0, 'α')}-${s}${cb(C1, 'β')})^2=`,
       substitutionLatex: `\\alpha=${alphaSub},\\ \\beta=${betaSub}:\\ (${p * alphaSub - q * betaSub})^2+(${r * alphaSub - s * betaSub})^2=${qVal}`,
+      substitutionHighlightLatex: `${cb(C0, `α = ${alphaSub}`)},\\ ${cb(C1, `β = ${betaSub}`)}:\\ (${p}(${av})-${q}(${bv}))^2+(${r}(${av})-${s}(${bv}))^2=${qVal}`,
       optionChecks: optionModels.map((model, idx) => ({
         label: labels[idx],
-        latex: `${options[idx]}=${evalAB(model)}`,
+        latex: `${model.a2}(${av})^2${model.ab >= 0 ? '+' : ''}${model.ab}(${av})(${bv})${model.b2 >= 0 ? '+' : ''}${model.b2}(${bv})^2=${evalAB(model)}`,
         correct: idx === 0,
       })),
       answerLabel: 'A',
@@ -476,6 +509,7 @@ const buildBivariateExpandVariant = (p, q, r, s) => {
 
 const buildExponentLawVariant = (u, v, m, n, p, q) => {
   const xSub = 3;
+  const xv = cb(C0, String(xSub));
   const K = u * p - v * q;
   const E = m * p + n * q;
   const correct = `3^{${K}}x^{${E}}`;
@@ -512,10 +546,18 @@ const buildExponentLawVariant = (u, v, m, n, p, q) => {
       questionText: `((3^${u}x^${m})^${p})/((3^${v}x^(-${n}))^${q}) =`,
       substitutionText: `x = ${xSub}: ((3^${u}*${xSub}^${m})^${p})/((3^${v}*${xSub}^(-${n}))^${q}) = 3^${K + E}`,
       questionLatex: `\\dfrac{(3^{${u}}x^{${m}})^{${p}}}{(3^{${v}}x^{-${n}})^{${q}}} =`,
+      questionHighlightLatex: `\\dfrac{(3^{${u}}${cb(C0, 'x')}^{${m}})^{${p}}}{(3^{${v}}${cb(C0, 'x')}^{-${n}})^{${q}}}=`,
       substitutionLatex: `x=${xSub}:\\ \\dfrac{(3^{${u}}(${xSub})^{${m}})^{${p}}}{(3^{${v}}(${xSub})^{-${n}})^{${q}}}=3^{${K + E}}=${qVal}`,
+      substitutionHighlightLatex: `${cb(C0, `\\textit{x} = ${xSub}`)}:\\ \\dfrac{(3^{${u}}(${xv})^{${m}})^{${p}}}{(3^{${v}}(${xv})^{-${n}})^{${q}}}=3^{${K + E}}=${qVal}`,
       optionChecks: options.map((opt, idx) => ({
         label: labels[idx],
-        latex: `${opt}=${evalOpt(opt)}`,
+        latex: (() => {
+          const m2 = opt.match(/^3\^\{(-?\d+)\}x\^\{(-?\d+)\}$/);
+          if (!m2) return `${opt}=${evalOpt(opt)}`;
+          const k = Number(m2[1]);
+          const e = Number(m2[2]);
+          return `3^{${k}}(${xv})^{${e}}=3^{${k + e}}=${evalOpt(opt)}`;
+        })(),
         correct: idx === 0,
       })),
       answerLabel: 'A',
