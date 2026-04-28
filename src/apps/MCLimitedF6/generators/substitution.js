@@ -179,6 +179,385 @@ const QUESTION_BANK = [
   },
 ];
 
+const labels = ['A', 'B', 'C', 'D'];
+
+const fmtSignedInt = (n) => (n >= 0 ? `+${n}` : `${n}`);
+
+const fmtLinear = (coef, variable, constant) => {
+  const parts = [];
+  if (coef !== 0) {
+    if (coef === 1) parts.push(variable);
+    else if (coef === -1) parts.push(`-${variable}`);
+    else parts.push(`${coef}${variable}`);
+  }
+  if (constant !== 0 || parts.length === 0) {
+    if (parts.length === 0) parts.push(`${constant}`);
+    else parts.push(constant > 0 ? `+${constant}` : `${constant}`);
+  }
+  return parts.join('');
+};
+
+const formatNExp = (coefN, constant) => {
+  const nPart = coefN === 1 ? 'n' : `${coefN}n`;
+  if (constant === 0) return nPart;
+  return constant > 0 ? `${nPart}+${constant}` : `${nPart}${constant}`;
+};
+
+const formatABExp = (coefA, coefAB, coefB) => {
+  const t1 = coefA === 1 ? '\\alpha^2' : `${coefA}\\alpha^2`;
+  const t2 = coefAB === 1 ? '\\alpha\\beta' : coefAB === -1 ? '-\\alpha\\beta' : `${coefAB}\\alpha\\beta`;
+  const t3 = coefB === 1 ? '\\beta^2' : `${coefB}\\beta^2`;
+
+  const mid = t2.startsWith('-') ? t2 : `+${t2}`;
+  const end = t3.startsWith('-') ? t3 : `+${t3}`;
+  return `${t1}${mid}${end}`;
+};
+
+const uniqueWrongs = (correct, wrongCandidates, fillerFn) => {
+  const set = new Set();
+  const out = [];
+  for (const w of wrongCandidates) {
+    if (!w || w === correct || set.has(w)) continue;
+    set.add(w);
+    out.push(w);
+    if (out.length === 3) break;
+  }
+  while (out.length < 3) {
+    const w = fillerFn(out.length);
+    if (!w || w === correct || set.has(w)) continue;
+    set.add(w);
+    out.push(w);
+  }
+  return out;
+};
+
+const buildAlgebraSimplifyVariant = (a) => {
+  const xSub = 2;
+  const qVal = ((xSub + a) ** 2 - (xSub - a) ** 2) / (2 * a);
+
+  const correct = '2x';
+  const wrongs = uniqueWrongs(
+    correct,
+    ['2x^2', `x^2+${a}`, `${2 * a}x`, `x^2+2x`],
+    (i) => `${i + 3}x`
+  );
+  const options = [correct, ...wrongs];
+
+  const optionValue = (opt) => {
+    if (opt === '2x') return 2 * xSub;
+    if (opt === '2x^2') return 2 * (xSub ** 2);
+    if (opt === `x^2+${a}`) return xSub ** 2 + a;
+    if (opt === `${2 * a}x`) return 2 * a * xSub;
+    if (opt === 'x^2+2x') return xSub ** 2 + 2 * xSub;
+    const m = opt.match(/^(\d+)x$/);
+    if (m) return Number(m[1]) * xSub;
+    return NaN;
+  };
+
+  return {
+    subtypeLabel: '代數式化簡（適用）',
+    questionLatex: `\\dfrac{(x+${a})^2-(x-${a})^2}{${2 * a}} =`,
+    options,
+    correctIndex: 0,
+    explanationMode: 'substitution',
+    substitutionView: {
+      variables: [{ symbol: 'x', value: String(xSub) }],
+      questionText: `((x+${a})^2-(x-${a})^2)/${2 * a} =`,
+      substitutionText: `x = ${xSub}: ((2+${a})^2-(2-${a})^2)/${2 * a} = ${qVal}`,
+      questionLatex: `\\dfrac{(x+${a})^2-(x-${a})^2}{${2 * a}} =`,
+      substitutionLatex: `x=${xSub}:\\ \\dfrac{(${xSub}+${a})^2-(${xSub}-${a})^2}{${2 * a}}=${qVal}`,
+      optionChecks: options.map((opt, idx) => ({
+        label: labels[idx],
+        latex: `${opt}=${optionValue(opt)}`,
+        correct: idx === 0,
+      })),
+      answerLabel: 'A',
+    },
+    explanationLines: [
+      `\\text{代 }x=${xSub}: \\dfrac{(${xSub}+${a})^2-(${xSub}-${a})^2}{${2 * a}}=${qVal}`,
+      '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的代入答案相同，所以答案為 A。}',
+    ],
+  };
+};
+
+const buildExponentSimplifyVariant = (p, q) => {
+  const nSub = 2;
+  const c = 2 * p - q;
+  const correct = `2^{${formatNExp(1, c)}}`;
+  const wrongs = uniqueWrongs(
+    correct,
+    [
+      `2^{${formatNExp(2, c)}}`,
+      `2^{${formatNExp(1, c + 1)}}`,
+      `2^{${formatNExp(1, c - 1)}}`,
+      `2^{${formatNExp(2, c - 1)}}`,
+    ],
+    (i) => `2^{${formatNExp(1, c + i + 2)}}`
+  );
+  const options = [correct, ...wrongs];
+
+  const evalExp = (expStr) => {
+    const m = expStr.match(/^2\^\{(\d*)n([+-]\d+)?\}$/);
+    if (!m) return NaN;
+    const coefN = m[1] === '' ? 1 : Number(m[1]);
+    const k = m[2] ? Number(m[2]) : 0;
+    return 2 ** (coefN * nSub + k);
+  };
+
+  const qVal = 2 ** (nSub + c);
+
+  return {
+    subtypeLabel: '指數化簡（需代兩個值）',
+    questionLatex: `\\dfrac{4^{n+${p}}\\cdot 8^n}{2^{3n+${q}}} =`,
+    options,
+    correctIndex: 0,
+    explanationMode: 'substitution',
+    substitutionView: {
+      variables: [{ symbol: 'n', value: String(nSub) }],
+      questionText: `(4^(n+${p})*8^n)/(2^(3n+${q})) =`,
+      substitutionText: `n = ${nSub}: (4^(${nSub}+${p})*8^${nSub})/2^(3(${nSub})+${q}) = ${qVal}`,
+      questionLatex: `\\dfrac{4^{n+${p}}\\cdot 8^n}{2^{3n+${q}}} =`,
+      substitutionLatex: `n=${nSub}:\\ \\dfrac{4^{${nSub}+${p}}\\cdot 8^{${nSub}}}{2^{3(${nSub})+${q}}}=${qVal}`,
+      optionChecks: options.map((opt, idx) => ({
+        label: labels[idx],
+        latex: `${opt}=${evalExp(opt)}`,
+        correct: idx === 0,
+      })),
+      answerLabel: 'A',
+    },
+    explanationLines: [
+      `\\text{代 }n=${nSub}: \\dfrac{4^{${nSub}+${p}}\\cdot 8^{${nSub}}}{2^{3(${nSub})+${q}}}=${qVal}`,
+      '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的代入答案相同，所以答案為 A。}',
+    ],
+  };
+};
+
+const buildFractionSimplifyVariant = (a, b, c, d) => {
+  const kSub = 2;
+  const denomAtSub = (kSub + a) * (c * kSub - d);
+  const numA = c + b;
+  const numB = a * b - d;
+
+  const correctNum = { A: numA, B: numB };
+  const candidates = [
+    { A: numA, B: -numB },
+    { A: numA - 1, B: numB },
+    { A: numA + 1, B: numB },
+    { A: numA, B: numB + 2 },
+    { A: -numA, B: numB },
+  ];
+
+  const numToLatex = ({ A, B }) => fmtLinear(A, 'k', B);
+  const fracLatex = (n) => `\\dfrac{${numToLatex(n)}}{(k+${a})(${c}k-${d})}`;
+  const evalNum = ({ A, B }) => A * kSub + B;
+  const correctValue = evalNum(correctNum) / denomAtSub;
+
+  const wrongNums = [];
+  const seen = new Set([fracLatex(correctNum)]);
+  for (const cand of candidates) {
+    const latex = fracLatex(cand);
+    const val = evalNum(cand) / denomAtSub;
+    if (!seen.has(latex) && val !== correctValue) {
+      seen.add(latex);
+      wrongNums.push(cand);
+      if (wrongNums.length === 3) break;
+    }
+  }
+  while (wrongNums.length < 3) {
+    const delta = wrongNums.length + 2;
+    const cand = { A: numA + delta, B: numB - delta };
+    const latex = fracLatex(cand);
+    const val = evalNum(cand) / denomAtSub;
+    if (!seen.has(latex) && val !== correctValue) {
+      seen.add(latex);
+      wrongNums.push(cand);
+    }
+  }
+
+  const optionNums = [correctNum, ...wrongNums];
+  const options = optionNums.map(fracLatex);
+
+  const qVal = 1 / (kSub + a) + b / (c * kSub - d);
+
+  return {
+    subtypeLabel: '分式化簡（適用）',
+    questionLatex: `\\dfrac{1}{k+${a}}+\\dfrac{${b}}{${c}k-${d}} =`,
+    options,
+    correctIndex: 0,
+    explanationMode: 'substitution',
+    substitutionView: {
+      variables: [{ symbol: 'k', value: String(kSub) }],
+      questionText: `1/(k+${a})+${b}/(${c}k-${d}) =`,
+      substitutionText: `k = ${kSub}: 1/(${kSub}+${a})+${b}/(${c}(${kSub})-${d}) = ${qVal}`,
+      questionLatex: `\\dfrac{1}{k+${a}}+\\dfrac{${b}}{${c}k-${d}} =`,
+      substitutionLatex: `k=${kSub}:\\ \\dfrac{1}{${kSub}+${a}}+\\dfrac{${b}}{${c}(${kSub})-${d}}=${qVal}`,
+      optionChecks: optionNums.map((num, idx) => ({
+        label: labels[idx],
+        latex: `${fracLatex(num)}=${evalNum(num) / denomAtSub}`,
+        correct: idx === 0,
+      })),
+      answerLabel: 'A',
+    },
+    explanationLines: [
+      `\\text{代 }k=${kSub}: \\dfrac{1}{${kSub}+${a}}+\\dfrac{${b}}{${c}(${kSub})-${d}}=${qVal}`,
+      '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的代入答案相同，所以答案為 A。}',
+    ],
+  };
+};
+
+const buildBivariateExpandVariant = (p, q, r, s) => {
+  const alphaSub = 2;
+  const betaSub = 3;
+  const A = p * p + r * r;
+  const B = -2 * (p * q + r * s);
+  const C = q * q + s * s;
+
+  const correctModel = { a2: A, ab: B, b2: C };
+  const wrongCandidates = [
+    { a2: A, ab: -B, b2: C },
+    { a2: A + 2, ab: B, b2: C },
+    { a2: A, ab: B + 2, b2: C - 2 },
+    { a2: A, ab: B - 2, b2: C + 2 },
+    { a2: A + 1, ab: B, b2: C + 1 },
+  ];
+  const unique = [];
+  const seen = new Set([`${A}|${B}|${C}`]);
+  for (const cand of wrongCandidates) {
+    const key = `${cand.a2}|${cand.ab}|${cand.b2}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    unique.push(cand);
+    if (unique.length === 3) break;
+  }
+  while (unique.length < 3) {
+    const d = unique.length + 2;
+    const cand = { a2: A + d, ab: B - d, b2: C + d };
+    const key = `${cand.a2}|${cand.ab}|${cand.b2}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(cand);
+    }
+  }
+
+  const optionModels = [correctModel, ...unique];
+  const options = optionModels.map((m) => formatABExp(m.a2, m.ab, m.b2));
+  const evalAB = (model) => model.a2 * alphaSub * alphaSub + model.ab * alphaSub * betaSub + model.b2 * betaSub * betaSub;
+
+  const qVal = ((p * alphaSub - q * betaSub) ** 2) + ((r * alphaSub - s * betaSub) ** 2);
+
+  return {
+    subtypeLabel: '雙變數展開（適用）',
+    questionLatex: `(${p}\\alpha-${q}\\beta)^2+(${r}\\alpha-${s}\\beta)^2 =`,
+    options,
+    correctIndex: 0,
+    explanationMode: 'substitution',
+    substitutionView: {
+      variables: [
+        { symbol: 'α', value: String(alphaSub) },
+        { symbol: 'β', value: String(betaSub) },
+      ],
+      questionText: `(${p}α-${q}β)^2+(${r}α-${s}β)^2 =`,
+      substitutionText: `α = ${alphaSub}, β = ${betaSub}: (${p * alphaSub - q * betaSub})^2 + (${r * alphaSub - s * betaSub})^2 = ${qVal}`,
+      questionLatex: `(${p}\\alpha-${q}\\beta)^2+(${r}\\alpha-${s}\\beta)^2 =`,
+      substitutionLatex: `\\alpha=${alphaSub},\\ \\beta=${betaSub}:\\ (${p * alphaSub - q * betaSub})^2+(${r * alphaSub - s * betaSub})^2=${qVal}`,
+      optionChecks: optionModels.map((model, idx) => ({
+        label: labels[idx],
+        latex: `${options[idx]}=${evalAB(model)}`,
+        correct: idx === 0,
+      })),
+      answerLabel: 'A',
+    },
+    explanationLines: [
+      `\\text{代 }\\alpha=${alphaSub},\\beta=${betaSub}: (${p * alphaSub - q * betaSub})^2+(${r * alphaSub - s * betaSub})^2=${qVal}`,
+      '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的代入答案相同，所以答案為 A。}',
+    ],
+  };
+};
+
+const buildExponentLawVariant = (u, v, m, n, p, q) => {
+  const xSub = 3;
+  const K = u * p - v * q;
+  const E = m * p + n * q;
+  const correct = `3^{${K}}x^{${E}}`;
+  const wrongs = uniqueWrongs(
+    correct,
+    [
+      `3^{${K + 1}}x^{${E}}`,
+      `3^{${K}}x^{${E + 2}}`,
+      `3^{${K + 2}}x^{${Math.max(1, E - 1)}}`,
+      `3^{${K - 1}}x^{${E + 1}}`,
+    ],
+    (i) => `3^{${K + i + 3}}x^{${E + i + 1}}`
+  );
+  const options = [correct, ...wrongs];
+
+  const evalOpt = (opt) => {
+    const m2 = opt.match(/^3\^\{(-?\d+)\}x\^\{(-?\d+)\}$/);
+    if (!m2) return NaN;
+    const k = Number(m2[1]);
+    const e = Number(m2[2]);
+    return 3 ** (k + e);
+  };
+
+  const qVal = 3 ** (K + E);
+
+  return {
+    subtypeLabel: '指數律（適用）',
+    questionLatex: `\\dfrac{(3^{${u}}x^{${m}})^{${p}}}{(3^{${v}}x^{-${n}})^{${q}}} =`,
+    options,
+    correctIndex: 0,
+    explanationMode: 'substitution',
+    substitutionView: {
+      variables: [{ symbol: 'x', value: String(xSub) }],
+      questionText: `((3^${u}x^${m})^${p})/((3^${v}x^(-${n}))^${q}) =`,
+      substitutionText: `x = ${xSub}: ((3^${u}*${xSub}^${m})^${p})/((3^${v}*${xSub}^(-${n}))^${q}) = 3^${K + E}`,
+      questionLatex: `\\dfrac{(3^{${u}}x^{${m}})^{${p}}}{(3^{${v}}x^{-${n}})^{${q}}} =`,
+      substitutionLatex: `x=${xSub}:\\ \\dfrac{(3^{${u}}(${xSub})^{${m}})^{${p}}}{(3^{${v}}(${xSub})^{-${n}})^{${q}}}=3^{${K + E}}=${qVal}`,
+      optionChecks: options.map((opt, idx) => ({
+        label: labels[idx],
+        latex: `${opt}=${evalOpt(opt)}`,
+        correct: idx === 0,
+      })),
+      answerLabel: 'A',
+    },
+    explanationLines: [
+      `\\text{代 }x=${xSub}: \\dfrac{(3^{${u}}(${xSub})^{${m}})^{${p}}}{(3^{${v}}(${xSub})^{-${n}})^{${q}}}=3^{${K + E}}`,
+      '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的代入答案相同，所以答案為 A。}',
+    ],
+  };
+};
+
+const EXTRA_VARIANTS = [
+  ...[2, 3, 4, 5, 6, 7].map((a) => buildAlgebraSimplifyVariant(a)),
+  ...[
+    [2, 1], [3, 2], [4, 3], [5, 4], [3, 1], [4, 2],
+  ].map(([p, q]) => buildExponentSimplifyVariant(p, q)),
+  ...[
+    [3, 2, 4, 5],
+    [4, 3, 5, 7],
+    [2, 4, 3, 2],
+    [5, 2, 4, 3],
+    [3, 5, 6, 8],
+    [4, 2, 5, 4],
+  ].map(([a, b, c, d]) => buildFractionSimplifyVariant(a, b, c, d)),
+  ...[
+    [2, 1, 1, 2],
+    [3, 1, 2, 1],
+    [2, 3, 1, 1],
+    [4, 1, 1, 3],
+    [3, 2, 2, 1],
+    [2, 1, 3, 2],
+  ].map(([p, q, r, s]) => buildBivariateExpandVariant(p, q, r, s)),
+  ...[
+    [2, 1, 1, 1, 3, 2],
+    [3, 1, 2, 1, 2, 1],
+    [2, 1, 1, 2, 4, 1],
+    [3, 2, 2, 1, 3, 1],
+    [4, 2, 1, 1, 2, 1],
+    [5, 2, 2, 1, 2, 2],
+  ].map(([u, v, m, n, p, q]) => buildExponentLawVariant(u, v, m, n, p, q)),
+];
+
 const buildSignedExpr = (terms, bodyFn) => {
   const filtered = terms.filter(t => t.coef !== 0);
   if (filtered.length === 0) return '0';
@@ -687,6 +1066,7 @@ const generateRatioEquationQuestion = () => {
 export const generateSubstitutionQuestion = () => {
   const bank = [
     ...QUESTION_BANK,
+    ...EXTRA_VARIANTS,
     generateBivariateFactorizationQuestion(),
     generateExponentProductQuestion(),
     generateParamEquationRootsQuestion(),
