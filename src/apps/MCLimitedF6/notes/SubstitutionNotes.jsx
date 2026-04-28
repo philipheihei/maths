@@ -27,8 +27,8 @@ const SubstitutionNotes = ({ onBack }) => {
         <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <h2 className="text-xl font-bold mb-4 pl-3 border-l-4 border-indigo-500">💡 甚麼是代入法？</h2>
           <p className="text-gray-700 leading-relaxed mb-4">
-            當 MC 題目問「哪個式子等於⋯」時，你不需要正式計算。<br/>
-            只需要：
+            當遇上某些 MC 題目不懂計的時候，你未必需要正式計算，可以透過 MC 代數代入法去得出正確答案。<br/>
+            步驟如下：
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-center text-sm font-semibold text-gray-700">
             <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
@@ -68,8 +68,8 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="flex items-start gap-3 p-3 rounded-xl bg-red-50 text-red-800 border border-red-300">
               <span className="text-xl">❌</span>
               <div>
-                <div className="font-bold">不適合用</div>
-                <div className="text-sm mt-1 text-red-900">不等式範圍題（選項係 <InlineMath math="x \leq a" /> 等）；概率題；需要列步驟的 Long Q；證明題</div>
+                <div className="font-bold">呢一類先：參數式求變數（唔好亂代）</div>
+                <div className="text-sm mt-1 text-red-900">例如 <InlineMath math="(3c+1)(d-4)=2d(5c-1)" /> 呢類「由 <InlineMath math="d" /> 求 <InlineMath math="c" />」題。若胡亂同時代 <InlineMath math="c,d" /> 數值，好易令左邊 <InlineMath math="\neq" /> 右邊，前設已經錯，後面比較選項自然會誤判。</div>
               </div>
             </div>
           </div>
@@ -94,7 +94,7 @@ const SubstitutionNotes = ({ onBack }) => {
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 適用</span>
               <span className="font-bold text-lg text-gray-800">題型一：分式化簡</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 [&>div]:pl-0 [&_.katex-display>.katex]:!ml-0 [&_.katex-display>.katex]:!text-left">
               <LeftBlockMath math="\frac{1}{k+2} + \frac{3}{5k-6} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
                 <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="\dfrac{-8k}{(k+2)(5k-6)}" /></div>
@@ -124,7 +124,7 @@ const SubstitutionNotes = ({ onBack }) => {
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 適用</span>
               <span className="font-bold text-lg text-gray-800">題型二：指數運算化簡</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 [&>div]:pl-0 [&_.katex-display>.katex]:!ml-0 [&_.katex-display>.katex]:!text-left">
               <LeftBlockMath math="\frac{9^{3n+1}}{(3^{2n+3})(27^{2n+1})} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
                 <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="9^{-n-2}" /></div><div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="9^{-n-1}" /></div>
@@ -154,7 +154,7 @@ const SubstitutionNotes = ({ onBack }) => {
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 適用</span>
               <span className="font-bold text-lg text-gray-800">題型三：展開代數式（雙變數）</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 overflow-x-auto">
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 overflow-x-auto [&>div]:pl-0 [&_.katex-display>.katex]:!ml-0 [&_.katex-display>.katex]:!text-left">
               <LeftBlockMath math="(2\alpha - \beta)^2 + (\alpha - 2\beta)^2 = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-sm text-left w-full">
                 <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="3\alpha^2 - 4\alpha\beta + 3\beta^2" /></div>
@@ -184,7 +184,7 @@ const SubstitutionNotes = ({ onBack }) => {
               <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">✅ 適用</span>
               <span className="font-bold text-lg text-gray-800">題型四：指數律化簡</span>
             </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200">
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 [&>div]:pl-0 [&_.katex-display>.katex]:!ml-0 [&_.katex-display>.katex]:!text-left">
               <LeftBlockMath math="\frac{(27x)^5}{(3x^{-2})^4} = ?" />
               <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
                 <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="3^2 x^3" /></div><div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="3^4 x^3" /></div>
@@ -296,7 +296,7 @@ const SubstitutionNotes = ({ onBack }) => {
                 <tr className="hover:bg-gray-50"><td className="p-3">二次函數配方</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">⚠️ 小心</td><td className="p-3 text-gray-600">代兩個值排除</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">解方程（選項含「或」）</td><td className="p-3 text-center text-emerald-600 font-bold whitespace-nowrap">✅ 適用</td><td className="p-3 text-gray-600">逐一代入兩邊 check 左 = 右</td></tr>
                 <tr className="hover:bg-gray-50"><td className="p-3">不等式範圍</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">⚠️ 有技巧</td><td className="p-3 text-gray-600">試幾個 x 值，檢查不等號方向</td></tr>
-                <tr className="hover:bg-gray-50"><td className="p-3">概率題</td><td className="p-3 text-center text-red-600 font-bold whitespace-nowrap">❌ 不適用</td><td className="p-3 text-gray-600">邏輯性強，需計算</td></tr>
+                <tr className="hover:bg-gray-50"><td className="p-3">參數式求變數（如由 <InlineMath math="d" /> 求 <InlineMath math="c" />）</td><td className="p-3 text-center text-red-600 font-bold whitespace-nowrap">❌ 不建議亂代</td><td className="p-3 text-gray-600">胡亂代值會令左 ≠ 右，前設錯誤</td></tr>
               </tbody>
             </table>
           </div>
