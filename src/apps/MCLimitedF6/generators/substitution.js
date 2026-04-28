@@ -179,8 +179,520 @@ const QUESTION_BANK = [
   },
 ];
 
+const buildSignedExpr = (terms, bodyFn) => {
+  const filtered = terms.filter(t => t.coef !== 0);
+  if (filtered.length === 0) return '0';
+
+  return filtered.map((t, idx) => {
+    const absCoef = Math.abs(t.coef);
+    const body = bodyFn(absCoef, t.kind);
+    const sign = t.coef < 0 ? '-' : '+';
+    if (idx === 0) return sign === '-' ? `-${body}` : body;
+    return `${sign}${body}`;
+  }).join('');
+};
+
+const shuffle = (arr) => {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = randInt(0, i);
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+};
+
+const gcdInt = (a, b) => {
+  let x = Math.abs(a);
+  let y = Math.abs(b);
+  while (y !== 0) {
+    const t = x % y;
+    x = y;
+    y = t;
+  }
+  return x || 1;
+};
+
+const evalPoly = (coef, x, y) => (
+  coef.xx * x * x +
+  coef.xy * x * y +
+  coef.yy * y * y +
+  coef.x * x +
+  coef.y * y
+);
+
+const evalOption = (a, cSigned, sx, sy, x, y) => (
+  (x + sx * y) * (a * x + sy * y + cSigned)
+);
+
+const buildPolyExpr = (coef, order, bodyFn) => {
+  const terms = order.map((k) => ({ coef: coef[k], kind: k }));
+  return buildSignedExpr(terms, bodyFn);
+};
+
+const buildLinearExpr = (terms, bodyFn) => buildSignedExpr(terms, bodyFn);
+
+const pickSubPair = (coef, a, cSigned, combos, correctIndex) => {
+  const candidates = shuffle([
+    { x: 1, y: 2 },
+    { x: 2, y: 1 },
+    { x: 1, y: 3 },
+    { x: 2, y: 3 },
+    { x: 3, y: 1 },
+    { x: 3, y: 2 },
+  ]);
+
+  for (const p of candidates) {
+    const qVal = evalPoly(coef, p.x, p.y);
+    const vals = combos.map(cmb => evalOption(a, cSigned, cmb.sx, cmb.sy, p.x, p.y));
+    const same = vals.filter(v => v === qVal).length;
+    if (same === 1 && vals[correctIndex] === qVal) {
+      return { ...p, qVal, vals };
+    }
+  }
+
+  const fallback = { x: 2, y: 1 };
+  return {
+    ...fallback,
+    qVal: evalPoly(coef, fallback.x, fallback.y),
+    vals: combos.map(cmb => evalOption(a, cSigned, cmb.sx, cmb.sy, fallback.x, fallback.y)),
+  };
+};
+
+const generateBivariateFactorizationQuestion = () => {
+  const a = randInt(2, 4);
+  const c = randInt(2, 6);
+  const cSign = randInt(0, 1) === 0 ? 1 : -1;
+  const cSigned = cSign * c;
+  const sx = randInt(0, 1) === 0 ? 1 : -1;
+  const sy = randInt(0, 1) === 0 ? 1 : -1;
+
+  const combos = [
+    { sx: 1, sy: 1 },
+    { sx: 1, sy: -1 },
+    { sx: -1, sy: 1 },
+    { sx: -1, sy: -1 },
+  ];
+  const correctIndex = combos.findIndex(cmb => cmb.sx === sx && cmb.sy === sy);
+
+  const coef = {
+    xx: a,
+    xy: sy + a * sx,
+    yy: sx * sy,
+    x: cSigned,
+    y: sx * cSigned,
+  };
+
+  const polyOrders = [
+    ['xx', 'xy', 'yy', 'x', 'y'],
+    ['xx', 'yy', 'xy', 'x', 'y'],
+    ['xx', 'xy', 'x', 'yy', 'y'],
+    ['xy', 'xx', 'yy', 'y', 'x'],
+  ];
+  const polyOrder = polyOrders[randInt(0, polyOrders.length - 1)];
+
+  const firstPerm = randInt(0, 1) === 0 ? [0, 1] : [1, 0];
+  const secondPerms = [
+    [0, 1, 2],
+    [0, 2, 1],
+    [1, 0, 2],
+    [1, 2, 0],
+    [2, 0, 1],
+    [2, 1, 0],
+  ];
+  const secondPerm = secondPerms[randInt(0, secondPerms.length - 1)];
+
+  const renderPolyVar = (absCoef, kind) => {
+    if (kind === 'xx') return absCoef === 1 ? 'x^2' : `${absCoef}x^2`;
+    if (kind === 'xy') return absCoef === 1 ? 'xy' : `${absCoef}xy`;
+    if (kind === 'yy') return absCoef === 1 ? 'y^2' : `${absCoef}y^2`;
+    if (kind === 'x') return absCoef === 1 ? 'x' : `${absCoef}x`;
+    return absCoef === 1 ? 'y' : `${absCoef}y`;
+  };
+
+  const renderPolyVarHL = (absCoef, kind) => {
+    const xh = cb(C0, 'x');
+    const yh = cb(C1, 'y');
+    if (kind === 'xx') return absCoef === 1 ? `${xh}^2` : `${absCoef}${xh}^2`;
+    if (kind === 'xy') return absCoef === 1 ? `${xh}${yh}` : `${absCoef}${xh}${yh}`;
+    if (kind === 'yy') return absCoef === 1 ? `${yh}^2` : `${absCoef}${yh}^2`;
+    if (kind === 'x') return absCoef === 1 ? xh : `${absCoef}${xh}`;
+    return absCoef === 1 ? yh : `${absCoef}${yh}`;
+  };
+
+  const questionCore = buildPolyExpr(coef, polyOrder, renderPolyVar);
+  const questionHighlightCore = buildPolyExpr(coef, polyOrder, renderPolyVarHL);
+
+  const buildOptionLatex = (cmb) => {
+    const t1 = [
+      { coef: 1, kind: 'x' },
+      { coef: cmb.sx, kind: 'y' },
+    ];
+    const t2 = [
+      { coef: a, kind: 'x' },
+      { coef: cmb.sy, kind: 'y' },
+      { coef: cSigned, kind: 'c' },
+    ];
+
+    const s1 = firstPerm.map(i => t1[i]);
+    const s2 = secondPerm.map(i => t2[i]);
+
+    const varBody = (absCoef, kind) => {
+      if (kind === 'x') return absCoef === 1 ? 'x' : `${absCoef}x`;
+      if (kind === 'y') return absCoef === 1 ? 'y' : `${absCoef}y`;
+      return `${absCoef}`;
+    };
+
+    const f1 = buildLinearExpr(s1, varBody);
+    const f2 = buildLinearExpr(s2, varBody);
+    return {
+      latex: `(${f1})(${f2})`,
+      terms1: s1,
+      terms2: s2,
+    };
+  };
+
+  const optionModels = combos.map(buildOptionLatex);
+  const options = optionModels.map(m => m.latex);
+
+  const picked = pickSubPair(coef, a, cSigned, combos, correctIndex);
+
+  const renderPolySub = (absCoef, kind) => {
+    if (kind === 'xx') return absCoef === 1 ? `(${picked.x})^2` : `${absCoef}(${picked.x})^2`;
+    if (kind === 'xy') return absCoef === 1 ? `(${picked.x})(${picked.y})` : `${absCoef}(${picked.x})(${picked.y})`;
+    if (kind === 'yy') return absCoef === 1 ? `(${picked.y})^2` : `${absCoef}(${picked.y})^2`;
+    if (kind === 'x') return absCoef === 1 ? `(${picked.x})` : `${absCoef}(${picked.x})`;
+    return absCoef === 1 ? `(${picked.y})` : `${absCoef}(${picked.y})`;
+  };
+
+  const renderPolySubHL = (absCoef, kind) => {
+    const xv = cb(C0, String(picked.x));
+    const yv = cb(C1, String(picked.y));
+    if (kind === 'xx') return absCoef === 1 ? `(${xv})^2` : `${absCoef}(${xv})^2`;
+    if (kind === 'xy') return absCoef === 1 ? `(${xv})(${yv})` : `${absCoef}(${xv})(${yv})`;
+    if (kind === 'yy') return absCoef === 1 ? `(${yv})^2` : `${absCoef}(${yv})^2`;
+    if (kind === 'x') return absCoef === 1 ? `(${xv})` : `${absCoef}(${xv})`;
+    return absCoef === 1 ? `(${yv})` : `${absCoef}(${yv})`;
+  };
+
+  const polySubCore = buildPolyExpr(coef, polyOrder, renderPolySub);
+  const polySubCoreHL = buildPolyExpr(coef, polyOrder, renderPolySubHL);
+
+  const labels = ['A', 'B', 'C', 'D'];
+
+  const optionChecks = optionModels.map((m, i) => {
+    const subBody = (absCoef, kind) => {
+      if (kind === 'c') return `${absCoef}`;
+      const v = kind === 'x' ? picked.x : picked.y;
+      return absCoef === 1 ? `(${v})` : `${absCoef}(${v})`;
+    };
+    const subBodyHL = (absCoef, kind) => {
+      if (kind === 'c') return `${absCoef}`;
+      const isX = kind === 'x';
+      const v = isX ? picked.x : picked.y;
+      const colored = isX ? cb(C0, String(v)) : cb(C1, String(v));
+      return absCoef === 1 ? `(${colored})` : `${absCoef}(${colored})`;
+    };
+    const f1Sub = buildLinearExpr(m.terms1, subBody);
+    const f2Sub = buildLinearExpr(m.terms2, subBody);
+    const f1SubHL = buildLinearExpr(m.terms1, subBodyHL);
+    const f2SubHL = buildLinearExpr(m.terms2, subBodyHL);
+    return {
+      label: labels[i],
+      text: `(${f1Sub})(${f2Sub}) = ${picked.vals[i]}`,
+      latex: `(${f1SubHL})(${f2SubHL})=${picked.vals[i]}`,
+      correct: i === correctIndex,
+    };
+  });
+
+  const answerLabel = labels[correctIndex];
+
+  return {
+    subtypeLabel: '二元因式分解（代入判別）',
+    questionLatex: `${questionCore}=`,
+    options,
+    correctIndex,
+    explanationMode: 'substitution',
+    substitutionView: {
+      variables: [
+        { symbol: 'x', value: String(picked.x) },
+        { symbol: 'y', value: String(picked.y) },
+      ],
+      questionText: `${questionCore} =`,
+      substitutionText: `x = ${picked.x}, y = ${picked.y}: ${polySubCore} = ${picked.qVal}`,
+      questionLatex: `${questionCore}=`,
+      questionHighlightLatex: `${questionHighlightCore}=`,
+      substitutionLatex: `x=${picked.x},\ y=${picked.y}:\ ${polySubCore}=${picked.qVal}`,
+      substitutionHighlightLatex: `${cb(C0, `\\textit{x} = ${picked.x}`)},\ ${cb(C1, `\\textit{y} = ${picked.y}`)}:\ ${polySubCoreHL}=${picked.qVal}`,
+      optionChecks,
+      answerLabel,
+    },
+    explanationLines: [
+      `\\text{代 }x=${picked.x},y=${picked.y}: ${polySubCore}=${picked.qVal}`,
+      `\\therefore \\text{比較所有代入的答案，只有 ${answerLabel} 跟題目的代入答案相同，所以答案為 ${answerLabel}。}`,
+    ],
+  };
+};
+
+const generateExponentProductQuestion = () => {
+  const CASIO_SIG_FIGS = 10;
+  const CASIO_INT_DIGIT_LIMIT = 10;
+  const CASIO_TINY_THRESHOLD = 1e-4;
+  const CASIO_MAX = 10n ** 100n;
+
+  const powBigInt = (base, exp) => {
+    let out = 1n;
+    let b = BigInt(base);
+    let e = exp;
+    while (e > 0) {
+      if (e % 2 === 1) out *= b;
+      b *= b;
+      e = Math.floor(e / 2);
+    }
+    return out;
+  };
+
+  const toSciLatexFromDigits = (digits) => {
+    const lead = digits[0];
+    const frac = digits.slice(1, CASIO_SIG_FIGS).padEnd(CASIO_SIG_FIGS - 1, '0');
+    const exp10 = digits.length - 1;
+    return `${lead}.${frac}\\times 10^{${exp10}}`;
+  };
+
+  const toCasioLatex = (value) => {
+    if (typeof value === 'bigint') {
+      if (value > CASIO_MAX) return '\\text{Maths ERROR}';
+      const digits = value.toString();
+      if (digits.length <= CASIO_INT_DIGIT_LIMIT) return digits;
+      return toSciLatexFromDigits(digits);
+    }
+
+    if (!Number.isFinite(value)) return '\\text{Maths ERROR}';
+    const abs = Math.abs(value);
+    if (abs === 0) return '0';
+    if (abs >= 1e100) return '\\text{Maths ERROR}';
+
+    const intDigits = abs >= 1 ? Math.floor(abs).toString().length : 1;
+    const useSci = intDigits > CASIO_INT_DIGIT_LIMIT || abs < CASIO_TINY_THRESHOLD;
+    if (!useSci) return `${value}`;
+
+    const sci = abs.toExponential(CASIO_SIG_FIGS - 1);
+    const [mantissa, expPart] = sci.split('e');
+    const expNum = Number(expPart);
+    const sign = value < 0 ? '-' : '';
+    return `${sign}${mantissa}\\times 10^{${expNum}}`;
+  };
+
+  // 常見用中小指數；保留少量大數情況作應試訓練
+  const bucket = randInt(1, 100);
+  const p = bucket <= 82
+    ? randInt(4, 16)
+    : bucket <= 97
+      ? randInt(17, 28)
+      : randInt(29, 70);
+  const q = 2 * p;
+  const nSub = 1;
+
+  const candidates = [
+    { base: 6, a: 2, b: q, correct: true },
+    { base: 6, a: 4, b: 2 * q, correct: false },
+    { base: 12, a: 2, b: q, correct: false },
+    { base: 12, a: 3, b: q + 2, correct: false },
+  ];
+
+  const shuffled = shuffle(candidates).map((c, idx) => ({ ...c, label: ['A', 'B', 'C', 'D'][idx] }));
+  const correctIndex = shuffled.findIndex(c => c.correct);
+  const answerLabel = ['A', 'B', 'C', 'D'][correctIndex];
+
+  const fmtExp = (a, b) => {
+    const nTerm = a === 1 ? 'n' : `${a}n`;
+    if (b === 0) return nTerm;
+    return b > 0 ? `${nTerm}+${b}` : `${nTerm}${b}`;
+  };
+
+  const qValueBig = powBigInt(4, nSub + p) * powBigInt(3, 2 * nSub + q);
+  const qValueLatex = toCasioLatex(qValueBig);
+
+  const optionChecks = shuffled.map((o) => {
+    const expNum = o.a * nSub + o.b;
+    const valBig = powBigInt(o.base, expNum);
+    const valLatex = toCasioLatex(valBig);
+    return {
+      label: o.label,
+      text: `${o.base}^(${o.a}(${nSub})+${o.b}) = ${o.base}^${expNum}`,
+      latex: `${o.base}^{${fmtExp(o.a, o.b)}}=${o.base}^{${o.a}(${cb(C0, String(nSub))})+${o.b}}=${o.base}^{${expNum}}=${valLatex}`,
+      correct: !!o.correct,
+    };
+  });
+
+  return {
+    subtypeLabel: '指數乘積（適用）',
+    questionLatex: `4^{n+${p}}\\cdot 3^{2n+${q}} =`,
+    options: shuffled.map(o => `${o.base}^{${fmtExp(o.a, o.b)}}`),
+    correctIndex,
+    explanationMode: 'substitution',
+    substitutionView: {
+      variables: [{ symbol: 'n', value: String(nSub) }],
+      questionText: `4^(n+${p})*3^(2n+${q}) =`,
+      substitutionText: `n = ${nSub}: 4^(${nSub}+${p})*3^(2(${nSub})+${q})`,
+      questionLatex: `4^{n+${p}}\\cdot 3^{2n+${q}} =`,
+      questionHighlightLatex: `4^{${cb(C0, 'n')}+${p}}\\cdot 3^{2${cb(C0, 'n')}+${q}}=`,
+      substitutionLatex: `n=${nSub}:\\ 4^{${nSub}+${p}}\\cdot 3^{2(${nSub})+${q}}=${qValueLatex}`,
+      substitutionHighlightLatex: `${cb(C0, `\\textit{n} = ${nSub}`)}:\\ 4^{${cb(C0, String(nSub))}+${p}}\\cdot 3^{2(${cb(C0, String(nSub))})+${q}}=${qValueLatex}`,
+      optionChecks,
+      answerLabel,
+    },
+    explanationLines: [
+      `\\text{代 }n=${nSub}: 4^{${nSub}+${p}}\\cdot 3^{2(${nSub})+${q}}=${qValueLatex}`,
+      `\\therefore \\text{比較所有代入的答案，只有 ${answerLabel} 跟題目的代入答案相同，所以答案為 ${answerLabel}。}`,
+    ],
+  };
+};
+
+const generateParamEquationRootsQuestion = () => {
+  const fmtC = (coef) => (coef === 1 ? 'c' : `${coef}c`);
+  const labels = ['A', 'B', 'C', 'D'];
+
+  const t = randInt(2, 5); // first root coefficient
+  let k = randInt(3, 7);   // second root coefficient
+  while (k === t) k = randInt(3, 7);
+  const m = 2 * t - 1;     // ensures (m+1)/2 = t
+
+  const keyOfPair = (a, b) => `${a}|${b}`;
+  const correctPair = [t, k];
+  const pairSet = new Set([keyOfPair(correctPair[0], correctPair[1])]);
+  const wrongPairs = [];
+  const candidates = [
+    [k, t],
+    [t, k + 1],
+    [Math.max(1, t - 1), k],
+    [1, k],
+    [t + 1, Math.max(1, k - 1)],
+    [k + 1, t + 1],
+  ];
+  for (const pair of candidates) {
+    const key = keyOfPair(pair[0], pair[1]);
+    if (!pairSet.has(key)) {
+      pairSet.add(key);
+      wrongPairs.push(pair);
+    }
+    if (wrongPairs.length === 3) break;
+  }
+  while (wrongPairs.length < 3) {
+    const a = randInt(1, 8);
+    const b = randInt(1, 8);
+    const key = keyOfPair(a, b);
+    if (!pairSet.has(key)) {
+      pairSet.add(key);
+      wrongPairs.push([a, b]);
+    }
+  }
+
+  const toOptionLatex = (pair) => `x=${fmtC(pair[0])}\\text{ 或 }x=${fmtC(pair[1])}`;
+  const optionModels = shuffle([
+    { roots: correctPair, correct: true },
+    ...wrongPairs.map(roots => ({ roots, correct: false })),
+  ]).map((m, idx) => ({ ...m, label: labels[idx], latex: toOptionLatex(m.roots) }));
+
+  const options = optionModels.map(m => m.latex);
+  const correctIndex = optionModels.findIndex(m => m.correct);
+  const answerLabel = labels[correctIndex];
+
+  const reducedVal = (r) => (2 * r - (m + 1)) * (r - k);
+  const fmtMul = (n) => (n >= 0 ? `+${n}` : `${n}`);
+  const renderVal = (v) => (v === 0 ? '0' : `${v}c^2`);
+
+  const optionChecks = optionModels.map((opt) => {
+    const lineForRoot = (r) => {
+      const val = reducedVal(r);
+      const ok = val === 0;
+      return `x=${fmtC(r)}:\\ (2(${r})${fmtMul(-(m + 1))})(${r}${fmtMul(-k)})c^2=${renderVal(val)}\\ ${ok ? '\\checkmark' : '\\times'}`;
+    };
+    const bothOk = reducedVal(opt.roots[0]) === 0 && reducedVal(opt.roots[1]) === 0;
+    return {
+      label: opt.label,
+      latexLines: [lineForRoot(opt.roots[0]), lineForRoot(opt.roots[1])],
+      correct: bothOk,
+    };
+  });
+
+  return {
+    subtypeLabel: '參數方程（解集判別）',
+    questionLatex: `\\text{設 }c\\text{ 為常數。解方程 }(x-c)(x-${fmtC(k)})=(${fmtC(m)}-x)(x-${fmtC(k)})`,
+    options,
+    correctIndex,
+    explanationMode: 'substitution',
+    substitutionView: {
+      variables: [],
+      questionLatex: `\\text{設 }c\\text{ 為常數。解方程 }(x-c)(x-${fmtC(k)})=(${fmtC(m)}-x)(x-${fmtC(k)})`,
+      substitutionLatex: `\\text{逐一代入選項內兩個候選解，檢查 }(2x-${fmtC(m + 1)})(x-${fmtC(k)})=0`,
+      optionChecks,
+      answerLabel,
+    },
+    explanationLines: [],
+  };
+};
+
+const generateRatioEquationQuestion = () => {
+  const pairs = [
+    [8, 5], [7, 4], [9, 5], [5, 3], [11, 7], [13, 8],
+  ];
+  const [a, b] = pairs[randInt(0, pairs.length - 1)];
+
+  const p = randInt(2, 5);
+  const q = randInt(2, 6);
+  const r = randInt(2, 5);
+
+  // x:y=a:b -> x=at, y=bt; from px=qz-ry => qz=(pa+rb)t
+  const numRaw = b * q;
+  const denRaw = p * a + r * b;
+  const g = gcdInt(numRaw, denRaw);
+  const num = numRaw / g;
+  const den = denRaw / g;
+
+  const correct = `${num}:${den}`;
+  const w1 = `${den}:${num}`;
+  const w2 = `${numRaw}:${denRaw}`;
+  const w3 = `${num}:${den + 1}`;
+
+  const wrongs = [...new Set([w1, w2, w3].filter(w => w !== correct))];
+  while (wrongs.length < 3) {
+    const n2 = num + randInt(1, 3);
+    const d2 = den + randInt(1, 3);
+    const cand = `${n2}:${d2}`;
+    if (cand !== correct && !wrongs.includes(cand)) wrongs.push(cand);
+  }
+
+  const options = shuffle([correct, ...wrongs.slice(0, 3)]);
+  const correctIndex = options.indexOf(correct);
+  const labels = ['A', 'B', 'C', 'D'];
+  const answerLabel = labels[correctIndex];
+
+  return {
+    subtypeLabel: '比例方程（求比值）',
+    questionLatex: `\\text{設 }x,y,z\\text{ 均為非零的數。若 }x:y=${a}:${b}\\text{ 及 }${p}x=${q}z-${r}y\\text{，則 }y:z=`,
+    options,
+    correctIndex,
+    explanationLines: [
+      `\\text{由 }x:y=${a}:${b}\\text{，可直接代 }x=${a},\\ y=${b}`,
+      `\\text{代入 }${p}x=${q}z-${r}y\\text{： }${p}(${a})=${q}z-${r}(${b})`,
+      `\\Rightarrow ${p * a}=${q}z-${r * b}`,
+      `\\Rightarrow ${p * a + r * b}=${q}z`,
+      `\\Rightarrow z=\\dfrac{${p * a + r * b}}{${q}}`,
+      `\\therefore y:z=${b}:\\dfrac{${p * a + r * b}}{${q}}=${b * q}:${p * a + r * b}=${num}:${den}`,
+      `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
+    ],
+  };
+};
+
 export const generateSubstitutionQuestion = () => {
-  const q = QUESTION_BANK[randInt(0, QUESTION_BANK.length - 1)];
+  const bank = [
+    ...QUESTION_BANK,
+    generateBivariateFactorizationQuestion(),
+    generateExponentProductQuestion(),
+    generateParamEquationRootsQuestion(),
+    generateRatioEquationQuestion(),
+  ];
+  const q = bank[randInt(0, bank.length - 1)];
   return {
     ...q,
     options: [...q.options],

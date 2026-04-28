@@ -149,10 +149,19 @@ export const SubstitutionSteps = ({ question }) => {
         const mark = ok ? '✅' : '❌';
         const markCls = ok ? 'text-green-700' : 'text-red-700';
         const optionRules = buildOptionRules();
+        const hasLatexLines = Array.isArray(row.latexLines) && row.latexLines.length > 0;
         return (
           <div key={`${row.label}-${idx}`} className="leading-8 text-[1.15rem]">
             <span className="font-semibold mr-2">{row.label}:</span>
-            {row.latex
+            {hasLatexLines ? (
+              <span className="inline-flex flex-col align-top">
+                {row.latexLines.map((line, lineIdx) => (
+                  <span key={`${row.label}-line-${lineIdx}`}>
+                    <InlineMath math={`\\quad ${renderSubstitutedHighlights(line)}`} />
+                  </span>
+                ))}
+              </span>
+            ) : row.latex
               ? <InlineMath math={`\\quad ${renderSubstitutedHighlights(row.latex)}`} />
               : renderWithRules(row.text, optionRules)}
             <span className={`ml-2 font-bold ${markCls}`}>{mark}</span>
