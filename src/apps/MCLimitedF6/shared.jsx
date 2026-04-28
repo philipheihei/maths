@@ -106,6 +106,26 @@ export const SubstitutionSteps = ({ question }) => {
 
   const vars = view.variables || [];
 
+  const escapeRegex = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+  const renderSubstitutedHighlights = (latex) => {
+    if (!latex) return latex;
+    let out = latex;
+    vars.forEach((v) => {
+      const sym = escapeRegex(v.symbol);
+      const val = `(${v.value})`;
+      out = out.replace(
+        new RegExp(`\\\\colorbox\\{([^}]+)\\}\\{\\\\textit\\{${sym}\\}\\}`, 'g'),
+        (_, color) => `\\colorbox{${color}}{${val}}`
+      );
+      out = out.replace(
+        new RegExp(`\\\\colorbox\\{([^}]+)\\}\\{${sym}\\}`, 'g'),
+        (_, color) => `\\colorbox{${color}}{${val}}`
+      );
+    });
+    return out;
+  };
+
   const buildOptionRules = () => {
     const rules = [];
     vars.forEach((v, i) => {
@@ -133,7 +153,7 @@ export const SubstitutionSteps = ({ question }) => {
           <div key={`${row.label}-${idx}`} className="leading-8 text-[1.15rem]">
             <span className="font-semibold mr-2">{row.label}:</span>
             {row.latex
-              ? <InlineMath math={`\\quad ${row.latex}`} />
+              ? <InlineMath math={`\\quad ${renderSubstitutedHighlights(row.latex)}`} />
               : renderWithRules(row.text, optionRules)}
             <span className={`ml-2 font-bold ${markCls}`}>{mark}</span>
           </div>
