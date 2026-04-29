@@ -293,9 +293,9 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
             <div className="border-l-4 border-red-400 bg-red-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700 leading-relaxed">
               <div className="font-bold text-red-800">📝 重點：呢類題唔用代入法</div>
-              <div>原因：題目本身係「有條件等式」，即 <InlineMath math="(3c+1)(d-4)=2d(5c-1)" /> 要成立。你一亂代 <InlineMath math="c,d" />，多數會破壞呢個條件。</div>
+              <div>原因：題目本身係「有條件等式」，即 <InlineMath math="(3c+1)(d-4)=2d(5c-1)" /> 要成立。<br/>胡亂代<InlineMath math="c,d" />, 會破壞原有條件。</div>
               <div className="pl-2 space-y-1.5">
-                <div><span className="bg-red-200 text-red-800 rounded px-1.5 font-mono text-xs shadow-sm">例子</span> 你話代 <InlineMath math="c=2,d=3" />：</div>
+                <div><span className="bg-red-200 text-red-800 rounded px-1.5 font-mono text-xs shadow-sm">例子</span> 假設 代 <InlineMath math="c=2,d=3" />：</div>
                 <div className="pl-4">左：<InlineMath math="(3(2)+1)(3-4)=7(-1)=-7" /></div>
                 <div className="pl-4">右：<InlineMath math="2(3)(5(2)-1)=6(9)=54" /></div>
                 <div className="pl-4">左 <InlineMath math="\neq" /> 右，所以你代入嘅 <InlineMath math="(c,d)" /> 根本唔符合題目前設，用佢去比選項會誤導。</div>

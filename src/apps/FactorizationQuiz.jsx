@@ -1343,13 +1343,13 @@ const QuizPage = ({ onBackToTeaching }) => {
               solutionEquationHighlight: {
                 left: bExpr,
                 topSegments: [
-                  { kind: 'plain', tex: bLeadExpr },
+                  { kind: 'plain', tex: bLeadExpr, underline: true },
                   { kind: 'plain', tex: `+ ${aExpr}` }
                 ],
                 topCaption: '原式',
                 midSegments: [
-                  { kind: 'g', tex: `${t}` },
-                  { kind: 'p', tex: factor2 },
+                  { kind: 'p', tex: `${t}`, underline: true, joinNext: true },
+                  { kind: 'g', tex: factor2, underline: true, joinPrev: true },
                   { kind: 'g', tex: '+' },
                   { kind: 'g', tex: factor1 },
                   { kind: 'p', tex: factor2 }
@@ -2206,19 +2206,19 @@ const QuizPage = ({ onBackToTeaching }) => {
                                   seg.kind === 'op' ? (
                                     <span key={idx} className="px-1 text-red-700 font-bold"><Latex math={seg.tex} /></span>
                                   ) : seg.kind === 'plain' ? (
-                                    <span key={idx} className="px-1 text-slate-700">
+                                    <span key={idx} className={`px-1 text-slate-700 ${seg.underline ? 'border-b-2 border-red-600 pb-0.5' : ''} ${seg.joinNext ? '-mr-1 rounded-r-none' : ''} ${seg.joinPrev ? 'rounded-l-none' : ''}`}>
                                       <Latex math={seg.tex} />
                                     </span>
                                   ) : (
                                     <span
                                       key={idx}
-                                      className={seg.kind === 'p'
+                                      className={`${seg.kind === 'p'
                                         ? 'bg-purple-100 text-purple-800 rounded px-1'
                                         : seg.kind === 'g'
                                           ? 'bg-green-100 text-green-800 rounded px-1'
                                           : seg.kind === 'a'
                                             ? 'bg-yellow-200 text-amber-900 rounded px-1'
-                                            : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                            : 'bg-cyan-200 text-cyan-900 rounded px-1'} ${seg.underline ? 'border-b-2 border-red-600 pb-0.5' : ''} ${seg.joinNext ? '-mr-1 rounded-r-none' : ''} ${seg.joinPrev ? 'rounded-l-none' : ''}`}
                                     >
                                       <Latex math={seg.tex} />
                                     </span>
@@ -2239,19 +2239,19 @@ const QuizPage = ({ onBackToTeaching }) => {
                                     seg.kind === 'op' ? (
                                       <span key={idx} className="px-1 text-red-700 font-bold"><Latex math={seg.tex} /></span>
                                     ) : seg.kind === 'plain' ? (
-                                      <span key={idx} className="px-1 text-slate-700">
+                                      <span key={idx} className={`px-1 text-slate-700 ${seg.underline ? 'border-b-2 border-red-600 pb-0.5' : ''} ${seg.joinNext ? '-mr-1 rounded-r-none' : ''} ${seg.joinPrev ? 'rounded-l-none' : ''}`}>
                                         <Latex math={seg.tex} />
                                       </span>
                                     ) : (
                                       <span
                                         key={idx}
-                                        className={seg.kind === 'p'
+                                        className={`${seg.kind === 'p'
                                           ? 'bg-purple-100 text-purple-800 rounded px-1'
                                           : seg.kind === 'g'
                                             ? 'bg-green-100 text-green-800 rounded px-1'
                                             : seg.kind === 'a'
                                               ? 'bg-yellow-200 text-amber-900 rounded px-1'
-                                              : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                              : 'bg-cyan-200 text-cyan-900 rounded px-1'} ${seg.underline ? 'border-b-2 border-red-600 pb-0.5' : ''} ${seg.joinNext ? '-mr-1 rounded-r-none' : ''} ${seg.joinPrev ? 'rounded-l-none' : ''}`}
                                       >
                                         <Latex math={seg.tex} />
                                       </span>
@@ -2273,19 +2273,19 @@ const QuizPage = ({ onBackToTeaching }) => {
                                     seg.kind === 'op' ? (
                                       <span key={idx} className="px-1 text-red-700 font-bold"><Latex math={seg.tex} /></span>
                                     ) : seg.kind === 'plain' ? (
-                                      <span key={idx} className="px-1 text-slate-700">
+                                      <span key={idx} className={`px-1 text-slate-700 ${seg.underline ? 'border-b-2 border-red-600 pb-0.5' : ''} ${seg.joinNext ? '-mr-1 rounded-r-none' : ''} ${seg.joinPrev ? 'rounded-l-none' : ''}`}>
                                         <Latex math={seg.tex} />
                                       </span>
                                     ) : (
                                       <span
                                         key={idx}
-                                        className={seg.kind === 'p'
+                                        className={`${seg.kind === 'p'
                                           ? 'bg-purple-100 text-purple-800 rounded px-1'
                                           : seg.kind === 'g'
                                             ? 'bg-green-100 text-green-800 rounded px-1'
                                             : seg.kind === 'a'
                                               ? 'bg-yellow-200 text-amber-900 rounded px-1'
-                                              : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                              : 'bg-cyan-200 text-cyan-900 rounded px-1'} ${seg.underline ? 'border-b-2 border-red-600 pb-0.5' : ''} ${seg.joinNext ? '-mr-1 rounded-r-none' : ''} ${seg.joinPrev ? 'rounded-l-none' : ''}`}
                                       >
                                         <Latex math={seg.tex} />
                                       </span>
@@ -2328,19 +2328,19 @@ const QuizPage = ({ onBackToTeaching }) => {
                                   seg.kind === 'op' ? (
                                     <span key={idx} className="px-1 text-red-700 font-bold"><Latex math={seg.tex} /></span>
                                   ) : seg.kind === 'plain' ? (
-                                    <span key={idx} className="px-1 text-slate-700">
+                                    <span key={idx} className={`px-1 text-slate-700 ${seg.underline ? 'border-b-2 border-red-600 pb-0.5' : ''} ${seg.joinNext ? '-mr-1 rounded-r-none' : ''} ${seg.joinPrev ? 'rounded-l-none' : ''}`}>
                                       <Latex math={seg.tex} />
                                     </span>
                                   ) : (
                                     <span
                                       key={idx}
-                                      className={seg.kind === 'p'
+                                      className={`${seg.kind === 'p'
                                         ? 'bg-purple-100 text-purple-800 rounded px-1'
                                         : seg.kind === 'g'
                                           ? 'bg-green-100 text-green-800 rounded px-1'
                                           : seg.kind === 'a'
                                             ? 'bg-yellow-200 text-amber-900 rounded px-1'
-                                            : 'bg-cyan-200 text-cyan-900 rounded px-1'}
+                                            : 'bg-cyan-200 text-cyan-900 rounded px-1'} ${seg.underline ? 'border-b-2 border-red-600 pb-0.5' : ''} ${seg.joinNext ? '-mr-1 rounded-r-none' : ''} ${seg.joinPrev ? 'rounded-l-none' : ''}`}
                                     >
                                       <Latex math={seg.tex} />
                                     </span>
