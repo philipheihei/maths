@@ -33,7 +33,7 @@ const Latex = ({ math, block = false }) => {
 };
 
 // 混合文字+LaTeX 渲染（以 $...$ 標記 LaTeX 部分）
-const StepText = ({ text }) => {
+const StepText = ({ text, className = 'text-sm text-slate-700 leading-relaxed' }) => {
   const parts = text.split(/(\$[^$]+\$|\[\[[^\]]+\]\])/g);
   const getKeyClass = (label) => {
     const normalized = label.replace(/\s+/g, '').toLowerCase();
@@ -44,7 +44,7 @@ const StepText = ({ text }) => {
   };
 
   return (
-    <span className="text-sm text-slate-700 leading-relaxed">
+    <span className={className}>
       {parts.map((part, i) => {
         if (part.startsWith('$') && part.endsWith('$')) {
           return <Latex key={i} math={part.slice(1, -1)} />;
@@ -1346,7 +1346,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                   { kind: 'plain', tex: bLeadExpr, underline: true },
                   { kind: 'plain', tex: `+ ${aExpr}` }
                 ],
-                topCaption: '原式',
+                topCaption: '原式：會找到與 (a) 相同部份，非 (a) 部份為紅線，需抽公因式。',
                 midSegments: [
                   { kind: 'p', tex: `${t}`, underline: true, joinNext: true },
                   { kind: 'g', tex: factor2, underline: true, joinPrev: true },
@@ -2073,6 +2073,19 @@ const QuizPage = ({ onBackToTeaching }) => {
     }
   };
 
+  const renderCaptionWithRedUnderline = (text) => {
+    if (!text) return null;
+    const parts = String(text).split('紅線');
+    return parts.map((part, idx) => (
+      <React.Fragment key={idx}>
+        {part}
+        {idx < parts.length - 1 && (
+          <span className="text-red-700 underline decoration-red-600 decoration-2 underline-offset-2">紅線</span>
+        )}
+      </React.Fragment>
+    ));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-indigo-50 p-4">
       <div className="max-w-4xl mx-auto">
@@ -2227,7 +2240,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                               </div>
                             </div>
                             {feedback.equationHighlight.topCaption && (
-                              <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {feedback.equationHighlight.topCaption}</span>
+                              <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {renderCaptionWithRedUnderline(feedback.equationHighlight.topCaption)}</span>
                             )}
                           </div>
                           {feedback.equationHighlight.midSegments?.length > 0 && (
@@ -2260,7 +2273,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                                 </div>
                               </div>
                               {feedback.equationHighlight.midCaption && (
-                                <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {feedback.equationHighlight.midCaption}</span>
+                                <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {renderCaptionWithRedUnderline(feedback.equationHighlight.midCaption)}</span>
                               )}
                             </div>
                           )}
@@ -2309,7 +2322,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                                   ))}
                                 </span>
                               ) : feedback.equationHighlight.bottomCaption ? (
-                                <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {feedback.equationHighlight.bottomCaption}</span>
+                                <span className="text-xs text-slate-500 italic leading-snug whitespace-nowrap w-72 shrink-0">&larr; {renderCaptionWithRedUnderline(feedback.equationHighlight.bottomCaption)}</span>
                               ) : null}
                             </div>
                           )}
