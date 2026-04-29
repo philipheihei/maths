@@ -2075,15 +2075,15 @@ const QuizPage = ({ onBackToTeaching }) => {
 
   const renderCaptionWithRedUnderline = (text) => {
     if (!text) return null;
-    const parts = String(text).split('紅線');
-    return parts.map((part, idx) => (
-      <React.Fragment key={idx}>
-        {part}
-        {idx < parts.length - 1 && (
-          <span className="text-red-700 underline decoration-red-600 decoration-2 underline-offset-2">紅線</span>
-        )}
-      </React.Fragment>
-    ));
+    const tokens = String(text).split(/(紅線[，,]\s*需抽公因式|紅線|需抽公因式)/g);
+    return tokens.map((token, idx) => {
+      if (token === '紅線' || token === '需抽公因式' || /^紅線[，,]\s*需抽公因式$/.test(token)) {
+        return (
+          <span key={idx} className="text-red-700 underline decoration-red-600 decoration-2 underline-offset-2">{token}</span>
+        );
+      }
+      return <React.Fragment key={idx}>{token}</React.Fragment>;
+    });
   };
 
   return (
