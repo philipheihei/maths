@@ -130,7 +130,7 @@ export const CoordinateGeometryFormulaTable = ({ onStartQuiz }) => {
             </div>
           </div>
           <div className="bg-white rounded-lg p-4">
-            <p className="text-xs text-slate-400 mb-2">例：判斷 A(<span className="text-blue-600">1</span>, <span className="text-green-600">2</span>)、B(<span className="text-blue-600">3</span>, <span className="text-green-600">6</span>)、C(<span className="text-blue-600">5</span>, <span className="text-green-600">10</span>) 是否共線</p>
+            <p className="text-sm font-semibold text-slate-600 mb-2">例：判斷 A(<span className="text-blue-600">1</span>, <span className="text-green-600">2</span>)、B(<span className="text-blue-600">3</span>, <span className="text-green-600">6</span>)、C(<span className="text-blue-600">5</span>, <span className="text-green-600">10</span>) 是否共線</p>
             <div className="space-y-2 text-sm text-slate-700">
               <Latex math={'\\begin{aligned}m_{AB} &= \\dfrac{\\textcolor{green}{6}-\\textcolor{green}{2}}{\\textcolor{blue}{3}-\\textcolor{blue}{1}} = \\dfrac{4}{2} = 2\\end{aligned}'} block />
               <Latex math={'\\begin{aligned}m_{BC} &= \\dfrac{\\textcolor{green}{10}-\\textcolor{green}{6}}{\\textcolor{blue}{5}-\\textcolor{blue}{3}} = \\dfrac{4}{2} = 2\\end{aligned}'} block />
@@ -186,7 +186,7 @@ export const CoordinateGeometryFormulaTable = ({ onStartQuiz }) => {
             </div>
           </div>
           <div className="bg-white rounded-lg p-4">
-            <p className="text-xs text-slate-400 mb-2">例：若 AB ⊥ CD，求 CD 的斜率</p>
+            <p className="text-sm font-semibold text-slate-600 mb-2">例：若 AB ⊥ CD，求 CD 的斜率</p>
             <p className="text-sm text-slate-600 mb-2">已知 AB 的斜率 = 6</p>
             <Latex math={'\\begin{aligned}m_{AB} \\times m_{CD} &= -1 \\\\ 6 \\times m_{CD} &= -1 \\\\ m_{CD} &= -\\dfrac{1}{6}\\end{aligned}'} block />
           </div>
