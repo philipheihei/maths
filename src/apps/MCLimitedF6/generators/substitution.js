@@ -1136,6 +1136,7 @@ const generateInequalityChainQuestion = () => {
   const L = b * p + c;
   const R = b * q + c;
   const linear = fmtLinear(b, 'y', c);
+  const midY = Math.floor((p + q) / 2);
 
   const correct = `${p}<y\\leq${q}`;
   const { options, correctIndex } = buildInequalityOptions(
@@ -1158,13 +1159,14 @@ const generateInequalityChainQuestion = () => {
     options,
     correctIndex,
     explanationLines: [
-      `\\text{連住不等式先拆成兩條： }${L}<${linear}\\ \text{及 }${linear}\\leq ${R}`,
+      `\\text{連住不等式先拆成兩條： }${L}<${linear}\\ \\text{及 }${linear}\\leq ${R}`,
       `\\Rightarrow ${L - c}<${b}y\\leq ${R - c}`,
       `\\Rightarrow y>${p}\\ \\text{ 且 }\\ y\\leq ${q}`,
       `\\Rightarrow ${p}<y\\leq ${q}`,
       `\\text{試分界位 }y=${p},${q}\\text{（要檢查有冇等號）：}`,
-      `y=${p}:\\ y>${p}\\text{ 不成立（下界冇等號）}`,
-      `y=${q}:\\ y\\leq ${q}\\text{ 成立（上界有等號）}`,
+      `\\text{代 }y=${p}:\\ ${L}<${b}(${p})${c >= 0 ? '+' : ''}${c}\\leq ${R}\\Rightarrow ${L}<${L}\\leq ${R}\\text{ 不成立}`,
+      `\\text{代 }y=${q}:\\ ${L}<${b}(${q})${c >= 0 ? '+' : ''}${c}\\leq ${R}\\Rightarrow ${L}<${R}\\leq ${R}\\text{ 成立}`,
+      `\\text{代中間值 }y=${midY}:\\ ${L}<${b}(${midY})${c >= 0 ? '+' : ''}${c}\\leq ${R}\\text{ 成立，用作核對區間方向。}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1176,6 +1178,7 @@ const generateInequalityAndQuestion = () => {
 
   const eq1 = `${fmtLinear(1, 'x', -A)}>0`;
   const eq2 = `${fmtLinear(2, 'x', -2 * B)}\\leq 0`;
+  const midX = Math.floor((A + B) / 2);
 
   const correct = `${A}<x\\leq ${B}`;
   const { options, correctIndex } = buildInequalityOptions(
@@ -1203,8 +1206,9 @@ const generateInequalityAndQuestion = () => {
       `\\text{「且」取交集：}x>${A}\\ \\text{ 且 }\\ x\\leq ${B}`,
       `\\Rightarrow ${A}<x\\leq ${B}`,
       `\\text{試分界位 }x=${A},${B}\\text{（要檢查有冇等號）：}`,
-      `x=${A}:\\ x>${A}\\text{ 不成立（左邊係嚴格大於）}`,
-      `x=${B}:\\ x\\leq ${B}\\text{ 成立（右邊有等號）}`,
+      `\\text{代 }x=${A}:\\ ${A}+${-A}>0\\Rightarrow 0>0\\text{ 不成立}`,
+      `\\text{代 }x=${B}:\\ 2(${B})-${2 * B}\\leq 0\\Rightarrow 0\\leq 0\\text{ 成立}`,
+      `\\text{代中間值 }x=${midX}:\\ ${midX}+${-A}>0\\ \\text{ 且 }\\ 2(${midX})-${2 * B}\\leq 0\\text{，兩條都成立。}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1216,6 +1220,7 @@ const generateInequalityOrOutsideQuestion = () => {
 
   const eq1 = `${fmtLinear(1, 'x', -L)}\\leq 0`;
   const eq2 = `${fmtLinear(1, 'x', -R)}\\geq 0`;
+  const midX = Math.floor((L + R) / 2);
 
   const correct = `x\\leq ${L}\\ \\text{ 或 }\\ x\\geq ${R}`;
   const { options, correctIndex } = buildInequalityOptions(
@@ -1242,7 +1247,9 @@ const generateInequalityOrOutsideQuestion = () => {
       `\\text{由 }${eq2}\\Rightarrow x\\geq ${R}`,
       `\\text{「或」取聯集：}x\\leq ${L}\\ \\text{ 或 }\\ x\\geq ${R}`,
       `\\text{試分界位 }x=${L},${R}\\text{：兩邊都有等號，所以都包括。}`,
-      `\\text{另外試中間值（例如 }x=0\\text{）：兩條都唔成立，故中間區間不包括。}`,
+      `\\text{代 }x=${L}:\\ ${L}${L >= 0 ? '-' : '+'}${Math.abs(L)}\\leq 0\\Rightarrow 0\\leq 0\\text{ 成立}`,
+      `\\text{代 }x=${R}:\\ ${R}${R >= 0 ? '-' : '+'}${Math.abs(R)}\\geq 0\\Rightarrow 0\\geq 0\\text{ 成立}`,
+      `\\text{代中間值 }x=${midX}:\\ ${midX}${L >= 0 ? '-' : '+'}${Math.abs(L)}\\leq 0\\text{ 不成立，且 }${midX}${R >= 0 ? '-' : '+'}${Math.abs(R)}\\geq 0\\text{ 亦不成立。}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1284,8 +1291,8 @@ const generateInequalityNotEqualQuestion = () => {
       `\\text{由 }${eq2}\\Rightarrow ${c}-x<${d * e}\\Rightarrow -x<${d * e - c}\\Rightarrow x>${k}`,
       `\\text{「或」取聯集：}x<${k}\\ \\text{ 或 }\\ x>${k}`,
       `\\Rightarrow x\\ne ${k}`,
-      `\\text{試分界位 }x=${k}\\text{：左邊 }x<${k}\\text{ 不成立，右邊 }x>${k}\\text{ 亦不成立，所以 }x=${k}\\text{ 唔包括。}`,
-      `\\text{試 }x=${k - 1}\ \text{同 }x=${k + 1}\\text{：至少一條成立，故兩側都包括。}`,
+      `\\text{代分界位 }x=${k}:\\ ${k}-${a}<-${b}\\Rightarrow -${b}<-${b}\\text{ 不成立；且 }\\dfrac{${c}-${k}}{${d}}<${e}\\Rightarrow ${e}<${e}\\text{ 不成立。}`,
+      `\\text{再代 }x=${k - 1}\\text{ 及 }x=${k + 1}\\text{：可得至少一條成立，故兩側都包括。}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
