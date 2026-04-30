@@ -1290,6 +1290,15 @@ const QuizPage = ({ onBackToTeaching }) => {
               </div>
             </button>
 
+            <a
+              href="/ninja-trig-dojo.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="-mt-1 bg-blue-50 rounded-xl border border-blue-200 px-5 py-3 text-blue-800 font-semibold hover:bg-blue-100 transition-colors text-center"
+            >
+              三角比的練習（忍者貓道場）
+            </a>
+
             {/* 三角比 - 求邊長 */}
             <button
               onClick={() => selectQuizType('trig_side')}
