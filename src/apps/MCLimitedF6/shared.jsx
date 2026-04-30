@@ -134,7 +134,8 @@ export const SubstitutionSteps = ({ question }) => {
     ));
   };
 
-  const normalizeLatex = (latex) => truncatePlainDecimals(renderSubstitutedHighlights(latex));
+  const normalizeQuestionLatex = (latex) => truncatePlainDecimals(latex);
+  const normalizeSubstitutedLatex = (latex) => truncatePlainDecimals(renderSubstitutedHighlights(latex));
 
   const buildOptionRules = () => {
     const rules = [];
@@ -148,10 +149,10 @@ export const SubstitutionSteps = ({ question }) => {
   return (
     <div className="py-2 pl-2 text-left space-y-2">
       <div className="leading-7">
-        <InlineMath math={`\\text{題目：} ${normalizeLatex(view.questionHighlightLatex || view.questionLatex || question.questionLatex || '')}`} />
+        <InlineMath math={`\\text{題目：} ${normalizeQuestionLatex(view.questionHighlightLatex || view.questionLatex || question.questionLatex || '')}`} />
       </div>
       <div className="leading-7">
-        <InlineMath math={`\\text{題目：代 } ${normalizeLatex(view.substitutionHighlightLatex || view.substitutionLatex || '')}`} />
+        <InlineMath math={`\\text{題目：代 } ${normalizeSubstitutedLatex(view.substitutionHighlightLatex || view.substitutionLatex || '')}`} />
       </div>
 
       {(view.optionChecks || []).map((row, idx) => {
@@ -167,12 +168,12 @@ export const SubstitutionSteps = ({ question }) => {
               <span className="inline-flex flex-col align-top">
                 {row.latexLines.map((line, lineIdx) => (
                   <span key={`${row.label}-line-${lineIdx}`}>
-                    <InlineMath math={`\\quad ${normalizeLatex(line)}`} />
+                    <InlineMath math={`\\quad ${normalizeSubstitutedLatex(line)}`} />
                   </span>
                 ))}
               </span>
             ) : row.latex
-              ? <InlineMath math={`\\quad ${normalizeLatex(row.latex)}`} />
+              ? <InlineMath math={`\\quad ${normalizeSubstitutedLatex(row.latex)}`} />
               : renderWithRules(row.text, optionRules)}
             <span className={`ml-2 font-bold ${markCls}`}>{mark}</span>
           </div>
@@ -180,7 +181,7 @@ export const SubstitutionSteps = ({ question }) => {
       })}
 
       <div className="leading-6 text-sm font-medium text-slate-700">
-        <InlineMath math={`\\therefore \\text{比較所有代入的答案，只有 }\\mathrm{${view.answerLabel}}\\text{ 跟題目的代入答案相同，所以答案為 }\\mathrm{${view.answerLabel}}\\text{。}`} />
+        <InlineMath math={`\\text{∴比較所有代入的答案，只有 ${view.answerLabel} 跟題目的代入答案相同，所以答案為 ${view.answerLabel}。}`} />
       </div>
     </div>
   );

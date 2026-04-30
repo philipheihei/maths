@@ -213,6 +213,12 @@ const formatABExp = (coefA, coefAB, coefB) => {
   return `${t1}${mid}${end}`;
 };
 
+const formatVarTerm = (coef, variable) => {
+  if (coef === 1) return variable;
+  if (coef === -1) return `-${variable}`;
+  return `${coef}${variable}`;
+};
+
 const uniqueWrongs = (correct, wrongCandidates, fillerFn) => {
   const set = new Set();
   const out = [];
@@ -332,18 +338,18 @@ const buildExponentSimplifyVariant = (p, q) => {
 
   return {
     subtypeLabel: '指數化簡（需代兩個值）',
-    questionLatex: `\\dfrac{4^{n+${p}}\\cdot 8^n}{2^{3n+${q}}} =`,
+    questionLatex: `\\dfrac{4^{n+${p}}\\cdot 8^n}{2^{4n+${q}}} =`,
     options,
     correctIndex: 0,
     explanationMode: 'substitution',
     substitutionView: {
       variables: [{ symbol: 'n', value: String(nSub) }],
-      questionText: `(4^(n+${p})*8^n)/(2^(3n+${q})) =`,
-      substitutionText: `n = ${nSub}: (4^(${nSub}+${p})*8^${nSub})/2^(3(${nSub})+${q}) = ${qVal}`,
-      questionLatex: `\\dfrac{4^{n+${p}}\\cdot 8^n}{2^{3n+${q}}} =`,
-      questionHighlightLatex: `\\dfrac{4^{${cb(C0, 'n')}+${p}}\\cdot 8^{${cb(C0, 'n')}}}{2^{3${cb(C0, 'n')}+${q}}}=`,
-      substitutionLatex: `n=${nSub}:\\ \\dfrac{4^{${nSub}+${p}}\\cdot 8^{${nSub}}}{2^{3(${nSub})+${q}}}=${qVal}`,
-      substitutionHighlightLatex: `${cb(C0, `\\textit{n} = ${nSub}`)}:\\ \\dfrac{4^{${nv}+${p}}\\cdot 8^{${nv}}}{2^{3(${nv})+${q}}}=${qVal}`,
+      questionText: `(4^(n+${p})*8^n)/(2^(4n+${q})) =`,
+      substitutionText: `n = ${nSub}: (4^(${nSub}+${p})*8^${nSub})/2^(4(${nSub})+${q}) = ${qVal}`,
+      questionLatex: `\\dfrac{4^{n+${p}}\\cdot 8^n}{2^{4n+${q}}} =`,
+      questionHighlightLatex: `\\dfrac{4^{${cb(C0, 'n')}+${p}}\\cdot 8^{${cb(C0, 'n')}}}{2^{4${cb(C0, 'n')}+${q}}}=`,
+      substitutionLatex: `n=${nSub}:\\ \\dfrac{4^{${nSub}+${p}}\\cdot 8^{${nSub}}}{2^{4(${nSub})+${q}}}=${qVal}`,
+      substitutionHighlightLatex: `${cb(C0, `\\textit{n} = ${nSub}`)}:\\ \\dfrac{4^{${nv}+${p}}\\cdot 8^{${nv}}}{2^{4(${nv})+${q}}}=${qVal}`,
       optionChecks: options.map((opt, idx) => ({
         label: labels[idx],
         latex: optionSubLatex(opt),
@@ -352,7 +358,7 @@ const buildExponentSimplifyVariant = (p, q) => {
       answerLabel: 'A',
     },
     explanationLines: [
-      `\\text{代 }n=${nSub}: \\dfrac{4^{${nSub}+${p}}\\cdot 8^{${nSub}}}{2^{3(${nSub})+${q}}}=${qVal}`,
+      `\\text{代 }n=${nSub}: \\dfrac{4^{${nSub}+${p}}\\cdot 8^{${nSub}}}{2^{4(${nSub})+${q}}}=${qVal}`,
       '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的代入答案相同，所以答案為 A。}',
     ],
   };
@@ -439,6 +445,14 @@ const buildBivariateExpandVariant = (p, q, r, s) => {
   const betaSub = 3;
   const av = cb(C0, String(alphaSub));
   const bv = cb(C1, String(betaSub));
+  const tPText = formatVarTerm(p, 'α');
+  const tQText = formatVarTerm(q, 'β');
+  const tRText = formatVarTerm(r, 'α');
+  const tSText = formatVarTerm(s, 'β');
+  const tPLatex = formatVarTerm(p, '\\alpha');
+  const tQLatex = formatVarTerm(q, '\\beta');
+  const tRLatex = formatVarTerm(r, '\\alpha');
+  const tSLatex = formatVarTerm(s, '\\beta');
   const A = p * p + r * r;
   const B = -2 * (p * q + r * s);
   const C = q * q + s * s;
@@ -478,7 +492,7 @@ const buildBivariateExpandVariant = (p, q, r, s) => {
 
   return {
     subtypeLabel: '雙變數展開（適用）',
-    questionLatex: `(${p}\\alpha-${q}\\beta)^2+(${r}\\alpha-${s}\\beta)^2 =`,
+    questionLatex: `(${tPLatex}-${tQLatex})^2+(${tRLatex}-${tSLatex})^2 =`,
     options,
     correctIndex: 0,
     explanationMode: 'substitution',
@@ -487,10 +501,10 @@ const buildBivariateExpandVariant = (p, q, r, s) => {
         { symbol: 'α', value: String(alphaSub) },
         { symbol: 'β', value: String(betaSub) },
       ],
-      questionText: `(${p}α-${q}β)^2+(${r}α-${s}β)^2 =`,
+      questionText: `(${tPText}-${tQText})^2+(${tRText}-${tSText})^2 =`,
       substitutionText: `α = ${alphaSub}, β = ${betaSub}: (${p * alphaSub - q * betaSub})^2 + (${r * alphaSub - s * betaSub})^2 = ${qVal}`,
-      questionLatex: `(${p}\\alpha-${q}\\beta)^2+(${r}\\alpha-${s}\\beta)^2 =`,
-      questionHighlightLatex: `(${p}${cb(C0, 'α')}-${q}${cb(C1, 'β')})^2+(${r}${cb(C0, 'α')}-${s}${cb(C1, 'β')})^2=`,
+      questionLatex: `(${tPLatex}-${tQLatex})^2+(${tRLatex}-${tSLatex})^2 =`,
+      questionHighlightLatex: `(${formatVarTerm(p, cb(C0, 'α'))}-${formatVarTerm(q, cb(C1, 'β'))})^2+(${formatVarTerm(r, cb(C0, 'α'))}-${formatVarTerm(s, cb(C1, 'β'))})^2=`,
       substitutionLatex: `\\alpha=${alphaSub},\\ \\beta=${betaSub}:\\ (${p * alphaSub - q * betaSub})^2+(${r * alphaSub - s * betaSub})^2=${qVal}`,
       substitutionHighlightLatex: `${cb(C0, `α = ${alphaSub}`)},\\ ${cb(C1, `β = ${betaSub}`)}:\\ (${p}(${av})-${q}(${bv}))^2+(${r}(${av})-${s}(${bv}))^2=${qVal}`,
       optionChecks: optionModels.map((model, idx) => ({
@@ -510,60 +524,87 @@ const buildBivariateExpandVariant = (p, q, r, s) => {
 const buildExponentLawVariant = (u, v, m, n, p, q) => {
   const xSub = 3;
   const xv = cb(C0, String(xSub));
-  const K = u * p - v * q;
-  const E = m * p + n * q;
-  const correct = `3^{${K}}x^{${E}}`;
+  const outP = Math.abs(p) <= 1 ? 2 : p;
+  const outQ = Math.abs(q) <= 1 ? 2 : q;
+  const K = u * outP - v * outQ;
+  const E = m * outP + n * outQ;
+  const baseNumU = 3 ** u;
+  const baseNumV = 3 ** v;
+  const withOuterPowLatex = (baseLatex, exp) => (exp === 1 ? baseLatex : `(${baseLatex})^{${exp}}`);
+  const withOuterPowText = (baseText, exp) => (exp === 1 ? baseText : `(${baseText})^${exp}`);
+
+  const coeffLatexFromPower3 = (k) => {
+    if (k === 0) return '';
+    if (k > 0) return `${3 ** k}`;
+    return `\\dfrac{1}{${3 ** (-k)}}`;
+  };
+
+  const toMonomialLatex = (k, e) => {
+    const coefLatex = coeffLatexFromPower3(k);
+    return `${coefLatex}x^{${e}}`;
+  };
+
+  const parseMonomialLatex = (opt) => {
+    let m2 = opt.match(/^x\^\{(-?\d+)\}$/);
+    if (m2) return { coefValue: 1, coefLatex: '', e: Number(m2[1]) };
+
+    m2 = opt.match(/^(\d+)x\^\{(-?\d+)\}$/);
+    if (m2) return { coefValue: Number(m2[1]), coefLatex: m2[1], e: Number(m2[2]) };
+
+    m2 = opt.match(/^\\dfrac\{1\}\{(\d+)\}x\^\{(-?\d+)\}$/);
+    if (m2) return { coefValue: 1 / Number(m2[1]), coefLatex: `\\dfrac{1}{${m2[1]}}`, e: Number(m2[2]) };
+
+    return null;
+  };
+
+  const correct = toMonomialLatex(K, E);
   const wrongs = uniqueWrongs(
     correct,
     [
-      `3^{${K + 1}}x^{${E}}`,
-      `3^{${K}}x^{${E + 2}}`,
-      `3^{${K + 2}}x^{${Math.max(1, E - 1)}}`,
-      `3^{${K - 1}}x^{${E + 1}}`,
+      toMonomialLatex(K + 1, E),
+      toMonomialLatex(K, E + 1),
+      toMonomialLatex(Math.max(1, K - 1), E + 1),
+      toMonomialLatex(K + 1, Math.max(1, E - 1)),
     ],
-    (i) => `3^{${K + i + 3}}x^{${E + i + 1}}`
+    (i) => toMonomialLatex(K + 1 + i, E + 1)
   );
   const options = [correct, ...wrongs];
 
   const evalOpt = (opt) => {
-    const m2 = opt.match(/^3\^\{(-?\d+)\}x\^\{(-?\d+)\}$/);
-    if (!m2) return NaN;
-    const k = Number(m2[1]);
-    const e = Number(m2[2]);
-    return 3 ** (k + e);
+    const parsed = parseMonomialLatex(opt);
+    if (!parsed) return NaN;
+    return parsed.coefValue * (xSub ** parsed.e);
   };
 
   const qVal = 3 ** (K + E);
 
   return {
     subtypeLabel: '指數律（適用）',
-    questionLatex: `\\dfrac{(3^{${u}}x^{${m}})^{${p}}}{(3^{${v}}x^{-${n}})^{${q}}} =`,
+    questionLatex: `\\dfrac{${withOuterPowLatex(`${baseNumU}x^{${m}}`, outP)}}{${withOuterPowLatex(`${baseNumV}x^{-${n}}`, outQ)}} =`,
     options,
     correctIndex: 0,
     explanationMode: 'substitution',
     substitutionView: {
       variables: [{ symbol: 'x', value: String(xSub) }],
-      questionText: `((3^${u}x^${m})^${p})/((3^${v}x^(-${n}))^${q}) =`,
-      substitutionText: `x = ${xSub}: ((3^${u}*${xSub}^${m})^${p})/((3^${v}*${xSub}^(-${n}))^${q}) = 3^${K + E}`,
-      questionLatex: `\\dfrac{(3^{${u}}x^{${m}})^{${p}}}{(3^{${v}}x^{-${n}})^{${q}}} =`,
-      questionHighlightLatex: `\\dfrac{(3^{${u}}${cb(C0, 'x')}^{${m}})^{${p}}}{(3^{${v}}${cb(C0, 'x')}^{-${n}})^{${q}}}=`,
-      substitutionLatex: `x=${xSub}:\\ \\dfrac{(3^{${u}}(${xSub})^{${m}})^{${p}}}{(3^{${v}}(${xSub})^{-${n}})^{${q}}}=3^{${K + E}}=${qVal}`,
-      substitutionHighlightLatex: `${cb(C0, `\\textit{x} = ${xSub}`)}:\\ \\dfrac{(3^{${u}}(${xv})^{${m}})^{${p}}}{(3^{${v}}(${xv})^{-${n}})^{${q}}}=3^{${K + E}}=${qVal}`,
+      questionText: `(${withOuterPowText(`${baseNumU}x^${m}`, outP)})/(${withOuterPowText(`${baseNumV}x^(-${n})`, outQ)}) =`,
+      substitutionText: `x = ${xSub}: (${withOuterPowText(`${baseNumU}*${xSub}^${m}`, outP)})/(${withOuterPowText(`${baseNumV}*${xSub}^(-${n})`, outQ)}) = ${qVal}`,
+      questionLatex: `\\dfrac{${withOuterPowLatex(`${baseNumU}x^{${m}}`, outP)}}{${withOuterPowLatex(`${baseNumV}x^{-${n}}`, outQ)}} =`,
+      questionHighlightLatex: `\\dfrac{${withOuterPowLatex(`${baseNumU}${cb(C0, 'x')}^{${m}}`, outP)}}{${withOuterPowLatex(`${baseNumV}${cb(C0, 'x')}^{-${n}}`, outQ)}}=`,
+      substitutionLatex: `x=${xSub}:\\ \\dfrac{${withOuterPowLatex(`${baseNumU}(${xSub})^{${m}}`, outP)}}{${withOuterPowLatex(`${baseNumV}(${xSub})^{-${n}}`, outQ)}}=3^{${K + E}}=${qVal}`,
+      substitutionHighlightLatex: `${cb(C0, `\\textit{x} = ${xSub}`)}:\\ \\dfrac{${withOuterPowLatex(`${baseNumU}(${xv})^{${m}}`, outP)}}{${withOuterPowLatex(`${baseNumV}(${xv})^{-${n}}`, outQ)}}=3^{${K + E}}=${qVal}`,
       optionChecks: options.map((opt, idx) => ({
         label: labels[idx],
         latex: (() => {
-          const m2 = opt.match(/^3\^\{(-?\d+)\}x\^\{(-?\d+)\}$/);
-          if (!m2) return `${opt}=${evalOpt(opt)}`;
-          const k = Number(m2[1]);
-          const e = Number(m2[2]);
-          return `3^{${k}}(${xv})^{${e}}=3^{${k + e}}=${evalOpt(opt)}`;
+          const parsed = parseMonomialLatex(opt);
+          if (!parsed) return `${opt}=${evalOpt(opt)}`;
+          return `${parsed.coefLatex}(${xv})^{${parsed.e}}=${evalOpt(opt)}`;
         })(),
         correct: idx === 0,
       })),
       answerLabel: 'A',
     },
     explanationLines: [
-      `\\text{代 }x=${xSub}: \\dfrac{(3^{${u}}(${xSub})^{${m}})^{${p}}}{(3^{${v}}(${xSub})^{-${n}})^{${q}}}=3^{${K + E}}`,
+      `\\text{代 }x=${xSub}: \\dfrac{${withOuterPowLatex(`3^{${u}}(${xSub})^{${m}}`, outP)}}{${withOuterPowLatex(`3^{${v}}(${xSub})^{-${n}}`, outQ)}}=3^{${K + E}}`,
       '\\therefore \\text{比較所有代入的答案，只有 A 跟題目的代入答案相同，所以答案為 A。}',
     ],
   };
@@ -591,12 +632,12 @@ const EXTRA_VARIANTS = [
     [2, 1, 3, 2],
   ].map(([p, q, r, s]) => buildBivariateExpandVariant(p, q, r, s)),
   ...[
-    [2, 1, 1, 1, 3, 2],
-    [3, 1, 2, 1, 2, 1],
-    [2, 1, 1, 2, 4, 1],
-    [3, 2, 2, 1, 3, 1],
-    [4, 2, 1, 1, 2, 1],
-    [5, 2, 2, 1, 2, 2],
+    [2, 1, 1, 1, 2, 2],
+    [2, 1, 2, 1, 2, 3],
+    [2, 2, 1, 1, 3, 2],
+    [1, 1, 1, 1, 2, 2],
+    [2, 1, 1, 2, 3, 2],
+    [1, 1, 2, 1, 2, 3],
   ].map(([u, v, m, n, p, q]) => buildExponentLawVariant(u, v, m, n, p, q)),
 ];
 
@@ -991,12 +1032,15 @@ const generateParamEquationRootsQuestion = () => {
   while (k === t) k = randInt(3, 7);
   const m = 2 * t - 1;     // ensures (m+1)/2 = t
 
-  const keyOfPair = (a, b) => `${a}|${b}`;
+  const keyOfPair = (a, b) => {
+    const lo = Math.min(a, b);
+    const hi = Math.max(a, b);
+    return `${lo}|${hi}`;
+  };
   const correctPair = [t, k];
   const pairSet = new Set([keyOfPair(correctPair[0], correctPair[1])]);
   const wrongPairs = [];
   const candidates = [
-    [k, t],
     [t, k + 1],
     [Math.max(1, t - 1), k],
     [1, k],
@@ -1032,19 +1076,27 @@ const generateParamEquationRootsQuestion = () => {
   const answerLabel = labels[correctIndex];
 
   const reducedVal = (r) => (2 * r - (m + 1)) * (r - k);
-  const fmtMul = (n) => (n >= 0 ? `+${n}` : `${n}`);
   const renderVal = (v) => (v === 0 ? '0' : `${v}c^2`);
 
   const optionChecks = optionModels.map((opt) => {
-    const lineForRoot = (r) => {
-      const val = reducedVal(r);
-      const ok = val === 0;
-      return `x=${fmtC(r)}:\\ (2(${r})${fmtMul(-(m + 1))})(${r}${fmtMul(-k)})c^2=${renderVal(val)}\\ ${ok ? '\\checkmark' : '\\times'}`;
+    const uniqueRoots = [...new Set(opt.roots)];
+    const linesForRoot = (r) => {
+      const leftVal = (r - 1) * (r - k);
+      const rightVal = (m - r) * (r - k);
+      const ok = leftVal === rightVal;
+      const status = ok
+        ? `\\text{✅ 左 = 右，}x=${fmtC(r)}\\text{ 成立}`
+        : `\\text{❌ 左 \\ne 右，}x=${fmtC(r)}\\text{ 不對}`;
+      return [
+        `x=${fmtC(r)}:`,
+        `\\text{左：}(x-c)(x-${fmtC(k)})=(${r}-1)(${r}-${k})c^2=${renderVal(leftVal)}`,
+        `\\text{右：}(${fmtC(m)}-x)(x-${fmtC(k)})=(${m}-${r})(${r}-${k})c^2=${renderVal(rightVal)}\\ ${status}`,
+      ];
     };
-    const bothOk = reducedVal(opt.roots[0]) === 0 && reducedVal(opt.roots[1]) === 0;
+    const bothOk = uniqueRoots.every(r => reducedVal(r) === 0);
     return {
       label: opt.label,
-      latexLines: [lineForRoot(opt.roots[0]), lineForRoot(opt.roots[1])],
+      latexLines: uniqueRoots.flatMap(linesForRoot),
       correct: bothOk,
     };
   });
@@ -1058,7 +1110,7 @@ const generateParamEquationRootsQuestion = () => {
     substitutionView: {
       variables: [],
       questionLatex: `\\text{設 }c\\text{ 為常數。解方程 }(x-c)(x-${fmtC(k)})=(${fmtC(m)}-x)(x-${fmtC(k)})`,
-      substitutionLatex: `\\text{逐一代入選項內兩個候選解，檢查 }(2x-${fmtC(m + 1)})(x-${fmtC(k)})=0`,
+      substitutionLatex: '\\text{逐一代入選項內 }x\\text{ 值，check 左 = 右}',
       optionChecks,
       answerLabel,
     },
@@ -1106,6 +1158,16 @@ const generateRatioEquationQuestion = () => {
     questionLatex: `\\text{設 }x,y,z\\text{ 均為非零的數。若 }x:y=${a}:${b}\\text{ 及 }${p}x=${q}z-${r}y\\text{，則 }y:z=`,
     options,
     correctIndex,
+    explanationAligned: `\\begin{aligned}
+&\\text{由 }x:y=${a}:${b}\\text{，可直接代 }x=${a},\\ y=${b}\\\\
+&\\text{代入 }${p}x=${q}z-${r}y\\text{：}\\\\
+${p}(${a}) & = ${q}z-${r}(${b})\\\\
+${p * a} & = ${q}z-${r * b}\\\\
+${p * a + r * b} & = ${q}z\\\\
+z & = \\dfrac{${p * a + r * b}}{${q}}\\\\
+&\\therefore y:z=${b}:\\dfrac{${p * a + r * b}}{${q}}=${b * q}:${p * a + r * b}=${num}:${den}\\\\
+&\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}
+\\end{aligned}`,
     explanationLines: [
       `\\text{由 }x:y=${a}:${b}\\text{，可直接代 }x=${a},\\ y=${b}`,
       `\\text{代入 }${p}x=${q}z-${r}y\\text{： }${p}(${a})=${q}z-${r}(${b})`,
@@ -1159,14 +1221,10 @@ const generateInequalityChainQuestion = () => {
     options,
     correctIndex,
     explanationLines: [
-      `\\text{連住不等式先拆成兩條： }${L}<${linear}\\ \\text{及 }${linear}\\leq ${R}`,
-      `\\Rightarrow ${L - c}<${b}y\\leq ${R - c}`,
-      `\\Rightarrow y>${p}\\ \\text{ 且 }\\ y\\leq ${q}`,
-      `\\Rightarrow ${p}<y\\leq ${q}`,
-      `\\text{試分界位 }y=${p},${q}\\text{（要檢查有冇等號）：}`,
-      `\\text{代 }y=${p}:\\ ${L}<${b}(${p})${c >= 0 ? '+' : ''}${c}\\leq ${R}\\Rightarrow ${L}<${L}\\leq ${R}\\text{ 不成立}`,
-      `\\text{代 }y=${q}:\\ ${L}<${b}(${q})${c >= 0 ? '+' : ''}${c}\\leq ${R}\\Rightarrow ${L}<${R}\\leq ${R}\\text{ 成立}`,
-      `\\text{代中間值 }y=${midY}:\\ ${L}<${b}(${midY})${c >= 0 ? '+' : ''}${c}\\leq ${R}\\text{ 成立，用作核對區間方向。}`,
+      `\\text{Step 1 試 }y=${midY}\\text{（中間值）}:\\ ${L}<${b}(${midY})${c >= 0 ? '+' : ''}${c}=${b * midY + c}\\leq ${R}\\ \\text{✅}`,
+      `\\text{Step 2 試左分界 }y=${p}:\\ ${L}<${b}(${p})${c >= 0 ? '+' : ''}${c}=${L}\\leq ${R}\\ \\text{❌（左邊要嚴格小於）}`,
+      `\\text{Step 3 試右分界 }y=${q}:\\ ${L}<${b}(${q})${c >= 0 ? '+' : ''}${c}=${R}\\leq ${R}\\ \\text{✅（右邊可等號）}`,
+      `\\text{再試外面兩點 }y=${p - 1},${q + 1}:\\ ${b * (p - 1) + c}\\text{ 太細，} ${b * (q + 1) + c}\\text{ 太大，兩個都 }\\text{❌}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1197,18 +1255,16 @@ const generateInequalityAndQuestion = () => {
 
   return {
     subtypeLabel: '不等式（取「且」）',
+    variationQ: true,
     questionLatex: `${eq1}\\ \\text{ 且 }\\ ${eq2}\\text{ 的解為？}`,
     options,
     correctIndex,
     explanationLines: [
-      `\\text{由 }${eq1}\\Rightarrow x>${A}`,
-      `\\text{由 }${eq2}\\Rightarrow x\\leq ${B}`,
-      `\\text{「且」取交集：}x>${A}\\ \\text{ 且 }\\ x\\leq ${B}`,
-      `\\Rightarrow ${A}<x\\leq ${B}`,
-      `\\text{試分界位 }x=${A},${B}\\text{（要檢查有冇等號）：}`,
-      `\\text{代 }x=${A}:\\ ${A}+${-A}>0\\Rightarrow 0>0\\text{ 不成立}`,
-      `\\text{代 }x=${B}:\\ 2(${B})-${2 * B}\\leq 0\\Rightarrow 0\\leq 0\\text{ 成立}`,
-      `\\text{代中間值 }x=${midX}:\\ ${midX}+${-A}>0\\ \\text{ 且 }\\ 2(${midX})-${2 * B}\\leq 0\\text{，兩條都成立。}`,
+      `\\text{先試 }x=${B}\\text{ 和 }x=${A}\\text{ 是否同時滿足兩個不等式。}`,
+      `\\text{試 }x=${A}:\\ 0>0\\ \\text{ 且 }\\ ${2 * A - 2 * B}\\leq 0\\ \\text{❌，故 }x=${A}\\text{ 不包括}`,
+      `\\text{試 }x=${B}:\\ ${B - A}>0\\ \\text{ 且 }\\ 0\\leq 0\\ \\text{✅，故 }x=${B}\\text{ 包括}`,
+      `\\text{再試 }x=${midX}:\\ ${midX - A}>0\\ \\text{ 且 }\\ ${2 * midX - 2 * B}\\leq 0\\ \\text{✅}`,
+      `\\text{再試 }x=${B + 1}:\\ ${B + 1 - A}>0\\ \\text{ 但 }\\ ${2 * (B + 1) - 2 * B}\\leq 0\\ \\text{❌}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1239,17 +1295,16 @@ const generateInequalityOrOutsideQuestion = () => {
 
   return {
     subtypeLabel: '不等式（取「或」）',
+    variationQ: true,
     questionLatex: `${eq1}\\ \\text{ 或 }\\ ${eq2}\\text{ 的解為？}`,
     options,
     correctIndex,
     explanationLines: [
-      `\\text{由 }${eq1}\\Rightarrow x\\leq ${L}`,
-      `\\text{由 }${eq2}\\Rightarrow x\\geq ${R}`,
-      `\\text{「或」取聯集：}x\\leq ${L}\\ \\text{ 或 }\\ x\\geq ${R}`,
-      `\\text{試分界位 }x=${L},${R}\\text{：兩邊都有等號，所以都包括。}`,
-      `\\text{代 }x=${L}:\\ ${L}${L >= 0 ? '-' : '+'}${Math.abs(L)}\\leq 0\\Rightarrow 0\\leq 0\\text{ 成立}`,
-      `\\text{代 }x=${R}:\\ ${R}${R >= 0 ? '-' : '+'}${Math.abs(R)}\\geq 0\\Rightarrow 0\\geq 0\\text{ 成立}`,
-      `\\text{代中間值 }x=${midX}:\\ ${midX}${L >= 0 ? '-' : '+'}${Math.abs(L)}\\leq 0\\text{ 不成立，且 }${midX}${R >= 0 ? '-' : '+'}${Math.abs(R)}\\geq 0\\text{ 亦不成立。}`,
+      `\\text{先試 }x=${L}\\text{ 和 }x=${R}\\text{ 是否至少滿足其中一個不等式。}`,
+      `\\text{試 }x=${L}:\\ ${L - L}\\leq 0\\ \\text{✅}`,
+      `\\text{試 }x=${R}:\\ ${R - R}\\geq 0\\ \\text{✅}`,
+      `\\text{再試 }x=${midX}:\\ ${midX - L}\\leq 0\\ \\text{❌，且 }\\ ${midX - R}\\geq 0\\ \\text{❌}`,
+      `\\text{再試外面兩點 }x=${L - 1},${R + 1}:\\ x=${L - 1}\\text{ 令第一條 }\\text{✅}，x=${R + 1}\\text{ 令第二條 }\\text{✅}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1287,12 +1342,10 @@ const generateInequalityNotEqualQuestion = () => {
     options,
     correctIndex,
     explanationLines: [
-      `\\text{由 }${eq1}\\Rightarrow x<${k}`,
-      `\\text{由 }${eq2}\\Rightarrow ${c}-x<${d * e}\\Rightarrow -x<${d * e - c}\\Rightarrow x>${k}`,
-      `\\text{「或」取聯集：}x<${k}\\ \\text{ 或 }\\ x>${k}`,
-      `\\Rightarrow x\\ne ${k}`,
-      `\\text{代分界位 }x=${k}:\\ ${k}-${a}<-${b}\\Rightarrow -${b}<-${b}\\text{ 不成立；且 }\\dfrac{${c}-${k}}{${d}}<${e}\\Rightarrow ${e}<${e}\\text{ 不成立。}`,
-      `\\text{再代 }x=${k - 1}\\text{ 及 }x=${k + 1}\\text{：可得至少一條成立，故兩側都包括。}`,
+      `\\text{Step 1 試分界位 }x=${k}:\\ ${k - a}<-${b}\\ \\text{❌，且 }\\dfrac{${c}-${k}}{${d}}<${e}\\ \\text{亦 }\\text{❌}`,
+      `\\text{Step 2 試 }x=${k - 1}:\\ ${k - 1 - a}<-${b}\\ \\text{✅，第二條 }\\text{❌}`,
+      `\\text{Step 3 試 }x=${k + 1}:\\ ${k + 1 - a}<-${b}\\ \\text{❌，但 }\\dfrac{${c}-${k + 1}}{${d}}<${e}\\ \\text{✅}`,
+      `\\text{兩邊都可成立，但 }x=${k}\\text{ 唔得，所以只排除 }x=${k}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
