@@ -873,9 +873,22 @@ const generateExponentProductQuestion = () => {
   };
 
   const toSciLatexFromDigits = (digits) => {
-    const lead = digits[0];
-    const frac = digits.slice(1, CASIO_SIG_FIGS).padEnd(CASIO_SIG_FIGS - 1, '0');
-    const exp10 = digits.length - 1;
+    let exp10 = digits.length - 1;
+    const nextDigit = Number(digits[CASIO_SIG_FIGS] || '0');
+
+    // Keep CASIO_SIG_FIGS significant digits and round by the next digit.
+    let sig = digits.slice(0, CASIO_SIG_FIGS).padEnd(CASIO_SIG_FIGS, '0');
+    if (nextDigit >= 5) {
+      sig = (BigInt(sig) + 1n).toString();
+      if (sig.length > CASIO_SIG_FIGS) {
+        // Example: 9.999... rounds to 1.000... × 10^(k+1)
+        sig = sig.slice(0, CASIO_SIG_FIGS);
+        exp10 += 1;
+      }
+    }
+
+    const lead = sig[0];
+    const frac = sig.slice(1).padEnd(CASIO_SIG_FIGS - 1, '0');
     return `${lead}.${frac}\\times 10^{${exp10}}`;
   };
 
@@ -1105,6 +1118,179 @@ const generateRatioEquationQuestion = () => {
   };
 };
 
+const buildInequalityOptions = (correct, wrongCandidates, fillerFn) => {
+  const wrongs = uniqueWrongs(correct, wrongCandidates, fillerFn);
+  const options = shuffle([correct, ...wrongs]);
+  return {
+    options,
+    correctIndex: options.indexOf(correct),
+  };
+};
+
+const generateInequalityChainQuestion = () => {
+  const p = randInt(-6, 1);
+  const q = randInt(p + 2, 8);
+  const b = randInt(2, 4);
+  const c = randInt(-5, 5);
+
+  const L = b * p + c;
+  const R = b * q + c;
+  const linear = fmtLinear(b, 'y', c);
+
+  const correct = `${p}<y\\leq${q}`;
+  const { options, correctIndex } = buildInequalityOptions(
+    correct,
+    [
+      `${p}\\leq y<${q}`,
+      `${p}<y<${q}`,
+      `${p}\\leq y\\leq ${q}`,
+      `y<${p}\\ \\text{ 或 }\\ y>${q}`,
+    ],
+    (i) => `${p - (i + 1)}<y\\leq${q}`
+  );
+
+  const labels = ['A', 'B', 'C', 'D'];
+  const answerLabel = labels[correctIndex];
+
+  return {
+    subtypeLabel: '不等式（鏈式夾擠）',
+    questionLatex: `${L}<${linear}\\leq ${R}\\text{ 的解為？}`,
+    options,
+    correctIndex,
+    explanationLines: [
+      `\\text{連住不等式先拆成兩條： }${L}<${linear}\\ \text{及 }${linear}\\leq ${R}`,
+      `\\Rightarrow ${L - c}<${b}y\\leq ${R - c}`,
+      `\\Rightarrow y>${p}\\ \\text{ 且 }\\ y\\leq ${q}`,
+      `\\Rightarrow ${p}<y\\leq ${q}`,
+      `\\text{試分界位 }y=${p},${q}\\text{（要檢查有冇等號）：}`,
+      `y=${p}:\\ y>${p}\\text{ 不成立（下界冇等號）}`,
+      `y=${q}:\\ y\\leq ${q}\\text{ 成立（上界有等號）}`,
+      `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
+    ],
+  };
+};
+
+const generateInequalityAndQuestion = () => {
+  const A = randInt(-6, 1);
+  const B = randInt(A + 2, 7);
+
+  const eq1 = `${fmtLinear(1, 'x', -A)}>0`;
+  const eq2 = `${fmtLinear(2, 'x', -2 * B)}\\leq 0`;
+
+  const correct = `${A}<x\\leq ${B}`;
+  const { options, correctIndex } = buildInequalityOptions(
+    correct,
+    [
+      `${A}\\leq x<${B}`,
+      `${A}<x<${B}`,
+      `${A}\\leq x\\leq ${B}`,
+      `x\\leq ${A}\\ \\text{ 或 }\\ x>${B}`,
+    ],
+    (i) => `${A - i - 1}<x\\leq ${B}`
+  );
+
+  const labels = ['A', 'B', 'C', 'D'];
+  const answerLabel = labels[correctIndex];
+
+  return {
+    subtypeLabel: '不等式（取「且」）',
+    questionLatex: `${eq1}\\ \\text{ 且 }\\ ${eq2}\\text{ 的解為？}`,
+    options,
+    correctIndex,
+    explanationLines: [
+      `\\text{由 }${eq1}\\Rightarrow x>${A}`,
+      `\\text{由 }${eq2}\\Rightarrow x\\leq ${B}`,
+      `\\text{「且」取交集：}x>${A}\\ \\text{ 且 }\\ x\\leq ${B}`,
+      `\\Rightarrow ${A}<x\\leq ${B}`,
+      `\\text{試分界位 }x=${A},${B}\\text{（要檢查有冇等號）：}`,
+      `x=${A}:\\ x>${A}\\text{ 不成立（左邊係嚴格大於）}`,
+      `x=${B}:\\ x\\leq ${B}\\text{ 成立（右邊有等號）}`,
+      `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
+    ],
+  };
+};
+
+const generateInequalityOrOutsideQuestion = () => {
+  const L = randInt(-8, -2);
+  const R = randInt(2, 8);
+
+  const eq1 = `${fmtLinear(1, 'x', -L)}\\leq 0`;
+  const eq2 = `${fmtLinear(1, 'x', -R)}\\geq 0`;
+
+  const correct = `x\\leq ${L}\\ \\text{ 或 }\\ x\\geq ${R}`;
+  const { options, correctIndex } = buildInequalityOptions(
+    correct,
+    [
+      `${L}\\leq x\\leq ${R}`,
+      `x<${L}\\ \\text{ 或 }\\ x>${R}`,
+      `x\\geq ${L}`,
+      `${L}<x<${R}`,
+    ],
+    (i) => `x\\leq ${L - i - 1}\\ \\text{ 或 }\\ x\\geq ${R}`
+  );
+
+  const labels = ['A', 'B', 'C', 'D'];
+  const answerLabel = labels[correctIndex];
+
+  return {
+    subtypeLabel: '不等式（取「或」）',
+    questionLatex: `${eq1}\\ \\text{ 或 }\\ ${eq2}\\text{ 的解為？}`,
+    options,
+    correctIndex,
+    explanationLines: [
+      `\\text{由 }${eq1}\\Rightarrow x\\leq ${L}`,
+      `\\text{由 }${eq2}\\Rightarrow x\\geq ${R}`,
+      `\\text{「或」取聯集：}x\\leq ${L}\\ \\text{ 或 }\\ x\\geq ${R}`,
+      `\\text{試分界位 }x=${L},${R}\\text{：兩邊都有等號，所以都包括。}`,
+      `\\text{另外試中間值（例如 }x=0\\text{）：兩條都唔成立，故中間區間不包括。}`,
+      `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
+    ],
+  };
+};
+
+const generateInequalityNotEqualQuestion = () => {
+  const k = randInt(-6, 6);
+  const a = k + randInt(2, 6);
+  const b = a - k;
+  const d = randInt(2, 5);
+  const e = randInt(1, 4);
+  const c = k + d * e;
+
+  const eq1 = `${fmtLinear(1, 'x', -a)}<-${b}`;
+  const eq2 = `\\dfrac{${c}-x}{${d}}<${e}`;
+
+  const correct = `x\\ne ${k}`;
+  const { options, correctIndex } = buildInequalityOptions(
+    correct,
+    [
+      `x<${k}`,
+      `x>${k}`,
+      `x=${k}`,
+      `x\\leq ${k}\\ \\text{ 或 }\\ x\\geq ${k}`,
+    ],
+    (i) => `x\\ne ${k + i + 1}`
+  );
+
+  const labels = ['A', 'B', 'C', 'D'];
+  const answerLabel = labels[correctIndex];
+
+  return {
+    subtypeLabel: '不等式（夾外解）',
+    questionLatex: `${eq1}\\ \\text{ 或 }\\ ${eq2}\\text{ 的解為？}`,
+    options,
+    correctIndex,
+    explanationLines: [
+      `\\text{由 }${eq1}\\Rightarrow x<${k}`,
+      `\\text{由 }${eq2}\\Rightarrow ${c}-x<${d * e}\\Rightarrow -x<${d * e - c}\\Rightarrow x>${k}`,
+      `\\text{「或」取聯集：}x<${k}\\ \\text{ 或 }\\ x>${k}`,
+      `\\Rightarrow x\\ne ${k}`,
+      `\\text{試分界位 }x=${k}\\text{：左邊 }x<${k}\\text{ 不成立，右邊 }x>${k}\\text{ 亦不成立，所以 }x=${k}\\text{ 唔包括。}`,
+      `\\text{試 }x=${k - 1}\ \text{同 }x=${k + 1}\\text{：至少一條成立，故兩側都包括。}`,
+      `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
+    ],
+  };
+};
+
 export const generateSubstitutionQuestion = () => {
   const bank = [
     ...QUESTION_BANK,
@@ -1113,6 +1299,10 @@ export const generateSubstitutionQuestion = () => {
     generateExponentProductQuestion(),
     generateParamEquationRootsQuestion(),
     generateRatioEquationQuestion(),
+    generateInequalityChainQuestion(),
+    generateInequalityAndQuestion(),
+    generateInequalityOrOutsideQuestion(),
+    generateInequalityNotEqualQuestion(),
   ];
   const q = bank[randInt(0, bank.length - 1)];
   return {
