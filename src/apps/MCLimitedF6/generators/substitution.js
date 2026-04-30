@@ -1158,10 +1158,13 @@ const generateInequalityChainQuestion = () => {
     options,
     correctIndex,
     explanationLines: [
-      `\\text{由 }${L}<${linear}\\leq ${R}`,
+      `\\text{連住不等式先拆成兩條： }${L}<${linear}\\ \text{及 }${linear}\\leq ${R}`,
       `\\Rightarrow ${L - c}<${b}y\\leq ${R - c}`,
       `\\Rightarrow y>${p}\\ \\text{ 且 }\\ y\\leq ${q}`,
       `\\Rightarrow ${p}<y\\leq ${q}`,
+      `\\text{試分界位 }y=${p},${q}\\text{（要檢查有冇等號）：}`,
+      `y=${p}:\\ y>${p}\\text{ 不成立（下界冇等號）}`,
+      `y=${q}:\\ y\\leq ${q}\\text{ 成立（上界有等號）}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1199,6 +1202,9 @@ const generateInequalityAndQuestion = () => {
       `\\text{由 }${eq2}\\Rightarrow x\\leq ${B}`,
       `\\text{「且」取交集：}x>${A}\\ \\text{ 且 }\\ x\\leq ${B}`,
       `\\Rightarrow ${A}<x\\leq ${B}`,
+      `\\text{試分界位 }x=${A},${B}\\text{（要檢查有冇等號）：}`,
+      `x=${A}:\\ x>${A}\\text{ 不成立（左邊係嚴格大於）}`,
+      `x=${B}:\\ x\\leq ${B}\\text{ 成立（右邊有等號）}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1235,6 +1241,8 @@ const generateInequalityOrOutsideQuestion = () => {
       `\\text{由 }${eq1}\\Rightarrow x\\leq ${L}`,
       `\\text{由 }${eq2}\\Rightarrow x\\geq ${R}`,
       `\\text{「或」取聯集：}x\\leq ${L}\\ \\text{ 或 }\\ x\\geq ${R}`,
+      `\\text{試分界位 }x=${L},${R}\\text{：兩邊都有等號，所以都包括。}`,
+      `\\text{另外試中間值（例如 }x=0\\text{）：兩條都唔成立，故中間區間不包括。}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
@@ -1276,6 +1284,8 @@ const generateInequalityNotEqualQuestion = () => {
       `\\text{由 }${eq2}\\Rightarrow ${c}-x<${d * e}\\Rightarrow -x<${d * e - c}\\Rightarrow x>${k}`,
       `\\text{「或」取聯集：}x<${k}\\ \\text{ 或 }\\ x>${k}`,
       `\\Rightarrow x\\ne ${k}`,
+      `\\text{試分界位 }x=${k}\\text{：左邊 }x<${k}\\text{ 不成立，右邊 }x>${k}\\text{ 亦不成立，所以 }x=${k}\\text{ 唔包括。}`,
+      `\\text{試 }x=${k - 1}\ \text{同 }x=${k + 1}\\text{：至少一條成立，故兩側都包括。}`,
       `\\therefore \\text{答案是 }\\mathrm{${answerLabel}}\\text{。}`,
     ],
   };
