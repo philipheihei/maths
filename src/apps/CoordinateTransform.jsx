@@ -1130,7 +1130,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
                   <div className="mt-4 pt-4 border-t border-amber-200 space-y-2">
                     <p className="font-bold">步驟說明：</p>
                     <p>步驟1: 每旋轉90°，(x, y) 數字調轉，所以轉{rotationAngle}°會數字調轉{rotationAngle / 90}次，結果為({getTargetPoint().x}, {getTargetPoint().y})</p>
-                    <p>步驟2: 每旋轉90°，會移過一個象限。留意P' 的象限 x坐標為{getTargetPoint().x >= 0 ? '+ve' : '-ve'}，y坐標為{getTargetPoint().y >= 0 ? '+ve' : '-ve'}。所以結果為({getTargetPoint().x}, {getTargetPoint().y})</p>
+                    <p>步驟2: 每旋轉90°，會移過一個象限。留意P' 在{getTargetPoint().x > 0 && getTargetPoint().y > 0 ? '第一象限' : getTargetPoint().x < 0 && getTargetPoint().y > 0 ? '第二象限' : getTargetPoint().x < 0 && getTargetPoint().y < 0 ? '第三象限' : getTargetPoint().x > 0 && getTargetPoint().y < 0 ? '第四象限' : getTargetPoint().x === 0 && getTargetPoint().y > 0 ? '正y軸上' : getTargetPoint().x === 0 && getTargetPoint().y < 0 ? '負y軸上' : getTargetPoint().y === 0 && getTargetPoint().x > 0 ? '正x軸上' : getTargetPoint().y === 0 && getTargetPoint().x < 0 ? '負x軸上' : '原點'}，x坐標為{getTargetPoint().x >= 0 ? '+ve' : '-ve'}，y坐標為{getTargetPoint().y >= 0 ? '+ve' : '-ve'}。所以結果為({getTargetPoint().x}, {getTargetPoint().y})</p>
                   </div>
                 )}
               </div>
@@ -1310,7 +1310,7 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
     let from, to, description, explanation;
     
     // Helper function to generate rotation steps
-    const generateRotationSteps = (fromPoint, angle, clockwise, toPoint) => {
+    const generateRotationSteps = (fromPoint, angle, clockwise, toPoint, pointLabel) => {
       const direction = clockwise ? '順時針' : '逆時針';
       const rotationTimes = angle / 90;
       
@@ -1326,19 +1326,19 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       let xSign = normalizedX > 0 ? '+ve' : normalizedX < 0 ? '-ve' : '0';
       let ySign = normalizedY > 0 ? '+ve' : normalizedY < 0 ? '-ve' : '0';
       
-      if (normalizedX > 0 && normalizedY > 0) quadrant = '第一';
-      else if (normalizedX < 0 && normalizedY > 0) quadrant = '第二';
-      else if (normalizedX < 0 && normalizedY < 0) quadrant = '第三';
-      else if (normalizedX > 0 && normalizedY < 0) quadrant = '第四';
+      if (normalizedX > 0 && normalizedY > 0) quadrant = '第一象限';
+      else if (normalizedX < 0 && normalizedY > 0) quadrant = '第二象限';
+      else if (normalizedX < 0 && normalizedY < 0) quadrant = '第三象限';
+      else if (normalizedX > 0 && normalizedY < 0) quadrant = '第四象限';
       else if (normalizedX === 0 && normalizedY > 0) quadrant = '正y軸上';
       else if (normalizedX === 0 && normalizedY < 0) quadrant = '負y軸上';
       else if (normalizedY === 0 && normalizedX > 0) quadrant = '正x軸上';
       else if (normalizedY === 0 && normalizedX < 0) quadrant = '負x軸上';
       else quadrant = '原點';
       
-      let step2 = `步驟2: 每旋轉90°，會移過一個象限。留意P' 在${quadrant}，x坐標為${xSign}，y坐標為${ySign}。所以結果為(${normalizedX}, ${normalizedY})`;
+      let step2 = `步驟2: 每旋轉90°，會移過一個象限。留意${pointLabel}' 在${quadrant}，x坐標為${xSign}，y坐標為${ySign}。所以結果為(${normalizedX}, ${normalizedY})`;
       
-      return `${step1}\n${step2}`;
+      return `${step1}\n\n${step2}`;
     };
     
     if (type === 'translation') {
@@ -1427,7 +1427,7 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
       explanation = `繞原點${direction}旋轉 ${angle}°：\n${formula} = (${normalizeZero(to.x)}, ${normalizeZero(to.y)})`;
       
       // Generate rotation steps explanation
-      const rotationSteps = generateRotationSteps(from, angle, clockwise, to);
+      const rotationSteps = generateRotationSteps(from, angle, clockwise, to, label);
       
       return { type, from, to, label, description, explanation, angle, clockwise, rotationSteps };
     }

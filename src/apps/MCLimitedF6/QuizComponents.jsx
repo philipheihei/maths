@@ -265,15 +265,70 @@ export const FunctionGraphQuiz = ({ onBack }) => {
 
 // ─── Generic Topic Quiz ───────────────────────────────────────────────────────
 export const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
-  const [question, setQuestion] = useState(() => normalizeMCQuestion(generateFn()));
+  const isSubstitutionTopic = topicLabel === '代數代入法';
+
+  const substitutionTypeOptions = [
+    { id: 'alg', label: '代數式化簡', match: '代數式化簡（適用）' },
+    { id: 'exp2', label: '指數化簡（代兩值）', match: '指數化簡（需代兩個值）' },
+    { id: 'frac', label: '分式化簡', match: '分式化簡（適用）' },
+    { id: 'bivar', label: '雙變數展開', match: '雙變數展開（適用）' },
+    { id: 'law', label: '指數律', match: '指數律（適用）' },
+    { id: 'factor2', label: '二元因式分解', match: '二元因式分解（代入判別）' },
+    { id: 'expProd', label: '指數乘積', match: '指數乘積（適用）' },
+    { id: 'param', label: '參數方程', match: '參數方程（解集判別）' },
+    { id: 'ratio', label: '比例方程', match: '比例方程（求比值）' },
+    { id: 'ineqChain', label: '不等式（鏈式夾擠）', match: '不等式（鏈式夾擠）' },
+    { id: 'ineqAnd', label: '不等式（及）', match: '不等式（取「且」）' },
+    { id: 'ineqOr', label: '不等式（或）', match: '不等式（取「或」）' },
+    { id: 'ineqNotEq', label: '不等式（夾外解）', match: '不等式（夾外解）' },
+  ];
+
+  const initialEnabledTypes = isSubstitutionTopic
+    ? Object.fromEntries(substitutionTypeOptions.map(t => [t.id, true]))
+    : {};
+
+  const [enabledTypes, setEnabledTypes] = useState(initialEnabledTypes);
+
+  const isSubtypeEnabled = (subtypeLabel, enabledMap) => {
+    if (!isSubstitutionTopic) return true;
+    const type = substitutionTypeOptions.find(t => t.match === subtypeLabel);
+    if (!type) return true;
+    return !!enabledMap[type.id];
+  };
+
+  const pickQuestionByEnabledTypes = (enabledMap) => {
+    const maxTry = 60;
+    for (let i = 0; i < maxTry; i++) {
+      const cand = normalizeMCQuestion(generateFn());
+      if (isSubtypeEnabled(cand?.subtypeLabel, enabledMap)) return cand;
+    }
+    return normalizeMCQuestion(generateFn());
+  };
+
+  const [question, setQuestion] = useState(() => pickQuestionByEnabledTypes(initialEnabledTypes));
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [streak, setStreak] = useState(0);
 
+  const toggleType = (typeId) => {
+    if (!isSubstitutionTopic) return;
+    setEnabledTypes(prev => {
+      const next = { ...prev, [typeId]: !prev[typeId] };
+      const enabledCount = Object.values(next).filter(Boolean).length;
+      if (enabledCount === 0) return prev;
+
+      const nextQuestion = pickQuestionByEnabledTypes(next);
+      setQuestion(nextQuestion);
+      setSelected(null);
+      return next;
+    });
+  };
+
   const nextQuestion = useCallback(() => {
-    setQuestion(normalizeMCQuestion(generateFn()));
+    const next = pickQuestionByEnabledTypes(enabledTypes);
+    setQuestion(next);
     setSelected(null);
-  }, [generateFn]);
+  }, [enabledTypes, generateFn]);
 
   const handleSelect = (idx) => {
     if (selected !== null) return;
@@ -311,6 +366,26 @@ export const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
       <div className="mb-3">
         <span className="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-medium">{question.subtypeLabel}</span>
       </div>
+
+      {isSubstitutionTopic && (
+        <div className="bg-white rounded-xl shadow-sm border p-4 mb-4">
+          <h3 className="font-bold text-gray-700 mb-3">選擇題目類型</h3>
+          <div className="flex flex-wrap gap-3">
+            {substitutionTypeOptions.map((type) => (
+              <label key={type.id} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={!!enabledTypes[type.id]}
+                  onChange={() => toggleType(type.id)}
+                  className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="font-medium">{type.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="text-base font-semibold text-slate-700 mb-3 text-left space-y-1">
         <div><InlineMath math={question.questionLatex} /></div>
         {question.questionLatex2 && <div><InlineMath math={question.questionLatex2} /></div>}

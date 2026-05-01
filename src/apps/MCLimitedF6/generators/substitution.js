@@ -1217,10 +1217,13 @@ const generateInequalityChainQuestion = () => {
 
   return {
     subtypeLabel: '不等式（鏈式夾擠）',
+    variationQ: true,
     questionLatex: `${L}<${linear}\\leq ${R}\\text{ 的解為？}`,
     options,
     correctIndex,
     explanationLines: [
+      `\\text{先看題目選項，需試 }y=${p}\\text{、}y=${q}\\text{，以及中間值 }y=${midY}\\text{ 是否滿足不等式。}`,
+      `\\text{判準（及）：左右兩邊條件都要同時成立才為✅。}`,
       `\\text{Step 1 試 }y=${midY}\\text{（中間值）}:\\ ${L}<${b}(${midY})${c >= 0 ? '+' : ''}${c}=${b * midY + c}\\leq ${R}\\ \\text{✅}`,
       `\\text{Step 2 試左分界 }y=${p}:\\ ${L}<${b}(${p})${c >= 0 ? '+' : ''}${c}=${L}\\leq ${R}\\ \\text{❌（左邊要嚴格小於）}`,
       `\\text{Step 3 試右分界 }y=${q}:\\ ${L}<${b}(${q})${c >= 0 ? '+' : ''}${c}=${R}\\leq ${R}\\ \\text{✅（右邊可等號）}`,
@@ -1260,7 +1263,8 @@ const generateInequalityAndQuestion = () => {
     options,
     correctIndex,
     explanationLines: [
-      `\\text{先試 }x=${B}\\text{ 和 }x=${A}\\text{ 是否同時滿足兩個不等式。}`,
+      `\\text{先看題目選項，需試 }x=${A}\\text{、}x=${B}\\text{ 及中間值 }x=${midX}\\text{ 是否滿足不等式。}`,
+      `\\text{判準（及）：必須同時滿足兩條不等式才為✅。}`,
       `\\text{試 }x=${A}:\\ 0>0\\ \\text{ 且 }\\ ${2 * A - 2 * B}\\leq 0\\ \\text{❌，故 }x=${A}\\text{ 不包括}`,
       `\\text{試 }x=${B}:\\ ${B - A}>0\\ \\text{ 且 }\\ 0\\leq 0\\ \\text{✅，故 }x=${B}\\text{ 包括}`,
       `\\text{再試 }x=${midX}:\\ ${midX - A}>0\\ \\text{ 且 }\\ ${2 * midX - 2 * B}\\leq 0\\ \\text{✅}`,
@@ -1300,7 +1304,8 @@ const generateInequalityOrOutsideQuestion = () => {
     options,
     correctIndex,
     explanationLines: [
-      `\\text{先試 }x=${L}\\text{ 和 }x=${R}\\text{ 是否至少滿足其中一個不等式。}`,
+      `\\text{先看題目選項，需試 }x=${L}\\text{、}x=${R}\\text{ 及中間值 }x=${midX}\\text{ 是否滿足不等式。}`,
+      `\\text{判準（或）：滿足其中一條不等式即為✅。}`,
       `\\text{試 }x=${L}:\\ ${L - L}\\leq 0\\ \\text{✅}`,
       `\\text{試 }x=${R}:\\ ${R - R}\\geq 0\\ \\text{✅}`,
       `\\text{再試 }x=${midX}:\\ ${midX - L}\\leq 0\\ \\text{❌，且 }\\ ${midX - R}\\geq 0\\ \\text{❌}`,
@@ -1338,11 +1343,14 @@ const generateInequalityNotEqualQuestion = () => {
 
   return {
     subtypeLabel: '不等式（夾外解）',
+    variationQ: true,
     questionLatex: `${eq1}\\ \\text{ 或 }\\ ${eq2}\\text{ 的解為？}`,
     options,
     correctIndex,
     explanationLines: [
-      `\\text{Step 1 試分界位 }x=${k}:\\ ${k - a}<-${b}\\ \\text{❌，且 }\\dfrac{${c}-${k}}{${d}}<${e}\\ \\text{亦 }\\text{❌}`,
+      `\\text{先看題目選項，需試 }x=${k}\\text{、}x>${k}\\text{（選 }x=${k + 1}\\text{）及 }x<${k}\\text{（選 }x=${k - 1}\\text{）是否滿足不等式。}`,
+      `\\text{判準（或）：滿足其中一條不等式即為✅。}`,
+      `\\text{Step 1 試分界位 }x=${k}\\text{：試 }x=${k}\\text{ 出 }${k - a}<-${b}\\text{。}`,
       `\\text{Step 2 試 }x=${k - 1}:\\ ${k - 1 - a}<-${b}\\ \\text{✅，第二條 }\\text{❌}`,
       `\\text{Step 3 試 }x=${k + 1}:\\ ${k + 1 - a}<-${b}\\ \\text{❌，但 }\\dfrac{${c}-${k + 1}}{${d}}<${e}\\ \\text{✅}`,
       `\\text{兩邊都可成立，但 }x=${k}\\text{ 唔得，所以只排除 }x=${k}`,
