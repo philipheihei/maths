@@ -220,9 +220,10 @@ export const genHCFFactoredQ = () => {
   const opts = shuffle([answerStr, ...uniqueWrongs]);
   const correctIdx = opts.indexOf(answerStr);
 
+  const factorPowStr = (f, e) => (e === 1 ? f : `${f}^{${e}}`);
   const factorBreakdown = factors.map((f, i) =>
-    `${f}: \\min(${e1[i]},${e2[i]}) = ${hcfExps[i]}`
-  ).join(', \\quad ');
+    `${factorPowStr(f, e1[i])},\\ ${factorPowStr(f, e2[i])} \\rightarrow \\text{最小次方：}${factorPowStr(f, hcfExps[i])}`
+  );
 
   return {
     type: 'hcf',
@@ -231,7 +232,7 @@ export const genHCFFactoredQ = () => {
     correctIndex: correctIdx,
     explanationLines: [
       `\\textbf{H.C.F.} \\text{ → 對每個因式取最小次方}`,
-      factorBreakdown,
+      ...factorBreakdown,
       `\\therefore \\text{H.C.F.} = ${answerStr}`,
     ],
     subtypeLabel: 'H.C.F. — 因式形式多項式',
