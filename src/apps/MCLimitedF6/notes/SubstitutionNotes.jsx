@@ -109,10 +109,10 @@ const SubstitutionNotes = ({ onBack }) => {
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`\\dfrac{1}{${h(H0, '2')}+2}+\\dfrac{3}{5(${h(H0, '2')})-6}=\\dfrac14+\\dfrac34=1`} /></div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項（分母 <InlineMath math="(4)(4)=16" />）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li><ChoiceColon label="A" /><InlineMath math={`\\dfrac{-8(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{-16}{15}`} /> ❌</li>
-                  <li><ChoiceColon label="B" /><InlineMath math={`\\dfrac{-2(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{-4}{15}`} /> ❌</li>
-                  <li><ChoiceColon label="C" /><InlineMath math={`\\dfrac{2(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{4}{15}`} /> ❌</li>
-                  <li className="text-emerald-700 font-bold"><ChoiceColon label="D" /><InlineMath math={`\\dfrac{8(${h(H0, '2')})}{((${h(H0, '2')})+2)(4(${h(H0, '2')})-5)}=\\dfrac{16}{15}`} /> ✅ ← 答案</li>
+                  <li><ChoiceColon label="A" /><InlineMath math={`\\dfrac{-8(${h(H0, '2')})}{((${h(H0, '2')})+2)(5(${h(H0, '2')})-6)}=\\dfrac{-16}{16}=-1`} /> ❌</li>
+                  <li><ChoiceColon label="B" /><InlineMath math={`\\dfrac{-2(${h(H0, '2')})}{((${h(H0, '2')})+2)(5(${h(H0, '2')})-6)}=\\dfrac{-4}{16}=-\\dfrac14`} /> ❌</li>
+                  <li><ChoiceColon label="C" /><InlineMath math={`\\dfrac{2(${h(H0, '2')})}{((${h(H0, '2')})+2)(5(${h(H0, '2')})-6)}=\\dfrac{4}{16}=\\dfrac14`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold"><ChoiceColon label="D" /><InlineMath math={`\\dfrac{8(${h(H0, '2')})}{((${h(H0, '2')})+2)(5(${h(H0, '2')})-6)}=\\dfrac{16}{16}=1`} /> ✅ ← 答案</li>
                 </ul>
               </div>
             </div>
@@ -133,16 +133,16 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="n = 1" /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：
-                <InlineMath math={`\\dfrac{9^{3(${h(H0, '1')})+1}}{(3^{2(${h(H0, '1')})+3})(27^{2(${h(H0, '1')})+1})}=9^{-3}`} />
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="n = 2" /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入（直接按機）：
+                <InlineMath math={`\\dfrac{9^{3(${h(H0, '2')})+1}}{(3^{2(${h(H0, '2')})+3})(27^{2(${h(H0, '2')})+1})}=\\dfrac{1}{6561}`} />
               </div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代 <InlineMath math="n=1" /> 入選項：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代 <InlineMath math="n=2" /> 入選項（直接比對 ANS）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li className="text-emerald-700 font-bold"><ChoiceColon label="A" /><InlineMath math={`9^{-${h(H0, '1')}-2}=9^{-3}`} /> ✅ ← 答案</li>
-                  <li><ChoiceColon label="B" /><InlineMath math={`9^{-${h(H0, '1')}-1}=9^{-2}`} /> ❌</li>
-                  <li><ChoiceColon label="C" /><InlineMath math={`9^{${h(H0, '1')}-2}=9^{-1}`} /> ❌</li>
-                  <li><ChoiceColon label="D" /><InlineMath math={`9^{${h(H0, '1')}-1}=9^0=1`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold"><ChoiceColon label="A" /><InlineMath math={`9^{-${h(H0, '2')}-2}=\\dfrac{1}{6561}`} /> ✅ ← 答案</li>
+                  <li><ChoiceColon label="B" /><InlineMath math={`9^{-${h(H0, '2')}-1}=\\dfrac{1}{729}`} /> ❌</li>
+                  <li><ChoiceColon label="C" /><InlineMath math={`9^{${h(H0, '2')}-2}=1`} /> ❌</li>
+                  <li><ChoiceColon label="D" /><InlineMath math={`9^{${h(H0, '2')}-1}=9`} /> ❌</li>
                 </ul>
               </div>
             </div>
@@ -194,13 +194,13 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="x = 3" /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`\\dfrac{(27\\cdot ${h(H0, '3')})^5}{(3\\cdot ${h(H0, '3')}^{-2})^4}=3^{24}`} /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入（直接按機）：<InlineMath math={`\\dfrac{(27\\cdot ${h(H0, '3')})^5}{(3\\cdot ${h(H0, '3')}^{-2})^4}\\approx 2.8243\\times 10^{11}`} /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項（直接比對 ANS）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
-                  <li><ChoiceColon label="A" /><InlineMath math={`3^2(${h(H0, '3')})^3=3^5`} /> ❌</li>
-                  <li><ChoiceColon label="B" /><InlineMath math={`3^4(${h(H0, '3')})^3=3^7`} /> ❌</li>
-                  <li className="text-emerald-700 font-bold"><ChoiceColon label="C" /><InlineMath math={`3^{11}(${h(H0, '3')})^{13}=3^{24}`} /> ✅ ← 答案</li>
-                  <li><ChoiceColon label="D" /><InlineMath math={`3^{14}(${h(H0, '3')})^{13}=3^{27}`} /> ❌</li>
+                  <li><ChoiceColon label="A" /><InlineMath math={`3^2(${h(H0, '3')})^3=243`} /> ❌</li>
+                  <li><ChoiceColon label="B" /><InlineMath math={`3^4(${h(H0, '3')})^3=2187`} /> ❌</li>
+                  <li className="text-emerald-700 font-bold"><ChoiceColon label="C" /><InlineMath math={`3^{11}(${h(H0, '3')})^{13}\\approx 2.8243\\times 10^{11}`} /> ✅ ← 答案</li>
+                  <li><ChoiceColon label="D" /><InlineMath math={`3^{14}(${h(H0, '3')})^{13}\\approx 7.6256\\times 10^{12}`} /> ❌</li>
                 </ul>
               </div>
               <div className="text-emerald-700 font-bold mt-2">答案：C（<InlineMath math="3^{11}x^{13}" />）</div>
