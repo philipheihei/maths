@@ -927,7 +927,7 @@ const GradientInclinationSVG1 = () => (
     <text x="175" y="185" fill="#3b82f6" fontSize="16" fontWeight="bold">地下</text>
     
     {/* 垂直邊：斜坡頂的高度 */}
-    <text x="380" y="100" fill="#22c55e" fontSize="16" fontWeight="bold" textAnchor="middle">斜坡頂的高度</text>
+    <text x="395" y="100" fill="#22c55e" fontSize="16" fontWeight="bold" textAnchor="end">斜坡頂的高度</text>
     <path d="M 325,100 L 305,110" fill="none" stroke="#22c55e" strokeWidth="2" markerEnd="url(#arrow-green)" />
     
     {/* 斜邊：斜坡 */}
