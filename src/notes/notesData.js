@@ -1,6 +1,6 @@
 import { ApproximationNotes } from './F1Notes';
 import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes } from './F3Notes';
+import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
 import { QuadraticEquationNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
@@ -79,6 +79,14 @@ export const NOTES_DATA = {
         { id: 'special-shapes', num: 3, title: '菱形 / 長方形 / 正方形', color: 'orange' },
         { id: 'midpoint-theorem', num: 4, title: '中點定理', color: 'purple' },
         { id: 'intercept-theorem', num: 5, title: '截線定理', color: 'purple' },
+      ]
+    },
+    {
+      id: 'triangle-lines',
+      topic: 'CH6 三角形的心',
+      color: 'orange',
+      subtopics: [
+        { id: 'four-lines', num: 1, title: '三角形的四條重要線(四線)特徵', color: 'red' },
       ]
     },
     {
@@ -186,6 +194,7 @@ export const NOTES_COMPONENTS = {
   'factorization': FactorizationNotes,
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,
+  'triangle-lines': TriangleLinesNotes,
   'coordinate-geometry-f3': CoordinateGeometryF3Notes,
   'trig-applications': TrigonometryApplicationsNotes,
   'quadratic-equation': QuadraticEquationNotes,

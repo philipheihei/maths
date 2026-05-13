@@ -793,6 +793,113 @@ export const QuadrilateralNotes = ({ activeSub }) => {
 };
 
 // ========================================
+// CH6 三角形的心 (F3)
+// ========================================
+
+export const TriangleLinesNotes = () => {
+  return (
+    <div className="space-y-6">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="bg-orange-100 text-orange-800 border border-orange-300 px-2.5 py-1 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">
+            重點
+          </span>
+          <h3 className="text-xl font-bold text-slate-800">
+            三角形的四條重要線(四線)特徵
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* 高線 */}
+          <div className="bg-red-50/50 rounded-xl p-4 border border-red-100 flex flex-col items-center">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <path d="M 20 130 L 80 30 L 170 130 Z" fill="#f5ebe6" stroke="#9f6b53" strokeWidth="2" strokeLinejoin="round" />
+              <polyline points="80,122 88,122 88,130" fill="#dcfce7" stroke="#15803d" strokeWidth="1.5" />
+              <line x1="80" y1="10" x2="80" y2="150" stroke="#ef4444" strokeWidth="2" />
+            </svg>
+            <div className="text-center mt-3">
+              <h4 className="text-lg font-bold text-red-600">1. 高線</h4>
+              <div className="mt-2 text-sm text-left bg-white px-4 py-3 rounded-lg shadow-sm border border-slate-200 w-full">
+                <div className="font-bold text-green-700 mb-1">特徵：</div>
+                <div className="font-bold text-green-700 text-lg flex items-center justify-between">
+                  <span>• 垂直 (90°)</span>
+                  <span className="text-purple-700 text-xs font-normal">（必須由頂點拉出來）</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 中線 */}
+          <div className="bg-red-50/50 rounded-xl p-4 border border-red-100 flex flex-col items-center">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <path d="M 20 130 L 80 30 L 170 130 Z" fill="#f5ebe6" stroke="#9f6b53" strokeWidth="2" strokeLinejoin="round" />
+              <line x1="77" y1="10" x2="98" y2="150" stroke="#ef4444" strokeWidth="2" />
+              <line x1="57.5" y1="126" x2="57.5" y2="134" stroke="#9f6b53" strokeWidth="2" />
+              <line x1="132.5" y1="126" x2="132.5" y2="134" stroke="#9f6b53" strokeWidth="2" />
+              <circle cx="95" cy="130" r="3.5" fill="#000" />
+            </svg>
+            <div className="text-center mt-3">
+              <h4 className="text-lg font-bold text-red-600">2. 中線</h4>
+              <div className="mt-2 text-sm text-left bg-white px-4 py-3 rounded-lg shadow-sm border border-slate-200 w-full">
+                <div className="font-bold text-green-700 mb-1">特徵：</div>
+                <div className="font-bold text-green-700 text-lg flex flex-col gap-1">
+                  <span>• 中點，長度相等</span>
+                  <span className="text-purple-700 text-xs font-normal text-right">（必須由頂點拉出來）</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 角平分線 */}
+          <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100 flex flex-col items-center">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <path d="M 20 130 L 80 30 L 170 130 Z" fill="#f5ebe6" stroke="#9f6b53" strokeWidth="2" strokeLinejoin="round" />
+              {/* 左邊的角（半徑25） */}
+              <path d="M 67.1 51.4 A 25 25 0 0 0 82.5 54.9" fill="none" stroke="#15803d" strokeWidth="2" />
+              {/* 右邊的角（半徑32，拉近距離） */}
+              <path d="M 83.2 61.8 A 32 32 0 0 0 101.4 53.8" fill="none" stroke="#15803d" strokeWidth="2" />
+              <line x1="78" y1="10" x2="92" y2="150" stroke="#ef4444" strokeWidth="2" />
+            </svg>
+            <div className="text-center mt-3">
+              <h4 className="text-lg font-bold text-red-600">3. 角平分線</h4>
+              <div className="mt-2 text-sm text-left bg-white px-4 py-3 rounded-lg shadow-sm border border-slate-200 w-full">
+                <div className="font-bold text-green-700 mb-1">特徵：</div>
+                <div className="font-bold text-green-700 text-lg flex items-center justify-between">
+                  <span>• 角度相同</span>
+                  <span className="text-purple-700 text-xs font-normal">（必須由頂點拉出來）</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 垂直平分線 */}
+          <div className="bg-blue-50/50 rounded-xl p-4 border border-blue-100 flex flex-col items-center">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <path d="M 20 130 L 80 30 L 170 130 Z" fill="#f5ebe6" stroke="#9f6b53" strokeWidth="2" strokeLinejoin="round" />
+              <polyline points="95,122 103,122 103,130" fill="#dcfce7" stroke="#15803d" strokeWidth="1.5" />
+              <path d="M 54.5 125 L 54.5 135 M 60.5 125 L 60.5 135 M 129.5 125 L 129.5 135 M 135.5 125 L 135.5 135" stroke="#9f6b53" strokeWidth="2" />
+              <line x1="95" y1="30" x2="95" y2="150" stroke="#ef4444" strokeWidth="2" />
+              <circle cx="95" cy="130" r="3.5" fill="#000" />
+            </svg>
+            <div className="text-center mt-3">
+              <h4 className="text-lg font-bold text-red-600">4. 垂直平分線</h4>
+              <div className="mt-2 text-sm text-left bg-white px-4 py-3 rounded-lg shadow-sm border border-slate-200 w-full">
+                <div className="font-bold text-green-700 mb-1">特徵：</div>
+                <div className="font-bold text-green-700 text-lg flex flex-col gap-1">
+                  <span>• 垂直 (90°) + 長度相等</span>
+                  <span className="text-slate-500 text-xs font-normal text-right">（不一定由頂點拉出來）</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+// ========================================
 // CH8 三角學的應用 (F3)
 // ========================================
 
