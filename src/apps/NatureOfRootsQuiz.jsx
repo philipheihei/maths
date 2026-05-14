@@ -241,7 +241,9 @@ export default function NatureOfRootsQuiz() {
                   </span>
                   <input
                     ref={inputRef}
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
+                    pattern="-?[0-9]*"
                     value={deltaInput}
                     onChange={(e) => setDeltaInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleDeltaSubmit()}
