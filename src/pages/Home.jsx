@@ -390,7 +390,7 @@ const Home = () => {
       id: 'nature-of-roots',
       title: '方程的根的性質',
       description: '掌握判別式 Δ 的計算，判定實根數目與圖像幾何特徵',
-      icon: <Layers size={24} />,
+      icon: Layers,
       color: 'bg-indigo-600',
       hoverColor: 'hover:bg-indigo-700',
       path: '/nature-of-roots',
