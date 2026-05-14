@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Calculator, ArrowRight, BookOpen, Award, BarChart2, FileText, Search, X, Layers
+} from 'lucide-react';
 
 const Home = () => {
   const [activeFilter, setActiveFilter] = useState('全部');

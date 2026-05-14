@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Settings, CheckCircle2, XCircle, ArrowRight, HelpCircle, FileText, ArrowLeft } from 'lucide-react';
-import { loadKatexOnce } from '../../utils/katexLoader';
+import { loadKatexOnce } from '../utils/katexLoader';
 import { useNavigate } from 'react-router-dom';
-import { Latex } from '../../notes/shared';
+import { Latex } from '../notes/shared';
 
 // -- Parabola SVG Generator --
 const ParabolaSVG = ({ condition }) => {
