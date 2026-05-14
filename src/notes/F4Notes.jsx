@@ -248,9 +248,9 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
                 <div className="font-bold text-slate-800 mb-2 bg-red-100 px-3 py-1 rounded-full"><Latex math="\Delta > 0" /></div>
                 <svg viewBox="0 0 100 100" className="w-24 h-24 mb-2">
                   <line x1="10" y1="70" x2="90" y2="70" stroke="#333" strokeWidth="2" />
-                  <path d="M 20 20 Q 50 120 80 20" fill="none" stroke="#ef4444" strokeWidth="2" />
-                  <circle cx="34.5" cy="70" r="3" fill="#333" />
-                  <circle cx="65.5" cy="70" r="3" fill="#333" />
+                  <path d="M 20 20 Q 50 150 80 20" fill="none" stroke="#ef4444" strokeWidth="2" />
+                  <circle cx="35.6" cy="70" r="3" fill="#333" />
+                  <circle cx="64.4" cy="70" r="3" fill="#333" />
                 </svg>
                 <p>相交於<span className="font-bold text-red-600">兩個</span>點</p>
                 <p className="text-xs text-slate-500 mt-1">(2個 x 截距)</p>
