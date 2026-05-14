@@ -319,6 +319,22 @@ const Home = () => {
       inDevelopment: false
     },
     {
+      id: 'trig-applications-f4',
+      title: '三角學的應用 (3D)',
+      description: '透過互動 3D 立體模型，學習線與面、面與面夾角，配合步驟動畫理解投影概念',
+      icon: Calculator,
+      color: 'bg-indigo-600',
+      hoverColor: 'hover:bg-indigo-700',
+      path: '/trig-applications-f4',
+      level: 'F4',
+      badges: [
+        { level: 'F4', chapter: 'CH10', subject: '三角學的應用' }
+      ],
+      category: '高中',
+      topics: ['三角學', '立體幾何', '線與面夾角', '面與面夾角', '投影'],
+      inDevelopment: false
+    },
+    {
       id: 'remainder-factor-quiz',
       title: '餘式定理 & 因式定理',
       description: '餘式定理與因式定理：找相應的 f(x) 值',
@@ -385,6 +401,7 @@ const Home = () => {
     'distance-slope',
     'remainder-factor-quiz',
     'trig-quiz',
+    'trig-applications-f4',
     'dispersion-quiz',
     'compound-inequality-quiz',
     'inequality-quiz',
