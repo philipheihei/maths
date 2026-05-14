@@ -191,6 +191,137 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 };
 
 // ========================================
+// CH2 二次方程的根的性質 (F4)
+// ========================================
+export const NatureOfRootsNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH2 二次方程的根的性質</h1>
+        <p className="text-slate-600">透過判別式 <Latex math="\Delta" /> 判斷根的數目與二次圖像關係</p>
+      </div>
+
+      <CollapsibleSection id="discriminant" title="判別式與根的數目" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3 text-lg">判別式 <Latex math="\Delta" /> (Delta)</h3>
+            <p className="text-slate-700 mb-2">考慮二次方程 <Latex math="ax^2 + bx + c = 0" />，其中 <Latex math="a \neq 0" />：</p>
+            <div className="text-center my-4 bg-white p-3 rounded shadow-sm border border-slate-200">
+              <span className="text-xl font-bold text-blue-600"><Latex math="\Delta = b^2 - 4ac" /></span>
+            </div>
+            <div className="grid gap-3">
+              <div className="bg-white p-3 rounded flex items-center shadow-sm">
+                <span className="w-16 font-bold text-slate-700 bg-red-100 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta > 0" /></span>
+                <span className="text-slate-700">有<span className="font-bold text-red-600">兩個相異</span>實根</span>
+              </div>
+              <div className="bg-white p-3 rounded flex items-center shadow-sm">
+                <span className="w-16 font-bold text-slate-700 bg-green-100 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta = 0" /></span>
+                <span className="text-slate-700">有<span className="font-bold text-green-600">一個二重</span>實根 (兩個相等的實根)</span>
+              </div>
+              <div className="bg-white p-3 rounded flex items-center shadow-sm">
+                <span className="w-16 font-bold text-slate-700 bg-slate-200 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta < 0" /></span>
+                <span className="text-slate-700"><span className="font-bold text-slate-600">沒有</span>實根</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 text-sm shadow-sm">
+            <p className="text-amber-800 font-bold mb-1">💡 考試常見字眼：</p>
+            <ul className="list-disc pl-5 space-y-1 text-slate-700">
+              <li>題目說「<b>有實根</b>」：代表 <Latex math="\Delta \geq 0" /> (大於或等於零)</li>
+              <li>題目說「<b>相切 / 接觸</b>於一點」：代表 <Latex math="\Delta = 0" /></li>
+              <li>題目說「<b>不相交</b>」：代表 <Latex math="\Delta < 0" /></li>
+            </ul>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="graph-relations" title="Δ 與圖像 x 截距的關係" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-3">圖像與 <Latex math="x" /> 軸的關係 (<Latex math="y = ax^2 + bx + c" />)</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
+              <div className="bg-white p-3 border border-slate-200 rounded shadow-sm flex flex-col items-center">
+                <div className="font-bold text-slate-800 mb-2 bg-red-100 px-3 py-1 rounded-full"><Latex math="\Delta > 0" /></div>
+                <svg viewBox="0 0 100 100" className="w-24 h-24 mb-2">
+                  <line x1="10" y1="70" x2="90" y2="70" stroke="#333" strokeWidth="2" />
+                  <path d="M 20 20 Q 50 120 80 20" fill="none" stroke="#ef4444" strokeWidth="2" />
+                  <circle cx="34.5" cy="70" r="3" fill="#333" />
+                  <circle cx="65.5" cy="70" r="3" fill="#333" />
+                </svg>
+                <p>相交於<span className="font-bold text-red-600">兩個</span>點</p>
+                <p className="text-xs text-slate-500 mt-1">(2個 x 截距)</p>
+              </div>
+
+              <div className="bg-white p-3 border border-slate-200 rounded shadow-sm flex flex-col items-center">
+                <div className="font-bold text-slate-800 mb-2 bg-green-100 px-3 py-1 rounded-full"><Latex math="\Delta = 0" /></div>
+                <svg viewBox="0 0 100 100" className="w-24 h-24 mb-2">
+                  <line x1="10" y1="70" x2="90" y2="70" stroke="#333" strokeWidth="2" />
+                  <path d="M 20 20 Q 50 120 80 20" fill="none" stroke="#22c55e" strokeWidth="2" />
+                  <circle cx="50" cy="70" r="3" fill="#333" />
+                </svg>
+                <p>只<span className="font-bold text-green-600">接觸</span>於一點</p>
+                <p className="text-xs text-slate-500 mt-1">(1個 x 截距)</p>
+              </div>
+
+              <div className="bg-white p-3 border border-slate-200 rounded shadow-sm flex flex-col items-center">
+                <div className="font-bold text-slate-800 mb-2 bg-slate-200 px-3 py-1 rounded-full"><Latex math="\Delta < 0" /></div>
+                <svg viewBox="0 0 100 100" className="w-24 h-24 mb-2">
+                  <line x1="10" y1="85" x2="90" y2="85" stroke="#333" strokeWidth="2" />
+                  <path d="M 20 20 Q 50 120 80 20" fill="none" stroke="#64748b" strokeWidth="2" />
+                </svg>
+                <p><span className="font-bold text-slate-600">不相交</span></p>
+                <p className="text-xs text-slate-500 mt-1">(0個 x 截距)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="find-unknowns" title="求未知數 (k 取值範圍)" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg p-4 border border-red-200">
+            <h3 className="font-bold text-slate-800 mb-3">考試實戰例題</h3>
+            <div className="bg-red-50 p-3 rounded mb-3">
+              <p className="text-sm text-green-700 mb-2">題目：</p>
+              <p className="text-slate-800 mb-2">若二次方程 <Latex math="16x^2 + kx + 1 = 0" /> 有一個二重實根，求 <Latex math="k" /> 的值。</p>
+            </div>
+            
+            <div className="pl-4 border-l-2 border-slate-300 space-y-2 text-slate-700">
+              <p className="text-sm rounded bg-amber-100 text-amber-800 inline-block px-2 py-0.5">解題步驟：</p>
+              <p><Latex math="\because" /> 方程有一個二重實根</p>
+              <p><Latex math="\therefore \Delta = 0" /></p>
+              <div className="my-2 bg-slate-100 p-2 rounded">
+                <Latex math="\begin{aligned} (k)^2 - 4(16)(1) &= 0 \\ k^2 - 64 &= 0 \\ k^2 &= 64 \\ k &= 8 \text{ 或 } -8 \end{aligned}" block />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-blue-200">
+            <div className="bg-blue-50 p-3 rounded mb-3">
+              <p className="text-sm text-green-700 mb-2">題目：</p>
+              <p className="text-slate-800 mb-2">若 <Latex math="y = 3x^2 + 6x - (k + 2)" /> 的圖像與 <Latex math="x" /> 軸並不相交，求 <Latex math="k" /> 的取值範圍。</p>
+            </div>
+            
+            <div className="pl-4 border-l-2 border-slate-300 space-y-2 text-slate-700">
+              <p><Latex math="\because" /> 圖像與 <Latex math="x" /> 軸並不相交</p>
+              <p><Latex math="\therefore \Delta < 0" /></p>
+              <div className="my-2 bg-slate-100 p-2 rounded overflow-x-auto">
+                <Latex math="\begin{aligned} 6^2 - 4(3)[-(k+2)] &< 0 \\ 36 + 12(k+2) &< 0 \\ 3 + (k+2) &< 0 &\textcolor{blue}{\leftarrow \text{全式除以12}} \\ k &< -5 \end{aligned}" block />
+              </div>
+              <p className="text-slate-700 font-bold mt-2"><Latex math="\therefore k" /> 的取值範圍是 <Latex math="k < -5" />。</p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+}
+
+// ========================================
 // CH4 餘式定理 & 因式定理 (F4)
 // ========================================
 export const RemainderFactorNotes = ({ activeSub }) => {

@@ -1,7 +1,7 @@
 import { ApproximationNotes } from './F1Notes';
 import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
-import { QuadraticEquationNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
+import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
@@ -134,6 +134,16 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'nature-of-roots',
+      topic: 'CH2 二次方程的根的性質',
+      color: 'blue',
+      subtopics: [
+        { id: 'discriminant', num: 1, title: '判別式與根的數目', color: 'blue' },
+        { id: 'graph-relations', num: 2, title: 'Δ 與圖像 x 截距的關係', color: 'green' },
+        { id: 'find-unknowns', num: 3, title: '求未知數 (k 取值範圍)', color: 'red' },
+      ]
+    },
+    {
       id: 'functions',
       topic: 'CH3 函數 f(x)',
       color: 'indigo',
@@ -198,6 +208,7 @@ export const NOTES_COMPONENTS = {
   'coordinate-geometry-f3': CoordinateGeometryF3Notes,
   'trig-applications': TrigonometryApplicationsNotes,
   'quadratic-equation': QuadraticEquationNotes,
+  'nature-of-roots': NatureOfRootsNotes,
   'remainder-factor': RemainderFactorNotes,
   'variation': VariationNotes,
   'simultaneous-eq': SimEqCalculatorNotes,

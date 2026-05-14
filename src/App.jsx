@@ -25,6 +25,7 @@ import SolidGeometryQuiz from './apps/SolidGeometryQuiz';
 import TrigQuiz from './apps/TrigQuiz';
 import DistanceSlopeQuiz from './apps/DistanceSlopeQuiz';
 import TrigApplicationsF4 from './apps/TrigApplicationsF4';
+import NatureOfRootsQuiz from './apps/NatureOfRootsQuiz';
 import Notes from './pages/Notes';
 
 // ==========================================
@@ -62,6 +63,7 @@ function App() {
         <Route path="/trig-quiz" element={<TrigQuiz />} />
         <Route path="/distance-slope" element={<DistanceSlopeQuiz />} />
         <Route path="/trig-applications-f4" element={<TrigApplicationsF4 />} />
+        <Route path="/nature-of-roots" element={<NatureOfRootsQuiz />} />
         <Route path="/notes" element={<Notes />} />
       </Routes>
       {isDev && Agentation && (

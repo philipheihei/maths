@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Calculator, ArrowRight, BookOpen, Award, BarChart2, FileText, Search, X
-} from 'lucide-react';
+  Calculator, ArrowRight, BookOpen, Award, BarChart2, FileText, Search, X, Layers
 
 const Home = () => {
   const [activeFilter, setActiveFilter] = useState('全部');
@@ -385,6 +384,20 @@ const Home = () => {
       category: '初中',
       topics: ['面積', '體積', '圓柱', '圓錐', '球體', '半球', '平截頭體'],
       inDevelopment: false
+    },
+    {
+      id: 'nature-of-roots',
+      title: '方程的根的性質',
+      description: '掌握判別式 Δ 的計算，判定實根數目與圖像幾何特徵',
+      icon: <Layers size={24} />,
+      color: 'bg-indigo-600',
+      hoverColor: 'hover:bg-indigo-700',
+      path: '/nature-of-roots',
+      level: 'F4',
+      badges: [{ level: 'F4', chapter: 'CH02', subject: '一元二次方程' }],
+      category: '高中',
+      topics: ['二次方程', '判別式', '根的性質', '二次函數圖像'],
+      inDevelopment: false
     }
   ];
 
@@ -411,6 +424,7 @@ const Home = () => {
     'circle-theorems',
     'identity',
     'probability-quiz',
+    'nature-of-roots',
     'mc-limited-f6',
     'angle-quiz'
   ];
