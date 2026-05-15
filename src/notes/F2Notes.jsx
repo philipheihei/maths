@@ -46,9 +46,62 @@ export const MeasurementErrorsNotes = ({ activeSub }) => {
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <span className="font-bold text-blue-700">精準度 = <Latex math="\dfrac{200}{10} = 20 \text{ A}" /></span>
                 <div className="flex-1">
-                  {/* 📐 待繪製：[電流錶，含有左側 0 及 200 刻度放大，共10小格] — 見下方繪圖規格單 */}
-                  <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm">
-                    圖示待加入（@數學繪圖師）
+                  <div className="bg-white rounded-xl p-4 flex flex-col items-center justify-center border border-slate-200">
+                    <svg width="100%" viewBox="0 0 300 210" className="max-w-[280px]">
+                      <defs>
+                        <filter id="meter-shadow">
+                          <feDropShadow dx="1" dy="2" stdDeviation="2" floodOpacity="0.3"/>
+                        </filter>
+                      </defs>
+                      <path d="M 30 150 A 120 120 0 0 1 270 150" fill="none" stroke="#e2e8f0" strokeWidth="2" />
+                      
+                      {Array.from({ length: 41 }).map((_, i) => {
+                        const v = i * 20;
+                        const angle = -150 + (v / 800) * 120;
+                        const rad = angle * Math.PI / 180;
+                        const isMajor = v % 200 === 0;
+                        const isMid = v % 100 === 0 && !isMajor;
+                        
+                        const rOuter = 130;
+                        const rInner = isMajor ? 110 : isMid ? 115 : 120;
+                        
+                        const x1 = 150 + rInner * Math.cos(rad);
+                        const y1 = 150 + rInner * Math.sin(rad);
+                        const x2 = 150 + rOuter * Math.cos(rad);
+                        const y2 = 150 + rOuter * Math.sin(rad);
+                        
+                        return (
+                          <g key={v}>
+                            <line 
+                              x1={x1} y1={y1} x2={x2} y2={y2} 
+                              stroke="#1e293b" 
+                              strokeWidth={isMajor ? 3 : isMid ? 2 : 1.5} 
+                            />
+                            {isMajor && (
+                              <text 
+                                x={150 + 82 * Math.cos(rad)} 
+                                y={150 + 82 * Math.sin(rad) + 8} 
+                                textAnchor="middle" 
+                                fontSize="22" 
+                                fontWeight="bold" 
+                                fill="#0f172a"
+                                className="font-mono tracking-tighter"
+                              >
+                                {v}
+                              </text>
+                            )}
+                          </g>
+                        );
+                      })}
+
+                      <text x="150" y="195" textAnchor="middle" fontSize="32" fontWeight="bold" fill="#0f172a">A</text>
+
+                      <g filter="url(#meter-shadow)">
+                        <polygon points="146,160 154,160 151,35 149,35" fill="#1e293b" transform="rotate(-60 150 150)" />
+                        <circle cx="150" cy="150" r="18" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1" opacity="0.9" />
+                        <circle cx="150" cy="150" r="8" fill="#0f172a" />
+                      </g>
+                    </svg>
                   </div>
                 </div>
               </div>
