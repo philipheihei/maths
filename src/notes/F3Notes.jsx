@@ -528,10 +528,10 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       <rect x="20" y="20" width="160" height="100" fill="white" stroke="black" strokeWidth="2.5" strokeLinejoin="round" />
       <line x1="20" y1="20" x2="180" y2="120" stroke="#16a34a" strokeWidth="2" />
       <line x1="180" y1="20" x2="20" y2="120" stroke="#16a34a" strokeWidth="2" />
-      <text x="5" y="15" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">A</text>
-      <text x="5" y="135" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">B</text>
-      <text x="182" y="135" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">C</text>
-      <text x="182" y="15" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">D</text>
+      <text x="5" y="10" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">A</text>
+      <text x="5" y="140" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">B</text>
+      <text x="190" y="140" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">C</text>
+      <text x="190" y="10" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold">D</text>
       <text x="100" y="90" fontFamily="Times New Roman, serif" fontSize="20" fontStyle="italic" fill="black" fontWeight="bold" textAnchor="middle">O</text>
       <g>
         <g transform="translate(60, 45) rotate(32)"><use href="#tick-mark-double-rect" /></g>
@@ -729,10 +729,14 @@ export const QuadrilateralNotes = ({ activeSub }) => {
             <svg width="180" height="130" viewBox="0 0 180 130">
               <path d="M 90,15 L 25,115 L 155,115 Z" fill="none" stroke="#333" strokeWidth="2" strokeLinejoin="round" />
               <line x1="57" y1="65" x2="122" y2="65" stroke="#6a1b9a" strokeWidth="2.5" />
-              <line x1="55" y1="35" x2="65" y2="45" stroke="#333" strokeWidth="1.5" />
-              <line x1="35" y1="85" x2="45" y2="95" stroke="#333" strokeWidth="1.5" />
-              <line x1="115" y1="35" x2="125" y2="45" stroke="#333" strokeWidth="1.5" />
-              <line x1="130" y1="85" x2="140" y2="95" stroke="#333" strokeWidth="1.5" />
+              {/* AM, MB ticks (single) */}
+              <line x1="68.8" y1="36.7" x2="78.8" y2="43.3" stroke="#0ea5e9" strokeWidth="1.5" />
+              <line x1="36.3" y1="86.7" x2="46.3" y2="93.3" stroke="#0ea5e9" strokeWidth="1.5" />
+              {/* AN, NC ticks (double) */}
+              <line x1="110.2" y1="35.0" x2="100.2" y2="41.6" stroke="#0ea5e9" strokeWidth="1.5" />
+              <line x1="112.4" y1="38.4" x2="102.4" y2="45.0" stroke="#0ea5e9" strokeWidth="1.5" />
+              <line x1="142.7" y1="85.0" x2="132.7" y2="91.6" stroke="#0ea5e9" strokeWidth="1.5" />
+              <line x1="144.9" y1="88.4" x2="134.9" y2="95.0" stroke="#0ea5e9" strokeWidth="1.5" />
               <text x="85" y="12" fontSize="13" fill="#333">A</text>
               <text x="10" y="115" fontSize="13" fill="#333">B</text>
               <text x="158" y="115" fontSize="13" fill="#333">C</text>
@@ -759,10 +763,13 @@ export const QuadrilateralNotes = ({ activeSub }) => {
               <line x1="20" y1="100" x2="160" y2="100" stroke="#333" strokeWidth="1.5" />
               <line x1="50" y1="10" x2="75" y2="110" stroke="#1565c0" strokeWidth="2" />
               <line x1="110" y1="10" x2="135" y2="110" stroke="#1565c0" strokeWidth="2" />
-              <line x1="58" y1="38" x2="62" y2="42" stroke="#d32f2f" strokeWidth="2" />
-              <line x1="67" y1="78" x2="71" y2="82" stroke="#d32f2f" strokeWidth="2" />
-              <line x1="118" y1="38" x2="122" y2="42" stroke="#d32f2f" strokeWidth="2" />
-              <line x1="127" y1="78" x2="131" y2="82" stroke="#d32f2f" strokeWidth="2" />
+              {/* Parallel signs (arrowheads pointing right) */}
+              <polyline points="144,16 150,20 144,24" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <polyline points="144,56 150,60 144,64" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <polyline points="144,96 150,100 144,104" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              {/* AC = CE tick marks (perpendicular to transversal) */}
+              <line x1="52.5" y1="41.2" x2="62.5" y2="38.8" stroke="#0ea5e9" strokeWidth="1.5" />
+              <line x1="62.5" y1="81.2" x2="72.5" y2="78.8" stroke="#0ea5e9" strokeWidth="1.5" />
               <text x="38" y="16" fontSize="12" fill="#333">A</text>
               <text x="100" y="16" fontSize="12" fill="#333">B</text>
               <text x="54" y="56" fontSize="12" fill="#333">C</text>
