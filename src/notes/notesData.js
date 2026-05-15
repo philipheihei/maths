@@ -161,6 +161,7 @@ export const NOTES_DATA = {
         { id: 'discriminant', num: 1, title: '判別式與根的數目', color: 'blue' },
         { id: 'graph-relations', num: 2, title: 'Δ 與圖像 x 截距的關係', color: 'green' },
         { id: 'find-unknowns', num: 3, title: '求未知數 (k 取值範圍)', color: 'red' },
+        { id: 'roots-sum-product', num: 4, title: '兩根之和與兩根之積', color: 'purple' },
       ]
     },
     {

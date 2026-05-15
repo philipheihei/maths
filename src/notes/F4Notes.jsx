@@ -194,7 +194,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 // CH2 二次方程的根的性質 (F4)
 // ========================================
 export const NatureOfRootsNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
 
   return (
     <>
@@ -207,6 +207,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3 text-lg">判別式 <Latex math="\Delta" /> (Delta)</h3>
+            <p className="text-slate-700 mb-2">判別式是用來判斷一元二次方程式的根的情況，不用真的解方程就能知道答案的性質。</p>
             <p className="text-slate-700 mb-2">考慮二次方程 <Latex math="ax^2 + bx + c = 0" />，其中 <Latex math="a \neq 0" />：</p>
             <div className="text-center my-4 bg-white p-3 rounded shadow-sm border border-slate-200">
               <span className="text-xl font-bold text-blue-600"><Latex math="\Delta = b^2 - 4ac" /></span>
@@ -327,6 +328,70 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
                 <Latex math="\begin{aligned} 6^2 - 4(3)[-(k+2)] &< 0 \\ 36 + 12(k+2) &< 0 \\ 3 + (k+2) &< 0 &\textcolor{blue}{\leftarrow \text{全式除以12}} \\ k &< -5 \end{aligned}" block />
               </div>
               <p className="text-slate-700 font-bold mt-2"><Latex math="\therefore k" /> 的取值範圍是 <Latex math="k < -5" />。</p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="roots-sum-product" title="兩根之和與兩根之積" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-2">一般式的二次方程與根</h3>
+            <p className="text-slate-700 mb-4">若 <Latex math="\alpha" /> 和 <Latex math="\beta" /> 為方程 <Latex math="ax^2 + bx + c = 0" /> 的兩個根，即使不知道實質的值，也可以利用係數求出：</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 flex flex-col items-center justify-center">
+                <span className="text-slate-600 mb-2 font-bold">兩根之和 (Sum of roots)</span>
+                <span className="text-xl text-purple-700 font-bold"><Latex math="\alpha + \beta = -\frac{b}{a}" /></span>
+              </div>
+              <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 flex flex-col items-center justify-center">
+                <span className="text-slate-600 mb-2 font-bold">兩根之積 (Product of roots)</span>
+                <span className="text-xl text-purple-700 font-bold"><Latex math="\alpha\beta = \frac{c}{a}" /></span>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100">
+              <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">常見變種</h4>
+              <p className="text-slate-700 text-sm mb-2">題目有機會考 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 以外的變種，可將它們轉換為只包含 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 的形式：</p>
+              <div className="text-center bg-slate-50 p-3 rounded">
+                <span className="text-lg font-bold text-blue-800"><Latex math="\alpha^2 + \beta^2 = (\alpha + \beta)^2 - 2\alpha\beta" /></span>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 mt-4">
+              <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">長答例題</h4>
+              <div className="bg-slate-50 rounded p-3 mb-3 text-slate-800">
+                <p>已知二次方程 <Latex math="3x^2 - 5x + 2 = 0" /> 的根為 <Latex math="\alpha" />、<Latex math="\beta" />，求兩根之和及兩根之積。</p>
+              </div>
+              <div className="bg-blue-50 rounded p-3 overflow-x-auto">
+                <Latex math="\begin{aligned}
+&a=3,\ b=-5,\ c=2 \\
+&\alpha+\beta=-\frac{b}{a}=-\frac{-5}{3}=\frac{5}{3} \\
+&\alpha\beta=\frac{c}{a}=\frac{2}{3}
+\end{aligned}" block />
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 mt-4">
+              <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">MC例題</h4>
+              <div className="bg-slate-50 rounded p-3 mb-3 text-slate-800">
+                <p>設 <Latex math="k" /> 為常數。若二次方程 <Latex math="x^2 + kx - 3 = 0" /> 的根為 <Latex math="\alpha" /> 及 <Latex math="\beta" />，則 <Latex math="\alpha^2+\beta^2" /> = ?</p>
+              </div>
+              <div className="bg-white rounded p-3 mb-3 border border-slate-200 text-slate-700 text-sm">
+                <p className="mb-1">A. <Latex math="k^2 + 4" /></p>
+                <p className="mb-1">B. <Latex math="k^2 + 6" /></p>
+                <p className="mb-1">C. <Latex math="k^2 - 4" /></p>
+                <p>D. <Latex math="k^2 - 8" /></p>
+              </div>
+              <div className="bg-emerald-50 rounded p-3 overflow-x-auto">
+                <Latex math="\begin{aligned}
+&\alpha+\beta=-\frac{b}{a}=-k,\quad \alpha\beta=\frac{c}{a}=-3 \\
+&\alpha^2+\beta^2=(\alpha+\beta)^2-2\alpha\beta \\
+&\qquad\qquad\ =(-k)^2-2(-3) \\
+&\qquad\qquad\ =k^2+6
+\end{aligned}" block />
+              </div>
+              <p className="mt-2 text-slate-700 font-bold">正確選擇：B</p>
             </div>
           </div>
         </div>
