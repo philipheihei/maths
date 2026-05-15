@@ -140,12 +140,12 @@ const FunctionGraphNotes = ({ onBack }) => (
             <line x1="30" y1="115" x2="30" y2="5" stroke="#374151" strokeWidth="1.5" markerEnd="url(#arrB)" />
             <path d="M 20,25 Q 75,160 130,25" fill="none" stroke="#7dd3fc" strokeWidth="2.5" strokeLinecap="round" />
             <line x1="75" y1="110" x2="75" y2="10" stroke="#f59e0b" strokeWidth="2" strokeDasharray="5,3" />
-            <text x="44" y="121" fontSize="14" fill="#374151" fontWeight="bold" fontStyle="italic">x</text>
-            <text x="54" y="121" fontSize="14" fill="#374151" fontWeight="bold"> =</text>
-            <text x="66" y="121" fontSize="15" fill="#374151" fontWeight="bold">−</text>
+            <text x="36" y="122" fontSize="15" fill="#374151" fontWeight="bold" fontStyle="italic">x</text>
+            <text x="46" y="122" fontSize="15" fill="#374151" fontWeight="bold"> =</text>
+            <line x1="62" y1="117" x2="69" y2="117" stroke="#374151" strokeWidth="2" strokeLinecap="round" />
             <text x="76" y="114" fontSize="13" fill="#f59e0b" fontWeight="bold">b</text>
             <line x1="73" y1="117" x2="87" y2="117" stroke="#374151" strokeWidth="1.8" />
-            <text x="72" y="129" fontSize="13" fill="#374151" fontWeight="bold">2a</text>
+            <text x="73" y="129" fontSize="13" fill="#374151" fontWeight="bold">2a</text>
           </svg>
         </div>
       </section>

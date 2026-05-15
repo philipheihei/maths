@@ -98,7 +98,7 @@ export const CoordinateGeometryFormulaTable = ({ onStartQuiz }) => {
       </div>
 
       <div className="bg-orange-50 border border-orange-200 rounded-xl p-5">
-        <h3 className="font-bold text-orange-800 mb-3 text-lg">共線</h3>
+        <h3 className="font-bold text-orange-800 mb-3 text-lg">3. 共線</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg p-4 space-y-2">
             <p className="text-xs text-slate-400 mb-1">定義</p>
@@ -143,7 +143,7 @@ export const CoordinateGeometryFormulaTable = ({ onStartQuiz }) => {
       </div>
 
       <div className="bg-rose-50 border border-rose-200 rounded-xl p-5">
-        <h3 className="font-bold text-rose-800 mb-3 text-lg">3. 平行 / 垂直</h3>
+        <h3 className="font-bold text-rose-800 mb-3 text-lg">4. 平行 / 垂直</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg p-4 space-y-3">
             <p className="text-xs text-slate-400 mb-1">定義</p>
@@ -194,7 +194,7 @@ export const CoordinateGeometryFormulaTable = ({ onStartQuiz }) => {
       </div>
 
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-5">
-        <h3 className="font-bold text-amber-800 mb-3 text-lg">4. 中點公式</h3>
+        <h3 className="font-bold text-amber-800 mb-3 text-lg">5. 中點公式</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg p-4">
             <p className="text-xs text-slate-400 mb-2">公式（<Latex math={'\\dfrac{\\text{頭}+\\text{尾}}{2}=\\text{中間}'} />）</p>
@@ -238,7 +238,7 @@ export const CoordinateGeometryFormulaTable = ({ onStartQuiz }) => {
       </div>
 
       <div className="bg-violet-50 border border-violet-200 rounded-xl p-5">
-        <h3 className="font-bold text-violet-800 mb-3 text-lg">5. 截點公式 <span className="text-sm font-normal text-violet-500">（非基礎課程）</span></h3>
+        <h3 className="font-bold text-violet-800 mb-3 text-lg">6. 截點公式 <span className="text-sm font-normal text-violet-500">（非基礎課程）</span></h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg p-4">
             <p className="text-xs text-slate-400 mb-2">公式（比例與點交叉乘！）</p>
