@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 const IconTarget = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-500 mr-2">
@@ -327,42 +329,6 @@ const TASKS = TASK_GROUPS.reduce((acc, group) => {
   return acc;
 }, {});
 
-function useScripts(urls) {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadScript = (url) => new Promise((resolve, reject) => {
-      if (document.querySelector(`script[src="${url}"]`)) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = url;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-
-    Promise.all(urls.map(loadScript))
-      .then(() => {
-        if (isMounted) {
-          setLoaded(true);
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to load scripts', err);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [urls]);
-
-  return loaded;
-}
-
 export default function TrigApplicationsF4() {
   const [currentTaskId, setCurrentTaskId] = useState('pyramid-line');
   const [completedTasks, setCompletedTasks] = useState([]);
@@ -397,21 +363,13 @@ export default function TrigApplicationsF4() {
     animatedObjects: [],
   });
 
-  const threeLoaded = useScripts([
-    'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
-    'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js',
-  ]);
-
   const calculateAngle = (p1Id, p2Id, p3Id) => {
-    if (!window.THREE) {
-      return null;
-    }
-    const p1 = new window.THREE.Vector3(...currentTask.points[p1Id].coords);
-    const p2 = new window.THREE.Vector3(...currentTask.points[p2Id].coords);
-    const p3 = new window.THREE.Vector3(...currentTask.points[p3Id].coords);
+    const p1 = new THREE.Vector3(...currentTask.points[p1Id].coords);
+    const p2 = new THREE.Vector3(...currentTask.points[p2Id].coords);
+    const p3 = new THREE.Vector3(...currentTask.points[p3Id].coords);
 
-    const v1 = new window.THREE.Vector3().subVectors(p1, p2).normalize();
-    const v2 = new window.THREE.Vector3().subVectors(p3, p2).normalize();
+    const v1 = new THREE.Vector3().subVectors(p1, p2).normalize();
+    const v2 = new THREE.Vector3().subVectors(p3, p2).normalize();
 
     const dot = v1.dot(v2);
     const angleRad = Math.acos(Math.min(Math.max(dot, -1), 1));
@@ -480,11 +438,10 @@ export default function TrigApplicationsF4() {
   };
 
   useEffect(() => {
-    if (!threeLoaded || !containerRef.current) {
+    if (!containerRef.current) {
       return undefined;
     }
 
-    const THREE = window.THREE;
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
 
@@ -503,7 +460,7 @@ export default function TrigApplicationsF4() {
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controlsRef.current = controls;
@@ -561,14 +518,13 @@ export default function TrigApplicationsF4() {
         containerRef.current.innerHTML = '';
       }
     };
-  }, [threeLoaded]);
+  }, []);
 
   useEffect(() => {
-    if (!threeLoaded || !sceneRef.current) {
+    if (!sceneRef.current) {
       return;
     }
 
-    const THREE = window.THREE;
     const scene = sceneRef.current;
 
     if (objectsRef.current.base) {
@@ -646,10 +602,10 @@ export default function TrigApplicationsF4() {
       scene.add(sphere);
       objectsRef.current.points[id] = sphere;
     });
-  }, [currentTask, threeLoaded]);
+  }, [currentTask]);
 
   useEffect(() => {
-    if (!threeLoaded || !sceneRef.current || !rendererRef.current) {
+    if (!sceneRef.current || !rendererRef.current) {
       return undefined;
     }
 
@@ -686,7 +642,7 @@ export default function TrigApplicationsF4() {
             return;
           }
 
-          const vec = new window.THREE.Vector3(...pointData.coords);
+          const vec = new THREE.Vector3(...pointData.coords);
           vec.project(camera);
           newLabels[id] = {
             x: (vec.x * 0.5 + 0.5) * canvasW,
@@ -704,14 +660,13 @@ export default function TrigApplicationsF4() {
     animate();
 
     return () => cancelAnimationFrame(animationFrameId);
-  }, [threeLoaded]);
+  }, []);
 
   useEffect(() => {
-    if (!threeLoaded || !sceneRef.current) {
+    if (!sceneRef.current) {
       return;
     }
 
-    const THREE = window.THREE;
     const scene = sceneRef.current;
     const { points, lines, highlightLines } = objectsRef.current;
     const colors = { normal: 0x94a3b8, selected: 0xd9b756, angle: 0x22c55e };
@@ -852,7 +807,7 @@ export default function TrigApplicationsF4() {
         }
       }
     }
-  }, [selectedPoints, addedPoints, showSolutionMode, solutionStep, currentTask, threeLoaded, isAnswerCorrect, matchedAnswerDetails]);
+  }, [selectedPoints, addedPoints, showSolutionMode, solutionStep, currentTask, isAnswerCorrect, matchedAnswerDetails]);
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col items-center py-8">
