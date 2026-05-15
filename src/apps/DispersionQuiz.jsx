@@ -1201,9 +1201,9 @@ const CumulativeFrequencySession = ({ data }) => {
   const total = cumulative;
   const positions = total > 0
     ? Array.from(new Set([
-        Math.max(1, Math.ceil(total * 0.25)),
-        Math.max(1, Math.ceil(total * 0.5)),
-        Math.max(1, Math.ceil(total * 0.75))
+        Math.max(1, Math.min(total, Math.floor((total + 1) * 0.25))),
+        Math.max(1, Math.min(total, Math.floor((total + 1) * 0.5))),
+        Math.max(1, Math.min(total, Math.floor((total + 1) * 0.75)))
       ]))
     : [];
 
@@ -1236,7 +1236,7 @@ const CumulativeFrequencySession = ({ data }) => {
                 <td className="border border-slate-200 px-3 py-2">{r.freq}</td>
                 <td className="border border-slate-200 px-3 py-2 font-semibold text-blue-700">{r.cumFreq}</td>
                 <td className="border border-slate-200 px-3 py-2 text-slate-600">
-                  第 {r.from}{r.freq > 1 ? `–${r.cumFreq}` : ''} 個
+                  第 {r.from}{r.freq > 1 ? `–${r.cumFreq}` : ''} 個數
                 </td>
               </tr>
             ))}
@@ -1262,12 +1262,8 @@ const CumulativeFrequencySession = ({ data }) => {
               return (
                 <p key={pos}>
                   第 <span className="font-bold text-red-600">{pos}</span> 個數
-                  {row ? (
-                    <>
-                      落入「第 {row.from}{row.freq > 1 ? `–${row.cumFreq}` : ''} 個」，
-                      所以讀到數值 <span className="font-bold text-red-600">{row.value}</span>。
-                    </>
-                  ) : ' 未能判讀。'}
+                  ，落入「第 {row.from}{row.freq > 1 ? `–${row.cumFreq}` : ''} 個數」，
+                  所以讀到數值 <span className="font-bold text-red-600">{row.value}</span>。
                 </p>
               );
             })}
