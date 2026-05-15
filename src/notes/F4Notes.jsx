@@ -213,15 +213,15 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             </div>
             <div className="grid gap-3">
               <div className="bg-white p-3 rounded flex items-center shadow-sm">
-                <span className="w-16 font-bold text-slate-700 bg-red-100 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta > 0" /></span>
+                <span className="min-w-[5.5rem] whitespace-nowrap inline-flex justify-center items-center font-bold text-slate-700 bg-red-100 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta > 0" /></span>
                 <span className="text-slate-700">有<span className="font-bold text-red-600">兩個相異</span>實根</span>
               </div>
               <div className="bg-white p-3 rounded flex items-center shadow-sm">
-                <span className="w-16 font-bold text-slate-700 bg-green-100 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta = 0" /></span>
+                <span className="min-w-[5.5rem] whitespace-nowrap inline-flex justify-center items-center font-bold text-slate-700 bg-green-100 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta = 0" /></span>
                 <span className="text-slate-700">有<span className="font-bold text-green-600">一個二重</span>實根 (兩個相等的實根)</span>
               </div>
               <div className="bg-white p-3 rounded flex items-center shadow-sm">
-                <span className="w-16 font-bold text-slate-700 bg-slate-200 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta < 0" /></span>
+                <span className="min-w-[5.5rem] whitespace-nowrap inline-flex justify-center items-center font-bold text-slate-700 bg-slate-200 text-center rounded px-2 py-1 mr-3"><Latex math="\Delta < 0" /></span>
                 <span className="text-slate-700"><span className="font-bold text-slate-600">沒有</span>實根</span>
               </div>
             </div>
@@ -229,11 +229,25 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
           
           <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 text-sm shadow-sm">
             <p className="text-amber-800 font-bold mb-1">💡 考試常見字眼：</p>
-            <ul className="list-disc pl-5 space-y-1 text-slate-700">
-              <li>題目說「<b>有實根</b>」：代表 <Latex math="\Delta \geq 0" /> (大於或等於零)</li>
-              <li>題目說「<b>相切 / 接觸</b>於一點」：代表 <Latex math="\Delta = 0" /></li>
-              <li>題目說「<b>不相交</b>」：代表 <Latex math="\Delta < 0" /></li>
-            </ul>
+            <p className="text-slate-700 mb-2">判別式條件 → 題目常見字眼（關鍵字）</p>
+            <div className="space-y-2 text-slate-700">
+              <div className="bg-white rounded border border-amber-200 px-3 py-2">
+                <span className="font-bold mr-2"><Latex math="\Delta < 0" /></span>
+                <span>沒有實根、不相交</span>
+              </div>
+              <div className="bg-white rounded border border-amber-200 px-3 py-2">
+                <span className="font-bold mr-2"><Latex math="\Delta = 0" /></span>
+                <span>二重實根、相等實根、相切於一點、一個 x 截距、等根</span>
+              </div>
+              <div className="bg-white rounded border border-amber-200 px-3 py-2">
+                <span className="font-bold mr-2"><Latex math="\Delta > 0" /></span>
+                <span>相異實根、相交於兩點、兩個 x 截距</span>
+              </div>
+              <div className="bg-white rounded border border-amber-200 px-3 py-2">
+                <span className="font-bold mr-2"><Latex math="\Delta \geq 0" /></span>
+                <span>有實根</span>
+              </div>
+            </div>
           </div>
         </div>
       </CollapsibleSection>
