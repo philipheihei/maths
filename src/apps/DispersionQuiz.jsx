@@ -1186,6 +1186,98 @@ const FrequencyTable = ({ data, highlight }) => {
   );
 };
 
+const CumulativeFrequencySession = ({ data }) => {
+  const freq = {};
+  data.forEach(v => { freq[v] = (freq[v] || 0) + 1; });
+  const keys = Object.keys(freq).map(Number).sort((a, b) => a - b);
+
+  let cumulative = 0;
+  const rows = keys.map((k) => {
+    const from = cumulative + 1;
+    cumulative += freq[k];
+    return { value: k, freq: freq[k], cumFreq: cumulative, from };
+  });
+
+  const total = cumulative;
+  const positions = total > 0
+    ? Array.from(new Set([
+        Math.max(1, Math.ceil(total * 0.25)),
+        Math.max(1, Math.ceil(total * 0.5)),
+        Math.max(1, Math.ceil(total * 0.75))
+      ]))
+    : [];
+
+  const findRowByPosition = (pos) => rows.find(r => pos >= r.from && pos <= r.cumFreq);
+
+  return (
+    <div className="max-w-4xl space-y-4">
+      <h2 className="text-3xl font-bold text-slate-800">累積頻數分佈表</h2>
+
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+        <p className="text-sm text-slate-700 leading-relaxed">
+          累積頻數分佈表會將每組頻數逐步累加，幫你快速判斷「第幾個數」落在哪個數值組別。
+        </p>
+      </div>
+
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 overflow-x-auto">
+        <table className="w-full text-sm text-center border-collapse">
+          <thead>
+            <tr className="bg-slate-100 text-slate-700">
+              <th className="border border-slate-200 px-3 py-2">數值</th>
+              <th className="border border-slate-200 px-3 py-2">頻數 f</th>
+              <th className="border border-slate-200 px-3 py-2">累積頻數 cf</th>
+              <th className="border border-slate-200 px-3 py-2">包含第…個數</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.value}>
+                <td className="border border-slate-200 px-3 py-2 font-semibold text-slate-800">{r.value}</td>
+                <td className="border border-slate-200 px-3 py-2">{r.freq}</td>
+                <td className="border border-slate-200 px-3 py-2 font-semibold text-blue-700">{r.cumFreq}</td>
+                <td className="border border-slate-200 px-3 py-2 text-slate-600">
+                  第 {r.from}{r.freq > 1 ? `–${r.cumFreq}` : ''} 個
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-5">
+        <h3 className="font-bold text-indigo-800 mb-3">點樣睇（快速步驟）</h3>
+        <div className="space-y-2 text-sm text-slate-700">
+          <p>1. 先睇最後一個累積頻數，得到總數 N = <span className="font-bold text-blue-700">{total}</span>。</p>
+          <p>2. 想搵第 k 個數，就喺「包含第…個數」欄位搵到包含 k 的範圍。</p>
+          <p>3. 該行對應的「數值」就係你要讀取的結果。</p>
+        </div>
+      </div>
+
+      {positions.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+          <h3 className="font-bold text-slate-700 mb-3">即場示範</h3>
+          <div className="space-y-2 text-sm text-slate-700">
+            {positions.map((pos) => {
+              const row = findRowByPosition(pos);
+              return (
+                <p key={pos}>
+                  第 <span className="font-bold text-red-600">{pos}</span> 個數
+                  {row ? (
+                    <>
+                      落入「第 {row.from}{row.freq > 1 ? `–${row.cumFreq}` : ''} 個」，
+                      所以讀到數值 <span className="font-bold text-red-600">{row.value}</span>。
+                    </>
+                  ) : ' 未能判讀。'}
+                </p>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // --- 虛擬鍵盤組件 ---
 const Keypad = ({ value, onChange }) => {
   const handleKeyClick = (key) => {
@@ -2335,7 +2427,7 @@ export default function StatisticsApp() {
     const [learnData, setLearnData] = useState([]);
     const [learnMeasure, setLearnMeasure] = useState(null);
     const [learnHighlight, setLearnHighlight] = useState(null);
-    const [selectedSection, setSelectedSection] = useState('charts'); // 'charts' | 'standard-score'
+    const [selectedSection, setSelectedSection] = useState('charts'); // 'charts' | 'standard-score' | 'cumfreq'
 
     const chartTypes = {
       box: { name: '框線圖 (Box-and-Whisker Diagram)', stats: ['median', 'range', 'iqr'] },
@@ -2544,6 +2636,19 @@ export default function StatisticsApp() {
               >
                 標準分 (Standard Score)
               </button>
+              <button
+                onClick={() => {
+                  setSelectedSection('cumfreq');
+                  if (learnData.length === 0) setLearnData(DataGenerator.generateFrequencyData());
+                }}
+                className={`w-full text-left p-3 rounded-lg text-sm font-medium transition-colors mt-2 ${
+                  selectedSection === 'cumfreq'
+                    ? 'bg-cyan-100 text-cyan-800 border border-cyan-300'
+                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                累積頻數分佈表
+              </button>
             </div>
           </div>
 
@@ -2623,6 +2728,8 @@ export default function StatisticsApp() {
                   <p className="text-sm text-slate-600 mt-2">標準分為 2，即小明的成績比平均高出 2 個標準差，排名在前半。</p>
                 </div>
               </div>
+            ) : selectedSection === 'cumfreq' ? (
+              <CumulativeFrequencySession data={learnData} />
             ) : selectedChart && learnData.length > 0 ? (
               <div className="max-w-4xl">
                 {/* 標題 */}
