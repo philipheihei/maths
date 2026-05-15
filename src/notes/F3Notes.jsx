@@ -564,10 +564,10 @@ export const QuadrilateralNotes = ({ activeSub }) => {
         .sq-shape { stroke: black; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
         .sq-arc { stroke: #0ea5e9; stroke-width: 2; fill: none; }`}</style>
       <g className="sq-arc">
-        <path d="M 90 50 A 40 40 0 0 1 78.28 78.28" /><path d="M 78.28 78.28 A 40 40 0 0 1 50 90" />
-        <path d="M 350 90 A 40 40 0 0 1 321.72 78.28" /><path d="M 321.72 78.28 A 40 40 0 0 1 310 50" />
-        <path d="M 310 350 A 40 40 0 0 1 321.72 321.72" /><path d="M 321.72 321.72 A 40 40 0 0 1 350 310" />
-        <path d="M 50 310 A 40 40 0 0 1 78.28 321.72" /><path d="M 78.28 321.72 A 40 40 0 0 1 90 350" />
+        <path d="M 90 50 A 40 40 0 0 1 78.28 78.28" /><path d="M 72.63 72.63 A 32 32 0 0 1 50 82" />
+        <path d="M 350 90 A 40 40 0 0 1 321.72 78.28" /><path d="M 327.37 72.63 A 32 32 0 0 1 318 50" />
+        <path d="M 310 350 A 40 40 0 0 1 321.72 321.72" /><path d="M 327.37 327.37 A 32 32 0 0 1 350 318" />
+        <path d="M 50 310 A 40 40 0 0 1 78.28 321.72" /><path d="M 72.63 327.37 A 32 32 0 0 1 82 350" />
       </g>
       <g className="sq-shape">
         <rect x="50" y="50" width="300" height="300" />

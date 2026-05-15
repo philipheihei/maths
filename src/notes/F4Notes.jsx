@@ -557,13 +557,25 @@ export const FunctionNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">📝 一般式：<Latex math="ax^2 + bx + c = 0" /></h3>
             <div className="grid md:grid-cols-2 gap-4 mb-4">
-              <div className="bg-white rounded-lg p-4 text-center border border-green-200">
-                <p className="text-4xl mb-2">∪</p>
+              <div className="bg-white rounded-lg p-4 text-center border border-green-200 flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-16 h-16 mb-2">
+                  <line x1="10" y1="50" x2="90" y2="50" stroke="#94a3b8" strokeWidth="2" />
+                  <polyline points="86,46 90,50 86,54" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <line x1="50" y1="10" x2="50" y2="90" stroke="#94a3b8" strokeWidth="2" />
+                  <polyline points="46,14 50,10 54,14" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 20 20 Q 50 100 80 20" fill="none" stroke="#22c55e" strokeWidth="4" strokeLinecap="round" />
+                </svg>
                 <p className="font-bold text-green-700"><Latex math="a > 0" /></p>
                 <p className="text-sm text-slate-600">開口<span className="text-green-600 font-bold">向上</span>（+ve）</p>
               </div>
-              <div className="bg-white rounded-lg p-4 text-center border border-red-200">
-                <p className="text-4xl mb-2">∩</p>
+              <div className="bg-white rounded-lg p-4 text-center border border-red-200 flex flex-col items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-16 h-16 mb-2">
+                  <line x1="10" y1="50" x2="90" y2="50" stroke="#94a3b8" strokeWidth="2" />
+                  <polyline points="86,46 90,50 86,54" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <line x1="50" y1="10" x2="50" y2="90" stroke="#94a3b8" strokeWidth="2" />
+                  <polyline points="46,14 50,10 54,14" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M 20 80 Q 50 0 80 80" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+                </svg>
                 <p className="font-bold text-red-700"><Latex math="a < 0" /></p>
                 <p className="text-sm text-slate-600">開口<span className="text-red-600 font-bold">向下</span>（-ve）</p>
               </div>
