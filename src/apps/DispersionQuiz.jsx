@@ -1257,11 +1257,12 @@ const CumulativeFrequencySession = ({ data }) => {
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
           <h3 className="font-bold text-slate-700 mb-3">即場示範</h3>
           <div className="space-y-2 text-sm text-slate-700">
-            {positions.map((pos) => {
-              const row = findRowByPosition(pos);
+            {positions.map((position) => {
+              const row = findRowByPosition(position);
+              if (!row) return null;
               return (
-                <p key={pos}>
-                  第 <span className="font-bold text-red-600">{pos}</span> 個數
+                <p key={position}>
+                  第 <span className="font-bold text-red-600">{position}</span> 個數
                   ，落入「第 {row.from}{row.freq > 1 ? `–${row.cumFreq}` : ''} 個數」，
                   所以讀到數值 <span className="font-bold text-red-600">{row.value}</span>。
                 </p>
