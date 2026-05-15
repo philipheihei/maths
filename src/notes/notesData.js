@@ -1,5 +1,5 @@
 import { ApproximationNotes } from './F1Notes';
-import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes } from './F2Notes';
+import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
@@ -18,6 +18,26 @@ export const NOTES_DATA = {
     }
   ],
   F2: [
+    {
+      id: 'algebraic-fractions',
+      topic: 'CH5 代數分式',
+      color: 'purple',
+      subtopics: [
+        { id: 'addition-subtraction', num: 1, title: '代數分式加減', color: 'purple' },
+        { id: 'multiplication-division', num: 2, title: '代數分式乘除', color: 'blue' },
+        { id: 'subject-change', num: 3, title: '主項變換', color: 'green' },
+      ]
+    },
+    {
+      id: 'measurement-errors',
+      topic: 'CH6 量度與誤差',
+      color: 'orange',
+      subtopics: [
+        { id: 'precision-absolute-error', num: 1, title: '精準度與絕對誤差', color: 'orange' },
+        { id: 'max-absolute-error', num: 2, title: '最大絕對誤差', color: 'green' },
+        { id: 'relative-percentage-error', num: 3, title: '相對誤差與百分誤差', color: 'red' },
+      ]
+    },
     {
       id: 'inequality',
       topic: 'CH8 不等式',
@@ -197,6 +217,8 @@ export const getNotesForLevel = (level) => {
 };
 
 export const NOTES_COMPONENTS = {
+  'algebraic-fractions': AlgebraicFractionsNotes,
+  'measurement-errors': MeasurementErrorsNotes,
   'inequality': InequalityNotes,
   'simultaneous-eq-f2': SimultaneousEqF2Notes,
   'pythagoras-f2': PythagorasF2Notes,

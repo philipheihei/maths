@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { loadKatexOnce } from '../utils/katexLoader';
 import { SimultaneousEqNotesContent } from '../components/SimultaneousEqNotesContent';
 import { PythagorasNotesBlock, TrigRatiosNotesBlock } from '../components/F2TrigNotesShared';
 import { SIMULTANEOUS_EQ_CHEATSHEET } from '../constants/simultaneousEqCheatsheet';
+import { CollapsibleSection } from './shared';
 
 const Latex = ({ math, block = false, left = false }) => {
   const containerRef = React.useRef(null);
@@ -20,6 +21,484 @@ const Latex = ({ math, block = false, left = false }) => {
     }
   }, [math, block, isLoaded]);
   return <span ref={containerRef} className={block ? `block ${left ? 'text-left' : 'text-center'} my-1` : "inline-block align-middle"} />;
+};
+
+// ========================================
+// CH6 量度與誤差 (F2)
+// ========================================
+export const MeasurementErrorsNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-orange-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH6 量度與誤差</h1>
+        <p className="text-slate-600">認識及計算量度刻度中的各類誤差</p>
+      </div>
+
+      <CollapsibleSection id="precision-absolute-error" title="精準度與絕對誤差" num={1} color="orange" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+            <h3 className="font-bold text-orange-800 mb-3">📝 1. 精準度 (Precision)</h3>
+            <p className="text-slate-700 font-bold mb-2">定義：最近的量度刻度之差</p>
+            <div className="bg-white rounded p-3 mb-2">
+              <p className="text-blue-700 text-sm mb-2">例子 (電流錶)：0和200當中有10格</p>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <span className="font-bold text-blue-700">精準度 = <Latex math="\dfrac{200}{10} = 20 \text{ A}" /></span>
+                <div className="flex-1">
+                  {/* 📐 待繪製：[電流錶，含有左側 0 及 200 刻度放大，共10小格] — 見下方繪圖規格單 */}
+                  <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm">
+                    圖示待加入（@數學繪圖師）
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">📝 2. 絕對誤差 (Absolute Error)</h3>
+            <div className="bg-white rounded p-3 border border-red-200">
+              <p className="text-red-600 font-bold text-lg mb-2 border-b border-red-50 pb-2">量度錯了多少</p>
+              <p className="text-slate-700 font-bold text-center mb-2">量度值 − 真確值 &nbsp; 或 &nbsp; 真確值 − 量度值</p>
+              <p className="text-green-700 text-sm">(題目會提供真確值)</p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="max-absolute-error" title="最大絕對誤差" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-3 text-lg">3. 最大絕對誤差 (Maximum Absolute Error)</h3>
+            
+            <div className="bg-white rounded p-3 text-center mb-3">
+              <p className="font-bold text-green-700 mb-1">(不知真確值)</p>
+              <p className="font-bold text-lg text-slate-800">
+                最大絕對誤差 = 精準度 <Latex math="\div" /> 2
+              </p>
+            </div>
+
+            <div className="bg-amber-50 rounded p-3 border border-amber-200 mb-3">
+              <p className="text-slate-700 text-sm font-bold mb-2">「<span className="bg-yellow-200 px-1 rounded text-green-700">精準度</span>」亦會表達為：</p>
+              <ul className="text-sm space-y-1 text-blue-700 font-bold ml-4">
+                <li>• 刻度之間的距離 /</li>
+                <li>• 準確至最接近的 <span className="border-b-2 border-red-500 text-red-600">(單位)</span></li>
+              </ul>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-sm font-bold text-blue-800 mb-3 bg-blue-100 inline-block px-2 py-1 rounded">試做 6.4</p>
+              <p className="text-slate-700 mb-3 text-sm">求下列各量度值的最大絕對誤差。</p>
+              
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-2">
+                  <span className="font-bold text-slate-700 w-6">(a)</span>
+                  <span className="text-slate-600">100°C</span>
+                  <span className="text-sm text-slate-500">(準確至最接近的 <span className="bg-yellow-200 px-1 rounded font-bold text-slate-800">10°C</span>)</span>
+                  <span className="ml-auto font-bold text-blue-700"><Latex math="10^\circ \text{C} \div 2 = 5^\circ \text{C}" /></span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-2">
+                  <span className="font-bold text-slate-700 w-6">(b)</span>
+                  <span className="text-slate-600">66.7 cm</span>
+                  <span className="text-sm text-slate-500">(準確至最接近的 <span className="bg-yellow-200 px-1 rounded font-bold text-slate-800">0.1 cm</span>)</span>
+                  <span className="ml-auto font-bold text-blue-700"><Latex math="0.1 \div 2 = 0.05 \text{ cm}" /></span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-bold text-slate-700 w-6">(c)</span>
+                  <span className="text-slate-600">12.85 kg</span>
+                  <span className="text-sm text-slate-500">(準確至最接近的 <span className="bg-yellow-200 px-1 rounded font-bold text-slate-800">0.01 kg</span>)</span>
+                  <span className="ml-auto font-bold text-blue-700"><Latex math="0.01 \div 2 = 0.005 \text{ kg}" /></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="relative-percentage-error" title="相對誤差與百分誤差" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+            <h3 className="font-bold text-red-800 mb-3 text-lg">4. 相對誤差 (Relative Error)</h3>
+            <div className="bg-white rounded p-3 text-center mb-3">
+              <p className="font-bold text-slate-800 text-lg mb-1">相對誤差 = 最大絕對誤差 <Latex math="\div" /> 量度值</p>
+              <p className="font-bold text-red-600">(必定 小 <Latex math="\div" /> 大)</p>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-sm font-bold text-blue-800 mb-3 bg-blue-100 inline-block px-2 py-1 rounded">試做 6.6</p>
+              <p className="text-slate-700 mb-3 text-sm">
+                一部計算機的重量量得 250 g (準確至最接近的 10 g)。求量得的重量的
+              </p>
+              
+              <div className="space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                  <span className="font-bold text-slate-700 w-8">(a)</span>
+                  <span className="text-slate-700">最大絕對誤差</span>
+                  <span className="font-bold text-blue-700 mt-1 sm:mt-0 sm:ml-auto"><Latex math="10 \div 2 = 5 \text{ g}" /></span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                  <span className="font-bold text-slate-700 w-8">(b)</span>
+                  <span className="text-slate-700 bg-yellow-200 px-1 rounded font-bold">相對誤差</span>
+                  <span className="text-green-600 font-bold ml-2 text-sm sm:hidden mt-2">↑ 不需單位</span>
+                  <span className="font-bold text-blue-700 mt-1 sm:mt-0 sm:ml-auto flex items-center gap-2">
+                    <Latex math="5 \div 250 = 0.02" />
+                    <span className="text-green-600 font-bold hidden sm:inline-block">← 不需單位</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-3 text-lg">5. 百分誤差 (Percentage Error)</h3>
+            <div className="bg-white rounded p-3 text-center">
+              <p className="font-bold text-slate-800 text-lg">百分誤差 = 相對誤差 <Latex math="\times 100\%" /></p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+export const AlgebraicFractionsNotes = ({ activeSub }) => {
+  const rootRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!activeSub) return;
+    const target = rootRef.current?.querySelector(`[id="${activeSub}"]`) || document.getElementById(activeSub);
+    if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  }, [activeSub]);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-violet-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH5 代數分式</h1>
+        <p className="text-slate-600">處理有未知數的分數運算及主項變換技巧</p>
+      </div>
+
+      <div ref={rootRef} className="space-y-8 text-slate-700">
+        <CollapsibleSection id="addition-subtraction" title="代數分式加減 (看分母是否相同)" num={1} color="purple" activeSub={activeSub}>
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* 分母相同 */}
+            <div className="flex-1 bg-green-50 p-5 rounded-xl border border-green-200">
+              <h3 className="font-bold text-green-800 mb-4 text-lg">A. 分母相同</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="bg-green-200 text-green-800 px-2 py-0.5 rounded text-sm font-bold font-serif italic">e.g.</span>
+                  <div className="flex items-center gap-2 text-lg">
+                    <Latex math="\dfrac{3x}{x+2}" />
+                    <span className="font-bold text-blue-600">+</span>
+                    <Latex math="\dfrac{6}{x+2}" />
+                  </div>
+                </div>
+                
+                <div className="pl-6 space-y-3">
+                  <div className="flex items-center gap-4">
+                    <span className="font-bold">=</span>
+                    <Latex math="\dfrac{3x+6}{x+2}" />
+                    <span className="text-sm text-green-700">← 分子加減，分母相同二合為一</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="font-bold">=</span>
+                    <div className="relative">
+                      <Latex math="\dfrac{3(x+2)}{x+2}" />
+                      {/* strikethroughs */}
+                      <div className="absolute top-1 right-2 w-10 h-0.5 bg-red-500 -rotate-12"></div>
+                      <div className="absolute bottom-1 right-1 w-10 h-0.5 bg-red-500 -rotate-12"></div>
+                    </div>
+                    <span className="text-sm text-green-700">← 完成前檢查能否抽公因式和化簡</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="font-bold">=</span>
+                    <Latex math="3" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 分母不同 */}
+            <div className="flex-1 bg-red-50 p-5 rounded-xl border border-red-200">
+              <h3 className="font-bold text-red-800 mb-4 text-lg">B. 分母不同</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="bg-red-200 text-red-800 px-2 py-0.5 rounded text-sm font-bold font-serif italic">e.g.</span>
+                  <div className="flex items-center gap-2 text-lg">
+                    <Latex math="\dfrac{1}{4y}" />
+                    <span className="font-bold text-blue-600">+</span>
+                    <Latex math="\dfrac{7}{10y}" />
+                  </div>
+                </div>
+
+                <div className="pl-6 space-y-3">
+                  <div className="flex items-center gap-4 flex-wrap">
+                    <span className="font-bold">=</span>
+                    <Latex math="\dfrac{1 \cdot 10y}{4y \cdot 10y} + \dfrac{7 \cdot 4y}{10y \cdot 4y}" />
+                    <span className="text-sm text-green-700 bg-green-100 px-2 py-1 rounded">
+                      ← 擴分 (分母互相乘對面，分子跟分母相乘)
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="font-bold">=</span>
+                    <Latex math="\dfrac{10y + 28y}{40y^2}" />
+                    <span className="text-sm text-slate-500">← <Latex math="(1 \cdot 10y) + (7 \cdot 4y)" /></span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="font-bold">=</span>
+                    <div className="relative">
+                      <Latex math="\dfrac{38y}{40y^2}" />
+                      <div className="absolute top-1.5 right-1 w-5 h-0.5 bg-red-500 -rotate-45"></div>
+                      <div className="absolute bottom-2 right-0 w-4 h-0.5 bg-red-500 -rotate-45"></div>
+                    </div>
+                    <span className="text-sm text-green-700">← 完成前檢查能否抽公因式和化簡</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="font-bold">=</span>
+                    <Latex math="\dfrac{19}{20y}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        <CollapsibleSection id="multiplication-division" title="代數分式乘除 (約簡)" num={2} color="blue" activeSub={activeSub}>
+          <div className="space-y-6">
+            <div className="bg-green-50 text-green-800 p-3 rounded-lg border border-green-200 inline-block font-bold">
+              口訣：上乘上，下乘下
+            </div>
+
+            <div className="bg-white p-5 rounded-lg border border-slate-200">
+              <div className="flex flex-wrap items-center gap-6 text-lg">
+                <div className="flex items-center gap-2">
+                  <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-sm font-bold font-serif italic">e.g.</span>
+                  <Latex math="\dfrac{6}{7c} \times \dfrac{c}{2y}" />
+                </div>
+                <span className="font-bold">=</span>
+                <div className="flex flex-col gap-1 items-start">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <Latex math="\dfrac{6c}{14cy}" />
+                      <div className="absolute top-2 right-1.5 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                      <div className="absolute bottom-2 right-4 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                    </div>
+                    <div className="flex flex-col text-sm text-green-700">
+                      <span>← 上乘上</span>
+                      <span>← 下乘下</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 mt-2">
+                    <span className="font-bold">=</span>
+                    <Latex math="\dfrac{3}{7y}" />
+                    <span className="text-sm bg-yellow-200 text-slate-800 px-2 py-0.5 rounded font-bold">計算機約簡</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-rose-50 p-5 rounded-xl border-2 border-rose-200 shadow-sm">
+              <h3 className="font-bold text-red-600 mb-6 text-lg flex items-center gap-2">
+                <span className="text-xl">⚠️</span> 需分辨何時可以 / 不能約簡 (<Latex math="\times \div" /> 可以 / <Latex math="+ -" /> 不能)
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* 可以約簡 */}
+                <div className="bg-white p-4 rounded-lg border border-green-300 relative">
+                  <div className="absolute -top-3 -right-3 bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-xl shadow">✓</div>
+                  <div className="flex justify-center mb-6">
+                    <div className="relative text-xl">
+                      <Latex math="\dfrac{4pq}{14p^2q}" />
+                      <div className="absolute top-1 left-0 text-red-600 text-xs font-bold line-through">4</div>
+                      <div className="absolute bottom-1 left-0 text-red-600 text-xs font-bold line-through">14</div>
+                      <div className="absolute -top-2 left-0 text-xs font-bold text-slate-700">2</div>
+                      <div className="absolute -bottom-3 left-0 text-xs font-bold text-slate-700">7</div>
+                      <div className="absolute top-2 right-1.5 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                      <div className="absolute bottom-2 right-1.5 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                      <div className="absolute top-2 right-4 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                      <div className="absolute bottom-2 right-5 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                    </div>
+                  </div>
+                  <div className="text-center font-bold text-green-700">
+                    是乘數，可以約簡
+                  </div>
+                </div>
+
+                {/* 不能約簡 */}
+                <div className="bg-white p-4 rounded-lg border border-red-300 relative">
+                  <div className="absolute -top-3 -right-3 bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-xl shadow">✗</div>
+                  <div className="flex justify-center mb-4">
+                    <div className="relative text-xl flex items-center gap-4">
+                      <div>
+                        <Latex math="\dfrac{4x + 2y}{2x}" />
+                        <div className="absolute top-1 left-0 w-4 h-0.5 bg-red-500 -rotate-45"></div>
+                        <div className="absolute bottom-2 left-1 w-4 h-0.5 bg-red-500 -rotate-45"></div>
+                      </div>
+                      <span className="text-3xl text-red-500 font-bold">X</span>
+                    </div>
+                  </div>
+                  <div className="text-center text-sm">
+                    <p className="font-bold text-green-700 mb-2">不能約簡，因為上面大畫面是 "+"</p>
+                    <p className="text-purple-700 font-bold mb-3">↓ 要先找相同的因數/代數 因式分解</p>
+                    
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="flex items-center gap-3">
+                        <div className="relative text-lg">
+                          <Latex math="\dfrac{2(2x+y)}{2x}" />
+                          <div className="absolute top-1 left-0 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                          <div className="absolute bottom-1 left-0 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                        </div>
+                        <span className="text-green-700 font-bold text-xs">← 大畫面 <Latex math="2 \cdot (2x+y)" /> 為乘數</span>
+                      </div>
+                      <div>
+                        <span className="font-bold">=</span>
+                        <Latex math="\dfrac{2x+y}{x}" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        <CollapsibleSection id="subject-change" title="主項變換" num={3} color="green" activeSub={activeSub}>
+          <div className="space-y-6">
+            <div className="bg-white p-5 rounded-lg border border-slate-200">
+              <h3 className="font-bold text-blue-800 mb-3">成為主項的條件 (例: <Latex math="x" /> 是主項)</h3>
+              <ol className="list-decimal list-inside text-red-600 font-bold space-y-1 ml-2">
+                <li><Latex math="x" /> 只在左方 (其中一方)</li>
+                <li>右方沒有 <Latex math="x" /></li>
+              </ol>
+            </div>
+
+            <div className="bg-amber-50 p-5 rounded-xl border border-amber-200">
+              <h3 className="font-bold text-amber-900 mb-4 text-lg">實戰口訣：「乘拆移抽除」五步曲</h3>
+              <p className="text-sm font-bold text-green-700 mb-3">在題目步驟中，(按順序) 見到 ______，就要 ______</p>
+              
+              <div className="overflow-hidden rounded-lg border border-amber-200 bg-white mb-6">
+                <table className="w-full text-left text-sm md:text-base">
+                  <thead className="bg-amber-100 text-amber-800">
+                    <tr>
+                      <th className="p-3">見到</th>
+                      <th className="p-3 w-16 text-center">就要</th>
+                      <th className="p-3">行動</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-amber-50 font-bold">
+                    <tr>
+                      <td className="p-3 text-green-700">分數</td>
+                      <td className="p-3 text-red-600 text-center text-lg">乘</td>
+                      <td className="p-3 text-green-700">(交叉相乘)</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 text-green-700">括號</td>
+                      <td className="p-3 text-red-600 text-center text-lg">拆</td>
+                      <td className="p-3 text-green-700">(拆除括號)</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 text-green-700 flex flex-col">
+                        <span>主項</span>
+                        <span className="text-xs text-blue-600 font-normal">(例. <Latex math="x" /> 是主項)</span>
+                      </td>
+                      <td className="p-3 text-red-600 text-center text-lg">移</td>
+                      <td className="p-3 text-green-700">(所有有 <Latex math="x" /> 的項放在同一邊)</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 text-green-700">主項出現多於一次</td>
+                      <td className="p-3 text-red-600 text-center text-lg">抽</td>
+                      <td className="p-3 text-green-700">(因式分解抽 <Latex math="x" />)</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 text-green-700">主項旁有其他數字/代數</td>
+                      <td className="p-3 text-red-600 text-center text-lg">除</td>
+                      <td className="p-3 text-green-700">(除去另一方變分數)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* 例題 1 */}
+              <div className="bg-white p-5 rounded-lg border border-blue-200">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="font-bold text-blue-800">例子 1：</span>
+                  <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-bold">[ <Latex math="n" /> 為主項 ]</span>
+                </div>
+                
+                <div className="space-y-3 font-mono text-sm md:text-base">
+                  <div className="flex gap-4 items-center">
+                    <Latex math="n(m-5) = 3m + 2n" block left />
+                  </div>
+                  <div className="text-xs text-purple-700 font-bold ml-4">
+                    沒分數 → 有括號，拆 →
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <Latex math="\boldsymbol{nm} - \boldsymbol{5n} = 3m + \boldsymbol{2n}" block left />
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <Latex math="\boldsymbol{nm} - \boldsymbol{5n} - \boldsymbol{2n} = 3m" block left />
+                    <span className="text-purple-700 text-xs whitespace-nowrap">← n全放左方</span>
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <Latex math="\boldsymbol{n}(m - 7) = 3m" block left />
+                    <span className="text-purple-700 text-xs whitespace-nowrap">← 抽n (變成唯一主項)</span>
+                  </div>
+                  <div className="flex gap-4 items-center mt-2">
+                    <Latex math="\boldsymbol{n} = \dfrac{3m}{m - 7}" block left />
+                    <span className="text-purple-700 text-xs whitespace-nowrap">← 將 m-7 放進另一方除</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 例題 2 */}
+              <div className="bg-white p-5 rounded-lg border border-blue-200">
+                <div className="flex justify-between items-center mb-4">
+                  <span className="font-bold text-blue-800">例子 2：</span>
+                  <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-bold">[ <Latex math="b" /> 為主項 ]</span>
+                </div>
+
+                <div className="space-y-3 font-mono text-sm md:text-base">
+                  <div className="flex gap-4 items-center">
+                    <Latex math="\dfrac{a+4}{3} = \dfrac{b+1}{2}" block left />
+                    <span className="text-red-500 font-bold">乘</span>
+                    <span className="text-green-700 text-xs whitespace-nowrap">交叉相乘 (拆分數)</span>
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <Latex math="2(a+4) = 3(b+1)" block left />
+                    <span className="text-red-500 font-bold">拆</span>
+                    <span className="text-green-700 text-xs whitespace-nowrap">拆括號</span>
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <Latex math="2a+8 = 3\boldsymbol{b}+3" block left />
+                    <span className="text-red-500 font-bold">移</span>
+                    <span className="text-green-700 text-xs whitespace-nowrap">主項放一邊，沒有主項放另一邊</span>
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <Latex math="2a+8-3 = 3\boldsymbol{b}" block left />
+                    <span className="text-red-500 font-bold">抽</span>
+                    <span className="text-green-700 text-xs whitespace-nowrap">(無)</span>
+                  </div>
+                  <div className="flex gap-4 items-center pl-4">
+                    <Latex math="2a+5 = 3\boldsymbol{b}" block left />
+                  </div>
+                  <div className="flex gap-4 items-center mt-2">
+                    <Latex math="\dfrac{2a+5}{3} = \boldsymbol{b}" block left />
+                    <span className="text-red-500 font-bold">除</span>
+                    <span className="text-green-700 text-xs whitespace-nowrap">b(主項)旁邊丟往另一邊除</span>
+                  </div>
+                  <div className="flex gap-4 items-center mt-2 pt-2 border-t border-slate-100">
+                    <Latex math="\boldsymbol{b} = \dfrac{2a+5}{3}" block left />
+                    <span className="text-purple-700 text-xs font-bold whitespace-nowrap ml-4">主項放左邊</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+      </div>
+    </>
+  );
 };
 
 export const InequalityNotes = ({ activeSub }) => {
