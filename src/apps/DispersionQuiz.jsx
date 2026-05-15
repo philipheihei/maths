@@ -2544,6 +2544,16 @@ export default function StatisticsApp() {
               >
                 標準分 (Standard Score)
               </button>
+              <button
+                onClick={() => setSelectedSection('cumulative-freq')}
+                className={`w-full tracking-tighter text-left p-3 rounded-lg text-sm font-medium transition-colors mt-2 ${
+                  selectedSection === 'cumulative-freq'
+                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                    : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                累積頻數分佈表 (Cumulative)
+              </button>
             </div>
           </div>
 
@@ -2621,6 +2631,80 @@ export default function StatisticsApp() {
                   <p className="text-slate-700 text-sm mb-3">某次測驗的平均分為 60 分，標準差為 8 分。小明得 76 分，求小明的標準分。</p>
                   <LV2KatexLine math={`z = \\dfrac{76 - 60}{8} = \\dfrac{16}{8} = 2`} />
                   <p className="text-sm text-slate-600 mt-2">標準分為 2，即小明的成績比平均高出 2 個標準差，排名在前半。</p>
+                </div>
+              </div>
+            ) : selectedSection === 'cumulative-freq' ? (
+              <div className="max-w-2xl">
+                <h2 className="text-3xl font-bold text-slate-800 mb-6">累積頻數分佈表</h2>
+                {/* 概念說明 */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 mb-4">
+                  <p className="text-slate-700 text-base leading-relaxed mb-4">
+                    累積頻數分佈表（Cumulative Frequency Distribution Table）是用來記錄「某個數值以下」的數據總數。
+                  </p>
+                  <ul className="list-disc pl-5 text-slate-700 space-y-2">
+                    <li><span className="font-bold text-indigo-700">頻數 (Frequency)</span>：該組別的數量</li>
+                    <li><span className="font-bold text-emerald-700">累積頻數 (Cumulative Frequency)</span>：由第一組加到該組別的<span className="font-bold">總數</span></li>
+                  </ul>
+                </div>
+                
+                {/* 關係圖解 */}
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-4">
+                  <p className="text-sm font-bold text-emerald-700 uppercase tracking-wide mb-4">如何找未知數 (Z字加法 vs 逆向減法)</p>
+                  
+                  <div className="flex flex-col md:flex-row gap-6 items-center justify-center mb-6">
+                    {/* 簡化表 */}
+                    <table className="border-collapse bg-white shadow-sm text-center text-sm md:text-base">
+                      <thead>
+                        <tr>
+                          <th className="border border-slate-300 px-4 py-2 bg-slate-100 font-bold">組別</th>
+                          <th className="border border-slate-300 px-4 py-2 bg-slate-100 font-bold text-indigo-600">頻數</th>
+                          <th className="border border-slate-300 px-4 py-2 bg-slate-100 font-bold text-emerald-600">累積頻數</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">第1組</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold">3 <span className="text-xs text-slate-400 font-normal ml-1">(a)</span></td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-100/50">3</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">第2組</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">9</td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-100/50">12 <span className="text-xs text-slate-400 font-normal ml-1">(x)</span></td>
+                        </tr>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">第3組</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">5 <span className="text-xs text-slate-400 font-normal ml-1">(b)</span></td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold">17 <span className="text-xs text-slate-400 font-normal ml-1">(y)</span></td>
+                        </tr>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">第4組</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold">3</td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold">20</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="bg-white/80 p-4 rounded-lg border border-emerald-100">
+                      <p className="font-bold text-slate-800 mb-1">技巧 1：第一組相等</p>
+                      <p className="text-sm text-slate-600 mb-2">第一組的「頻數」必定等於它的「累積頻數」。</p>
+                      <LV2KatexLine math={`a = 3`} />
+                    </div>
+                    <div className="bg-white/80 p-4 rounded-lg border border-emerald-100">
+                      <p className="font-bold text-slate-800 mb-1">技巧 2：Z字加法 (用來求累積頻數)</p>
+                      <p className="text-sm text-slate-600 mb-2"><span className="text-emerald-600 font-bold">上一行累積頻數</span> + <span className="text-indigo-600 font-bold">本行頻數</span> = <span className="text-emerald-600 font-bold">本行累積頻數</span></p>
+                      <LV2KatexLine math={`3 + 9 = x \\implies x = 12`} />
+                    </div>
+                    <div className="bg-white/80 p-4 rounded-lg border border-emerald-100">
+                      <p className="font-bold text-slate-800 mb-1">技巧 3：逆向減法 (用來求頻數)</p>
+                      <p className="text-sm text-slate-600 mb-2"><span className="text-emerald-600 font-bold">本行累積頻數</span> − <span className="text-emerald-600 font-bold">上一行累積頻數</span> = <span className="text-indigo-600 font-bold">本行頻數</span></p>
+                      <LV2KatexLine math={`y - 12 = b \\quad \\text{(還差 y 未知)}`} />
+                      <LV2KatexLine math={`20 - 3 = y \\implies y = 17 \\quad \\text{(從最尾推回去)}`} />
+                      <LV2KatexLine math={`17 - 12 = b \\implies b = 5`} />
+                    </div>
+                  </div>
                 </div>
               </div>
             ) : selectedChart && learnData.length > 0 ? (
