@@ -261,7 +261,7 @@ export const InequalityNotes = ({ activeSub }) => {
                             <line x1="115" y1="14" x2="115" y2="26" stroke="currentColor" strokeWidth="2.5" />
                             <text x="115" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">0</text>
                             
-                            <circle cx="65" cy="-20" r="5" fill="white" stroke="currentColor" strokeWidth="2.5" />
+                            <circle cx="65" cy="-20" r="5" fill="currentColor" stroke="currentColor" strokeWidth="2.5" />
                             <line x1="65" y1="-15" x2="65" y2="20" stroke="currentColor" strokeWidth="2.5" />
                             <line x1="70" y1="-20" x2="150" y2="-20" stroke="currentColor" strokeWidth="3" />
                             <polygon points="150,-26 162,-20 150,-14" fill="currentColor" />
@@ -294,7 +294,7 @@ export const InequalityNotes = ({ activeSub }) => {
                             <text x="100" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">1</text>
                             
                             <circle cx="100" cy="-20" r="5" fill="white" stroke="currentColor" strokeWidth="2.5" />
-                            <line x1="100" y1="-15" x2="100" y2="20" stroke="currentColor" strokeWidth="2.5" strokeDasharray="2,2" />
+                            <line x1="100" y1="-15" x2="100" y2="20" stroke="currentColor" strokeWidth="2.5" />
                             <line x1="95" y1="-20" x2="15" y2="-20" stroke="currentColor" strokeWidth="3" />
                             <polygon points="15,-26 3,-20 15,-14" fill="currentColor" />
                           </svg>
@@ -312,7 +312,7 @@ export const InequalityNotes = ({ activeSub }) => {
                             <text x="115" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">0</text>
                             
                             <circle cx="65" cy="-20" r="5" fill="currentColor" stroke="currentColor" strokeWidth="2.5" />
-                            <line x1="65" y1="-15" x2="65" y2="20" stroke="currentColor" strokeWidth="2.5" strokeDasharray="2,2" />
+                            <line x1="65" y1="-15" x2="65" y2="20" stroke="currentColor" strokeWidth="2.5" />
                             <line x1="70" y1="-20" x2="150" y2="-20" stroke="currentColor" strokeWidth="3" />
                             <polygon points="150,-26 162,-20 150,-14" fill="currentColor" />
                           </svg>
