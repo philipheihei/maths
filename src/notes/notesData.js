@@ -1,4 +1,4 @@
-import { ApproximationNotes, BasicCalculationNotes, DirectedNumbersNotes } from './F1Notes';
+import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, PolynomialsNotes, StatisticsNotes } from './F1Notes';
 import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
@@ -27,6 +27,52 @@ export const NOTES_DATA = {
         { id: 'positive-negative', num: 1, title: '有向數即正負數', color: 'blue' },
         { id: 'number-line', num: 2, title: '數線與大小', color: 'green' },
         { id: 'operations', num: 3, title: '有向數的乘除變化', color: 'red' },
+      ]
+    },
+    {
+      id: 'linear-equation',
+      topic: 'CH4 一元一次方程',
+      color: 'red',
+      subtopics: [
+        { id: 'move-terms', num: 1, title: '移項變相反', color: 'green' },
+        { id: 'big-picture', num: 2, title: '解代數時，看大畫面', color: 'red' },
+        { id: 'fraction-addition', num: 3, title: '分數加減數', color: 'purple' },
+      ]
+    },
+    {
+      id: 'area-volume',
+      topic: 'CH5 面積和體積',
+      color: 'amber',
+      subtopics: [
+        { id: 'basic-area', num: 1, title: '簡單圖形的面積', color: 'blue' },
+        { id: 'polygon-area', num: 2, title: '計算多邊形面積', color: 'green' },
+        { id: 'prism-formulas', num: 3, title: '柱體體積及表面面積', color: 'purple' },
+        { id: 'draw-3d', num: 4, title: '畫立體圖', color: 'amber' },
+      ]
+    },
+    {
+      id: 'polynomials',
+      topic: 'CH6 多項式的運算',
+      color: 'purple',
+      subtopics: [
+        { id: 'definition', num: 1, title: '分辨單項式與多項式', color: 'blue' },
+        { id: 'terms-coeff', num: 2, title: '項數、係數與常數項', color: 'blue' },
+        { id: 'degree-order', num: 3, title: '次數與排列', color: 'green' },
+        { id: 'addition-subtraction', num: 4, title: '多項式的加減', color: 'orange' },
+        { id: 'multiplication', num: 5, title: '多項式的乘法', color: 'red' }
+      ]
+    },
+    {
+      id: 'statistics',
+      topic: 'CH8 統計(一)',
+      color: 'blue',
+      subtopics: [
+        { id: 'bar-chart', num: 1, title: '棒形圖', color: 'blue' },
+        { id: 'pie-chart', num: 2, title: '圓形圖', color: 'blue' },
+        { id: 'line-graph', num: 3, title: '折線圖', color: 'blue' },
+        { id: 'stem-leaf', num: 4, title: '幹葉圖', color: 'blue' },
+        { id: 'discrete-continuous', num: 5, title: '需分辨數據為離散數據還是連續數據？', color: 'red' },
+        { id: 'frequency-table', num: 6, title: '頻數分佈表 (填表格)', color: 'blue' },
       ]
     },
     {
@@ -243,10 +289,24 @@ export const NOTES_DATA = {
 };
 
 export const getNotesForLevel = (level) => {
+  const sortByChapter = (topics) => {
+    return topics
+      .map((topic, index) => ({ topic, index }))
+      .sort((a, b) => {
+        const aMatch = a.topic.topic.match(/CH\s*(\d+)/i);
+        const bMatch = b.topic.topic.match(/CH\s*(\d+)/i);
+        const aNum = aMatch ? Number(aMatch[1]) : Number.POSITIVE_INFINITY;
+        const bNum = bMatch ? Number(bMatch[1]) : Number.POSITIVE_INFINITY;
+        if (aNum !== bNum) return aNum - bNum;
+        return a.index - b.index;
+      })
+      .map(({ topic }) => topic);
+  };
+
   if (level === 'F6') {
-    return [...(NOTES_DATA.F4 || []), ...(NOTES_DATA.F5 || []), ...(NOTES_DATA.F6 || [])];
+    return sortByChapter([...(NOTES_DATA.F4 || []), ...(NOTES_DATA.F5 || []), ...(NOTES_DATA.F6 || [])]);
   }
-  return NOTES_DATA[level] || [];
+  return sortByChapter(NOTES_DATA[level] || []);
 };
 
 export const NOTES_COMPONENTS = {
@@ -271,5 +331,9 @@ export const NOTES_COMPONENTS = {
   'variation': VariationNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'approximation': ApproximationNotes,
+  'area-volume': AreaVolumeNotes,
+  'linear-equation': LinearEquationNotes,
+  'polynomials': PolynomialsNotes,
+  'statistics': StatisticsNotes,
   'functions': FunctionNotes,
 };
