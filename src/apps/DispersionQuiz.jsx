@@ -2650,59 +2650,173 @@ export default function StatisticsApp() {
                 {/* 關係圖解 */}
                 <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-6 mb-4">
                   <p className="text-sm font-bold text-emerald-700 uppercase tracking-wide mb-4">如何找未知數 (Z字加法 vs 逆向減法)</p>
-                  
-                  <div className="flex flex-col md:flex-row gap-6 items-center justify-center mb-6">
-                    {/* 簡化表 */}
-                    <table className="border-collapse bg-white shadow-sm text-center text-sm md:text-base">
+                  <p className="text-slate-700 text-sm mb-4">
+                    下面的頻數分佈表及累積頻數分佈表均顯示某班學生的身高的分佈。
+                  </p>
+
+                  <div className="flex flex-col md:flex-row gap-6 items-start justify-center mb-6">
+                    {/* 先顯示頻數分佈表（連續數據） */}
+                    <table className="border-collapse bg-white shadow-sm text-center text-sm md:text-base border-4 border-black">
                       <thead>
                         <tr>
-                          <th className="border border-slate-300 px-4 py-2 bg-slate-100 font-bold">組別</th>
-                          <th className="border border-slate-300 px-4 py-2 bg-slate-100 font-bold text-indigo-600">頻數</th>
-                          <th className="border border-slate-300 px-4 py-2 bg-slate-100 font-bold text-emerald-600">累積頻數</th>
+                          <th className="border border-slate-300 px-4 py-2 font-bold text-blue-800 w-32">高度 (cm)</th>
+                          <th className="border border-slate-300 px-4 py-2 font-bold text-blue-800 w-24">頻數</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td className="border border-slate-300 px-4 py-2">第1組</td>
-                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold">3 <span className="text-xs text-slate-400 font-normal ml-1">(a)</span></td>
-                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-100/50">3</td>
+                          <td className="border border-slate-300 px-4 py-2">140 - 149</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50/30">a</td>
                         </tr>
                         <tr>
-                          <td className="border border-slate-300 px-4 py-2">第2組</td>
-                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">9</td>
-                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-100/50">12 <span className="text-xs text-slate-400 font-normal ml-1">(x)</span></td>
+                          <td className="border border-slate-300 px-4 py-2">150 - 159</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">4</td>
                         </tr>
                         <tr>
-                          <td className="border border-slate-300 px-4 py-2">第3組</td>
-                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">5 <span className="text-xs text-slate-400 font-normal ml-1">(b)</span></td>
-                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold">17 <span className="text-xs text-slate-400 font-normal ml-1">(y)</span></td>
+                          <td className="border border-slate-300 px-4 py-2">160 - 169</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">b</td>
                         </tr>
                         <tr>
-                          <td className="border border-slate-300 px-4 py-2">第4組</td>
-                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold">3</td>
-                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold">20</td>
+                          <td className="border border-slate-300 px-4 py-2">170 - 179</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">c</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">180 - 189</td>
+                          <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50/30">3</td>
                         </tr>
                       </tbody>
                     </table>
+
+                    <table className="border-collapse bg-white shadow-sm text-center text-sm md:text-base border-4 border-black">
+                      <thead>
+                        <tr>
+                          <th className="border border-slate-300 px-4 py-2 font-bold text-emerald-800 w-40">高度少於 (cm)</th>
+                          <th className="border border-slate-300 px-4 py-2 font-bold text-emerald-800 w-32">累積頻數</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">149.5</td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-100/50">2</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">159.5</td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-100/50">x</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">169.5</td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-50">13</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">179.5</td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-50">y</td>
+                        </tr>
+                        <tr>
+                          <td className="border border-slate-300 px-4 py-2">189.5</td>
+                          <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-50">37</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="bg-white/80 p-4 rounded-lg border border-emerald-100 mb-4">
+                    <p className="font-bold text-slate-800 mb-1">代數版 (先用關係式看結構)</p>
+                    <p className="text-sm text-slate-600 mb-2">先不代數值，只寫「累積頻數 = 之前總和 + 本組頻數」。</p>
+                    <div className="space-y-1">
+                      <LV2KatexLine math={`x = a + 4`} />
+                      <LV2KatexLine math={`13 = x + b`} />
+                      <LV2KatexLine math={`y = 13 + c`} />
+                      <LV2KatexLine math={`37 = y + 3`} />
+                    </div>
                   </div>
 
                   <div className="space-y-4">
                     <div className="bg-white/80 p-4 rounded-lg border border-emerald-100">
                       <p className="font-bold text-slate-800 mb-1">技巧 1：第一組相等</p>
                       <p className="text-sm text-slate-600 mb-2">第一組的「頻數」必定等於它的「累積頻數」。</p>
-                      <LV2KatexLine math={`a = 3`} />
+                      <LV2KatexLine math={`a = 2`} />
                     </div>
                     <div className="bg-white/80 p-4 rounded-lg border border-emerald-100">
                       <p className="font-bold text-slate-800 mb-1">技巧 2：Z字加法 (用來求累積頻數)</p>
                       <p className="text-sm text-slate-600 mb-2"><span className="text-emerald-600 font-bold">上一行累積頻數</span> + <span className="text-indigo-600 font-bold">本行頻數</span> = <span className="text-emerald-600 font-bold">本行累積頻數</span></p>
-                      <LV2KatexLine math={`3 + 9 = x \\implies x = 12`} />
+                      <LV2KatexLine math={`2 + 4 = x \\implies x = 6`} />
+                      <LV2KatexLine math={`y + 3 = 37 \\quad \\text{(留意：最後一行累積頻數即為總數)}`} />
                     </div>
                     <div className="bg-white/80 p-4 rounded-lg border border-emerald-100">
                       <p className="font-bold text-slate-800 mb-1">技巧 3：逆向減法 (用來求頻數)</p>
                       <p className="text-sm text-slate-600 mb-2"><span className="text-emerald-600 font-bold">本行累積頻數</span> − <span className="text-emerald-600 font-bold">上一行累積頻數</span> = <span className="text-indigo-600 font-bold">本行頻數</span></p>
-                      <LV2KatexLine math={`y - 12 = b \\quad \\text{(還差 y 未知)}`} />
-                      <LV2KatexLine math={`20 - 3 = y \\implies y = 17 \\quad \\text{(從最尾推回去)}`} />
-                      <LV2KatexLine math={`17 - 12 = b \\implies b = 5`} />
+                      <LV2KatexLine math={`13 - x = b`} />
+                      <LV2KatexLine math={`13 - 6 = b \\implies b = 7`} />
+                      <LV2KatexLine math={`37 - y = 3 \\implies y = 34 \\quad \\text{(再推回 y)}`} />
+                      <LV2KatexLine math={`y - 13 = c \\implies 34 - 13 = c \\implies c = 21`} />
+                    </div>
+                  </div>
+                  
+                  {/* 答案完整圖表 */}
+                  <div className="mt-8 border-t border-slate-200 pt-6">
+                    <p className="font-bold text-slate-800 text-lg mb-4 text-center">📝 答案完整圖表版</p>
+                    <div className="flex flex-col md:flex-row gap-6 items-start justify-center">
+                      <table className="border-collapse bg-white shadow-sm text-center text-sm md:text-base border-4 border-black">
+                        <thead>
+                          <tr>
+                            <th className="border border-slate-300 px-4 py-2 font-bold text-blue-800 w-32">高度 (cm)</th>
+                            <th className="border border-slate-300 px-4 py-2 font-bold text-blue-800 w-24">頻數</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">140 - 149</td>
+                            <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50/30">2 <span className="text-xs text-slate-400 font-normal ml-1">(a)</span></td>
+                          </tr>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">150 - 159</td>
+                            <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">4</td>
+                          </tr>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">160 - 169</td>
+                            <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">7 <span className="text-xs text-slate-400 font-normal ml-1">(b)</span></td>
+                          </tr>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">170 - 179</td>
+                            <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50">21 <span className="text-xs text-slate-400 font-normal ml-1">(c)</span></td>
+                          </tr>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">180 - 189</td>
+                            <td className="border border-slate-300 px-4 py-2 text-indigo-700 font-bold bg-indigo-50/30">3</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <table className="border-collapse bg-white shadow-sm text-center text-sm md:text-base border-4 border-black">
+                        <thead>
+                          <tr>
+                            <th className="border border-slate-300 px-4 py-2 font-bold text-emerald-800 w-40">高度少於 (cm)</th>
+                            <th className="border border-slate-300 px-4 py-2 font-bold text-emerald-800 w-32">累積頻數</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">149.5</td>
+                            <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-100/50">2</td>
+                          </tr>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">159.5</td>
+                            <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-100/50">6 <span className="text-xs text-slate-400 font-normal ml-1">(x)</span></td>
+                          </tr>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">169.5</td>
+                            <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-50">13</td>
+                          </tr>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">179.5</td>
+                            <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-50">34 <span className="text-xs text-slate-400 font-normal ml-1">(y)</span></td>
+                          </tr>
+                          <tr>
+                            <td className="border border-slate-300 px-4 py-2">189.5</td>
+                            <td className="border border-slate-300 px-4 py-2 text-emerald-700 font-bold bg-emerald-50">37</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
