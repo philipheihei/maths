@@ -140,7 +140,7 @@ const Notes = () => {
                             : 'text-slate-600 hover:bg-slate-100'
                         }`}
                       >
-                        <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${isSubActive ? sc.numActive : sc.numInactive}`}>
+                        <span className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-xs leading-none font-bold ${isSubActive ? sc.numActive : sc.numInactive}`}>
                           {sub.num}
                         </span>
                         <span className="truncate">{sub.title}</span>

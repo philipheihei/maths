@@ -1,4 +1,4 @@
-import { ApproximationNotes } from './F1Notes';
+import { ApproximationNotes, BasicCalculationNotes, DirectedNumbersNotes } from './F1Notes';
 import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
@@ -7,6 +7,28 @@ import { SimEqCalculatorNotes } from './A1Notes';
 
 export const NOTES_DATA = {
   F1: [
+    {
+      id: 'basic-calculation',
+      topic: 'CH1 基礎計算',
+      color: 'blue',
+      subtopics: [
+        { id: 'divisibility', num: 1, title: '整除性', color: 'blue' },
+        { id: 'indices', num: 2, title: '指數記數法 (次方)', color: 'blue' },
+        { id: 'prime-factorization', num: 3, title: '質因數連乘式', color: 'blue' },
+        { id: 'hcf-lcm', num: 4, title: '最大公因數 (H.C.F.) 及 最小公倍數 (L.C.M.)', color: 'blue' },
+        { id: 'arithmetic', num: 5, title: '四則運算', color: 'blue' },
+      ]
+    },
+    {
+      id: 'directed-numbers',
+      topic: 'CH2 有向數',
+      color: 'red',
+      subtopics: [
+        { id: 'positive-negative', num: 1, title: '有向數即正負數', color: 'blue' },
+        { id: 'number-line', num: 2, title: '數線與大小', color: 'green' },
+        { id: 'operations', num: 3, title: '有向數的乘除變化', color: 'red' },
+      ]
+    },
     {
       id: 'approximation',
       topic: 'CH13 近似值',
@@ -228,6 +250,8 @@ export const getNotesForLevel = (level) => {
 };
 
 export const NOTES_COMPONENTS = {
+  'basic-calculation': BasicCalculationNotes,
+  'directed-numbers': DirectedNumbersNotes,
   'algebraic-fractions': AlgebraicFractionsNotes,
   'measurement-errors': MeasurementErrorsNotes,
   'inequality': InequalityNotes,
