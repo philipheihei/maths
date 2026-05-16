@@ -240,9 +240,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                 <div className="flex items-center gap-2">
                   <span className="bg-green-200 text-green-800 px-2 py-0.5 rounded text-sm font-bold font-serif italic">e.g.</span>
                   <div className="flex items-center gap-2 text-lg">
-                    <Latex math="\dfrac{3x}{x+2}" />
-                    <span className="font-bold text-blue-600">+</span>
-                    <Latex math="\dfrac{6}{x+2}" />
+                    <Latex math="\dfrac{3x}{x+2}+\dfrac{6}{x+2}" />
                   </div>
                 </div>
                 
@@ -256,9 +254,9 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                     <span className="font-bold">=</span>
                     <div className="relative">
                       <Latex math="\dfrac{3(x+2)}{x+2}" />
-                      {/* strikethroughs */}
-                      <div className="absolute top-1 right-2 w-10 h-0.5 bg-red-500 -rotate-12"></div>
-                      <div className="absolute bottom-1 right-1 w-10 h-0.5 bg-red-500 -rotate-12"></div>
+                      {/* strikethroughs for x+2 */}
+                      <div className="absolute top-[18%] right-0 w-8 sm:w-10 h-[2px] bg-red-500 -rotate-[20deg]"></div>
+                      <div className="absolute bottom-[18%] left-1/2 -translate-x-1/2 w-8 sm:w-10 h-[2px] bg-red-500 -rotate-[20deg]"></div>
                     </div>
                     <span className="text-sm text-green-700">← 完成前檢查能否抽公因式和化簡</span>
                   </div>
@@ -277,9 +275,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                 <div className="flex items-center gap-2">
                   <span className="bg-red-200 text-red-800 px-2 py-0.5 rounded text-sm font-bold font-serif italic">e.g.</span>
                   <div className="flex items-center gap-2 text-lg">
-                    <Latex math="\dfrac{1}{4y}" />
-                    <span className="font-bold text-blue-600">+</span>
-                    <Latex math="\dfrac{7}{10y}" />
+                    <Latex math="\dfrac{1}{4y}+\dfrac{7}{10y}" />
                   </div>
                 </div>
 
@@ -298,10 +294,11 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="font-bold">=</span>
-                    <div className="relative">
+                    <div className="relative inline-block">
                       <Latex math="\dfrac{38y}{40y^2}" />
-                      <div className="absolute top-1.5 right-1 w-5 h-0.5 bg-red-500 -rotate-45"></div>
-                      <div className="absolute bottom-2 right-0 w-4 h-0.5 bg-red-500 -rotate-45"></div>
+                      {/* strikethroughs for y and power 2 */}
+                      <div className="absolute top-[20%] right-0 w-[0.8rem] h-[2px] bg-red-500 -rotate-[30deg]"></div>
+                      <div className="absolute bottom-[40%] right-[-0.1rem] w-[0.6rem] h-[2px] bg-red-500 -rotate-[30deg]"></div>
                     </div>
                     <span className="text-sm text-green-700">← 完成前檢查能否抽公因式和化簡</span>
                   </div>

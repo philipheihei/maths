@@ -136,7 +136,7 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
           </div>
 
           <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
-            <h3 className="font-bold text-orange-800 mb-3">C. 哪個是必為常數？ <span className="text-sm bg-yellow-200 border border-yellow-400 px-2 py-0.5 rounded">MC 限定</span></h3>
+            <h3 className="font-bold text-orange-800 mb-3">C. 哪個必為常數？ <span className="text-sm bg-yellow-200 border border-yellow-400 px-2 py-0.5 rounded">MC 限定</span></h3>
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-sm text-red-600 font-bold mb-3">目標：要找 k = ?</p>
               <div className="bg-green-50 rounded p-3">

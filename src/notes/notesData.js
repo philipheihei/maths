@@ -1,7 +1,7 @@
 import { ApproximationNotes } from './F1Notes';
 import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
-import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
+import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
@@ -183,6 +183,16 @@ export const NOTES_DATA = {
         { id: 'remainder', num: 1, title: '餘式定理', color: 'teal' },
         { id: 'factor', num: 2, title: '因式定理', color: 'orange' },
       ]
+    },
+    {
+      id: 'straight-line-equation',
+      topic: 'CH5 直線方程',
+      color: 'blue',
+      subtopics: [
+        { id: 'find-equation', num: 1, title: '求直線方程的方法', color: 'blue' },
+        { id: 'general-form-line', num: 2, title: '直線一般式', color: 'green' },
+        { id: 'intersection-lines', num: 3, title: '兩直線的交點', color: 'purple' },
+      ]
     }
   ],
   F5: [
@@ -233,6 +243,7 @@ export const NOTES_COMPONENTS = {
   'quadratic-equation': QuadraticEquationNotes,
   'nature-of-roots': NatureOfRootsNotes,
   'remainder-factor': RemainderFactorNotes,
+  'straight-line-equation': StraightLineEquationNotes,
   'variation': VariationNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'approximation': ApproximationNotes,

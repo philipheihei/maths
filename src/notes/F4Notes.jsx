@@ -696,3 +696,125 @@ export const FunctionNotes = ({ activeSub }) => {
     </>
   );
 };
+
+// ========================================
+// CH5 直線方程 (F4)
+// ========================================
+export const StraightLineEquationNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH5 直線方程</h1>
+        <p className="text-slate-600">掌握點斜式、斜截式、直線一般式及交點計算</p>
+      </div>
+
+      <CollapsibleSection id="find-equation" title="求直線方程的方法" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">1.1 點斜式 <span className="text-sm bg-red-100 text-red-600 px-2 py-0.5 rounded ml-2">最常用</span></h3>
+            <div className="bg-white rounded-lg p-3 text-center my-3 shadow-sm border border-blue-100">
+              <span className="text-xl font-bold text-blue-700"><Latex math="y - y_1 = m(x - x_1)" /></span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-slate-700"><span className="font-bold text-purple-700">需：</span>一點坐標 + 斜率</p>
+              <div className="bg-white p-2 rounded text-sm text-blue-800">
+                <span className="font-bold">例：</span>題目提供 坐標 (3, 7) → 代入 <Latex math="(x_1, y_1)" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-3">1.2 斜截式 <span className="text-sm bg-red-100 text-red-600 px-2 py-0.5 rounded ml-2">較常用</span></h3>
+            <div className="bg-white rounded-lg p-3 text-center my-3 shadow-sm border border-green-100">
+              <span className="text-xl font-bold text-green-700"><Latex math="y = mx + c" /></span>
+              <p className="text-xs text-slate-500 mt-2">m = 斜率，c = y截距</p>
+            </div>
+            <p className="text-slate-700"><span className="font-bold text-purple-700">需：</span>y截距 + 斜率</p>
+          </div>
+
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">💡 提示</h3>
+            <ul className="text-sm text-slate-700 space-y-1">
+              <li>• 如沒有斜率，需用提供<span className="font-bold">兩點</span>找斜率</li>
+            </ul>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="general-form-line" title="直線一般式" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-3">直線一般式</h3>
+            <div className="bg-white border border-green-200 rounded p-3 text-center mb-3">
+              <Latex math="Ax + By + C = 0" block />
+            </div>
+            <div className="bg-yellow-100 border border-yellow-300 rounded p-3 mb-3">
+              <p className="text-slate-800 font-bold mb-1">* 可用來找：</p>
+              <div className="text-center text-lg text-red-600 font-bold">
+                斜率 <Latex math="= -\frac{A}{B}" />
+              </div>
+            </div>
+            <p className="text-slate-700 text-sm">亦可透過代 <Latex math="x = 0" /> / <Latex math="y = 0" /> 找 <span className="bg-pink-200 px-1 rounded text-pink-800">y截距</span> / <span className="bg-green-200 px-1 rounded text-green-800">x截距</span></p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+            <p className="text-sm text-slate-600 mb-2">例子： <Latex math="-2x + 4y - 1 = 0" /></p>
+            <div className="bg-yellow-50 border-4 border-yellow-300 rounded p-3 text-center mb-4">
+              <span className="font-bold text-blue-700">斜率 <Latex math="= -\frac{A}{B} = -\left(\frac{-2}{4}\right)" /> <Latex math="= \frac{1}{2}" /></span>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 text-sm mt-3">
+              <div className="border-4 border-green-400 bg-green-50 rounded-lg p-3">
+                <p className="font-bold text-green-700 mb-2">代 <Latex math="y = 0" /> 找 x 截距 →</p>
+                <div className="text-slate-700 text-center">
+                  <Latex math="\begin{aligned} -2x + 4(0) - 1 &= 0 \\ -2x - 1 &= 0 \\ x &= -\frac{1}{2} \end{aligned}" block />
+                </div>
+                <p className="font-bold text-blue-700 mt-2 text-center">x截距：<Latex math="-\frac{1}{2}" /></p>
+              </div>
+
+              <div className="border-4 border-pink-300 bg-pink-50 rounded-lg p-3">
+                <p className="font-bold text-green-700 mb-2">代 <Latex math="x = 0" /> 找 y 截距：</p>
+                <div className="text-slate-700 text-center">
+                  <Latex math="\begin{aligned} -2(0) + 4y - 1 &= 0 \\ 4y - 1 &= 0 \\ y &= \frac{1}{4} \end{aligned}" block />
+                </div>
+                <p className="font-bold text-blue-700 mt-2 text-center">y截距：<Latex math="\frac{1}{4}" /></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="intersection-lines" title="兩直線的交點" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-3">利用計數機找交點</h3>
+            <p className="text-slate-700 mb-3">兩直線的交點，可透過 <span className="bg-orange-500 text-white px-2 py-0.5 rounded font-mono text-xs">Prog</span> <span className="bg-gray-900 text-white px-2 py-0.5 rounded font-mono text-xs">1</span> 找（或需移至Prog1 樣式）</p>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 flex flex-col items-center justify-center gap-4 mb-4">
+              <div className="text-sm flex flex-col sm:flex-row items-center gap-4">
+                <div>
+                  <p><Latex math="L_1 : x + 2y - 5 = 0" /></p>
+                  <p><Latex math="L_2 : x - y + 1 = 0" /></p>
+                </div>
+                <span className="font-bold text-xl">→</span>
+                <div>
+                  <Latex math="\begin{cases} x + 2y = 5 \\ x - y = -1 \end{cases}" />
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-red-50 p-3 rounded-lg border border-red-200 text-sm text-slate-700 mt-3 flex items-start gap-2">
+              <span className="font-bold text-red-600">⚠️</span>
+              <div>
+                <p>如 <span className="bg-orange-500 text-white px-1 py-0.5 rounded font-mono text-[10px]">Prog</span> <span className="bg-gray-900 text-white px-1 py-0.5 rounded font-mono text-[10px]">1</span> 出 <span className="text-red-600 font-bold">Maths Error</span>，</p>
+                <p>則<span className="font-bold">沒有交點</span> / <span className="font-bold">無限交點</span>（看 <span className="text-green-700 font-bold">y截距</span> 是否一樣）</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
