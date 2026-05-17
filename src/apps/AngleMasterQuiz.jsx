@@ -955,7 +955,7 @@ export default function AngleMasterQuiz() {
                       <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                         <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                         <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
-                        <line x1="59.5" y1="67.8" x2="50.5" y2="72.2" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="59.5" y1="72.2" x2="50.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
                         <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
                         <line x1="57" y1="115" x2="57" y2="125" stroke="#ef4444" strokeWidth="2" />
                         <line x1="53" y1="115" x2="53" y2="125" stroke="#ef4444" strokeWidth="2" />
@@ -975,7 +975,7 @@ export default function AngleMasterQuiz() {
                       <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                         <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                         <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
-                        <line x1="59.5" y1="67.8" x2="50.5" y2="72.2" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="59.5" y1="72.2" x2="50.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
                         <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
                         <polyline points="70,120 70,110 80,110" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                         <text x="75" y="14" fontSize="14" fill="#334155" fontStyle="italic">A</text>
@@ -992,10 +992,10 @@ export default function AngleMasterQuiz() {
                       <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                         <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                         <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
-                        <line x1="59.5" y1="67.8" x2="50.5" y2="72.2" stroke="#ef4444" strokeWidth="2" />
+                        <line x1="59.5" y1="72.2" x2="50.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
                         <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
                         <path d="M 71.1 37.9 A 20 20 0 0 0 80.0 40.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
-                        <path d="M 80.0 40.0 A 20 20 0 0 0 88.9 37.9" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                        <path d="M 80.0 44.0 A 24 24 0 0 0 90.7 41.5" stroke="#2563eb" strokeWidth="1.5" fill="none" />
                         <text x="67.6" y="56.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
                         <text x="82.4" y="56.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">y</text>
                         <text x="75" y="14" fontSize="14" fill="#334155" fontStyle="italic">A</text>

@@ -23,6 +23,353 @@ const Latex = ({ math, block = false, left = false }) => {
   return <span ref={containerRef} className={block ? `block ${left ? 'text-left' : 'text-center'} my-1` : "inline-block align-middle"} />;
 };
 
+const MathDisplay = ({ math }) => (
+  <div className="font-semibold text-slate-800">
+    <Latex math={math} />
+  </div>
+);
+
+// ========================================
+// CH2 有關三角形和直線的角 (F2)
+// ========================================
+export const TriangleLineAnglesNotes = ({ activeSub }) => {
+  const s1 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-green-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH2 有關三角形和直線的角</h1>
+        <p className="text-slate-600">認識進階幾何角度定理、等腰三角形及多邊形的性質</p>
+      </div>
+
+      <CollapsibleSection id="advanced-angle-theorems" title="進階幾何角度定理 (6-12)" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          {/* 6. 等腰三角形底角 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">6</span>
+              等腰三角形底角
+              <span className="text-sm text-red-500 font-normal">（等腰△ → 底角相等）</span>
+            </h3>
+            <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
+              <p className="text-center text-xl font-bold text-green-800 my-1">若 AB = AC，則 ∠B = ∠C</p>
+              <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                <polygon points="150,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                <line x1="105" y1="70" x2="120" y2="78" stroke="#9333ea" strokeWidth="2" />
+                <line x1="110" y1="63" x2="125" y2="71" stroke="#9333ea" strokeWidth="2" />
+                <line x1="180" y1="78" x2="195" y2="70" stroke="#9333ea" strokeWidth="2" />
+                <line x1="175" y1="71" x2="190" y2="63" stroke="#9333ea" strokeWidth="2" />
+                <path d="M 100 120 A 20 20 0 0 0 91.5 103.6" stroke="#16a34a" strokeWidth="2" fill="none" />
+                <path d="M 106 120 A 26 26 0 0 0 94.9 98.7" stroke="#16a34a" strokeWidth="2" fill="none" />
+                <path d="M 200 120 A 20 20 0 0 1 208.5 103.6" stroke="#16a34a" strokeWidth="2" fill="none" />
+                <path d="M 194 120 A 26 26 0 0 1 205.1 98.7" stroke="#16a34a" strokeWidth="2" fill="none" />
+                <text x="145" y="14" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                <text x="60" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                <text x="230" y="125" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+              </svg>
+              <div className="bg-white rounded p-3 mt-2 border border-slate-200">
+                <p className="text-sm text-green-800 font-bold mb-2">例子：</p>
+                <div className="flex items-center gap-4">
+                  <svg viewBox="0 0 110 88" className="w-28 flex-none touch-none">
+                    <polygon points="55,12 8,78 102,78" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                    <line x1="27.5" y1="42" x2="35.5" y2="48" stroke="#9333ea" strokeWidth="2" />
+                    <line x1="82.5" y1="42" x2="74.5" y2="48" stroke="#9333ea" strokeWidth="2" />
+                    <path d="M 21 78 A 13 13 0 0 0 15.5 67.4" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                    <path d="M 89 78 A 13 13 0 0 1 94.5 67.4" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                    <text x="25" y="72" fontSize="10" fill="#334155">67°</text>
+                    <text x="83" y="72" fontSize="12" fill="#334155" fontStyle="italic">x</text>
+                  </svg>
+                  <div className="text-sm text-slate-700">
+                    <p className="text-green-700 font-bold mb-1">底角 = 67°</p>
+                    <div className="grid grid-cols-[auto_auto_1fr] gap-x-2">
+                      <div className="text-right">x</div>
+                      <div className="text-center">=</div>
+                      <div className="text-left">180° - 67° - 67°</div>
+                      
+                      <div className="text-right">x</div>
+                      <div className="text-center">=</div>
+                      <div className="text-left">46°</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(等腰△底角)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 7. 等角對邊相等 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">7</span>
+              等角對邊相等
+              <span className="text-sm text-slate-500 font-normal">（等底角 → 等腰）</span>
+            </h3>
+            <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
+              <p className="text-center text-xl font-bold text-green-800 my-1">若 ∠B = ∠C，則 AB = AC</p>
+              <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                <polygon points="150,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                <path d="M 100 120 A 20 20 0 0 0 91.5 103.6" stroke="#2563eb" strokeWidth="2" fill="none" />
+                <path d="M 106 120 A 26 26 0 0 0 94.9 98.7" stroke="#2563eb" strokeWidth="2" fill="none" />
+                <path d="M 200 120 A 20 20 0 0 1 208.5 103.6" stroke="#2563eb" strokeWidth="2" fill="none" />
+                <path d="M 194 120 A 26 26 0 0 1 205.1 98.7" stroke="#2563eb" strokeWidth="2" fill="none" />
+                <line x1="105" y1="70" x2="120" y2="78" stroke="#ef4444" strokeWidth="2" />
+                <line x1="180" y1="78" x2="195" y2="70" stroke="#ef4444" strokeWidth="2" />
+                <text x="145" y="14" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                <text x="60" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                <text x="230" y="125" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+              </svg>
+              <p className="text-sm text-slate-600 text-center mt-3">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(等角對邊相等)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 8. 三角形外角 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">8</span>
+              三角形外角
+              <span className="text-sm text-slate-500 font-normal">（外角 = 內對角之和）</span>
+            </h3>
+            <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
+              <p className="text-center text-xl font-bold text-green-800 my-1">其中 d = a + b</p>
+              <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                <polygon points="170,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                <line x1="220" y1="120" x2="280" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                <path d="M 160.0 31.1 A 15 15 0 0 0 176.7 33.4" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 100.0 120.0 A 20 20 0 0 0 93.4 105.1" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 213.3 106.6 A 15 15 0 0 1 235.0 120.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <text x="163" y="49" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                <text x="102" y="114" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                <text x="228.1" y="103.7" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">d</text>
+                <text x="165" y="14" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                <text x="60" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                <text x="215" y="138" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+              </svg>
+              <p className="text-sm text-slate-600 text-center mt-3">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(△外角)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 9. 等邊三角形性質 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">9</span>
+              等邊三角形性質
+              <span className="text-sm text-slate-500 font-normal">（三邊等長 ⟷ 三角均 60°）</span>
+            </h3>
+            <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
+              <p className="text-center text-xl font-bold text-green-800 my-1">若 AB = BC = AC</p>
+              <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                <polygon points="150,25 95,120 205,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                {/* Tick marks on edges */}
+                <line x1="118.2" y1="70.0" x2="126.8" y2="75.0" stroke="#ef4444" strokeWidth="2" />
+                <line x1="173.2" y1="75.0" x2="181.8" y2="70.0" stroke="#ef4444" strokeWidth="2" />
+                <line x1="150.0" y1="115.0" x2="150.0" y2="125.0" stroke="#ef4444" strokeWidth="2" />
+
+                <path d="M 140.0 42.3 A 20 20 0 0 0 160.0 42.3" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 115.0 120.0 A 20 20 0 0 0 105.0 102.7" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 195.0 102.7 A 20 20 0 0 0 185.0 120.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+
+                <text x="141" y="58" fontSize="12" fill="#1e3a8a">60°</text>
+                <text x="115" y="115" fontSize="12" fill="#1e3a8a">60°</text>
+                <text x="168" y="115" fontSize="12" fill="#1e3a8a">60°</text>
+
+                <text x="145" y="18" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                <text x="80" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                <text x="210" y="125" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+              </svg>
+              <p className="text-center font-bold text-blue-800 my-1">則 ∠A = ∠B = ∠C = 60°</p>
+              <p className="text-sm text-slate-600 text-center mt-3">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(等邊△性質)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 10. 等腰三角形性質 */}
+          <div className="md:col-span-2 flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">10</span>
+              等腰三角形性質
+              <span className="text-sm text-slate-500 font-normal">（頂角平分線、底邊中線、底邊高線：三線合一）</span>
+            </h3>
+            <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                {/* case 1 */}
+                <div className="text-center">
+                  <p className="text-sm text-slate-700 mb-2">若 <b>AB = AC</b> 及 <b>BM = CM</b></p>
+                  <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
+                    <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                    <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
+                    <line x1="59.5" y1="72.2" x2="50.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="57" y1="115" x2="57" y2="125" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="53" y1="115" x2="53" y2="125" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="107" y1="115" x2="107" y2="125" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="103" y1="115" x2="103" y2="125" stroke="#ef4444" strokeWidth="2" />
+                    <text x="75" y="14" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                    <text x="15" y="125" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                    <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                    <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
+                  </svg>
+                  <p className="text-sm text-blue-800 font-bold">則 AM ⊥ BC 及 x = y</p>
+                </div>
+
+                {/* case 2 */}
+                <div className="text-center md:border-l md:border-green-200">
+                  <p className="text-sm text-slate-700 mb-2">若 <b>AB = AC</b> 及 <b>AM ⊥ BC</b></p>
+                  <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
+                    <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                    <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
+                    <line x1="59.5" y1="72.2" x2="50.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                    <polyline points="70,120 70,110 80,110" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <text x="75" y="14" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                    <text x="15" y="125" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                    <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                    <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
+                  </svg>
+                  <p className="text-sm text-blue-800 font-bold">則 BM = CM 及 x = y</p>
+                </div>
+
+                {/* case 3 */}
+                <div className="text-center md:border-l md:border-green-200">
+                  <p className="text-sm text-slate-700 mb-2">若 <b>AB = AC</b> 及 <b>x = y</b></p>
+                  <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
+                    <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                    <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
+                    <line x1="59.5" y1="72.2" x2="50.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                    <line x1="100.5" y1="72.2" x2="109.5" y2="67.8" stroke="#ef4444" strokeWidth="2" />
+                    <path d="M 71.1 37.9 A 20 20 0 0 0 80.0 40.0" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <path d="M 80.0 44.0 A 24 24 0 0 0 90.7 41.5" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                    <text x="67.6" y="56.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
+                    <text x="82.4" y="56.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">y</text>
+                    <text x="75" y="14" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                    <text x="15" y="125" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                    <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                    <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
+                  </svg>
+                  <p className="text-sm text-blue-800 font-bold">則 BM = CM 及 AM ⊥ BC</p>
+                </div>
+
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3 border-t border-green-200 pt-2">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(等腰△性質)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 11. 多邊形內角和 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">11</span>
+              多邊形內角和
+              <span className="text-sm text-slate-500 font-normal">（n 邊形內角和）</span>
+            </h3>
+            <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 flex-1">
+              <p className="text-center text-xl font-bold text-amber-800 my-1">內角和 = (n - 2) × 180°</p>
+              <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                <polygon points="120,30 200,20 250,70 230,120 70,90" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                
+                <path d="M 112.3 39.2 A 12 12 0 0 0 131.9 28.5" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 188.1 21.5 A 12 12 0 0 0 208.5 28.5" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 241.5 61.5 A 12 12 0 0 0 245.5 81.1" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 234.5 108.9 A 12 12 0 0 0 218.2 117.8" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 81.8 92.2 A 12 12 0 0 0 77.7 80.8" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                
+                <text x="125.6" y="52" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
+                <text x="187.9" y="45.8" fontSize="12" fill="#1e3a8a">133°</text>
+                <text x="212.0" y="76.0" fontSize="12" fill="#1e3a8a">120°</text>
+                <text x="214.4" y="105.7" fontSize="12" fill="#1e3a8a">80°</text>
+                <text x="85.7" y="87.6" fontSize="12" fill="#1e3a8a">77°</text>
+              </svg>
+              <div className="bg-white rounded p-3 mt-2 border border-slate-200">
+                <p className="text-sm text-amber-800 font-bold mb-2">例子（五邊形, n=5）：</p>
+                <div className="text-sm text-slate-700 grid grid-cols-[1fr_auto_1fr] gap-x-2">
+                  <div className="text-right">x + 77° + 80° + 120° + 133°</div>
+                  <div className="text-center">=</div>
+                  <div className="text-left">(5 - 2) × 180°</div>
+                  
+                  <div className="text-right">x + 410°</div>
+                  <div className="text-center">=</div>
+                  <div className="text-left">540°</div>
+                  
+                  <div className="text-right">x</div>
+                  <div className="text-center">=</div>
+                  <div className="text-left">130°</div>
+                </div>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-amber-900">(多邊形內角和)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 12. 多邊形外角和 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">12</span>
+              多邊形外角和
+              <span className="text-sm text-slate-500 font-normal">（外角總和 = 360°）</span>
+            </h3>
+            <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 flex-1">
+              <p className="text-center text-xl font-bold text-amber-800 my-1">外角和 = 360°</p>
+              <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                <polygon points="130,40 120,90 200,110 260,60" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                
+                <line x1="130" y1="40" x2="91" y2="34" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                <line x1="120" y1="90" x2="114" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                <line x1="200" y1="110" x2="240" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                <line x1="260" y1="60" x2="284" y2="40" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                
+                <path d="M 118.1 38.2 A 12 12 0 0 0 127.6 51.8" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 117.6 101.8 A 12 12 0 0 0 131.6 92.9" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 211.6 112.9 A 12 12 0 0 0 209.2 102.3" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                <path d="M 269.2 52.3 A 12 12 0 0 0 248.1 58.2" stroke="#2563eb" strokeWidth="1.5" fill="none" />
+                
+                <text x="103.0" y="57.6" fontSize="12" fill="#1e3a8a">95°</text>
+                <text x="126.8" y="113.6" fontSize="12" fill="#1e3a8a">76°</text>
+                <text x="216.4" y="110.1" fontSize="12" fill="#1e3a8a" fontStyle="italic">x</text>
+                <text x="248.6" y="41.9" fontSize="12" fill="#1e3a8a">114°</text>
+
+                <text x="135" y="32" fontSize="14" fill="#334155" fontStyle="italic">A</text>
+                <text x="100" y="85" fontSize="14" fill="#334155" fontStyle="italic">B</text>
+                <text x="195" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
+                <text x="265" y="75" fontSize="14" fill="#334155" fontStyle="italic">D</text>
+              </svg>
+              <div className="bg-white rounded p-3 mt-2 border border-slate-200">
+                <p className="text-sm text-amber-800 font-bold mb-2">例子（四邊形 ABCD）：</p>
+                <div className="text-sm text-slate-700 grid grid-cols-[1fr_auto_1fr] gap-x-2">
+                  <div className="text-right">x + 76° + 95° + 114°</div>
+                  <div className="text-center">=</div>
+                  <div className="text-left">360°</div>
+                  
+                  <div className="text-right">x + 285°</div>
+                  <div className="text-center">=</div>
+                  <div className="text-left">360°</div>
+                  
+                  <div className="text-right">x</div>
+                  <div className="text-center">=</div>
+                  <div className="text-left">75°</div>
+                </div>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-amber-900">(多邊形外角和)</span>
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
 // ========================================
 // CH6 量度與誤差 (F2)
 // ========================================
@@ -1001,6 +1348,163 @@ export const InequalityNotes = ({ activeSub }) => {
 
 export const SimultaneousEqF2Notes = ({ activeSub }) => {
   return <SimultaneousEqNotesContent cheatsheet={SIMULTANEOUS_EQ_CHEATSHEET} activeSub={activeSub} />;
+};
+
+export const IdentitiesF2Notes = ({ activeSub }) => {
+  const s1 = useRef(null);
+  const s2 = useRef(null);
+  const s3 = useRef(null);
+
+  return (
+    <>
+      <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-indigo-500">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">CH3 恆等式</h1>
+          <p className="text-slate-600">認識恆等式的定義及比較同類項的技巧</p>
+        </div>
+
+        {/* 3.1 恆等式 */}
+        <CollapsibleSection id="identities-def" title="3.1 恆等式" num={1} color="indigo" activeSub={activeSub} sectionRef={s1}>
+          <div className="space-y-4">
+            <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+              <h3 className="font-bold text-indigo-800 mb-3">📝 定義：恆等式是什麼？</h3>
+              <p className="text-slate-700">恆等式（Identities）即是 <strong>永恆相等的等式</strong>。</p>
+              <div className="mt-2 text-center text-indigo-900 bg-white/60 p-2 rounded inline-block mx-auto border border-indigo-100 shadow-sm">
+                <Latex math="2y - y \equiv y" />
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <h3 className="font-bold text-slate-800 mb-2">例子：證明恆等式</h3>
+              <p className="text-slate-700 mb-3">證明 <Latex math="2(6x+8) = 4(3x+4)" /> 是恆等式</p>
+              
+              <div className="flex flex-col space-y-2 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+                <div className="flex items-start">
+                  <span className="text-green-700 text-sm font-bold min-w-40 pt-1 shrink-0">先抄左方的式，然後進行化簡 ➔</span>
+                  <div className="pl-2">
+                    <MathDisplay math="左方 = 2(6x+8)" />
+                    <MathDisplay math="= 12x+16" />
+                  </div>
+                </div>
+                <div className="flex items-start mt-2">
+                  <span className="text-green-700 text-sm font-bold min-w-40 pt-1 shrink-0">相同的步驟在右方重覆 ➔</span>
+                  <div className="pl-2 relative">
+                    <MathDisplay math="右方 = 4(3x+4)" />
+                    <MathDisplay math="= 12x+16" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 mt-4 text-center">
+                <span className="text-green-700 font-bold mb-2 inline-block">固定格式 ➔</span>
+                <MathDisplay math="\\because 左方 = 右方" />
+                <MathDisplay math="\\therefore 2(6x+8) \\equiv 4(3x+4)" />
+                <p className="text-sm text-green-700 font-bold mt-1">由 "=" 變成 "\\equiv"</p>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* 比較同類項 */}
+        <CollapsibleSection id="identities-compare" title="可透過已知恆等式去比較同類項的係數" num={2} color="indigo" activeSub={activeSub} sectionRef={s2}>
+          <div className="space-y-6">
+            <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+              <p className="mb-4">例如： <Latex math="4x - 5 \equiv Ax + B" /> ，找 <Latex math="A" /> 和 <Latex math="B" /> 的值</p>
+              
+              <div className="flex flex-col md:flex-row md:items-center gap-6 justify-center">
+                 <div className="text-center bg-slate-50 p-4 rounded-lg">
+                   <div className="text-lg mb-2">
+                     <span className="underline decoration-red-500 decoration-2 underline-offset-4 text-red-700 font-semibold px-1">4x</span> 
+                     <span className="underline decoration-green-500 decoration-2 underline-offset-4 text-green-700 font-semibold px-1">- 5</span> 
+                     <Latex math="\equiv" /> 
+                     <span className="underline decoration-red-500 decoration-2 underline-offset-4 text-red-700 font-semibold px-1">Ax</span> 
+                     <span className="underline decoration-green-500 decoration-2 underline-offset-4 text-green-700 font-semibold px-1">+ B</span>
+                   </div>
+                   <div className="flex justify-center gap-8 mt-4 text-sm font-bold">
+                      <div className="flex flex-col text-red-600">
+                        <span>(有 x 項)</span>
+                        <Latex math="\therefore Ax = 4x" />
+                        <Latex math="A = 4" />
+                      </div>
+                      <div className="flex flex-col text-green-600">
+                        <span>(沒 x 項)</span>
+                        <Latex math="-5 = B" />
+                        <Latex math="B = -5" />
+                      </div>
+                   </div>
+                 </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+              <p className="bg-amber-100 p-2 rounded mb-4 font-bold inline-block">例子： <Latex math="(3x+1)(x+7) \equiv 3x^2 + Px - 7Q" /></p>
+              
+              <div className="mb-4 text-indigo-800 font-bold text-sm">
+                需先展開括號再比較：
+                <span className="underline decoration-red-500 decoration-2 text-red-700 ml-2">x² 項</span>, 
+                <span className="underline decoration-green-500 decoration-2 text-green-700 mx-2">x 項</span>, 
+                <span className="underline decoration-purple-500 decoration-2 text-purple-700">常數 (沒 x)</span>
+              </div>
+
+              <div className="bg-slate-50 p-4 rounded-lg">
+                <MathDisplay math="左方 = (3x+1)(x+7)" />
+                <MathDisplay math="= 3x^2 + 21x + x + 7" />
+                <MathDisplay math="= 3x^2 + 22x + 7" />
+              </div>
+              
+              <div className="mt-4 bg-slate-50 p-4 rounded-lg flex flex-col md:flex-row gap-6 justify-center">
+                 <div className="flex flex-col text-green-600 font-bold border-l-4 border-green-400 pl-3">
+                   <p className="text-slate-600 text-sm mb-1">比較 x 項：</p>
+                   <Latex math="Px = 22x" />
+                   <Latex math="P = 22" />
+                 </div>
+                 <div className="flex flex-col text-purple-600 font-bold border-l-4 border-purple-400 pl-3">
+                   <p className="text-slate-600 text-sm mb-1">比較常數項：</p>
+                   <Latex math="-7Q = 7" />
+                   <Latex math="Q = -1" />
+                 </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* 三條必記恆等式 */}
+        <CollapsibleSection id="identities-formulas" title="3.2 & 3.3 三條必記恆等式！" num={3} color="rose" activeSub={activeSub} sectionRef={s3}>
+          <div className="bg-rose-50 rounded-lg p-5 border border-rose-200">
+             <div className="space-y-4 mb-8 text-center text-lg md:text-xl font-bold font-serif text-slate-800">
+               <div>1. <Latex math="(a+b)^2 = a^2 + 2ab + b^2" /></div>
+               <div>2. <Latex math="(a-b)^2 = a^2 - 2ab + b^2" /></div>
+               <div className="relative inline-block">
+                 3. <Latex math="(a+b)(a-b) = a^2 - b^2" />
+                 <div className="absolute -bottom-5 right-0 text-xs text-purple-700 font-bold">沒 2ab 項</div>
+                 <div className="absolute -bottom-5 left-10 text-xs text-purple-700 font-bold">一加一減</div>
+               </div>
+             </div>
+
+             <div className="space-y-6 pt-6 border-t border-rose-200">
+               <div>
+                  <h4 className="font-bold text-rose-800 mb-2">例子 1: <Latex math="(a+b)^2" /></h4>
+                  <MathDisplay math="(x+8)^2 = x^2 + 2(8)(x) + 8^2" />
+                  <MathDisplay math="= x^2 + 16x + 64" />
+               </div>
+               <div>
+                  <h4 className="font-bold text-rose-800 mb-2">例子 2: <Latex math="(a-b)^2" /></h4>
+                  <MathDisplay math="(2x-5)^2 = (2x)^2 - 2(2x)(5) + 5^2" />
+                  <MathDisplay math="= 4x^2 - 20x + 25" />
+               </div>
+               <div>
+                  <h4 className="font-bold text-rose-800 mb-2">例子 3: <Latex math="(a+b)(a-b)" /></h4>
+                  <MathDisplay math="2(m+6n)(m-6n) = 2[m^2 - (6n)^2]" />
+                  <MathDisplay math="= 2(m^2 - 36n^2)" />
+                  <MathDisplay math="= 2m^2 - 72n^2" />
+               </div>
+             </div>
+          </div>
+        </CollapsibleSection>
+
+      </div>
+    </>
+  );
 };
 
 export const PythagorasF2Notes = () => {

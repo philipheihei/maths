@@ -1,5 +1,5 @@
 import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, AdvancedLinearEquationNotes, PolynomialsNotes, StatisticsNotes, CoordinateNotes, PercentageNotes, AnglesNotes } from './F1Notes';
-import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes } from './F2Notes';
+import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes, TriangleLineAnglesNotes, IdentitiesF2Notes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
@@ -125,6 +125,24 @@ export const NOTES_DATA = {
     }
   ],
   F2: [
+    {
+      id: 'triangle-line-angles',
+      topic: 'CH2 有關三角形和直線的角',
+      color: 'green',
+      subtopics: [
+        { id: 'advanced-angle-theorems', num: 1, title: '進階幾何角度定理 (6-12)', color: 'green' },
+      ]
+    },
+    {
+      id: 'identities-f2',
+      topic: 'CH3 恆等式',
+      color: 'indigo',
+      subtopics: [
+        { id: 'identities-def', num: 1, title: '恆等式定義', color: 'indigo' },
+        { id: 'identities-compare', num: 2, title: '比較同類項的係數', color: 'indigo' },
+        { id: 'identities-formulas', num: 3, title: '三條必記恆等式！', color: 'rose' },
+      ]
+    },
     {
       id: 'algebraic-fractions',
       topic: 'CH5 代數分式',
@@ -351,7 +369,9 @@ export const getNotesForLevel = (level) => {
 export const NOTES_COMPONENTS = {
   'basic-calculation': BasicCalculationNotes,
   'directed-numbers': DirectedNumbersNotes,
+  'triangle-line-angles': TriangleLineAnglesNotes,
   'algebraic-fractions': AlgebraicFractionsNotes,
+  'identities-f2': IdentitiesF2Notes,
   'measurement-errors': MeasurementErrorsNotes,
   'inequality': InequalityNotes,
   'simultaneous-eq-f2': SimultaneousEqF2Notes,
