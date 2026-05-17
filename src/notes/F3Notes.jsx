@@ -1366,3 +1366,243 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
     </>
   );
 };
+
+// ========================================
+// CH11 概率 (F3)
+// ========================================
+
+const TreeDiagramSVG = () => (
+  <svg width="100%" height="260" viewBox="0 0 600 260" className="mx-auto block overflow-visible">
+    <g fontSize="16" fontWeight="bold">
+      <text x="40" y="30" fill="#334155" textDecoration="underline">包裝</text>
+      <text x="140" y="30" fill="#334155" textDecoration="underline">口味</text>
+      <text x="260" y="30" fill="#334155" textDecoration="underline">配料</text>
+      <text x="360" y="30" fill="#334155" textDecoration="underline">可能結果</text>
+      
+      <line x1="0" y1="140" x2="30" y2="80" stroke="#64748b" strokeWidth="2" />
+      <line x1="0" y1="140" x2="30" y2="200" stroke="#64748b" strokeWidth="2" />
+      
+      <text x="40" y="85" fill="#1e293b">D</text>
+      <line x1="60" y1="80" x2="130" y2="50" stroke="#64748b" strokeWidth="2" />
+      <line x1="60" y1="80" x2="130" y2="110" stroke="#64748b" strokeWidth="2" />
+      
+      <text x="140" y="55" fill="#1e293b">V</text>
+      <line x1="160" y1="50" x2="250" y2="35" stroke="#64748b" strokeWidth="2" />
+      <line x1="160" y1="50" x2="250" y2="65" stroke="#64748b" strokeWidth="2" />
+      <text x="260" y="40" fill="#1e293b">A</text>
+      <text x="380" y="40" fill="#1e293b">DVA</text>
+      <text x="260" y="70" fill="#1e293b">B</text>
+      <text x="380" y="70" fill="#1e293b">DVB</text>
+      
+      <text x="140" y="115" fill="#1e293b">M</text>
+      <line x1="160" y1="110" x2="250" y2="95" stroke="#64748b" strokeWidth="2" />
+      <line x1="160" y1="110" x2="250" y2="125" stroke="#64748b" strokeWidth="2" />
+      <text x="260" y="100" fill="#1e293b">A</text>
+      <text x="380" y="100" fill="#1e293b">DMA</text>
+      <text x="260" y="130" fill="#1e293b">B</text>
+      <text x="380" y="130" fill="#1e293b">DMB</text>
+      
+      <text x="40" y="205" fill="#ea580c">C</text>
+      <line x1="60" y1="200" x2="130" y2="170" stroke="#64748b" strokeWidth="2" />
+      <line x1="60" y1="200" x2="130" y2="230" stroke="#64748b" strokeWidth="2" />
+      
+      <text x="140" y="175" fill="#16a34a">V</text>
+      <line x1="160" y1="170" x2="250" y2="155" stroke="#64748b" strokeWidth="2" />
+      <line x1="160" y1="170" x2="250" y2="185" stroke="#64748b" strokeWidth="2" />
+      <text x="260" y="160" fill="#1e293b">A</text>
+      <text x="380" y="160" fill="#1e293b">CVA</text>
+      <text x="260" y="190" fill="#2563eb">B</text>
+      <text x="380" y="190" fill="#2563eb">CVB</text>
+      
+      <text x="140" y="235" fill="#1e293b">M</text>
+      <line x1="160" y1="230" x2="250" y2="215" stroke="#64748b" strokeWidth="2" />
+      <line x1="160" y1="230" x2="250" y2="245" stroke="#64748b" strokeWidth="2" />
+      <text x="260" y="220" fill="#1e293b">A</text>
+      <text x="380" y="220" fill="#1e293b">CMA</text>
+      <text x="260" y="250" fill="#1e293b">B</text>
+      <text x="380" y="250" fill="#1e293b">CMB</text>
+    </g>
+
+    <path d="M 425,185 L 445,185" fill="none" stroke="#2563eb" strokeWidth="1.5" markerEnd="url(#arrow-blue-tree)"/>
+    <defs>
+      <marker id="arrow-blue-tree" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
+      </marker>
+    </defs>
+    <rect x="455" y="145" width="145" height="80" rx="8" fill="white" stroke="#94a3b8" strokeDasharray="4 4" />
+    <text x="465" y="168" fontSize="13" fill="#334155"><tspan fill="#ea580c" fontWeight="bold">C</tspan><tspan fill="#16a34a" fontWeight="bold">V</tspan><tspan fill="#2563eb" fontWeight="bold">B</tspan> 即一個筒裝(<tspan fill="#ea580c" fontWeight="bold">C</tspan>)</text>
+    <text x="465" y="188" fontSize="13" fill="#334155">的香草(<tspan fill="#16a34a" fontWeight="bold">V</tspan>)雪糕配</text>
+    <text x="465" y="208" fontSize="13" fill="#334155">藍莓(<tspan fill="#2563eb" fontWeight="bold">B</tspan>)。</text>
+  </svg>
+);
+
+export const ProbabilityF3Notes = ({ activeSub }) => {
+  const s1 = useRef(null);
+  const s2 = useRef(null);
+  const s3 = useRef(null);
+
+  return (
+    <>
+      <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-orange-500">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">CH11 概率</h1>
+          <p className="text-slate-600">學會畫樹形圖及表格尋找所有結果，掌握概率及期望值計算</p>
+        </div>
+
+        {/* 1. 畫圖找組合/概率 */}
+        <CollapsibleSection id="tree-diagram-table" title="畫圖找組合/概率" num={1} color="orange" activeSub={activeSub} sectionRef={s1}>
+          <div className="space-y-6">
+            
+            {/* A. 樹形圖 */}
+            <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+              <h3 className="font-bold text-orange-800 mb-3 text-lg">A. 樹形圖</h3>
+              <p className="text-slate-700 mb-4">
+                <strong className="text-purple-700">樹形圖</strong>利用分支顯示一個活動的所有可能結果。
+                <br/>
+                <span className="text-sm text-slate-500">（例：單球雪糕餐牌 — 包裝、口味、配料）</span>
+              </p>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm border border-slate-200 overflow-x-auto">
+                <TreeDiagramSVG />
+              </div>
+            </div>
+
+            {/* B. 數表 */}
+            <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+              <h3 className="font-bold text-blue-800 mb-3 text-lg">B. 數表 <span className="text-sm font-normal text-slate-600">（只能表達兩個階段）</span></h3>
+              <p className="text-slate-700 mb-4">
+                當事件只有兩個階段時，我們可利用下表顯示所有可能結果。
+                <br/>
+                <span className="text-sm text-slate-500">（例：兩隻小狗的性別組合）</span>
+              </p>
+              
+              <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
+                {/* 數表 */}
+                <div className="relative pt-6 pl-8">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 text-slate-700 font-bold whitespace-nowrap">第二隻小狗</div>
+                  <div className="absolute left-[-1rem] top-1/2 -translate-y-1/2 text-slate-700 font-bold" style={{ writingMode: 'vertical-rl' }}>第一隻小狗</div>
+                  
+                  <table className="border-collapse text-center w-48 text-lg bg-white">
+                    <tbody>
+                      <tr>
+                        <td className="w-16 h-12 border border-slate-300"></td>
+                        <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-cyan-600">F</td>
+                        <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-cyan-600">M</td>
+                      </tr>
+                      <tr>
+                        <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-green-600">F</td>
+                        <td className="w-16 h-12 border border-slate-300 font-bold text-teal-600">FF</td>
+                        <td className="w-16 h-12 border-2 border-slate-800 font-bold text-teal-600 relative">
+                          FM
+                          {/* 箭頭連結提示 */}
+                          <div className="absolute top-1/2 -right-6 md:-right-8 w-6 md:w-8 h-px bg-slate-400"></div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-green-600">M</td>
+                        <td className="w-16 h-12 border border-slate-300 font-bold text-teal-600">MF</td>
+                        <td className="w-16 h-12 border border-slate-300 font-bold text-teal-600">MM</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* 文字說明卡片 */}
+                <div className="bg-white border border-dashed border-slate-400 rounded-lg p-3 text-sm text-slate-700 w-48 shrink-0 relative mt-4 md:mt-0">
+                  <span className="font-bold text-teal-600">FM</span> 代表第一隻小狗是<span className="text-green-600 font-bold">雌性 (F)</span> 及第二隻小狗是<span className="text-cyan-600 font-bold">雄性 (M)</span>。
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </CollapsibleSection>
+
+        {/* 2. 概率 */}
+        <CollapsibleSection id="probability-definition" title="概率 (機會率)" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+          <div className="bg-white rounded-lg p-5 border border-green-200 space-y-4">
+            
+            <div className="flex items-start gap-3">
+              <span className="bg-green-100 text-green-800 font-bold px-2 py-1 rounded w-20 text-center shrink-0">範圍</span>
+              <div className="pt-1">
+                <span className="text-lg font-bold text-red-600">0 - 1</span>
+                <ul className="list-disc list-inside mt-2 text-slate-700 space-y-1 ml-1">
+                  <li><span className="text-red-500 font-bold">0</span> 是一定<span className="underline">不會</span>發生 <span className="text-slate-500">(e.g. 太陽從西邊升起)</span></li>
+                  <li><span className="text-red-500 font-bold">1</span> 是一定<span className="underline">會</span>發生 <span className="text-slate-500">(e.g. 太陽從東邊升起)</span></li>
+                </ul>
+                <div className="bg-red-50 border-l-4 border-red-400 text-red-800 p-2 mt-3 text-sm flex items-center justify-center font-bold">
+                  按：如果計到概率是負數 / 大於 1，則必定錯誤
+                </div>
+              </div>
+            </div>
+
+            <div className="border-t border-green-100 my-4"></div>
+
+            <div className="bg-slate-50 rounded-lg p-4">
+              <p className="font-bold text-slate-800 mb-2">
+                想表達 A 事件的概率 可寫成 <span className="text-green-700 ml-2 border border-green-300 bg-green-100 px-2 py-1 rounded"><Latex math="P(A)" /></span>
+              </p>
+              <div className="text-slate-700 mt-3 space-y-3 font-mono">
+                <div className="flex items-center flex-wrap gap-2">
+                  <span className="text-blue-700 font-sans">e.g. 抽到單數的概率</span>
+                  <span className="text-slate-400">→</span>
+                  <span className="text-green-700 font-bold"><Latex math="P(\text{單數})" /></span>
+                </div>
+                <div className="flex items-center flex-wrap gap-2">
+                  <span className="text-blue-700 font-sans">x {'>'} 4 的概率是 0.5</span>
+                  <span className="text-slate-400">→</span>
+                  <span className="text-green-700 font-bold"><Latex math="P(x > 4) = 0.5" /></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </CollapsibleSection>
+
+        {/* 3. 期望值 */}
+        <CollapsibleSection id="expected-value" title="期望值" num={3} color="indigo" activeSub={activeSub} sectionRef={s3}>
+          <div className="space-y-4">
+            
+            <div className="bg-indigo-50 rounded-lg p-5 border border-indigo-200">
+              <h3 className="font-bold text-slate-800 text-lg flex items-center flex-wrap gap-2 mb-2">
+                期望值：<span className="bg-yellow-200 px-2 py-1 rounded font-mono break-all text-xl">概率 <Latex math="\times" /> 次數/金額</span>
+              </h3>
+              <p className="text-green-700 font-bold mb-4 mt-2">
+                註：題目未必提供概率，需自行計算
+              </p>
+            </div>
+
+            <div className="bg-white rounded-lg p-5 border border-slate-200">
+              <div className="bg-slate-50 p-3 rounded border border-slate-200 text-slate-700 text-sm mb-4">
+                <strong>e.g.</strong> 某箱內有九張 $50 現金券和一張 $100 現金券。從該箱內隨機抽出一張現金券。
+              </div>
+
+              <div className="space-y-4 font-bold text-slate-800">
+                <div className="flex flex-col md:flex-row gap-4 md:items-center text-blue-900 border-l-4 border-blue-500 pl-3">
+                  <span><Latex math="\hookrightarrow" /> 能推出：</span>
+                  <span className="bg-blue-100 px-2 py-1 rounded border border-blue-200">
+                    <Latex math="P(\text{抽} \$50) = \dfrac{9}{10}" />
+                  </span>
+                  <span className="bg-blue-100 px-2 py-1 rounded border border-blue-200">
+                    <Latex math="P(\text{抽} \$100) = \dfrac{1}{10}" />
+                  </span>
+                </div>
+
+                <div className="bg-indigo-50 p-4 rounded-lg mt-4 border border-indigo-200">
+                  <p className="mb-2">假設一定抽到，期望值：</p>
+                  <p className="text-lg md:text-xl flex flex-wrap items-center gap-y-2 mt-2">
+                    <Latex math="\dfrac{9}{10} \times \$50 + \dfrac{1}{10} \times \$100" />
+                  </p>
+                  <p className="text-lg md:text-xl text-red-600 mt-2">
+                    <Latex math="= \$55" />
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </CollapsibleSection>
+
+      </div>
+    </>
+  );
+};

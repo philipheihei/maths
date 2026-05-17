@@ -1,6 +1,6 @@
 import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, AdvancedLinearEquationNotes, PolynomialsNotes, StatisticsNotes, CoordinateNotes, PercentageNotes, AnglesNotes } from './F1Notes';
-import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes, TriangleLineAnglesNotes, IdentitiesF2Notes, FactorizationF2Notes } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
+import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes, TriangleLineAnglesNotes, IdentitiesF2Notes, FactorizationF2Notes, CirclesCylindersF2Notes } from './F2Notes';
+import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, ProbabilityF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
@@ -152,6 +152,7 @@ export const NOTES_DATA = {
         { id: 'extract-common-f2', num: 2, title: '提取公因式', color: 'purple' },
         { id: 'grouping-f2', num: 3, title: '併項法（分組因式分解）', color: 'blue' },
         { id: 'dse-prev-answer-f2', num: 4, title: 'DSE 題型技巧：利用前題答案', color: 'red' },
+        { id: 'factorization-tips-f2', num: 5, title: '注意事項及陷阱', color: 'amber' },
       ]
     },
     {
@@ -210,6 +211,16 @@ export const NOTES_DATA = {
       color: 'green',
       subtopics: [
         { id: 'trig-ratios-core', num: 1, title: '三角比（不包特殊角）', color: 'green' },
+      ]
+    },
+    {
+      id: 'circles-cylinders-f2',
+      topic: 'CH13 圓形與圓柱體',
+      color: 'teal',
+      subtopics: [
+        { id: 'circles-circumference-arc', num: 1, title: '圓周與弧長', color: 'teal' },
+        { id: 'circles-area-sector', num: 2, title: '圓面積與扇形面積', color: 'blue' },
+        { id: 'cylinders', num: 3, title: '圓柱體體積及表面面積', color: 'purple' },
       ]
     }
   ],
@@ -273,6 +284,16 @@ export const NOTES_DATA = {
       color: 'teal',
       subtopics: [
         { id: 'coordinate-geometry-core', num: 1, title: '公式表', color: 'teal' },
+      ]
+    },
+    {
+      id: 'probability-f3',
+      topic: 'CH11 概率',
+      color: 'orange',
+      subtopics: [
+        { id: 'tree-diagram-table', num: 1, title: '畫圖找組合/概率', color: 'orange' },
+        { id: 'probability-definition', num: 2, title: '概率 (機會率)', color: 'green' },
+        { id: 'expected-value', num: 3, title: '期望值', color: 'indigo' },
       ]
     }
   ],
@@ -411,4 +432,6 @@ export const NOTES_COMPONENTS = {
   'percentage': PercentageNotes,
   'functions': FunctionNotes,
   'angles': AnglesNotes,
+  'circles-cylinders-f2': CirclesCylindersF2Notes,
+  'probability-f3': ProbabilityF3Notes,
 };

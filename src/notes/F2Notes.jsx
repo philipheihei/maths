@@ -1517,6 +1517,7 @@ export const FactorizationF2Notes = ({ activeSub }) => {
   const s2 = useRef(null);
   const s3 = useRef(null);
   const s4 = useRef(null);
+  const s5 = useRef(null);
 
   return (
     <>
@@ -1723,6 +1724,32 @@ export const FactorizationF2Notes = ({ activeSub }) => {
             </div>
           </div>
         </CollapsibleSection>
+
+        <CollapsibleSection id="factorization-tips-f2" title="注意事項及陷阱" num={5} color="amber" activeSub={activeSub} sectionRef={s5}>
+          <div className="space-y-4">
+            <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+              <h3 className="font-bold text-red-600 mb-3 text-lg">＊ 提示 1：</h3>
+              
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 my-4">
+                {/* 算式部份 */}
+                <div className="text-2xl font-bold text-red-600 tracking-wider">
+                  49<span className="bg-yellow-200 px-1 rounded mx-0.5">x</span>² - 14<span className="bg-yellow-200 px-1 rounded mx-0.5">x</span>y + y²
+                </div>
+                
+                {/* Q&A 部份 */}
+                <div className="flex flex-col space-y-2 text-green-700 font-bold text-lg leading-relaxed">
+                  <div className="flex items-start">
+                    <span className="mr-2 hidden md:inline">←</span>
+                    <div>
+                      <div>Q : 只有兩個項有 x 可以抽嗎？</div>
+                      <div>A : 需全部項都有 才能抽！</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
       </div>
     </>
   );
@@ -1749,5 +1776,288 @@ export const TrigRatiosF2Notes = () => {
       </div>
       <TrigRatiosNotesBlock />
     </div>
+  );
+};
+
+// ========================================
+// CH13 圓形與圓柱體 (F2)
+// ========================================
+export const CirclesCylindersF2Notes = ({ activeSub }) => {
+  const s1 = useRef(null);
+  const s2 = useRef(null);
+  const s3 = useRef(null);
+
+  return (
+    <>
+      <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">CH13 圓形與圓柱體</h1>
+          <p className="text-teal-700 font-bold text-lg">這課全部是有關圓形！</p>
+        </div>
+
+        {/* ========================================
+            1. 圓周與弧長
+            ======================================== */}
+        <CollapsibleSection id="circles-circumference-arc" title="圓周與弧長" num={1} color="teal" activeSub={activeSub} sectionRef={s1}>
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* 左：圓周 */}
+            <div className="flex-1 bg-white rounded-lg p-4 border border-teal-200">
+              <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2">
+                <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">1.</span> 圓周：
+                <span className="bg-green-200 text-slate-800 px-2 py-0.5 rounded font-mono"><Latex math="2 \pi r" /></span>
+              </h3>
+              
+              <div className="relative text-sm text-green-700 font-bold ml-16 -mt-2 mb-2">
+                <span className="absolute -top-3 left-6">↖ 半徑</span>
+              </div>
+
+              <div className="flex justify-center mb-4">
+                <svg viewBox="0 0 160 160" className="w-40 h-40">
+                  <circle cx="80" cy="80" r="70" fill="none" stroke="#000" strokeWidth="2" />
+                  <line x1="80" y1="80" x2="80" y2="150" stroke="#000" strokeWidth="2" />
+                  <circle cx="80" cy="80" r="3" fill="#000" />
+                  <text x="80" y="70" textAnchor="middle" fontSize="14" fontStyle="italic">O</text>
+                  <text x="85" y="120" textAnchor="start" fontSize="14">8 cm</text>
+                </svg>
+              </div>
+
+              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold">
+                <p>例：圓周：<Latex math="2 \pi (8) = 16 \pi" /> cm</p>
+              </div>
+            </div>
+
+            {/* 右：弧長 */}
+            <div className="flex-1 bg-white rounded-lg p-4 border border-teal-200 relative">
+              <div className="absolute left-[-26px] top-1/2 -translate-y-1/2 hidden md:block text-slate-400">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-teal-100 pb-2">
+                <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">2.</span> 弧長 <span className="text-sm font-normal text-green-700">(圓周的一部份)</span>：
+                <span className="bg-green-200 px-2 py-0.5 rounded font-mono"><Latex math="2 \pi r" /></span>
+                <Latex math="\times" />
+                <span className="bg-yellow-300 px-2 py-0.5 rounded font-mono text-xl"><Latex math="\dfrac{\theta}{360^\circ}" /></span>
+              </h3>
+
+              <div className="text-sm font-bold text-green-700 ml-32 -mt-3 mb-2 hidden md:block">
+                <span>↓ 圓周公式</span>
+              </div>
+
+              <div className="flex justify-center mb-4 mt-8 md:mt-2 relative min-h-[160px]">
+                 <div className="relative">
+                   <svg viewBox="0 0 160 160" className="w-40 h-40 overflow-visible">
+                     <circle cx="80" cy="80" r="70" fill="none" stroke="#64748b" strokeWidth="2" strokeDasharray="6 4" />
+                     <path d="M 80 80 L 67.8 11.0 A 70 70 0 0 1 150 80 Z" fill="none" stroke="#94a3b8" strokeWidth="1" strokeDasharray="6 4" />
+                     <path d="M 67.8 11.0 A 70 70 0 0 1 150 80" fill="none" stroke="#d97706" strokeWidth="3.5" />
+                     <line x1="80" y1="80" x2="67.8" y2="11.0" stroke="#000" strokeWidth="2" strokeDasharray="5 3"/>
+                     <line x1="80" y1="80" x2="150" y2="80" stroke="#000" strokeWidth="2" strokeDasharray="5 3"/>
+                     {/* Angle Arc */}
+                     <path d="M 95 80 A 15 15 0 0 0 77.4 65.2" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                     <text x="80" y="95" textAnchor="middle" fontSize="14" fontStyle="italic">O</text>
+                     <text x="115" y="95" textAnchor="middle" fontSize="14">4 m</text>
+                     <text x="60" y="10" textAnchor="middle" fontSize="14" fontStyle="italic">A</text>
+                     <text x="157" y="90" textAnchor="middle" fontSize="14" fontStyle="italic">B</text>
+                     <text x="100" y="65" textAnchor="middle" fontSize="14" fill="#000">100°</text>
+                   </svg>
+
+                   {/* Annotations */}
+                   <div className="absolute top-4 -right-16 text-sm text-green-700 font-bold whitespace-nowrap">
+                     ← 弧 AB / 弧 <Latex math="\overparen{AB}" />
+                   </div>
+                   <div className="absolute top-16 -right-48 text-sm whitespace-nowrap text-blue-800 font-bold hidden md:block">
+                     <span className="text-red-600">360°</span> 當中只要 <span className="bg-pink-200 px-1 rounded text-red-600">100°</span> → 
+                     <span className="bg-pink-100 text-red-600 px-1 py-0.5 rounded mx-1"><Latex math="\dfrac{100^\circ}{360^\circ}" /></span>
+                     <div className="text-xs text-blue-700 text-center mt-1 w-full flex justify-end pr-8">按題目而變</div>
+                   </div>
+                 </div>
+              </div>
+
+              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold w-full relative">
+                <p className="flex items-center flex-wrap gap-y-1">
+                  <Latex math="\overparen{AB} = 2 \pi (4) \times" />
+                  <span className="bg-yellow-300 px-1 rounded mx-1 text-lg leading-none py-0.5 mt-0.5"><Latex math="\dfrac{100^\circ}{360^\circ}" /></span>
+                  <Latex math="= 6.98" /> m
+                </p>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* ========================================
+            2. 圓面積與扇形面積
+            ======================================== */}
+        <CollapsibleSection id="circles-area-sector" title="圓面積與扇形面積" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* 左：圓面積 */}
+            <div className="flex-1 bg-white rounded-lg p-4 border border-blue-200">
+              <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2">
+                <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">3.</span> 圓面積：
+                <span className="bg-blue-200 text-slate-800 px-2 py-0.5 rounded font-mono"><Latex math="\pi r^2" /></span>
+              </h3>
+
+              <div className="flex justify-center mb-4 mt-6">
+                <svg viewBox="0 0 160 160" className="w-40 h-40">
+                  <circle cx="80" cy="80" r="70" fill="#fde047" stroke="#000" strokeWidth="2" />
+                  <line x1="80" y1="80" x2="10" y2="80" stroke="#000" strokeWidth="2" />
+                  <circle cx="80" cy="80" r="3" fill="#000" />
+                  <text x="90" y="90" textAnchor="middle" fontSize="14" fontStyle="italic">O</text>
+                  <text x="45" y="95" textAnchor="middle" fontSize="14">3 cm</text>
+                </svg>
+              </div>
+
+              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold">
+                <p>例：圓面積：<Latex math="\pi (3)^2 = 9 \pi" /> cm²</p>
+              </div>
+            </div>
+
+            {/* 右：扇形面積 */}
+            <div className="flex-1 bg-white rounded-lg p-4 border border-blue-200 relative">
+              <div className="absolute left-[-26px] top-1/2 -translate-y-1/2 hidden md:block text-slate-400">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </div>
+
+              <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-blue-100 pb-2">
+                <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">4.</span> 扇形 <span className="text-sm font-normal text-green-700">(圓面積的一部份)</span>：
+                <span className="bg-blue-200 px-2 py-0.5 rounded font-mono"><Latex math="\pi r^2" /></span>
+                <Latex math="\times" />
+                <span className="bg-yellow-300 px-2 py-0.5 rounded font-mono text-xl"><Latex math="\dfrac{\theta}{360^\circ}" /></span>
+              </h3>
+
+              <div className="flex justify-center mb-6 mt-6 md:mt-2 relative">
+                 <div className="relative">
+                   <svg viewBox="0 0 160 160" className="w-40 h-40 overflow-visible">
+                     <path d="M 80 80 L 10 80 A 70 70 0 0 1 115 19.4 Z" fill="#fef08a" stroke="#000" strokeWidth="2" strokeLinejoin="round" />
+                     <circle cx="80" cy="80" r="70" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="6 4" />
+                     <circle cx="80" cy="80" r="3" fill="#000" />
+                     {/* Arc for 120° */}
+                     <path d="M 65 80 A 15 15 0 0 1 87.5 67" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                     <text x="80" y="95" textAnchor="middle" fontSize="14" fontStyle="italic">O</text>
+                     <text x="45" y="95" textAnchor="middle" fontSize="14">14 cm</text>
+                     <text x="8" y="75" textAnchor="end" fontSize="14" fontStyle="italic">S</text>
+                     <text x="120" y="15" textAnchor="start" fontSize="14" fontStyle="italic">T</text>
+                     <text x="90" y="60" textAnchor="middle" fontSize="14" fill="#000">120°</text>
+                   </svg>
+                 </div>
+                 
+                 <div className="absolute top-16 -right-24 md:-right-28 text-sm text-green-700 font-bold whitespace-nowrap text-left leading-relaxed hidden sm:block">
+                   扇形像在整個 pizza cut 一部份<br/>
+                   360° 的 pizza 只要 120°！
+                 </div>
+              </div>
+
+              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold w-full mt-4">
+                <p className="flex items-center flex-wrap gap-y-1">
+                  例：扇形 STo 面積：<Latex math="\pi (14)^2 \times" />
+                  <span className="bg-yellow-300 px-1 rounded mx-1 text-lg leading-none py-0.5 mt-0.5"><Latex math="\dfrac{120^\circ}{360^\circ}" /></span>
+                  <Latex math="= 205" /> cm²
+                </p>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* ========================================
+            3. 圓柱體體積及表面面積
+            ======================================== */}
+        <CollapsibleSection id="cylinders" title="圓柱體體積及表面面積" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+          <div className="space-y-6">
+            
+            <div className="bg-purple-50 rounded-lg p-5 border border-purple-200 shadow-sm relative">
+              <h3 className="font-bold text-red-600 mb-3 text-xl flex items-center gap-2">
+                5. 圓柱體體積： <span className="text-red-700 italic font-serif"><Latex math="\pi r^2 \cdot h" /></span>
+                <span className="text-green-700 text-sm md:text-base ml-2 md:ml-4 relative font-bold">
+                  <span className="absolute -left-4 md:-left-5 top-1 -mr-2 text-green-700 font-sans">↙</span> 高度 (height)
+                </span>
+              </h3>
+            </div>
+
+            <div className="bg-[#fdf6ea] rounded-lg p-5 border border-amber-200 shadow-sm relative overflow-hidden">
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="flex-1 space-y-5 relative z-10 w-full p-2">
+                  <div className="flex items-start gap-2 bg-white/70 p-3 rounded">
+                    <span className="text-red-600 font-bold text-lg leading-none shadow-sm rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 border border-red-200">6</span>
+                    <div className="font-bold text-slate-800 pt-0.5 leading-relaxed">
+                      直立圓柱的曲面面積 <Latex math="= 2\pi rh" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-2 bg-white/70 p-3 rounded">
+                    <span className="text-red-600 font-bold text-lg leading-none shadow-sm rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 border border-red-200">7</span>
+                    <div className="space-y-2 font-bold text-slate-800 w-full">
+                      <div>直立圓柱的總表面面積</div>
+                      <div className="border-b border-amber-200/50 pb-2"><Latex math="= 2 \times \text{底面積} + \text{曲面面積}" /></div>
+                      <div className="pt-1 text-lg truncate"><Latex math="= 2\pi r^2 + 2\pi rh" /></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative shrink-0 pr-10 pb-4 h-48 w-44 md:w-56 mt-4 md:mt-0 ml-10 flex items-center">
+                   <svg viewBox="0 0 160 160" className="w-full h-full overflow-visible">
+                     {/* Lower Base */}
+                     <ellipse cx="80" cy="130" rx="50" ry="15" fill="#fca5a5" stroke="#000" strokeWidth="2" strokeDasharray="3 3"/>
+                     {/* Red Hatching Pattern via path */}
+                     <path d="M 40 130 L 60 120 M 50 135 L 75 122 M 60 140 L 90 125 M 75 142 L 110 125 M 95 140 L 120 128" stroke="#ef4444" strokeWidth="2" />
+                     
+                     {/* Curved Surface */}
+                     <path d="M 30 50 L 30 130 A 50 15 0 0 0 130 130 L 130 50 Z" fill="#fde047" stroke="#000" strokeWidth="2" />
+                     
+                     {/* Upper Base */}
+                     <ellipse cx="80" cy="50" rx="50" ry="15" fill="#fde047" stroke="#000" strokeWidth="2" />
+                     <circle cx="80" cy="50" r="3" fill="#000" />
+                     <text x="75" y="47" textAnchor="end" fontSize="14" fontStyle="italic">O</text>
+                     <line x1="80" y1="50" x2="130" y2="50" stroke="#000" strokeWidth="2" strokeDasharray="4 2" />
+                     <text x="105" y="45" textAnchor="middle" fontSize="14" fontStyle="italic">r</text>
+
+                     <line x1="130" y1="50" x2="130" y2="130" stroke="none" />
+                     <text x="140" y="95" textAnchor="start" fontSize="14" fill="#10b981" fontStyle="italic" fontWeight="bold">h</text>
+                   </svg>
+                   
+                   <div className="absolute top-2 -right-8 md:-right-16 text-red-600 font-bold whitespace-nowrap text-lg">
+                      <span className="relative">
+                        底面積 (上)
+                        <svg width="40" height="40" viewBox="0 0 40 40" className="absolute -left-12 -top-2 overflow-visible stroke-red-600">
+                           <path d="M 40 18 Q 20 20 10 32" fill="none" strokeWidth="3" markerEnd="url(#arrow-head)" strokeLinecap="round" />
+                           <defs>
+                             <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                               <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+                             </marker>
+                           </defs>
+                        </svg>
+                        <span className="absolute -bottom-6 left-[-1.5rem] transform -translate-x-1/2 text-[10px] text-red-800/60 font-sans tracking-widest hidden md:block">圓周</span>
+                      </span>
+                   </div>
+
+                   <div className="absolute top-[85px] -right-8 md:-right-12 text-green-700 font-bold whitespace-nowrap text-lg flex items-center">
+                      <svg width="40" height="20" viewBox="0 0 40 20" className="mr-1 mt-1 overflow-visible stroke-green-700">
+                        <line x1="40" y1="10" x2="10" y2="10" strokeWidth="3" markerEnd="url(#arrow-head-green)" strokeLinecap="round" />
+                        <defs>
+                          <marker id="arrow-head-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+                          </marker>
+                        </defs>
+                      </svg>
+                      曲面面積
+                   </div>
+
+                   <div className="absolute bottom-[20px] md:-bottom-2 -right-10 md:-right-12 text-red-600 font-bold whitespace-nowrap text-lg flex items-center gap-1">
+                      <svg width="30" height="30" viewBox="0 0 30 30" className="mr-1 overflow-visible stroke-red-600">
+                        <line x1="30" y1="30" x2="5" y2="5" strokeWidth="3" markerEnd="url(#arrow-head-up)" strokeLinecap="round" />
+                        <defs>
+                          <marker id="arrow-head-up" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+                          </marker>
+                        </defs>
+                      </svg>
+                      底面積 (下)
+                   </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </CollapsibleSection>
+
+      </div>
+    </>
   );
 };
