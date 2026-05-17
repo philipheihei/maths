@@ -1,4 +1,4 @@
-import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, AdvancedLinearEquationNotes, PolynomialsNotes, StatisticsNotes, CoordinateNotes } from './F1Notes';
+import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, AdvancedLinearEquationNotes, PolynomialsNotes, StatisticsNotes, CoordinateNotes, PercentageNotes, AnglesNotes } from './F1Notes';
 import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
@@ -84,6 +84,17 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'percentage',
+      topic: 'CH9 百分數',
+      color: 'blue',
+      subtopics: [
+        { id: 'interconversion', num: 1, title: '百分數 / 小數 / 分數互化', color: 'blue' },
+        { id: 'percentage-of-part', num: 2, title: '表達部份的百分數', color: 'green' },
+        { id: 'percentage-comparison', num: 3, title: '百分數比較', color: 'amber' },
+        { id: 'percentage-change', num: 4, title: '百分變化', color: 'purple' },
+      ]
+    },
+    {
       id: 'coordinate',
       topic: 'CH10 坐標',
       color: 'amber',
@@ -92,6 +103,15 @@ export const NOTES_DATA = {
         { id: 'quadrants', num: 2, title: '象限', color: 'green' },
         { id: 'length', num: 3, title: '坐標線段 找長度', color: 'amber' },
         { id: 'transformation', num: 4, title: '點的轉換', color: 'red' },
+      ]
+    },
+    {
+      id: 'angles',
+      topic: 'CH11 直線相關的角',
+      color: 'blue',
+      subtopics: [
+        { id: 'lines-angles-naming', num: 0, title: '基礎知識：線和角的命名', color: 'slate' },
+        { id: 'basic-angle-theorems', num: 1, title: '幾何角度定理 (1-5)', color: 'blue' },
       ]
     },
     {
@@ -356,5 +376,7 @@ export const NOTES_COMPONENTS = {
   'polynomials': PolynomialsNotes,
   'statistics': StatisticsNotes,
   'coordinate': CoordinateNotes,
+  'percentage': PercentageNotes,
   'functions': FunctionNotes,
+  'angles': AnglesNotes,
 };

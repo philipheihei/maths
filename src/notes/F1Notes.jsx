@@ -2365,3 +2365,478 @@ export const CoordinateNotes = ({ activeSub }) => {
     </>
   );
 };
+
+export const PercentageNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+
+  return (
+    <>
+      <CollapsibleSection id="interconversion" title="1. 百分數 / 小數 / 分數互化" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">🔄 百分數／小數／分數互化 → 用計算機</h3>
+            
+            <div className="space-y-6">
+              {/* 小數 <=> 分數 */}
+              <div className="bg-white p-4 rounded-lg border border-blue-100 flex flex-col md:flex-row md:items-center gap-4">
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-700 w-24">小數 → 分數</span>
+                    <span className="text-slate-500">e.g.</span>
+                    <Latex math="0.51 \rightarrow \frac{51}{100}" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-700 w-24">分數 → 小數</span>
+                    <span className="text-slate-500">e.g.</span>
+                    <Latex math="\frac{2}{5} \rightarrow 0.4" />
+                  </div>
+                </div>
+                <div className="text-green-700 font-bold flex items-center gap-1 bg-green-50 px-3 py-2 rounded-lg">
+                  輸入數字後按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> 轉換
+                </div>
+              </div>
+
+              {/* 百分數 <=> 小數/分數 */}
+              <div className="bg-white p-4 rounded-lg border border-blue-100 flex flex-col md:flex-row md:items-center gap-4">
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-700 w-28">百分數 → 小數</span>
+                    <span className="text-slate-500">e.g.</span>
+                    <Latex math="85\% \rightarrow 0.85" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-700 w-28">百分數 → 分數</span>
+                    <span className="text-slate-500">e.g.</span>
+                    <Latex math="72\% \rightarrow \frac{18}{25}" />
+                  </div>
+                </div>
+                <div className="text-green-700 font-bold flex items-center gap-1 bg-green-50 px-3 py-2 rounded-lg">
+                  輸入數字後按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> 轉換
+                </div>
+              </div>
+
+              {/* 分數/小數 -> 百分數 */}
+              <div className="bg-white p-4 rounded-lg border border-blue-100 flex flex-col md:flex-row md:items-center gap-4">
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-700 w-28">分數 → 百分數</span>
+                    <span className="text-slate-500">e.g.</span>
+                    <Latex math="\frac{3}{4} \rightarrow 75\%" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-slate-700 w-28">小數 → 百分數</span>
+                    <span className="text-slate-500">e.g.</span>
+                    <Latex math="0.253 \rightarrow 25.3\%" />
+                  </div>
+                </div>
+                <div className="text-green-700 font-bold bg-green-50 px-3 py-2 rounded-lg">
+                  輸入分數/小數後 <span className="bg-yellow-200 px-1 rounded text-red-600">×100</span>，答案再寫上「%」
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="percentage-of-part" title="2. 表達部份的百分數" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-4 bg-white p-4 rounded-lg">
+              <div className="text-xl">
+                <Latex math="\frac{\text{目標部份}}{\text{總數}} \times 100\%" />
+              </div>
+              <div className="text-red-600 font-bold ml-4 relative">
+                <span className="absolute -left-6 top-1/2 -translate-y-1/2">←</span>
+                關鍵字眼：所佔的百分數
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-blue-800 font-bold mb-3">e.g. 題目：40 隻手錶中，有 8 隻是智能手錶</p>
+              
+              <div className="flex items-center text-lg mt-4 pl-4">
+                <span className="font-bold mr-4">答案：</span>
+                <div className="flex items-center">
+                  <div className="flex flex-col items-center">
+                    <div className="relative">
+                      <span className="text-blue-600 font-bold">8</span>
+                      <span className="absolute left-4 bottom-1 text-sm text-red-600 font-bold whitespace-nowrap">← 目標數字</span>
+                    </div>
+                    <div className="h-0.5 w-8 bg-black my-1"></div>
+                    <div className="relative">
+                      <span className="text-blue-600 font-bold">40</span>
+                      <span className="absolute left-6 top-0 text-sm text-red-600 font-bold whitespace-nowrap">← 總數</span>
+                    </div>
+                  </div>
+                  <span className="ml-2 font-bold">×100% = 20%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="percentage-comparison" title="3. 百分數比較" num={3} color="amber" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-3">⚖️ 百分數比較</h3>
+            
+            <div className="space-y-5">
+              <div className="bg-white p-4 rounded-lg border border-amber-100">
+                <p className="text-lg font-bold mb-3">
+                  - <span className="text-red-500">A</span> 是 <span className="text-blue-500">B</span> 的百分之幾？
+                </p>
+                <div className="flex items-center gap-4 pl-4">
+                  <span className="font-bold">答案：</span>
+                  <div className="text-xl inline-block mr-2">
+                    <Latex math="\frac{\color{red}A}{\color{blue}B} \times 100\%" />
+                  </div>
+                  <div className="text-green-700 font-bold flex items-center">
+                    ← 口訣：前上後下
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-4 rounded-lg border border-amber-100 space-y-4">
+                <div className="flex flex-col gap-2">
+                  <p className="text-lg font-bold">
+                    - <span className="text-red-500">A</span> <span className="bg-yellow-200 px-1 rounded">較</span> <span className="text-blue-500">B</span> <span className="bg-yellow-200 px-1 rounded">多 10%</span>
+                  </p>
+                  <p className="text-lg pl-4">
+                    <span className="font-bold mr-2">式：</span>
+                    <span className="text-red-500 font-bold">A</span> = <span className="text-blue-500 font-bold">B</span> <span className="bg-yellow-200 px-1 rounded font-bold">(1 + 10%)</span>
+                  </p>
+                </div>
+                
+                <hr className="border-amber-100" />
+                
+                <div className="flex flex-col gap-2">
+                  <p className="text-lg font-bold">
+                    - <span className="text-red-500">A</span> <span className="bg-yellow-200 px-1 rounded">較</span> <span className="text-blue-500">B</span> <span className="bg-yellow-200 px-1 rounded">少 10%</span>
+                  </p>
+                  <p className="text-lg pl-4">
+                    <span className="font-bold mr-2">式：</span>
+                    <span className="text-red-500 font-bold">A</span> = <span className="text-blue-500 font-bold">B</span> <span className="bg-yellow-200 px-1 rounded font-bold">(1 - 10%)</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="percentage-change" title="4. 百分變化" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-3">📈 百分變化</h3>
+            
+            <div className="flex flex-col md:flex-row items-center gap-4 mb-4 bg-white p-4 rounded-lg">
+              <div className="text-xl">
+                <Latex math="\frac{\color{green}\text{新} - \color{green}\text{舊}}{\color{green}\text{舊}} \times 100\%" />
+              </div>
+              <div className="text-red-600 font-bold ml-4 relative">
+                <span className="absolute -left-6 top-1/2 -translate-y-1/2">←</span>
+                關鍵字眼：百分變化
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+              <p className="text-purple-800 font-bold mb-2">新/舊按事件的發生時序排列</p>
+              <p className="text-blue-800 font-bold mb-4 border-b pb-2">例：昨天 5000 人，今天 6000 人，求人數百分變化</p>
+              
+              <div className="space-y-4 pl-4 text-lg">
+                <div className="flex items-center">
+                  <div className="flex flex-col items-center">
+                    <div className="relative pb-1">
+                      <span className="font-bold text-blue-700">6000 - 5000</span>
+                      <span className="absolute left-1 -top-4 text-xs text-green-600 font-bold">新</span>
+                      <span className="absolute right-1 -top-4 text-xs text-green-600 font-bold">舊</span>
+                    </div>
+                    <div className="h-0.5 w-[110%] bg-black"></div>
+                    <div className="relative pt-1">
+                      <span className="font-bold text-blue-700">5000</span>
+                      <span className="absolute left-1/2 -translate-x-1/2 top-7 text-xs text-green-600 font-bold">舊</span>
+                    </div>
+                  </div>
+                  <span className="ml-4 font-bold">×100%</span>
+                </div>
+                
+                <div className="flex items-center pt-8">
+                  <span className="mr-2">=</span>
+                  <div className="flex flex-col items-center">
+                    <div className="font-bold text-blue-700 pb-1">1000</div>
+                    <div className="h-0.5 w-[120%] bg-black"></div>
+                    <div className="font-bold text-blue-700 pt-1">5000</div>
+                  </div>
+                  <span className="ml-4 font-bold">×100%</span>
+                </div>
+                
+                <div className="pt-2 font-bold text-blue-700">
+                  = <span className="bg-green-100 px-1 rounded text-green-700">+20%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+export const AnglesNotes = ({ activeSub }) => {
+  const s0 = useRef(null), s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
+
+  return (
+    <>
+      <CollapsibleSection id="lines-angles-naming" title="基礎知識：線和角的命名" num={0} color="slate" activeSub={activeSub} sectionRef={s0}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+            <p className="text-sm font-bold text-green-800 mb-1">線段</p>
+            <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-mono font-bold bg-white px-1 rounded">線段 AB</span>（從 A 到 B）</p>
+            <svg viewBox="0 0 300 60" className="w-full touch-none mt-2">
+              <line x1="80" y1="30" x2="220" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="80" cy="30" r="3" fill="#334155" />
+              <circle cx="220" cy="20" r="3" fill="#334155" />
+              <text x="60" y="35" fontSize="16" fill="#16a34a" fontFamily="sans-serif" fontStyle="italic">A</text>
+              <text x="230" y="25" fontSize="16" fill="#16a34a" fontFamily="sans-serif" fontStyle="italic">B</text>
+            </svg>
+          </div>
+          <div className="bg-green-50 rounded-lg p-3 border border-green-200">
+            <p className="text-sm font-bold text-green-800 mb-1">角的命名（角的特徵）</p>
+            <p className="text-sm text-slate-700 mb-2">由三個點命名，如 <span className="font-mono font-bold bg-white px-1 rounded">∠ABC</span>
+              <span className="ml-2 text-xs text-amber-700 font-bold">⚠️ 頂點（vertex）在<span className="text-red-600">中間</span>的英文字母</span>
+            </p>
+            <svg viewBox="0 0 300 100" className="w-full touch-none">
+              <path d="M 60 80 L 120 30 M 60 80 L 180 80" stroke="#334155" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="125" y="25" fontSize="16" fill="#16a34a" fontStyle="italic">A</text>
+              <text x="40" y="85" fontSize="16" fill="#16a34a" fontStyle="italic">B</text>
+              <text x="185" y="85" fontSize="16" fill="#16a34a" fontStyle="italic">C</text>
+              <path d="M 90 80 A 30 30 0 0 0 83 61" stroke="#dc2626" strokeWidth="2" fill="none" />
+            </svg>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="basic-angle-theorems" title="幾何角度定理 (1-5)" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          {/* 1. 直線上的鄰角 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
+              <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">1</span>
+              直線上的鄰角
+            </h3>
+            <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 flex-1 flex flex-col justify-between">
+              <div>
+                <p className="text-center text-xl font-bold text-blue-800 my-1">a + b + c = 180°</p>
+                <svg viewBox="0 0 300 100" className="w-full max-w-xs mx-auto my-3 touch-none">
+                  <line x1="40" y1="80" x2="260" y2="80" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="150" y1="80" x2="100" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="150" y1="80" x2="230" y2="35" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M 128 80 A 22 22 0 0 1 133 60" stroke="#2563eb" strokeWidth="2" fill="none" />
+                  <path d="M 139 67 A 17 17 0 0 1 165 72" stroke="#2563eb" strokeWidth="2" fill="none" />
+                  <path d="M 169 70 A 22 22 0 0 1 172 80" stroke="#2563eb" strokeWidth="2" fill="none" />
+                  <text x="115" y="75" fontSize="14" fill="#1e3a8a" fontStyle="italic">a</text>
+                  <text x="151" y="62" fontSize="14" fill="#1e3a8a" fontStyle="italic">b</text>
+                  <text x="180" y="75" fontSize="14" fill="#1e3a8a" fontStyle="italic">c</text>
+                  <text x="40" y="98" fontSize="14" fill="#dc2626" fontStyle="italic">A</text>
+                  <text x="146" y="98" fontSize="14" fill="#dc2626" fontStyle="italic">O</text>
+                  <text x="250" y="98" fontSize="14" fill="#dc2626" fontStyle="italic">B</text>
+                </svg>
+                <p className="text-sm text-slate-600 text-center mt-2">
+                  <span className="bg-blue-200 px-2 py-0.5 rounded font-bold text-blue-900">在直線的所有角</span>之和 = 180°
+                </p>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-blue-200">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(直線上的鄰角, adj. ∠s on st. line)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 2. 同頂角 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
+              <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">2</span>
+              同頂角
+            </h3>
+            <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 flex-1 flex flex-col justify-between">
+              <div>
+                <p className="text-center text-xl font-bold text-blue-800 my-1">a + b + c = 360°</p>
+                <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                  <g transform="translate(150, 70)">
+                    <line x1="0" y1="0" x2="0" y2="-60" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="0" y1="0" x2="55" y2="40" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="0" y1="0" x2="-45" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M 0 -14 A 14 14 0 0 1 11 9" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <path d="M 18 13 A 22 22 0 0 1 -15 16" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <path d="M -11 14 A 18 18 0 0 1 0 -18" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <text x="17" y="-5" fontSize="14" fill="#1e3a8a" fontStyle="italic">a</text>
+                    <text x="-2" y="38" fontSize="14" fill="#1e3a8a" fontStyle="italic">b</text>
+                    <text x="-32" y="-6" fontSize="14" fill="#1e3a8a" fontStyle="italic">c</text>
+                  </g>
+                </svg>
+                <p className="text-sm text-slate-600 text-center mt-2">
+                  <span className="bg-blue-200 px-2 py-0.5 rounded font-bold text-blue-900">圓圈的所有角</span>之和 = 360°
+                </p>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-blue-200">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(同頂角, ∠s at a pt.)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 3. 對頂角 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
+              <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">3</span>
+              對頂角
+            </h3>
+            <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 flex-1 flex flex-col justify-between">
+              <div>
+                <p className="text-center text-xl font-bold text-blue-800 my-1">a = b</p>
+                <svg viewBox="0 0 300 120" className="w-full max-w-xs mx-auto my-3 touch-none">
+                  <line x1="70" y1="20" x2="230" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="70" y1="100" x2="230" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <g transform="translate(150, 60)">
+                    <path d="M -18 -8 A 20 20 0 0 0 -18 8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <path d="M 18 -8 A 20 20 0 0 1 18 8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                    <text x="-35" y="5" fontSize="16" fill="#1e3a8a" fontStyle="italic">a</text>
+                    <text x="25" y="5" fontSize="16" fill="#1e3a8a" fontStyle="italic">b</text>
+                  </g>
+                </svg>
+                <div className="bg-amber-50 rounded p-2 mt-2 border border-amber-200 text-center">
+                  <p className="text-sm text-amber-800">💡 兩直線相交 → 對面的角<span className="font-bold text-red-600">相等</span></p>
+                </div>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-blue-200">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(對頂角, vert. opp. ∠s)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 5. 三角形內角和 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
+              <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">5</span>
+              三角形內角和
+            </h3>
+            <div className="bg-green-50 rounded-lg p-4 border border-green-200 flex-1 flex flex-col justify-between">
+              <div>
+                <p className="text-center text-xl font-bold text-green-800 my-1">a + b + c = 180°</p>
+                <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                  <polygon points="150,20 60,110 240,110" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
+                  <path d="M 135.9 34.1 A 20 20 0 0 0 164.1 34.1" stroke="#16a34a" strokeWidth="2" fill="none" />
+                  <path d="M 80 110 A 20 20 0 0 0 74.1 95.9" stroke="#16a34a" strokeWidth="2" fill="none" />
+                  <path d="M 220 110 A 20 20 0 0 1 225.9 95.9" stroke="#16a34a" strokeWidth="2" fill="none" />
+                  <text x="145" y="55" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                  <text x="90" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                  <text x="200" y="103" fontSize="16" fill="#15803d" fontFamily="Times New Roman, serif" fontStyle="italic">c</text>
+                </svg>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-green-200">
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(△內角和, ∠ sum of △)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 4A. 同位角 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
+              <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4A</span>
+              同位角（F 形 → 相等）
+            </h3>
+            <div className="bg-red-50 rounded-lg p-4 border border-red-200 flex-1 flex flex-col justify-between">
+              <div>
+                <p className="text-center text-xl font-bold text-red-800 my-1">a = b</p>
+                <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                  <line x1="40" y1="50" x2="260" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="168" y1="20" x2="102" y2="130" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <polyline points="230,50 150,50 102,130" stroke="#ef4444" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
+                  <line x1="120" y1="100" x2="230" y2="100" stroke="#ef4444" strokeWidth="6" strokeLinecap="round" opacity="0.4" />
+                  <path d="M 165 50 A 15 15 0 0 1 142.3 62.8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                  <path d="M 135 100 A 15 15 0 0 1 112.3 112.8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                  <text x="166" y="76" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                  <text x="136" y="126" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                  <path d="M 195 45 L 205 50 L 195 55" stroke="#16a34a" strokeWidth="2" fill="none" />
+                  <path d="M 195 95 L 205 100 L 195 105" stroke="#16a34a" strokeWidth="2" fill="none" />
+                  <text x="23" y="55" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                  <text x="265" y="55" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                  <text x="23" y="95" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                  <text x="265" y="95" fontSize="16" fill="#334155" fontStyle="italic">D</text>
+                </svg>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-red-200">
+                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(同位角, AB//CD, corr. ∠s, AB//CD)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 4B. 內錯角 */}
+          <div className="flex flex-col">
+            <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
+              <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4B</span>
+              內錯角（Z/N 形 → 相等）
+            </h3>
+            <div className="bg-red-50 rounded-lg p-4 border border-red-200 flex-1 flex flex-col justify-between">
+              <div>
+                <p className="text-center text-xl font-bold text-red-800 my-1">a = b</p>
+                <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                  <line x1="100" y1="20" x2="100" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="200" y1="20" x2="200" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="100" y1="40" x2="200" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                  <polyline points="100,120 100,40 200,100 200,20" stroke="#ef4444" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
+                  <path d="M 112.8 47.7 A 15 15 0 0 1 100 55" stroke="#2563eb" strokeWidth="2" fill="none" />
+                  <path d="M 200 85 A 15 15 0 0 0 187.2 92.3" stroke="#2563eb" strokeWidth="2" fill="none" />
+                  <text x="114" y="74" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                  <text x="176" y="76" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                  <path d="M 92 85 L 100 75 L 108 85 M 92 95 L 100 85 L 108 95" stroke="#16a34a" strokeWidth="2" fill="none" />
+                  <path d="M 192 65 L 200 55 L 208 65 M 192 75 L 200 65 L 208 75" stroke="#16a34a" strokeWidth="2" fill="none" />
+                  <text x="84" y="17" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                  <text x="84" y="133" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                  <text x="204" y="17" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                  <text x="204" y="133" fontSize="16" fill="#334155" fontStyle="italic">D</text>
+                </svg>
+              </div>
+              <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-red-200">
+                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(內錯角, AB//CD, alt. ∠s, AB//CD)</span>
+              </p>
+            </div>
+          </div>
+
+          {/* 4C. 同旁內角 */}
+          <div className="flex flex-col md:col-span-2">
+            <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
+              <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4C</span>
+              同旁內角（C/U 形 → 180°）
+            </h3>
+            <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+              <p className="text-center text-xl font-bold text-red-800 my-1">a + b = 180°</p>
+              <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
+                <line x1="40" y1="50" x2="260" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                <line x1="168" y1="20" x2="102" y2="130" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
+                <polyline points="230,50 150,50 120,100 230,100" stroke="#ef4444" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
+                <path d="M 165 50 A 15 15 0 0 1 142.3 62.8" stroke="#2563eb" strokeWidth="2" fill="none" />
+                <path d="M 127.7 87.2 A 15 15 0 0 1 135 100" stroke="#2563eb" strokeWidth="2" fill="none" />
+                <text x="153" y="72" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">a</text>
+                <text x="135" y="85" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
+                <path d="M 190 45 L 200 50 L 190 55 M 200 45 L 210 50 L 200 55" stroke="#16a34a" strokeWidth="2" fill="none" />
+                <path d="M 190 95 L 200 100 L 190 105 M 200 95 L 210 100 L 200 105" stroke="#16a34a" strokeWidth="2" fill="none" />
+                <text x="23" y="55" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                <text x="265" y="55" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                <text x="40" y="90" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                <text x="250" y="90" fontSize="16" fill="#334155" fontStyle="italic">D</text>
+              </svg>
+              <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-red-200">
+                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(同旁內角, AB//CD, int. ∠s, AB//CD)</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
