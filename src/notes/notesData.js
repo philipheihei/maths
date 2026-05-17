@@ -1,4 +1,4 @@
-import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, PolynomialsNotes, StatisticsNotes } from './F1Notes';
+import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, AdvancedLinearEquationNotes, PolynomialsNotes, StatisticsNotes, CoordinateNotes } from './F1Notes';
 import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
@@ -63,6 +63,14 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'linear-equation-advanced',
+      topic: 'CH7 進階一元一次方程',
+      color: 'blue',
+      subtopics: [
+        { id: 'advanced-equations', num: 1, title: '分數方程與拆括號方程', color: 'blue' },
+      ]
+    },
+    {
       id: 'statistics',
       topic: 'CH8 統計(一)',
       color: 'blue',
@@ -71,8 +79,19 @@ export const NOTES_DATA = {
         { id: 'pie-chart', num: 2, title: '圓形圖', color: 'blue' },
         { id: 'line-graph', num: 3, title: '折線圖', color: 'blue' },
         { id: 'stem-leaf', num: 4, title: '幹葉圖', color: 'blue' },
-        { id: 'discrete-continuous', num: 5, title: '需分辨數據為離散數據還是連續數據？', color: 'red' },
+        { id: 'discrete-continuous', num: 5, title: '連續數據 / 離散數據', color: 'red' },
         { id: 'frequency-table', num: 6, title: '頻數分佈表 (填表格)', color: 'blue' },
+      ]
+    },
+    {
+      id: 'coordinate',
+      topic: 'CH10 坐標',
+      color: 'amber',
+      subtopics: [
+        { id: 'coordinate-system', num: 1, title: '坐標系統 (直角坐標)', color: 'blue' },
+        { id: 'quadrants', num: 2, title: '象限', color: 'green' },
+        { id: 'length', num: 3, title: '坐標線段 找長度', color: 'amber' },
+        { id: 'transformation', num: 4, title: '點的轉換', color: 'red' },
       ]
     },
     {
@@ -333,7 +352,9 @@ export const NOTES_COMPONENTS = {
   'approximation': ApproximationNotes,
   'area-volume': AreaVolumeNotes,
   'linear-equation': LinearEquationNotes,
+  'linear-equation-advanced': AdvancedLinearEquationNotes,
   'polynomials': PolynomialsNotes,
   'statistics': StatisticsNotes,
+  'coordinate': CoordinateNotes,
   'functions': FunctionNotes,
 };

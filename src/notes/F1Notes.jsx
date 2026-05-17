@@ -633,7 +633,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
               <span className="text-slate-600">例子：</span>
               <span className="bg-yellow-200 px-2 py-1 rounded">5</span>
               <span className="text-xl">/</span>
-              <span className="bg-yellow-200 px-2 py-1 rounded">+ 2x^3</span>
+              <span className="bg-yellow-200 px-2 py-1 rounded">+ 2x<sup>3</sup></span>
               <span className="font-bold ml-2">👉 項數：2</span>
             </div>
           </div>
@@ -1404,6 +1404,211 @@ export const LinearEquationNotes = ({ activeSub }) => {
           </div>
         </div>
       </CollapsibleSection>
+
+    </>
+  );
+};
+
+export const AdvancedLinearEquationNotes = ({ activeSub }) => {
+  const s1 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH7 進階一元一次方程</h1>
+        <p className="text-slate-600">分數方程與拆括號同類項方程</p>
+      </div>
+
+      <CollapsibleSection id="advanced-equations" title="1. 進階解方程" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-6 text-lg">
+          <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm overflow-x-auto">
+            <h3 className="font-bold text-blue-800 mb-4 text-xl border-b pb-2">1. 解分數方程</h3>
+
+            <div className="mb-8 min-w-[650px]">
+              <p className="font-bold text-slate-700 mb-4">例子 1：</p>
+              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-4 items-center pl-4 pr-4">
+                <div className="text-right flex justify-end items-center">
+                  <Latex math="\frac{x}{" /><span className="border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center mx-[2px] text-red-500 font-bold mt-1">4</span><Latex math="} - \frac{x}{" /><span className="border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center mx-[2px] text-red-500 font-bold mt-1">5</span><Latex math="}" />
+                </div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="10" /></div>
+                <div className="text-sm text-slate-500 font-bold tracking-widest text-blue-600 pl-4 w-full">例：4×5=20</div>
+
+                <div className="text-right flex justify-end items-center">
+                  <span className="border-b-[3px] border-green-700 font-bold text-green-700 mr-2 text-xl pb-1">20</span><Latex math="\left(\frac{x}{4} - \frac{x}{5}\right)" />
+                </div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left whitespace-nowrap">
+                  <Latex math="10 \times " /><span className="border-b-[3px] border-green-700 font-bold text-green-700 ml-1 text-xl pb-1">20</span>
+                </div>
+                <div className="text-sm text-slate-700 flex items-center pl-4 w-full">
+                  <span className="text-red-500 font-bold mr-3 text-xl">←</span>
+                  <span className="border-2 border-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 shrink-0">1</span>
+                  <span className="text-red-600 border border-green-700 px-2 py-0.5 font-bold whitespace-nowrap bg-white rounded">將分母相乘的數字</span>
+                  <span className="text-red-600 font-bold ml-2 whitespace-nowrap border-b-2 border-red-600">乘兩邊</span>
+                </div>
+
+                <div className="text-right relative">
+                  <Latex math="5x - 4x" />
+                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm text-red-500 font-bold whitespace-nowrap flex items-center gap-6">
+                    <span className="relative"><span className="absolute -top-3 right-full text-xl translate-x-2">↗</span><span className="ml-[6px]">20÷4=5</span></span>
+                    <span className="relative"><span className="absolute -top-3 left-0 text-xl -translate-x-1">↖</span><span className="mr-[6px]">20÷5=4</span></span>
+                  </div>
+                </div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="200" /></div>
+                <div className="text-sm text-slate-700 flex items-center pl-4 w-full">
+                  <span className="text-red-500 font-bold mr-3 text-xl">←</span>
+                  <span className="border-2 border-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 shrink-0">2</span>
+                  <span className="text-red-600 font-bold text-base">拆括號，有分數 →</span>
+                </div>
+
+                <div className="text-right pt-8"><Latex math="x" /></div>
+                <div className="text-center pt-8"><Latex math="=" /></div>
+                <div className="text-left pt-8"><Latex math="200" /></div>
+                <div className="text-sm text-slate-700 flex items-center pt-8 pl-4 w-full">
+                  <span className="text-red-500 font-bold mr-3 text-xl">←</span>
+                  <span className="border-2 border-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 shrink-0">3</span>
+                  <span className="text-red-600 font-bold text-base whitespace-nowrap">簡化 <Latex math="x" /> （答案: <Latex math="x = ?" />）</span>
+                </div>
+              </div>
+            </div>
+
+            <hr className="my-8 border-slate-200" />
+
+            <div className="min-w-[700px]">
+              <p className="font-bold text-slate-700 mb-4">例子 2：</p>
+              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-6 items-center pl-4 pr-4">
+                <div className="text-right"><Latex math="\frac{4x}{3} - \frac{x}{2}" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="5" /></div>
+                <div className="text-sm text-green-700 font-bold text-base pl-4 tracking-wide">題目目標：弄走分數</div>
+
+                <div className="text-right flex items-center justify-end">
+                  <span className="bg-purple-200 px-2 py-0.5 rounded font-bold mr-2 tracking-widest text-[#5b21b6]">2×3</span><Latex math="\times \left(\frac{4x}{\colorbox{#eab308}{3}} - \frac{x}{\colorbox{#eab308}{2}}\right)" />
+                </div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left whitespace-nowrap">
+                  <Latex math="5 \times " /><span className="bg-purple-200 px-2 py-0.5 rounded font-bold ml-1 tracking-widest text-[#5b21b6]">2 \times 3</span>
+                </div>
+                <div className="text-sm text-[#5b21b6] font-bold relative pl-4 w-full text-base">
+                  <div>觀察有什麼分母，相乘</div>
+                  <div className="text-red-500 font-bold flex items-center absolute -left-4 top-[80%] mt-1">
+                    <span className="mr-1 rotate-[140deg] text-2xl">↖</span>兩邊都要乘！
+                  </div>
+                </div>
+
+                <div className="text-right pt-6 pb-2"><Latex math="6\left(\frac{4x}{3} - \frac{x}{2}\right)" /></div>
+                <div className="text-center pt-6 pb-2"><Latex math="=" /></div>
+                <div className="text-left pt-6 pb-2"><Latex math="30" /></div>
+                <div className="text-sm pt-6 pb-2"></div>
+
+                <div className="text-right flex items-center justify-end">
+                  <div className="flex items-center">
+                    <div className="relative inline-flex items-center">
+                      <span className="absolute -top-3 -left-3 text-red-500 text-xs font-bold">2</span>
+                      <div className="absolute top-1/2 left-[-10%] w-[120%] h-[2px] bg-red-500 -rotate-[30deg]"></div>
+                      <span className="text-2xl font-serif">6</span>
+                    </div>
+                    <span className="mx-1.5"><Latex math="\Big(" /></span>
+                    <div className="relative inline-flex items-center flex-col mx-1 -top-1">
+                      <Latex math="\frac{4x}{3}" />
+                      <div className="absolute bottom-[20%] left-[-10%] w-[120%] h-[2px] bg-red-500 -rotate-[20deg]"></div>
+                      <span className="absolute -bottom-3 -right-3 text-red-500 text-xs font-bold">1</span>
+                    </div>
+                    <span className="mx-1.5"><Latex math="\Big)" /></span>
+                    <span className="mx-3 text-xl">-</span>
+                    <div className="relative inline-flex items-center">
+                      <span className="absolute -top-3 -left-3 text-red-500 text-xs font-bold">3</span>
+                      <div className="absolute top-1/2 left-[-10%] w-[120%] h-[2px] bg-red-500 -rotate-[30deg]"></div>
+                      <span className="text-2xl font-serif">6</span>
+                    </div>
+                    <span className="mx-1.5"><Latex math="\Big(" /></span>
+                    <div className="relative inline-flex items-center flex-col mx-1 -top-1">
+                      <Latex math="\frac{x}{2}" />
+                      <div className="absolute bottom-[20%] left-[-10%] w-[120%] h-[2px] bg-red-500 -rotate-[20deg]"></div>
+                      <span className="absolute -bottom-3 -right-3 text-red-500 text-xs font-bold">1</span>
+                    </div>
+                    <span className="mx-1.5"><Latex math="\Big)" /></span>
+                  </div>
+                </div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="30" /></div>
+                <div className="text-sm"></div>
+
+                <div className="text-right pt-2"><Latex math="2(4x) - 3x" /></div>
+                <div className="text-center pt-2"><Latex math="=" /></div>
+                <div className="text-left pt-2"><Latex math="30" /></div>
+                <div className="text-sm"></div>
+
+                <div className="text-right"><Latex math="8x - 3x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="30" /></div>
+                <div className="text-sm"></div>
+
+                <div className="text-right"><Latex math="5x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="30" /></div>
+                <div className="text-sm"></div>
+
+                <div className="text-right"><Latex math="x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="6" /></div>
+                <div className="text-sm"></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm overflow-x-auto">
+            <h3 className="font-bold text-blue-800 mb-4 text-xl border-b pb-2">2. 解括號 (同類項) 方程</h3>
+
+            <div className="min-w-[650px]">
+              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-5 items-center pl-4 pr-4">
+                <div className="text-right"><Latex math="2(x-3) + 3x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="14" /></div>
+                <div className="text-sm"></div>
+
+                <div className="text-right"><Latex math="2x - 6 + 3x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="14" /></div>
+                <div className="text-sm text-slate-700 flex items-center pl-4">
+                  <span className="text-green-600 font-bold mr-3 text-xl">←</span>
+                  <span className="text-green-700 font-bold whitespace-nowrap text-base">先拆括號</span>
+                  <div className="text-[#5b21b6] ml-3 font-bold px-1 relative text-base flex items-center whitespace-nowrap">
+                    <span className="absolute -top-3 left-[16px] text-lg rotate-12">↷</span>
+                    <span className="absolute -top-4 left-4 text-lg">↷</span>
+                    <Latex math="2(x-3) = 2(x)-2(3) = 2x-6" />
+                  </div>
+                </div>
+
+                <div className="text-right"><Latex math="2x + 3x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="14 + 6" /></div>
+                <div className="text-sm text-slate-700 flex items-center pl-4">
+                  <span className="text-green-600 font-bold mr-3 text-xl">←</span>
+                  <span className="text-green-700 font-bold whitespace-nowrap text-base">後分類（有 <Latex math="x" /> / 沒 <Latex math="x" />）</span>
+                </div>
+
+                <div className="text-right"><Latex math="5x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="20" /></div>
+                <div className="text-sm"></div>
+
+                <div className="text-right"><Latex math="x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="\frac{20}{5}" /></div>
+                <div className="text-sm"></div>
+
+                <div className="text-right"><Latex math="x" /></div>
+                <div className="text-center"><Latex math="=" /></div>
+                <div className="text-left"><Latex math="4" /></div>
+                <div className="text-sm"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
     </>
   );
 };
@@ -1861,8 +2066,9 @@ export const StatisticsNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="discrete-continuous" title="5. 需分辨數據為離散數據還是連續數據？" num={5} color="red" activeSub={activeSub} sectionRef={s5}>
+      <CollapsibleSection id="discrete-continuous" title="5. 連續數據 / 離散數據" num={5} color="red" activeSub={activeSub} sectionRef={s5}>
         <div className="bg-white rounded-xl p-6 border-l-[6px] border-l-red-500 shadow-md max-w-3xl mx-auto">
+          <p className="text-red-700 font-bold mb-4">- 需分辨數據為離散數據還是連續數據</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-red-50 p-6 rounded-xl border border-red-200 transition hover:shadow-md">
               <h3 className="text-red-800 font-bold text-xl mb-3 flex items-center"><span className="mr-2">📝</span>離散數據</h3>
@@ -1872,16 +2078,288 @@ export const StatisticsNotes = ({ activeSub }) => {
                 <p className="text-slate-700 font-medium">錢，人數，物件數量 ...</p>
               </div>
             </div>
-            
-            <div className="bg-red-50 p-6 rounded-xl border border-red-200 transition hover:shadow-md">
-              <h3 className="text-red-800 font-bold text-xl mb-3 flex items-center"><span className="mr-2">📏</span>連續數據</h3>
-              <p className="text-slate-700 text-lg mb-4"><span className="text-red-600 font-bold border-b-2 border-red-300 pb-1">量度</span>所得</p>
-              <div className="bg-white p-3 rounded-lg border border-red-100">
+
+            <div className="bg-blue-50 p-6 rounded-xl border border-blue-200 transition hover:shadow-md">
+              <h3 className="text-blue-800 font-bold text-xl mb-3 flex items-center"><span className="mr-2">📝</span>連續數據</h3>
+              <p className="text-slate-700 text-lg mb-4"><span className="text-blue-600 font-bold border-b-2 border-blue-300 pb-1">量度</span>所得</p>
+              <div className="bg-white p-3 rounded-lg border border-blue-100">
                 <p className="text-blue-800 text-sm font-bold opacity-80 mb-1">例子：</p>
-                <p className="text-slate-700 font-medium">身高，體重，溫度，時間，容量，體積 ...</p>
+                <p className="text-slate-700 font-medium">身高、時間、重量、溫度 ...</p>
               </div>
             </div>
           </div>
+
+          <div className="mt-5 bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-800 font-bold text-center">
+            記法：數算得離散，量度得連續。
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+export const CoordinateNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+
+  // 繪製格線的輔助函數
+  const renderGrid = (size, step = 30) => {
+    const paths = [];
+    for (let i = -size; i <= size; i++) {
+      paths.push(<line key={`h${i}`} x1={-size * step} y1={i * step} x2={size * step} y2={i * step} stroke="#bae6fd" strokeWidth="2" />);
+      paths.push(<line key={`v${i}`} x1={i * step} y1={-size * step} x2={i * step} y2={size * step} stroke="#bae6fd" strokeWidth="2" />);
+    }
+    return paths;
+  };
+
+  const drawPoint = (x, y, label, color = "#0284c7") => {
+    const cx = x * 30;
+    const cy = -y * 30;
+    return (
+      <g key={label}>
+        <path d={`M ${cx - 4} ${cy - 4} L ${cx + 4} ${cy + 4} M ${cx + 4} ${cy - 4} L ${cx - 4} ${cy + 4}`} stroke={color} strokeWidth="2.5" />
+        <text x={cx + 8} y={cy - 8} fontSize="14" fill="#000" fontWeight="bold">{label}</text>
+      </g>
+    );
+  };
+
+  return (
+    <>
+      <CollapsibleSection id="coordinate-system" title="坐標系統 (直角坐標)" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">📍 坐標系統 (直角坐標)</h3>
+            <ul className="text-slate-700 space-y-2">
+              <li>• <span className="bg-amber-200 px-1 rounded font-bold text-red-600">原點 $O (0, 0)$</span> 為十字的中間交點。</li>
+              <li>• 例子：$A$ 的坐標為 $(2, 4)$。前方的 <span className="text-green-700 font-bold">$x$ 坐標是左右</span>，後方的 <span className="text-red-600 font-bold">$y$ 坐標是上下</span>。</li>
+            </ul>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center">
+            <svg viewBox="-180 -180 360 360" className="w-full max-w-md bg-white">
+              {/* 格線 */}
+              {renderGrid(5)}
+              
+              {/* X軸和Y軸 */}
+              <line x1="-165" y1="0" x2="165" y2="0" stroke="#16a34a" strokeWidth="3" />
+              <polyline points="160,-5 165,0 160,5" fill="none" stroke="#16a34a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="172" y="5" fontSize="16" fill="#dc2626" fontWeight="bold">x 軸</text>
+
+              <line x1="0" y1="165" x2="0" y2="-165" stroke="#16a34a" strokeWidth="3" />
+              <polyline points="-5,-160 0,-165 5,-160" fill="none" stroke="#16a34a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="12" y="-160" fontSize="16" fill="#dc2626" fontWeight="bold">y 軸</text>
+
+              {/* 刻度文字 */}
+              {[-4, -3, -2, -1, 1, 2, 3].map(i => (
+                <g key={`x-tick-${i}`}>
+                   <text x={i * 30} y="18" fontSize="14" fill="#16a34a" textAnchor="middle">{i}</text>
+                   <line x1={i * 30} y1="-3" x2={i * 30} y2="3" stroke="#16a34a" strokeWidth="2" />
+                </g>
+              ))}
+              {[1, 2, 3, 4, 5].map(i => (
+                <g key={`y-tick-${i}`}>
+                  <text x="-12" y={-i * 30 + 5} fontSize="14" fill="#16a34a" textAnchor="end">{i}</text>
+                  <line x1="-3" y1={-i * 30} x2="3" y2={-i * 30} stroke="#16a34a" strokeWidth="2" />
+                </g>
+              ))}
+              {[-1, -2, -3].map(i => (
+                <g key={`y-tick-neg-${i}`}>
+                  <text x="-12" y={-i * 30 + 5} fontSize="14" fill="#16a34a" textAnchor="end">{i}</text>
+                  <line x1="-3" y1={-i * 30} x2="3" y2={-i * 30} stroke="#16a34a" strokeWidth="2" />
+                </g>
+              ))}
+              <text x="10" y="16" fontSize="14" fill="#16a34a" textAnchor="middle">0</text>
+              <text x="35" y="-12" fontSize="14" fill="#dc2626" fontWeight="bold">原點 O (0,0)</text>
+
+              {/* 標點 */}
+              {drawPoint(2, 4, "A", "#0284c7")}
+              {drawPoint(1, -2, "B", "#0284c7")}
+              {drawPoint(-3, -3, "C", "#0284c7")}
+              {drawPoint(-4, -2, "D", "#0284c7")}
+              {drawPoint(-1, 2, "E", "#0284c7")}
+            </svg>
+            <p className="text-sm text-slate-500 mt-2">找坐標例子：$B(1, -2)$、$C(-3, -3)$、$D(-4, -2)$、$E(-1, 2)$</p>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="quadrants" title="象限" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-3">🧭 四個象限</h3>
+            <ul className="text-slate-700 space-y-2">
+              <li>• 坐標平面可分為 <span className="font-bold">4 個象限</span>。</li>
+              <li>• 必定用<span className="font-bold text-green-700">羅馬數字</span>表達象限。</li>
+            </ul>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col md:flex-row items-center gap-6">
+            <svg viewBox="-100 -100 200 200" className="w-48 bg-white">
+              {/* 四個象限背景色 */}
+              <rect x="0" y="-100" width="100" height="100" fill="#f0fdf4" />
+              <rect x="-100" y="-100" width="100" height="100" fill="#f0fff4" /> {/* Different shades for quadrants? Light enough. Just use text. */}
+              
+              <line x1="-90" y1="0" x2="90" y2="0" stroke="#000" strokeWidth="2" />
+              <polyline points="85,-4 90,0 85,4" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <line x1="0" y1="90" x2="0" y2="-90" stroke="#000" strokeWidth="2" />
+              <polyline points="-4,-85 0,-90 4,-85" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+
+              <text x="45" y="-30" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">I</text>
+              <text x="45" y="-60" fontSize="14" fill="#000" fontWeight="bold" textAnchor="middle">(+, +)</text>
+
+              <text x="-45" y="-30" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">II</text>
+              <text x="-45" y="-60" fontSize="14" fill="#000" fontWeight="bold" textAnchor="middle">(-, +)</text>
+
+              <text x="-45" y="50" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">III</text>
+              <text x="-45" y="20" fontSize="14" fill="#000" fontWeight="bold" textAnchor="middle">(-, -)</text>
+
+              <text x="45" y="50" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">IV</text>
+              <text x="45" y="20" fontSize="14" fill="#000" fontWeight="bold" textAnchor="middle">(+, -)</text>
+              
+              {/* Highlight line logic */}
+              <circle cx="30" cy="0" r="4" fill="#dc2626" />
+              <text x="40" y="-10" fontSize="12" fill="#dc2626" fontWeight="bold">(x, 0)</text>
+            </svg>
+
+            <div className="bg-red-50 p-4 border border-red-200 rounded-lg flex-1">
+              <h4 className="font-bold text-red-800 mb-2">⚠️ 陷阱注意</h4>
+              <p className="text-slate-700">其中一個坐標為 0，則<span className="font-bold underline">不屬於任何象限</span>。</p>
+              <p className="text-sm text-slate-600 mt-2 bg-white p-2 rounded">
+                e.g. $(6, 0)$ 不屬於 I, II, III, IV 任何一個象限。它位於 $x$ 軸上。
+              </p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="length" title="坐標線段 找長度" num={3} color="amber" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-3">📏 計算水平或鉛垂線段長度</h3>
+            <div className="bg-white p-4 rounded-lg my-3 border border-amber-100 flex items-center justify-center space-x-6">
+              <div className="text-lg">
+                $(\,<span className="font-bold">1</span>, <span className="bg-yellow-300 px-1 rounded font-bold">2</span>\,)$
+              </div>
+              <div className="w-16 h-0.5 bg-green-500 relative">
+                <div className="absolute -top-1.5 -left-1 w-3 h-3 border border-green-500 rounded-full bg-white"></div>
+                <div className="absolute -top-1.5 -right-1 w-3 h-3 border border-green-500 rounded-full bg-white"></div>
+              </div>
+              <div className="text-lg">
+                $(\,<span className="font-bold">5</span>, <span className="bg-yellow-300 px-1 rounded font-bold">2</span>\,)$
+              </div>
+            </div>
+
+            <div className="space-y-3 mt-4 text-slate-700">
+              <p className="flex items-start">
+                <span className="text-green-600 font-bold mr-2 mt-0.5">Step 1：</span>
+                <span>找前／後的數字相同，用螢光筆 highlight （如上圖的 2）。</span>
+              </p>
+              <p className="flex items-start">
+                <span className="text-green-600 font-bold mr-2 mt-0.5">Step 2：</span>
+                <span>不相同的數字（沒 highlight），用 <span className="font-bold text-purple-700">大 − 小</span>。</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="mb-2 text-slate-700">上述例子的長度為：</p>
+            <Latex math="5 - 1 = 4 \text{ 單位}" block />
+            
+            <div className="mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-slate-400 text-sm">
+              <p className="font-bold text-slate-800">💡 考試提示：</p>
+              <ul className="list-disc pl-5 mt-1 space-y-1 text-slate-600">
+                <li><span className="font-bold">周界</span> $\rightarrow$ 將所有找到的邊長 <span className="font-bold text-red-600">相加</span>！</li>
+                <li><span className="font-bold">面積</span> $\rightarrow$ 將相應找到的邊長 <span className="font-bold text-red-600">相乘</span>！</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="transformation" title="點的轉換" num={4} color="red" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+            <h3 className="font-bold text-red-800 mb-2">🔄 需分辨平移、旋轉、反射</h3>
+            
+            <div className="space-y-3 mt-3">
+              <div className="bg-white p-3 rounded-lg border border-red-100">
+                <h4 className="font-bold text-red-600 mb-1 border-b-2 border-red-200 inline-block">平移 (Translation)</h4>
+                <p className="text-slate-700 text-sm">向「上、下、左、右」4 個方向，打直／打橫移特定格數。</p>
+              </div>
+              <div className="bg-white p-3 rounded-lg border border-red-100">
+                <h4 className="font-bold text-blue-600 mb-1 border-b-2 border-blue-200 inline-block">反射 (Reflection)</h4>
+                <p className="text-slate-700 text-sm">可沿 <span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300">$x$ 軸</span>、<span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300">$y$ 軸</span>或特定直線（例如 $x=1$）反射。<br/>可透過畫圖，或者記住：沿 $y$ 軸反射，$x$ 正負調轉；沿 $x$ 軸反射，$y$ 正負調轉。</p>
+              </div>
+              <div className="bg-white p-3 rounded-lg border border-red-100">
+                <h4 className="font-bold text-purple-700 mb-1 border-b-2 border-purple-200 inline-block">旋轉 (Rotation) 📐</h4>
+                <p className="text-slate-700 text-sm">
+                  每轉 90°，$(x, y)$ 必須<span className="bg-yellow-200 px-1 rounded font-bold">調轉寫正值</span>，再<span className="font-bold text-red-600">按其象限加回相應負號</span>。
+                </p>
+                <div className="mt-2 pl-2 border-l-2 border-purple-300 bg-purple-50 p-2 rounded text-xs text-purple-800">
+                  <p>例如：$\,C(2, -4)\,$ 轉 90°，先調轉 $\rightarrow (4, 2)$。<br/>畫圖可見若 <span className="font-bold">順時針</span> 轉 90° 會到第 III 象限，所以加負號得 <span className="font-bold text-red-600">$\,(-4, -2)$</span>。</p>
+                </div>
+                <div className="mt-2 text-xs text-slate-500">
+                  <p>註1：如轉 180° 即不用調轉 $x,y$ (因為調了兩次會抵銷)。順時針 270° 即等於 逆時針 90°。</p>
+                  <p className="text-red-500 font-bold mt-1">💡 小貼士：可望手錶或時鐘數字順序，提醒自己順逆時針。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center">
+            <svg viewBox="-150 -150 300 300" className="w-full max-w-md bg-white">
+              {renderGrid(5, 25)}
+              
+              <line x1="-140" y1="0" x2="140" y2="0" stroke="#000" strokeWidth="2" />
+              <polyline points="135,-4 140,0 135,4" fill="none" stroke="#000" strokeWidth="2" />
+              <text x="145" y="5" fontSize="14" fill="#000" fontWeight="bold">X</text>
+
+              <line x1="0" y1="140" x2="0" y2="-140" stroke="#000" strokeWidth="2" />
+              <polyline points="-4,-135 0,-140 4,-135" fill="none" stroke="#000" strokeWidth="2" />
+              <text x="-15" y="-140" fontSize="14" fill="#000" fontWeight="bold">Y</text>
+
+              {/* A 平移 */}
+              {drawPoint(5, 4, "", "#db2777")}
+              <text x="130" y="-105" fontSize="12" fill="#db2777" fontWeight="bold">A(5, 4)</text>
+              {drawPoint(1, 4, "", "#db2777")}
+              <text x="25" y="-105" fontSize="12" fill="#db2777" fontWeight="bold">A'(1, 4)</text>
+              <line x1="120" y1="-100" x2="35" y2="-100" stroke="#db2777" strokeWidth="2" strokeDasharray="4 2" />
+              <polyline points="40,-104 35,-100 40,-96" fill="none" stroke="#db2777" strokeWidth="2" />
+              <text x="75" y="-110" fontSize="12" fill="#db2777" textAnchor="middle">向左平移 4單位</text>
+
+              {/* B 反射 */}
+              {drawPoint(-3, 2, "", "#0284c7")}
+              <text x="-75" y="-60" fontSize="12" fill="#0284c7" fontWeight="bold" textAnchor="end">B(-3, 2)</text>
+              {drawPoint(3, 2, "", "#0284c7")}
+              <text x="75" y="-60" fontSize="12" fill="#0284c7" fontWeight="bold">B'(3, 2)</text>
+              
+              <path d="M -70 -55 Q -35 -80 0 -55 Q 35 -80 70 -55" fill="none" stroke="#0284c7" strokeWidth="2" />
+              <polyline points="-5,-60 0,-55 -8,-52" fill="none" stroke="#0284c7" strokeWidth="2" />
+              <polyline points="65,-60 70,-55 62,-52" fill="none" stroke="#0284c7" strokeWidth="2" />
+              <text x="-35" y="-75" fontSize="12" fill="#0284c7" textAnchor="middle">3格</text>
+              <text x="35" y="-75" fontSize="12" fill="#0284c7" textAnchor="middle">再 3格</text>
+
+              {/* C 旋轉 */}
+              {drawPoint(2, -4, "", "#7e22ce")}
+              <text x="55" y="90" fontSize="12" fill="#7e22ce" fontWeight="bold">C(2, -4)</text>
+              {drawPoint(-4, -2, "", "#7e22ce")}
+              <text x="-105" y="60" fontSize="12" fill="#7e22ce" fontWeight="bold">C'(-4, -2)</text>
+              
+              <path d="M 45 105 Q 0 130 -95 65" fill="none" stroke="#7e22ce" strokeWidth="2" />
+              <polyline points="-85,65 -95,65 -92,74" fill="none" stroke="#7e22ce" strokeWidth="2" />
+              <text x="-25" y="120" fontSize="12" fill="#7e22ce" textAnchor="middle">順時針</text>
+
+              {/* C 逆時針箭頭示意 (僅線條) */}
+              <path d="M 55 90 Q 75 70 85 45" fill="none" stroke="#7e22ce" strokeWidth="1.5" strokeDasharray="3 3"/>
+              <polyline points="80,50 85,45 88,52" fill="none" stroke="#7e22ce" strokeWidth="1.5" />
+              <text x="95" y="60" fontSize="12" fill="#7e22ce">逆時針向</text>
+              
+              {/* 原點 */}
+              <text x="-10" y="15" fontSize="12" fill="#16a34a" fontWeight="bold">0</text>
+              
+            </svg>
+            <p className="text-xs text-slate-500 mt-2 text-center">各類轉換圖示（各色箭頭代表不同的轉換過程）</p>
+          </div>
+
         </div>
       </CollapsibleSection>
     </>
