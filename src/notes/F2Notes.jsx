@@ -1382,8 +1382,7 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                 <div className="flex items-start">
                   <span className="text-green-700 text-sm font-bold min-w-40 pt-1 shrink-0">先抄左方的式，然後進行化簡 ➔</span>
                   <div className="pl-2">
-                    <MathDisplay math="左方 = 2(6x+8)" />
-                    <MathDisplay math="= 12x+16" />
+                    <MathDisplay math={String.raw`\begin{aligned} \text{左方} &= 2(6x+8) \\ &= 12x+16 \end{aligned}`} block left />
                   </div>
                 </div>
                 <div className="flex items-start mt-2">
@@ -1505,6 +1504,225 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
           </div>
         </CollapsibleSection>
 
+      </div>
+    </>
+  );
+};
+
+// ========================================
+// CH4 因式分解 (F2)
+// ========================================
+export const FactorizationF2Notes = ({ activeSub }) => {
+  const s1 = useRef(null);
+  const s2 = useRef(null);
+  const s3 = useRef(null);
+  const s4 = useRef(null);
+
+  return (
+    <>
+      <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-emerald-500">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">CH4 因式分解</h1>
+          <p className="text-slate-600">認識展開與因式分解之分別</p>
+        </div>
+
+        <CollapsibleSection id="expand-vs-factorize" title="展開 vs 因式分解" num={1} color="emerald" activeSub={activeSub} sectionRef={s1}>
+          <div className="space-y-4">
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 text-center">
+              <h3 className="font-bold text-slate-800 mb-6 text-lg border-b border-slate-200 pb-3">
+                ⚠️ 需分清楚問題在問<span className="text-red-600 font-bold mx-1">展開</span>還是<span className="text-green-700 font-bold mx-1">因式分解</span>
+              </h3>
+              
+              <div className="relative flex justify-center items-center h-48 my-2">
+                <div className="absolute left-1/2 -ml-40 text-3xl font-bold text-slate-800 bg-white px-2 z-10">
+                  <Latex math="2(x+2)" />
+                </div>
+                
+                <div className="absolute right-1/2 -mr-40 text-3xl font-bold text-slate-800 bg-white px-2 z-10">
+                  <Latex math="2x+4" />
+                </div>
+
+                {/* Top arrow */}
+                <svg width="240" height="80" className="absolute top-0 left-1/2 -translate-x-1/2 overflow-visible">
+                  <path d="M 30 50 Q 120 -10 210 50" fill="none" stroke="#ef4444" strokeWidth="3" markerEnd="url(#arrow-red)" />
+                  <text x="120" y="10" fontSize="18" fontWeight="bold" fill="#ef4444" textAnchor="middle">展開 (拆括號)</text>
+                  <defs>
+                    <marker id="arrow-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+                    </marker>
+                  </defs>
+                </svg>
+
+                {/* Bottom arrow */}
+                <svg width="240" height="80" className="absolute bottom-0 left-1/2 -translate-x-1/2 overflow-visible">
+                  <path d="M 210 30 Q 120 90 30 30" fill="none" stroke="#15803d" strokeWidth="3" markerEnd="url(#arrow-green)" />
+                  <text x="120" y="80" fontSize="18" fontWeight="bold" fill="#15803d" textAnchor="middle">因式分解 [加括號]</text>
+                  <defs>
+                     <marker id="arrow-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#15803d" />
+                    </marker>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        <CollapsibleSection id="extract-common-f2" title="提取公因式" num={2} color="purple" activeSub={activeSub} sectionRef={s2}>
+          <div className="space-y-4">
+            <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+              <h3 className="font-bold text-purple-800 mb-3">📝 分析題目</h3>
+              <p className="text-slate-700 mb-2">若所有項都出現相同代數/因數時可<span className="text-red-600 font-bold">抽取</span></p>
+
+              <div className="bg-white rounded-lg p-3 mb-3">
+                <p className="text-sm text-slate-600 mb-2">例子 1：找出相同代數及公因數，先抽出到前面，再加括號裝剩餘部分。</p>
+                <div className="flex items-center gap-2 flex-wrap text-lg">
+                  <span><span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">6</span>u<span className="bg-yellow-200 px-1 rounded">v</span> <span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">8</span><span className="bg-yellow-200 px-1 rounded">v</span>w</span>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap text-lg mt-1">
+                  <span className="text-slate-500">=</span>
+                  <span><span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">2</span><span className="bg-yellow-200 px-1 rounded">v</span>(<span className="bg-green-200 px-1 rounded">3</span>u+<span className="bg-green-200 px-1 rounded">4</span>w)</span>
+                </div>
+                <div className="mt-3 text-sm space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-yellow-200 px-2 py-0.5 rounded">黃</span>
+                    <span>= 完全相同的代數</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="bg-green-200 px-2 py-0.5 rounded">綠</span>
+                    <span>= 可抽公因數（6 和 8 都是 2 的倍數）</span>
+                    <span className="text-slate-500">6÷2=3，8÷2=4</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-3">
+                <p className="text-sm text-slate-600 mb-2">例子 2：遇上相同代數但不同次方，只抽最低次方</p>
+                <div className="flex items-center gap-2 flex-wrap text-lg">
+                  <span><span className="bg-pink-200 px-1 rounded"><Latex math="m^3" /></span><span className="bg-cyan-200 px-1 rounded">n</span> - 3<span className="bg-pink-200 px-1 rounded">m</span><span className="bg-cyan-200 px-1 rounded"><Latex math="n^2" /></span></span>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap text-lg mt-1">
+                  <span className="text-slate-500">=</span>
+                  <span>mn(<span className="bg-pink-200 px-1 rounded"><Latex math="m^2" /></span> - 3<span className="bg-cyan-200 px-1 rounded">n</span>)</span>
+                </div>
+                <div className="mt-3 text-sm text-slate-600">
+                  <span className="text-pink-600">⤷</span> 抽走一個 m 後，m^3 變為 m^2。
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+              <h3 className="font-bold text-amber-800 mb-2">💡 技巧</h3>
+              <ul className="text-sm text-slate-700 space-y-1">
+                <li>• 先找數字的公因數</li>
+                <li>• 再找代數的公因式（取最低次方）</li>
+                <li>• 記住：<Latex math="a^3 \\div a = a^2" />（次方相減）</li>
+              </ul>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        <CollapsibleSection id="grouping-f2" title="併項法（分組因式分解）" num={3} color="blue" activeSub={activeSub} sectionRef={s3}>
+          <div className="space-y-4">
+            <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+              <h3 className="font-bold text-blue-800 mb-3">📝 方法步驟</h3>
+              <ol className="text-sm text-slate-700 space-y-2 list-decimal list-inside">
+                <li>將四項分成兩組（通常首兩項一組、後兩項一組）</li>
+                <li>分別對每組提取公因式</li>
+                <li>若兩組出現相同括號，再提取該括號</li>
+              </ol>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-blue-200">
+              <p className="text-sm text-slate-600 mb-3">例子 1：標準四項</p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 shrink-0" />
+                  <div className="text-sm w-40 shrink-0"><Latex math="bm + bn + 5m + 5n" /></div>
+                  <div className="text-xs text-slate-500 italic">← 前兩項找相同，後兩項找相同</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                  <div className="text-sm w-40 shrink-0"><Latex math="b(m+n) + 5(m+n)" /></div>
+                  <div className="text-xs text-slate-500 italic">← 將相同括號抽出</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                  <div className="text-sm w-40 shrink-0"><Latex math="(m+n)(b+5)" /></div>
+                  <div className="text-xs text-slate-500 italic">← 另一個括號按順序寫</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-blue-200">
+              <p className="text-sm text-slate-600 mb-2">例子 2：已有括號</p>
+              <div className="space-y-1">
+                <Latex math={String.raw`\begin{aligned} &(2x-5) - (2x-5)y \\ &= (2x-5)(1-y) \end{aligned}`} block />
+              </div>
+              <p className="text-sm text-slate-500 mt-2">💡 抽相同括號放前，剩餘部分放後括號</p>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        <CollapsibleSection id="dse-prev-answer-f2" title="DSE 題型技巧：利用前題答案" num={4} color="red" activeSub={activeSub} sectionRef={s4}>
+          <div className="space-y-4">
+            <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+              <h3 className="font-bold text-red-800 mb-3">📋 利用前題答案</h3>
+              <div className="bg-white rounded-lg p-3">
+                <p className="text-sm text-slate-600 mb-3">DSE 常見 (a) 同 (b) 互相關聯；(b) 可以直接套用 (a) 結果，減少重算。</p>
+
+                <div className="space-y-2 text-sm mb-3">
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-slate-700">(a)</span>
+                    <span>因式分解 <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 - 13rs - 28s^2" /></span></span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-slate-700">(b)</span>
+                    <span>因式分解 <Latex math="4r - 14s +" /> <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 - 13rs - 28s^2" /></span></span>
+                  </div>
+                </div>
+
+                <div className="bg-green-50 border border-green-200 rounded-lg p-2 mb-3">
+                  <p className="text-sm font-bold text-green-700 mb-1">(a) 部答案：</p>
+                  <Latex math="6r^2 - 13rs - 28s^2 = (2r-7s)(3r+4s)" block />
+                </div>
+
+                <div className="bg-yellow-50 p-3 rounded">
+                  <p className="text-sm font-bold text-green-700 mb-2">(b) 部套用：</p>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                      <div className="flex items-center flex-wrap gap-0.5 min-w-0">
+                        <Latex math="4r - 14s +" />
+                        <span className="bg-yellow-200 rounded px-0.5"><Latex math="(2r-7s)(3r+4s)" /></span>
+                      </div>
+                      <div className="text-xs text-slate-500 italic shrink-0">← 套用 (a) 部答案</div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                      <div className="flex items-center flex-wrap gap-0.5 min-w-0">
+                        <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="2" /></span>
+                        <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
+                        <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="+" /></span>
+                        <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
+                        <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(3r+4s)" /></span>
+                      </div>
+                      <div className="text-xs text-slate-500 italic shrink-0">← 非 (a) 部答案 抽公因式，應看到有最少兩個 <span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同括號</span></div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                      <div className="flex items-center flex-wrap gap-0.5 min-w-0">
+                        <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
+                        <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(2 + 3r + 4s)" /></span>
+                      </div>
+                      <div className="text-xs text-slate-500 italic shrink-0">← 抽<span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同的括號</span>放前，<span className="bg-green-100 text-green-800 px-0.5 rounded">剩餘部份</span>放後括號</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
       </div>
     </>
   );

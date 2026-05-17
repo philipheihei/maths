@@ -1,5 +1,5 @@
 import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, AdvancedLinearEquationNotes, PolynomialsNotes, StatisticsNotes, CoordinateNotes, PercentageNotes, AnglesNotes } from './F1Notes';
-import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes, TriangleLineAnglesNotes, IdentitiesF2Notes } from './F2Notes';
+import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes, TriangleLineAnglesNotes, IdentitiesF2Notes, FactorizationF2Notes } from './F2Notes';
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
@@ -141,6 +141,17 @@ export const NOTES_DATA = {
         { id: 'identities-def', num: 1, title: '恆等式定義', color: 'indigo' },
         { id: 'identities-compare', num: 2, title: '比較同類項的係數', color: 'indigo' },
         { id: 'identities-formulas', num: 3, title: '三條必記恆等式！', color: 'rose' },
+      ]
+    },
+    {
+      id: 'factorization-f2',
+      topic: 'CH4 因式分解',
+      color: 'emerald',
+      subtopics: [
+        { id: 'expand-vs-factorize', num: 1, title: '展開 vs 因式分解', color: 'emerald' },
+        { id: 'extract-common-f2', num: 2, title: '提取公因式', color: 'purple' },
+        { id: 'grouping-f2', num: 3, title: '併項法（分組因式分解）', color: 'blue' },
+        { id: 'dse-prev-answer-f2', num: 4, title: 'DSE 題型技巧：利用前題答案', color: 'red' },
       ]
     },
     {
@@ -372,6 +383,7 @@ export const NOTES_COMPONENTS = {
   'triangle-line-angles': TriangleLineAnglesNotes,
   'algebraic-fractions': AlgebraicFractionsNotes,
   'identities-f2': IdentitiesF2Notes,
+  'factorization-f2': FactorizationF2Notes,
   'measurement-errors': MeasurementErrorsNotes,
   'inequality': InequalityNotes,
   'simultaneous-eq-f2': SimultaneousEqF2Notes,
