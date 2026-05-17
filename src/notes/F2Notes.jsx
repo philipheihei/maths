@@ -23,9 +23,9 @@ const Latex = ({ math, block = false, left = false }) => {
   return <span ref={containerRef} className={block ? `block ${left ? 'text-left' : 'text-center'} my-1` : "inline-block align-middle"} />;
 };
 
-const MathDisplay = ({ math }) => (
+const MathDisplay = ({ math, block = false, left = false }) => (
   <div className="font-semibold text-slate-800">
-    <Latex math={math} />
+    <Latex math={math} block={block} left={left} />
   </div>
 );
 
@@ -1389,17 +1389,20 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                 <div className="flex items-start mt-2">
                   <span className="text-green-700 text-sm font-bold min-w-40 pt-1 shrink-0">相同的步驟在右方重覆 ➔</span>
                   <div className="pl-2 relative">
-                    <MathDisplay math="右方 = 4(3x+4)" />
-                    <MathDisplay math="= 12x+16" />
+                    <MathDisplay math={String.raw`\begin{aligned} \text{右方} &= 4(3x+4) \\ &= 12x+16 \end{aligned}`} block left />
                   </div>
                 </div>
               </div>
 
               <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 mt-4 text-center">
-                <span className="text-green-700 font-bold mb-2 inline-block">固定格式 ➔</span>
-                <MathDisplay math="\\because 左方 = 右方" />
-                <MathDisplay math="\\therefore 2(6x+8) \\equiv 4(3x+4)" />
-                <p className="text-sm text-green-700 font-bold mt-1">由 "=" 變成 "\\equiv"</p>
+                <div className="inline-flex items-start gap-2 text-left">
+                  <span className="text-green-700 font-bold pt-1 shrink-0">固定格式 ➔</span>
+                  <div>
+                    <MathDisplay math={String.raw`\because\ \text{左方}=\text{右方}`} block left />
+                    <MathDisplay math={String.raw`\therefore\ 2(6x+8)\equiv4(3x+4)`} block left />
+                  </div>
+                </div>
+                <p className="text-sm text-green-700 font-bold mt-1">由 "=" 變成 "≡"</p>
               </div>
             </div>
           </div>
