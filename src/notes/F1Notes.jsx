@@ -2111,9 +2111,9 @@ export const CoordinateNotes = ({ activeSub }) => {
     return paths;
   };
 
-  const drawPoint = (x, y, label, color = "#0284c7") => {
-    const cx = x * 30;
-    const cy = -y * 30;
+  const drawPoint = (x, y, label, color = "#0284c7", step = 30) => {
+    const cx = x * step;
+    const cy = -y * step;
     return (
       <g key={label}>
         <path d={`M ${cx - 4} ${cy - 4} L ${cx + 4} ${cy + 4} M ${cx + 4} ${cy - 4} L ${cx - 4} ${cy + 4}`} stroke={color} strokeWidth="2.5" />
@@ -2129,8 +2129,8 @@ export const CoordinateNotes = ({ activeSub }) => {
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">📍 坐標系統 (直角坐標)</h3>
             <ul className="text-slate-700 space-y-2">
-              <li>• <span className="bg-amber-200 px-1 rounded font-bold text-red-600">原點 $O (0, 0)$</span> 為十字的中間交點。</li>
-              <li>• 例子：$A$ 的坐標為 $(2, 4)$。前方的 <span className="text-green-700 font-bold">$x$ 坐標是左右</span>，後方的 <span className="text-red-600 font-bold">$y$ 坐標是上下</span>。</li>
+              <li>• <span className="bg-amber-200 px-1 rounded font-bold text-red-600">原點 <Latex math="O(0,0)" /></span> 為十字的中間交點。</li>
+              <li>• 例子：<Latex math="A" /> 的坐標為 <Latex math="(2,4)" />。前方的 <span className="text-green-700 font-bold"><Latex math="x" /> 坐標是左右</span>，後方的 <span className="text-red-600 font-bold"><Latex math="y" /> 坐標是上下</span>。</li>
             </ul>
           </div>
 
@@ -2177,7 +2177,7 @@ export const CoordinateNotes = ({ activeSub }) => {
               {drawPoint(-4, -2, "D", "#0284c7")}
               {drawPoint(-1, 2, "E", "#0284c7")}
             </svg>
-            <p className="text-sm text-slate-500 mt-2">找坐標例子：$B(1, -2)$、$C(-3, -3)$、$D(-4, -2)$、$E(-1, 2)$</p>
+            <p className="text-sm text-slate-500 mt-2">找坐標例子：<Latex math="B(1,-2)" />、<Latex math="C(-3,-3)" />、<Latex math="D(-4,-2)" />、<Latex math="E(-1,2)" /></p>
           </div>
         </div>
       </CollapsibleSection>
@@ -2224,7 +2224,7 @@ export const CoordinateNotes = ({ activeSub }) => {
               <h4 className="font-bold text-red-800 mb-2">⚠️ 陷阱注意</h4>
               <p className="text-slate-700">其中一個坐標為 0，則<span className="font-bold underline">不屬於任何象限</span>。</p>
               <p className="text-sm text-slate-600 mt-2 bg-white p-2 rounded">
-                e.g. $(6, 0)$ 不屬於 I, II, III, IV 任何一個象限。它位於 $x$ 軸上。
+                e.g. <Latex math="(6,0)" /> 不屬於 I, II, III, IV 任何一個象限。它位於 <Latex math="x" /> 軸上。
               </p>
             </div>
           </div>
@@ -2237,14 +2237,14 @@ export const CoordinateNotes = ({ activeSub }) => {
             <h3 className="font-bold text-amber-800 mb-3">📏 計算水平或鉛垂線段長度</h3>
             <div className="bg-white p-4 rounded-lg my-3 border border-amber-100 flex items-center justify-center space-x-6">
               <div className="text-lg">
-                $(\,<span className="font-bold">1</span>, <span className="bg-yellow-300 px-1 rounded font-bold">2</span>\,)$
+                (<span className="font-bold">1</span>, <span className="bg-yellow-300 px-1 rounded font-bold">2</span>)
               </div>
               <div className="w-16 h-0.5 bg-green-500 relative">
                 <div className="absolute -top-1.5 -left-1 w-3 h-3 border border-green-500 rounded-full bg-white"></div>
                 <div className="absolute -top-1.5 -right-1 w-3 h-3 border border-green-500 rounded-full bg-white"></div>
               </div>
               <div className="text-lg">
-                $(\,<span className="font-bold">5</span>, <span className="bg-yellow-300 px-1 rounded font-bold">2</span>\,)$
+                (<span className="font-bold">5</span>, <span className="bg-yellow-300 px-1 rounded font-bold">2</span>)
               </div>
             </div>
 
@@ -2267,8 +2267,8 @@ export const CoordinateNotes = ({ activeSub }) => {
             <div className="mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-slate-400 text-sm">
               <p className="font-bold text-slate-800">💡 考試提示：</p>
               <ul className="list-disc pl-5 mt-1 space-y-1 text-slate-600">
-                <li><span className="font-bold">周界</span> $\rightarrow$ 將所有找到的邊長 <span className="font-bold text-red-600">相加</span>！</li>
-                <li><span className="font-bold">面積</span> $\rightarrow$ 將相應找到的邊長 <span className="font-bold text-red-600">相乘</span>！</li>
+                <li><span className="font-bold">周界</span> <Latex math="\rightarrow" /> 將所有找到的邊長 <span className="font-bold text-red-600">相加</span>！</li>
+                <li><span className="font-bold">面積</span> <Latex math="\rightarrow" /> 將相應找到的邊長 <span className="font-bold text-red-600">相乘</span>！</li>
               </ul>
             </div>
           </div>
@@ -2287,18 +2287,18 @@ export const CoordinateNotes = ({ activeSub }) => {
               </div>
               <div className="bg-white p-3 rounded-lg border border-red-100">
                 <h4 className="font-bold text-blue-600 mb-1 border-b-2 border-blue-200 inline-block">反射 (Reflection)</h4>
-                <p className="text-slate-700 text-sm">可沿 <span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300">$x$ 軸</span>、<span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300">$y$ 軸</span>或特定直線（例如 $x=1$）反射。<br/>可透過畫圖，或者記住：沿 $y$ 軸反射，$x$ 正負調轉；沿 $x$ 軸反射，$y$ 正負調轉。</p>
+                <p className="text-slate-700 text-sm">可沿 <span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300"><Latex math="x" /> 軸</span>、<span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300"><Latex math="y" /> 軸</span>或特定直線（例如 <Latex math="x=1" />）反射。<br/>可透過畫圖，或者記住：沿 <Latex math="y" /> 軸反射，<Latex math="x" /> 正負調轉；沿 <Latex math="x" /> 軸反射，<Latex math="y" /> 正負調轉。</p>
               </div>
               <div className="bg-white p-3 rounded-lg border border-red-100">
                 <h4 className="font-bold text-purple-700 mb-1 border-b-2 border-purple-200 inline-block">旋轉 (Rotation) 📐</h4>
                 <p className="text-slate-700 text-sm">
-                  每轉 90°，$(x, y)$ 必須<span className="bg-yellow-200 px-1 rounded font-bold">調轉寫正值</span>，再<span className="font-bold text-red-600">按其象限加回相應負號</span>。
+                  每轉 90°，<Latex math="(x,y)" /> 必須<span className="bg-yellow-200 px-1 rounded font-bold">調轉寫正值</span>，再<span className="font-bold text-red-600">按其象限加回相應負號</span>。
                 </p>
                 <div className="mt-2 pl-2 border-l-2 border-purple-300 bg-purple-50 p-2 rounded text-xs text-purple-800">
-                  <p>例如：$\,C(2, -4)\,$ 轉 90°，先調轉 $\rightarrow (4, 2)$。<br/>畫圖可見若 <span className="font-bold">順時針</span> 轉 90° 會到第 III 象限，所以加負號得 <span className="font-bold text-red-600">$\,(-4, -2)$</span>。</p>
+                  <p>例如：<Latex math="C(2,-4)" /> 轉 90°，先調轉 <Latex math="\rightarrow(4,2)" />。<br/>畫圖可見若 <span className="font-bold">順時針</span> 轉 90° 會到第 III 象限，所以加負號得 <span className="font-bold text-red-600"><Latex math="(-4,-2)" /></span>。</p>
                 </div>
                 <div className="mt-2 text-xs text-slate-500">
-                  <p>註1：如轉 180° 即不用調轉 $x,y$ (因為調了兩次會抵銷)。順時針 270° 即等於 逆時針 90°。</p>
+                  <p>註1：如轉 180° 即不用調轉 <Latex math="x,y" /> (因為調了兩次會抵銷)。順時針 270° 即等於 逆時針 90°。</p>
                   <p className="text-red-500 font-bold mt-1">💡 小貼士：可望手錶或時鐘數字順序，提醒自己順逆時針。</p>
                 </div>
               </div>
@@ -2306,7 +2306,7 @@ export const CoordinateNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center">
-            <svg viewBox="-150 -150 300 300" className="w-full max-w-md bg-white">
+            <svg viewBox="-165 -160 360 330" className="w-full max-w-md bg-white">
               {renderGrid(5, 25)}
               
               <line x1="-140" y1="0" x2="140" y2="0" stroke="#000" strokeWidth="2" />
@@ -2318,18 +2318,18 @@ export const CoordinateNotes = ({ activeSub }) => {
               <text x="-15" y="-140" fontSize="14" fill="#000" fontWeight="bold">Y</text>
 
               {/* A 平移 */}
-              {drawPoint(5, 4, "", "#db2777")}
-              <text x="130" y="-105" fontSize="12" fill="#db2777" fontWeight="bold">A(5, 4)</text>
-              {drawPoint(1, 4, "", "#db2777")}
+              {drawPoint(5, 4, "", "#16a34a", 25)}
+              <text x="105" y="-110" fontSize="12" fill="#db2777" fontWeight="bold">A(5, 4)</text>
+              {drawPoint(1, 4, "", "#16a34a", 25)}
               <text x="25" y="-105" fontSize="12" fill="#db2777" fontWeight="bold">A'(1, 4)</text>
               <line x1="120" y1="-100" x2="35" y2="-100" stroke="#db2777" strokeWidth="2" strokeDasharray="4 2" />
               <polyline points="40,-104 35,-100 40,-96" fill="none" stroke="#db2777" strokeWidth="2" />
               <text x="75" y="-110" fontSize="12" fill="#db2777" textAnchor="middle">向左平移 4單位</text>
 
               {/* B 反射 */}
-              {drawPoint(-3, 2, "", "#0284c7")}
+              {drawPoint(-3, 2, "", "#16a34a", 25)}
               <text x="-75" y="-60" fontSize="12" fill="#0284c7" fontWeight="bold" textAnchor="end">B(-3, 2)</text>
-              {drawPoint(3, 2, "", "#0284c7")}
+              {drawPoint(3, 2, "", "#16a34a", 25)}
               <text x="75" y="-60" fontSize="12" fill="#0284c7" fontWeight="bold">B'(3, 2)</text>
               
               <path d="M -70 -55 Q -35 -80 0 -55 Q 35 -80 70 -55" fill="none" stroke="#0284c7" strokeWidth="2" />
@@ -2339,9 +2339,9 @@ export const CoordinateNotes = ({ activeSub }) => {
               <text x="35" y="-75" fontSize="12" fill="#0284c7" textAnchor="middle">再 3格</text>
 
               {/* C 旋轉 */}
-              {drawPoint(2, -4, "", "#7e22ce")}
+              {drawPoint(2, -4, "", "#16a34a", 25)}
               <text x="55" y="90" fontSize="12" fill="#7e22ce" fontWeight="bold">C(2, -4)</text>
-              {drawPoint(-4, -2, "", "#7e22ce")}
+              {drawPoint(-4, -2, "", "#16a34a", 25)}
               <text x="-105" y="60" fontSize="12" fill="#7e22ce" fontWeight="bold">C'(-4, -2)</text>
               
               <path d="M 45 105 Q 0 130 -95 65" fill="none" stroke="#7e22ce" strokeWidth="2" />
@@ -2351,7 +2351,7 @@ export const CoordinateNotes = ({ activeSub }) => {
               {/* C 逆時針箭頭示意 (僅線條) */}
               <path d="M 55 90 Q 75 70 85 45" fill="none" stroke="#7e22ce" strokeWidth="1.5" strokeDasharray="3 3"/>
               <polyline points="80,50 85,45 88,52" fill="none" stroke="#7e22ce" strokeWidth="1.5" />
-              <text x="95" y="60" fontSize="12" fill="#7e22ce">逆時針向</text>
+              <text x="82" y="60" fontSize="12" fill="#7e22ce">逆時針向</text>
               
               {/* 原點 */}
               <text x="-10" y="15" fontSize="12" fill="#16a34a" fontWeight="bold">0</text>
