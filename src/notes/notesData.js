@@ -1,119 +1,12 @@
-import { ApproximationNotes, AreaVolumeNotes, BasicCalculationNotes, DirectedNumbersNotes, LinearEquationNotes, AdvancedLinearEquationNotes, PolynomialsNotes, StatisticsNotes, CoordinateNotes, PercentageNotes, AnglesNotes } from './F1Notes';
-import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes, AlgebraicFractionsNotes, TriangleLineAnglesNotes, IdentitiesF2Notes, FactorizationF2Notes, CirclesCylindersF2Notes } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, ProbabilityF3Notes } from './F3Notes';
-import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
+import { ApproximationNotes } from './F1Notes';
+import { InequalityNotes, SimultaneousEqF2Notes, PythagorasF2Notes, TrigRatiosF2Notes, MeasurementErrorsNotes } from './F2Notes';
+import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes } from './F3Notes';
+import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
 export const NOTES_DATA = {
   F1: [
-    {
-      id: 'basic-calculation',
-      topic: 'CH1 基礎計算',
-      color: 'blue',
-      subtopics: [
-        { id: 'divisibility', num: 1, title: '整除性', color: 'blue' },
-        { id: 'indices', num: 2, title: '指數記數法 (次方)', color: 'blue' },
-        { id: 'prime-factorization', num: 3, title: '質因數連乘式', color: 'blue' },
-        { id: 'hcf-lcm', num: 4, title: '最大公因數 (H.C.F.) 及 最小公倍數 (L.C.M.)', color: 'blue' },
-        { id: 'arithmetic', num: 5, title: '四則運算', color: 'blue' },
-      ]
-    },
-    {
-      id: 'directed-numbers',
-      topic: 'CH2 有向數',
-      color: 'red',
-      subtopics: [
-        { id: 'positive-negative', num: 1, title: '有向數即正負數', color: 'blue' },
-        { id: 'number-line', num: 2, title: '數線與大小', color: 'green' },
-        { id: 'operations', num: 3, title: '有向數的乘除變化', color: 'red' },
-      ]
-    },
-    {
-      id: 'linear-equation',
-      topic: 'CH4 一元一次方程',
-      color: 'red',
-      subtopics: [
-        { id: 'move-terms', num: 1, title: '移項變相反', color: 'green' },
-        { id: 'big-picture', num: 2, title: '解代數時，看大畫面', color: 'red' },
-        { id: 'fraction-addition', num: 3, title: '分數加減數', color: 'purple' },
-      ]
-    },
-    {
-      id: 'area-volume',
-      topic: 'CH5 面積和體積',
-      color: 'amber',
-      subtopics: [
-        { id: 'basic-area', num: 1, title: '簡單圖形的面積', color: 'blue' },
-        { id: 'polygon-area', num: 2, title: '計算多邊形面積', color: 'green' },
-        { id: 'prism-formulas', num: 3, title: '柱體體積及表面面積', color: 'purple' },
-        { id: 'draw-3d', num: 4, title: '畫立體圖', color: 'amber' },
-      ]
-    },
-    {
-      id: 'polynomials',
-      topic: 'CH6 多項式的運算',
-      color: 'purple',
-      subtopics: [
-        { id: 'definition', num: 1, title: '分辨單項式與多項式', color: 'blue' },
-        { id: 'terms-coeff', num: 2, title: '項數、係數與常數項', color: 'blue' },
-        { id: 'degree-order', num: 3, title: '次數與排列', color: 'green' },
-        { id: 'addition-subtraction', num: 4, title: '多項式的加減', color: 'orange' },
-        { id: 'multiplication', num: 5, title: '多項式的乘法', color: 'red' }
-      ]
-    },
-    {
-      id: 'linear-equation-advanced',
-      topic: 'CH7 進階一元一次方程',
-      color: 'blue',
-      subtopics: [
-        { id: 'advanced-equations', num: 1, title: '分數方程與拆括號方程', color: 'blue' },
-      ]
-    },
-    {
-      id: 'statistics',
-      topic: 'CH8 統計(一)',
-      color: 'blue',
-      subtopics: [
-        { id: 'bar-chart', num: 1, title: '棒形圖', color: 'blue' },
-        { id: 'pie-chart', num: 2, title: '圓形圖', color: 'blue' },
-        { id: 'line-graph', num: 3, title: '折線圖', color: 'blue' },
-        { id: 'stem-leaf', num: 4, title: '幹葉圖', color: 'blue' },
-        { id: 'discrete-continuous', num: 5, title: '連續數據 / 離散數據', color: 'red' },
-        { id: 'frequency-table', num: 6, title: '頻數分佈表 (填表格)', color: 'blue' },
-      ]
-    },
-    {
-      id: 'percentage',
-      topic: 'CH9 百分數',
-      color: 'blue',
-      subtopics: [
-        { id: 'interconversion', num: 1, title: '百分數 / 小數 / 分數互化', color: 'blue' },
-        { id: 'percentage-of-part', num: 2, title: '表達部份的百分數', color: 'green' },
-        { id: 'percentage-comparison', num: 3, title: '百分數比較', color: 'amber' },
-        { id: 'percentage-change', num: 4, title: '百分變化', color: 'purple' },
-      ]
-    },
-    {
-      id: 'coordinate',
-      topic: 'CH10 坐標',
-      color: 'amber',
-      subtopics: [
-        { id: 'coordinate-system', num: 1, title: '坐標系統 (直角坐標)', color: 'blue' },
-        { id: 'quadrants', num: 2, title: '象限', color: 'green' },
-        { id: 'length', num: 3, title: '坐標線段 找長度', color: 'amber' },
-        { id: 'transformation', num: 4, title: '點的轉換', color: 'red' },
-      ]
-    },
-    {
-      id: 'angles',
-      topic: 'CH11 直線相關的角',
-      color: 'blue',
-      subtopics: [
-        { id: 'lines-angles-naming', num: 0, title: '基礎知識：線和角的命名', color: 'slate' },
-        { id: 'basic-angle-theorems', num: 1, title: '幾何角度定理 (1-5)', color: 'blue' },
-      ]
-    },
     {
       id: 'approximation',
       topic: 'CH13 近似值',
@@ -125,46 +18,6 @@ export const NOTES_DATA = {
     }
   ],
   F2: [
-    {
-      id: 'triangle-line-angles',
-      topic: 'CH2 有關三角形和直線的角',
-      color: 'green',
-      subtopics: [
-        { id: 'advanced-angle-theorems', num: 1, title: '進階幾何角度定理 (6-12)', color: 'green' },
-      ]
-    },
-    {
-      id: 'identities-f2',
-      topic: 'CH3 恆等式',
-      color: 'indigo',
-      subtopics: [
-        { id: 'identities-def', num: 1, title: '恆等式定義', color: 'indigo' },
-        { id: 'identities-compare', num: 2, title: '比較同類項的係數', color: 'indigo' },
-        { id: 'identities-formulas', num: 3, title: '三條必記恆等式！', color: 'rose' },
-      ]
-    },
-    {
-      id: 'factorization-f2',
-      topic: 'CH4 因式分解',
-      color: 'emerald',
-      subtopics: [
-        { id: 'expand-vs-factorize', num: 1, title: '展開 vs 因式分解', color: 'emerald' },
-        { id: 'extract-common-f2', num: 2, title: '提取公因式', color: 'purple' },
-        { id: 'grouping-f2', num: 3, title: '併項法（分組因式分解）', color: 'blue' },
-        { id: 'dse-prev-answer-f2', num: 4, title: 'DSE 題型技巧：利用前題答案', color: 'red' },
-        { id: 'factorization-tips-f2', num: 5, title: '注意事項及陷阱', color: 'amber' },
-      ]
-    },
-    {
-      id: 'algebraic-fractions',
-      topic: 'CH5 代數分式',
-      color: 'purple',
-      subtopics: [
-        { id: 'addition-subtraction', num: 1, title: '代數分式加減', color: 'purple' },
-        { id: 'multiplication-division', num: 2, title: '代數分式乘除', color: 'blue' },
-        { id: 'subject-change', num: 3, title: '主項變換', color: 'green' },
-      ]
-    },
     {
       id: 'measurement-errors',
       topic: 'CH6 量度與誤差',
@@ -211,16 +64,6 @@ export const NOTES_DATA = {
       color: 'green',
       subtopics: [
         { id: 'trig-ratios-core', num: 1, title: '三角比（不包特殊角）', color: 'green' },
-      ]
-    },
-    {
-      id: 'circles-cylinders-f2',
-      topic: 'CH13 圓形與圓柱體',
-      color: 'teal',
-      subtopics: [
-        { id: 'circles-circumference-arc', num: 1, title: '圓周與弧長', color: 'teal' },
-        { id: 'circles-area-sector', num: 2, title: '圓面積與扇形面積', color: 'blue' },
-        { id: 'cylinders', num: 3, title: '圓柱體體積及表面面積', color: 'purple' },
       ]
     }
   ],
@@ -287,6 +130,16 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'central-tendency',
+      topic: 'CH10 集中趨勢的量度',
+      color: 'indigo',
+      subtopics: [
+        { id: 'basic-measures', num: 1, title: '平均數 中位數 眾數', color: 'blue' },
+        { id: 'table-format', num: 2, title: '以表格形式呈現', color: 'green' },
+        { id: 'weighted-mean', num: 3, title: '加權平均數', color: 'purple' },
+      ]
+    },
+    {
       id: 'probability-f3',
       topic: 'CH11 概率',
       color: 'orange',
@@ -318,7 +171,6 @@ export const NOTES_DATA = {
         { id: 'discriminant', num: 1, title: '判別式與根的數目', color: 'blue' },
         { id: 'graph-relations', num: 2, title: 'Δ 與圖像 x 截距的關係', color: 'green' },
         { id: 'find-unknowns', num: 3, title: '求未知數 (k 取值範圍)', color: 'red' },
-        { id: 'roots-sum-product', num: 4, title: '兩根之和與兩根之積', color: 'purple' },
       ]
     },
     {
@@ -339,16 +191,6 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'remainder', num: 1, title: '餘式定理', color: 'teal' },
         { id: 'factor', num: 2, title: '因式定理', color: 'orange' },
-      ]
-    },
-    {
-      id: 'straight-line-equation',
-      topic: 'CH5 直線方程',
-      color: 'blue',
-      subtopics: [
-        { id: 'find-equation', num: 1, title: '求直線方程的方法', color: 'blue' },
-        { id: 'general-form-line', num: 2, title: '直線一般式', color: 'green' },
-        { id: 'intersection-lines', num: 3, title: '兩直線的交點', color: 'purple' },
       ]
     }
   ],
@@ -378,33 +220,13 @@ export const NOTES_DATA = {
 };
 
 export const getNotesForLevel = (level) => {
-  const sortByChapter = (topics) => {
-    return topics
-      .map((topic, index) => ({ topic, index }))
-      .sort((a, b) => {
-        const aMatch = a.topic.topic.match(/CH\s*(\d+)/i);
-        const bMatch = b.topic.topic.match(/CH\s*(\d+)/i);
-        const aNum = aMatch ? Number(aMatch[1]) : Number.POSITIVE_INFINITY;
-        const bNum = bMatch ? Number(bMatch[1]) : Number.POSITIVE_INFINITY;
-        if (aNum !== bNum) return aNum - bNum;
-        return a.index - b.index;
-      })
-      .map(({ topic }) => topic);
-  };
-
   if (level === 'F6') {
-    return sortByChapter([...(NOTES_DATA.F4 || []), ...(NOTES_DATA.F5 || []), ...(NOTES_DATA.F6 || [])]);
+    return [...(NOTES_DATA.F4 || []), ...(NOTES_DATA.F5 || []), ...(NOTES_DATA.F6 || [])];
   }
-  return sortByChapter(NOTES_DATA[level] || []);
+  return NOTES_DATA[level] || [];
 };
 
 export const NOTES_COMPONENTS = {
-  'basic-calculation': BasicCalculationNotes,
-  'directed-numbers': DirectedNumbersNotes,
-  'triangle-line-angles': TriangleLineAnglesNotes,
-  'algebraic-fractions': AlgebraicFractionsNotes,
-  'identities-f2': IdentitiesF2Notes,
-  'factorization-f2': FactorizationF2Notes,
   'measurement-errors': MeasurementErrorsNotes,
   'inequality': InequalityNotes,
   'simultaneous-eq-f2': SimultaneousEqF2Notes,
@@ -416,22 +238,13 @@ export const NOTES_COMPONENTS = {
   'triangle-lines': TriangleLinesNotes,
   'coordinate-geometry-f3': CoordinateGeometryF3Notes,
   'trig-applications': TrigonometryApplicationsNotes,
+  'central-tendency': CentralTendencyNotes,
+  'probability-f3': ProbabilityF3Notes,
   'quadratic-equation': QuadraticEquationNotes,
   'nature-of-roots': NatureOfRootsNotes,
   'remainder-factor': RemainderFactorNotes,
-  'straight-line-equation': StraightLineEquationNotes,
   'variation': VariationNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'approximation': ApproximationNotes,
-  'area-volume': AreaVolumeNotes,
-  'linear-equation': LinearEquationNotes,
-  'linear-equation-advanced': AdvancedLinearEquationNotes,
-  'polynomials': PolynomialsNotes,
-  'statistics': StatisticsNotes,
-  'coordinate': CoordinateNotes,
-  'percentage': PercentageNotes,
   'functions': FunctionNotes,
-  'angles': AnglesNotes,
-  'circles-cylinders-f2': CirclesCylindersF2Notes,
-  'probability-f3': ProbabilityF3Notes,
 };

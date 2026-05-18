@@ -1606,3 +1606,207 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
     </>
   );
 };
+
+// ========================================
+// CH10 集中趨勢的量度 (F3)
+// ========================================
+export const CentralTendencyNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-indigo-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH10 集中趨勢的量度</h1>
+        <p className="text-slate-600">平均數、中位數、眾數與加權平均數的計算</p>
+      </div>
+
+      <CollapsibleSection id="basic-measures" title="平均數 中位數 眾數" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-slate-800 mb-2">例：一組數據</h3>
+            <p className="text-lg font-bold text-slate-800 mb-3 tracking-widest">
+              1, 3, 4, 7 <span className="text-red-500 mx-1">|</span> 7, 8, 8, 8
+            </p>
+            <div className="space-y-4">
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
+                <div className="flex items-center flex-wrap gap-2 mb-1">
+                  <span className="font-bold text-slate-800 w-16">平均數</span>
+                  <Latex math="= \frac{1+3+4+7+7+8+8+8}{8}" />
+                  <span className="text-red-600 font-bold ml-2">← 所有數值相加</span>
+                </div>
+                <div className="ml-[4.5rem]">
+                  <span className="text-red-600 font-bold text-sm">← 總共 8 個數字</span>
+                </div>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-slate-800 w-16">中位數</span>
+                  <Latex math="= \frac{7+7}{2} = 7" />
+                </div>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
+                <div className="flex items-center flex-wrap gap-2">
+                  <span className="font-bold text-slate-800 w-16">眾數</span>
+                  <Latex math="= 8" />
+                  <span className="text-red-600 font-bold ml-2">← 出現得最多的數字</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="table-format" title="以表格形式呈現" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-slate-800 mb-2">亦可以以表格形式呈現</h3>
+            <p className="text-sm text-slate-600 mb-3">例：下表顯示一組學生在暑假期間所閱讀的書本數量</p>
+            
+            <div className="overflow-x-auto mb-4 bg-white p-2 rounded shadow-sm">
+              <table className="w-full text-center border-collapse">
+                <tbody>
+                  <tr>
+                    <td className="border border-slate-400 p-2 bg-green-100 font-bold text-slate-800 w-24">書本數量</td>
+                    <td className="border border-slate-400 p-2">1</td>
+                    <td className="border border-slate-400 p-2">2</td>
+                    <td className="border border-slate-400 p-2">3</td>
+                    <td className="border border-slate-400 p-2">4</td>
+                    <td className="border border-slate-400 p-2">5</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-slate-400 p-2 bg-green-100 font-bold text-green-800 w-24">
+                      <div className="relative">
+                        <span className="absolute -left-12 -top-4 text-green-700 font-bold text-xs" style={{ whiteSpace: 'nowrap' }}>出現數量<br/>↓</span>
+                        頻數
+                      </div>
+                    </td>
+                    <td className="border border-slate-400 p-2">5</td>
+                    <td className="border border-slate-400 p-2">10</td>
+                    <td className="border border-slate-400 p-2">4</td>
+                    <td className="border border-slate-400 p-2">3</td>
+                    <td className="border border-slate-400 p-2 border-r-4">1</td>
+                    <td className="border-none text-left pl-2 hidden sm:table-cell text-green-700 font-bold text-sm whitespace-nowrap">
+                      ← 能加到總數：5+10+4+3+1 = 23
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p className="sm:hidden text-green-700 font-bold text-sm mt-2 text-center">能加到總數：5+10+4+3+1 = 23</p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
+                <div className="flex flex-col lg:flex-row lg:items-center gap-2">
+                  <span className="font-bold text-slate-800 w-16 mb-2 lg:mb-0">平均數：</span>
+                  <div>
+                    <div className="border-b-2 border-slate-800 text-center pb-1">
+                      <Latex math="1 \times 5 + 2 \times 10 + 3 \times 4 + 4 \times 3 + 5 \times 1" inline />
+                    </div>
+                    <div className="text-center pt-1">
+                      <Latex math="5 + 10 + 4 + 3 + 1" inline />
+                    </div>
+                  </div>
+                  <div className="text-green-700 font-bold text-sm lg:ml-4 flex flex-col">
+                    <span>← 上 × 下，加在一起！</span>
+                    <span>← 總次數</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-200 relative">
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="w-24">
+                    <span className="font-bold text-slate-800">中位數：</span>
+                    <span className="text-lg font-bold ml-2">2</span>
+                  </div>
+                  <div className="text-green-700 font-bold text-sm space-y-1">
+                    <p>Step 1：總數 = ? (23)</p>
+                    <p>Step 2：÷ 2 找最中間的位置 (23 ÷ 2 = 11.5)</p>
+                    <p>Step 3：中間的位置是哪一格 (第11.5個在頻數10)</p>
+                    <p>Step 4：答案！ (頻數10代表的是 2)</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
+                <div className="flex items-center flex-wrap gap-2">
+                  <span className="font-bold text-slate-800 w-16">眾數：</span>
+                  <span className="text-lg font-bold mr-2">2</span>
+                  <span className="text-green-700 font-bold text-sm">
+                    ← 直觀 (頻數10是最大頻數，背後代表兩本書)
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="weighted-mean" title="加權平均數" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-slate-800 mb-1">加權平均數</h3>
+            <p className="text-purple-700 font-bold text-sm mb-3">和上述計法相同</p>
+            <p className="text-sm text-slate-600 mb-2">例：</p>
+            
+            <div className="flex flex-col lg:flex-row gap-6 items-start">
+              <div className="bg-white p-2 rounded shadow-sm overflow-x-auto w-full lg:w-auto">
+                <table className="text-center border-collapse min-w-[200px]">
+                  <thead>
+                    <tr className="bg-orange-100">
+                      <th className="border border-slate-400 p-2 font-bold w-24"></th>
+                      <th className="border border-slate-400 p-2 font-bold w-20">分數 (分)</th>
+                      <th className="border border-slate-400 p-2 font-bold w-16">權</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm">
+                    <tr>
+                      <td className="border border-slate-400 p-2 text-left bg-orange-50/50">普通話</td>
+                      <td className="border border-slate-400 p-2">78</td>
+                      <td className="border border-slate-400 p-2">3</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-slate-400 p-2 text-left bg-orange-50/50">中國歷史</td>
+                      <td className="border border-slate-400 p-2">72</td>
+                      <td className="border border-slate-400 p-2">3</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-slate-400 p-2 text-left bg-orange-50/50">音樂</td>
+                      <td className="border border-slate-400 p-2">56</td>
+                      <td className="border border-slate-400 p-2">2</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-slate-400 p-2 text-left bg-orange-50/50">視覺藝術</td>
+                      <td className="border border-slate-400 p-2">90</td>
+                      <td className="border border-slate-400 p-2">2</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div className="bg-white p-4 rounded shadow-sm border border-slate-200 flex-1">
+                <p className="font-bold text-slate-800 mb-2">加權平均數：</p>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div>
+                    <div className="border-b-2 border-slate-800 text-center pb-1 text-blue-700 font-bold whitespace-nowrap pt-1 px-2">
+                      78 × 3 + 72 × 3 + 56 × 2 + 90 × 2
+                    </div>
+                    <div className="text-center pt-1 text-blue-700 font-bold px-2">
+                      3 + 3 + 2 + 2
+                    </div>
+                  </div>
+                  <div className="text-green-700 font-bold text-sm space-y-2">
+                    <p>← 左 × 右 / 上 × 下 再相加</p>
+                    <p>← 權相加</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
