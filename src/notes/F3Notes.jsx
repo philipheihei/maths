@@ -18,7 +18,7 @@ export const FactorizationNotes = ({ activeSub }) => {
         <p className="text-red-700 font-bold text-center text-lg">📌 答案一定有括號！</p>
       </div>
 
-      <CollapsibleSection id="extract-common" title="提取公因式" num={1} color="purple" activeSub={activeSub} sectionRef={s1}>
+      <CollapsibleSection id="extract-common" title="提取公因式(重溫)" num={1} color="purple" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-purple-800 mb-3">📝 分析題目</h3>
@@ -68,7 +68,7 @@ export const FactorizationNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="grouping" title="併項法（分組因式分解）" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
+      <CollapsibleSection id="grouping" title="併項法（重溫）" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">📝 方法步驟</h3>
@@ -1372,13 +1372,15 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
 // ========================================
 
 const TreeDiagramSVG = () => (
-  <svg width="100%" height="260" viewBox="0 0 600 260" className="mx-auto block overflow-visible">
+  <svg width="100%" height="260" viewBox="0 0 600 260" className="mx-auto mt-2 block overflow-visible">
     <g fontSize="16" fontWeight="bold">
       <text x="40" y="30" fill="#334155" textDecoration="underline">包裝</text>
       <text x="140" y="30" fill="#334155" textDecoration="underline">口味</text>
       <text x="260" y="30" fill="#334155" textDecoration="underline">配料</text>
       <text x="360" y="30" fill="#334155" textDecoration="underline">可能結果</text>
-      
+    </g>
+
+    <g fontSize="16" fontWeight="bold" transform="translate(0 12)">
       <line x1="0" y1="140" x2="30" y2="80" stroke="#64748b" strokeWidth="2" />
       <line x1="0" y1="140" x2="30" y2="200" stroke="#64748b" strokeWidth="2" />
       
@@ -1423,16 +1425,16 @@ const TreeDiagramSVG = () => (
       <text x="380" y="250" fill="#1e293b">CMB</text>
     </g>
 
-    <path d="M 425,185 L 445,185" fill="none" stroke="#2563eb" strokeWidth="1.5" markerEnd="url(#arrow-blue-tree)"/>
+    <path d="M 425,197 L 445,197" fill="none" stroke="#2563eb" strokeWidth="1.5" markerEnd="url(#arrow-blue-tree)"/>
     <defs>
       <marker id="arrow-blue-tree" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
       </marker>
     </defs>
-    <rect x="455" y="145" width="145" height="80" rx="8" fill="white" stroke="#94a3b8" strokeDasharray="4 4" />
-    <text x="465" y="168" fontSize="13" fill="#334155"><tspan fill="#ea580c" fontWeight="bold">C</tspan><tspan fill="#16a34a" fontWeight="bold">V</tspan><tspan fill="#2563eb" fontWeight="bold">B</tspan> 即一個筒裝(<tspan fill="#ea580c" fontWeight="bold">C</tspan>)</text>
-    <text x="465" y="188" fontSize="13" fill="#334155">的香草(<tspan fill="#16a34a" fontWeight="bold">V</tspan>)雪糕配</text>
-    <text x="465" y="208" fontSize="13" fill="#334155">藍莓(<tspan fill="#2563eb" fontWeight="bold">B</tspan>)。</text>
+    <rect x="455" y="157" width="145" height="80" rx="8" fill="white" stroke="#94a3b8" strokeDasharray="4 4" />
+    <text x="465" y="180" fontSize="13" fill="#334155"><tspan fill="#ea580c" fontWeight="bold">C</tspan><tspan fill="#16a34a" fontWeight="bold">V</tspan><tspan fill="#2563eb" fontWeight="bold">B</tspan> 即一個筒裝(<tspan fill="#ea580c" fontWeight="bold">C</tspan>)</text>
+    <text x="465" y="200" fontSize="13" fill="#334155">的香草(<tspan fill="#16a34a" fontWeight="bold">V</tspan>)雪糕配</text>
+    <text x="465" y="220" fontSize="13" fill="#334155">藍莓(<tspan fill="#2563eb" fontWeight="bold">B</tspan>)。</text>
   </svg>
 );
 
