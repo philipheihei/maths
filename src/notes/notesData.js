@@ -2,6 +2,7 @@ import {
   BasicCalculationNotes,
   AlgebraBasicNotes,
   ApproximationNotes,
+  CongruentTrianglesNotes,
   DirectedNumbersNotes,
   PolynomialsNotes,
   AreaVolumeNotes,
@@ -11,6 +12,7 @@ import {
   CoordinateNotes,
   PercentageNotes,
   AnglesNotes,
+  RateRatioNotes,
 } from './F1Notes';
 import {
   InequalityNotes,
@@ -149,6 +151,16 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'congruent-triangles',
+      topic: 'CH12 全等三角形',
+      color: 'blue',
+      subtopics: [
+        { id: 'concept', num: 1, title: '1. 認識概念 (全等)', color: 'blue' },
+        { id: 'corresponding-parts', num: 2, title: '2. 連接對應邊/對應角', color: 'green' },
+        { id: 'conditions', num: 3, title: '3. 學判斷一組三角形是否全等', color: 'red' },
+      ]
+    },
+    {
       id: 'approximation',
       topic: 'CH13 近似值',
       color: 'green',
@@ -156,12 +168,25 @@ export const NOTES_DATA = {
         { id: 'sig-fig', num: 1, title: '有效數字 & 捨入方法', color: 'green' },
         { id: 'approx-examples', num: 2, title: '題目範例', color: 'blue' },
       ]
+    },
+    {
+      id: 'rate-ratio',
+      topic: 'CH14 率與比',
+      color: 'blue',
+      subtopics: [
+        { id: 'unit-conversion', num: 1, title: '1. 單位轉換', color: 'slate' },
+        { id: 'rate', num: 2, title: '2. 率 (Rate)', color: 'blue' },
+        { id: 'ratio', num: 3, title: '3. 比 (Ratio)', color: 'purple' },
+        { id: 'continued-ratio', num: 4, title: '4. 連比', color: 'indigo' },
+        { id: 'scale', num: 5, title: '5. 比例圖', color: 'amber' },
+        { id: 'proportion', num: 6, title: '6. 正比/反比', color: 'rose' },
+      ]
     }
   ],
   F2: [
     {
       id: 'triangle-line-angles',
-      topic: 'CH2 平面幾何圖形的角及直線的性質',
+      topic: 'CH2 有關三角形和直線的角',
       color: 'green',
       subtopics: [
         { id: 'advanced-angle-theorems', num: 1, title: '進階平面幾何角定理 (6-12)', color: 'green' },
@@ -463,6 +488,8 @@ export const NOTES_COMPONENTS = {
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
   'angles': AnglesNotes,
+  'congruent-triangles': CongruentTrianglesNotes,
+  'rate-ratio': RateRatioNotes,
   'functions': FunctionNotes,
   'straight-line-equation': StraightLineEquationNotes,
 };

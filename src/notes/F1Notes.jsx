@@ -3350,10 +3350,26 @@ export const RateRatioNotes = ({ activeSub }) => {
              </div>
           </div>
 
-          <div className="bg-white rounded-lg p-4 border border-slate-200">
+          <div className="bg-white rounded-lg p-4 border border-slate-200 relative pt-10">
             <h3 className="font-bold text-slate-800 mb-3">例子：率的符號與計算</h3>
-            <p className="mb-2 text-lg">例子：<span className="text-blue-800 font-bold">m</span> <span className="text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">/</span> <span className="text-blue-800 font-bold">s</span> ， <span className="text-blue-800 font-bold">$</span> <span className="text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">/</span> <span className="text-blue-800 font-bold border-b-2 border-transparent">小時</span></p>
-            <p className="text-sm text-green-700 font-bold mb-4">↑ 率會出現這個符號</p>
+            {/* 手動微調坐標：改 top / left 數值 */}
+            <p
+              className="absolute text-sm text-green-700 font-bold whitespace-nowrap"
+              style={{ top: '40px', left: '50%', transform: 'translateX(-50%)' }}
+            >
+              率會出現這個符號
+            </p>
+            <p className="mb-4 text-lg text-center">
+              例子：<span className="text-blue-800 font-bold">m</span>{' '}
+              <span className="relative inline-flex text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">
+                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-green-700 text-base font-bold">↓</span>/
+              </span>{' '}
+              <span className="text-blue-800 font-bold">s</span> ， <span className="text-blue-800 font-bold">$</span>{' '}
+              <span className="relative inline-flex text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">
+                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-green-700 text-base font-bold">↓</span>/
+              </span>{' '}
+              <span className="text-blue-800 font-bold border-b-2 border-transparent">小時</span>
+            </p>
 
             <div className="bg-blue-50 p-4 rounded-lg">
               <p className="mb-4 text-slate-700 text-lg whitespace-normal leading-relaxed">
