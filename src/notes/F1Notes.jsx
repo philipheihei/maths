@@ -3478,29 +3478,29 @@ export const RateRatioNotes = ({ activeSub }) => {
             <div className="space-y-8 pl-2 sm:pl-8">
               {/* Step 1 */}
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 flex flex-col items-center">
+                <div className="flex-shrink-0 w-16 flex flex-col items-center">
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
                   <span className="text-green-700 font-bold text-sm mt-1">圖表找</span>
                   <span className="text-green-700 font-bold text-sm">答案</span>
                   <span className="text-red-500 mt-2 font-bold">↓</span>
                 </div>
                 <div className="font-mono text-xl text-blue-900 font-bold">
-                  <div className="flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
-                    <span className="w-8 text-center">a</span><span>:</span>
-                    <span className="w-8 text-center">b</span><span>:</span>
-                    <span className="w-8 text-center relative">c
+                  <div className="grid grid-cols-[2.25rem_1rem_2.25rem_1rem_2.25rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
+                    <span className="text-center">a</span><span className="text-center">:</span>
+                    <span className="text-center">b</span><span className="text-center">:</span>
+                    <span className="text-center relative">c
                       <div className="absolute -inset-1 border-2 border-purple-500 rounded-full h-[110px] w-10 -left-1 top-0 pointer-events-none"></div>
                     </span>
                   </div>
-                  <div className="flex gap-4 px-2">
-                    <span className="w-8 text-center">7</span><span> </span>
-                    <span className="w-8 text-center"></span><span> </span>
-                    <span className="w-8 text-center relative">6</span>
+                  <div className="grid grid-cols-[2.25rem_1rem_2.25rem_1rem_2.25rem] px-2 items-center">
+                    <span className="text-center">7</span><span></span>
+                    <span className="text-center"></span><span></span>
+                    <span className="text-center">6</span>
                   </div>
-                  <div className="flex gap-4 px-2 tracking-widest">
-                    <span className="w-8 text-center"></span><span> </span>
-                    <span className="w-8 text-center">3</span><span>:</span>
-                    <span className="w-8 text-center relative">4</span>
+                  <div className="grid grid-cols-[2.25rem_1rem_2.25rem_1rem_2.25rem] px-2 tracking-widest items-center">
+                    <span className="text-center"></span><span></span>
+                    <span className="text-center">3</span><span className="text-center">:</span>
+                    <span className="text-center">4</span>
                   </div>
                   <div className="text-sm text-purple-700 font-bold mt-2 flex justify-end font-sans">↖ 重疊變相同</div>
                 </div>
@@ -3508,33 +3508,35 @@ export const RateRatioNotes = ({ activeSub }) => {
 
               {/* Step 2 */}
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 flex flex-col items-center">
+                <div className="flex-shrink-0 w-16 flex flex-col items-center">
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
                   <span className="text-red-500 mt-6 font-bold">↓</span>
                 </div>
-                <div className="font-mono text-xl text-blue-900 font-bold relative">
-                  <div className="flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
-                    <span className="w-12 text-center">a</span><span>:</span>
-                    <span className="w-12 text-center">b</span><span>:</span>
-                    <span className="w-12 text-center text-green-600">c</span>
+                <div className="font-mono text-xl text-blue-900 font-bold relative pr-20">
+                  <div className="grid grid-cols-[3rem_1rem_3rem_1rem_3rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
+                    <span className="text-center">a</span><span className="text-center">:</span>
+                    <span className="text-center">b</span><span className="text-center">:</span>
+                    <span className="text-center text-green-600">c</span>
                   </div>
-                  <div className="flex gap-4 px-2">
-                    <span className="w-12 text-center text-base">7<span className="text-red-600 font-bold">×4</span></span><span> </span>
-                    <span className="w-12 text-center"></span><span> </span>
-                    <span className="w-12 text-center bg-green-200 text-base rounded">6<span className="text-red-600 font-bold">×4</span></span>
+                  <div className="grid grid-cols-[3rem_1rem_3rem_1rem_3rem] px-2 items-center">
+                    <span className="text-center text-base">7<span className="text-red-600 font-bold">×4</span></span><span></span>
+                    <span className="text-center"></span><span></span>
+                    <span className="text-center bg-green-200 text-base rounded">6<span className="text-red-600 font-bold">×4</span></span>
                   </div>
-                  <div className="flex gap-4 px-2 mt-1">
-                    <span className="w-12 text-center"></span><span> </span>
-                    <span className="w-12 text-center text-base">3<span className="text-red-600 font-bold">×6</span></span><span>:</span>
-                    <span className="w-12 text-center bg-green-200 text-base rounded">4<span className="text-red-600 font-bold">×6</span></span>
+                  <div className="grid grid-cols-[3rem_1rem_3rem_1rem_3rem] px-2 mt-1 items-center">
+                    <span className="text-center"></span><span></span>
+                    <span className="text-center text-base">3<span className="text-red-600 font-bold">×6</span></span><span className="text-center">:</span>
+                    <span className="text-center bg-green-200 text-base rounded">4<span className="text-red-600 font-bold">×6</span></span>
                   </div>
-                  <div className="absolute right-[-20px] top-[40px] text-purple-700 font-bold text-base whitespace-nowrap font-sans flex items-center"><span className="text-4xl font-normal leading-none mr-1">{"}"}</span>← 互乘做大</div>
+                  <div className="absolute right-0 top-[44px] text-purple-700 font-bold text-base whitespace-nowrap font-sans flex items-center">
+                    <span className="text-[56px] font-normal leading-[0.85] mr-1">{"}"}</span>← 互乘做大
+                  </div>
                 </div>
               </div>
               
               {/* Step 3 */}
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 w-16 flex justify-center">
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
                 </div>
                 <div className="font-mono text-xl text-blue-900 font-bold">
