@@ -11,6 +11,7 @@ import {
   CoordinateNotes,
   PercentageNotes,
   AnglesNotes,
+  CongruentTrianglesNotes,
   RateRatioNotes,
 } from './F1Notes';
 import {
@@ -147,6 +148,16 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'lines-angles-naming', num: 0, title: '基礎知識：線和角的命名', color: 'slate' },
         { id: 'basic-angle-theorems', num: 1, title: '幾何角度定理 (1-5)', color: 'blue' },
+      ]
+    },
+    {
+      id: 'congruent-triangles',
+      topic: 'CH12 全等三角形',
+      color: 'blue',
+      subtopics: [
+        { id: 'concept', num: 1, title: '1. 認識概念 (全等)', color: 'blue' },
+        { id: 'corresponding-parts', num: 2, title: '2. 連接對應邊/對應角', color: 'green' },
+        { id: 'conditions', num: 3, title: '3. 學判斷一組三角形是否全等', color: 'red' },
       ]
     },
     {
@@ -478,6 +489,7 @@ export const NOTES_COMPONENTS = {
   'rate-ratio': RateRatioNotes,
   'percentage': PercentageNotes,
   'angles': AnglesNotes,
+  'congruent-triangles': CongruentTrianglesNotes,
   'functions': FunctionNotes,
   'straight-line-equation': StraightLineEquationNotes,
 };

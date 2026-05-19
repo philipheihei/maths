@@ -3639,3 +3639,316 @@ export const RateRatioNotes = ({ activeSub }) => {
     </>
   );
 };
+
+const CorrespondingPartsSVG = () => {
+  // A(80,40), B(30,150), C(160,150)
+  // P(280,40), Q(230,150), R(360,150)
+  return (
+    <svg viewBox="0 0 400 200" className="w-full h-auto bg-white rounded-lg">
+      <defs>
+        {/* 紫色實心角 B/Q */}
+        <clipPath id="angB"><path d="M 30,150 L 80,40 L 160,150 Z" /></clipPath>
+        <clipPath id="angQ"><path d="M 230,150 L 280,40 L 360,150 Z" /></clipPath>
+      </defs>
+      {/* 填充紫色角 B & Q */}
+      <circle cx="30" cy="150" r="25" fill="#a855f7" clipPath="url(#angB)" />
+      <circle cx="230" cy="150" r="25" fill="#a855f7" clipPath="url(#angQ)" />
+
+      {/* A / P 綠色角弧 (3 arcs) */}
+      {/* A(80,40) to B(30,150) vector is (-50, 110), R=25/30/35 */}
+      {/* A(80,40) to C(160,150) vector is (80, 110) */}
+      {[25, 30, 35].map(r => (
+        <React.Fragment key={r}>
+          <path d={`M ${80 - 50*r/120.8} ${40 + 110*r/120.8} A ${r} ${r} 0 0 0 ${80 + 80*r/136} ${40 + 110*r/136}`} stroke="#22c55e" strokeWidth="2" fill="none" />
+          <path d={`M ${280 - 50*r/120.8} ${40 + 110*r/120.8} A ${r} ${r} 0 0 0 ${280 + 80*r/136} ${40 + 110*r/136}`} stroke="#22c55e" strokeWidth="2" fill="none" />
+        </React.Fragment>
+      ))}
+
+      {/* C / R 灰色角弧 (1 arc) */}
+      <path d="M 135 150 A 25 25 0 0 0 145.2 129.6" stroke="#64748b" strokeWidth="3" fill="none" />
+      <path d="M 335 150 A 25 25 0 0 0 345.2 129.6" stroke="#64748b" strokeWidth="3" fill="none" />
+
+      {/* Triangles */}
+      <path d="M 80,40 L 30,150 L 160,150 Z" stroke="#334155" strokeWidth="2.5" fill="none" />
+      <path d="M 280,40 L 230,150 L 360,150 Z" stroke="#334155" strokeWidth="2.5" fill="none" />
+
+      {/* 標記 AB / PQ (1 red tick) */}
+      <line x1="43" y1="92" x2="67" y2="98" stroke="#ef4444" strokeWidth="2.5" />
+      <circle cx="55" cy="95" r="10" stroke="#ef4444" strokeWidth="2" fill="none" />
+      <line x1="243" y1="92" x2="267" y2="98" stroke="#ef4444" strokeWidth="2.5" />
+      <circle cx="255" cy="95" r="10" stroke="#ef4444" strokeWidth="2" fill="none" />
+
+      {/* 標記 BC / QR (2 black ticks) */}
+      <line x1="91" y1="140" x2="91" y2="160" stroke="#000" strokeWidth="2" />
+      <line x1="99" y1="140" x2="99" y2="160" stroke="#000" strokeWidth="2" />
+      <circle cx="95" cy="150" r="14" stroke="#000" strokeWidth="2" fill="none" />
+      <line x1="291" y1="140" x2="291" y2="160" stroke="#000" strokeWidth="2" />
+      <line x1="299" y1="140" x2="299" y2="160" stroke="#000" strokeWidth="2" />
+      <circle cx="295" cy="150" r="14" stroke="#000" strokeWidth="2" fill="none" />
+
+      {/* 標記 CA / RP (3 blue ticks) */}
+      {[-4, 0, 4].map(offset => (
+        <React.Fragment key={offset}>
+          <line x1={120 + 8 + offset*0.6} y1={95 - 6 + offset*0.8} x2={120 - 8 + offset*0.6} y2={95 + 6 + offset*0.8} stroke="#3b82f6" strokeWidth="2" />
+          <line x1={320 + 8 + offset*0.6} y1={95 - 6 + offset*0.8} x2={320 - 8 + offset*0.6} y2={95 + 6 + offset*0.8} stroke="#3b82f6" strokeWidth="2" />
+        </React.Fragment>
+      ))}
+      <circle cx="120" cy="95" r="14" stroke="#3b82f6" strokeWidth="2" fill="none" />
+      <circle cx="320" cy="95" r="14" stroke="#3b82f6" strokeWidth="2" fill="none" />
+
+      {/* Labels */}
+      <text x="80" y="30" fontSize="18" fontStyle="italic" textAnchor="middle" fill="#334155">A</text>
+      <text x="18" y="155" fontSize="18" fontStyle="italic" textAnchor="middle" fill="#334155">B</text>
+      <text x="175" y="155" fontSize="18" fontStyle="italic" textAnchor="middle" fill="#334155">C</text>
+      <text x="280" y="30" fontSize="18" fontStyle="italic" textAnchor="middle" fill="#334155">P</text>
+      <text x="218" y="155" fontSize="18" fontStyle="italic" textAnchor="middle" fill="#334155">Q</text>
+      <text x="375" y="155" fontSize="18" fontStyle="italic" textAnchor="middle" fill="#334155">R</text>
+    </svg>
+  );
+};
+
+const CongruentConditionsSVG = () => {
+  // A list of conditions to render triangles
+  // 5 rows: 0 to 4. Each row takes ~120px height
+  return (
+    <svg viewBox="0 0 400 650" className="w-full h-auto bg-green-50/50 rounded-lg">
+      <defs>
+        {/* Right angle rect */}
+        <g id="right-ang">
+          <polyline points="0,-12 12,-12 12,0" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+        </g>
+      </defs>
+
+      {/* Row 1: SAS */}
+      <g transform="translate(0, 0)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(a) [簡記 : SAS]</text>
+        <path d="M 160,20 L 110,80 L 210,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        {/* Ticks & Arcs */}
+        <line x1="129" y1="48" x2="141" y2="52" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="249" y1="48" x2="261" y2="52" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="160" y1="75" x2="160" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 1 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 1 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="120" y="30" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="110" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
+        <text x="80" y="80" fontSize="16" fill="#334155" textAnchor="end">夾角 →</text>
+      </g>
+
+      {/* Row 2: ASA */}
+      <g transform="translate(0, 110)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(b) [簡記 : ASA]</text>
+        <path d="M 160,20 L 110,80 L 210,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <line x1="160" y1="75" x2="160" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 1 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 1 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 190 80 A 20 20 0 0 0 197 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 186 80 A 24 24 0 0 0 194 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 310 80 A 20 20 0 0 0 317 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 306 80 A 24 24 0 0 0 314 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="110" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="210" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
+        <path d="M 160 55 Q 160 70 160 70" fill="none" stroke="#334155" strokeWidth="1" markerEnd="url(#arrow)" />
+        <text x="160" y="50" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">夾邊</text>
+      </g>
+
+      {/* Row 3: AAS */}
+      <g transform="translate(0, 220)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(c) [簡記 : AAS]</text>
+        <path d="M 160,20 L 110,80 L 210,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <line x1="179" y1="41" x2="191" y2="59" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="299" y1="41" x2="311" y2="59" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 1 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 1 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 152 30 A 20 20 0 0 0 170 33" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 148 25 A 25 25 0 0 0 173 29" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 272 30 A 20 20 0 0 0 290 33" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 268 25 A 25 25 0 0 0 293 29" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="110" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
+        <text x="160" y="15" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="200" y="60" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="240" y="45" fontSize="16" fill="#334155" fontWeight="bold" textAnchor="end">← 不是夾邊</text>
+      </g>
+
+      {/* Row 4: SSS */}
+      <g transform="translate(0, 330)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(d) [簡記 : SSS]</text>
+        <path d="M 160,20 L 110,80 L 210,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        
+        <line x1="129" y1="48" x2="141" y2="52" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="249" y1="48" x2="261" y2="52" stroke="#0ea5e9" strokeWidth="2" />
+        
+        <line x1="181" y1="46" x2="191" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="178" y1="50" x2="188" y2="58" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="301" y1="46" x2="311" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="298" y1="50" x2="308" y2="58" stroke="#0ea5e9" strokeWidth="2" />
+
+        <line x1="156" y1="75" x2="156" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="160" y1="75" x2="160" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="164" y1="75" x2="164" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="276" y1="75" x2="276" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="284" y1="75" x2="284" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+
+        <text x="120" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="200" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+      </g>
+
+      {/* Row 5: RHS */}
+      <g transform="translate(0, 440)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(e) [簡記 : RHS]</text>
+        <path d="M 110,20 L 110,80 L 190,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 240,20 L 240,80 L 320,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <use href="#right-ang" x="110" y="80" />
+        <use href="#right-ang" x="240" y="80" />
+        <line x1="150" y1="75" x2="150" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="147" y1="46" x2="155" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="144" y1="50" x2="152" y2="58" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="277" y1="46" x2="285" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="274" y1="50" x2="282" y2="58" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="100" y="85" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
+        <text x="150" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="165" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="100" y="15" fontSize="16" fill="#0284c7" fontWeight="bold" textAnchor="end">直角</text>
+        <path d="M 90 20 Q 90 40 100 50" fill="none" stroke="#0284c7" strokeWidth="2" markerEnd="url(#arrow)" />
+        <text x="96" y="100" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">不是夾角 →</text>
+        <text x="96" y="120" fontSize="16" fill="#0284c7" textAnchor="end" fontWeight="bold">但是直角(特別例子)</text>
+      </g>
+
+      {/* Row 6: SAS (Right angle trap) */}
+      <g transform="translate(0, 560)">
+        <path d="M 110,20 L 110,80 L 190,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 240,20 L 240,80 L 320,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <use href="#right-ang" x="110" y="80" stroke="#ef4444" />
+        <use href="#right-ang" x="240" y="80" stroke="#ef4444" />
+        <line x1="150" y1="75" x2="150" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="105" y1="50" x2="115" y2="50" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="105" y1="54" x2="115" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="235" y1="50" x2="245" y2="50" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="235" y1="54" x2="245" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="350" y="65" fontSize="24" fontStyle="italic" fill="#16a34a" fontWeight="bold">SAS</text>
+      </g>
+
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+        </marker>
+      </defs>
+    </svg>
+  );
+};
+
+export const CongruentTrianglesNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+
+  return (
+    <>
+      {/* 1. 認識概念 全等 */}
+      <CollapsibleSection id="concept" title="1. 認識概念 (全等)" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-5 border border-blue-200 shadow-sm flex items-center gap-3">
+            <span className="text-2xl">💡</span>
+            <div>
+              <p className="text-slate-800 text-lg">
+                <span className="font-bold text-slate-800">全等：</span>
+                <span className="text-red-600 font-bold mx-2">形狀</span>和<span className="text-red-600 font-bold mx-2">大小</span>一樣
+                <span className="text-blue-800 font-bold ml-2">（邊長 / 角度相等）</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 2. 連接對應邊/對應角 */}
+      <CollapsibleSection id="corresponding-parts" title="2. 連接對應邊 / 對應角" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="text-slate-700 mb-4 tex-lg">例如： 考慮以下兩個三角形。</p>
+            
+            {/* 全等三角形 PQR 與 ABC */}
+            <div className="w-full max-w-lg mx-auto mb-4">
+              <CorrespondingPartsSVG />
+            </div>
+
+            <p className="text-red-600 font-bold text-center mb-6">看標記認，哪對角的角度相同</p>
+
+            <div className="bg-green-50 p-6 rounded-lg border border-green-200 mx-auto max-w-2xl relative">
+              <div className="text-center font-mono space-y-4 text-lg">
+                <div className="flex flex-wrap justify-center gap-4 text-slate-800 font-bold">
+                  <span className="mr-2">∵</span>
+                  <span className="border-b-4 border-red-500 pb-1">AB = PQ</span> 、
+                  <span className="border-b-4 border-purple-500 pb-1">∠B = ∠Q</span> 、
+                  <span className="border-b-4 border-slate-800 pb-1">BC = QR</span> 、
+                </div>
+                <div className="flex flex-wrap justify-center gap-4 text-slate-800 font-bold ml-[2em]">
+                  <span className="border-b-4 border-slate-400 pb-1">∠C = ∠R</span> 、
+                  <span className="border-b-4 border-blue-500 pb-1">CA = RP</span> 及
+                  <span className="border-b-4 border-green-500 pb-1">∠A = ∠P</span>
+                </div>
+                
+                <div className="mt-8 text-xl font-bold flex items-center justify-center gap-2 font-sans pt-4 border-t border-green-200">
+                  <span className="mr-2 font-mono">∴</span>
+                  <span>三角形 ABC 與 三角形 PQR  全等，即</span>
+                  <span className="bg-yellow-200 px-2 py-1 rounded inline-flex items-center gap-1 font-mono ml-2 relative">
+                    <Latex math="\triangle ABC\cong\triangle PQR" />
+                    <div className="absolute -bottom-6 right-0 text-red-600 text-sm font-sans whitespace-nowrap">按順序排列</div>
+                    <div className="absolute -right-4 top-1/2 translate-x-full -translate-y-1/2 flex items-center">
+                      <div className="w-12 h-[2px] bg-slate-800"></div>
+                      <span className="text-lg ml-2 font-bold transform -rotate-12 translate-y-1 font-sans">全等三角形的名稱</span>
+                    </div>
+                  </span>
+                </div>
+                {/* Visual marker highlighting the congruent sign */}
+                <div className="absolute bottom-[40px] left-[61%] w-8 h-8 rounded-full border-[3px] border-green-600 pointer-events-none transform -translate-x-1/2 z-10 md:left-[55.5%]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 3. 學判斷一組三角形是否全等 */}
+      <CollapsibleSection id="conditions" title="3. 學判斷一組三角形是否全等" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="md:col-span-1 border-r border-slate-200 pr-4">
+               <ul className="text-2xl font-mono text-slate-800 space-y-4 mb-8 font-bold">
+                 <li>S = 線</li>
+                 <li>A = 角</li>
+               </ul>
+               <p className="text-red-600 font-bold text-lg">* 需留意是否夾角/夾邊</p>
+            </div>
+            
+            <div className="md:col-span-3 space-y-8 bg-green-50 p-6 rounded-lg border border-green-200">
+               {/* 全等三角形各項證明條件 */}
+               <div className="w-full max-w-xl mx-auto">
+                 <CongruentConditionsSVG />
+               </div>
+               
+               <div className="mt-6 p-4 bg-white rounded-lg shadow-sm border-l-4 border-red-500 relative overflow-hidden">
+                 <div className="absolute -right-4 -bottom-4 text-8xl text-red-50 opacity-50 font-black pointer-events-none">!</div>
+                 <h4 className="text-red-700 font-bold text-lg mb-2 relative z-10">⚠️ 易錯提醒：不是有直角就是 RHS！</h4>
+                 <p className="text-slate-700 relative z-10 text-[15px] leading-relaxed">
+                   如果兩條 <strong>直角邊 (兩股)</strong> 分別相等，且夾著直角，這屬於 <span className="font-bold text-red-600 bg-red-100 px-1 rounded">SAS</span>（兩邊及其夾角）。
+                 </p>
+                 <p className="text-slate-700 mt-2 relative z-10 text-[15px] leading-relaxed">
+                   必須是 <strong>直角</strong> (R) + <strong>斜邊</strong> (H) 相等 + <strong>另一條邊</strong> (S) 相等，才算是 <span className="font-bold text-blue-700 bg-blue-100 px-1 rounded">RHS</span>。
+                 </p>
+               </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
