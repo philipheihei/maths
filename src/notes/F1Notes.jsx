@@ -3924,6 +3924,7 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
                     </div>
                   </span>
                 </div>
+                {/* Visual marker highlighting the congruent sign */}
               </div>
             </div>
           </div>
