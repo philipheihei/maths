@@ -3683,8 +3683,8 @@ const CorrespondingPartsSVG = () => {
       ))}
 
       {/* C / R 灰色角弧 (1 arc) */}
-      <path d="M 135 150 A 25 25 0 0 0 145.2 129.6" stroke="#64748b" strokeWidth="3" fill="none" />
-      <path d="M 335 150 A 25 25 0 0 0 345.2 129.6" stroke="#64748b" strokeWidth="3" fill="none" />
+      <path d="M 135 150 A 25 25 0 0 1 145.2 129.6" stroke="#64748b" strokeWidth="3" fill="none" />
+      <path d="M 335 150 A 25 25 0 0 1 345.2 129.6" stroke="#64748b" strokeWidth="3" fill="none" />
 
       {/* Triangles */}
       <path d="M 80,40 L 30,150 L 160,150 Z" stroke="#334155" strokeWidth="2.5" fill="none" />
@@ -3692,17 +3692,13 @@ const CorrespondingPartsSVG = () => {
 
       {/* 標記 AB / PQ (1 red tick) */}
       <line x1="43" y1="92" x2="67" y2="98" stroke="#ef4444" strokeWidth="2.5" />
-      <circle cx="55" cy="95" r="10" stroke="#ef4444" strokeWidth="2" fill="none" />
       <line x1="243" y1="92" x2="267" y2="98" stroke="#ef4444" strokeWidth="2.5" />
-      <circle cx="255" cy="95" r="10" stroke="#ef4444" strokeWidth="2" fill="none" />
 
       {/* 標記 BC / QR (2 black ticks) */}
       <line x1="91" y1="140" x2="91" y2="160" stroke="#000" strokeWidth="2" />
       <line x1="99" y1="140" x2="99" y2="160" stroke="#000" strokeWidth="2" />
-      <circle cx="95" cy="150" r="14" stroke="#000" strokeWidth="2" fill="none" />
       <line x1="291" y1="140" x2="291" y2="160" stroke="#000" strokeWidth="2" />
       <line x1="299" y1="140" x2="299" y2="160" stroke="#000" strokeWidth="2" />
-      <circle cx="295" cy="150" r="14" stroke="#000" strokeWidth="2" fill="none" />
 
       {/* 標記 CA / RP (3 blue ticks) */}
       {[-4, 0, 4].map(offset => (
@@ -3711,8 +3707,6 @@ const CorrespondingPartsSVG = () => {
           <line x1={320 + 8 + offset*0.6} y1={95 - 6 + offset*0.8} x2={320 - 8 + offset*0.6} y2={95 + 6 + offset*0.8} stroke="#3b82f6" strokeWidth="2" />
         </React.Fragment>
       ))}
-      <circle cx="120" cy="95" r="14" stroke="#3b82f6" strokeWidth="2" fill="none" />
-      <circle cx="320" cy="95" r="14" stroke="#3b82f6" strokeWidth="2" fill="none" />
 
       {/* Labels */}
       <text x="80" y="30" fontSize="18" fontStyle="italic" textAnchor="middle" fill="#334155">A</text>
@@ -3747,8 +3741,8 @@ const CongruentConditionsSVG = () => {
         <line x1="249" y1="48" x2="261" y2="52" stroke="#0ea5e9" strokeWidth="2" />
         <line x1="160" y1="75" x2="160" y2="85" stroke="#0ea5e9" strokeWidth="2" />
         <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 130 80 A 20 20 0 0 1 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 250 80 A 20 20 0 0 1 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 0 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 0 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <text x="120" y="30" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
         <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
         <text x="110" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
@@ -3762,12 +3756,12 @@ const CongruentConditionsSVG = () => {
         <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
         <line x1="160" y1="75" x2="160" y2="85" stroke="#0ea5e9" strokeWidth="2" />
         <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 130 80 A 20 20 0 0 1 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 250 80 A 20 20 0 0 1 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 190 80 A 20 20 0 0 0 197 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 186 80 A 24 24 0 0 0 194 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 310 80 A 20 20 0 0 0 317 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 306 80 A 24 24 0 0 0 314 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 0 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 0 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 190 80 A 20 20 0 0 1 197 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 186 80 A 24 24 0 0 1 194 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 310 80 A 20 20 0 0 1 317 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 306 80 A 24 24 0 0 1 314 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <text x="110" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
         <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
         <text x="210" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
@@ -3782,8 +3776,8 @@ const CongruentConditionsSVG = () => {
         <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
         <line x1="179" y1="41" x2="191" y2="59" stroke="#0ea5e9" strokeWidth="2" />
         <line x1="299" y1="41" x2="311" y2="59" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 130 80 A 20 20 0 0 1 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 250 80 A 20 20 0 0 1 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 0 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 0 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 152 30 A 20 20 0 0 0 170 33" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 148 25 A 25 25 0 0 0 173 29" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 272 30 A 20 20 0 0 0 290 33" fill="none" stroke="#0ea5e9" strokeWidth="2" />
