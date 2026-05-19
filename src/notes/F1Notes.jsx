@@ -3895,17 +3895,17 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
 
             <p className="text-red-600 font-bold text-center mb-6">看標記認，哪對角的角度相同</p>
 
-            <div className="bg-green-50 p-6 rounded-lg border border-green-200 mx-auto max-w-2xl relative">
+            <div className="bg-green-50 p-6 rounded-lg border border-green-200 mx-auto max-w-2xl relative md:ml-0 md:mr-24 lg:mr-28">
               <div className="text-center font-mono space-y-4 text-lg">
                 <div className="flex flex-wrap justify-center gap-4 text-slate-800 font-bold">
                   <span className="mr-2">∵</span>
                   <span className="border-b-4 border-red-500 pb-1">AB = PQ</span> 、
-                  <span className="border-b-4 border-purple-500 pb-1">∠B = ∠Q</span> 、
                   <span className="border-b-4 border-slate-800 pb-1">BC = QR</span> 、
+                  <span className="border-b-4 border-blue-500 pb-1">CA = RP</span> 、
                 </div>
                 <div className="flex flex-wrap justify-center gap-4 text-slate-800 font-bold ml-[2em]">
                   <span className="border-b-4 border-slate-400 pb-1">∠C = ∠R</span> 、
-                  <span className="border-b-4 border-blue-500 pb-1">CA = RP</span> 及
+                  <span className="border-b-4 border-purple-500 pb-1">∠B = ∠Q</span> 及
                   <span className="border-b-4 border-green-500 pb-1">∠A = ∠P</span>
                 </div>
                 
@@ -3916,13 +3916,14 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
                     <Latex math="\triangle ABC\cong\triangle PQR" />
                     <div className="absolute -bottom-6 right-0 text-red-600 text-sm font-sans whitespace-nowrap">按順序排列</div>
                     <div className="absolute -right-4 top-1/2 translate-x-full -translate-y-1/2 flex items-center">
-                      <div className="w-12 h-[2px] bg-slate-800"></div>
-                      <span className="text-lg ml-2 font-bold transform -rotate-12 translate-y-1 font-sans">全等三角形的名稱</span>
+                      <svg width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="currentColor" className="text-slate-800" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="48" y1="12" x2="2" y2="12" />
+                        <polyline points="8 6 2 12 8 18" />
+                      </svg>
+                      <span className="text-lg ml-2 font-bold font-sans">全等三角形的名稱</span>
                     </div>
                   </span>
                 </div>
-                {/* Visual marker highlighting the congruent sign */}
-                <div className="absolute bottom-[40px] left-[61%] w-8 h-8 rounded-full border-[3px] border-green-600 pointer-events-none transform -translate-x-1/2 z-10 md:left-[55.5%]"></div>
               </div>
             </div>
           </div>
@@ -3932,16 +3933,16 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
       {/* 3. 學判斷一組三角形是否全等 */}
       <CollapsibleSection id="conditions" title="3. 學判斷一組三角形是否全等" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="md:col-span-1 border-r border-slate-200 pr-4">
-               <ul className="text-2xl font-mono text-slate-800 space-y-4 mb-8 font-bold">
-                 <li>S = 線</li>
-                 <li>A = 角</li>
-               </ul>
-               <p className="text-red-600 font-bold text-lg">* 需留意是否夾角/夾邊</p>
+          <div className="space-y-4">
+            <div className="border-b border-slate-200 pb-4 md:flex md:items-center md:justify-between md:gap-6">
+              <ul className="text-2xl font-mono text-slate-800 font-bold flex flex-wrap items-center gap-x-8 gap-y-2">
+                <li>S = 線</li>
+                <li>A = 角</li>
+              </ul>
+              <p className="text-red-600 font-bold text-lg mt-2 md:mt-0">* 需留意是否夾角/夾邊</p>
             </div>
-            
-            <div className="md:col-span-3 space-y-8 bg-green-50 p-6 rounded-lg border border-green-200">
+
+            <div className="space-y-8 bg-green-50 p-6 rounded-lg border border-green-200">
                {/* 全等三角形各項證明條件 */}
                <div className="w-full max-w-xl mx-auto">
                  <CongruentConditionsSVG />
