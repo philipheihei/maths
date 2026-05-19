@@ -53,18 +53,6 @@ export const NOTES_DATA = {
       ]
     },
     {
-      id: 'polynomials',
-      topic: 'CH3 多項式',
-      color: 'purple',
-      subtopics: [
-        { id: 'definition', num: 1, title: '分辨單項式與多項式', color: 'blue' },
-        { id: 'terms-coeff', num: 2, title: '項數、係數與常數項', color: 'blue' },
-        { id: 'degree-order', num: 3, title: '次數與排列', color: 'green' },
-        { id: 'addition-subtraction', num: 4, title: '多項式的加減', color: 'orange' },
-        { id: 'multiplication', num: 5, title: '多項式的乘法', color: 'red' },
-      ]
-    },
-    {
       id: 'linear-equation',
       topic: 'CH4 一元一次方程',
       color: 'teal',
@@ -83,6 +71,18 @@ export const NOTES_DATA = {
         { id: 'polygon-area', num: 2, title: '計算多邊形面積', color: 'green' },
         { id: 'prism-formulas', num: 3, title: '柱體體積及表面面積', color: 'purple' },
         { id: 'draw-3d', num: 4, title: '畫立體圖', color: 'amber' },
+      ]
+    },
+    {
+      id: 'polynomials',
+      topic: 'CH6 多項式',
+      color: 'purple',
+      subtopics: [
+        { id: 'definition', num: 1, title: '分辨單項式與多項式', color: 'blue' },
+        { id: 'terms-coeff', num: 2, title: '項數、係數與常數項', color: 'blue' },
+        { id: 'degree-order', num: 3, title: '次數與排列', color: 'green' },
+        { id: 'addition-subtraction', num: 4, title: '多項式的加減', color: 'orange' },
+        { id: 'multiplication', num: 5, title: '多項式的乘法', color: 'red' },
       ]
     },
     {

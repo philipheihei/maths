@@ -181,15 +181,22 @@ export const BasicCalculationNotes = ({ activeSub }) => {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <h3 className="font-bold text-blue-800 mb-4">2 個數字的 L.C.M. 和 H.C.F.</h3>
-              <div className="flex font-mono text-lg mb-4">
-                <div className="flex flex-col items-end pr-2 border-r-2 border-black">
-                  <span className="bg-yellow-200 px-1 mb-1 relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-black after:-bottom-[3px] after:left-0">2</span>
-                  <span className="bg-yellow-200 px-1 mb-1 relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-black after:-bottom-[3px] after:left-0">2</span>
+              <div className="inline-grid grid-cols-[auto_1fr] font-mono text-lg mb-4 items-end gap-y-1">
+                <div className="pr-2 pb-1 text-right">
+                  <span className="bg-yellow-200 px-1">2</span>
                 </div>
-                <div className="flex flex-col pl-2">
-                  <div className="flex gap-4 mb-1"><span>20</span><span>32</span></div>
-                  <div className="flex gap-4 mb-1"><span>10</span><span>16</span></div>
-                  <div className="flex gap-4"><span className="bg-yellow-200 px-1">5</span><span className="bg-yellow-200 px-1">8</span></div>
+                <div className="pl-2 border-l-2 border-b-2 border-black pb-1 flex gap-4 w-max">
+                  <span className="w-6 text-center">20</span><span className="w-6 text-center">32</span>
+                </div>
+                <div className="pr-2 pb-1 text-right">
+                  <span className="bg-yellow-200 px-1">2</span>
+                </div>
+                <div className="pl-2 border-l-2 border-b-2 border-black pb-1 flex gap-4 w-max">
+                  <span className="w-6 text-center">10</span><span className="w-6 text-center">16</span>
+                </div>
+                <div></div>
+                <div className="pl-2 pt-1 flex gap-4 w-max">
+                  <span className="bg-yellow-200 px-1 w-6 text-center">5</span><span className="bg-yellow-200 px-1 w-6 text-center">8</span>
                 </div>
               </div>
               <ul className="text-sm space-y-2">
@@ -201,26 +208,41 @@ export const BasicCalculationNotes = ({ activeSub }) => {
 
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <h3 className="font-bold text-blue-800 mb-4">3 個數字的 L.C.M. 和 H.C.F.</h3>
-              <div className="flex font-mono text-lg mb-4">
-                <div className="flex flex-col items-end pr-2 border-r-2 border-black">
-                  <span className="relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-black after:-bottom-[3px] after:left-0 px-1 mb-1 bg-green-200">2</span>
-                  <span className="bg-yellow-200 px-1 mb-1 relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-black after:-bottom-[3px] after:left-0">3</span>
-                  <span className="bg-yellow-200 px-1 mb-1 relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-black after:-bottom-[3px] after:left-0">2</span>
+              <div className="inline-grid grid-cols-[auto_auto_1fr] font-mono text-lg mb-4 items-end gap-y-1">
+                <div className="pr-2 pb-1 text-right">
+                  <span className="bg-green-200 px-1">2</span>
                 </div>
-                <div className="flex flex-col pl-2">
-                  <div className="flex gap-4 mb-1"><span>18</span><span>20</span><span>24</span></div>
-                  <div className="flex gap-4 mb-1">
-                    <span className="bg-yellow-200 px-1">9</span><span>10</span><span className="bg-yellow-200 px-1">12</span>
-                    <span className="text-green-700 text-sm font-sans ml-2">← 可選其中兩數的公因數繼續找 L.C.M.</span>
-                  </div>
-                  <div className="flex gap-4 mb-1">
-                    <span>3</span><span>10</span><span>4</span>
-                    <span className="text-green-700 text-sm font-sans ml-2">← 10照抄，因為除不盡3</span>
-                  </div>
-                  <div className="flex gap-4">
-                    <span className="bg-yellow-200 px-1">3</span><span className="bg-yellow-200 px-1">5</span><span className="bg-yellow-200 px-1">2</span>
-                    <span className="text-green-700 text-sm font-sans ml-2">← 直至做到任何兩數字都除不盡</span>
-                  </div>
+                <div className="pl-2 pr-4 border-l-2 border-b-2 border-black pb-1 flex gap-4 w-max">
+                  <span className="w-6 text-center">18</span><span className="w-6 text-center">20</span><span className="w-6 text-center">24</span>
+                </div>
+                <div></div>
+
+                <div className="pr-2 pb-1 text-right">
+                  <span className="bg-yellow-200 px-1">3</span>
+                </div>
+                <div className="pl-2 pr-4 border-l-2 border-b-2 border-black pb-1 flex gap-4 w-max">
+                  <span className="bg-yellow-200 px-1 w-6 text-center">9</span><span className="w-6 text-center">10</span><span className="bg-yellow-200 px-1 w-6 text-center">12</span>
+                </div>
+                <div className="pl-2 pb-1 flex items-center">
+                  <span className="text-green-700 text-sm font-sans">← 可選其中兩數的公因數繼續找 L.C.M.</span>
+                </div>
+
+                <div className="pr-2 pb-1 text-right">
+                  <span className="bg-yellow-200 px-1">2</span>
+                </div>
+                <div className="pl-2 pr-4 border-l-2 border-b-2 border-black pb-1 flex gap-4 w-max">
+                  <span className="w-6 text-center">3</span><span className="w-6 text-center">10</span><span className="w-6 text-center">4</span>
+                </div>
+                <div className="pl-2 pb-1 flex items-center">
+                  <span className="text-green-700 text-sm font-sans">← 10照抄，因為除不盡3</span>
+                </div>
+
+                <div></div>
+                <div className="pl-2 pr-4 pt-1 flex gap-4 w-max">
+                  <span className="bg-yellow-200 px-1 w-6 text-center">3</span><span className="bg-yellow-200 px-1 w-6 text-center">5</span><span className="bg-yellow-200 px-1 w-6 text-center">2</span>
+                </div>
+                <div className="pl-2 pt-1 flex items-center">
+                  <span className="text-green-700 text-sm font-sans">← 直至做到任何兩數字都除不盡</span>
                 </div>
               </div>
               <ul className="text-sm space-y-2">
@@ -838,10 +860,10 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <polyline points="30,118 42,118 42,130" fill="none" stroke="#334155" strokeWidth="1.5" />
                   <polyline points="130,118 118,118 118,130" fill="none" stroke="#334155" strokeWidth="1.5" />
                   {/* Tick marks */}
-                  <line x1="75" y1="26" x2="85" y2="34" stroke="#e63946" strokeWidth="2" />
-                  <line x1="75" y1="126" x2="85" y2="134" stroke="#e63946" strokeWidth="2" />
-                  <line x1="26" y1="75" x2="34" y2="85" stroke="#e63946" strokeWidth="2" />
-                  <line x1="126" y1="75" x2="134" y2="85" stroke="#e63946" strokeWidth="2" />
+                  <line x1="80" y1="24" x2="80" y2="36" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="80" y1="124" x2="80" y2="136" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="24" y1="80" x2="36" y2="80" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="124" y1="80" x2="136" y2="80" stroke="#0ea5e9" strokeWidth="2" />
                   
                   <text x="80" y="145" fontSize="13" fill="#475569" textAnchor="middle">邊長</text>
                   <text x="15" y="80" fontSize="13" fill="#475569" textAnchor="middle" writingMode="vertical-rl">邊長</text>
@@ -853,12 +875,17 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                 <svg viewBox="0 0 160 160" className="w-32 h-32">
                   <rect x="30" y="30" width="100" height="100" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" />
                   <polyline points="30,42 42,42 42,30" fill="none" stroke="#334155" strokeWidth="1.5" />
-                  <text x="80" y="145" fontSize="13" fill="#475569" textAnchor="middle">5 cm</text>
-                  <text x="135" y="85" fontSize="13" fill="#475569" textAnchor="start">5 cm</text>
+                  <polyline points="130,42 118,42 118,30" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <polyline points="30,118 42,118 42,130" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <polyline points="130,118 118,118 118,130" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <text x="80" y="142" fontSize="13" fill="#475569" textAnchor="middle">5 cm</text>
+                  <text x="132" y="85" fontSize="13" fill="#475569" textAnchor="start">5 cm</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  正方形的面積 = 5 × 5 (cm²)<br/>
-                  = <span className="underline">25 cm²</span>
+                  <pre className="whitespace-pre font-sans inline-block text-left">
+                    正方形的面積 = 5 × 5 (cm²){'\n'}
+                    {'          '}= <span className="underline">25 cm²</span>
+                  </pre>
                 </div>
               </div>
             </div>
@@ -873,12 +900,12 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <polyline points="20,78 32,78 32,90" fill="none" stroke="#334155" strokeWidth="1.5" />
                   <polyline points="180,78 168,78 168,90" fill="none" stroke="#334155" strokeWidth="1.5" />
                   
-                  <line x1="100" y1="26" x2="100" y2="34" stroke="#e63946" strokeWidth="2" />
-                  <line x1="100" y1="86" x2="100" y2="94" stroke="#e63946" strokeWidth="2" />
-                  <line x1="16" y1="57" x2="24" y2="57" stroke="#e63946" strokeWidth="2" />
-                  <line x1="16" y1="63" x2="24" y2="63" stroke="#e63946" strokeWidth="2" />
-                  <line x1="176" y1="57" x2="184" y2="57" stroke="#e63946" strokeWidth="2" />
-                  <line x1="176" y1="63" x2="184" y2="63" stroke="#e63946" strokeWidth="2" />
+                  <line x1="100" y1="24" x2="100" y2="36" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="100" y1="84" x2="100" y2="96" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="14" y1="57" x2="26" y2="57" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="14" y1="63" x2="26" y2="63" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="174" y1="57" x2="186" y2="57" stroke="#0ea5e9" strokeWidth="2" />
+                  <line x1="174" y1="63" x2="186" y2="63" stroke="#0ea5e9" strokeWidth="2" />
 
                   <text x="100" y="105" fontSize="13" fill="#475569" textAnchor="middle">長</text>
                   <text x="185" y="65" fontSize="13" fill="#475569" textAnchor="start">闊</text>
@@ -887,17 +914,21 @@ export const AreaVolumeNotes = ({ activeSub }) => {
               </div>
               <div className="w-1/2 flex flex-col items-center justify-center">
                 <span className="text-sm text-slate-500 mb-2">例如：</span>
-                <svg viewBox="0 0 200 120" className="w-40 h-24">
+                <svg viewBox="0 0 200 135" className="w-40 h-24">
                   <rect x="50" y="20" width="60" height="90" fill="rgba(245,158,11,0.2)" stroke="#334155" strokeWidth="2" />
                   <polyline points="50,32 62,32 62,20" fill="none" stroke="#334155" strokeWidth="1.5" />
                   <polyline points="110,32 98,32 98,20" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <polyline points="50,98 62,98 62,110" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <polyline points="110,98 98,98 98,110" fill="none" stroke="#334155" strokeWidth="1.5" />
                   
-                  <text x="80" y="125" fontSize="13" fill="#475569" textAnchor="middle">6 cm</text>
+                  <text x="80" y="121" fontSize="13" fill="#475569" textAnchor="middle">6 cm</text>
                   <text x="45" y="70" fontSize="13" fill="#475569" textAnchor="end">9 cm</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  長方形的面積 = 9 × 6 (cm²)<br/>
-                  = <span className="underline">54 cm²</span>
+                  <pre className="whitespace-pre font-sans inline-block text-left">
+                    長方形的面積 = 9 × 6 (cm²){'\n'}
+                    {'          '}= <span className="underline">54 cm²</span>
+                  </pre>
                 </div>
               </div>
             </div>
@@ -918,6 +949,14 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <polyline points="85,76 90,80 85,84" fill="none" stroke="#0ea5e9" strokeWidth="2" />
                   <polyline points="92,76 97,80 92,84" fill="none" stroke="#0ea5e9" strokeWidth="2" />
 
+                  {/* Left and right parallel marks (single arrows) */}
+                  <g transform="translate(40,50) rotate(123.7)">
+                    <polyline points="-5,-4 0,0 -5,4" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                  </g>
+                  <g transform="translate(180,50) rotate(123.7)">
+                    <polyline points="-5,-4 0,0 -5,4" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                  </g>
+
                   {/* Dimension lines */}
                   <line x1="20" y1="95" x2="160" y2="95" stroke="#475569" strokeWidth="1" />
                   <line x1="20" y1="90" x2="20" y2="100" stroke="#475569" strokeWidth="1" />
@@ -935,7 +974,7 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   
                   {/* Extension line for height */}
                   <line x1="200" y1="30" x2="200" y2="80" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
-                  <line x1="150" y1="80" x2="210" y2="80" stroke="#334155" strokeWidth="1" />
+                  <line x1="150" y1="80" x2="200" y2="80" stroke="#334155" strokeWidth="1" />
                   <polyline points="188,80 188,68 200,68" fill="none" stroke="#334155" strokeWidth="1.5" />
 
                   {/* Dimension lines */}
@@ -944,11 +983,13 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <line x1="150" y1="90" x2="150" y2="100" stroke="#475569" strokeWidth="1" />
 
                   <text x="95" y="110" fontSize="13" fill="#475569" textAnchor="middle">30 cm</text>
-                  <text x="195" y="55" fontSize="13" fill="#db2777" textAnchor="end">8 cm</text>
+                  <text x="206" y="55" fontSize="13" fill="#db2777" textAnchor="start">8 cm</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  平行四邊形的面積 = 30 × 8 (cm²)<br/>
-                  = <span className="underline">240 cm²</span>
+                  <pre className="whitespace-pre font-sans inline-block text-left">
+                    平行四邊形的面積 = 30 × 8 (cm²){'\n'}
+                    {'              '}= <span className="underline">240 cm²</span>
+                  </pre>
                 </div>
               </div>
             </div>
@@ -982,8 +1023,10 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <text x="45" y="55" fontSize="13" fill="#475569" textAnchor="end">7 m</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  三角形的面積 = <Latex math="\frac{1}{2}" /> × 12 × 7 (m²)<br/>
-                  = <span className="underline">42 m²</span>
+                  <pre className="whitespace-pre font-sans inline-block text-left">
+                    三角形的面積 = <Latex math="\frac{1}{2}" /> × 12 × 7 (m²){'\n'}
+                    {'          '}= <span className="underline">42 m²</span>
+                  </pre>
                 </div>
               </div>
             </div>
@@ -1002,8 +1045,6 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <line x1="40" y1="90" x2="40" y2="100" stroke="#475569" strokeWidth="1" />
                   <line x1="160" y1="90" x2="160" y2="100" stroke="#475569" strokeWidth="1" />
                   
-                  <line x1="70" y1="10" x2="130" y2="10" stroke="#475569" strokeWidth="1" />
-
                   <text x="100" y="110" fontSize="13" fill="#475569" textAnchor="middle">下底</text>
                   <text x="100" y="15" fontSize="13" fill="#475569" textAnchor="middle">上底</text>
                   <text x="75" y="55" fontSize="13" fill="#0284c7" textAnchor="start">高</text>
@@ -1022,9 +1063,11 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <text x="110" y="22" fontSize="13" fill="#475569" textAnchor="middle">5 mm</text>
                   <text x="75" y="60" fontSize="13" fill="#0284c7" textAnchor="start">4 mm</text>
                 </svg>
-                <div className="mt-2 text-center whitespace-nowrap">
-                  梯形面積 = <Latex math="\frac{1}{2}" />(5 + 8) × 4 (mm²)<br/>
-                  = <span className="underline">26 mm²</span>
+                <div className="mt-2 text-center">
+                  <pre className="whitespace-pre font-sans inline-block text-left">
+                    梯形面積 = <Latex math="\frac{1}{2}" />(5 + 8) × 4 (mm²){'\n'}
+                    {'      '}= <span className="underline">26 mm²</span>
+                  </pre>
                 </div>
               </div>
             </div>
@@ -1157,34 +1200,46 @@ export const AreaVolumeNotes = ({ activeSub }) => {
               </div>
             </div>
             
-            <div className="md:w-2/3 space-y-4 text-lg">
+            <div className="md:w-2/3 space-y-4 text-base sm:text-lg">
               
-              <div className="bg-white rounded-lg p-4 border border-slate-200 relative">
+              <div className="bg-white rounded-lg p-4 border border-slate-200 relative overflow-x-auto">
                 <span className="absolute top-2 right-2 text-red-600 font-bold text-sm">留意單位</span>
-                <p className="mb-2">
-                  1. 求柱體<span className="bg-yellow-200 px-1 rounded">體積</span> = <span className="bg-green-200 px-1 rounded">底面積</span> × <span className="bg-blue-200 px-1 rounded">高</span>
-                </p>
-                <p className="pl-6">
-                  <span className="bg-yellow-200 px-1 rounded">體積</span> = <span className="bg-green-200 px-1 rounded">16 × 12 ÷ 2</span> × <span className="bg-blue-200 px-1 rounded">24</span> = 2304 cm³
-                </p>
+                <p className="mb-2">1. 求柱體體積</p>
+                <div className="pl-2 sm:pl-4 grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2 items-start whitespace-nowrap">
+                  <div className="text-right"><span className="bg-yellow-200 px-1 rounded">體積</span></div>
+                  <div>=</div>
+                  <div className="whitespace-normal break-words"><span className="bg-green-200 px-1 rounded">底面積</span> × <span className="bg-blue-200 px-1 rounded">高</span></div>
+                  
+                  <div className="text-right"><span className="bg-yellow-200 px-1 rounded text-transparent select-none"><span className="text-slate-800">體積</span></span></div>
+                  <div>=</div>
+                  <div className="whitespace-normal break-words"><span className="bg-green-200 px-1 rounded">16 × 12 ÷ 2</span> × <span className="bg-blue-200 px-1 rounded">24</span><br className="sm:hidden" /> = 2304 cm³</div>
+                </div>
               </div>
 
-              <div className="bg-white rounded-lg p-4 border border-slate-200">
-                <p className="mb-2">
-                  2. 求柱體<span className="bg-yellow-200 px-1 rounded">側面面積</span> = <span className="bg-purple-200 px-1 rounded">底周界</span> × <span className="bg-blue-200 px-1 rounded">高</span>
-                </p>
-                <p className="pl-6">
-                  <span className="bg-yellow-200 px-1 rounded">側面面積</span> = <span className="bg-purple-200 px-1 rounded">(12 + 16 + 20)</span> × <span className="bg-blue-200 px-1 rounded">24</span> = 1152 cm²
-                </p>
+              <div className="bg-white rounded-lg p-4 border border-slate-200 overflow-x-auto">
+                <p className="mb-2">2. 求柱體側面面積</p>
+                <div className="pl-2 sm:pl-4 grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2 items-start whitespace-nowrap">
+                  <div className="text-right"><span className="bg-yellow-200 px-1 rounded">側面面積</span></div>
+                  <div>=</div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">底周界</span> × <span className="bg-blue-200 px-1 rounded">高</span></div>
+                  
+                  <div className="text-right"><span className="bg-yellow-200 px-1 rounded text-transparent select-none"><span className="text-slate-800">側面面積</span></span></div>
+                  <div>=</div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">(12 + 16 + 20)</span> × <span className="bg-blue-200 px-1 rounded">24</span><br className="sm:hidden" /> = 1152 cm²</div>
+                </div>
               </div>
 
-              <div className="bg-white rounded-lg p-4 border border-slate-200">
-                <p className="mb-2 w-full">
-                  3. 求柱體<span className="bg-yellow-200 px-1 rounded">總表面面積</span> = <span className="bg-purple-200 px-1 rounded">底周界</span> × <span className="bg-blue-200 px-1 rounded">高</span> + 2 × <span className="bg-green-200 px-1 rounded">底面積</span>
-                </p>
-                <p className="pl-6 w-full text-base sm:text-lg">
-                  <span className="bg-yellow-200 px-1 rounded tracking-tighter sm:tracking-normal">總表面面積</span> = <span className="bg-purple-200 px-1 rounded">(12 + 16 + 20)</span> × <span className="bg-blue-200 px-1 rounded">24</span> + 2 × <span className="bg-green-200 px-1 rounded">(16 × 12 ÷ 2)</span> = 3456 cm²
-                </p>
+              <div className="bg-white rounded-lg p-4 border border-slate-200 overflow-x-auto">
+                <p className="mb-2 w-full">3. 求柱體總表面面積</p>
+                <div className="pl-2 sm:pl-4 grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2 items-start whitespace-nowrap">
+                  <div className="text-right"><span className="bg-yellow-200 px-1 rounded">總表面面積</span></div>
+                  <div>=</div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">底周界</span> × <span className="bg-blue-200 px-1 rounded">高</span> + 2 × <span className="bg-green-200 px-1 rounded">底面積</span></div>
+                  
+                  <div className="text-right"><span className="bg-yellow-200 px-1 rounded text-transparent select-none"><span className="text-slate-800">總表面面積</span></span></div>
+                  <div>=</div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">(12 + 16 + 20)</span> × <span className="bg-blue-200 px-1 rounded">24</span> + 2 × <span className="bg-green-200 px-1 rounded">(16 × 12 ÷ 2)</span><br className="sm:hidden" /> = 3456 cm²</div>
+                </div>
               </div>
 
             </div>
@@ -1387,7 +1442,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
               
               <Latex math="\frac{2x}{3} = 8 " /> <span className="bg-yellow-200 px-2 rounded inline-block"><Latex math="+ 4" /></span>
               <br/>
-              <span className="text-xl text-green-700 mr-4 font-bold inline-block align-middle">除數</span> <Latex math="\frac{2x}{" /> <span className="bg-green-200 px-2 rounded inline-block"><Latex math="3" /></span><Latex math="} = 12" />
+              <span className="text-xl text-green-700 mr-4 font-bold inline-block align-middle">除數</span> <Latex math="\frac{2x}{3} = 12" />
               <br/>
               <span className="bg-cyan-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="x = 12 \times " /> <span className="bg-green-200 px-2 rounded inline-block"><Latex math="3" /></span>
               <br/>
@@ -1428,7 +1483,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
               <p className="font-bold text-slate-700 mb-4">例子 1：</p>
               <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-4 items-center pl-4 pr-4">
                 <div className="text-right flex justify-end items-center">
-                  <Latex math="\frac{x}{" /><span className="border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center mx-[2px] text-red-500 font-bold mt-1">4</span><Latex math="} - \frac{x}{" /><span className="border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center mx-[2px] text-red-500 font-bold mt-1">5</span><Latex math="}" />
+                  <Latex math="\frac{x}{4} - \frac{x}{5}" />
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="10" /></div>
