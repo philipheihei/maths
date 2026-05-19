@@ -1,5 +1,6 @@
 import {
   BasicCalculationNotes,
+  AlgebraBasicNotes,
   ApproximationNotes,
   DirectedNumbersNotes,
   PolynomialsNotes,
@@ -53,6 +54,16 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'algebra-basic',
+      topic: 'CH3 代數式',
+      color: 'emerald',
+      subtopics: [
+        { id: 'math-translation', num: 1, title: '中文句子 ↔ 數式', color: 'emerald' },
+        { id: 'substitution', num: 2, title: '代入法', color: 'emerald' },
+        { id: 'sequence', num: 3, title: '數列', color: 'emerald' },
+      ]
+    },
+    {
       id: 'linear-equation',
       topic: 'CH4 一元一次方程',
       color: 'teal',
@@ -64,7 +75,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'area-volume',
-      topic: 'CH5 面積與體積',
+      topic: 'CH5 面積與體積 (一)',
       color: 'orange',
       subtopics: [
         { id: 'basic-area', num: 1, title: '簡單圖形的面積', color: 'blue' },
@@ -87,7 +98,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'advanced-linear-equation',
-      topic: 'CH7 進階方程',
+      topic: 'CH7 進階一元一次方程',
       color: 'indigo',
       subtopics: [
         { id: 'advanced-equations', num: 1, title: '進階解方程', color: 'blue' },
@@ -95,7 +106,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'statistics',
-      topic: 'CH8 統計圖表',
+      topic: 'CH8 統計(一)',
       color: 'cyan',
       subtopics: [
         { id: 'bar-chart', num: 1, title: '棒形圖', color: 'blue' },
@@ -108,7 +119,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'coordinate',
-      topic: 'CH9 坐標幾何',
+      topic: 'CH9 百分數',
       color: 'sky',
       subtopics: [
         { id: 'coordinate-system', num: 1, title: '坐標系統 (直角坐標)', color: 'blue' },
@@ -119,7 +130,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'percentage',
-      topic: 'CH10 百分數',
+      topic: 'CH10 坐標幾何',
       color: 'emerald',
       subtopics: [
         { id: 'interconversion', num: 1, title: '百分數 / 小數 / 分數互化', color: 'blue' },
@@ -130,7 +141,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'angles',
-      topic: 'CH11 角與角度定理',
+      topic: 'CH11 直線相關的角',
       color: 'rose',
       subtopics: [
         { id: 'lines-angles-naming', num: 0, title: '基礎知識：線和角的命名', color: 'slate' },
@@ -418,6 +429,7 @@ export const getNotesForLevel = (level) => {
 
 export const NOTES_COMPONENTS = {
   'basic-calculation': BasicCalculationNotes,
+  'algebra-basic': AlgebraBasicNotes,
   'directed-numbers': DirectedNumbersNotes,
   'polynomials': PolynomialsNotes,
   'area-volume': AreaVolumeNotes,

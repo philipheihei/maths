@@ -882,10 +882,12 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <text x="132" y="85" fontSize="13" fill="#475569" textAnchor="start">5 cm</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  <pre className="whitespace-pre font-sans inline-block text-left">
-                    正方形的面積 = 5 × 5 (cm²){'\n'}
-                    {'          '}= <span className="underline">25 cm²</span>
-                  </pre>
+                  <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
+                    <span>正方形的面積</span>
+                    <span>= 5 × 5 (cm²)</span>
+                    <span></span>
+                    <span>= <span className="underline">25 cm²</span></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -925,10 +927,12 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <text x="45" y="70" fontSize="13" fill="#475569" textAnchor="end">9 cm</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  <pre className="whitespace-pre font-sans inline-block text-left">
-                    長方形的面積 = 9 × 6 (cm²){'\n'}
-                    {'          '}= <span className="underline">54 cm²</span>
-                  </pre>
+                  <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
+                    <span>長方形的面積</span>
+                    <span>= 9 × 6 (cm²)</span>
+                    <span></span>
+                    <span>= <span className="underline">54 cm²</span></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -949,11 +953,11 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <polyline points="85,76 90,80 85,84" fill="none" stroke="#0ea5e9" strokeWidth="2" />
                   <polyline points="92,76 97,80 92,84" fill="none" stroke="#0ea5e9" strokeWidth="2" />
 
-                  {/* Left and right parallel marks (single arrows) */}
-                  <g transform="translate(40,50) rotate(123.7)">
+                  {/* Left and right parallel marks (single arrows, pointing up) */}
+                  <g transform="translate(40,50) rotate(-56.3)">
                     <polyline points="-5,-4 0,0 -5,4" fill="none" stroke="#0ea5e9" strokeWidth="2" />
                   </g>
-                  <g transform="translate(180,50) rotate(123.7)">
+                  <g transform="translate(180,50) rotate(-56.3)">
                     <polyline points="-5,-4 0,0 -5,4" fill="none" stroke="#0ea5e9" strokeWidth="2" />
                   </g>
 
@@ -986,10 +990,12 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <text x="206" y="55" fontSize="13" fill="#db2777" textAnchor="start">8 cm</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  <pre className="whitespace-pre font-sans inline-block text-left">
-                    平行四邊形的面積 = 30 × 8 (cm²){'\n'}
-                    {'              '}= <span className="underline">240 cm²</span>
-                  </pre>
+                  <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
+                    <span>平行四邊形的面積</span>
+                    <span>= 30 × 8 (cm²)</span>
+                    <span></span>
+                    <span>= <span className="underline">240 cm²</span></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1023,10 +1029,12 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <text x="45" y="55" fontSize="13" fill="#475569" textAnchor="end">7 m</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  <pre className="whitespace-pre font-sans inline-block text-left">
-                    三角形的面積 = <Latex math="\frac{1}{2}" /> × 12 × 7 (m²){'\n'}
-                    {'          '}= <span className="underline">42 m²</span>
-                  </pre>
+                  <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
+                    <span>三角形的面積</span>
+                    <span>= <Latex math="\frac{1}{2}" /> × 12 × 7 (m²)</span>
+                    <span></span>
+                    <span>= <span className="underline">42 m²</span></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1040,6 +1048,10 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <line x1="70" y1="20" x2="70" y2="80" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
                   <polyline points="70,68 82,68 82,80" fill="none" stroke="#334155" strokeWidth="1.5" />
                   
+                  {/* Top and bottom parallel marks (single arrows) */}
+                  <polyline points="95,16 100,20 95,24" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                  <polyline points="95,76 100,80 95,84" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+
                   {/* Dimension lines */}
                   <line x1="40" y1="95" x2="160" y2="95" stroke="#475569" strokeWidth="1" />
                   <line x1="40" y1="90" x2="40" y2="100" stroke="#475569" strokeWidth="1" />
@@ -1064,10 +1076,12 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <text x="75" y="60" fontSize="13" fill="#0284c7" textAnchor="start">4 mm</text>
                 </svg>
                 <div className="mt-2 text-center">
-                  <pre className="whitespace-pre font-sans inline-block text-left">
-                    梯形面積 = <Latex math="\frac{1}{2}" />(5 + 8) × 4 (mm²){'\n'}
-                    {'      '}= <span className="underline">26 mm²</span>
-                  </pre>
+                  <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
+                    <span>梯形面積</span>
+                    <span>= <Latex math="\frac{1}{2}" />(5 + 8) × 4 (mm²)</span>
+                    <span></span>
+                    <span>= <span className="underline">26 mm²</span></span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2925,6 +2939,331 @@ export const AnglesNotes = ({ activeSub }) => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+export const AlgebraBasicNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+  const cheatsheet = [
+    { key: '連續數', latex: 'x,(x+1)' },
+    { key: '大 / 多 / 高', latex: '+' },
+    { key: '小 / 少 / 低', latex: '-' },
+    { key: '2倍 (n倍)', latex: '\\times 2; (\\times n)' },
+    { key: '較 / 比 / 是 / 為 / 相同', latex: '=' },
+    { key: 'x 與 y 之和', latex: 'x+y' },
+    { key: 'x 的 12 年後', latex: 'x+12' },
+    { key: 'y 的 3 年前', latex: 'y-3' },
+    { key: '一半', latex: '\\div 2' },
+    { key: 'y 與 11 的積', latex: 'y\\times 11' },
+    { key: 'x 的平方', latex: 'x^2' },
+    { key: 'x 的立方', latex: 'x^3' },
+  ];
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-emerald-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH3 代數式</h1>
+        <p className="text-slate-600">中文句子與數式互譯、代入法及數列</p>
+      </div>
+
+      <CollapsibleSection id="math-translation" title="1. 中文句子 ↔ 數式" num={1} color="emerald" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-6">
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">💡 秘訣</h3>
+            <p className="text-slate-700">數字 / 英文字不用變，中文字變做數學文字。</p>
+          </div>
+
+          <section id="sim-eq-word" className="bg-emerald-50 rounded-xl p-5 border-2 border-emerald-200 scroll-mt-24">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="bg-emerald-600 text-white font-black text-lg px-3 py-1 rounded-lg">文字題</span>
+              <h2 className="text-lg font-bold text-emerald-800">文字轉數式 (組件)</h2>
+            </div>
+
+            <div className="bg-white rounded-xl border border-emerald-200 overflow-hidden shadow-sm">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-emerald-100 text-emerald-800 text-sm">
+                    <th className="py-3 px-4 font-bold border-b border-emerald-200 w-1/2">關鍵字</th>
+                    <th className="py-3 px-4 font-bold border-b border-emerald-200 w-1/2">列式</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-slate-700 divide-y divide-emerald-50">
+                  {cheatsheet.map((item, idx) => (
+                    <tr key={idx} className="hover:bg-emerald-50/50 transition-colors">
+                      <td className="py-3 px-4 font-medium">{item.key}</td>
+                      <td className="py-3 px-4 font-sans text-blue-700 bg-blue-50/50 rounded-r-lg">
+                        <span className="bg-blue-100 px-3 py-1 rounded-full inline-flex items-center">
+                          <Latex math={item.latex} />
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="bg-teal-50 rounded-xl p-5 border-2 border-teal-200 mt-6">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="bg-teal-600 text-white font-black text-lg px-3 py-1 rounded-lg">文字題</span>
+              <h2 className="text-lg font-bold text-teal-800">常見題目句式結構</h2>
+            </div>
+
+            <div className="bg-white rounded-xl border border-teal-200 shadow-sm overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[500px]">
+                <thead>
+                  <tr className="bg-teal-100 text-teal-800 text-sm">
+                    <th className="py-3 px-4 font-bold border-b border-teal-200 w-[55%]">關鍵詞組 (題目)</th>
+                    <th className="py-3 px-4 font-bold border-b border-teal-200 w-[45%]">列式 (答案)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm md:text-base divide-y divide-teal-100">
+                  <tr className="hover:bg-teal-50 transition-colors">
+                    <td className="py-4 px-4 text-slate-700 leading-loose">
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">A</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-rose-100 text-rose-800">比</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-amber-100 text-amber-800">B</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-emerald-100 text-emerald-800">多</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-purple-100 text-purple-800">6</span>
+                    </td>
+                    <td className="py-4 px-4 text-slate-700 font-sans leading-loose whitespace-nowrap">
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800"><Latex math="A" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800 mx-0.5"><Latex math="=" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800"><Latex math="B" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800 mx-0.5"><Latex math="+" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800"><Latex math="6" /></span>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-teal-50 transition-colors">
+                    <td className="py-4 px-4 text-slate-700 leading-loose">
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">A 和 B 之和 / 總值</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-rose-100 text-rose-800">是</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-purple-100 text-purple-800">24</span>
+                    </td>
+                    <td className="py-4 px-4 text-slate-700 font-sans leading-loose whitespace-nowrap">
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800"><Latex math="A+B" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800 mx-0.5"><Latex math="=" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800"><Latex math="24" /></span>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-teal-50 transition-colors">
+                    <td className="py-4 px-4 text-slate-700 leading-loose">
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">A</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-rose-100 text-rose-800">是</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-amber-100 text-amber-800">B 的 5 倍</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-emerald-100 text-emerald-800">多</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-purple-100 text-purple-800">25</span>
+                    </td>
+                    <td className="py-4 px-4 text-slate-700 font-sans leading-loose whitespace-nowrap">
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800"><Latex math="A" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800 mx-0.5"><Latex math="=" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800"><Latex math="5B" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800 mx-0.5"><Latex math="+" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800"><Latex math="25" /></span>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-teal-50 transition-colors">
+                    <td className="py-4 px-4 text-slate-700 leading-loose">
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">A</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-rose-100 text-rose-800">是</span>
+                      <span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-amber-100 text-amber-800">B 的 1/3</span>
+                    </td>
+                    <td className="py-4 px-4 text-slate-700 font-sans leading-loose whitespace-nowrap">
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800"><Latex math="A" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-rose-100 text-rose-800 mx-0.5"><Latex math="=" /></span>
+                      <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800"><Latex math="B\times\dfrac{1}{3}" /></span>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-teal-50 transition-colors">
+                    <td className="py-4 px-4 text-slate-700 leading-loose">
+                      購買了<span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-purple-100 text-purple-800">10 個</span>蘋果和香蕉，其中有<span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-blue-100 text-blue-800">x 個</span><span className="inline-block px-1.5 py-0.5 rounded mx-0.5 font-bold bg-red-100 text-red-800">蘋果</span>
+                    </td>
+                    <td className="py-4 px-4 text-slate-700 font-sans leading-loose">
+                      <div className="mb-2 whitespace-nowrap">
+                        <span className="inline-block px-2 py-0.5 rounded font-bold bg-red-100 text-red-800">蘋果</span>
+                        <span className="inline-block px-2 py-0.5 rounded font-bold mx-0.5">=</span>
+                        <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800"><Latex math="x" /></span>
+                      </div>
+                      <div className="whitespace-nowrap">
+                        <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">香蕉</span>
+                        <span className="inline-block px-2 py-0.5 rounded font-bold mx-0.5">=</span>
+                        <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800"><Latex math="10" /></span>
+                        <span className="inline-block px-2 py-0.5 rounded font-bold mx-0.5">-</span>
+                        <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800"><Latex math="x" /></span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200 mt-2">
+            <h4 className="font-bold text-purple-800 mb-2">⚠️ 注意事項</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-slate-700 font-bold mb-1">註 1：基本運算字元</p>
+                <ul className="text-sm text-slate-700 pl-4 space-y-1">
+                  <li><span className="text-emerald-700 font-bold">和</span> <Latex math="\rightarrow +" /></li>
+                  <li><span className="text-emerald-700 font-bold">差</span> <Latex math="\rightarrow -" /></li>
+                  <li><span className="text-emerald-700 font-bold">積</span> <Latex math="\rightarrow \times" /></li>
+                  <li><span className="text-emerald-700 font-bold">商</span> <Latex math="\rightarrow \div" /></li>
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm text-slate-700 font-bold mb-1">註 2：出現<span className="text-red-600 mx-1">「的結果」</span>字眼 <Latex math="\rightarrow" /> 即加括號</p>
+                <div className="bg-white p-2 rounded border border-purple-100 text-sm mt-1">
+                  <p className="mb-1">e.g. <Latex math="x" /> 乘以 2 減 y 的<span className="text-blue-600 font-bold border-b border-blue-600">結果</span></p>
+                  <p className="text-emerald-700 font-bold"><Latex math="= x(2-y)" /> <span className="text-red-600 text-xs ml-2 font-bold">← 要加括號</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="substitution" title="2. 代入法" num={2} color="emerald" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+            <h3 className="font-bold text-red-800 mb-2">🎯 認位置，代數字 (加括號代)</h3>
+            <p className="text-sm text-slate-700">代入時<span className="font-bold underline">必須加括號</span>，否則有機會答案錯（尤其負數的次方）。</p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-slate-800 font-bold mb-3">e.g. <Latex math="y = 50 - \colorbox{#fef08a}{\mathit{x}}" /> ， 若 <Latex math="\colorbox{#fef08a}{\mathit{x}=40}" /> ，求 y 的值</p>
+              <div className="pl-6 font-bold text-slate-700 space-y-1">
+                <p><Latex math="y = 50 - " /><span className="text-blue-600">(40)</span></p>
+                <p><Latex math="y = 10" /></p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200 relative">
+              <p className="text-slate-800 font-bold mb-3">e.g. <Latex math="H = \colorbox{#fef08a}{\mathit{k}}^2 - 1" /> ， 若 <Latex math="\colorbox{#fef08a}{\mathit{k}=-4}" /> ，求 H 的值</p>
+              <div className="pl-6 font-bold text-slate-700 space-y-1">
+                <p><Latex math="H = " /><span className="bg-yellow-200 px-1 rounded">(-4)</span><Latex math="^2 - 1" /></p>
+                <p><Latex math="= 16 - 1" /></p>
+                <p><Latex math="= 15" /></p>
+              </div>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:block bg-red-50 p-3 rounded-lg border border-red-200">
+                <p className="text-xs text-red-800 font-bold mb-1 border-b border-red-200 pb-1">括號的分別：</p>
+                <p className="text-sm font-bold text-slate-700"><Latex math="(-4)^2 = +16" /> <span className="text-green-600 ml-1">✓</span></p>
+                <p className="text-sm font-bold text-slate-700"><Latex math="-4^2 = -16" /> <span className="text-red-500 ml-1">×</span></p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-slate-800 font-bold mb-3">e.g. <Latex math="T = ( \colorbox{#fef08a}{\mathit{n}} - 1) \colorbox{#bbf7d0}{\mathit{d}}" /> ， 若 <Latex math="\colorbox{#fef08a}{\mathit{n}=4}" /> 和 <Latex math="\colorbox{#bbf7d0}{\mathit{d}=-2}" /> ，求 T 的值</p>
+              <div className="pl-6 font-bold text-slate-700 space-y-1">
+                <p><Latex math="T = (" /><span className="bg-yellow-200 px-1 rounded">4</span><Latex math="- 1)" /><span className="bg-green-200 px-1 rounded">(-2)</span></p>
+                <p><Latex math="= -6" /></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="sequence" title="3. 數列" num={3} color="emerald" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-6">
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <h3 className="font-bold text-blue-800 mb-4 border-b pb-2 text-lg">考法 1：列出數列</h3>
+            
+            <div className="space-y-6">
+              <div>
+                <p className="font-bold text-slate-700 mb-2">例 1：</p>
+                <div className="flex items-center gap-6 pl-4 flex-wrap">
+                  <div className="relative pt-6 min-w-[300px]">
+                    <div className="flex gap-4 text-xl font-bold tracking-widest text-slate-800">
+                      <span>7</span><span>,</span><span>4</span><span>,</span><span>1</span><span>,</span><span>-2</span><span>,</span>
+                      <span className="text-purple-600 border-b-2 border-purple-600"> -5 </span><span>,</span>
+                      <span className="text-purple-600 border-b-2 border-purple-600"> -8 </span>
+                    </div>
+                    {/* Arrows connecting numbers */}
+                    <div className="absolute top-12 left-0 flex gap-4 text-sm text-purple-700 font-bold">
+                      <span className="w-6 text-center">↪<br/>-3</span>
+                      <span className="w-6 text-center">↪<br/>-3</span>
+                      <span className="w-6 text-center">↪<br/>-3</span>
+                      <span className="w-6 text-center">↪<br/>-3</span>
+                    </div>
+                  </div>
+                  <div className="text-indigo-800 font-bold bg-indigo-50 px-3 py-1.5 rounded-lg mt-6">
+                    知規律為「不斷減去 3」
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <p className="font-bold text-slate-700 mb-2 pt-6">例 2：</p>
+                <div className="flex items-center gap-6 pl-4 flex-wrap">
+                  <div className="relative pt-6 min-w-[300px]">
+                    <div className="flex gap-4 text-xl font-bold tracking-widest text-slate-800">
+                      <span>2</span><span>,</span><span>4</span><span>,</span><span>8</span><span>,</span><span>16</span><span>,</span>
+                      <span className="text-purple-600 border-b-2 border-purple-600"> 32 </span><span>,</span>
+                      <span className="text-purple-600 border-b-2 border-purple-600"> 64 </span>
+                    </div>
+                    <div className="absolute top-12 left-0 flex gap-4 text-sm text-purple-700 font-bold">
+                      <span className="w-6 text-center">↪<br/>×2</span>
+                      <span className="w-6 text-center">↪<br/>×2</span>
+                      <span className="w-6 text-center">↪<br/>×2</span>
+                      <span className="w-6 text-center">↪<br/>×2</span>
+                    </div>
+                  </div>
+                  <div className="text-indigo-800 font-bold bg-indigo-50 px-3 py-1.5 rounded-lg mt-6">
+                    知規律為「不斷 ×2」
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <h3 className="font-bold text-blue-800 mb-4 border-b pb-2 text-lg">考法 2：列出首幾項 / 找特定項</h3>
+            
+            <div className="bg-green-50 p-3 rounded-lg border border-green-200 mb-4 inline-block">
+              <p className="font-bold text-green-800">定義：<Latex math="a_3" /> <Latex math="=" /> 第三項</p>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <p className="font-bold text-slate-800 mb-2">例：列出數列 <Latex math="a_{\colorbox{#fef08a}{n}} = \colorbox{#fef08a}{n} + 2" /> 的首 4 項</p>
+                <div className="pl-6 font-bold text-slate-700 space-y-1">
+                  <p><Latex math="a_1 = " /><span className="bg-yellow-200 px-1 rounded">1</span><Latex math=" + 2 = 3" /></p>
+                  <p><Latex math="a_2 = " /><span className="bg-yellow-200 px-1 rounded">2</span><Latex math=" + 2 = 4" /></p>
+                  <p><Latex math="a_3 = " /><span className="bg-yellow-200 px-1 rounded">3</span><Latex math=" + 2 = 5" /></p>
+                  <p><Latex math="a_4 = " /><span className="bg-yellow-200 px-1 rounded">4</span><Latex math=" + 2 = 6" /></p>
+                </div>
+              </div>
+              
+              <hr className="border-slate-100" />
+
+              <div>
+                <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="3a + 1" /> 的第 21 項是？</p>
+                <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4 relative">
+                  <div className="absolute left-[130px] -top-5 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 a = 21</div>
+                  <p>第 21 項 <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"> (21) </span><Latex math=" + 1" /></p>
+                  <p className="pl-[72px]"><Latex math="= 64" /></p>
+                </div>
+              </div>
+
+              <hr className="border-slate-100" />
+
+              <div>
+                <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="\frac{a^2 + 2}{2a - 3}" /> 的第 5 項是？</p>
+                <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4 relative">
+                  <div className="absolute left-[100px] -top-5 text-sm text-green-700 font-bold whitespace-nowrap">a 代 5 ↓</div>
+                  <p>第 5 項 <Latex math="= \frac{\color{red}(\color{red}5\color{red})^2 + 2}{2\color{red}(\color{red}5\color{red}) - 3}" /> <Latex math="= \frac{27}{7}" /></p>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
       </CollapsibleSection>
