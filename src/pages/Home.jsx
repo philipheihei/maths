@@ -398,7 +398,7 @@ const Home = () => {
       badges: [{ level: 'F4', chapter: 'CH02', subject: '一元二次方程' }],
       category: '高中',
       topics: ['二次方程', '判別式', '根的性質', '二次函數圖像'],
-      inDevelopment: false
+      inDevelopment: true
     }
   ];
 

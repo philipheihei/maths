@@ -11,6 +11,7 @@ import {
   CoordinateNotes,
   PercentageNotes,
   AnglesNotes,
+  RateRatioNotes,
 } from './F1Notes';
 import {
   InequalityNotes,
@@ -155,6 +156,19 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'sig-fig', num: 1, title: '有效數字 & 捨入方法', color: 'green' },
         { id: 'approx-examples', num: 2, title: '題目範例', color: 'blue' },
+      ]
+    },
+    {
+      id: 'rate-ratio',
+      topic: 'CH14 率與比',
+      color: 'blue',
+      subtopics: [
+        { id: 'unit-conversion', num: 1, title: '1. 單位轉換', color: 'slate' },
+        { id: 'rate', num: 2, title: '2. 率 (Rate)', color: 'blue' },
+        { id: 'ratio', num: 3, title: '3. 比 (Ratio)', color: 'purple' },
+        { id: 'continued-ratio', num: 4, title: '4. 連比', color: 'indigo' },
+        { id: 'scale', num: 5, title: '5. 比例圖', color: 'amber' },
+        { id: 'proportion', num: 6, title: '6. 正比/反比', color: 'rose' },
       ]
     }
   ],
@@ -461,6 +475,7 @@ export const NOTES_COMPONENTS = {
   'variation': VariationNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'approximation': ApproximationNotes,
+  'rate-ratio': RateRatioNotes,
   'percentage': PercentageNotes,
   'angles': AnglesNotes,
   'functions': FunctionNotes,

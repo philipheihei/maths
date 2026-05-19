@@ -3139,7 +3139,9 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
 
           <div className="grid grid-cols-1 gap-4">
             <div className="bg-white rounded-lg p-4 border border-slate-200">
-              <p className="text-slate-800 font-bold mb-3">e.g. <Latex math="y = 50 - \colorbox{#fef08a}{\mathit{x}}" /> ， 若 <Latex math="\colorbox{#fef08a}{\mathit{x}=40}" /> ，求 y 的值</p>
+              <p className="text-slate-800 font-bold mb-3">
+                e.g. <Latex math="y = 50 - x" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">x = 40</span> ，求 y 的值
+              </p>
               <div className="pl-6 font-bold text-slate-700 space-y-1">
                 <p><Latex math="y = 50 - " /><span className="text-blue-600">(40)</span></p>
                 <p><Latex math="y = 10" /></p>
@@ -3147,7 +3149,9 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-slate-200 relative">
-              <p className="text-slate-800 font-bold mb-3">e.g. <Latex math="H = \colorbox{#fef08a}{\mathit{k}}^2 - 1" /> ， 若 <Latex math="\colorbox{#fef08a}{\mathit{k}=-4}" /> ，求 H 的值</p>
+              <p className="text-slate-800 font-bold mb-3">
+                e.g. <Latex math="H = k^2 - 1" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">k = -4</span> ，求 H 的值
+              </p>
               <div className="pl-6 font-bold text-slate-700 space-y-1">
                 <p><Latex math="H = " /><span className="bg-yellow-200 px-1 rounded">(-4)</span><Latex math="^2 - 1" /></p>
                 <p><Latex math="= 16 - 1" /></p>
@@ -3161,7 +3165,9 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-slate-200">
-              <p className="text-slate-800 font-bold mb-3">e.g. <Latex math="T = ( \colorbox{#fef08a}{\mathit{n}} - 1) \colorbox{#bbf7d0}{\mathit{d}}" /> ， 若 <Latex math="\colorbox{#fef08a}{\mathit{n}=4}" /> 和 <Latex math="\colorbox{#bbf7d0}{\mathit{d}=-2}" /> ，求 T 的值</p>
+              <p className="text-slate-800 font-bold mb-3">
+                e.g. <Latex math="T = (n - 1)d" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">n = 4</span> 和 <span className="bg-green-200 px-1 rounded font-sans">d = -2</span> ，求 T 的值
+              </p>
               <div className="pl-6 font-bold text-slate-700 space-y-1">
                 <p><Latex math="T = (" /><span className="bg-yellow-200 px-1 rounded">4</span><Latex math="- 1)" /><span className="bg-green-200 px-1 rounded">(-2)</span></p>
                 <p><Latex math="= -6" /></p>
@@ -3264,6 +3270,369 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
               </div>
             </div>
             
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+export const RateRatioNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null), s6 = useRef(null);
+
+  return (
+    <>
+      {/* 1. 單位轉換 */}
+      <CollapsibleSection id="unit-conversion" title="1. 單位轉換" num={1} color="slate" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center shadow-sm relative">
+              <h3 className="font-bold text-slate-800 w-full mb-3">1.A 長度單位</h3>
+              <div className="flex items-center space-x-8">
+                <ul className="text-slate-700 space-y-2 font-mono text-lg">
+                  <li>1 m = 100 cm</li>
+                  <li>1 km = 1000 m</li>
+                  <li>1 cm = 10 mm</li>
+                </ul>
+                
+                <div className="flex items-center space-x-2 bg-slate-50 p-3 rounded">
+                  <div className="flex flex-col space-y-2 text-green-700 font-bold text-md text-right">
+                    <span>mm 毫米</span>
+                    <span>cm 厘米</span>
+                    <span>m 米</span>
+                    <span>km 公里</span>
+                  </div>
+                  <div className="relative flex flex-col items-center justify-between h-32 ml-4">
+                    <div className="text-red-600 font-bold absolute -top-4">小</div>
+                    <div className="w-0.5 h-full bg-red-600 my-1 relative">
+                        <div className="absolute -top-1 -left-1 text-red-600">▲</div>
+                        <div className="absolute -bottom-1 -left-1 text-red-600">▼</div>
+                    </div>
+                    <div className="text-red-600 font-bold absolute -bottom-4">大</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+                <h3 className="font-bold text-slate-800 mb-3">1.B 重量單位</h3>
+                <ul className="text-slate-700 space-y-2 font-mono text-lg">
+                  <li>1 kg = 1000 g</li>
+                </ul>
+              </div>
+
+              <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+                <h3 className="font-bold text-slate-800 mb-3">1.C 時間單位</h3>
+                <div className="grid grid-cols-2 gap-x-2 gap-y-4 text-slate-700 font-mono text-[15px] whitespace-nowrap">
+                  <div>
+                    <p>1 年 = 365 天</p>
+                    <p>1 天 (D) = 24 小時</p>
+                  </div>
+                  <div>
+                    <p>1 小時 <span className="text-green-700">(h)</span> = 60 分鐘</p>
+                    <p>1 分鐘 <span className="text-green-700">(min)</span> = 60 秒 <span className="text-green-700">(s)</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 2. 率 */}
+      <CollapsibleSection id="rate" title="2. 率 (Rate)" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+             <div className="flex flex-col space-y-2">
+               <p><span className="text-red-600 font-bold text-lg">率</span>：兩種<span className="font-bold">不同</span>的單位比較</p>
+               <p><span className="text-red-800 font-bold text-lg">比</span>：兩種<span className="font-bold">相同</span>的單位比較</p>
+             </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <h3 className="font-bold text-slate-800 mb-3">例子：率的符號與計算</h3>
+            <p className="mb-2 text-lg">例子：<span className="text-blue-800 font-bold">m</span> <span className="text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">/</span> <span className="text-blue-800 font-bold">s</span> ， <span className="text-blue-800 font-bold">$</span> <span className="text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">/</span> <span className="text-blue-800 font-bold border-b-2 border-transparent">小時</span></p>
+            <p className="text-sm text-green-700 font-bold mb-4">↑ 率會出現這個符號</p>
+
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <p className="mb-4 text-slate-700 text-lg whitespace-normal leading-relaxed">
+                e.g. 工作了 <span className="bg-yellow-300 px-1 font-bold">10小時</span>，總工資是 <span className="bg-pink-300 px-1 font-bold text-blue-800">$ 500</span>。以 <span className="border-b-2 border-red-500 font-bold"><span className="text-pink-600">$</span> / <span className="bg-yellow-300 px-1">小時</span></span> 表達時薪。
+                <span className="inline-block relative">
+                    <span className="absolute -top-4 -left-12 text-xs text-purple-700 whitespace-nowrap">$ 500 ÷ 10小時</span>
+                </span>
+              </p>
+              
+              <div className="pl-4 border-l-4 border-red-400 space-y-4 font-mono text-[17px]">
+                <div className="flex items-start gap-2">
+                  <span className="text-red-500 border border-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xs mt-1">1</span>
+                  <div>
+                    <p className="text-red-600 font-bold font-sans">按照單位寫相應數字</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-2">
+                  <span className="text-red-500 border border-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xs mt-1">2</span>
+                  <div>
+                    <p className="text-red-600 font-bold font-sans">計算：</p>
+                    <p className="text-blue-800 font-bold">答： 500 ÷ 10 = 50 ∴ $50 / 小時</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 3. 比 */}
+      <CollapsibleSection id="ratio" title="3. 比 (Ratio)" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
+            <p className="text-green-700 font-bold mb-4 text-lg">比會出現冒號</p>
+            <div className="flex flex-col md:flex-row gap-8 items-start text-lg text-blue-800">
+              <div>
+                <p className="mb-2">例子： 10 <span className="text-green-600 border border-green-600 rounded-full px-1 font-bold">:</span> 60</p>
+                <div className="flex items-center gap-4 ml-8">
+                  <div className="text-red-600 font-bold text-sm text-right font-sans">
+                    <p>以計算機</p>
+                    <p>分數功能約簡</p>
+                  </div>
+                  <div>
+                    <p><Latex math="\frac{10}{60} = \frac{1}{6}" /></p>
+                    <p className="text-red-600 font-bold text-center mt-1 text-xl">1 : 6</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p>0.6 <span className="text-green-600 border border-green-600 rounded-full px-1 font-bold">:</span> 0.8</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 font-mono text-[17px]">
+            <p className="mb-4 text-slate-800 font-sans">例：一條繩長 28cm，按 2:5 比例分開兩部份，求較長的部份。</p>
+            <div className="space-y-4 text-blue-900 font-bold">
+              <div className="flex items-center gap-2 font-sans">
+                <span>答：較長的比例：</span>
+                <div className="flex flex-col items-center">
+                   <div className="border-b border-blue-900 px-1">5</div>
+                   <div className="text-xs">2+5</div>
+                </div>
+                <span>=</span>
+                <Latex math="\frac{5}{7}" />
+              </div>
+              <div className="pl-12 font-sans">
+                <p>28 × <Latex math="\frac{5}{7}" /></p>
+                <p>= 20</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200 text-center">
+            <p className="text-red-700 font-bold text-lg tracking-wide">解決比例問題時，或需用 <span className="border-b-2 border-red-500 pb-1">交叉相乘！</span></p>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 4. 連比 */}
+      <CollapsibleSection id="continued-ratio" title="4. 連比" num={4} color="indigo" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-red-50 rounded-lg p-3 border border-red-200">
+            <p className="text-green-700 font-bold text-lg">連比 (不能用計算機約簡)</p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm overflow-x-auto text-[17px]">
+            <div className="mb-4 flex items-center font-mono">
+              <div className="text-blue-800">e.g. <span className="bg-yellow-300 font-bold">a</span> : <span className="bg-pink-300 font-bold px-1">b</span> : <span className="bg-green-300 font-bold px-1">c</span> = <span className="bg-yellow-300 font-bold px-1">4</span> : <span className="bg-pink-300 font-bold px-1">5</span> : <span className="bg-green-300 font-bold px-1">6</span></div>
+              <span className="mx-4 font-bold text-2xl">⇒</span>
+              <div className="inline-block align-middle space-y-1 bg-slate-50 p-2 rounded">
+                <div><span className="bg-yellow-300 font-bold px-1">a</span> : <span className="bg-green-300 font-bold px-1">c</span> = <span className="bg-yellow-300 font-bold px-1">4</span> : <span className="bg-green-300 font-bold px-1">6</span></div>
+                <div><span className="bg-pink-300 font-bold px-1">b</span> : <span className="bg-green-300 font-bold px-1">c</span> = <span className="bg-pink-300 font-bold px-1">5</span> : <span className="bg-green-300 font-bold px-1">6</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <p className="mb-6 font-bold text-blue-900 text-lg font-mono flex flex-wrap gap-2 items-center">
+              <span>e.g. <span className="bg-yellow-300 px-1">a</span> : <span className="bg-green-300 px-1">c</span> = <span className="bg-yellow-300 px-1">7</span> : <span className="bg-green-300 px-1">6</span> ,</span>
+              <span><span className="bg-pink-300 px-1">b</span> : <span className="bg-green-300 px-1">c</span> = <span className="bg-pink-300 px-1">3</span> : <span className="bg-green-300 px-1">4</span> ,</span>
+              <span>求 a : b : c</span>
+            </p>
+            
+            <div className="space-y-8 pl-2 sm:pl-8">
+              {/* Step 1 */}
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 flex flex-col items-center">
+                  <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
+                  <span className="text-green-700 font-bold text-sm mt-1">圖表找</span>
+                  <span className="text-green-700 font-bold text-sm">答案</span>
+                  <span className="text-red-500 mt-2 font-bold">↓</span>
+                </div>
+                <div className="font-mono text-xl text-blue-900 font-bold">
+                  <div className="flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
+                    <span className="w-8 text-center">a</span><span>:</span>
+                    <span className="w-8 text-center">b</span><span>:</span>
+                    <span className="w-8 text-center relative">c
+                      <div className="absolute -inset-1 border-2 border-purple-500 rounded-full h-[110px] w-10 -left-1 top-0 pointer-events-none"></div>
+                    </span>
+                  </div>
+                  <div className="flex gap-4 px-2">
+                    <span className="w-8 text-center">7</span><span> </span>
+                    <span className="w-8 text-center"></span><span> </span>
+                    <span className="w-8 text-center relative">6</span>
+                  </div>
+                  <div className="flex gap-4 px-2 tracking-widest">
+                    <span className="w-8 text-center"></span><span> </span>
+                    <span className="w-8 text-center">3</span><span>:</span>
+                    <span className="w-8 text-center relative">4</span>
+                  </div>
+                  <div className="text-sm text-purple-700 font-bold mt-2 flex justify-end font-sans">↖ 重疊變相同</div>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 flex flex-col items-center">
+                  <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
+                  <span className="text-red-500 mt-6 font-bold">↓</span>
+                </div>
+                <div className="font-mono text-xl text-blue-900 font-bold relative">
+                  <div className="flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
+                    <span className="w-12 text-center">a</span><span>:</span>
+                    <span className="w-12 text-center">b</span><span>:</span>
+                    <span className="w-12 text-center text-green-600">c</span>
+                  </div>
+                  <div className="flex gap-4 px-2">
+                    <span className="w-12 text-center text-base">7<span className="text-red-600 font-bold">×4</span></span><span> </span>
+                    <span className="w-12 text-center"></span><span> </span>
+                    <span className="w-12 text-center bg-green-200 text-base rounded">6<span className="text-red-600 font-bold">×4</span></span>
+                  </div>
+                  <div className="flex gap-4 px-2 mt-1">
+                    <span className="w-12 text-center"></span><span> </span>
+                    <span className="w-12 text-center text-base">3<span className="text-red-600 font-bold">×6</span></span><span>:</span>
+                    <span className="w-12 text-center bg-green-200 text-base rounded">4<span className="text-red-600 font-bold">×6</span></span>
+                  </div>
+                  <div className="absolute right-[-20px] top-[40px] text-purple-700 font-bold text-base whitespace-nowrap font-sans flex items-center"><span className="text-4xl font-normal leading-none mr-1">{"}"}</span>← 互乘做大</div>
+                </div>
+              </div>
+              
+              {/* Step 3 */}
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
+                </div>
+                <div className="font-mono text-xl text-blue-900 font-bold">
+                  <div className="flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
+                    <span className="w-8 text-center">a</span><span>:</span>
+                    <span className="w-8 text-center">b</span><span>:</span>
+                    <span className="w-8 text-center">c</span>
+                  </div>
+                  <div className="flex gap-4 px-2 mb-2">
+                    <span className="w-8 text-center">28</span><span>:</span>
+                    <span className="w-8 text-center">18</span><span>:</span>
+                    <span className="w-8 text-center">24</span>
+                  </div>
+                  <div className="flex items-center gap-4 px-2 relative font-sans text-lg mt-2">
+                    <span className="absolute -left-6 font-mono">=</span>
+                    <span className="w-8 text-center font-mono">14</span><span className="font-mono">:</span>
+                    <span className="w-8 text-center font-mono">9</span><span className="font-mono">:</span>
+                    <span className="w-8 text-center font-mono">12</span>
+                    <span className="ml-[20%] lg:ml-8 text-purple-700 text-sm font-bold whitespace-normal lg:whitespace-nowrap">{'← '}連比需約簡 (需3個數字同時約)</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-blue-900 font-bold text-xl mt-4 pt-4 font-mono">
+                ∴ a : b : c = 14 : 9 : 12
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200 text-lg">
+            <h4 className="font-bold text-green-700 mb-2 font-sans">💡 小技巧</h4>
+            <div className="text-blue-900 font-mono">
+              <p>若 <span className="font-bold">3<span className="bg-yellow-300 px-1">a</span> = 7<span className="bg-pink-300 px-1">b</span></span></p>
+              <p className="mt-2"><span className="bg-yellow-300 px-1 font-bold">a</span> : <span className="bg-pink-300 px-1 font-bold">b</span> = <span className="bg-yellow-300 font-bold px-1 text-black">7</span> : <span className="bg-pink-300 font-bold px-1 text-black">3</span> <span className="text-slate-600 ml-4 text-sm font-sans">(3 × <span className="text-red-500 font-bold">7</span> = 7 × <span className="text-red-500 font-bold">3</span>)</span></p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 5. 比例圖 */}
+      <CollapsibleSection id="scale" title="5. 比例圖" num={5} color="amber" activeSub={activeSub} sectionRef={s5}>
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <div className="flex items-center gap-4 font-bold text-xl mb-4 text-slate-800">
+              <span className="font-sans">比例尺</span>
+              <span className="text-green-600 text-2xl">→</span>
+              <div className="flex flex-col items-center font-mono">
+                <span>1 : n</span>
+                <span className="text-red-600 text-sm font-sans mt-1"><span className="border border-red-600 p-0.5 rounded">圖</span>的長度 : <span className="text-red-600 font-bold">實際</span>長度</span>
+              </div>
+            </div>
+
+            <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 mt-4">
+              <p className="font-bold text-slate-800 mb-4 font-sans text-lg">- 思考實際比圖 <span className="text-xl">大還是小？</span></p>
+              <div className="space-y-6 pl-4 font-sans text-lg">
+                <div className="flex items-center gap-4">
+                  <span className="font-bold w-24">實際較大</span>
+                  <span className="text-green-700 font-bold">→</span>
+                  <div className="flex items-center gap-2 text-green-700">
+                    <span className="text-purple-700 font-bold text-xl px-2">×</span>
+                    <span className="font-bold tracking-widest">乘數 變大</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="font-bold w-24">實際較小</span>
+                  <span className="text-green-700 font-bold">→</span>
+                  <div className="flex items-center gap-2 text-green-700">
+                    <span className="text-purple-700 font-bold text-xl font-mono px-2">÷</span>
+                    <span className="font-bold tracking-widest">除數 縮小</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* 6. 正比/反比 */}
+      <CollapsibleSection id="proportion" title="6. 正比/反比" num={6} color="rose" activeSub={activeSub} sectionRef={s6}>
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <h3 className="font-bold text-slate-800 mb-6 text-lg tracking-wide">- 認清情況是正比 / 反比</h3>
+            
+            <div className="space-y-6">
+              <div className="flex flex-col md:flex-row gap-4 items-center bg-rose-50 p-4 rounded-lg">
+                <div className="font-bold text-xl min-w-[80px]">正比：</div>
+                <div className="min-w-[100px] text-center md:text-left text-lg">
+                  <p>兩個數字</p>
+                  <p>相同方向</p>
+                </div>
+                <div className="flex-1 text-green-600 font-bold text-xl leading-relaxed flex flex-col items-center font-mono">
+                  <p>A ↑ B ↑</p>
+                  <p className="text-red-600">A ↓ B ↓</p>
+                </div>
+                <div className="flex-1 text-lg flex items-center gap-2 font-bold justify-center">
+                  公式： <Latex math="\frac{y}{x} = k" className="text-red-600" />
+                </div>
+              </div>
+
+              <div className="flex flex-col md:flex-row gap-4 items-center bg-blue-50 p-4 rounded-lg">
+                <div className="font-bold text-xl min-w-[80px]">反比：</div>
+                <div className="min-w-[100px] text-center md:text-left text-lg">
+                  <p>兩個數字</p>
+                  <p>相反方向</p>
+                </div>
+                <div className="flex-1 text-green-600 font-bold text-xl leading-relaxed flex flex-col items-center font-mono">
+                  <p>A ↑ <span className="text-red-600">B ↓</span></p>
+                  <p className="text-red-600">A ↓ <span className="text-green-600">B ↑</span></p>
+                </div>
+                <div className="flex-1 text-xl flex items-center gap-2 font-bold justify-center font-mono">
+                  <span className="font-sans">公式：</span> <span className="text-red-600">xy = k</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </CollapsibleSection>
