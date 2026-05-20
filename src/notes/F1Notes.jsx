@@ -3480,7 +3480,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">1</span>
                   <span className="text-green-700 font-bold text-sm mt-1">圖表找</span>
                   <span className="text-green-700 font-bold text-sm">答案</span>
-                  <span className="text-red-500 mt-2 font-bold">↓</span>
+                  <span className="text-red-500 mt-2 font-bold inline-block text-2xl leading-none scale-y-150 origin-top">↓</span>
                 </div>
                 <div className="font-sans text-xl text-blue-900 font-bold relative pr-[100px]">
                   <div className="grid grid-cols-[2.25rem_1rem_2.25rem_1rem_2.25rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
@@ -3500,7 +3500,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                     <span className="text-center">3</span><span className="text-center">:</span>
                     <span className="text-center">4</span>
                   </div>
-                  <div className="absolute right-0 bottom-0 text-sm text-purple-700 font-bold whitespace-nowrap font-sans">↖ 重疊變相同</div>
+                  <div className="absolute right-4 -bottom-0.5 text-sm text-purple-700 font-bold whitespace-nowrap font-sans">↖ 重疊變相同</div>
                 </div>
               </div>
 
@@ -3508,25 +3508,25 @@ export const RateRatioNotes = ({ activeSub }) => {
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-16 flex flex-col items-center">
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
-                  <span className="text-red-500 mt-6 font-bold">↓</span>
+                  <span className="text-red-500 mt-6 font-bold inline-block text-2xl leading-none scale-y-150 origin-top">↓</span>
                 </div>
                 <div className="font-sans text-xl text-blue-900 font-bold relative pr-[140px]">
-                  <div className="grid grid-cols-[3rem_1rem_3rem_1rem_3rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
+                  <div className="grid grid-cols-[3.25rem_1rem_3.25rem_1rem_3.25rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
                     <span className="text-center">a</span><span className="text-center">:</span>
                     <span className="text-center">b</span><span className="text-center">:</span>
                     <span className="text-center text-green-600">c</span>
                   </div>
-                  <div className="grid grid-cols-[3rem_1rem_3rem_1rem_3rem] px-2 items-center">
-                    <span className="text-center text-base">7<span className="text-red-600 font-bold">×4</span></span><span></span>
+                  <div className="grid grid-cols-[3.25rem_1rem_3.25rem_1rem_3.25rem] px-2 items-center">
+                    <span className="text-center">7<span className="text-red-600 font-bold">×4</span></span><span></span>
                     <span className="text-center"></span><span></span>
-                    <span className="text-center bg-green-200 text-base rounded">6<span className="text-red-600 font-bold">×4</span></span>
+                    <span className="text-center bg-green-200 rounded">6<span className="text-red-600 font-bold">×4</span></span>
                   </div>
-                  <div className="grid grid-cols-[3rem_1rem_3rem_1rem_3rem] px-2 mt-1 items-center">
+                  <div className="grid grid-cols-[3.25rem_1rem_3.25rem_1rem_3.25rem] px-2 mt-1 items-center">
                     <span className="text-center"></span><span></span>
-                    <span className="text-center text-base">3<span className="text-red-600 font-bold">×6</span></span><span className="text-center">:</span>
-                    <span className="text-center bg-green-200 text-base rounded">4<span className="text-red-600 font-bold">×6</span></span>
+                    <span className="text-center">3<span className="text-red-600 font-bold">×6</span></span><span className="text-center">:</span>
+                    <span className="text-center bg-green-200 rounded">4<span className="text-red-600 font-bold">×6</span></span>
                   </div>
-                  <div className="absolute right-0 top-[44px] text-purple-700 font-bold text-base whitespace-nowrap font-sans flex items-center">
+                  <div className="absolute right-9 top-[36px] text-purple-700 font-bold text-base whitespace-nowrap font-sans flex items-center">
                     <span className="text-[56px] font-normal leading-[0.85] mr-1">{"}"}</span>← 互乘做大
                   </div>
                 </div>
@@ -3538,22 +3538,22 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
                 </div>
                 <div className="font-sans text-xl text-blue-900 font-bold">
-                  <div className="flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
+                  <div className="inline-flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
                     <span className="w-8 text-center">a</span><span>:</span>
                     <span className="w-8 text-center">b</span><span>:</span>
                     <span className="w-8 text-center">c</span>
                   </div>
-                  <div className="flex gap-4 px-2 mb-2">
+                  <div className="flex gap-4 px-2 mb-2 text-xl">
                     <span className="w-8 text-center">28</span><span>:</span>
                     <span className="w-8 text-center">18</span><span>:</span>
                     <span className="w-8 text-center">24</span>
                   </div>
-                  <div className="flex items-center gap-4 px-2 relative font-sans text-lg mt-2">
+                  <div className="flex items-center gap-4 px-2 relative font-sans text-xl mt-2">
                     <span className="absolute -left-6 font-sans">=</span>
                     <span className="w-8 text-center font-sans">14</span><span className="font-sans">:</span>
                     <span className="w-8 text-center font-sans">9</span><span className="font-sans">:</span>
                     <span className="w-8 text-center font-sans">12</span>
-                    <span className="ml-[20%] lg:ml-8 text-purple-700 text-sm font-bold whitespace-normal lg:whitespace-nowrap">{'← '}連比需約簡 (需3個數字同時約)</span>
+                    <span className="ml-[20%] lg:ml-8 text-purple-700 text-sm font-bold whitespace-normal lg:whitespace-nowrap leading-5">{'← '}連比需約簡 (需3個數字同時約)</span>
                   </div>
                 </div>
               </div>
@@ -3616,7 +3616,7 @@ export const RateRatioNotes = ({ activeSub }) => {
       <CollapsibleSection id="proportion" title="6. 正比/反比" num={6} color="rose" activeSub={activeSub} sectionRef={s6}>
         <div className="space-y-4">
           <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <h3 className="font-bold text-slate-800 mb-6 text-lg tracking-wide">- 認清情況是正比 / 反比</h3>
+            <h3 className="font-bold text-slate-800 mb-6 text-lg tracking-wide">- 分辨情況是正比 / 反比</h3>
             
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row gap-4 items-center bg-rose-50 p-4 rounded-lg">
@@ -3738,10 +3738,11 @@ const CongruentConditionsSVG = () => {
         <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 130 80 A 20 20 0 0 0 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 250 80 A 20 20 0 0 0 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <text x="120" y="30" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="110" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
-        <text x="80" y="80" fontSize="16" fill="#334155" textAnchor="end">夾角 →</text>
+        {/* Labels */}
+        <text x="125" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="96" y="78" fontSize="14" fill="#334155" textAnchor="end" fontWeight="bold">夾角 →</text>
       </g>
 
       {/* Row 2: ASA */}
@@ -3757,11 +3758,12 @@ const CongruentConditionsSVG = () => {
         <path d="M 186 80 A 24 24 0 0 1 194 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 310 80 A 20 20 0 0 1 317 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 306 80 A 24 24 0 0 1 314 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <text x="110" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
-        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="210" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
-        <path d="M 160 55 Q 160 70 160 70" fill="none" stroke="#334155" strokeWidth="1" markerEnd="url(#arrow)" />
+        {/* Labels */}
+        <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="205" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
         <text x="160" y="50" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">夾邊</text>
+        <path d="M 160 55 L 160 70" fill="none" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrow)" />
       </g>
 
       {/* Row 3: AAS */}
@@ -3777,10 +3779,11 @@ const CongruentConditionsSVG = () => {
         <path d="M 148 25 A 25 25 0 0 0 173 29" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 272 30 A 20 20 0 0 0 290 33" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 268 25 A 25 25 0 0 0 293 29" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <text x="110" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
+        {/* Labels */}
+        <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
         <text x="160" y="15" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
-        <text x="200" y="60" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="240" y="45" fontSize="16" fill="#334155" fontWeight="bold" textAnchor="end">← 不是夾邊</text>
+        <text x="200" y="65" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="215" y="60" fontSize="14" fill="#334155" fontWeight="bold" textAnchor="start">← 不是夾邊</text>
       </g>
 
       {/* Row 4: SSS */}
@@ -3804,9 +3807,9 @@ const CongruentConditionsSVG = () => {
         <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
         <line x1="284" y1="75" x2="284" y2="85" stroke="#0ea5e9" strokeWidth="2" />
 
-        <text x="120" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="200" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="125" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="195" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
       </g>
 
       {/* Row 5: RHS */}
@@ -3822,13 +3825,15 @@ const CongruentConditionsSVG = () => {
         <line x1="144" y1="50" x2="152" y2="58" stroke="#0ea5e9" strokeWidth="2" />
         <line x1="277" y1="46" x2="285" y2="54" stroke="#0ea5e9" strokeWidth="2" />
         <line x1="274" y1="50" x2="282" y2="58" stroke="#0ea5e9" strokeWidth="2" />
-        <text x="100" y="85" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
-        <text x="150" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="165" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="100" y="15" fontSize="16" fill="#0284c7" fontWeight="bold" textAnchor="end">直角</text>
-        <path d="M 90 20 Q 90 40 100 50" fill="none" stroke="#0284c7" strokeWidth="2" markerEnd="url(#arrow)" />
-        <text x="96" y="100" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">不是夾角 →</text>
-        <text x="96" y="120" fontSize="16" fill="#0284c7" textAnchor="end" fontWeight="bold">但是直角(特別例子)</text>
+        
+        <text x="96" y="90" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
+        <text x="150" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="165" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        
+        <text x="100" y="15" fontSize="14" fill="#0284c7" fontWeight="bold" textAnchor="end">直角</text>
+        <path d="M 95 20 Q 95 65 102 70" fill="none" stroke="#0284c7" strokeWidth="1.5" markerEnd="url(#arrow)" />
+        <text x="96" y="100" fontSize="14" fill="#334155" textAnchor="end" fontWeight="bold">不是夾角 →</text>
+        <text x="96" y="120" fontSize="14" fill="#0284c7" textAnchor="end" fontWeight="bold">但是直角(特別例子)</text>
       </g>
 
       {/* Row 6: SAS (Right angle trap) */}

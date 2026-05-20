@@ -1378,29 +1378,53 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
               <h3 className="font-bold text-slate-800 mb-2">例子：證明恆等式</h3>
               <p className="text-slate-700 mb-3">證明 <Latex math="2(6x+8) = 4(3x+4)" /> 是恆等式</p>
               
-              <div className="flex flex-col space-y-2 mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
+              <div className="mb-4 bg-slate-50 p-3 rounded-lg border border-slate-100 space-y-3">
                 <div className="flex items-start">
-                  <span className="text-green-700 text-sm font-bold min-w-40 pt-1 shrink-0">先抄左方的式，然後進行化簡 ➔</span>
-                  <div className="pl-2">
-                    <MathDisplay math={String.raw`\begin{aligned} \text{左方} &= 2(6x+8) \\ &= 12x+16 \end{aligned}`} block left />
+                  <span className="text-green-700 text-sm font-bold min-w-[210px] pt-1 shrink-0">先抄左方的式，然後進行化簡 ➔</span>
+                  <div className="pl-2 space-y-1">
+                    <div className="grid grid-cols-[3rem_1.25rem_auto] items-center">
+                      <span className="font-semibold text-slate-800 text-right pr-2">左方</span>
+                      <span className="font-semibold text-slate-700 text-center">=</span>
+                      <Latex math="2(6x+8)" />
+                    </div>
+                    <div className="grid grid-cols-[3rem_1.25rem_auto] items-center">
+                      <span></span>
+                      <span className="font-semibold text-slate-700 text-center">=</span>
+                      <Latex math="12x+16" />
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start mt-2">
-                  <span className="text-green-700 text-sm font-bold min-w-40 pt-1 shrink-0">相同的步驟在右方重覆 ➔</span>
-                  <div className="pl-2 relative">
-                    <MathDisplay math={String.raw`\begin{aligned} \text{右方} &= 4(3x+4) \\ &= 12x+16 \end{aligned}`} block left />
-                  </div>
-                </div>
-              </div>
 
-              <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 mt-4 text-center">
-                <div className="inline-flex items-start gap-2 text-left">
-                  <span className="text-green-700 font-bold pt-1 shrink-0">固定格式 ➔</span>
-                  <div>
-                    <MathDisplay math={String.raw`\because\ \text{左方}=\text{右方}`} block left />
-                    <MathDisplay math={String.raw`\therefore\ 2(6x+8)\equiv4(3x+4)`} block left />
+                <div className="flex items-start">
+                  <span className="text-green-700 text-sm font-bold min-w-[210px] pt-1 shrink-0">相同的步驟在右方重覆 ➔</span>
+                  <div className="pl-2 space-y-1">
+                    <div className="grid grid-cols-[3rem_1.25rem_auto] items-center">
+                      <span className="font-semibold text-slate-800 text-right pr-2">右方</span>
+                      <span className="font-semibold text-slate-700 text-center">=</span>
+                      <Latex math="4(3x+4)" />
+                    </div>
+                    <div className="grid grid-cols-[3rem_1.25rem_auto] items-center">
+                      <span></span>
+                      <span className="font-semibold text-slate-700 text-center">=</span>
+                      <Latex math="12x+16" />
+                    </div>
                   </div>
                 </div>
+
+                <div className="flex items-start pt-2 border-t border-slate-200">
+                  <span className="text-green-700 text-sm font-bold min-w-[210px] pt-1 shrink-0">固定格式 ➔</span>
+                  <div className="pl-2 space-y-1">
+                    <div className="grid grid-cols-[3rem_auto] items-center">
+                      <span className="font-semibold text-slate-800 text-right pr-2">∵</span>
+                      <Latex math="\text{左方}=\text{右方}" />
+                    </div>
+                    <div className="grid grid-cols-[3rem_auto] items-center">
+                      <span className="font-semibold text-slate-800 text-right pr-2">∴</span>
+                      <Latex math="2(6x+8)\equiv4(3x+4)" />
+                    </div>
+                  </div>
+                </div>
+
                 <p className="text-sm text-green-700 font-bold mt-1">由 "=" 變成 "≡"</p>
               </div>
             </div>

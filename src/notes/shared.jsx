@@ -38,7 +38,8 @@ export const CollapsibleSection = ({ id, title, num, color = 'blue', activeSub, 
   useEffect(() => {
     if (activeSub === id) {
       setTimeout(() => {
-        sectionRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const target = sectionRef?.current || document.getElementById(id);
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
   }, [activeSub, id]);
@@ -53,7 +54,7 @@ export const CollapsibleSection = ({ id, title, num, color = 'blue', activeSub, 
   };
 
   return (
-    <div ref={sectionRef} className="bg-white rounded-2xl shadow-lg mb-6 scroll-mt-24 overflow-hidden">
+    <div id={id} ref={sectionRef} className="bg-white rounded-2xl shadow-lg mb-6 scroll-mt-24 overflow-hidden">
       <div className="flex items-center gap-3 p-5">
         {num !== undefined && num !== null && (
           <span className={`${numBg[color] || 'bg-blue-500'} text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0`}>
