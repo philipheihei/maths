@@ -1412,7 +1412,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
               <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">分數即「÷」數</div>
                 <pre className="whitespace-pre font-sans text-xl leading-relaxed mt-2 text-center">
-                  <Latex math="\frac{a + 11}{" /><span className="bg-green-200 px-1 rounded inline-block"><Latex math="6" /></span><Latex math="} = 4" />
+                  <Latex math="\frac{a + 11}{6} = 4" />
                   <br/>
                   <Latex math="a " /> <span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="+ 11" /></span> <Latex math=" = 4 \times " /> <span className="bg-green-200 px-1 rounded inline-block"><Latex math="6" /></span>
                   <br/>
@@ -1778,20 +1778,22 @@ export const StatisticsNotes = ({ activeSub }) => {
                 <path d="M 0 0 L -106.25 28.47 A 110 110 0 0 1 -95.26 -55 Z" fill="rgba(34,197,94,0.3)" stroke="#22c55e" strokeWidth="2" strokeLinejoin="round" />
                 {/* 30 deg: 240 to 270 (-90) */}
                 <path d="M 0 0 L -95.26 -55 A 110 110 0 0 1 0 -110 Z" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" strokeWidth="2" strokeLinejoin="round" />
-              </g>
 
-              {/* Angle Labels */}
-              <g fontSize="12" fontWeight="bold" textAnchor="middle">
-                {/* 120deg (0 to 120, avg 60, -90+60 = -30) -> cos(-30), sin(-30) */}
-                <text x="250" y="100" fill="#a16207">120°</text>
-                {/* 69deg (120 to 189, avg 154.5, -90+154.5 = 64.5) -> bot right */}
-                <text x="260" y="210" fill="#be185d">69°</text>
-                {/* 96deg (189 to 285, avg 237, -90+237=147) -> bot left */}
-                <text x="130" y="235" fill="#c2410c">x°</text>
-                {/* 45deg (285 to 330, avg 307.5, -90+307.5 = 217.5 = -142.5) -> top left */}
-                <text x="120" y="145" fill="#15803d">45°</text>
-                {/* 30deg (330 to 360, avg 345, -90+345=255 = -105) -> top */}
-                <text x="175" y="80" fill="#1d4ed8">30°</text>
+                {/* Central Arcs (Radius 30) */}
+                <path d="M 0 -30 A 30 30 0 0 1 25.98 15" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                <path d="M 25.98 15 A 30 30 0 0 1 -4.69 29.63" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                <path d="M -4.69 29.63 A 30 30 0 0 1 -28.98 -7.76" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                <path d="M -28.98 -7.76 A 30 30 0 0 1 -15 -25.98" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                <path d="M -15 -25.98 A 30 30 0 0 1 0 -30" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+
+                {/* Angle Labels (Inside slices, outside arcs) */}
+                <g fontSize="14" textAnchor="middle" dominantBaseline="central">
+                  <text x="43.3" y="-25" fill="#334155">120°</text>
+                  <text x="21.5" y="45.1" fill="#334155">69°</text>
+                  <text x="-41.9" y="27.2" fill="#334155"><tspan fontStyle="italic">x</tspan>°</text>
+                  <text x="-40.6" y="-21.4" fill="#334155">45°</text>
+                  <text x="-12.9" y="-48.3" fill="#334155">30°</text>
+                </g>
               </g>
 
               {/* Slice Category Labels */}
@@ -3186,22 +3188,40 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
               <div>
                 <p className="font-bold text-slate-700 mb-2">例 1：</p>
                 <div className="flex items-center gap-6 pl-4 flex-wrap">
-                  <div className="relative pt-6 min-w-[300px]">
-                    <div className="flex gap-4 text-xl font-bold tracking-widest text-slate-800">
-                      <span>7</span><span>,</span><span>4</span><span>,</span><span>1</span><span>,</span><span>-2</span><span>,</span>
-                      <span className="text-purple-600 border-b-2 border-purple-600"> -5 </span><span>,</span>
-                      <span className="text-purple-600 border-b-2 border-purple-600"> -8 </span>
-                    </div>
-                    {/* Arrows connecting numbers */}
-                    <div className="absolute top-12 left-0 flex gap-4 text-sm text-purple-700 font-bold">
-                      <span className="w-6 text-center">↪<br/>-3</span>
-                      <span className="w-6 text-center">↪<br/>-3</span>
-                      <span className="w-6 text-center">↪<br/>-3</span>
-                      <span className="w-6 text-center">↪<br/>-3</span>
+                  <div className="relative pt-2 pb-6 min-w-[300px]">
+                    <div className="flex text-xl font-bold text-slate-800 items-baseline">
+                      {[
+                        { v: "7", c: true, a: "-3", w: "w-6" },
+                        { v: "4", c: true, a: "-3", w: "w-6" },
+                        { v: "1", c: true, a: "-3", w: "w-6" },
+                        { v: "-2", c: true, a: "-3", w: "w-8" },
+                        { v: "-5", c: true, w: "w-8", h: true },
+                        { v: "-8", c: false, w: "w-8", h: true }
+                      ].map((item, i) => (
+                        <React.Fragment key={i}>
+                          <span className={`inline-block ${item.w} text-center ${item.h ? 'text-purple-600 border-b-2 border-purple-600' : ''}`}>
+                            {item.v}
+                          </span>
+                          {item.c && (
+                            <div className="w-8 relative flex justify-center">
+                              <span>,</span>
+                              {item.a && (
+                                <div className="absolute top-6 w-14 flex flex-col items-center text-sm text-purple-700 font-bold z-10 pointer-events-none">
+                                  <svg viewBox="0 0 44 16" className="w-full h-4 overflow-visible" aria-hidden="true">
+                                    <path d="M2 2 C 14 14, 30 14, 42 2" fill="none" stroke="#6b21a8" strokeWidth="2" strokeLinecap="round" />
+                                    <path d="M 35 3 L 42 2 L 41 9" fill="none" stroke="#6b21a8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                  </svg>
+                                  <span className="mt-1 leading-none text-center">{item.a}</span>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </React.Fragment>
+                      ))}
                     </div>
                   </div>
                   <div className="text-indigo-800 font-bold bg-indigo-50 px-3 py-1.5 rounded-lg mt-6">
-                    知規律為「不斷減去 3」
+                    發現規律為「不斷減去 3」
                   </div>
                 </div>
               </div>
@@ -3209,21 +3229,40 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
               <div>
                 <p className="font-bold text-slate-700 mb-2 pt-6">例 2：</p>
                 <div className="flex items-center gap-6 pl-4 flex-wrap">
-                  <div className="relative pt-6 min-w-[300px]">
-                    <div className="flex gap-4 text-xl font-bold tracking-widest text-slate-800">
-                      <span>2</span><span>,</span><span>4</span><span>,</span><span>8</span><span>,</span><span>16</span><span>,</span>
-                      <span className="text-purple-600 border-b-2 border-purple-600"> 32 </span><span>,</span>
-                      <span className="text-purple-600 border-b-2 border-purple-600"> 64 </span>
-                    </div>
-                    <div className="absolute top-12 left-0 flex gap-4 text-sm text-purple-700 font-bold">
-                      <span className="w-6 text-center">↪<br/>×2</span>
-                      <span className="w-6 text-center">↪<br/>×2</span>
-                      <span className="w-6 text-center">↪<br/>×2</span>
-                      <span className="w-6 text-center">↪<br/>×2</span>
+                  <div className="relative pt-2 pb-6 min-w-[300px]">
+                    <div className="flex text-xl font-bold text-slate-800 items-baseline">
+                      {[
+                        { v: "2", c: true, a: "×2", w: "w-6" },
+                        { v: "4", c: true, a: "×2", w: "w-6" },
+                        { v: "8", c: true, a: "×2", w: "w-6" },
+                        { v: "16", c: true, a: "×2", w: "w-8" },
+                        { v: "32", c: true, w: "w-8", h: true },
+                        { v: "64", c: false, w: "w-8", h: true }
+                      ].map((item, i) => (
+                        <React.Fragment key={i}>
+                          <span className={`inline-block ${item.w} text-center ${item.h ? 'text-purple-600 border-b-2 border-purple-600' : ''}`}>
+                            {item.v}
+                          </span>
+                          {item.c && (
+                            <div className="w-8 relative flex justify-center">
+                              <span>,</span>
+                              {item.a && (
+                                <div className="absolute top-6 w-14 flex flex-col items-center text-sm text-purple-700 font-bold z-10 pointer-events-none">
+                                  <svg viewBox="0 0 44 16" className="w-full h-4 overflow-visible" aria-hidden="true">
+                                    <path d="M2 2 C 14 14, 30 14, 42 2" fill="none" stroke="#6b21a8" strokeWidth="2" strokeLinecap="round" />
+                                    <path d="M 35 3 L 42 2 L 41 9" fill="none" stroke="#6b21a8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                  </svg>
+                                  <span className="mt-1 leading-none text-center">{item.a}</span>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </React.Fragment>
+                      ))}
                     </div>
                   </div>
                   <div className="text-indigo-800 font-bold bg-indigo-50 px-3 py-1.5 rounded-lg mt-6">
-                    知規律為「不斷 ×2」
+                    發現規律為「不斷 ×2」
                   </div>
                 </div>
               </div>
@@ -3663,14 +3702,13 @@ const CorrespondingPartsSVG = () => {
   // P(280,40), Q(230,150), R(360,150)
   return (
     <svg viewBox="0 0 400 200" className="w-full h-auto bg-white rounded-lg">
-      <defs>
-        {/* 紫色實心角 B/Q */}
-        <clipPath id="angB"><path d="M 30,150 L 80,40 L 160,150 Z" /></clipPath>
-        <clipPath id="angQ"><path d="M 230,150 L 280,40 L 360,150 Z" /></clipPath>
-      </defs>
-      {/* 填充紫色角 B & Q */}
-      <circle cx="30" cy="150" r="25" fill="#a855f7" clipPath="url(#angB)" />
-      <circle cx="230" cy="150" r="25" fill="#a855f7" clipPath="url(#angQ)" />
+      {/* 紫色角 B & Q (2 arcs) */}
+      {[20, 26].map(r => (
+        <React.Fragment key={r}>
+          <path d={`M ${30 + r} 150 A ${r} ${r} 0 0 0 ${30 + r * 50 / 120.8} ${150 - r * 110 / 120.8}`} stroke="#a855f7" strokeWidth="2" fill="none" />
+          <path d={`M ${230 + r} 150 A ${r} ${r} 0 0 0 ${230 + r * 50 / 120.8} ${150 - r * 110 / 120.8}`} stroke="#a855f7" strokeWidth="2" fill="none" />
+        </React.Fragment>
+      ))}
 
       {/* A / P 綠色角弧 (3 arcs) */}
       {/* A(80,40) to B(30,150) vector is (-50, 110), R=25/30/35 */}
