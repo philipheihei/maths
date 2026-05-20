@@ -1172,44 +1172,37 @@ export const AreaVolumeNotes = ({ activeSub }) => {
             <div className="md:w-1/3">
               {/* 三角柱體標記圖 */}
               <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 flex items-center justify-center h-full">
-                <svg viewBox="0 0 200 200" className="w-full max-w-[200px] h-auto">
-                  {/* Top Triangle */}
-                  <polygon points="60,40 140,80 40,90" fill="rgba(167,243,208,0.5)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                <svg viewBox="0 0 200 240" className="w-full max-w-[220px] h-auto font-sans mx-auto">
+                  {/* Dashed back bottom edge */}
+                  <line x1="60" y1="160" x2="160" y2="160" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
                   
-                  {/* Bottom Triangle (hidden back lines) */}
-                  <polyline points="40,170 140,160 60,120" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" strokeLinejoin="round" />
-                  <line x1="40" y1="170" x2="60" y2="120" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
-
-                  {/* Vertical Edges */}
-                  <line x1="40" y1="90" x2="40" y2="170" stroke="#334155" strokeWidth="2" />
-                  <line x1="140" y1="80" x2="140" y2="160" stroke="#334155" strokeWidth="2" />
-                  <line x1="60" y1="40" x2="60" y2="120" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
+                  {/* Prism Front Faces Fill (Optional, for better visual) */}
+                  <polygon points="60,40 60,160 124,208 124,88" fill="rgba(251,146,60,0.2)" stroke="none" />
+                  <polygon points="160,40 160,160 124,208 124,88" fill="rgba(251,146,60,0.3)" stroke="none" />
                   
-                  {/* Right Angle symbol in Top Triangle (Assuming 40,90 is the right angle based on 12, 16, 20) */}
-                  {/* Let's say sides are: 40,90 to 60,40 = 20, 60,40 to 140,80 = 16, 40,90 to 140,80 = 12 this doesn't form a correct right angle.
-                      Let's just draw a symbol at 40,90 */}
-                  <polyline points="50,85 55,95 45,100" stroke="#e63946" strokeWidth="1.5" fill="none" transform="rotate(-20 40 90)" />
-
+                  {/* Prism Top Face Fill */}
+                  <polygon points="60,40 160,40 124,88" fill="rgba(253,230,138,0.5)" stroke="none" />
+                  
+                  {/* Solid Edges - Left front face */}
+                  <polygon points="60,40 60,160 124,208 124,88" fill="none" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  {/* Solid Edges - Right front face */}
+                  <polygon points="160,40 160,160 124,208 124,88" fill="none" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  {/* Solid Edges - Top face */}
+                  <polygon points="60,40 160,40 124,88" fill="none" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  
+                  {/* Right Angle Marker */}
+                  <polyline points="114,81 122,71 131,78" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                  
                   {/* Labels */}
-                  <text x="35" y="60" fontSize="12" fill="#475569" textAnchor="end">20 cm</text>
-                  <text x="50" y="80" fontSize="12" fill="#475569" textAnchor="start">16 cm</text>
-                  <text x="95" y="95" fontSize="12" fill="#475569" textAnchor="middle">12 cm</text>
+                  <text x="110" y="30" fontSize="14" fill="#475569" textAnchor="middle">20 cm</text>
+                  <text x="52" y="105" fontSize="14" fill="#475569" textAnchor="end">24 cm</text>
+                  <text x="85" y="198" fontSize="14" fill="#475569" textAnchor="end">16 cm</text>
+                  <text x="150" y="195" fontSize="14" fill="#475569" textAnchor="start">12 cm</text>
                   
-                  {/* Height */}
-                  <text x="25" y="135" fontSize="12" fill="#475569" textAnchor="end">24 cm</text>
-
-                  {/* Highlight Labels */}
-                  <text x="95" y="65" fontSize="14" fill="#047857" fontWeight="bold" textAnchor="middle">底</text>
-                  <text x="90" y="135" fontSize="14" fill="#6b21a8" fontWeight="bold" textAnchor="middle">側</text>
-
-                  <path d="M 80,70 Q 75,75 65,70" fill="none" stroke="#047857" strokeWidth="1.5" markerStart="url(#arrow)" />
-                  <path d="M 75,135 Q 65,135 50,135" fill="none" stroke="#6b21a8" strokeWidth="1.5" markerEnd="url(#arrow)" />
-                  
-                  <defs>
-                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                      <polygon points="0,0 10,5 0,10" fill="#475569" />
-                    </marker>
-                  </defs>
+                  {/* Highlight Labels without arrows */}
+                  <text x="110" y="62" fontSize="16" fill="#15803d" fontWeight="bold" textAnchor="middle">底</text>
+                  <text x="85" y="135" fontSize="16" fill="#7e22ce" fontWeight="bold" textAnchor="middle">側</text>
+                  <text x="145" y="130" fontSize="16" fill="#7e22ce" fontWeight="bold" textAnchor="middle">側</text>
                 </svg>
               </div>
             </div>
@@ -1291,9 +1284,9 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <rect x="40" y="40" width="100" height="60" fill="none" stroke="#22c55e" strokeWidth="2" />
                   
                   {/* Dashed lines for back rectangle where hidden */}
-                  <polyline points="70,80 70,20 170,20 170,80" fill="none" stroke="#22c55e" strokeWidth="2" />
+                  <polyline points="70,20 170,20 170,80" fill="none" stroke="#22c55e" strokeWidth="2" />
                   <line x1="70" y1="80" x2="170" y2="80" stroke="#dc2626" strokeWidth="2" strokeDasharray="5,5" />
-                  <line x1="70" y1="80" x2="70" y2="40" stroke="#dc2626" strokeWidth="2" strokeDasharray="5,5" />
+                  <line x1="70" y1="80" x2="70" y2="20" stroke="#dc2626" strokeWidth="2" strokeDasharray="5,5" />
                 </svg>
               </div>
             </div>
