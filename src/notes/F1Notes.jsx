@@ -1772,51 +1772,37 @@ export const StatisticsNotes = ({ activeSub }) => {
                 <path d="M 0 0 L 0 -110 A 110 110 0 0 1 95.26 55 Z" fill="rgba(234,179,8,0.3)" stroke="#eab308" strokeWidth="2" strokeLinejoin="round" />
                 {/* 69 deg: 30 to 99 */}
                 <path d="M 0 0 L 95.26 55 A 110 110 0 0 1 -17.21 108.64 Z" fill="rgba(236,72,153,0.3)" stroke="#ec4899" strokeWidth="2" strokeLinejoin="round" />
-                {/* 96 deg: 99 to 195 (-165) */}
-                <path d="M 0 0 L -17.21 108.64 A 110 110 0 0 1 -106.25 28.47 Z" fill="rgba(249,115,22,0.3)" stroke="#f97316" strokeWidth="2" strokeLinejoin="round" />
-                {/* 45 deg: 195 to 240 (-120) */}
-                <path d="M 0 0 L -106.25 28.47 A 110 110 0 0 1 -95.26 -55 Z" fill="rgba(34,197,94,0.3)" stroke="#22c55e" strokeWidth="2" strokeLinejoin="round" />
-                {/* 30 deg: 240 to 270 (-90) */}
-                <path d="M 0 0 L -95.26 -55 A 110 110 0 0 1 0 -110 Z" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" strokeWidth="2" strokeLinejoin="round" />
+                {/* 96 deg: 99 to 195 (x°) */}
+                <path d="M 0 0 L -17.21 108.64 A 110 110 0 0 1 -106.25 -28.47 Z" fill="rgba(249,115,22,0.3)" stroke="#f97316" strokeWidth="2" strokeLinejoin="round" />
+                {/* 45 deg: 195 to 240 */}
+                <path d="M 0 0 L -106.25 -28.47 A 110 110 0 0 1 -55 -95.26 Z" fill="rgba(34,197,94,0.3)" stroke="#22c55e" strokeWidth="2" strokeLinejoin="round" />
+                {/* 30 deg: 240 to 270 */}
+                <path d="M 0 0 L -55 -95.26 A 110 110 0 0 1 0 -110 Z" fill="rgba(59,130,246,0.3)" stroke="#3b82f6" strokeWidth="2" strokeLinejoin="round" />
 
-                {/* Central Arcs (Radius 30) */}
-                <path d="M 0 -30 A 30 30 0 0 1 25.98 15" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-                <path d="M 25.98 15 A 30 30 0 0 1 -4.69 29.63" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-                <path d="M -4.69 29.63 A 30 30 0 0 1 -28.98 -7.76" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-                <path d="M -28.98 -7.76 A 30 30 0 0 1 -15 -25.98" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-                <path d="M -15 -25.98 A 30 30 0 0 1 0 -30" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+                {/* Central Arcs (Radii with slight differences) */}
+                <path d="M 0 -25 A 25 25 0 0 1 21.65 12.5" fill="none" stroke="#eab308" strokeWidth="2" /> {/* 120° */}
+                <path d="M 30.31 17.5 A 35 35 0 0 1 -5.47 34.57" fill="none" stroke="#ec4899" strokeWidth="2" /> {/* 69° */}
+                <path d="M -3.91 24.69 A 25 25 0 0 1 -24.15 -6.47" fill="none" stroke="#f97316" strokeWidth="2" /> {/* x° */}
+                <path d="M -28.98 -7.76 A 30 30 0 0 1 -15 -25.98" fill="none" stroke="#22c55e" strokeWidth="2" /> {/* 45° */}
+                <path d="M -20 -34.64 A 40 40 0 0 1 0 -40" fill="none" stroke="#3b82f6" strokeWidth="2" /> {/* 30° */}
 
-                {/* Angle Labels (Inside slices, outside arcs) */}
-                <g fontSize="14" textAnchor="middle" dominantBaseline="central">
-                  <text x="43.3" y="-25" fill="#334155">120°</text>
-                  <text x="21.5" y="45.1" fill="#334155">69°</text>
-                  <text x="-41.9" y="27.2" fill="#334155"><tspan fontStyle="italic">x</tspan>°</text>
-                  <text x="-40.6" y="-21.4" fill="#334155">45°</text>
-                  <text x="-12.9" y="-48.3" fill="#334155">30°</text>
+                {/* Angle Labels (Centered within each sector outside arcs) */}
+                <g fontSize="14" textAnchor="middle" dominantBaseline="central" fontWeight="bold">
+                  <text x="39" y="-23" fill="#a16207">120°</text>
+                  <text x="22" y="45" fill="#be185d">69°</text>
+                  <text x="-34" y="22" fill="#c2410c"><tspan fontStyle="italic">x</tspan>°</text>
+                  <text x="-36" y="-27" fill="#15803d">45°</text>
+                  <text x="-14" y="-53" fill="#1d4ed8">30°</text>
                 </g>
-              </g>
 
-              {/* Slice Category Labels */}
-              <g fontSize="12" textAnchor="middle">
-                {/* 120deg */}
-                <text x="290" y="60" fill="#334155">60歲或以上</text>
-                <line x1="260" y1="85" x2="290" y2="65" stroke="#94a3b8" strokeWidth="1" />
-                
-                {/* 69deg */}
-                <text x="320" y="230" fill="#334155">45 - 59歲</text>
-                <line x1="275" y1="215" x2="320" y2="215" stroke="#94a3b8" strokeWidth="1" />
-                
-                {/* 96deg */}
-                <text x="80" y="260" fill="#334155">30 - 44歲</text>
-                <line x1="120" y1="240" x2="80" y2="245" stroke="#94a3b8" strokeWidth="1" />
-
-                {/* 45deg */}
-                <text x="50" y="130" fill="#334155">15 - 29歲</text>
-                <line x1="105" y1="135" x2="70" y2="135" stroke="#94a3b8" strokeWidth="1" />
-
-                {/* 30deg */}
-                <text x="150" y="30" fill="#334155">0 - 14歲</text>
-                <line x1="170" y1="65" x2="150" y2="35" stroke="#94a3b8" strokeWidth="1" />
+                {/* Slice Category Labels */}
+                <g fontSize="15" textAnchor="middle" dominantBaseline="central" fill="#334155">
+                  <text x="65" y="-38">60歲或以上</text>
+                  <text x="37" y="77">45 - 59歲</text>
+                  <text x="-63" y="41">30 - 44歲</text>
+                  <text x="-64" y="-49">15 - 29歲</text>
+                  <text x="-22" y="-82">0 - 14歲</text>
+                </g>
               </g>
             </svg>
           </div>
@@ -1864,7 +1850,8 @@ export const StatisticsNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="line-graph" title="3. 折線圖" num={3} color="blue" activeSub={activeSub} sectionRef={s3}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg p-4 border border-slate-200">
+          <div className="bg-white rounded-lg p-4 border border-slate-200 text-center">
+            <h4 className="text-slate-700 font-bold mb-2">A城由2020年至2026年的失業率</h4>
             <svg viewBox="0 0 400 250" className="w-full h-auto max-w-md mx-auto font-sans">
               <defs>
                 <marker id="arrow-y2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
@@ -1904,7 +1891,7 @@ export const StatisticsNotes = ({ activeSub }) => {
 
               {/* Labels (X-axis) */}
               <g fill="#475569" fontSize="11" textAnchor="middle">
-                {['2012', '2013', '2014', '2015', '2016', '2017', '2018'].map((year, i) => (
+                {['2020', '2021', '2022', '2023', '2024', '2025', '2026'].map((year, i) => (
                   <text key={year} x={90 + i * 40} y="235">{year}</text>
                 ))}
                 <text x="210" y="250" fontSize="11" fill="#64748b">年份</text>

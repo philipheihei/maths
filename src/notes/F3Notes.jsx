@@ -1488,22 +1488,22 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
                     <tbody>
                       <tr>
                         <td className="w-16 h-12 border border-slate-300"></td>
-                        <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-cyan-600">F</td>
-                        <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-cyan-600">M</td>
+                        <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-blue-600">F</td>
+                        <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-blue-600">M</td>
                       </tr>
                       <tr>
                         <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-green-600">F</td>
-                        <td className="w-16 h-12 border border-slate-300 font-bold text-teal-600">FF</td>
-                        <td className="w-16 h-12 border-2 border-slate-800 font-bold text-teal-600 relative">
-                          FM
+                        <td className="w-16 h-12 border border-slate-300 font-bold"><span className="text-green-600">F</span><span className="text-blue-600">F</span></td>
+                        <td className="w-16 h-12 border-2 border-slate-800 font-bold relative">
+                          <span className="text-green-600">F</span><span className="text-blue-600">M</span>
                           {/* 箭頭連結提示 */}
                           <div className="absolute top-1/2 -right-6 md:-right-8 w-6 md:w-8 h-px bg-slate-400"></div>
                         </td>
                       </tr>
                       <tr>
                         <td className="w-16 h-12 border border-slate-300 bg-amber-100 font-bold text-green-600">M</td>
-                        <td className="w-16 h-12 border border-slate-300 font-bold text-teal-600">MF</td>
-                        <td className="w-16 h-12 border border-slate-300 font-bold text-teal-600">MM</td>
+                        <td className="w-16 h-12 border border-slate-300 font-bold"><span className="text-green-600">M</span><span className="text-blue-600">F</span></td>
+                        <td className="w-16 h-12 border border-slate-300 font-bold"><span className="text-green-600">M</span><span className="text-blue-600">M</span></td>
                       </tr>
                     </tbody>
                   </table>
@@ -1511,7 +1511,7 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
 
                 {/* 文字說明卡片 */}
                 <div className="bg-white border border-dashed border-slate-400 rounded-lg p-3 text-sm text-slate-700 w-48 shrink-0 relative mt-4 md:mt-0">
-                  <span className="font-bold text-teal-600">FM</span> 代表第一隻小狗是<span className="text-green-600 font-bold">雌性 (F)</span> 及第二隻小狗是<span className="text-cyan-600 font-bold">雄性 (M)</span>。
+                  <span className="font-bold text-teal-600">FM</span> 代表第一隻小狗是<span className="text-green-600 font-bold">雌性 (F)</span> 及第二隻小狗是<span className="text-blue-600 font-bold">雄性 (M)</span>。
                 </div>
               </div>
             </div>
