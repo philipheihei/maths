@@ -120,25 +120,25 @@ export const NOTES_DATA = {
       ]
     },
     {
-      id: 'coordinate',
-      topic: 'CH9 百分數',
-      color: 'sky',
-      subtopics: [
-        { id: 'coordinate-system', num: 1, title: '坐標系統 (直角坐標)', color: 'blue' },
-        { id: 'quadrants', num: 2, title: '象限', color: 'green' },
-        { id: 'length', num: 3, title: '坐標線段 找長度', color: 'amber' },
-        { id: 'transformation', num: 4, title: '點的轉換', color: 'red' },
-      ]
-    },
-    {
       id: 'percentage',
-      topic: 'CH10 坐標幾何',
+      topic: 'CH9 百分數',
       color: 'emerald',
       subtopics: [
         { id: 'interconversion', num: 1, title: '百分數 / 小數 / 分數互化', color: 'blue' },
         { id: 'percentage-of-part', num: 2, title: '表達部份的百分數', color: 'green' },
         { id: 'percentage-comparison', num: 3, title: '百分數比較', color: 'amber' },
         { id: 'percentage-change', num: 4, title: '百分變化', color: 'purple' },
+      ]
+    },
+    {
+      id: 'coordinate',
+      topic: 'CH10 坐標幾何',
+      color: 'sky',
+      subtopics: [
+        { id: 'coordinate-system', num: 1, title: '坐標系統 (直角坐標)', color: 'blue' },
+        { id: 'quadrants', num: 2, title: '象限', color: 'green' },
+        { id: 'length', num: 3, title: '坐標線段 找長度', color: 'amber' },
+        { id: 'transformation', num: 4, title: '點的轉換', color: 'red' },
       ]
     },
     {
