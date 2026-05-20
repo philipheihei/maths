@@ -3742,7 +3742,7 @@ const CongruentConditionsSVG = () => {
         <text x="125" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
         <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
         <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
-        <text x="96" y="78" fontSize="14" fill="#334155" textAnchor="end" fontWeight="bold">夾角 →</text>
+        <text x="96" y="78" fontSize="14" fill="#0284c7" textAnchor="end" fontWeight="bold">夾角 →</text>
       </g>
 
       {/* Row 2: ASA */}
@@ -3762,8 +3762,8 @@ const CongruentConditionsSVG = () => {
         <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
         <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
         <text x="205" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
-        <text x="160" y="50" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">夾邊</text>
-        <path d="M 160 55 L 160 70" fill="none" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrow)" />
+        <text x="160" y="50" fontSize="14" fill="#0284c7" textAnchor="middle" fontWeight="bold">夾邊</text>
+        <path d="M 160 55 L 160 70" fill="none" stroke="#0284c7" strokeWidth="1.5" markerEnd="url(#arrow)" />
       </g>
 
       {/* Row 3: AAS */}
@@ -3783,7 +3783,7 @@ const CongruentConditionsSVG = () => {
         <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
         <text x="160" y="15" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
         <text x="200" y="65" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
-        <text x="215" y="60" fontSize="14" fill="#334155" fontWeight="bold" textAnchor="start">← 不是夾邊</text>
+        <text x="215" y="60" fontSize="14" fill="#0284c7" fontWeight="bold" textAnchor="start">← 不是夾邊</text>
       </g>
 
       {/* Row 4: SSS */}
@@ -3832,7 +3832,7 @@ const CongruentConditionsSVG = () => {
         
         <text x="100" y="15" fontSize="14" fill="#0284c7" fontWeight="bold" textAnchor="end">直角</text>
         <path d="M 95 20 Q 95 65 102 70" fill="none" stroke="#0284c7" strokeWidth="1.5" markerEnd="url(#arrow)" />
-        <text x="96" y="100" fontSize="14" fill="#334155" textAnchor="end" fontWeight="bold">不是夾角 →</text>
+        <text x="96" y="100" fontSize="14" fill="#0284c7" textAnchor="end" fontWeight="bold">不是夾角 →</text>
         <text x="96" y="120" fontSize="14" fill="#0284c7" textAnchor="end" fontWeight="bold">但是直角(特別例子)</text>
       </g>
 
@@ -3853,7 +3853,7 @@ const CongruentConditionsSVG = () => {
 
       <defs>
         <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#0284c7" />
         </marker>
       </defs>
     </svg>

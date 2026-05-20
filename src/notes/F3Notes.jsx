@@ -1511,7 +1511,7 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
 
                 {/* 文字說明卡片 */}
                 <div className="bg-white border border-dashed border-slate-400 rounded-lg p-3 text-sm text-slate-700 w-48 shrink-0 relative mt-4 md:mt-0">
-                  <span className="font-bold text-teal-600">FM</span> 代表第一隻小狗是<span className="text-green-600 font-bold">雌性 (F)</span> 及第二隻小狗是<span className="text-blue-600 font-bold">雄性 (M)</span>。
+                  <span className="font-bold"><span className="text-green-600">F</span><span className="text-blue-600">M</span></span> 代表第一隻小狗是<span className="text-green-600 font-bold">雌性 (F)</span> 及第二隻小狗是<span className="text-blue-600 font-bold">雄性 (M)</span>。
                 </div>
               </div>
             </div>
@@ -1667,15 +1667,15 @@ export const CentralTendencyNotes = ({ activeSub }) => {
             <p className="text-sm text-slate-600 mb-3">例：下表顯示一組學生在暑假期間所閱讀的書本數量</p>
             
             <div className="overflow-x-auto mb-4 bg-white p-2 rounded shadow-sm">
-              <table className="w-full text-center border-collapse">
+              <table className="text-center border-collapse mx-auto">
                 <tbody>
                   <tr>
                     <td className="border border-slate-400 p-2 bg-green-100 font-bold text-slate-800 w-24">書本數量</td>
-                    <td className="border border-slate-400 p-2">1</td>
-                    <td className="border border-slate-400 p-2">2</td>
-                    <td className="border border-slate-400 p-2">3</td>
-                    <td className="border border-slate-400 p-2">4</td>
-                    <td className="border border-slate-400 p-2">5</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">1</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">2</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">3</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">4</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">5</td>
                   </tr>
                   <tr>
                     <td className="border border-slate-400 p-2 bg-green-100 font-bold text-green-800 w-24">
@@ -1684,11 +1684,11 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                         頻數
                       </div>
                     </td>
-                    <td className="border border-slate-400 p-2">5</td>
-                    <td className="border border-slate-400 p-2">10</td>
-                    <td className="border border-slate-400 p-2">4</td>
-                    <td className="border border-slate-400 p-2">3</td>
-                    <td className="border border-slate-400 p-2 border-r-4">1</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">5</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">10</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">4</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">3</td>
+                    <td className="border border-slate-400 p-2 border-r-4 w-[53px] h-[41px] min-w-[53px]">1</td>
                     <td className="border-none text-left pl-2 hidden sm:table-cell text-green-700 font-bold text-sm whitespace-nowrap">
                       ← 能加到總數：5+10+4+3+1 = 23
                     </td>
