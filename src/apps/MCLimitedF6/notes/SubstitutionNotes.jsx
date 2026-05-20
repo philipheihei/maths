@@ -105,9 +105,9 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="k = 2" />（避免分母為0，檢查：<InlineMath math="k+2=4" />, <InlineMath math="5k-6=4" />，OK）</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`\\dfrac{1}{${h(H0, '2')}+2}+\\dfrac{3}{5(${h(H0, '2')})-6}=\\dfrac14+\\dfrac34=1`} /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項（分母 <InlineMath math="(4)(4)=16" />）：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 1</span> 代 <InlineMath math="k = 2" />（避免分母為0，檢查：<InlineMath math="k+2=4" />, <InlineMath math="5k-6=4" />，OK）</div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`\\dfrac{1}{${h(H0, '2')}+2}+\\dfrac{3}{5(${h(H0, '2')})-6}=\\dfrac14+\\dfrac34=1`} /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 代選項（分母 <InlineMath math="(4)(4)=16" />）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
                   <li><ChoiceColon label="A" /><InlineMath math={`\\dfrac{-8(${h(H0, '2')})}{((${h(H0, '2')})+2)(5(${h(H0, '2')})-6)}=\\dfrac{-16}{16}=-1`} /> ❌</li>
                   <li><ChoiceColon label="B" /><InlineMath math={`\\dfrac{-2(${h(H0, '2')})}{((${h(H0, '2')})+2)(5(${h(H0, '2')})-6)}=\\dfrac{-4}{16}=-\\dfrac14`} /> ❌</li>
@@ -133,11 +133,11 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="n = 2" /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入（直接按機）：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 1</span> 代 <InlineMath math="n = 2" /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 2</span> 題目代入（直接按機）：
                 <InlineMath math={`\\dfrac{9^{3(${h(H0, '2')})+1}}{(3^{2(${h(H0, '2')})+3})(27^{2(${h(H0, '2')})+1})}=\\dfrac{1}{6561}`} />
               </div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代 <InlineMath math="n=2" /> 入選項（直接比對 ANS）：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 代 <InlineMath math="n=2" /> 入選項（直接比對 ANS）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
                   <li className="text-emerald-700 font-bold"><ChoiceColon label="A" /><InlineMath math={`9^{-${h(H0, '2')}-2}=\\dfrac{1}{6561}`} /> ✅ ← 答案</li>
                   <li><ChoiceColon label="B" /><InlineMath math={`9^{-${h(H0, '2')}-1}=\\dfrac{1}{729}`} /> ❌</li>
@@ -165,9 +165,9 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟（雙變數要代兩個不同值）</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="\alpha = 2,\ \beta = 3" /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`(2(${h(H0, '2')})-${h(H1, '3')})^2+(${h(H0, '2')}-2(${h(H1, '3')}))^2=17`} /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 1</span> 代 <InlineMath math="\alpha = 2,\ \beta = 3" /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 2</span> 題目代入：<InlineMath math={`(2(${h(H0, '2')})-${h(H1, '3')})^2+(${h(H0, '2')}-2(${h(H1, '3')}))^2=17`} /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 代選項：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
                   <li><ChoiceColon label="A" /><InlineMath math={`3(${h(H0, '2')})^2-4(${h(H0, '2')})(${h(H1, '3')})+3(${h(H1, '3')})^2=15`} /> ❌</li>
                   <li><ChoiceColon label="B" /><InlineMath math={`3(${h(H0, '2')})^2-8(${h(H0, '2')})(${h(H1, '3')})+3(${h(H1, '3')})^2=-9`} /> ❌</li>
@@ -193,9 +193,9 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
             <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700">
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 代 <InlineMath math="x = 3" /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 題目代入（直接按機）：<InlineMath math={`\\dfrac{(27\\cdot ${h(H0, '3')})^5}{(3\\cdot ${h(H0, '3')}^{-2})^4}\\approx 2.8243\\times 10^{11}`} /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 代選項（直接比對 ANS）：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 1</span> 代 <InlineMath math="x = 3" /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 2</span> 題目代入（直接按機）：<InlineMath math={`\\dfrac{(27\\cdot ${h(H0, '3')})^5}{(3\\cdot ${h(H0, '3')}^{-2})^4}\\approx 2.8243\\times 10^{11}`} /></div>
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 代選項（直接比對 ANS）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
                   <li><ChoiceColon label="A" /><InlineMath math={`3^2(${h(H0, '3')})^3=243`} /> ❌</li>
                   <li><ChoiceColon label="B" /><InlineMath math={`3^4(${h(H0, '3')})^3=2187`} /> ❌</li>
@@ -259,14 +259,14 @@ const SubstitutionNotes = ({ onBack }) => {
               <div>做法好簡單：揀幾個 <InlineMath math="x" /> 值代入左右兩邊，睇住不等號方向有無成立（例如 <InlineMath math="左 > 右" /> 或 <InlineMath math="左 \geq 右" />）。</div>
               <div>先找兩個分界位：<InlineMath math="x=-6" />、<InlineMath math="x=-4" />（即係答案可能會由「啱」變「唔啱」的轉折位），再試這兩個位附近的數字就得。</div>
               <div className="pl-2 space-y-1.5">
-                <div><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 1</span> 試 <InlineMath math="x=-5" />（介乎 -6 與 -4 之間）</div>
+                <div><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 1</span> 試 <InlineMath math="x=-5" />（介乎 -6 與 -4 之間）</div>
                 <div className="pl-4">第一條：<InlineMath math="-5-1 > \dfrac{2(-5)-9}{3}" />，即 <InlineMath math="-6 > -\dfrac{19}{3}" /> ✅</div>
                 <div className="pl-4">第二條：<InlineMath math="3(-5)+12 \geq 0" />，即 <InlineMath math="-3 \geq 0" /> ❌</div>
                 <div className="pl-4">因為是「或」，一條成立已經夠，所以 <InlineMath math="x=-5" /> 屬於答案範圍。</div>
-                <div className="mt-1"><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 2</span> 試 <InlineMath math="x=-7" />（小於 -6）</div>
+                <div className="mt-1"><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 2</span> 試 <InlineMath math="x=-7" />（小於 -6）</div>
                 <div className="pl-4">第一條：<InlineMath math="-8 > -\dfrac{23}{3}" /> ❌；第二條：<InlineMath math="-9 \geq 0" /> ❌，兩條都不成立。</div>
                 <div className="pl-4"><InlineMath math="x=-7" /> 唔喺答案範圍，可排除 <InlineMath math="x < -6" />（選項 C）。</div>
-                <div className="mt-1"><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-mono text-xs shadow-sm">Step 3</span> 試 <InlineMath math="x=0" />（大於 -4）</div>
+                <div className="mt-1"><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 試 <InlineMath math="x=0" />（大於 -4）</div>
                 <div className="pl-4">第二條：<InlineMath math="3(0)+12 \geq 0" /> ✅，所以所有 <InlineMath math="x \geq -4" /> 都會在「或」題中保留。</div>
               </div>
               <div className="bg-white border border-emerald-200 rounded-lg p-2 mt-2">
@@ -295,7 +295,7 @@ const SubstitutionNotes = ({ onBack }) => {
               <div className="font-bold text-red-800">📝 重點：呢類題唔用代入法</div>
               <div>原因：題目本身係「有條件等式」，即 <InlineMath math="(3c+1)(d-4)=2d(5c-1)" /> 要成立。<br/>胡亂代<InlineMath math="c,d" />, 會破壞原有條件。</div>
               <div className="pl-2 space-y-1.5">
-                <div><span className="bg-red-200 text-red-800 rounded px-1.5 font-mono text-xs shadow-sm">例子</span> 假設 代 <InlineMath math="c=2,d=3" />：</div>
+                <div><span className="bg-red-200 text-red-800 rounded px-1.5 font-sans text-xs shadow-sm">例子</span> 假設 代 <InlineMath math="c=2,d=3" />：</div>
                 <div className="pl-4">左：<InlineMath math="(3(2)+1)(3-4)=7(-1)=-7" /></div>
                 <div className="pl-4">右：<InlineMath math="2(3)(5(2)-1)=6(9)=54" /></div>
                 <div className="pl-4">左 <InlineMath math="\neq" /> 右，所以你代入嘅 <InlineMath math="(c,d)" /> 根本唔符合題目前設，用佢去比選項會誤導。</div>

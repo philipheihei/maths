@@ -38,9 +38,9 @@ const StepText = ({ text, className = 'text-sm text-slate-700 leading-relaxed' }
   const getKeyClass = (label) => {
     const normalized = label.replace(/\s+/g, '').toLowerCase();
     if (normalized === 'ab/c') {
-      return 'bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded';
+      return 'bg-gray-500 text-white text-xs font-sans px-2 py-0.5 rounded';
     }
-    return 'bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded';
+    return 'bg-gray-900 text-white text-xs font-sans px-2 py-0.5 rounded';
   };
 
   return (
@@ -69,7 +69,7 @@ const StepText = ({ text, className = 'text-sm text-slate-700 leading-relaxed' }
 const FactorizationKeyboard = ({ onInput, onDelete, onSubmit, disabled, questionVars = [] }) => {
   const KEY = `h-11 rounded-lg font-medium text-base flex items-center justify-center select-none transition-all shadow-[0_2px_0_0_rgba(0,0,0,0.12)] active:shadow-none active:translate-y-[1px] border`;
   const NUM = `${KEY} bg-white text-slate-700 border-slate-200`;
-  const VAR = `${KEY} bg-blue-50 text-blue-700 border-blue-200 font-mono italic text-lg`;
+  const VAR = `${KEY} bg-blue-50 text-blue-700 border-blue-200 font-sans italic text-lg`;
   const OP  = `${KEY} bg-slate-100 text-slate-600 border-slate-200`;
   const DEL = `${KEY} bg-red-50 text-red-500 border-red-100`;
 
@@ -333,13 +333,13 @@ const TeachingPage = ({ onStartQuiz }) => {
                   </div>
                   {/* Line 2 */}
                   <div className="flex items-center gap-2">
-                    <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                    <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                     <div className="text-sm w-40 shrink-0"><Latex math="b(m+n) + 5(m+n)" /></div>
                     <div className="text-xs text-slate-500 italic">← 將相同括號抽出</div>
                   </div>
                   {/* Line 3 */}
                   <div className="flex items-center gap-2">
-                    <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                    <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                     <div className="text-sm w-40 shrink-0"><Latex math="(m+n)(b+5)" /></div>
                     <div className="text-xs text-slate-500 italic">← 不是相同括號的按順序放另一個括號</div>
                   </div>
@@ -368,7 +368,7 @@ const TeachingPage = ({ onStartQuiz }) => {
               <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                 <h3 className="font-bold text-green-800 mb-3">🖩 計算機 FMLA 01 方法</h3>
                 <p className="text-sm text-slate-700 mb-3">
-                  如二次多項式沒相同代數/因數，出動 <span className="bg-orange-500 text-white px-2 py-0.5 rounded font-mono">FMLA</span> 01
+                  如二次多項式沒相同代數/因數，出動 <span className="bg-orange-500 text-white px-2 py-0.5 rounded font-sans">FMLA</span> 01
                 </p>
                 
                 <div className="bg-white rounded-lg p-3 mb-3">
@@ -405,11 +405,11 @@ const TeachingPage = ({ onStartQuiz }) => {
                       <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span>
                       <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
                       <span className="text-slate-400 mx-0.5">→</span>
-                      <span className="text-xs text-slate-700 font-mono">8</span>
+                      <span className="text-xs text-slate-700 font-sans">8</span>
                       <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
-                      <span className="text-xs text-slate-700 font-mono">(−)17</span>
+                      <span className="text-xs text-slate-700 font-sans">(−)17</span>
                       <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
-                      <span className="text-xs text-slate-700 font-mono">(−)21</span>
+                      <span className="text-xs text-slate-700 font-sans">(−)21</span>
                       <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
                     </div>
                   </div>
@@ -417,13 +417,13 @@ const TeachingPage = ({ onStartQuiz }) => {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-gray-50 p-3 rounded">
                       <p className="font-bold text-center mb-2 text-base">答案 1（整數）</p>
-                      <p className="text-center text-3xl font-mono mb-2">3</p>
+                      <p className="text-center text-3xl font-sans mb-2">3</p>
                       <p className="text-center text-sm text-slate-600 mt-2">→ 相反數：-3</p>
                       <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(x-3)" /></p>
                     </div>
                     <div className="bg-gray-50 p-3 rounded">
                       <p className="font-bold text-center mb-2 text-base">答案 2（小數）</p>
-                      <p className="text-center text-3xl font-mono mb-1">-0.875</p>
+                      <p className="text-center text-3xl font-sans mb-1">-0.875</p>
                       <p className="text-center text-xs text-orange-600 font-semibold mb-1">按 <span className="bg-gray-500 text-white text-xs font-mono px-1.5 py-0.5 rounded">a b/c</span> 轉分數</p>
                       <p className="text-center text-sm text-slate-600">= <Latex math="-\frac{7}{8}" /></p>
                       <p className="text-center text-sm text-slate-600">分母放前，分子相反數放後</p>
@@ -513,22 +513,22 @@ const TeachingPage = ({ onStartQuiz }) => {
                       <div className="text-xs text-slate-500 mb-2 pl-1">→ a = 6，b = −13，c = −28</div>
                       <div className="flex items-center gap-1 flex-wrap mb-3">
                         <span className="text-slate-600 text-xs">輸入：</span>
-                        <span className="text-slate-700 text-xs font-mono">6</span>
+                        <span className="text-slate-700 text-xs font-sans">6</span>
                         <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
-                        <span className="text-slate-700 text-xs font-mono">−13</span>
+                        <span className="text-slate-700 text-xs font-sans">−13</span>
                         <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
-                        <span className="text-slate-700 text-xs font-mono">−28</span>
+                        <span className="text-slate-700 text-xs font-sans">−28</span>
                         <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div className="bg-white rounded border p-2 text-center">
                           <p className="text-xs text-slate-500 mb-1">答案 1</p>
-                          <p className="text-2xl font-mono font-bold text-slate-800">3.5</p>
+                          <p className="text-2xl font-sans font-bold text-slate-800">3.5</p>
                           <p className="text-xs text-orange-600 font-semibold mt-1">按 <span className="bg-gray-500 text-white text-xs font-mono px-1.5 py-0.5 rounded">a b/c</span> → <Latex math="\frac{7}{2}" /></p>
                         </div>
                         <div className="bg-white rounded border p-2 text-center">
                           <p className="text-xs text-slate-500 mb-1">答案 2</p>
-                          <p className="text-2xl font-mono font-bold text-slate-800">−1.333...</p>
+                          <p className="text-2xl font-sans font-bold text-slate-800">−1.333...</p>
                           <p className="text-xs text-orange-600 font-semibold mt-1">按 <span className="bg-gray-500 text-white text-xs font-mono px-1.5 py-0.5 rounded">a b/c</span> → <Latex math="-\frac{4}{3}" /></p>
                         </div>
                       </div>
@@ -640,7 +640,7 @@ const TeachingPage = ({ onStartQuiz }) => {
 
                       {/* Line 1 */}
                       <div className="flex items-center gap-2">
-                        <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                        <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                         <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
                           <Latex math="4r - 14s + " />
                           <span className="bg-yellow-200 rounded px-0.5"><Latex math="(2r-7s)(3r+4s)" /></span>
@@ -650,7 +650,7 @@ const TeachingPage = ({ onStartQuiz }) => {
 
                       {/* Line 2 */}
                       <div className="flex items-center gap-2">
-                        <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                        <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                         <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
                           <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="2" /></span>
                           <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
@@ -663,7 +663,7 @@ const TeachingPage = ({ onStartQuiz }) => {
 
                       {/* Line 3 */}
                       <div className="flex items-center gap-2">
-                        <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                        <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                         <div className="flex items-center flex-wrap gap-0.5 text-sm min-w-0">
                           <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
                           <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(2 + 3r + 4s)" /></span>
@@ -2133,7 +2133,7 @@ const QuizPage = ({ onBackToTeaching }) => {
             <p className="text-sm text-slate-500 mb-2">因式分解：</p>
             {quizType === 'dse' ? (
               <div className="py-3">
-                <div className="text-2xl text-center font-mono">
+                <div className="text-2xl text-center font-sans">
                   <Latex
                     math={isAnswered && currentQuestion.highlightedQuestion ? currentQuestion.highlightedQuestion : currentQuestion.question}
                     block
@@ -2151,7 +2151,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                     {currentQuestion.carryAnswers.map((item, idx) => (
                       <div key={idx} className="bg-blue-50 border border-blue-200 rounded-lg px-3 py-2">
                         <p className="text-xs text-blue-700 font-bold mb-1">{item.label}</p>
-                        <p className="text-sm text-blue-800 font-mono"><Latex math={item.value} /></p>
+                        <p className="text-sm text-blue-800 font-sans"><Latex math={item.value} /></p>
                       </div>
                     ))}
                   </div>
@@ -2163,7 +2163,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 )}
               </div>
             ) : (
-              <div className="text-2xl text-center py-4 font-mono">
+              <div className="text-2xl text-center py-4 font-sans">
                 <Latex math={isAnswered && currentQuestion.highlightedQuestion ? currentQuestion.highlightedQuestion : currentQuestion.question} />
               </div>
             )}
@@ -2182,7 +2182,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                     : '輸入答案，例如：(x+2)(x-3)'
                 }
                 disabled={isAnswered}
-                className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-lg focus:border-purple-500 focus:outline-none disabled:bg-gray-100 font-mono"
+                className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-lg focus:border-purple-500 focus:outline-none disabled:bg-gray-100 font-sans"
               />
             </div>
 
@@ -2208,7 +2208,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 <div className={`flex items-start gap-2 text-sm ${feedback.type === 'correct' ? 'text-green-700' : 'text-red-700'}`}>
                   <span className="font-medium shrink-0 whitespace-nowrap">{feedback.answerLabel || '答案'}：</span>
                   {feedback.equationHighlight ? (
-                    <div className="font-mono text-sm">
+                    <div className="font-sans text-sm">
                       {feedback.equationHighlight.topSegments?.length > 0 ? (
                         <>
                           <div className="flex items-center gap-2">
@@ -2245,7 +2245,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                           </div>
                           {feedback.equationHighlight.midSegments?.length > 0 && (
                             <div className="flex items-center gap-2 mt-1">
-                              <span className="w-4 shrink-0 text-right font-mono">=</span>
+                              <span className="w-4 shrink-0 text-right font-sans">=</span>
                               <div className="flex-1 min-w-0 overflow-x-auto">
                                 <div className="inline-flex items-center gap-1 whitespace-nowrap">
                                   {feedback.equationHighlight.midSegments.map((seg, idx) => (
@@ -2279,7 +2279,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                           )}
                           {feedback.answerLabel !== '參考列式' && (
                             <div className="flex items-center gap-2 mt-1">
-                              <span className="w-4 shrink-0 text-right font-mono">=</span>
+                              <span className="w-4 shrink-0 text-right font-sans">=</span>
                               <div className="flex-1 min-w-0 overflow-x-auto">
                                 <div className="inline-flex items-center gap-1 whitespace-nowrap">
                                   {feedback.equationHighlight.segments.map((seg, idx) => (
@@ -2334,7 +2334,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                             <Latex math={feedback.equationHighlight.left} />
                           </div>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="w-4 shrink-0 text-right font-mono">=</span>
+                            <span className="w-4 shrink-0 text-right font-sans">=</span>
                             <div className="flex-1 min-w-0 overflow-x-auto">
                               <div className="inline-flex items-center gap-1 whitespace-nowrap">
                                 {feedback.equationHighlight.segments.map((seg, idx) => (
@@ -2366,7 +2366,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                       )}
                     </div>
                   ) : (
-                    <span className="font-mono"><Latex math={feedback.answer || ''} /></span>
+                    <span className="font-sans"><Latex math={feedback.answer || ''} /></span>
                   )}
                 </div>
                 {/* 解題步驟 */}
@@ -2391,7 +2391,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="w-4 shrink-0 text-right font-mono text-slate-700">=</span>
+                          <span className="w-4 shrink-0 text-right font-sans text-slate-700">=</span>
                           <div className="flex items-center flex-wrap gap-1">
                             {feedback.stepEquationHighlight.segments.map((seg, idx) => (
                               <span

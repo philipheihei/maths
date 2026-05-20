@@ -56,11 +56,11 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                 </div>
                 <p className="text-green-700"><span className="font-bold">Step 4:</span> 出答案 (2個!)</p>
                 <div className="ml-4 space-y-2">
-                  <div className="border border-slate-300 p-2 bg-slate-50 rounded font-mono text-sm">
+                  <div className="border border-slate-300 p-2 bg-slate-50 rounded font-sans text-sm">
                     <p>01: QuadEquation</p>
                     <p className="text-red-600">x₁ &nbsp;&nbsp;&nbsp;&nbsp; -1</p>
                   </div>
-                  <div className="border border-slate-300 p-2 bg-slate-50 rounded font-mono text-sm">
+                  <div className="border border-slate-300 p-2 bg-slate-50 rounded font-sans text-sm">
                     <p>01: QuadEquation</p>
                     <p className="text-black">x₂ &nbsp;&nbsp;&nbsp;&nbsp; -3</p>
                   </div>

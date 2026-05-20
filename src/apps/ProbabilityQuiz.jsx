@@ -1577,7 +1577,7 @@ const ProbabilityNotes = () => {
               <span className="bg-yellow-200 text-yellow-800 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">例</span>
               <div>
                 <p className="font-bold text-slate-800 mb-2">計算 10 個抽 3 個的排列 = <MathNotation type="P" n="10" r="3" /></p>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-sm sm:text-base mt-3 mb-1">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-sans text-sm sm:text-base mt-3 mb-1">
                   <span className="font-bold text-slate-800 text-lg">10</span>
                   <span className="text-slate-400">👉</span>
                   
@@ -1611,7 +1611,7 @@ const ProbabilityNotes = () => {
               <span className="bg-yellow-200 text-yellow-800 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">例</span>
               <div>
                 <p className="font-bold text-slate-800 mb-2">計算 8 個抽 3 個的組合 = <MathNotation type="C" n="8" r="3" /></p>
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-mono text-sm sm:text-base mt-3 mb-1">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-sans text-sm sm:text-base mt-3 mb-1">
                   <span className="font-bold text-slate-800 text-lg">8</span>
                   <span className="text-slate-400">👉</span>
                   

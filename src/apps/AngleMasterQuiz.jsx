@@ -186,7 +186,7 @@ export default function AngleMasterQuiz() {
               <div className="aspect-[320/220]">{q.renderSVG(false)}</div>
               <div className="p-2 border-t border-gray-100">
                 <div className="flex items-center gap-1 flex-wrap mb-1">
-                  <span className="font-mono font-bold text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">{q.id}</span>
+                  <span className="font-sans font-bold text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">{q.id}</span>
                   <span className={`text-xs font-bold px-2 py-0.5 rounded ${DIFF_COLORS[q.difficulty]}`}>{q.difficulty}</span>
                 </div>
                 <p className="text-xs text-gray-700 leading-tight">{q.title}</p>
@@ -536,7 +536,7 @@ export default function AngleMasterQuiz() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div className="bg-green-50 rounded-lg p-3 border border-green-200">
                     <p className="text-sm font-bold text-green-800 mb-1">線段</p>
-                    <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-mono font-bold bg-white px-1 rounded">線段 AB</span>（從 A 到 B）</p>
+                    <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-sans font-bold bg-white px-1 rounded">線段 AB</span>（從 A 到 B）</p>
                     <svg viewBox="0 0 300 60" className="w-full touch-none mt-2">
                       <line x1="80" y1="30" x2="220" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                       <circle cx="80" cy="30" r="3" fill="#334155" />
@@ -547,7 +547,7 @@ export default function AngleMasterQuiz() {
                   </div>
                   <div className="bg-green-50 rounded-lg p-3 border border-green-200">
                     <p className="text-sm font-bold text-green-800 mb-1">角的命名（角的特徵）</p>
-                    <p className="text-sm text-slate-700 mb-2">由三個點命名，如 <span className="font-mono font-bold bg-white px-1 rounded">∠ABC</span>
+                    <p className="text-sm text-slate-700 mb-2">由三個點命名，如 <span className="font-sans font-bold bg-white px-1 rounded">∠ABC</span>
                       <span className="ml-2 text-xs text-amber-700 font-bold">⚠️ 頂點（vertex）在<span className="text-red-600">中間</span>的英文字母</span>
                     </p>
                     <svg viewBox="0 0 300 100" className="w-full touch-none">

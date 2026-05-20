@@ -119,7 +119,7 @@ const MeanExplanation = ({ data, mean, chartType }) => {
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
             <div>
               <div>將所有數值加起來</div>
-              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200">
+              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-sans text-xs text-slate-600 border border-slate-200">
                 {sorted.join(' + ')} = <span className="font-bold text-blue-700">{total}</span>
               </div>
             </div>
@@ -277,7 +277,7 @@ const MedianExplanation = ({ data, chartType }) => {
               <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
               <div>
                 <span>先數<span className="font-bold text-blue-700">總頻數</span>（所有頻數加起來）</span>
-                <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200">
+                <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-sans text-xs text-slate-600 border border-slate-200">
                   {rows.map(r => r.f).join(' + ')} = <span className="font-bold text-blue-700">{n}</span>
                 </div>
               </div>
@@ -402,7 +402,7 @@ const MedianExplanation = ({ data, chartType }) => {
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
             <div className="w-full">
-              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-1">
+              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-sans text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-1">
                 {sorted.map((v, i) => {
                   const isMedianPos = isOdd
                     ? i === Math.floor(n / 2)
@@ -492,7 +492,7 @@ const IQRExplanation = ({ data, chartType }) => {
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">1</span>
             <div>
               <div>將數據由小至大排列</div>
-              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-mono text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-1">
+              <div className="mt-1 bg-slate-100 rounded px-3 py-1.5 font-sans text-xs text-slate-600 border border-slate-200 flex flex-wrap gap-1">
                 {sorted.map((v, i) => (
                   <span key={i} className={`px-1 rounded ${
                     i === mid && n % 2 !== 0 ? 'bg-yellow-200 font-bold' : ''
@@ -508,13 +508,13 @@ const IQRExplanation = ({ data, chartType }) => {
             <div>
               <span>找出中位數，將數據分為上下半組</span>
               <div className="mt-1 flex items-center gap-2 flex-wrap">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-mono">
+                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-sans">
                   下半組: [{lowerHalf.join(', ')}]
                 </span>
                 <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">
                   中位數 = {q2}
                 </span>
-                <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-mono">
+                <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-sans">
                   上半組: [{upperHalf.join(', ')}]
                 </span>
               </div>
@@ -526,7 +526,7 @@ const IQRExplanation = ({ data, chartType }) => {
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
             <span>
               Q₁ = 下半組的中位數
-              <span className="ml-2 font-mono bg-blue-50 border border-blue-200 px-2 py-0.5 rounded text-blue-700 font-bold">
+              <span className="ml-2 font-sans bg-blue-50 border border-blue-200 px-2 py-0.5 rounded text-blue-700 font-bold">
                 [{lowerHalf.join(', ')}] → Q₁ = {q1}
               </span>
             </span>
@@ -537,7 +537,7 @@ const IQRExplanation = ({ data, chartType }) => {
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">4</span>
             <span>
               Q₃ = 上半組的中位數
-              <span className="ml-2 font-mono bg-red-50 border border-red-200 px-2 py-0.5 rounded text-red-700 font-bold">
+              <span className="ml-2 font-sans bg-red-50 border border-red-200 px-2 py-0.5 rounded text-red-700 font-bold">
                 [{upperHalf.join(', ')}] → Q₃ = {q3}
               </span>
             </span>
@@ -651,7 +651,7 @@ const MeanSteps = ({ data, mean, chartType }) => {
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">2</span>
             <span>
               將題目數字代入：
-              <div className="mt-1 inline-flex flex-col items-center font-mono text-xs text-slate-700 border border-slate-300 rounded px-2 py-1 bg-slate-50 ml-1">
+              <div className="mt-1 inline-flex flex-col items-center font-sans text-xs text-slate-700 border border-slate-300 rounded px-2 py-1 bg-slate-50 ml-1">
                 <span className="border-b border-slate-500 pb-0.5 break-all">{numExpr}</span>
                 <span className="pt-0.5 break-all">{denExpr}</span>
               </div>
@@ -660,14 +660,14 @@ const MeanSteps = ({ data, mean, chartType }) => {
           <div className="flex items-start gap-2">
             <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border-2 border-slate-400 text-slate-600 font-bold text-xs flex-shrink-0 mt-0.5">3</span>
             <span>化簡：
-              <span className="font-mono ml-1">
+              <span className="font-sans ml-1">
                 <span className="font-bold text-blue-700">{sum}</span>
                 {' '}÷{' '}
                 <span className="font-bold text-blue-700">{n}</span>
               </span>
             </span>
           </div>
-          <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 font-mono text-base border border-slate-200">
+          <div className="mt-2 bg-slate-100 rounded-lg px-3 py-2 font-sans text-base border border-slate-200">
             <span className="text-slate-500">∴ 平均數 =</span> <span className="text-red-600 font-bold text-lg">{mean}</span>
           </div>
         </div>
@@ -1032,7 +1032,7 @@ const StemLeafPlot = ({ data, highlight, highlightIndices = [], highlightColors 
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center">
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-sans flex flex-col items-center">
       <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf Diagram)</h3>
       <table className="border-collapse">
         <thead>
@@ -1772,7 +1772,7 @@ const LV2FreqTableDisplay = ({ xLabel, values, displayFreqs, unknownIdx }) => (
 
 // LV2 幹葉圖顯示元件（仿 LV1 幹葉圖格式）
 const LV2StemLeafDisplay = ({ stems, displayLeaves, varName }) => (
-  <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-mono flex flex-col items-center my-3">
+  <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 font-sans flex flex-col items-center my-3">
     <h3 className="font-bold text-slate-700 mb-2">幹葉圖 (Stem-and-Leaf Diagram)</h3>
     <table className="border-collapse">
       <thead>
@@ -2310,7 +2310,7 @@ export default function StatisticsApp() {
               {feedback.detailJSX ? (
                 <div className="w-full mb-4">{feedback.detailJSX}</div>
               ) : feedback.detail && (
-                <pre className="text-sm font-mono whitespace-pre-wrap bg-white/50 p-3 rounded mb-4">
+                <pre className="text-sm font-sans whitespace-pre-wrap bg-white/50 p-3 rounded mb-4">
                   {feedback.detail}
                 </pre>
               )}

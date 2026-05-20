@@ -595,7 +595,7 @@ const CoordinateInput = ({ value, onChange, onSubmit, disabled = false }) => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-center gap-2 text-2xl font-mono">
+      <div className="flex items-center justify-center gap-2 text-2xl font-sans">
         <span className="text-gray-600">(</span>
         <input
           ref={xRef}
@@ -1117,14 +1117,14 @@ const TeachingPage = ({ onGoToQuiz }) => {
           <div className="bg-amber-50 p-4 rounded-xl border border-amber-100">
             <h4 className="font-bold text-amber-800 mb-2">教學</h4>
             {transformType === 'translation' && (
-              <div className="text-amber-700 font-mono text-sm space-y-1">
+              <div className="text-amber-700 font-sans text-sm space-y-1">
                 <p>x 坐標左右移，y 坐標上下移</p>
                 <p>向上/向右加 (+)</p>
                 <p>向下/向左減 (-)</p>
               </div>
             )}
             {transformType === 'rotation' && (
-              <div className="text-amber-700 font-mono text-sm space-y-2">
+              <div className="text-amber-700 font-sans text-sm space-y-2">
                 <p>每移 90° (x, y) 數字調轉，正負睇象限。</p>
                 {progress === 1 && (
                   <div className="mt-4 pt-4 border-t border-amber-200 space-y-2">
@@ -1136,7 +1136,7 @@ const TeachingPage = ({ onGoToQuiz }) => {
               </div>
             )}
             {transformType === 'reflection' && (
-              <div className="text-amber-700 font-mono text-sm space-y-1">
+              <div className="text-amber-700 font-sans text-sm space-y-1">
                 <p>對 x 軸反射 → 上下反轉 → y轉正負號</p>
                 <p>對 y 軸反射 → 左右反轉 → x轉正負號</p>
                 <hr className="border-amber-200 my-2"/>
@@ -1744,7 +1744,7 @@ const QuizPage = ({ score, setScore, onGoToLearn }) => {
                 </span>
               </div>
               {feedback.explanation && (
-                <div className="mt-3 p-3 bg-white rounded-lg text-sm text-gray-700 whitespace-pre-line font-mono">
+                <div className="mt-3 p-3 bg-white rounded-lg text-sm text-gray-700 whitespace-pre-line font-sans">
                   {feedback.explanation}
                 </div>
               )}

@@ -4,7 +4,7 @@ import { InlineMath, BlockMath } from '../shared';
 
 // ─── Helper: annotated binary number with bit-position labels ──────────────
 const BinAnnotated = ({ bits }) => (
-  <span className="inline-flex items-end font-mono">
+  <span className="inline-flex items-end font-sans">
     {bits.split('').map((bit, i) => {
       const pos = bits.length - 1 - i;
       return (
@@ -47,9 +47,9 @@ const BinaryNotes = ({ onBack }) => (
                 </thead>
                 <tbody>
                   <tr className="bg-white">
-                    <td className="border border-teal-300 px-3 py-1 font-mono font-bold">110001001011</td>
+                    <td className="border border-teal-300 px-3 py-1 font-sans font-bold">110001001011</td>
                     {[1,1,0,0,0,1,0,0,1,0,1,1].map((b, i) => (
-                      <td key={i} className={`border border-teal-300 px-2 py-1 font-mono font-bold ${b===1 ? 'text-teal-700' : 'text-slate-400'}`}>{b}</td>
+                      <td key={i} className={`border border-teal-300 px-2 py-1 font-sans font-bold ${b===1 ? 'text-teal-700' : 'text-slate-400'}`}>{b}</td>
                     ))}
                   </tr>
                   <tr className="bg-teal-50">
@@ -111,7 +111,7 @@ const BinaryNotes = ({ onBack }) => (
               </ol>
               <div className="bg-blue-50 rounded px-3 pb-3 pt-2 text-sm">
                 <div className="font-sans text-blue-700 mb-2 text-xs">題目：想將 <InlineMath math="1100_2" /> 變成十進數</div>
-                <div className="font-mono flex flex-wrap items-center gap-1 pt-4">
+                <div className="font-sans flex flex-wrap items-center gap-1 pt-4">
                   <span className="relative inline-block mx-1 align-middle">
                     <span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span>
                     <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span>
@@ -143,7 +143,7 @@ const BinaryNotes = ({ onBack }) => (
                   → 顯示二進制
                 </li>
               </ol>
-              <div className="bg-green-50 rounded p-2 text-sm font-mono">
+              <div className="bg-green-50 rounded p-2 text-sm font-sans">
                 例：COMP 算得 <InlineMath math="11+2^6+2^{10}+2^{11}=3147" /> → BASE <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span> → <span className="text-green-600 font-bold">DEC</span> 輸入 3147 → 按<span className="relative inline-block mx-1 align-middle"><span className="absolute -top-3.5 left-0 right-0 text-center text-green-600 text-xs font-bold leading-none">BIN</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">log</span></span>→ <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → 得二進制
               </div>
             </div>

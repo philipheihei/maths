@@ -181,7 +181,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <h3 className="font-bold text-blue-800 mb-4">2 個數字的 L.C.M. 和 H.C.F.</h3>
-              <div className="inline-grid grid-cols-[auto_1fr] font-mono text-lg mb-4 items-end gap-y-1">
+              <div className="inline-grid grid-cols-[auto_1fr] font-sans text-lg mb-4 items-end gap-y-1">
                 <div className="pr-2 pb-1 text-right">
                   <span className="bg-yellow-200 px-1">2</span>
                 </div>
@@ -208,7 +208,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
 
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <h3 className="font-bold text-blue-800 mb-4">3 個數字的 L.C.M. 和 H.C.F.</h3>
-              <div className="inline-grid grid-cols-[auto_auto_1fr] font-mono text-lg mb-4 items-end gap-y-1">
+              <div className="inline-grid grid-cols-[auto_auto_1fr] font-sans text-lg mb-4 items-end gap-y-1">
                 <div className="pr-2 pb-1 text-right">
                   <span className="bg-green-200 px-1">2</span>
                 </div>
@@ -1748,7 +1748,7 @@ export const StatisticsNotes = ({ activeSub }) => {
                 <text x="42" y="125">20</text>
                 <text x="42" y="77.5">30</text>
                 <text x="42" y="30">40</text>
-                <text x="15" y="20">票數</text>
+                <text x="42" y="15">票數</text>
               </g>
             </svg>
           </div>
@@ -1929,23 +1929,14 @@ export const StatisticsNotes = ({ activeSub }) => {
             
             <p className="text-slate-800 font-bold mb-4 self-start">以下的幹葉圖顯示下列數據：</p>
             
-            <div className="grid grid-cols-5 gap-y-2 gap-x-6 text-xl font-mono mb-8 text-center text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-100 w-full max-w-sm">
+            <div className="grid grid-cols-5 gap-y-2 gap-x-6 text-xl font-sans mb-8 text-center text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-100 w-full max-w-sm">
               <div>1</div>
-              <div className="bg-yellow-200 px-1 rounded">21</div>
+              <div>21</div>
               <div>10</div>
-              <div className="bg-blue-200 px-1 rounded text-red-600 font-bold relative">
-                47
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap text-red-600">最大</div>
-              </div>
+              <div>47</div>
               <div>45</div>
               <div>23</div>
-              <div className="relative">
-                10
-                <svg className="absolute w-8 h-8 -left-4 -top-3" style={{ pointerEvents: 'none' }}>
-                  <ellipse cx="16" cy="18" rx="14" ry="10" fill="none" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 2"/>
-                </svg>
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap text-red-600 font-bold">最小</div>
-              </div>
+              <div>10</div>
               <div>42</div>
               <div>24</div>
               <div>48</div>
@@ -1958,33 +1949,26 @@ export const StatisticsNotes = ({ activeSub }) => {
                   <th className="px-5 py-2 text-slate-800 font-bold">葉(個位)</th>
                 </tr>
               </thead>
-              <tbody className="font-mono text-center text-slate-700">
+              <tbody className="font-sans text-left text-slate-700 tabular-nums">
                 <tr className="hover:bg-slate-50 transition">
-                  <td className="px-5 py-2 border-r-[3px] border-slate-700">0</td>
-                  <td className="px-5 py-2 text-left tracking-[0.5em]">1</td>
+                  <td className="px-5 py-2 border-r-[3px] border-slate-700 text-center">0</td>
+                  <td className="px-5 py-2 tracking-[0.5em]">1</td>
                 </tr>
                 <tr className="hover:bg-slate-50 transition">
-                  <td className="px-5 py-2 border-r-[3px] border-slate-700">1</td>
-                  <td className="px-5 py-2 text-left tracking-[0.5em]">
-                    <span className="relative inline-block w-4 text-center">0
-                      <svg className="absolute w-8 h-8 -left-2 -top-1" style={{ pointerEvents: 'none' }}>
-                        <circle cx="16" cy="14" r="10" fill="none" stroke="#ef4444" strokeWidth="2" />
-                      </svg>
-                    </span>
-                    0
-                  </td>
-                </tr>
-                <tr className="hover:bg-slate-50 transition bg-yellow-50">
-                  <td className="px-5 py-2 border-r-[3px] border-slate-700 font-bold">2</td>
-                  <td className="px-5 py-2 text-left tracking-[0.5em] font-bold">1<span className="text-blue-600">3</span>4</td>
+                  <td className="px-5 py-2 border-r-[3px] border-slate-700 text-center">1</td>
+                  <td className="px-5 py-2 tracking-[0.5em]">0 0</td>
                 </tr>
                 <tr className="hover:bg-slate-50 transition">
-                  <td className="px-5 py-2 border-r-[3px] border-slate-700">4</td>
-                  <td className="px-5 py-2 text-left tracking-[0.5em]">2 5 <span className="text-red-600 font-bold relative">7
-                    <svg className="absolute w-8 h-8 -left-2.5 -top-1" style={{ pointerEvents: 'none' }}>
-                      <circle cx="14" cy="14" r="10" fill="none" stroke="#3b82f6" strokeWidth="2" />
-                    </svg>
-                  </span> 8</td>
+                  <td className="px-5 py-2 border-r-[3px] border-slate-700 font-bold text-center">2</td>
+                  <td className="px-5 py-2 tracking-[0.5em] font-bold">1 3 4</td>
+                </tr>
+                <tr className="hover:bg-slate-50 transition">
+                  <td className="px-5 py-2 border-r-[3px] border-slate-700 text-center">3</td>
+                  <td className="px-5 py-2 tracking-[0.5em]"></td>
+                </tr>
+                <tr className="hover:bg-slate-50 transition">
+                  <td className="px-5 py-2 border-r-[3px] border-slate-700 text-center">4</td>
+                  <td className="px-5 py-2 tracking-[0.5em]">2 5 7 8</td>
                 </tr>
               </tbody>
             </table>
@@ -1994,7 +1978,7 @@ export const StatisticsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-4 text-xl border-b border-blue-200 pb-2">幹葉圖</h3>
             <ul className="text-slate-700 font-bold text-lg space-y-3 list-disc ml-6 mb-6">
               <li>能清楚知道每一個數據</li>
-              <li>按大小<span className="bg-yellow-200 px-1 rounded text-slate-800">順序</span>排列數據</li>
+              <li>按大小<span className="px-1 text-slate-800">順序</span>排列數據</li>
               <li>能看到<span className="text-red-500 px-1">最大 / 最小</span>的數據</li>
               <li>可以得知<span className="text-red-500 px-1">總人數</span>
                 <div className="text-slate-600 font-normal mt-1 border-l-4 border-slate-300 pl-3 ml-2 text-base">↳ 數葉（右方）的數字出現了多少次</div>
@@ -2010,7 +1994,7 @@ export const StatisticsNotes = ({ activeSub }) => {
                       <th className="px-3 py-1 border-l-2 border-slate-400 text-slate-600 font-normal">葉 (個位)</th>
                     </tr>
                   </thead>
-                  <tbody className="font-mono text-center">
+                  <tbody className="font-sans text-center">
                     <tr>
                       <td className="px-3 py-1">1</td>
                       <td className="px-3 py-1 border-l-2 border-slate-400 text-left tracking-widest"><span className="text-slate-500 font-sans">b</span> 9 <span className="text-green-600 font-sans font-bold">a</span> <span className="text-green-600 font-sans text-sm font-bold ml-2">←可能性只有 9</span></td>
@@ -2125,7 +2109,7 @@ export const StatisticsNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="discrete-continuous" title="5. 連續數據 / 離散數據" num={5} color="red" activeSub={activeSub} sectionRef={s5}>
-        <div className="bg-white rounded-xl p-6 border-l-[6px] border-l-red-500 shadow-md max-w-3xl mx-auto">
+        <div className="bg-white rounded-xl p-6 border-l-[6px] border-l-red-500 shadow-md w-full max-w-5xl mx-auto">
           <p className="text-red-700 font-bold mb-4">- 需分辨數據為離散數據還是連續數據</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-red-50 p-6 rounded-xl border border-red-200 transition hover:shadow-md">
@@ -2142,7 +2126,7 @@ export const StatisticsNotes = ({ activeSub }) => {
               <p className="text-slate-700 text-lg mb-4"><span className="text-blue-600 font-bold border-b-2 border-blue-300 pb-1">量度</span>所得</p>
               <div className="bg-white p-3 rounded-lg border border-blue-100">
                 <p className="text-blue-800 text-sm font-bold opacity-80 mb-1">例子：</p>
-                <p className="text-slate-700 font-medium">身高、時間、重量、溫度 ...</p>
+                <p className="text-slate-700 font-medium md:whitespace-nowrap">身高、體重、溫度、時間、容量、體積 ...</p>
               </div>
             </div>
           </div>
@@ -2652,7 +2636,7 @@ export const AnglesNotes = ({ activeSub }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-green-50 rounded-lg p-3 border border-green-200">
             <p className="text-sm font-bold text-green-800 mb-1">線段</p>
-            <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-mono font-bold bg-white px-1 rounded">線段 AB</span>（從 A 到 B）</p>
+            <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-sans font-bold bg-white px-1 rounded">線段 AB</span>（從 A 到 B）</p>
             <svg viewBox="0 0 300 60" className="w-full touch-none mt-2">
               <line x1="80" y1="30" x2="220" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
               <circle cx="80" cy="30" r="3" fill="#334155" />
@@ -2663,7 +2647,7 @@ export const AnglesNotes = ({ activeSub }) => {
           </div>
           <div className="bg-green-50 rounded-lg p-3 border border-green-200">
             <p className="text-sm font-bold text-green-800 mb-1">角的命名（角的特徵）</p>
-            <p className="text-sm text-slate-700 mb-2">由三個點命名，如 <span className="font-mono font-bold bg-white px-1 rounded">∠ABC</span>
+            <p className="text-sm text-slate-700 mb-2">由三個點命名，如 <span className="font-sans font-bold bg-white px-1 rounded">∠ABC</span>
               <span className="ml-2 text-xs text-amber-700 font-bold">⚠️ 頂點（vertex）在<span className="text-red-600">中間</span>的英文字母</span>
             </p>
             <svg viewBox="0 0 300 100" className="w-full touch-none">
@@ -3315,7 +3299,7 @@ export const RateRatioNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center shadow-sm relative">
               <h3 className="font-bold text-slate-800 w-full mb-3">1.A 長度單位</h3>
               <div className="flex items-center space-x-8">
-                <ul className="text-slate-700 space-y-2 font-mono text-lg">
+                <ul className="text-slate-700 space-y-2 font-sans text-lg">
                   <li>1 m = 100 cm</li>
                   <li>1 km = 1000 m</li>
                   <li>1 cm = 10 mm</li>
@@ -3343,14 +3327,14 @@ export const RateRatioNotes = ({ activeSub }) => {
             <div className="space-y-4">
               <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
                 <h3 className="font-bold text-slate-800 mb-3">1.B 重量單位</h3>
-                <ul className="text-slate-700 space-y-2 font-mono text-lg">
+                <ul className="text-slate-700 space-y-2 font-sans text-lg">
                   <li>1 kg = 1000 g</li>
                 </ul>
               </div>
 
               <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
                 <h3 className="font-bold text-slate-800 mb-3">1.C 時間單位</h3>
-                <div className="grid grid-cols-2 gap-x-2 gap-y-4 text-slate-700 font-mono text-[15px] whitespace-nowrap">
+                <div className="grid grid-cols-2 gap-x-2 gap-y-4 text-slate-700 font-sans text-[15px] whitespace-nowrap">
                   <div>
                     <p>1 年 = 365 天</p>
                     <p>1 天 (D) = 24 小時</p>
@@ -3405,7 +3389,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                 </span>
               </p>
               
-              <div className="pl-4 border-l-4 border-red-400 space-y-4 font-mono text-[17px]">
+              <div className="pl-4 border-l-4 border-red-400 space-y-4 font-sans text-[17px]">
                 <div className="flex items-start gap-2">
                   <span className="text-red-500 border border-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xs mt-1">1</span>
                   <div>
@@ -3451,7 +3435,7 @@ export const RateRatioNotes = ({ activeSub }) => {
             </div>
           </div>
 
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 font-mono text-[17px]">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 font-sans text-[17px]">
             <p className="mb-4 text-slate-800 font-sans">例：一條繩長 28cm，按 2:5 比例分開兩部份，求較長的部份。</p>
             <div className="space-y-4 text-blue-900 font-bold">
               <div className="flex items-center gap-2 font-sans">
@@ -3484,7 +3468,7 @@ export const RateRatioNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm overflow-x-auto text-[17px]">
-            <div className="mb-4 flex items-center font-mono">
+            <div className="mb-4 flex items-center font-sans">
               <div className="text-blue-800">e.g. <span className="bg-yellow-300 font-bold">a</span> : <span className="bg-pink-300 font-bold px-1">b</span> : <span className="bg-green-300 font-bold px-1">c</span> = <span className="bg-yellow-300 font-bold px-1">4</span> : <span className="bg-pink-300 font-bold px-1">5</span> : <span className="bg-green-300 font-bold px-1">6</span></div>
               <span className="mx-4 font-bold text-2xl">⇒</span>
               <div className="inline-block align-middle space-y-1 bg-slate-50 p-2 rounded">
@@ -3495,7 +3479,7 @@ export const RateRatioNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <p className="mb-6 font-bold text-blue-900 text-lg font-mono flex flex-wrap gap-2 items-center">
+            <p className="mb-6 font-bold text-blue-900 text-lg font-sans flex flex-wrap gap-2 items-center">
               <span>e.g. <span className="bg-yellow-300 px-1">a</span> : <span className="bg-green-300 px-1">c</span> = <span className="bg-yellow-300 px-1">7</span> : <span className="bg-green-300 px-1">6</span> ,</span>
               <span><span className="bg-pink-300 px-1">b</span> : <span className="bg-green-300 px-1">c</span> = <span className="bg-pink-300 px-1">3</span> : <span className="bg-green-300 px-1">4</span> ,</span>
               <span>求 a : b : c</span>
@@ -3510,7 +3494,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <span className="text-green-700 font-bold text-sm">答案</span>
                   <span className="text-red-500 mt-2 font-bold">↓</span>
                 </div>
-                <div className="font-mono text-xl text-blue-900 font-bold">
+                <div className="font-sans text-xl text-blue-900 font-bold">
                   <div className="grid grid-cols-[2.25rem_1rem_2.25rem_1rem_2.25rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
                     <span className="text-center">a</span><span className="text-center">:</span>
                     <span className="text-center">b</span><span className="text-center">:</span>
@@ -3538,7 +3522,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">2</span>
                   <span className="text-red-500 mt-6 font-bold">↓</span>
                 </div>
-                <div className="font-mono text-xl text-blue-900 font-bold relative pr-20">
+                <div className="font-sans text-xl text-blue-900 font-bold relative pr-20">
                   <div className="grid grid-cols-[3rem_1rem_3rem_1rem_3rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
                     <span className="text-center">a</span><span className="text-center">:</span>
                     <span className="text-center">b</span><span className="text-center">:</span>
@@ -3565,7 +3549,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                 <div className="flex-shrink-0 w-16 flex justify-center">
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
                 </div>
-                <div className="font-mono text-xl text-blue-900 font-bold">
+                <div className="font-sans text-xl text-blue-900 font-bold">
                   <div className="flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
                     <span className="w-8 text-center">a</span><span>:</span>
                     <span className="w-8 text-center">b</span><span>:</span>
@@ -3577,16 +3561,16 @@ export const RateRatioNotes = ({ activeSub }) => {
                     <span className="w-8 text-center">24</span>
                   </div>
                   <div className="flex items-center gap-4 px-2 relative font-sans text-lg mt-2">
-                    <span className="absolute -left-6 font-mono">=</span>
-                    <span className="w-8 text-center font-mono">14</span><span className="font-mono">:</span>
-                    <span className="w-8 text-center font-mono">9</span><span className="font-mono">:</span>
-                    <span className="w-8 text-center font-mono">12</span>
+                    <span className="absolute -left-6 font-sans">=</span>
+                    <span className="w-8 text-center font-sans">14</span><span className="font-sans">:</span>
+                    <span className="w-8 text-center font-sans">9</span><span className="font-sans">:</span>
+                    <span className="w-8 text-center font-sans">12</span>
                     <span className="ml-[20%] lg:ml-8 text-purple-700 text-sm font-bold whitespace-normal lg:whitespace-nowrap">{'← '}連比需約簡 (需3個數字同時約)</span>
                   </div>
                 </div>
               </div>
               
-              <div className="text-blue-900 font-bold text-xl mt-4 pt-4 font-mono">
+              <div className="text-blue-900 font-bold text-xl mt-4 pt-4 font-sans">
                 ∴ a : b : c = 14 : 9 : 12
               </div>
             </div>
@@ -3594,7 +3578,7 @@ export const RateRatioNotes = ({ activeSub }) => {
 
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200 text-lg">
             <h4 className="font-bold text-green-700 mb-2 font-sans">💡 小技巧</h4>
-            <div className="text-blue-900 font-mono">
+            <div className="text-blue-900 font-sans">
               <p>若 <span className="font-bold">3<span className="bg-yellow-300 px-1">a</span> = 7<span className="bg-pink-300 px-1">b</span></span></p>
               <p className="mt-2"><span className="bg-yellow-300 px-1 font-bold">a</span> : <span className="bg-pink-300 px-1 font-bold">b</span> = <span className="bg-yellow-300 font-bold px-1 text-black">7</span> : <span className="bg-pink-300 font-bold px-1 text-black">3</span> <span className="text-slate-600 ml-4 text-sm font-sans">(3 × <span className="text-red-500 font-bold">7</span> = 7 × <span className="text-red-500 font-bold">3</span>)</span></p>
             </div>
@@ -3609,7 +3593,7 @@ export const RateRatioNotes = ({ activeSub }) => {
             <div className="flex items-center gap-4 font-bold text-xl mb-4 text-slate-800">
               <span className="font-sans">比例尺</span>
               <span className="text-green-600 text-2xl">→</span>
-              <div className="flex flex-col items-center font-mono">
+              <div className="flex flex-col items-center font-sans">
                 <span>1 : n</span>
                 <span className="text-red-600 text-sm font-sans mt-1"><span className="border border-red-600 p-0.5 rounded">圖</span>的長度 : <span className="text-red-600 font-bold">實際</span>長度</span>
               </div>
@@ -3630,7 +3614,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <span className="font-bold w-24">實際較小</span>
                   <span className="text-green-700 font-bold">→</span>
                   <div className="flex items-center gap-2 text-green-700">
-                    <span className="text-purple-700 font-bold text-xl font-mono px-2">÷</span>
+                    <span className="text-purple-700 font-bold text-xl font-sans px-2">÷</span>
                     <span className="font-bold tracking-widest">除數 縮小</span>
                   </div>
                 </div>
@@ -3653,7 +3637,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <p>兩個數字</p>
                   <p>相同方向</p>
                 </div>
-                <div className="flex-1 text-green-600 font-bold text-xl leading-relaxed flex flex-col items-center font-mono">
+                <div className="flex-1 text-green-600 font-bold text-xl leading-relaxed flex flex-col items-center font-sans">
                   <p>A ↑ B ↑</p>
                   <p className="text-red-600">A ↓ B ↓</p>
                 </div>
@@ -3668,11 +3652,11 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <p>兩個數字</p>
                   <p>相反方向</p>
                 </div>
-                <div className="flex-1 text-green-600 font-bold text-xl leading-relaxed flex flex-col items-center font-mono">
+                <div className="flex-1 text-green-600 font-bold text-xl leading-relaxed flex flex-col items-center font-sans">
                   <p>A ↑ <span className="text-red-600">B ↓</span></p>
                   <p className="text-red-600">A ↓ <span className="text-green-600">B ↑</span></p>
                 </div>
-                <div className="flex-1 text-xl flex items-center gap-2 font-bold justify-center font-mono">
+                <div className="flex-1 text-xl flex items-center gap-2 font-bold justify-center font-sans">
                   <span className="font-sans">公式：</span> <span className="text-red-600">xy = k</span>
                 </div>
               </div>
@@ -3921,7 +3905,7 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
             <p className="text-red-600 font-bold text-center mb-6">看標記認，哪對角的角度相同</p>
 
             <div className="bg-green-50 p-6 rounded-lg border border-green-200 mx-auto max-w-2xl relative md:ml-0 md:mr-24 lg:mr-28">
-              <div className="text-center font-mono space-y-4 text-lg">
+              <div className="text-center font-sans space-y-4 text-lg">
                 <div className="flex flex-wrap justify-center gap-4 text-slate-800 font-bold">
                   <span className="mr-2">∵</span>
                   <span className="border-b-4 border-red-500 pb-1">AB = PQ</span> 、
@@ -3935,9 +3919,9 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
                 </div>
                 
                 <div className="mt-8 text-xl font-bold flex items-center justify-center gap-2 font-sans pt-4 border-t border-green-200">
-                  <span className="mr-2 font-mono">∴</span>
+                  <span className="mr-2 font-sans">∴</span>
                   <span>三角形 ABC 與 三角形 PQR  全等，即</span>
-                  <span className="bg-yellow-200 px-2 py-1 rounded inline-flex items-center gap-1 font-mono ml-2 relative">
+                  <span className="bg-yellow-200 px-2 py-1 rounded inline-flex items-center gap-1 font-sans ml-2 relative">
                     <Latex math="\triangle ABC\cong\triangle PQR" />
                     <div className="absolute -bottom-6 right-0 text-red-600 text-sm font-sans whitespace-nowrap">按順序排列</div>
                     <div className="absolute -right-4 top-1/2 translate-x-full -translate-y-1/2 flex items-center">
@@ -3961,7 +3945,7 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="border-b border-slate-200 pb-4 md:flex md:items-center md:justify-between md:gap-6">
-              <ul className="text-2xl font-mono text-slate-800 font-bold flex flex-wrap items-center gap-x-8 gap-y-2">
+              <ul className="text-2xl font-sans text-slate-800 font-bold flex flex-wrap items-center gap-x-8 gap-y-2">
                 <li>S = 線</li>
                 <li>A = 角</li>
               </ul>

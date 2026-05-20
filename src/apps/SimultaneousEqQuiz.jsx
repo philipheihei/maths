@@ -973,7 +973,7 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
               <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
               <strong>輸入以下程式碼</strong>
             </div>
-            <div className="bg-black rounded-lg p-3 font-mono text-green-400 text-sm overflow-x-auto">
+            <div className="bg-black rounded-lg p-3 font-sans text-green-400 text-sm overflow-x-auto">
               <div>?→A : ?→B : ?→C : ?→D : ?→X : ?→Y :</div>
               <div>AX－DB→M : M⁻¹(CX－YB→X◢</div>
               <div>M⁻¹(AY－DC→Y</div>
@@ -1108,7 +1108,7 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
                     { before: 'n = 2m',        after: '−2m + n = 0',  note: '移項，常數為 0' },
                     { before: '5m = 4n − 7',   after: '5m − 4n = 7',  note: '移項' },
                   ].map((ex, i) => (
-                    <div key={i} className="flex flex-wrap items-center gap-1.5 text-xs font-mono bg-white rounded px-2 py-1 border border-red-200">
+                    <div key={i} className="flex flex-wrap items-center gap-1.5 text-xs font-sans bg-white rounded px-2 py-1 border border-red-200">
                       <span className="text-gray-500">{ex.before}</span>
                       <span className="text-red-400 font-sans">→</span>
                       <span className="text-red-700 font-bold">{ex.after}</span>
@@ -1831,7 +1831,7 @@ export default function SimultaneousEqQuiz() {
               onChange={(e) => !feedback && setXAnswer(e.target.value)}
               onFocus={() => !feedback && setActiveInput({ field: 'x', setter: setXAnswer })}
               readOnly={!!feedback}
-              className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none ${feedback?.xWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-blue-500'}`}
+              className={`w-full text-2xl font-sans p-2 border-2 rounded-lg focus:outline-none ${feedback?.xWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-blue-500'}`}
               placeholder="?"
             />
           </div>
@@ -1850,7 +1850,7 @@ export default function SimultaneousEqQuiz() {
               onChange={(e) => !feedback && setYAnswer(e.target.value)}
               onFocus={() => !feedback && setActiveInput({ field: 'y', setter: setYAnswer })}
               readOnly={!!feedback}
-              className={`w-full text-2xl font-mono p-2 border-2 rounded-lg focus:outline-none ${feedback?.yWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-green-500'}`}
+              className={`w-full text-2xl font-sans p-2 border-2 rounded-lg focus:outline-none ${feedback?.yWrong ? 'border-red-400 bg-red-50 cursor-not-allowed' : feedback ? 'border-gray-300 bg-gray-100 cursor-not-allowed' : 'border-gray-300 focus:border-green-500'}`}
               placeholder="?"
             />
           </div>
@@ -2136,7 +2136,7 @@ export default function SimultaneousEqQuiz() {
                         onFocus={() => setActiveInput({ type: 'lv1', index: idx, partIdx: i })}
                         style={{ width: `${Math.max(4, (lv1Inputs[`${idx}-${i}`] || "").length + 1)}ch` }}
                         className={`
-                            h-10 text-center font-mono text-lg border-2 rounded-md shadow-sm min-w-[4rem]
+                            h-10 text-center font-sans text-lg border-2 rounded-md shadow-sm min-w-[4rem]
                             focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors
                             ${isActive ? 'border-blue-500 bg-white' : 'border-gray-300 bg-gray-50'}
                             ${segment.color.replace('text-', 'text-')}
@@ -2288,7 +2288,7 @@ export default function SimultaneousEqQuiz() {
                             type="text"
                             value={lv2Inputs[idx]}
                             onChange={(e) => handleInputChange(e.target.value, 'lv2', idx)}
-                            className="w-full bg-transparent text-xl md:text-2xl font-mono focus:outline-none"
+                            className="w-full bg-transparent text-xl md:text-2xl font-sans focus:outline-none"
                             placeholder="..."
                         />
                     </div>

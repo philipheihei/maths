@@ -806,7 +806,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 <Latex math={`${currentQuestion.template.funcName}(`} />
                 <div className="relative inline-flex items-center">
                   {isAnswered && answers.input1 ? (
-                    <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-mono bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
+                    <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-sans bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
                       <FractionDisplay value={answers.input1} />
                     </div>
                   ) : (
@@ -818,15 +818,15 @@ const QuizPage = ({ onBackToTeaching }) => {
                       onKeyDown={(e) => handleKeyDown(e, input2Ref)}
                       onFocus={() => setActiveInput('input1')}
                       disabled={isAnswered}
-                      className={`w-20 border-2 rounded-lg px-2 py-1 text-center font-mono focus:outline-none disabled:bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'}`}
+                      className={`w-20 border-2 rounded-lg px-2 py-1 text-center font-sans focus:outline-none disabled:bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'}`}
                       placeholder="?"
                     />
                   )}
                 </div>
-                <span className="font-mono">) =</span>
+                <span className="font-sans">) =</span>
                 <div className="relative inline-flex items-center">
                   {isAnswered && answers.input2 ? (
-                    <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-mono bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
+                    <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-sans bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
                       <FractionDisplay value={answers.input2} />
                     </div>
                   ) : (
@@ -838,7 +838,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                       onKeyDown={(e) => handleKeyDown(e, null)}
                       onFocus={() => setActiveInput('input2')}
                       disabled={isAnswered}
-                      className={`w-20 border-2 rounded-lg px-2 py-1 text-center font-mono focus:outline-none disabled:bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'}`}
+                      className={`w-20 border-2 rounded-lg px-2 py-1 text-center font-sans focus:outline-none disabled:bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'}`}
                       placeholder="?"
                     />
                   )}
@@ -849,7 +849,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 <Latex math={`${currentQuestion.template.funcName}(`} />
                 <div className="relative inline-flex items-center">
                   {isAnswered && answers.input1 ? (
-                    <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-mono bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
+                    <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-sans bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
                       <FractionDisplay value={answers.input1} />
                     </div>
                   ) : (
@@ -861,7 +861,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                       onKeyDown={(e) => handleKeyDown(e, input2Ref)}
                       onFocus={() => setActiveInput('input1')}
                       disabled={isAnswered}
-                      className={`w-20 border-2 rounded-lg px-2 py-1 text-center font-mono focus:outline-none disabled:bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'}`}
+                      className={`w-20 border-2 rounded-lg px-2 py-1 text-center font-sans focus:outline-none disabled:bg-gray-100 ${activeInput === 'input1' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'}`}
                       placeholder="?"
                     />
                   )}
@@ -869,7 +869,7 @@ const QuizPage = ({ onBackToTeaching }) => {
                 <Latex math={`) = ${currentQuestion.template.funcName}(`} />
                 <div className="relative inline-flex items-center">
                   {isAnswered && answers.input2 ? (
-                    <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-mono bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
+                    <div className={`min-w-[5rem] border-2 rounded-lg px-2 py-1 text-center font-sans bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'} flex items-center justify-center`}>
                       <FractionDisplay value={answers.input2} />
                     </div>
                   ) : (
@@ -881,12 +881,12 @@ const QuizPage = ({ onBackToTeaching }) => {
                       onKeyDown={(e) => handleKeyDown(e, null)}
                       onFocus={() => setActiveInput('input2')}
                       disabled={isAnswered}
-                      className={`w-20 border-2 rounded-lg px-2 py-1 text-center font-mono focus:outline-none disabled:bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'}`}
+                      className={`w-20 border-2 rounded-lg px-2 py-1 text-center font-sans focus:outline-none disabled:bg-gray-100 ${activeInput === 'input2' ? 'border-teal-500 bg-teal-50' : 'border-slate-300'}`}
                       placeholder="?"
                     />
                   )}
                 </div>
-                <span className="font-mono">)</span>
+                <span className="font-sans">)</span>
               </div>
             )}
           </div>

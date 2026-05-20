@@ -432,7 +432,7 @@ export const MeasurementErrorsNotes = ({ activeSub }) => {
                                 fontSize="22" 
                                 fontWeight="bold" 
                                 fill="#0f172a"
-                                className="font-mono tracking-tighter"
+                                className="font-sans tracking-tighter"
                               >
                                 {v}
                               </text>
@@ -823,7 +823,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                   <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-bold">[ <Latex math="n" /> 為主項 ]</span>
                 </div>
                 
-                <div className="space-y-3 font-mono text-sm md:text-base">
+                <div className="space-y-3 font-sans text-sm md:text-base">
                   <div className="flex gap-4 items-center">
                     <Latex math="n(m-5) = 3m + 2n" block left />
                   </div>
@@ -855,7 +855,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                   <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-bold">[ <Latex math="b" /> 為主項 ]</span>
                 </div>
 
-                <div className="space-y-3 font-mono text-sm md:text-base">
+                <div className="space-y-3 font-sans text-sm md:text-base">
                   <div className="flex gap-4 items-center">
                     <Latex math="\dfrac{a+4}{3} = \dfrac{b+1}{2}" block left />
                     <span className="text-red-500 font-bold">乘</span>
@@ -1643,12 +1643,12 @@ export const FactorizationF2Notes = ({ activeSub }) => {
                   <div className="text-xs text-slate-500 italic">← 前兩項找相同，後兩項找相同</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                  <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                   <div className="text-sm w-40 shrink-0"><Latex math="b(m+n) + 5(m+n)" /></div>
                   <div className="text-xs text-slate-500 italic">← 將相同括號抽出</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                  <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                   <div className="text-sm w-40 shrink-0"><Latex math="(m+n)(b+5)" /></div>
                   <div className="text-xs text-slate-500 italic">← 另一個括號按順序寫</div>
                 </div>
@@ -1692,7 +1692,7 @@ export const FactorizationF2Notes = ({ activeSub }) => {
                   <p className="text-sm font-bold text-green-700 mb-2">(b) 部套用：</p>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
-                      <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                      <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                       <div className="flex items-center flex-wrap gap-0.5 min-w-0">
                         <Latex math="4r - 14s +" />
                         <span className="bg-yellow-200 rounded px-0.5"><Latex math="(2r-7s)(3r+4s)" /></span>
@@ -1700,7 +1700,7 @@ export const FactorizationF2Notes = ({ activeSub }) => {
                       <div className="text-xs text-slate-500 italic shrink-0">← 套用 (a) 部答案</div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                      <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                       <div className="flex items-center flex-wrap gap-0.5 min-w-0">
                         <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="2" /></span>
                         <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
@@ -1711,7 +1711,7 @@ export const FactorizationF2Notes = ({ activeSub }) => {
                       <div className="text-xs text-slate-500 italic shrink-0">← 非 (a) 部答案 抽公因式，應看到有最少兩個 <span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同括號</span></div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-4 shrink-0 text-right font-mono text-sm text-slate-700">=</div>
+                      <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                       <div className="flex items-center flex-wrap gap-0.5 min-w-0">
                         <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r-7s)" /></span>
                         <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(2 + 3r + 4s)" /></span>
@@ -1804,7 +1804,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
             <div className="w-full md:basis-[36%] md:max-w-[36%] md:flex-none bg-white rounded-lg p-4 border border-teal-200">
               <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2">
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">1.</span> 圓周：
-                <span className="bg-green-200 text-slate-800 px-2 py-0.5 rounded font-mono"><Latex math="2 \pi r" /></span>
+                <span className="bg-green-200 text-slate-800 px-2 py-0.5 rounded font-sans"><Latex math="2 \pi r" /></span>
               </h3>
               
               <div className="relative text-sm text-green-700 font-bold ml-16 -mt-2 mb-2">
@@ -1834,14 +1834,14 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
 
               <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-teal-100 pb-2 pt-6">
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">2.</span> 弧長 <span className="text-sm font-normal text-green-700">(圓周的一部份)</span>：
-                <span className="bg-green-200 px-2 py-0.5 rounded font-mono relative">
+                <span className="bg-green-200 px-2 py-0.5 rounded font-sans relative">
                   <div className="absolute -top-7 left-1/2 -translate-x-1/2 text-sm font-bold text-green-700 whitespace-nowrap hidden md:block">
                     ↓ 圓周公式
                   </div>
                   <Latex math="2 \pi r" />
                 </span>
                 <Latex math="\times" />
-                <span className="bg-yellow-300 px-2 py-0.5 rounded font-mono text-xl"><Latex math="\dfrac{\theta}{360^\circ}" /></span>
+                <span className="bg-yellow-300 px-2 py-0.5 rounded font-sans text-xl"><Latex math="\dfrac{\theta}{360^\circ}" /></span>
               </h3>
 
               <div className="flex justify-center md:justify-start md:ml-10 mb-4 mt-4 relative min-h-[160px]">
@@ -1903,7 +1903,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
             <div className="w-full md:basis-[36%] md:max-w-[36%] md:flex-none bg-white rounded-lg p-4 border border-blue-200">
               <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2">
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">3.</span> 圓面積：
-                <span className="bg-blue-200 text-slate-800 px-2 py-0.5 rounded font-mono"><Latex math="\pi r^2" /></span>
+                <span className="bg-blue-200 text-slate-800 px-2 py-0.5 rounded font-sans"><Latex math="\pi r^2" /></span>
               </h3>
 
               <div className="flex justify-center mb-4 mt-6">
@@ -1929,9 +1929,9 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
 
               <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-blue-100 pb-2">
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">4.</span> 扇形 <span className="text-sm font-normal text-green-700">(圓面積的一部份)</span>：
-                <span className="bg-blue-200 px-2 py-0.5 rounded font-mono"><Latex math="\pi r^2" /></span>
+                <span className="bg-blue-200 px-2 py-0.5 rounded font-sans"><Latex math="\pi r^2" /></span>
                 <Latex math="\times" />
-                <span className="bg-yellow-300 px-2 py-0.5 rounded font-mono text-xl"><Latex math="\dfrac{\theta}{360^\circ}" /></span>
+                <span className="bg-yellow-300 px-2 py-0.5 rounded font-sans text-xl"><Latex math="\dfrac{\theta}{360^\circ}" /></span>
               </h3>
 
               <div className="flex justify-center mb-6 mt-6 md:mt-2 relative">

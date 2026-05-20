@@ -28,7 +28,7 @@ const ComplexNotes = ({ onBack }) => (
             <span className="shrink-0 w-8 h-8 rounded-full bg-teal-500 text-white font-bold text-sm flex items-center justify-center">1</span>
             <div>
               <p className="font-bold text-teal-800">開啟 Complex Mode</p>
-              <p className="text-sm text-slate-600 mt-0.5">按 <span className="font-mono bg-gray-300 text-gray-800 px-1.5 py-0.5 rounded text-xs font-bold">MODE</span> → 選 <span className="font-mono bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">2 (CMPLX)</span></p>
+              <p className="text-sm text-slate-600 mt-0.5">按 <span className="font-mono bg-gray-300 text-gray-800 px-1.5 py-0.5 rounded text-xs font-bold">MODE</span> → 選 <span className="font-sans bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-bold">2 (CMPLX)</span></p>
               <p className="text-xs text-slate-400 mt-1">⚠️ 每次計完記得 MODE → 1 返回一般模式</p>
             </div>
           </div>
@@ -112,7 +112,7 @@ const ComplexNotes = ({ onBack }) => (
               <div className="flex items-center gap-2 flex-wrap mb-2">
                 <InlineMath math="-4(5-3i)" />
                 <span className="text-slate-400">=</span>
-                <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-xs">-4 × (5 - 3 <span className="text-teal-700 font-bold">i</span>)</span>
+                <span className="font-sans bg-slate-100 px-2 py-0.5 rounded text-xs">-4 × (5 - 3 <span className="text-teal-700 font-bold">i</span>)</span>
               </div>
               <div className="flex gap-2 flex-wrap">
                 <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
@@ -134,7 +134,7 @@ const ComplexNotes = ({ onBack }) => (
               <div className="flex items-center gap-2 flex-wrap mb-2">
                 <InlineMath math="\dfrac{4i^3}{i-1}" />
                 <span className="text-slate-400 text-xs mx-1">→ 輸入：</span>
-                <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-xs">4<span className="text-teal-700 font-bold">iii</span> ÷ ( <span className="text-teal-700 font-bold">i</span> - 1 )</span>
+                <span className="font-sans bg-slate-100 px-2 py-0.5 rounded text-xs">4<span className="text-teal-700 font-bold">iii</span> ÷ ( <span className="text-teal-700 font-bold">i</span> - 1 )</span>
               </div>
               <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^3" /> 時須打 <code><em>i</em> × <em>i</em> × <em>i</em></code>（有幾次方就打幾個 <em>i</em> 相乘）</p>
               <div className="flex gap-2 flex-wrap">
@@ -172,7 +172,7 @@ const ComplexNotes = ({ onBack }) => (
               <span className="shrink-0 w-6 h-6 rounded-full bg-teal-500 text-white font-bold text-xs flex items-center justify-center">2</span>
               <div>
                 <span className="text-teal-800 font-semibold">Cal 機輸入：</span>
-                <span className="font-mono bg-slate-100 text-slate-800 text-xs px-2 py-0.5 rounded ml-1">( i ÷ (10 - i) ) + ( 2 ÷ (10 + i) )</span>
+                <span className="font-sans bg-slate-100 text-slate-800 text-xs px-2 py-0.5 rounded ml-1">( i ÷ (10 - i) ) + ( 2 ÷ (10 + i) )</span>
               </div>
             </div>
             <div className="flex items-center gap-2 bg-green-50 rounded-lg px-3 py-2">
@@ -345,7 +345,7 @@ const ComplexNotes = ({ onBack }) => (
                 </div>
                 <div className="mt-2 text-blue-600 font-bold self-start pl-2">
                   <span className="text-[#6495ed] text-xl font-bold">e.g. </span>
-                  <span className="text-[#2c3e50] font-mono text-xl ml-2 tracking-wider">2+7i , -3i</span>
+                  <span className="text-[#2c3e50] font-sans text-xl ml-2 tracking-wider">2+7i , -3i</span>
                 </div>
               </div>
 
@@ -403,7 +403,7 @@ const ComplexNotes = ({ onBack }) => (
                         <div className="w-full bg-[#abdbfb] text-[#2c3e50] font-bold py-1.5 text-center border border-blue-300 shadow-sm whitespace-nowrap">整數</div>
                         <div className="text-blue-600 font-bold self-start mt-2 w-full flex pl-1">
                           <span className="text-[#6495ed] text-sm">e.g.</span>
-                          <span className="text-[#2c3e50] ml-1.5 font-mono tracking-widest text-[15px] pt-px">-4, 0, 7</span>
+                          <span className="text-[#2c3e50] ml-1.5 font-sans tracking-widest text-[15px] pt-px">-4, 0, 7</span>
                         </div>
                       </div>
                       <div className="flex flex-col flex-1 items-center z-10">

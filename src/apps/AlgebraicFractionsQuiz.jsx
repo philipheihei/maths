@@ -51,7 +51,7 @@ const InlineMath = ({ math }) => {
 // --- Teaching Tips Component Helper ---
 const AnnotatedStep = ({ numerator, denominator, noteNum, noteDen }) => {
   return (
-    <div className="flex items-center text-xl font-mono text-gray-800">
+    <div className="flex items-center text-xl font-sans text-gray-800">
        <span className="mr-3 font-serif">=</span>
        <div className="inline-grid grid-cols-[auto_auto] gap-x-4 items-center">
            {/* Numerator with Border Bottom (Fraction Line) */}

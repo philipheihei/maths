@@ -624,7 +624,7 @@ const IdentityQuiz = () => {
                 onChange={(e) => setUserAnswer(e.target.value)}
                 disabled={feedback !== 'idle'}
                 placeholder="在此輸入答案..."
-                className={`w-full bg-slate-50 border-2 px-4 py-3 text-center text-2xl text-slate-800 placeholder-slate-400 rounded-xl focus:outline-none transition-all font-mono shadow-sm
+                className={`w-full bg-slate-50 border-2 px-4 py-3 text-center text-2xl text-slate-800 placeholder-slate-400 rounded-xl focus:outline-none transition-all font-sans shadow-sm
                   ${feedback === 'correct' ? 'border-green-400 bg-green-50' : 
                     feedback === 'wrong' ? 'border-red-400 bg-red-50' : 'border-slate-200 focus:border-indigo-400 focus:bg-white focus:shadow-md'}`}
                 autoComplete="off"
@@ -654,71 +654,71 @@ const IdentityQuiz = () => {
 
             {/* 第 1 行：( ) ^2 + */}
             <div className="w-full grid grid-cols-4 gap-1.5 mt-2"> 
-              <button onClick={() => insertAtCursor('(')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('(')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 (
               </button>
-              <button onClick={() => insertAtCursor(')')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor(')')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 )
               </button>
-              <button onClick={() => insertAtCursor('^2')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50 flex items-center justify-center">
+              <button onClick={() => insertAtCursor('^2')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50 flex items-center justify-center">
                 <Latex math="^{2}" />
               </button>
-              <button onClick={() => insertAtCursor('+')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('+')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 +
               </button>
             </div>
 
             {/* 第 2 行：7 8 9 - */}
             <div className="w-full grid grid-cols-4 gap-1.5 mt-1.5"> 
-              <button onClick={() => insertAtCursor('7')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('7')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 7
               </button>
-              <button onClick={() => insertAtCursor('8')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('8')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 8
               </button>
-              <button onClick={() => insertAtCursor('9')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('9')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 9
               </button>
-              <button onClick={() => insertAtCursor('-')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('-')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 −
               </button>
             </div>
 
             {/* 第 3 行：4 5 6 × */}
             <div className="w-full grid grid-cols-4 gap-1.5 mt-1.5"> 
-              <button onClick={() => insertAtCursor('4')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('4')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 4
               </button>
-              <button onClick={() => insertAtCursor('5')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('5')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 5
               </button>
-              <button onClick={() => insertAtCursor('6')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('6')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 6
               </button>
-              <button onClick={() => insertAtCursor('*')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('*')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 ×
               </button>
             </div>
 
             {/* 第 4 行：1 2 3 ÷ */}
             <div className="w-full grid grid-cols-4 gap-1.5 mt-1.5"> 
-              <button onClick={() => insertAtCursor('1')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('1')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 1
               </button>
-              <button onClick={() => insertAtCursor('2')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('2')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 2
               </button>
-              <button onClick={() => insertAtCursor('3')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('3')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 3
               </button>
-              <button onClick={() => insertAtCursor('/')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('/')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 ÷
               </button>
             </div>
 
             {/* 第 5 行：0 x y ← 刪除 */}
             <div className="w-full grid grid-cols-4 gap-1.5 mt-1.5">
-              <button onClick={() => insertAtCursor('0')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-mono text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
+              <button onClick={() => insertAtCursor('0')} disabled={feedback !== 'idle'} className="bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 text-slate-700 font-sans text-xl py-2.5 rounded-lg shadow-sm transition active:scale-95 disabled:opacity-50">
                 0
               </button>
               <button
@@ -808,7 +808,7 @@ const IdentityQuiz = () => {
                             <span className={`text-xs font-bold uppercase ${index === 0 ? 'text-slate-400' : index === solutionSteps.length - 1 ? 'text-green-600' : 'text-indigo-500'}`}>
                               {step.label}:
                             </span>
-                            <div className="w-full text-left text-xl font-mono">
+                            <div className="w-full text-left text-xl font-sans">
                               <Latex math={step.math} />
                             </div>
                           </div>

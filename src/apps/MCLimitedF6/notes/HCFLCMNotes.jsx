@@ -53,25 +53,25 @@ const HCFLCMNotes = ({ onBack }) => (
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="font-bold text-blue-700 w-5">x</span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^3" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^5" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^2" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="x^3" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="x^5" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="x^2" /></span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-blue-700">最小次方：<InlineMath math="x^2" /></span>
             </div>
             <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
               <span className="font-bold text-green-700 w-5">y</span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^2" /></span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^1" /></span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="y^4" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-sans"><InlineMath math="y^2" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-sans"><InlineMath math="y^1" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-sans"><InlineMath math="y^4" /></span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-green-700">最小次方：<InlineMath math="y^1 = y" /></span>
             </div>
             <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
               <span className="font-bold text-amber-700 w-5">z</span>
-              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="z^2" /></span>
-              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="z^1" /></span>
-              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
+              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-sans"><InlineMath math="z^2" /></span>
+              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-sans"><InlineMath math="z^1" /></span>
+              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-sans text-xs">沒有</span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-amber-700">最小次方：<InlineMath math="z^0" />（不含 z）</span>
             </div>
@@ -87,17 +87,17 @@ const HCFLCMNotes = ({ onBack }) => (
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="font-bold text-blue-700 w-5">m</span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="m^3" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="m^2" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="m^5" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="m^3" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="m^2" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="m^5" /></span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-blue-700">最大次方：<InlineMath math="m^5" /></span>
             </div>
             <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
               <span className="font-bold text-green-700 w-5">n</span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="n^2" /></span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="n^4" /></span>
-              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-sans"><InlineMath math="n^2" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-sans"><InlineMath math="n^4" /></span>
+              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-sans text-xs">沒有</span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-green-700">最大次方：<InlineMath math="n^4" /></span>
             </div>
@@ -126,15 +126,15 @@ const HCFLCMNotes = ({ onBack }) => (
           <div className="space-y-2 text-sm mt-2">
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="font-bold text-blue-700 w-16 text-xs">(a+3)</span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(a+3)^2" /></span>
-              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(a+3)^1" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="(a+3)^2" /></span>
+              <span className="bg-blue-100 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="(a+3)^1" /></span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-blue-700">最大：<InlineMath math="(a+3)^2" /></span>
             </div>
             <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
               <span className="font-bold text-green-700 w-16 text-xs">(a−3)</span>
-              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(a-3)^1" /></span>
+              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-sans text-xs">沒有</span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-sans"><InlineMath math="(a-3)^1" /></span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-green-700">最大：<InlineMath math="(a-3)^1" /></span>
             </div>
@@ -147,22 +147,22 @@ const HCFLCMNotes = ({ onBack }) => (
           <div className="space-y-2 text-sm mt-2">
             <div className="flex items-center gap-2 bg-blue-100 rounded-lg px-3 py-2">
               <span className="font-bold text-blue-700 w-8 text-xs">x</span>
-              <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^3" /></span>
-              <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-mono"><InlineMath math="x^2" /></span>
+              <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="x^3" /></span>
+              <span className="bg-blue-200 text-blue-800 rounded px-2 py-0.5 font-sans"><InlineMath math="x^2" /></span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-blue-700">最小：<InlineMath math="x^2" /></span>
             </div>
             <div className="flex items-center gap-2 bg-green-100 rounded-lg px-3 py-2">
               <span className="font-bold text-green-700 w-8 text-xs">(x−1)</span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x-1)^2" /></span>
-              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x-1)^4" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-sans"><InlineMath math="(x-1)^2" /></span>
+              <span className="bg-green-200 text-green-800 rounded px-2 py-0.5 font-sans"><InlineMath math="(x-1)^4" /></span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-green-700">最小：<InlineMath math="(x-1)^2" /></span>
             </div>
             <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
               <span className="font-bold text-amber-700 w-8 text-xs">(x+3)</span>
-              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-mono"><InlineMath math="(x+3)^1" /></span>
-              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-mono text-xs">沒有</span>
+              <span className="bg-amber-100 text-amber-800 rounded px-2 py-0.5 font-sans"><InlineMath math="(x+3)^1" /></span>
+              <span className="bg-red-100 text-red-600 rounded px-2 py-0.5 font-sans text-xs">沒有</span>
               <span className="text-slate-400">→</span>
               <span className="font-bold text-amber-700">最小：<InlineMath math="(x+3)^0" />（不含，即 H.C.F. 不含 <InlineMath math="(x+3)" />）</span>
             </div>

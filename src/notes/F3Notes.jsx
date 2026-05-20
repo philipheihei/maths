@@ -94,7 +94,7 @@ export const FactorizationNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">🖩 計算機 FMLA 01 方法</h3>
-            <p className="text-sm text-slate-700 mb-3">如沒相同代數/因數，出動 <span className="bg-green-200 px-2 py-0.5 rounded font-mono">FMLA 01</span>（二次方）</p>
+            <p className="text-sm text-slate-700 mb-3">如沒相同代數/因數，出動 <span className="bg-green-200 px-2 py-0.5 rounded font-sans">FMLA 01</span>（二次方）</p>
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-sm font-bold text-slate-700 mb-2">步驟：</p>
               <div className="space-y-2 text-sm">
@@ -1543,7 +1543,7 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
               <p className="font-bold text-slate-800 mb-2">
                 想表達 A 事件的概率 可寫成 <span className="text-green-700 ml-2 border border-green-300 bg-green-100 px-2 py-1 rounded"><Latex math="P(A)" /></span>
               </p>
-              <div className="text-slate-700 mt-3 space-y-3 font-mono">
+              <div className="text-slate-700 mt-3 space-y-3 font-sans">
                 <div className="flex items-center flex-wrap gap-2">
                   <span className="text-blue-700 font-sans">e.g. 抽到單數的概率</span>
                   <span className="text-slate-400">→</span>
@@ -1566,7 +1566,7 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
             
             <div className="bg-indigo-50 rounded-lg p-5 border border-indigo-200">
               <h3 className="font-bold text-slate-800 text-lg flex items-center flex-wrap gap-2 mb-2">
-                期望值：<span className="bg-yellow-200 px-2 py-1 rounded font-mono break-all text-xl">概率 <Latex math="\times" /> 次數/金額</span>
+                期望值：<span className="bg-yellow-200 px-2 py-1 rounded font-sans break-all text-xl">概率 <Latex math="\times" /> 次數/金額</span>
               </h3>
               <p className="text-green-700 font-bold mb-4 mt-2">
                 註：題目未必提供概率，需自行計算

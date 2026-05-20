@@ -86,7 +86,7 @@ export const SimEqCalculatorNotes = ({ activeSub }) => {
                 <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <strong>輸入以下程式碼</strong>
               </div>
-              <div className="bg-black rounded-lg p-3 font-mono text-green-400 text-sm overflow-x-auto">
+              <div className="bg-black rounded-lg p-3 font-sans text-green-400 text-sm overflow-x-auto">
                 <div>?→A : ?→B : ?→C : ?→D : ?→X : ?→Y :</div>
                 <div>AX－DB→M : M⁻¹(CX－YB→X◢</div>
                 <div>M⁻¹(AY－DC→Y</div>
