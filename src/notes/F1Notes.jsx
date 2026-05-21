@@ -3746,7 +3746,7 @@ const CongruentConditionsSVG = () => {
       {/* Row 1: SAS */}
       <g transform="translate(0, 0)">
         <text x="20" y="40" fontSize="16" fontWeight="bold" fill="#334155">(a) [簡記 : SAS]</text>
-        <text x="140" y="110" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">夾角 →</text>
+        <text x="140" y="97" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">夾角 →</text>
         
         {/* T1 */}
         <path d="M 230,20 L 160,90 L 300,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
@@ -3760,7 +3760,7 @@ const CongruentConditionsSVG = () => {
         
         <text x="180" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
         <text x="230" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
-        <text x="155" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
+        <text x="155" y="97" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
 
         {/* T2 */}
         <path d="M 400,20 L 330,90 L 470,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
@@ -3783,9 +3783,9 @@ const CongruentConditionsSVG = () => {
         <path d="M 280 90 A 20 20 0 0 1 285.9 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 276 90 A 24 24 0 0 1 283.1 73.0" fill="none" stroke="#0ea5e9" strokeWidth="2" />
 
-        <text x="155" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
+        <text x="155" y="97" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
         <text x="230" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
-        <text x="305" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
+        <text x="305" y="97" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
 
         <text x="230" y="60" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">夾邊</text>
         <path d="M 230 65 Q 230 80 230 80" fill="none" stroke="#334155" strokeWidth="1" markerEnd="url(#arrow)" />
@@ -3812,10 +3812,10 @@ const CongruentConditionsSVG = () => {
         <path d="M 180 90 A 20 20 0 0 0 174.1 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
         <path d="M 184 90 A 24 24 0 0 0 176.9 73.0" fill="none" stroke="#0ea5e9" strokeWidth="2" />
 
-        <text x="230" y="12" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
-        <text x="155" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
-        <text x="280" y="70" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="295" y="55" fontSize="16" fill="#334155" fontWeight="bold">← 不是夾邊</text>
+        <text x="230" y="17" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="155" y="97" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
+        <text x="275" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="285" y="55" fontSize="15" fill="#334155" fontWeight="bold">← 不是夾邊</text>
 
         {/* T2 */}
         <path d="M 400,20 L 330,90 L 470,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
@@ -3842,7 +3842,7 @@ const CongruentConditionsSVG = () => {
         <line x1="236" y1="85" x2="236" y2="95" stroke="#0ea5e9" strokeWidth="2" />
 
         <text x="180" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="280" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
+        <text x="275" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
         <text x="230" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
 
         {/* T2 */}
@@ -3858,9 +3858,10 @@ const CongruentConditionsSVG = () => {
       {/* Row 5: RHS */}
       <g transform="translate(0, 560)">
         <text x="20" y="40" fontSize="16" fontWeight="bold" fill="#334155">(e) [簡記 : RHS]</text>
-        <text x="120" y="10" fontSize="16" fill="#0284c7" fontWeight="bold" textAnchor="end">直角</text>
-        <path d="M 100 15 Q 100 35 150 80" fill="none" stroke="#0284c7" strokeWidth="2" markerEnd="url(#arrow-blue)" />
-        <text x="140" y="110" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">不是夾角 →</text>
+        <text x="140" y="100" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">
+          <tspan x="140" dy="0">不是夾角,</tspan>
+          <tspan x="140" dy="20">但是直角</tspan>
+        </text>
         
         {/* T1 */}
         {/* Right angled at X=160, Y=90 */}
@@ -3871,8 +3872,8 @@ const CongruentConditionsSVG = () => {
         {/* Bottom Tick (230, 90) */}
         <line x1="230" y1="85" x2="230" y2="95" stroke="#0ea5e9" strokeWidth="2" />
         
-        <text x="150" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">R</text>
-        <text x="250" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">H</text>
+        <text x="170" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">R</text>
+        <text x="230" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">H</text>
         <text x="230" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
 
         {/* T2 */}
