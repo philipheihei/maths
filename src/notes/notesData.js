@@ -20,13 +20,14 @@ import {
   PythagorasF2Notes,
   TrigRatiosF2Notes,
   MeasurementErrorsNotes,
+  SimilarTrianglesNotes,
   TriangleLineAnglesNotes,
   AlgebraicFractionsNotes,
   IdentitiesF2Notes,
   FactorizationF2Notes,
   CirclesCylindersF2Notes,
 } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes } from './F3Notes';
+import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
@@ -185,6 +186,17 @@ export const NOTES_DATA = {
   ],
   F2: [
     {
+      id: 'similar-triangles',
+      topic: 'CH1 相似三角形',
+      color: 'blue',
+      subtopics: [
+        { id: 'similar-concept', num: 1, title: '1. 認識概念全等與相似', color: 'blue' },
+        { id: 'similar-properties', num: 2, title: '2. 相似三角形的性質', color: 'green' },
+        { id: 'similar-conditions', num: 3, title: '3. 相似三角形的判定條件', color: 'amber' },
+        { id: 'similar-example', num: 4, title: '求未知量例題 (短中長)', color: 'purple' },
+      ]
+    },
+    {
       id: 'triangle-line-angles',
       topic: 'CH2 有關三角形和直線的角',
       color: 'green',
@@ -293,6 +305,16 @@ export const NOTES_DATA = {
         { id: 'grouping', num: 2, title: '併項法（重溫）', color: 'blue' },
         { id: 'quadratic', num: 3, title: '二次多項式', color: 'green' },
         { id: 'dse-tips', num: 4, title: 'DSE 題型技巧', color: 'red' },
+      ]
+    },
+    {
+      id: 'percentage-f3',
+      topic: 'CH3 百分法(二)',
+      color: 'emerald',
+      subtopics: [
+        { id: 'successive-change', num: 1, title: '連續百分變化', color: 'blue' },
+        { id: 'growth-depreciation', num: 2, title: '增長/衰減', color: 'green' },
+        { id: 'simple-interest', num: 3, title: '利息 (單利息)', color: 'amber' },
       ]
     },
     {
@@ -492,4 +514,5 @@ export const NOTES_COMPONENTS = {
   'rate-ratio': RateRatioNotes,
   'functions': FunctionNotes,
   'straight-line-equation': StraightLineEquationNotes,
+  'similar-triangles': SimilarTrianglesNotes,
 };

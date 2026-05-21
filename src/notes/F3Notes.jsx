@@ -187,6 +187,139 @@ export const FactorizationNotes = ({ activeSub }) => {
 };
 
 // ========================================
+// CH3 百分法(二) (F3)
+// ========================================
+export const PercentageF3Notes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-emerald-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH3 百分法(二)</h1>
+        <p className="text-slate-600">連續百分變化、增長與衰減、單利息計算</p>
+      </div>
+
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+        <h3 className="font-bold text-amber-800 mb-3">🔄 重溫：基本百分變化</h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          <div className="bg-white rounded-lg p-4 border border-green-200">
+            <p className="text-green-700 font-bold mb-2">增加 <Latex math="n\%" /> → <Latex math="\times (1+n\%)" /></p>
+            <p className="text-slate-600 text-sm">例：24 增加 20%</p>
+            <Latex math="\rightarrow 24 \times (1 + 20\%) = 28.8" block />
+          </div>
+          <div className="bg-white rounded-lg p-4 border border-red-200">
+            <p className="text-red-700 font-bold mb-2">減少 <Latex math="n\%" /> → <Latex math="\times (1-n\%)" /></p>
+            <p className="text-slate-600 text-sm">例：30 減少 20%</p>
+            <Latex math="\rightarrow 30 \times (1 - 20\%) = 24" block />
+          </div>
+        </div>
+      </div>
+
+      <CollapsibleSection id="successive-change" title="連續百分變化" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">📝 規則：按順序乘</h3>
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-slate-700 text-sm mb-3">
+                <span className="font-bold text-blue-700">例：</span>
+                一間飲品店引入了一款新飲料。從該新飲料的每月售出杯數的報告可知，該店在第二個月<span className="bg-yellow-200 px-1 rounded">多售出 25%</span> (<Latex inline math="\times (1 + 25\%)" />) 及在第三個月<span className="bg-yellow-200 px-1 rounded">少售出 45%</span> (<Latex inline math="\times (1 - 45\%)" />)。若該店在第三個月售出了 <span className="underline decoration-purple-600 underline-offset-4 font-bold">2475</span> (結果) 杯新飲料，求首月所售出的新飲料杯數。
+              </p>
+              
+              <div className="space-y-3 bg-slate-50 p-4 rounded-lg">
+                <div className="flex gap-2">
+                  <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">1</span>
+                  <div>
+                    <span className="text-slate-600 text-sm block mb-1">設代數：</span>
+                    <span className="text-blue-700">設首月所售出的新飲料杯數為 y</span>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2">
+                  <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                  <div>
+                    <span className="text-slate-600 text-sm block mb-1">列式 (接駁答案)：</span>
+                    <Latex math="y(1 + 25\%)(1 - 45\%) = 2475" />
+                  </div>
+                </div>
+                
+                <div className="flex gap-2">
+                  <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                  <div>
+                    <span className="text-slate-600 text-sm block mb-1">按計算機 (<Latex math="(1 + 25\%)(1 - 45\%)" />)：</span>
+                    <pre className="whitespace-pre font-sans text-blue-700">
+                      <span className="bg-yellow-200 px-1 rounded">0.6875</span> y = 2475{'\n'}
+                                 y = 3600
+                    </pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="growth-depreciation" title="增長 / 衰減" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="flex gap-4 mb-2">
+            <span className="text-green-600 font-bold text-lg">增長：+</span>
+            <span className="text-red-500 font-bold text-lg">衰減：−</span>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-2">📈 增長例子</h3>
+            <p className="text-slate-700 mb-3">e.g. $100，每個月<span className="bg-yellow-200 px-1 rounded">增長</span> <Latex math="5\%" />，增長<span className="bg-yellow-200 px-1 rounded">4個月</span></p>
+            <div className="bg-slate-50 p-3 rounded">
+              <p className="text-sm text-slate-600">列式：</p>
+              <Latex math="\$100 \times (1 \mathbf{+} 5\%)^{\mathbf{4}} \gets \text{連續增長的期數}" block />
+              <Latex math="= \$121.55" block />
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-red-200">
+            <h3 className="font-bold text-red-800 mb-2">📉 衰減例子</h3>
+            <p className="text-slate-700 mb-3">e.g. $8720，每年<span className="bg-yellow-200 px-1 rounded">折舊 (衰減)</span> <Latex math="10\%" />，<span className="bg-yellow-200 px-1 rounded">8年後</span>的價值是？</p>
+            <div className="bg-slate-50 p-3 rounded">
+              <p className="text-sm text-slate-600">列式：</p>
+              <Latex math="\$8720 \times (1 \mathbf{-} 10\%)^{\mathbf{8}}" block />
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <Latex math="= \$3754" />
+                <span className="text-green-700 text-sm">(準確至最接近的元)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="simple-interest" title="利息：關注 年利率、本金、年期" num={3} color="amber" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">3.1 單利息 (Simple Interest)</h3>
+            <p className="text-slate-700 mb-4 font-bold">每年分開計算，不會疊加</p>
+            
+            <div className="bg-white rounded-lg p-4 border-2 border-cyan-300">
+              <div className="space-y-4">
+                <div>
+                  <p className="text-red-600 font-bold mb-1">A. 本利和：</p>
+                  <p className="text-slate-800 ml-4 font-bold text-lg text-center bg-slate-50 py-2 rounded">
+                    本金 + 本金 × 年利率 × 年期
+                  </p>
+                </div>
+                <div>
+                  <p className="text-red-600 font-bold mb-1">B. 利息：</p>
+                  <p className="text-slate-800 ml-4 font-bold text-lg text-center bg-slate-50 py-2 rounded">
+                    本金 × 年利率 × 年期
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+// ========================================
 // CH7 三角比 (F3)
 // ========================================
 export const TrigonometricIdentitiesNotes = ({ activeSub }) => {

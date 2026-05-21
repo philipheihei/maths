@@ -30,6 +30,460 @@ const MathDisplay = ({ math, block = false, left = false }) => (
 );
 
 // ========================================
+// CH1 相似三角形 (F2)
+// ========================================
+export const SimilarTrianglesNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH1 相似三角形</h1>
+        <p className="text-slate-600">認識相似三角形的概念、性質及判定條件，並運用其解決未知量</p>
+      </div>
+
+      <CollapsibleSection id="similar-concept" title="1. 認識概念全等與相似" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">📝 1. 認識概念</h3>
+            <div className="space-y-3">
+              <div className="bg-white rounded p-3">
+                <p className="font-bold text-slate-800">全等 <span className="text-slate-500 font-normal">（Congruent）</span>：</p>
+                <p className="text-red-600 font-bold ml-4 my-1">形狀 和 大小 一樣</p>
+                <p className="text-blue-700 text-sm ml-4">（邊長／角度相等）</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <p className="font-bold text-slate-800">相似 <span className="text-slate-500 font-normal">（Similar）</span>：</p>
+                <p className="text-red-600 font-bold ml-4 my-1">形狀 相同，大小 按比例</p>
+                <p className="text-blue-700 text-sm ml-4">（放大／縮小）</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="similar-properties" title="2. 相似三角形的性質" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-2">📝 2. 相似三角形的性質</h3>
+            <p className="text-slate-700 font-bold mb-3">按字母前中後認對應角/邊</p>
+            <p className="text-slate-700 mb-2">若 <span className="font-bold">△ABC ~ △XYZ</span>，則</p>
+            
+            <div className="space-y-4 pl-4">
+              <div className="bg-white p-3 rounded shadow-sm">
+                <div className="flex items-start gap-2 mb-1">
+                  <span className="font-bold text-slate-700">(a)</span>
+                  <div>
+                    <span className="font-bold text-slate-800 tracking-wider">∠A=∠X , ∠B=∠Y , ∠C=∠Z</span>
+                  </div>
+                  <span className="ml-auto font-bold text-purple-700">角度相等</span>
+                </div>
+                <p className="text-slate-600 text-sm ml-6 mb-2">〔簡記：<span className="text-red-700 font-bold">相似 △ 的對應角</span>〕</p>
+              </div>
+              
+              <div className="bg-white p-3 rounded shadow-sm">
+                <div className="flex items-start gap-2 mb-1">
+                  <span className="font-bold text-slate-700">(b)</span>
+                  <div>
+                    <div className="font-bold text-slate-800 font-sans tracking-wide">
+                      <Latex math="\dfrac{AB}{XY} = \dfrac{BC}{YZ} = \dfrac{AC}{XZ}" />
+                    </div>
+                  </div>
+                  <span className="ml-auto font-bold text-purple-700">長度按比例</span>
+                </div>
+                <p className="text-slate-600 text-sm ml-6 mb-2">〔簡記：<span className="text-red-700 font-bold">相似 △ 的對應邊</span>〕</p>
+              </div>
+            </div>
+            
+            <div className="bg-white rounded-lg p-4 mt-4 border border-slate-200">
+              <p className="text-sm text-slate-600 mb-2">例如：已知 <span className="font-bold text-slate-800">△ABC ~ △PQR</span>。求 x 和 y。</p>
+              
+              <div className="relative">
+                <div className="text-center mb-2 mx-auto text-green-700 font-bold bg-green-100 px-3 py-1 rounded inline-block">
+                  用一對已知邊找放大比率：4 ÷ 3 = <Latex math="\dfrac{4}{3}" />
+                  <span className="block text-xs text-purple-700 font-bold mt-1">（大 ÷ 小）</span>
+                </div>
+                
+                {/* SVG 1: 相似性質例題 △ABC 及 △PQR */}
+                <svg viewBox="0 0 400 160" className="w-full max-w-lg mx-auto relative z-10 touch-none my-4">
+                  {/* 小三角形 ABC */}
+                  <g transform="translate(30, 20)">
+                    <polygon points="50,10 10,90 90,90" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                    <text x="50" y="-5" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">C</text>
+                    <text x="-5" y="105" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
+                    <text x="105" y="105" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
+                    {/* 角 x */}
+                    <path d="M 25 60 A 25 25 0 0 0 45 90" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <text x="35" y="80" fontSize="14" fill="#334155" fontStyle="italic">x</text>
+                    {/* 邊 AC = 3 */}
+                    <rect x="20" y="40" width="16" height="16" fill="#fef08a" />
+                    <text x="28" y="53" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">3</text>
+                    {/* 邊 AB = 4.5 */}
+                    <text x="50" y="110" fontSize="14" fill="#334155" textAnchor="middle">4.5</text>
+                    <text x="50" y="65" fontSize="24" fill="#2563eb" fontWeight="bold" textAnchor="middle">小</text>
+                  </g>
+                  
+                  {/* 大三角形 PQR */}
+                  <g transform="translate(180, 10)">
+                    <polygon points="66,13 13,120 120,120" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                    <text x="66" y="3" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">R</text>
+                    <text x="-5" y="135" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">P</text>
+                    <text x="135" y="135" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">Q</text>
+                    {/* 角 56° */}
+                    <path d="M 33 80 A 35 35 0 0 0 60 120" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <text x="45" y="105" fontSize="14" fill="#334155">56°</text>
+                    {/* 邊 PR = 4 */}
+                    <rect x="28" y="55" width="16" height="16" fill="#fef08a" />
+                    <text x="36" y="68" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">4</text>
+                    {/* 邊 PQ = y */}
+                    <text x="66" y="140" fontSize="14" fill="#334155" textAnchor="middle" fontStyle="italic">y</text>
+                    <text x="66" y="85" fontSize="24" fill="#2563eb" fontWeight="bold" textAnchor="middle">大</text>
+                  </g>
+                  
+                  {/* 綠色箭頭 */}
+                  <g stroke="#16a34a" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M 85 20 Q 160 -10 230 25" />
+                    <polyline points="220,15 230,25 215,35" />
+                  </g>
+                  
+                  {/* 紅色箭頭 */}
+                  <g stroke="#dc2626" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M 120 125 Q 180 160 250 145" />
+                    <polyline points="240,135 250,145 238,155" />
+                  </g>
+                  <text x="255" y="145" fontSize="16" fill="#dc2626" fontWeight="bold">
+                    4.5 × 4/3 = 6
+                  </text>
+                  <text x="350" y="152" fontSize="14" fill="#16a34a" fontWeight="bold">放大率</text>
+                </svg>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                  <div className="bg-slate-50 rounded p-3 text-[15px]">
+                    <div className="flex justify-between items-center bg-yellow-100 px-2 py-1 rounded mb-2">
+                       <span className="font-bold">∠A = ∠P</span>
+                       <span className="text-slate-600 text-sm">(相似 △ 的對應角)</span>
+                    </div>
+                    <div className="px-2 font-bold mb-4">
+                      x = 56°
+                    </div>
+                    
+                    <div className="flex justify-between items-center bg-yellow-100 px-2 py-1 rounded mb-2">
+                       <span className="font-bold"><Latex math="\dfrac{AB}{PQ} = \dfrac{AC}{PR}" /></span>
+                       <span className="text-slate-600 text-sm">(相似 △ 的對應邊)</span>
+                    </div>
+                    <div className="px-2 space-y-2 font-bold">
+                       <Latex math="\dfrac{4.5}{y} = \dfrac{3}{4}" block left/>
+                       <Latex math="4.5 \times 4 = 3y" block left/>
+                       <Latex math="y = \dfrac{4.5 \times 4}{3}" block left/>
+                       <Latex math="y = \underline{\underline{6}}" block left/>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-blue-50 rounded p-3 flex flex-col justify-center items-center border border-blue-200">
+                    <p className="text-blue-800 font-bold mb-2">💡 快捷找答案技巧 (放大率)：</p>
+                    <div className="text-lg font-bold text-red-700 flex items-center gap-2">
+                      <Latex math="y = 4.5 \times \dfrac{4}{3} = \underline{\underline{6}}" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="similar-conditions" title="3. 相似三角形的判定條件" num={3} color="amber" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-3">📝 3. 相似三角形的判定條件</h3>
+            <p className="text-red-600 font-bold mb-4 bg-red-50 inline-block px-2 py-1 rounded">判斷是否相似△</p>
+            
+            <div className="grid grid-cols-1 gap-4 mb-6">
+              <div className="bg-white p-3 rounded shadow-sm border-l-4 border-blue-400">
+                <div className="flex items-center gap-2 font-bold text-blue-800 text-lg mb-2">
+                  (a) 3隻角
+                </div>
+                {/* 📐 判定 AAA */}
+                <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto my-2">
+                  <g transform="translate(40, 10)">
+                    <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                    {/* 單弧 */}
+                    <path d="M 33 25 A 15 15 0 0 0 47 25" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    {/* 雙弧 */}
+                    <path d="M 23 50 A 20 20 0 0 0 36 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 27 50 A 16 16 0 0 0 40 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    {/* 三弧 */}
+                    <path d="M 68 50 A 20 20 0 0 1 54 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 64 50 A 16 16 0 0 1 50 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 60 50 A 12 12 0 0 1 46 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                  </g>
+                  <g transform="translate(150, -5) scale(1.3)">
+                    <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                    <path d="M 33 25 A 15 15 0 0 0 47 25" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 23 50 A 20 20 0 0 0 36 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 27 50 A 16 16 0 0 0 40 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 68 50 A 20 20 0 0 1 54 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 64 50 A 16 16 0 0 1 50 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 60 50 A 12 12 0 0 1 46 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                  </g>
+                </svg>
+                <p className="text-slate-600 font-bold">〔簡記：<span className="text-red-500">AAA</span>〕</p>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border-l-4 border-blue-400">
+                <div className="flex items-center gap-2 font-bold text-blue-800 text-lg mb-2">
+                  (b) 3條邊
+                </div>
+                {/* 📐 判定 三邊成比例 */}
+                <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto my-2">
+                  <g transform="translate(40, 10)">
+                    <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                    <text x="18" y="45" fontSize="14" fill="#334155" fontStyle="italic">b</text>
+                    <text x="68" y="45" fontSize="14" fill="#334155" fontStyle="italic">c</text>
+                    <text x="45" y="95" fontSize="14" fill="#334155" fontStyle="italic">a</text>
+                  </g>
+                  <g transform="translate(150, -5) scale(1.3)">
+                    <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                    <text x="10" y="45" fontSize="12" fill="#334155" fontStyle="italic">kb</text>
+                    <text x="65" y="45" fontSize="12" fill="#334155" fontStyle="italic">kc</text>
+                    <text x="40" y="95" fontSize="12" fill="#334155" fontStyle="italic">ka</text>
+                  </g>
+                </svg>
+                <p className="text-slate-600 font-bold">〔簡記：<span className="text-red-500">三邊成比例</span>〕</p>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border-l-4 border-blue-400">
+                <div className="flex items-center gap-2 font-bold text-blue-800 text-lg mb-2">
+                  (c) 2條邊夾住一隻角 <span className="text-green-600 text-sm bg-green-50 px-2 py-0.5 rounded">← 夾角</span>
+                </div>
+                {/* 📐 判定 兩邊成比例且夾角相等 */}
+                <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto my-2 overflow-visible">
+                  <g transform="translate(20, 10)">
+                    <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                    <text x="18" y="45" fontSize="14" fill="#334155" fontStyle="italic">b</text>
+                    <text x="45" y="95" fontSize="14" fill="#334155" fontStyle="italic">a</text>
+                    <path d="M 23 50 A 20 20 0 0 0 36 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    {/* 綠箭頭指夾角 */}
+                    <g stroke="#16a34a" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M 60 55 Q 50 65 33 70" />
+                      <polyline points="38,62 33,70 42,75" />
+                    </g>
+                    <text x="65" y="55" fontSize="14" fill="#16a34a" fontWeight="bold">夾角</text>
+                  </g>
+                  <g transform="translate(150, -5) scale(1.3)">
+                    <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                    <text x="10" y="45" fontSize="12" fill="#334155" fontStyle="italic">kb</text>
+                    <text x="40" y="95" fontSize="12" fill="#334155" fontStyle="italic">ka</text>
+                    <path d="M 23 50 A 20 20 0 0 0 36 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                  </g>
+                </svg>
+                <p className="text-slate-600 font-bold">〔簡記：<span className="text-red-500">兩邊成比例且夾角相等</span>〕</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-sm text-slate-600 mb-3">例如：考慮以下兩個三角形。</p>
+              {/* 📐 判定條件例題 */}
+              <svg viewBox="0 0 400 160" className="w-full max-w-lg mx-auto relative z-10 touch-none my-4">
+                {/* 左下三角形 ABC */}
+                <g transform="translate(60, 40)">
+                  <polygon points="50,10 0,90 100,90" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  <text x="50" y="0" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
+                  <text x="-10" y="100" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
+                  <text x="110" y="100" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">C</text>
+                  
+                  {/* 角 A = 80° */}
+                  <path d="M 40 25 A 25 25 0 0 0 55 25" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <text x="32" y="45" fontSize="12" fill="#334155">80°</text>
+                  
+                  {/* 角 B = 40° */}
+                  <path d="M 18 60 A 25 25 0 0 0 35 90" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <text x="32" y="80" fontSize="12" fill="#334155">40°</text>
+                </g>
+                
+                {/* 右上大三角形 PQR 倒轉。原圖 P 在左(倒轉的底)，Q在右(倒轉的底)，R在下頂點。不過原圖上 R 標 80，Q標 60。
+                    我們可以旋轉。例如: Q左上，R右上，P下。 */}
+                <g transform="translate(260, 30) scale(1.3)">
+                  {/* points=(0,0) (100,0) (50,80) , let R=100,0, Q=0,0, P=50,80. But the text says PR=4...
+                      Wait, the spec says "倒轉擺放，∠R = 80°，∠Q = 60°，∠P留空" 
+                      Let's do R at top right, P at top left, Q at bottom. 
+                      Let's use the provided standard coordinates rotated. */}
+                  <polygon points="10,0 80,0 60,60" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  <text x="5" y="-5" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">P</text>
+                  <text x="85" y="-5" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">R</text>
+                  <text x="65" y="70" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">Q</text>
+                  
+                  {/* 角 R = 80° */}
+                  <path d="M 58 0 A 20 20 0 0 0 71 25" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <text x="52" y="25" fontSize="10" fill="#334155">80°</text>
+                  
+                  {/* 角 Q = 60° */}
+                  <path d="M 67 40 A 20 20 0 0 0 52 40" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <text x="68" y="47" fontSize="10" fill="#334155">60°</text>
+                </g>
+              </svg>
+              
+              <div className="bg-slate-50 rounded p-3 font-sans">
+                <div className="grid grid-cols-[auto_auto_1fr_auto] gap-x-2 text-[15px] mb-2 leading-loose">
+                  <div className="text-right">∠C</div>
+                  <div className="text-center">=</div>
+                  <div className="text-left font-bold text-slate-700">180° - 80° - 40°</div>
+                  <div className="text-right text-slate-500 text-sm">(△ 內角和)</div>
+
+                  <div className="text-right"></div>
+                  <div className="text-center">=</div>
+                  <div className="text-left font-bold text-slate-700">60°</div>
+                  <div className="text-right"></div>
+
+                  <div className="text-right">∠P</div>
+                  <div className="text-center">=</div>
+                  <div className="text-left font-bold text-slate-700">180° - 60° - 80°</div>
+                  <div className="text-right text-slate-500 text-sm">(△ 內角和)</div>
+
+                  <div className="text-right"></div>
+                  <div className="text-center">=</div>
+                  <div className="text-left font-bold text-slate-700">40°</div>
+                  <div className="text-right"></div>
+                </div>
+
+                <div className="border-t border-slate-300 pt-3 relative">
+                  <div className="absolute right-4 bottom-2 text-red-600 font-bold transform -rotate-12 bg-red-50 px-2 py-1 border border-red-200 shadow-sm rounded">判定條件</div>
+                  <table className="text-[15px] mx-10 text-slate-800">
+                    <tbody>
+                      <tr>
+                        <td className="pr-2 pb-1 font-serif italic text-lg">∵</td>
+                        <td className="font-bold">∠A = ∠R</td>
+                      </tr>
+                      <tr>
+                        <td className="pr-2 pb-1"></td>
+                        <td className="font-bold">∠B = ∠P</td>
+                      </tr>
+                      <tr>
+                        <td className="pr-2 pb-2"></td>
+                        <td className="font-bold">∠C = ∠Q</td>
+                      </tr>
+                      <tr>
+                        <td className="pr-2 pt-2 font-serif italic text-lg border-t border-slate-300">∴</td>
+                        <td className="font-bold pt-2 border-t border-slate-300">△ABC ~ △RPQ <span className="border-b-2 border-red-500 text-red-700 mx-1 px-1">(AAA)</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="similar-example" title="4. 求未知量例題 (短中長)" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-3">📝 4. 求下列各對相似三角形中的未知量。</h3>
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <div className="font-bold text-lg mb-3 flex items-center gap-4">
+                <span>19. <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△ABC</span> ~ <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△EDC</span></span>
+                <span className="text-red-600 text-sm bg-red-50 px-2 py-1 rounded-full flex items-center gap-1 group relative">
+                  ← 1. 先看已知對應邊
+                </span>
+              </div>
+
+              {/* 📐 第 19 題短中長 */}
+              <svg viewBox="0 0 400 180" className="w-full max-w-lg mx-auto relative z-10 touch-none my-4">
+                {/* ABCD 對接於 C。 A=(100,20), B=(40, 140), C=(220,100), D=(320, 70), E=(280, 150) */}
+                <g transform="translate(10, 0)">
+                  {/* BC-DC 線段 highlighted */}
+                  <line x1="40" y1="140" x2="320" y2="70" stroke="#16a34a" strokeWidth="4" />
+                  
+                  {/* 大三角形 ABC */}
+                  <polygon points="100,20 40,140 220,100" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  <text x="100" y="10" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
+                  <text x="30" y="155" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
+                  <text x="210" y="90" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">C</text>
+                  
+                  {/* 中間大字 */}
+                  <text x="120" y="95" fontSize="28" fill="#7e22ce" fontWeight="bold">大</text>
+                  
+                  {/* AB = 8 (中) */}
+                  <text x="50" y="75" fontSize="16" fill="#334155" textAnchor="middle">8</text>
+                  <text x="70" y="65" fontSize="14" fill="#0284c7" fontWeight="bold">中</text>
+                  <path d="M 68 68 L 60 78 L 72 73" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                  
+                  {/* BC = 10 (長) */}
+                  <text x="140" y="135" fontSize="16" fill="#334155" textAnchor="middle">10</text>
+                  <text x="165" y="135" fontSize="14" fill="#0284c7" fontWeight="bold">長</text>
+                  <path d="M 160 120 L 150 115 L 155 125" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                  
+                  {/* AC = x (短) */}
+                  <text x="175" y="65" fontSize="16" fill="#334155" fontStyle="italic">x</text>
+                  <text x="160" y="55" fontSize="14" fill="#0284c7" fontWeight="bold">短</text>
+                  <path d="M 168 58 L 175 62 L 165 65" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+
+                  {/* 小三角形 EDC (E=280,150, D=320,70, C=220,100) */}
+                  <polygon points="280,150 320,70 220,100" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  <text x="330" y="65" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">D</text>
+                  <text x="280" y="168" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">E</text>
+                  
+                  {/* 中間小字 */}
+                  <text x="280" y="115" fontSize="24" fill="#7e22ce" fontWeight="bold">小</text>
+                  
+                  {/* ED = y (中) */}
+                  <text x="305" y="125" fontSize="16" fill="#334155" fontStyle="italic">y</text>
+                  <text x="320" y="125" fontSize="14" fill="#0284c7" fontWeight="bold">中</text>
+                  <path d="M 315 120 L 308 115 L 310 125" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                  
+                  {/* DC = 5 (長) */}
+                  <text x="270" y="80" fontSize="16" fill="#334155" textAnchor="middle">5</text>
+                  <text x="290" y="70" fontSize="14" fill="#0284c7" fontWeight="bold">長</text>
+                  <path d="M 285 75 L 275 80 L 285 85" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                  
+                  {/* EC = 3 (短) */}
+                  <text x="245" y="135" fontSize="16" fill="#334155" textAnchor="middle">3</text>
+                  <text x="235" y="145" fontSize="14" fill="#0284c7" fontWeight="bold">短</text>
+                  <path d="M 245 140 L 252 135 L 255 145" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                </g>
+              </svg>
+
+              <div className="bg-blue-50 text-blue-900 font-bold p-3 rounded mb-4 text-center text-lg border border-blue-200">
+                可以用「<span className="text-red-600">短、中、長</span>」的觀察方法去辨認
+              </div>
+
+              <div className="bg-slate-50 rounded p-4 font-sans text-slate-800">
+                <div className="mb-4">
+                  <p className="text-red-700 font-bold mb-1">2. 找放大率：</p>
+                  <p className="font-bold text-lg ml-6">
+                    <span className="text-green-700">10 ÷ 5 = 2 倍</span> <span className="text-blue-700 text-sm">(大 ÷ 小)</span>
+                  </p>
+                </div>
+                
+                <div>
+                  <p className="text-red-700 font-bold mb-1">3. 以放大率找未知數：</p>
+                  <div className="grid grid-cols-[1rem_auto_auto_auto] gap-x-2 gap-y-3 font-bold text-lg ml-6 text-green-700 items-center">
+                    <div></div>
+                    <div className="text-right">x</div>
+                    <div className="text-center">=</div>
+                    <div className="text-left">3(2) = 6</div>
+
+                    <div></div>
+                    <div className="text-right">2y</div>
+                    <div className="text-center">=</div>
+                    <div className="text-left">8</div>
+
+                    <div></div>
+                    <div className="text-right">y</div>
+                    <div className="text-center">=</div>
+                    <div className="text-left">4</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+// ========================================
 // CH2 有關三角形和直線的角 (F2)
 // ========================================
 export const TriangleLineAnglesNotes = ({ activeSub }) => {
