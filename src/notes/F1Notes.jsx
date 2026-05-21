@@ -3984,6 +3984,23 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
                  <p className="text-slate-700 mt-2 relative z-10 text-[15px] leading-relaxed">
                    必須是 <strong>直角</strong> (R) + <strong>斜邊</strong> (H) 相等 + <strong>另一條邊</strong> (S) 相等，才算是 <span className="font-bold text-blue-700 bg-blue-100 px-1 rounded">RHS</span>。
                  </p>
+                  <svg width="240" height="90" viewBox="0 0 240 90" className="mx-auto mt-4 block relative z-10">
+                    <g transform="translate(15, 15)">
+                      <path d="M 0 0 L 0 60 L 50 60 Z" fill="#ebf8ff" stroke="#1e3a5f" strokeWidth="2" strokeLinejoin="round" />
+                      <rect x="0" y="50" width="10" height="10" fill="none" stroke="#ef4444" strokeWidth="1.5" />
+                      <line x1="-7" y1="30" x2="7" y2="30" stroke="#0ea5e9" strokeWidth="2" />
+                      <line x1="21" y1="53" x2="21" y2="67" stroke="#0ea5e9" strokeWidth="2" />
+                      <line x1="29" y1="53" x2="29" y2="67" stroke="#0ea5e9" strokeWidth="2" />
+                    </g>
+                    <g transform="translate(145, 15) scale(-1, 1)">
+                      <path d="M 0 0 L 0 60 L 50 60 Z" fill="#ebf8ff" stroke="#1e3a5f" strokeWidth="2" strokeLinejoin="round" />
+                      <rect x="0" y="50" width="10" height="10" fill="none" stroke="#ef4444" strokeWidth="1.5" />
+                      <line x1="-7" y1="30" x2="7" y2="30" stroke="#0ea5e9" strokeWidth="2" />
+                      <line x1="21" y1="53" x2="21" y2="67" stroke="#0ea5e9" strokeWidth="2" />
+                      <line x1="29" y1="53" x2="29" y2="67" stroke="#0ea5e9" strokeWidth="2" />
+                    </g>
+                    <text x="165" y="45" fontSize="20" fontWeight="bold" fill="#dc2626" dominantBaseline="middle">SAS</text>
+                  </svg>
                </div>
             </div>
           </div>
