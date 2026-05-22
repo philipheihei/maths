@@ -385,8 +385,10 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                 </span>
               </div>
 
-              {/* 📐 第 19 題短中長 */}
-              <svg viewBox="0 0 400 180" className="w-full max-w-lg mx-auto relative z-10 touch-none my-4">
+              <div className="flex flex-col lg:flex-row gap-6 items-start mt-4">
+                <div className="w-full lg:w-[55%] flex-shrink-0">
+                  {/* 📐 第 19 題短中長 */}
+                  <svg viewBox="0 0 400 180" className="w-full mx-auto relative z-10 touch-none my-2">
                 {/* ABCD 對接於 C。 A=(100,20), B=(40, 140), C=(220,100), D=(320, 70), E=(280, 150) */}
                 <g transform="translate(10, 0)">
                   {/* BC-DC 線段 highlighted */}
@@ -440,8 +442,10 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                   <path d="M 245 140 L 252 135 L 255 145" fill="none" stroke="#0284c7" strokeWidth="1.5" />
                 </g>
               </svg>
+                </div>
 
-              <div className="bg-blue-50 text-blue-900 font-bold p-3 rounded mb-4 text-center text-lg border border-blue-200">
+                <div className="w-full lg:w-[45%] space-y-4">
+                  <div className="bg-blue-50 text-blue-900 font-bold p-3 rounded text-center text-base border border-blue-200">
                 可以用「<span className="text-red-600">短、中、長</span>」的觀察方法去辨認
               </div>
 
@@ -471,6 +475,8 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                     <div className="text-center">=</div>
                     <div className="text-left">4</div>
                   </div>
+                </div>
+              </div>
                 </div>
               </div>
             </div>
