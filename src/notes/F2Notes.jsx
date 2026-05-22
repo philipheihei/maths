@@ -113,8 +113,8 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                     <text x="-5" y="105" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
                     <text x="105" y="105" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
                     {/* 角 x */}
-                    <path d="M 25 60 A 25 25 0 0 1 45 90" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                    <text x="35" y="80" fontSize="14" fill="#334155" textAnchor="middle" fontStyle="italic">x</text>
+                    <path d="M 30 90 A 20 20 0 0 0 18.9 72.1" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <text x="35" y="82" fontSize="14" fill="#334155" textAnchor="middle" fontStyle="italic">x</text>
                     {/* 邊 AC = 3 */}
                     <rect x="20" y="40" width="16" height="16" fill="#fef08a" />
                     <text x="28" y="53" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">3</text>
@@ -130,8 +130,8 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                     <text x="-5" y="135" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">P</text>
                     <text x="135" y="135" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">Q</text>
                     {/* 角 56° */}
-                    <path d="M 33 80 A 35 35 0 0 0 60 120" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                    <text x="45" y="105" fontSize="14" fill="#334155">56°</text>
+                    <path d="M 33 120 A 20 20 0 0 0 21.9 102.1" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <text x="44" y="112" fontSize="14" fill="#334155">56°</text>
                     {/* 邊 PR = 4 */}
                     <rect x="28" y="55" width="16" height="16" fill="#fef08a" />
                     <text x="36" y="68" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">4</text>
