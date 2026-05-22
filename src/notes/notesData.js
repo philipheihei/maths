@@ -495,6 +495,7 @@ export const NOTES_COMPONENTS = {
   'pythagoras-f2': PythagorasF2Notes,
   'trig-ratios-f2': TrigRatiosF2Notes,
   'factorization': FactorizationNotes,
+  'percentage-f3': PercentageF3Notes,
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,
   'triangle-lines': TriangleLinesNotes,

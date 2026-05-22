@@ -46,13 +46,13 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">📝 1. 認識概念</h3>
-            <div className="space-y-3">
-              <div className="bg-white rounded p-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="bg-white rounded p-3 shadow-sm border border-slate-100">
                 <p className="font-bold text-slate-800">全等 <span className="text-slate-500 font-normal">（Congruent）</span>：</p>
                 <p className="text-red-600 font-bold ml-4 my-1">形狀 和 大小 一樣</p>
                 <p className="text-blue-700 text-sm ml-4">（邊長／角度相等）</p>
               </div>
-              <div className="bg-white rounded p-3">
+              <div className="bg-white rounded p-3 shadow-sm border border-slate-100">
                 <p className="font-bold text-slate-800">相似 <span className="text-slate-500 font-normal">（Similar）</span>：</p>
                 <p className="text-red-600 font-bold ml-4 my-1">形狀 相同，大小 按比例</p>
                 <p className="text-blue-700 text-sm ml-4">（放大／縮小）</p>
@@ -113,8 +113,8 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                     <text x="-5" y="105" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
                     <text x="105" y="105" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
                     {/* 角 x */}
-                    <path d="M 25 60 A 25 25 0 0 0 45 90" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                    <text x="35" y="80" fontSize="14" fill="#334155" fontStyle="italic">x</text>
+                    <path d="M 25 60 A 25 25 0 0 1 45 90" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <text x="35" y="80" fontSize="14" fill="#334155" textAnchor="middle" fontStyle="italic">x</text>
                     {/* 邊 AC = 3 */}
                     <rect x="20" y="40" width="16" height="16" fill="#fef08a" />
                     <text x="28" y="53" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">3</text>
@@ -201,30 +201,33 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
             <div className="grid grid-cols-1 gap-4 mb-6">
               <div className="bg-white p-3 rounded shadow-sm border-l-4 border-blue-400">
                 <div className="flex items-center gap-2 font-bold text-blue-800 text-lg mb-2">
-                  (a) 3隻角
+                  (a) 3對角
                 </div>
                 {/* 📐 判定 AAA */}
-                <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto my-2">
+                <svg viewBox="0 0 320 130" className="w-full max-w-sm mx-auto my-2 overflow-visible">
                   <g transform="translate(40, 10)">
                     <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
                     {/* 單弧 */}
-                    <path d="M 33 25 A 15 15 0 0 0 47 25" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 34.1 23.8 A 15 15 0 0 0 47.4 23.0" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
                     {/* 雙弧 */}
-                    <path d="M 23 50 A 20 20 0 0 0 36 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    <path d="M 27 50 A 16 16 0 0 0 40 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 25 80 A 15 15 0 0 0 15.9 66.2" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 28 80 A 18 18 0 0 0 17.1 63.5" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
                     {/* 三弧 */}
-                    <path d="M 68 50 A 20 20 0 0 1 54 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    <path d="M 64 50 A 16 16 0 0 1 50 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    <path d="M 60 50 A 12 12 0 0 1 46 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 67 80 A 13 13 0 0 1 73.6 68.7" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 64 80 A 16 16 0 0 1 72.1 66.1" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 61 80 A 19 19 0 0 1 70.6 63.5" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
                   </g>
-                  <g transform="translate(150, -5) scale(1.3)">
+                  <g transform="translate(160, 5) scale(1.3)">
                     <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                    <path d="M 33 25 A 15 15 0 0 0 47 25" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    <path d="M 23 50 A 20 20 0 0 0 36 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    <path d="M 27 50 A 16 16 0 0 0 40 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    <path d="M 68 50 A 20 20 0 0 1 54 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    <path d="M 64 50 A 16 16 0 0 1 50 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    <path d="M 60 50 A 12 12 0 0 1 46 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    {/* 單弧 */}
+                    <path d="M 34.1 23.8 A 15 15 0 0 0 47.4 23.0" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    {/* 雙弧 */}
+                    <path d="M 25 80 A 15 15 0 0 0 15.9 66.2" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 28 80 A 18 18 0 0 0 17.1 63.5" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    {/* 三弧 */}
+                    <path d="M 67 80 A 13 13 0 0 1 73.6 68.7" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 64 80 A 16 16 0 0 1 72.1 66.1" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 61 80 A 19 19 0 0 1 70.6 63.5" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
                   </g>
                 </svg>
                 <p className="text-slate-600 font-bold">〔簡記：<span className="text-red-500">AAA</span>〕</p>
@@ -232,19 +235,19 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
 
               <div className="bg-white p-3 rounded shadow-sm border-l-4 border-blue-400">
                 <div className="flex items-center gap-2 font-bold text-blue-800 text-lg mb-2">
-                  (b) 3條邊
+                  (b) 3對邊
                 </div>
                 {/* 📐 判定 三邊成比例 */}
-                <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto my-2">
+                <svg viewBox="0 0 320 130" className="w-full max-w-sm mx-auto my-2 overflow-visible">
                   <g transform="translate(40, 10)">
                     <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                    <text x="18" y="45" fontSize="14" fill="#334155" fontStyle="italic">b</text>
+                    <text x="14" y="45" fontSize="14" fill="#334155" fontStyle="italic">b</text>
                     <text x="68" y="45" fontSize="14" fill="#334155" fontStyle="italic">c</text>
                     <text x="45" y="95" fontSize="14" fill="#334155" fontStyle="italic">a</text>
                   </g>
-                  <g transform="translate(150, -5) scale(1.3)">
+                  <g transform="translate(160, 5) scale(1.3)">
                     <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                    <text x="10" y="45" fontSize="12" fill="#334155" fontStyle="italic">kb</text>
+                    <text x="6" y="45" fontSize="12" fill="#334155" fontStyle="italic">kb</text>
                     <text x="65" y="45" fontSize="12" fill="#334155" fontStyle="italic">kc</text>
                     <text x="40" y="95" fontSize="12" fill="#334155" fontStyle="italic">ka</text>
                   </g>
@@ -254,27 +257,27 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
 
               <div className="bg-white p-3 rounded shadow-sm border-l-4 border-blue-400">
                 <div className="flex items-center gap-2 font-bold text-blue-800 text-lg mb-2">
-                  (c) 2條邊夾住一隻角 <span className="text-green-600 text-sm bg-green-50 px-2 py-0.5 rounded">← 夾角</span>
+                  (c) 2對邊夾住一對角 <span className="text-green-600 text-sm bg-green-50 px-2 py-0.5 rounded">← 夾角</span>
                 </div>
                 {/* 📐 判定 兩邊成比例且夾角相等 */}
-                <svg viewBox="0 0 300 100" className="w-full max-w-sm mx-auto my-2 overflow-visible">
+                <svg viewBox="0 0 320 130" className="w-full max-w-sm mx-auto my-2 overflow-visible">
                   <g transform="translate(20, 10)">
                     <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                    <text x="18" y="45" fontSize="14" fill="#334155" fontStyle="italic">b</text>
+                    <text x="14" y="45" fontSize="14" fill="#334155" fontStyle="italic">b</text>
                     <text x="45" y="95" fontSize="14" fill="#334155" fontStyle="italic">a</text>
-                    <path d="M 23 50 A 20 20 0 0 0 36 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 25 80 A 15 15 0 0 0 15.9 66.2" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
                     {/* 綠箭頭指夾角 */}
                     <g stroke="#16a34a" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M 60 55 Q 50 65 33 70" />
-                      <polyline points="38,62 33,70 42,75" />
+                      <path d="M 50 65 Q 40 70 30 72" />
+                      <polyline points="33,66 30,72 37,76" />
                     </g>
-                    <text x="65" y="55" fontSize="14" fill="#16a34a" fontWeight="bold">夾角</text>
+                    <text x="55" y="58" fontSize="14" fill="#16a34a" fontWeight="bold">夾角</text>
                   </g>
-                  <g transform="translate(150, -5) scale(1.3)">
+                  <g transform="translate(160, 5) scale(1.3)">
                     <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                    <text x="10" y="45" fontSize="12" fill="#334155" fontStyle="italic">kb</text>
+                    <text x="6" y="45" fontSize="12" fill="#334155" fontStyle="italic">kb</text>
                     <text x="40" y="95" fontSize="12" fill="#334155" fontStyle="italic">ka</text>
-                    <path d="M 23 50 A 20 20 0 0 0 36 80" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                    <path d="M 25 80 A 15 15 0 0 0 15.9 66.2" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
                   </g>
                 </svg>
                 <p className="text-slate-600 font-bold">〔簡記：<span className="text-red-500">兩邊成比例且夾角相等</span>〕</p>
@@ -293,32 +296,27 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                   <text x="110" y="100" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">C</text>
                   
                   {/* 角 A = 80° */}
-                  <path d="M 40 25 A 25 25 0 0 0 55 25" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                  <text x="32" y="45" fontSize="12" fill="#334155">80°</text>
+                  <path d="M 39.4 27 A 20 20 0 0 0 60.6 27" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <text x="50" y="45" fontSize="12" fill="#334155" textAnchor="middle">80°</text>
                   
                   {/* 角 B = 40° */}
-                  <path d="M 18 60 A 25 25 0 0 0 35 90" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <path d="M 10.6 73 A 20 20 0 0 1 20 90" fill="none" stroke="#2563eb" strokeWidth="1.5" />
                   <text x="32" y="80" fontSize="12" fill="#334155">40°</text>
                 </g>
                 
-                {/* 右上大三角形 PQR 倒轉。原圖 P 在左(倒轉的底)，Q在右(倒轉的底)，R在下頂點。不過原圖上 R 標 80，Q標 60。
-                    我們可以旋轉。例如: Q左上，R右上，P下。 */}
+                {/* 右上大三角形 PQR */}
                 <g transform="translate(260, 30) scale(1.3)">
-                  {/* points=(0,0) (100,0) (50,80) , let R=100,0, Q=0,0, P=50,80. But the text says PR=4...
-                      Wait, the spec says "倒轉擺放，∠R = 80°，∠Q = 60°，∠P留空" 
-                      Let's do R at top right, P at top left, Q at bottom. 
-                      Let's use the provided standard coordinates rotated. */}
                   <polygon points="10,0 80,0 60,60" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
                   <text x="5" y="-5" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">P</text>
                   <text x="85" y="-5" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">R</text>
                   <text x="65" y="70" fontSize="12" fill="#334155" fontStyle="italic" textAnchor="middle">Q</text>
                   
                   {/* 角 R = 80° */}
-                  <path d="M 58 0 A 20 20 0 0 0 71 25" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                  <text x="52" y="25" fontSize="10" fill="#334155">80°</text>
+                  <path d="M 65 0 A 15 15 0 0 0 75.3 14.2" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <text x="60" y="18" fontSize="10" fill="#334155" textAnchor="middle">80°</text>
                   
                   {/* 角 Q = 60° */}
-                  <path d="M 67 40 A 20 20 0 0 0 52 40" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <path d="M 50.4 48.5 A 15 15 0 0 1 64.7 45.8" fill="none" stroke="#2563eb" strokeWidth="1.5" />
                   <text x="68" y="47" fontSize="10" fill="#334155">60°</text>
                 </g>
               </svg>

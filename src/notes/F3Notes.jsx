@@ -270,8 +270,11 @@ export const PercentageF3Notes = ({ activeSub }) => {
             <p className="text-slate-700 mb-3">e.g. $100，每個月<span className="bg-yellow-200 px-1 rounded">增長</span> <Latex math="5\%" />，增長<span className="bg-yellow-200 px-1 rounded">4個月</span></p>
             <div className="bg-slate-50 p-3 rounded">
               <p className="text-sm text-slate-600">列式：</p>
-              <Latex math="\$100 \times (1 \mathbf{+} 5\%)^{\mathbf{4}} \gets \text{連續增長的期數}" block />
-              <Latex math="= \$121.55" block />
+              <Latex
+                math="\begin{aligned} \text{價值} &= \$100 \times (1 + 5\%)^{4} \leftarrow \text{連續增長的期數} \\ &= \$121.55 \end{aligned}"
+                block
+                left
+              />
             </div>
           </div>
 
@@ -280,11 +283,12 @@ export const PercentageF3Notes = ({ activeSub }) => {
             <p className="text-slate-700 mb-3">e.g. $8720，每年<span className="bg-yellow-200 px-1 rounded">折舊 (衰減)</span> <Latex math="10\%" />，<span className="bg-yellow-200 px-1 rounded">8年後</span>的價值是？</p>
             <div className="bg-slate-50 p-3 rounded">
               <p className="text-sm text-slate-600">列式：</p>
-              <Latex math="\$8720 \times (1 \mathbf{-} 10\%)^{\mathbf{8}}" block />
-              <div className="flex items-center justify-center gap-2 mt-2">
-                <Latex math="= \$3754" />
-                <span className="text-green-700 text-sm">(準確至最接近的元)</span>
-              </div>
+              <Latex
+                math="\begin{aligned} \text{價值} &= \$8720 \times (1 - 10\%)^{8} \\ &= \$3754 \end{aligned}"
+                block
+                left
+              />
+              <p className="text-green-700 text-sm ml-8">(準確至最接近的元)</p>
             </div>
           </div>
         </div>
