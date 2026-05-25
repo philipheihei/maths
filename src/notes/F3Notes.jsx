@@ -187,6 +187,90 @@ export const FactorizationNotes = ({ activeSub }) => {
 };
 
 // ========================================
+// CH2 指數定律 (F3)
+// ========================================
+export const LawsOfIndicesNotes = ({ activeSub }) => {
+  const s1 = useRef(null);
+  const s2 = useRef(null);
+  const s3 = useRef(null);
+
+  return (
+    <div className="space-y-6">
+      <CollapsibleSection id="laws" title="指數定律" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">💡 提示</h3>
+            <p className="text-sm text-slate-700">緊記：次方和一般數字的混算法是不同的。</p>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">📝 規則名稱：有括號指數乘</h3>
+            <Latex math="(a^2 b^3)^3 = a^{2 \times 3} b^{3 \times 3} = a^6 b^9" block />
+            <Latex math="\left(\frac{a^2}{b^3}\right)^4 = \frac{a^{2 \times 4}}{b^{3 \times 4}} = \frac{a^8}{b^{12}}" block />
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-3">📝 規則名稱：無括號指數加 (乘法) / 減 (除法)</h3>
+            <Latex math="a^2 \cdot a^3 = a^{2+3} = a^5" block />
+            <Latex math="\frac{a^3}{a^2} = a^{3-2} = a^1" block />
+          </div>
+
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-2">🔥 技巧：處理指數約簡時</h3>
+            <p className="text-slate-700 mb-2">指數較大的位置留，然後大減細。</p>
+            <Latex math="\frac{8y^3}{y^5} = \frac{8}{y^{5-3}} = \frac{8}{y^2}" block />
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="scientific-notation" title="科學記數法" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="text-slate-700 mb-2">正指數向右移小數點：</p>
+            <Latex math="1.496 \times 10^8 = 149600000" block />
+            <Latex math="\text{前面數字必需 } \ge 1 \text{ 或 } < 10" block />
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="text-slate-700 mb-2">負指數向左移小數點：</p>
+            <Latex math="5.62 \times 10^{-5} = 0.0000562" block />
+          </div>
+
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">🖩 計算機顯示科學記數法</h3>
+            <p className="text-slate-700 mb-2">當數字很長時，計算機會顯示科學記數法：</p>
+            <p className="text-center bg-[#a3b18a] text-[#1c1c1c] font-mono py-2 rounded mb-2 border-4 border-gray-400">
+              <span className="block text-right pr-4 tracking-widest text-sm">0.0000031715</span>
+              <span className="block text-right pr-4 text-xl">3.1715 <span className="text-xs -mt-1 alignment-baseline relative -top-1 ml-1">-06</span></span>
+            </p>
+            <Latex math="0.0000031715 \rightarrow 3.1715 \times 10^{-6}" block />
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="new-knowledge" title="新學知識" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">1.1 0次方</h3>
+            <p className="text-slate-700 font-bold mb-2">只需緊記：任何數的0次方 = 1</p>
+            <Latex math="x^0 = 1 \quad , \quad 3^0 = 1" block />
+            <Latex math="(-6)^0 = 1 \quad , \quad -6^0 = -1" block />
+            <p className="text-slate-600 text-sm mt-2">因為0次方只應用於6，不包括負號。</p>
+          </div>
+
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-3">1.2 負次方 (需轉成正次方)</h3>
+            <p className="bg-yellow-200 px-1 rounded inline-block text-slate-800 mb-2">負變正的方法：分數上下調轉</p>
+            <Latex math="x^{-4} = \frac{1}{x^4}" block />
+            <Latex math="\frac{1}{y^{-3}} = y^3" block />
+          </div>
+        </div>
+      </CollapsibleSection>
+    </div>
+  );
+};
+
+// ========================================
 // CH3 百分法(二) (F3)
 // ========================================
 export const PercentageF3Notes = ({ activeSub }) => {

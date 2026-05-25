@@ -2283,17 +2283,18 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
         <CollapsibleSection id="circles-circumference-arc" title="圓周與弧長" num={1} color="teal" activeSub={activeSub} sectionRef={s1}>
           <div className="flex flex-col md:flex-row gap-6">
             {/* 左：圓周 */}
-            <div className="w-full md:basis-[36%] md:max-w-[36%] md:flex-none bg-white rounded-lg p-4 border border-teal-200">
-              <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2">
+            <div className="w-full md:basis-[36%] md:max-w-[36%] md:flex-none bg-white rounded-lg p-4 border border-teal-200 flex flex-col">
+              <h3 className="font-bold text-slate-800 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-teal-100 pb-4 pt-6 min-h-[96px]">
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">1.</span> 圓周：
-                <span className="bg-green-200 text-slate-800 px-2 py-0.5 rounded font-sans"><Latex math="2 \pi r" /></span>
+                <span className="bg-green-200 text-slate-800 px-2 py-0.5 rounded font-sans relative">
+                  <Latex math="2 \pi r" />
+                  <div className="absolute -bottom-6 left-2 text-sm text-green-700 font-bold whitespace-nowrap">
+                    ↖ 半徑
+                  </div>
+                </span>
               </h3>
-              
-              <div className="relative text-sm text-green-700 font-bold ml-16 -mt-2 mb-2">
-                <span className="absolute -top-3 left-6">↖ 半徑</span>
-              </div>
 
-              <div className="flex justify-center mb-4">
+              <div className="flex justify-center flex-1 items-center py-4">
                 <svg viewBox="0 0 160 160" className="w-40 h-40">
                   <circle cx="80" cy="80" r="70" fill="none" stroke="#000" strokeWidth="2" />
                   <line x1="80" y1="80" x2="80" y2="150" stroke="#000" strokeWidth="2" />
@@ -2303,18 +2304,18 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                 </svg>
               </div>
 
-              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold">
-                <p>例：圓周：<Latex math="2 \pi (8) = 16 \pi" /> cm</p>
+              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold w-full mt-auto">
+                <p className="flex items-center flex-wrap gap-y-1">例：圓周：<Latex math="2 \pi (8) = 16 \pi" /> <span className="ml-1">cm</span></p>
               </div>
             </div>
 
             {/* 右：弧長 */}
-            <div className="w-full md:basis-[64%] md:max-w-[64%] md:flex-none bg-white rounded-lg p-4 border border-teal-200 relative">
+            <div className="w-full md:basis-[64%] md:max-w-[64%] md:flex-none bg-white rounded-lg p-4 border border-teal-200 relative flex flex-col">
               <div className="absolute left-[-26px] top-1/2 -translate-y-1/2 hidden md:block text-slate-400">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </div>
 
-              <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-teal-100 pb-2 pt-6">
+              <h3 className="font-bold text-slate-800 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-teal-100 pb-4 pt-6 min-h-[96px]">
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">2.</span> 弧長 <span className="text-sm font-normal text-green-700">(圓周的一部份)</span>：
                 <span className="bg-green-200 px-2 py-0.5 rounded font-sans relative">
                   <div className="absolute -top-7 left-1/2 -translate-x-1/2 text-sm font-bold text-green-700 whitespace-nowrap hidden md:block">
@@ -2326,7 +2327,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                 <span className="bg-yellow-300 px-2 py-0.5 rounded font-sans text-xl"><Latex math="\dfrac{\theta}{360^\circ}" /></span>
               </h3>
 
-              <div className="flex justify-center md:justify-start md:ml-10 mb-4 mt-4 relative min-h-[160px]">
+              <div className="flex justify-center md:justify-start md:ml-10 flex-1 items-center relative py-4">
                  <div className="relative">
                    <svg viewBox="0 0 160 160" className="w-40 h-40 overflow-visible">
                      <circle cx="80" cy="80" r="70" fill="none" stroke="#64748b" strokeWidth="2" strokeDasharray="6 4" />
@@ -2365,11 +2366,11 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                  </div>
               </div>
 
-              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold w-full relative">
+              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold w-full mt-auto">
                 <p className="flex items-center flex-wrap gap-y-1">
                   <Latex math={String.raw`\overset{\frown}{AB} = 2 \pi (4) \times`} />
                   <span className="bg-yellow-300 px-1 rounded mx-1 text-lg leading-none py-0.5 mt-0.5"><Latex math="\dfrac{100^\circ}{360^\circ}" /></span>
-                  <Latex math="= 6.98" /> m
+                  <Latex math="= 6.98" /> <span className="ml-1">m</span>
                 </p>
               </div>
             </div>
@@ -2382,13 +2383,13 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
         <CollapsibleSection id="circles-area-sector" title="圓面積與扇形面積" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
           <div className="flex flex-col md:flex-row gap-6">
             {/* 左：圓面積 */}
-            <div className="w-full md:basis-[36%] md:max-w-[36%] md:flex-none bg-white rounded-lg p-4 border border-blue-200">
-              <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2">
+            <div className="w-full md:basis-[36%] md:max-w-[36%] md:flex-none bg-white rounded-lg p-4 border border-blue-200 flex flex-col">
+              <h3 className="font-bold text-slate-800 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-blue-100 pb-4 pt-6 min-h-[96px]">
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">3.</span> 圓面積：
                 <span className="bg-blue-200 text-slate-800 px-2 py-0.5 rounded font-sans"><Latex math="\pi r^2" /></span>
               </h3>
 
-              <div className="flex justify-center mb-4 mt-6">
+              <div className="flex justify-center flex-1 items-center py-4">
                 <svg viewBox="0 0 160 160" className="w-40 h-40">
                   <circle cx="80" cy="80" r="70" fill="#fde047" stroke="#000" strokeWidth="2" />
                   <line x1="80" y1="80" x2="10" y2="80" stroke="#000" strokeWidth="2" />
@@ -2398,25 +2399,30 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                 </svg>
               </div>
 
-              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold">
-                <p>例：圓面積：<Latex math="\pi (3)^2 = 9 \pi" /> cm²</p>
+              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold w-full mt-auto">
+                <p className="flex items-center flex-wrap gap-y-1">例：圓面積：<Latex math="\pi (3)^2 = 9 \pi" /> <span className="ml-1">cm²</span></p>
               </div>
             </div>
 
             {/* 右：扇形面積 */}
-            <div className="w-full md:basis-[64%] md:max-w-[64%] md:flex-none bg-white rounded-lg p-4 border border-blue-200 relative">
+            <div className="w-full md:basis-[64%] md:max-w-[64%] md:flex-none bg-white rounded-lg p-4 border border-blue-200 relative flex flex-col">
               <div className="absolute left-[-26px] top-1/2 -translate-y-1/2 hidden md:block text-slate-400">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </div>
 
-              <h3 className="font-bold text-slate-800 mb-3 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-blue-100 pb-2">
+              <h3 className="font-bold text-slate-800 text-lg flex items-center gap-2 flex-wrap leading-relaxed border-b border-blue-100 pb-4 pt-6 min-h-[96px]">
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">4.</span> 扇形 <span className="text-sm font-normal text-green-700">(圓面積的一部份)</span>：
-                <span className="bg-blue-200 px-2 py-0.5 rounded font-sans"><Latex math="\pi r^2" /></span>
+                <span className="bg-blue-200 px-2 py-0.5 rounded font-sans relative">
+                  <div className="absolute -top-7 left-1/2 -translate-x-1/2 text-sm font-bold text-green-700 whitespace-nowrap hidden md:block">
+                    ↓ 面積公式
+                  </div>
+                  <Latex math="\pi r^2" />
+                </span>
                 <Latex math="\times" />
                 <span className="bg-yellow-300 px-2 py-0.5 rounded font-sans text-xl"><Latex math="\dfrac{\theta}{360^\circ}" /></span>
               </h3>
 
-              <div className="flex justify-center mb-6 mt-6 md:mt-2 relative">
+              <div className="flex justify-center flex-1 items-center py-4 relative">
                  <div className="relative">
                    <svg viewBox="0 0 160 160" className="w-40 h-40 overflow-visible">
                      <path d="M 80 80 L 10 80 A 70 70 0 0 1 115 19.4 Z" fill="#fef08a" stroke="#000" strokeWidth="2" strokeLinejoin="round" />
@@ -2438,11 +2444,11 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                  </div>
               </div>
 
-              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold w-full mt-4">
+              <div className="bg-blue-50 text-blue-900 p-3 rounded font-bold w-full mt-auto">
                 <p className="flex items-center flex-wrap gap-y-1">
                   例：扇形 STO 面積：<Latex math="\pi (14)^2 \times" />
                   <span className="bg-yellow-300 px-1 rounded mx-1 text-lg leading-none py-0.5 mt-0.5"><Latex math="\dfrac{120^\circ}{360^\circ}" /></span>
-                  <Latex math="= 205" /> cm²
+                  <Latex math="= 205" /> <span className="ml-1">cm²</span>
                 </p>
               </div>
             </div>

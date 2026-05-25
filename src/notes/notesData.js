@@ -27,9 +27,10 @@ import {
   FactorizationF2Notes,
   CirclesCylindersF2Notes,
 } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes } from './F3Notes';
+import { FactorizationNotes, LawsOfIndicesNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
+import { BinaryConversionNotes } from './F6Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
 export const NOTES_DATA = {
@@ -308,6 +309,16 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'laws-of-indices',
+      topic: 'CH2 指數定律',
+      color: 'blue',
+      subtopics: [
+        { id: 'laws', num: 1, title: '指數定律', color: 'blue' },
+        { id: 'scientific-notation', num: 2, title: '科學記數法', color: 'green' },
+        { id: 'new-knowledge', num: 3, title: '新學知識', color: 'red' },
+      ]
+    },
+    {
       id: 'percentage-f3',
       topic: 'CH3 百分法(二)',
       color: 'emerald',
@@ -454,7 +465,17 @@ export const NOTES_DATA = {
       ]
     }
   ],
-  F6: [],
+  F6: [
+    {
+      id: 'binary-conversion',
+      topic: '二進制轉換',
+      color: 'blue',
+      subtopics: [
+        { id: 'calculator-tricks', num: 1, title: '用計算機轉換 (DEC/BIN/HEX)', color: 'blue' },
+        { id: 'expansion', num: 2, title: '進制展開式與移位', color: 'green' },
+      ]
+    }
+  ],
   '高中甲(一)': [
     {
       id: 'simultaneous-eq',
@@ -495,6 +516,7 @@ export const NOTES_COMPONENTS = {
   'pythagoras-f2': PythagorasF2Notes,
   'trig-ratios-f2': TrigRatiosF2Notes,
   'factorization': FactorizationNotes,
+  'laws-of-indices': LawsOfIndicesNotes,
   'percentage-f3': PercentageF3Notes,
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,
@@ -507,6 +529,7 @@ export const NOTES_COMPONENTS = {
   'nature-of-roots': NatureOfRootsNotes,
   'remainder-factor': RemainderFactorNotes,
   'variation': VariationNotes,
+  'binary-conversion': BinaryConversionNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
