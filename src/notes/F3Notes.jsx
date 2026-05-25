@@ -2076,3 +2076,39 @@ export const CentralTendencyNotes = ({ activeSub }) => {
     </>
   );
 };
+
+// ========================================
+// CH4 面積與體積(三) (F3)
+// ========================================
+export const AreaVolumeF3Notes = ({ activeSub }) => {
+  const s1 = useRef(null);
+  const s2 = useRef(null);
+  const s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH4 面積與體積(三)</h1>
+        <p className="text-slate-600">重溫平面圖形面積，並掌握立體公式與相似比。</p>
+      </div>
+
+      <CollapsibleSection id="basic-area" title="1. 簡單圖形的面積" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+          <p className="text-slate-700">本節內容已轉移至 F3 CH4，稍後會補上完整示例圖與題型重點。</p>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="formulas" title="2. 公式" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+          <p className="text-slate-700">將涵蓋角錐體、圓錐體、球體及台體的體積與表面面積公式。</p>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="similar-shapes" title="3. 相似圖形 / 相似立體" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+          <p className="text-slate-700">將涵蓋長度比、面積比與體積比的對應關係與常見陷阱。</p>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
