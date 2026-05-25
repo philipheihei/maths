@@ -27,10 +27,9 @@ import {
   FactorizationF2Notes,
   CirclesCylindersF2Notes,
 } from './F2Notes';
-import { FactorizationNotes, LawsOfIndicesNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes } from './F3Notes';
+import { FactorizationNotes, LawsOfIndicesNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes, AreaVolumeF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { VariationNotes } from './F5Notes';
-import { BinaryConversionNotes } from './F6Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
 export const NOTES_DATA = {
@@ -313,9 +312,9 @@ export const NOTES_DATA = {
       topic: 'CH2 指數定律',
       color: 'blue',
       subtopics: [
-        { id: 'laws', num: 1, title: '指數定律', color: 'blue' },
+        { id: 'laws', num: 1, title: '指數定律 (及新學知識)', color: 'blue' },
         { id: 'scientific-notation', num: 2, title: '科學記數法', color: 'green' },
-        { id: 'new-knowledge', num: 3, title: '新學知識', color: 'red' },
+        { id: 'binary-conversion', num: 3, title: '二進制轉換', color: 'purple' },
       ]
     },
     {
@@ -326,6 +325,16 @@ export const NOTES_DATA = {
         { id: 'successive-change', num: 1, title: '連續百分變化', color: 'blue' },
         { id: 'growth-depreciation', num: 2, title: '增長/衰減', color: 'green' },
         { id: 'simple-interest', num: 3, title: '利息 (單利息)', color: 'amber' },
+      ]
+    },
+    {
+      id: 'area-volume-f3',
+      topic: 'CH4 面積與體積(三)',
+      color: 'teal',
+      subtopics: [
+        { id: 'basic-area', num: 1, title: '簡單圖形的面積', color: 'blue' },
+        { id: 'formulas', num: 2, title: '公式', color: 'green' },
+        { id: 'similar-shapes', num: 3, title: '相似圖形 / 相似立體', color: 'purple' },
       ]
     },
     {
@@ -465,17 +474,7 @@ export const NOTES_DATA = {
       ]
     }
   ],
-  F6: [
-    {
-      id: 'binary-conversion',
-      topic: '二進制轉換',
-      color: 'blue',
-      subtopics: [
-        { id: 'calculator-tricks', num: 1, title: '用計算機轉換 (DEC/BIN/HEX)', color: 'blue' },
-        { id: 'expansion', num: 2, title: '進制展開式與移位', color: 'green' },
-      ]
-    }
-  ],
+  F6: [],
   '高中甲(一)': [
     {
       id: 'simultaneous-eq',
@@ -518,6 +517,7 @@ export const NOTES_COMPONENTS = {
   'factorization': FactorizationNotes,
   'laws-of-indices': LawsOfIndicesNotes,
   'percentage-f3': PercentageF3Notes,
+  'area-volume-f3': AreaVolumeF3Notes,
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,
   'triangle-lines': TriangleLinesNotes,
@@ -529,7 +529,6 @@ export const NOTES_COMPONENTS = {
   'nature-of-roots': NatureOfRootsNotes,
   'remainder-factor': RemainderFactorNotes,
   'variation': VariationNotes,
-  'binary-conversion': BinaryConversionNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
