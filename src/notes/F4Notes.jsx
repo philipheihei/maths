@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Latex, CollapsibleSection } from './shared';
+export { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 
 // ========================================
 // CH1 二次方程 (F4)

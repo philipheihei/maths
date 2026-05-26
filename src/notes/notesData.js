@@ -29,6 +29,7 @@ import {
 } from './F2Notes';
 import { FactorizationNotes, LawsOfIndicesNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes, AreaVolumeF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
+import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { VariationNotes, StatisticsF5Notes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
@@ -484,6 +485,27 @@ export const NOTES_DATA = {
         { id: 'stat-standard-score', num: 4, title: '標準分 (Standard Score)', color: 'sky' },
         { id: 'stat-data-change', num: 5, title: '修改數據對各統計量的影響', color: 'red' },
       ]
+    },
+    {
+      id: 'circle-properties',
+      topic: 'CH12-13 圓形性質',
+      color: 'emerald',
+      subtopics: [
+        { id: 'circle-theorems', num: 1, title: '常見圓形定理', color: 'emerald' },
+      ]
+    },
+    {
+      id: 'compound-inequalities',
+      topic: 'CH17 複合不等式',
+      color: 'rose',
+      subtopics: [
+        { id: 'basics', num: 1, title: '0. 基礎知識', color: 'blue' },
+        { id: 'drawing', num: 2, title: '1. 畫圖找答案', color: 'green' },
+        { id: 'example-solving', num: 3, title: '2. 例子與解法', color: 'purple' },
+        { id: 'other-formats', num: 4, title: '3. 其他問法', color: 'orange' },
+        { id: 'integer-bounds', num: 5, title: '4. 問最大/最小整數', color: 'rose' },
+        { id: 'quadratic-application', num: 6, title: '5. 適用: 二次不等式', color: 'red' },
+      ]
     }
   ],
   F6: [],
@@ -551,4 +573,5 @@ export const NOTES_COMPONENTS = {
   'straight-line-equation': StraightLineEquationNotes,
   'similar-triangles': SimilarTrianglesNotes,
   'statistics-f5': StatisticsF5Notes,
+  'compound-inequalities': CompoundInequalitiesNotes,
 };

@@ -331,7 +331,10 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                       <th className="p-3 border-r border-b border-slate-300 font-bold">數值</th>
                       <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">10</th>
                       <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">11</th>
-                      <th className="p-3 border-b border-slate-300 font-medium">12</th>
+                      <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">12</th>
+                      <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">13</th>
+                      <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">14</th>
+                      <th className="p-3 border-b border-slate-300 font-medium">15</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -339,7 +342,10 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                       <td className="p-3 border-r border-slate-300 font-bold bg-slate-50">頻數</td>
                       <td className="p-3 border-r border-slate-200">2</td>
                       <td className="p-3 border-r border-slate-200">5</td>
-                      <td className="p-3">3</td>
+                      <td className="p-3 border-r border-slate-200">3</td>
+                      <td className="p-3 border-r border-slate-200">8</td>
+                      <td className="p-3 border-r border-slate-200">4</td>
+                      <td className="p-3">1</td>
                     </tr>
                   </tbody>
                 </table>
@@ -357,29 +363,44 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                 <text x="10" y="125" transform="rotate(-90, 10, 125)" textAnchor="middle" className="text-xs">頻數 (Freq)</text>
 
                 <g>
-                  <rect x="95" y="153.333" width="80" height="56.667" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="135" y="225" textAnchor="middle" className="text-xs">10</text>
-                  <text x="135" y="148" textAnchor="middle" className="text-xs font-bold text-slate-600">2</text>
+                  <rect x="54" y="172.2" width="42" height="37.8" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
+                  <text x="75" y="225" textAnchor="middle" className="text-xs">10</text>
+                  <text x="75" y="167.2" textAnchor="middle" className="text-xs font-bold text-slate-600">2</text>
                 </g>
                 <g>
-                  <rect x="210" y="68.333" width="80" height="141.667" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="250" y="225" textAnchor="middle" className="text-xs">11</text>
-                  <text x="250" y="63" textAnchor="middle" className="text-xs font-bold text-slate-600">5</text>
+                  <rect x="124" y="115.6" width="42" height="94.4" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
+                  <text x="145" y="225" textAnchor="middle" className="text-xs">11</text>
+                  <text x="145" y="110.6" textAnchor="middle" className="text-xs font-bold text-slate-600">5</text>
                 </g>
                 <g>
-                  <rect x="325" y="125" width="80" height="85" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="365" y="225" textAnchor="middle" className="text-xs">12</text>
-                  <text x="365" y="120" textAnchor="middle" className="text-xs font-bold text-slate-600">3</text>
+                  <rect x="194" y="153.3" width="42" height="56.7" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
+                  <text x="215" y="225" textAnchor="middle" className="text-xs">12</text>
+                  <text x="215" y="148.3" textAnchor="middle" className="text-xs font-bold text-slate-600">3</text>
+                </g>
+                <g>
+                  <rect x="264" y="58.9" width="42" height="151.1" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
+                  <text x="285" y="225" textAnchor="middle" className="text-xs">13</text>
+                  <text x="285" y="53.9" textAnchor="middle" className="text-xs font-bold text-slate-600">8</text>
+                </g>
+                <g>
+                  <rect x="334" y="134.4" width="42" height="75.6" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
+                  <text x="355" y="225" textAnchor="middle" className="text-xs">14</text>
+                  <text x="355" y="129.4" textAnchor="middle" className="text-xs font-bold text-slate-600">4</text>
+                </g>
+                <g>
+                  <rect x="404" y="191.1" width="42" height="18.9" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
+                  <text x="425" y="225" textAnchor="middle" className="text-xs">15</text>
+                  <text x="425" y="186.1" textAnchor="middle" className="text-xs font-bold text-slate-600">1</text>
                 </g>
               </svg>
             </div>
             <div className="text-sm text-slate-700 space-y-2">
-              <p>手算平均數：<Latex math="\frac{10\times 2 + 11\times 5 + 12\times 3}{2+5+3} = 11.1" inline /></p>
+              <p>手算平均數：<Latex math="\frac{10\times 2 + 11\times 5 + 12\times 3 + 13\times 8 + 14\times 4 + 15\times 1}{23} \approx 12.4" inline /></p>
               <p>計數機入法 (開 FREQ/加入頻數)：</p>
               <div className="bg-emerald-50 p-2 rounded font-mono">
                 10 <span className="bg-gray-300 text-yellow-700 text-xs px-2 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs px-2 py-0.5 rounded mr-1">,</span> 2 <span className="bg-gray-900 text-white text-xs px-2 py-0.5 rounded">M+</span>
               </div>
-              <p>中位數看法：總共 10 個數，找第 5、6 個。前面 10佔了2個位，11佔了5個位 (第3-7位)，因此中位數在 11。</p>
+              <p>中位數看法：總共 23 個數，找第 12 個。前面 10佔了2個位，11佔了5個位，12佔了3個位 (第1-10位)，13佔第11-18位，因此中位數在 13。</p>
             </div>
           </div>
 
@@ -516,6 +537,172 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             </div>
             <p className="text-xs text-slate-500 mt-2">*方差的單位是平方，因此乘數必須配以 2 次方。</p>
           </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+// ========================================
+// CH12-13 圓形性質 (F5)
+// ========================================
+const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormula }) => (
+  <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col h-full hover:shadow-md transition-shadow">
+    <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 font-bold text-slate-800 md:text-lg text-base">
+      {title}
+    </div>
+    <div className="flex-1 p-2 flex items-center justify-center bg-white min-h-[220px]">
+      <SVGComp />
+    </div>
+    <div className="px-4 py-4 border-t border-slate-200 bg-white min-h-[90px] flex items-center">
+      {directFormula ? (
+        <div className="flex items-center gap-3 w-full">
+          <div className="w-1 h-8 bg-emerald-500 rounded-full shrink-0"></div>
+          <p className="text-slate-800 mb-0 font-medium text-lg leading-none pt-2"><Latex math={directFormula} inline={false} block /></p>
+        </div>
+      ) : (
+        <div className="space-y-3 w-full">
+          <div className="flex gap-3 items-stretch">
+            <div className="w-1 bg-slate-300 rounded-full shrink-0"></div>
+            <div>
+              <span className="text-xs font-bold text-slate-400 block mb-0.5">條件</span>
+              <span className="text-slate-600 font-medium">{condition}</span>
+            </div>
+          </div>
+          <div className="flex gap-3 items-stretch mt-3">
+            <div className="w-1 bg-emerald-500 rounded-full shrink-0"></div>
+            <div>
+              <span className="text-xs font-bold text-emerald-600 block mb-0.5">結論</span>
+              <p className="text-slate-800 m-0 leading-none pt-1"><Latex math={conclusion} inline={false} /></p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+);
+
+export const CirclePropertiesNotes = ({ activeSub }) => {
+  const s1 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-emerald-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH12-13 圓形性質 (Circle Properties)</h1>
+        <p className="text-slate-600">圖形定理、性質整理及其格式寫法</p>
+      </div>
+
+      <CollapsibleSection id="circle-theorems" title="常見圓形定理" num={1} color="emerald" activeSub={activeSub} sectionRef={s1}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <PropertyCard
+            title="圓心角兩倍於圓周角"
+            directFormula="\angle AOB = 2\angle ACB"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <path d="M 31 140 L 100 100 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 31 140 L 100 20 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <text x="15" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="175" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="95" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+          
+          <PropertyCard
+            title="半圓上的圓周角"
+            condition={<>若 <Latex math="\text{AB}" inline /> 是圓的直徑，</>}
+            conclusion="\angle ACB = 90^\circ"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="20" y1="100" x2="180" y2="100" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 20 100 L 60 31 L 180 100" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="60,31 56,38 63,42 67,35" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="5" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="185" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="53" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="95" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="同弓形內的圓周角"
+            directFormula="\angle APB = \angle AQB"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="31" y1="140" x2="169" y2="140" stroke="#334155" strokeWidth="1" />
+                <path d="M 31 140 L 70 25 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 31 140 L 155 42 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 64 39 A 15 15 0 0 0 78 37" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 62 42 A 15 15 0 0 0 79 40" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 139 52 A 20 20 0 0 0 157 58" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 137 55 A 20 20 0 0 0 156 61" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="17" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="175" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="65" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="162" y="38" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="弧與圓心角成比例"
+            directFormula="\widehat{AB} : \widehat{BC} = \angle AOB : \angle BOC"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <path d="M 100 100 L 31 60" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 100 100 L 140 31" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 100 100 L 178 117" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 85 91 A 18 18 0 0 1 109 84" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 115 88 A 20 20 0 0 1 120 103" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="17" y="52" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="145" y="22" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="185" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="91" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="切線 ⊥ 半徑"
+            condition={<>若 <Latex math="\text{PQ}" inline /> 是圓在 <Latex math="\text{T}" inline /> 點的切線，</>}
+            conclusion="\text{PQ} \perp \text{OT}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="20" y1="54" x2="140" y2="-15" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="60,31 66,27 71,36 65,40" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="10" y="70" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="150" y="-3" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="40" y="28" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
+                <text x="105" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="切線 ⊥ 半徑 逆定理"
+            condition={<>若 <Latex math="\text{OT} \perp \text{PQ}" inline />，</>}
+            conclusion="\text{PQ 是圓在 T 點的切線}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="20" y1="54" x2="140" y2="-15" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="60,31 66,27 71,36 65,40" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="10" y="70" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="150" y="-3" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="40" y="28" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
+                <text x="105" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
         </div>
       </CollapsibleSection>
     </>
