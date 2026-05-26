@@ -480,6 +480,7 @@ export const NOTES_DATA = {
       color: 'emerald',
       subtopics: [
         { id: 'circle-theorems', num: 1, title: '常見圓形定理', color: 'emerald' },
+        { id: 'other-theorems', num: 2, title: '其他圓形定理', color: 'teal' },
       ]
     },
     {

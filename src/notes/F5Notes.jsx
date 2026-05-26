@@ -703,8 +703,339 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               </svg>
             )}
           />
+
+          <PropertyCard
+            title="切線性質"
+            condition={<>若 <Latex math="\text{TP}" inline /> 及 <Latex math="\text{TQ}" inline /> 分別是圓在 <Latex math="\text{P}" inline /> 及 <Latex math="\text{Q}" inline /> 點的切線<br/>(由 <Latex math="\text{T}" inline /> 引出)，</>}
+            conclusion="\begin{aligned} \angle TOP &= \angle TOQ \\ \angle OTP &= \angle OTQ \\ TP &= TQ \end{aligned}"
+            svg={() => (
+              <svg viewBox="0 0 240 200" className="w-full max-w-[240px]">
+                <circle cx="80" cy="100" r="70" fill="none" stroke="#64748b" strokeWidth="1" />
+                <path d="M 80 100 L 98 33" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 80 100 L 129 150" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 80 100 L 220 50" fill="none" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                
+                <line x1="98" y1="33" x2="220" y2="50" stroke="#334155" strokeWidth="1.5" />
+                <line x1="129" y1="150" x2="220" y2="50" stroke="#334155" strokeWidth="1.5" />
+                
+                {/* 垂直符號 */}
+                <polygon points="98,33 93,42 101,47 106,37" fill="none" stroke="#334155" strokeWidth="1" />
+                <polygon points="129,150 120,143 125,134 135,140" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                {/* 等長標記 (TP, TQ) */}
+                <line x1="156" y1="36" x2="160" y2="45" stroke="#334155" strokeWidth="1.5" />
+                <line x1="172" y1="105" x2="178" y2="98" stroke="#334155" strokeWidth="1.5" />
+                
+                {/* 角標記 */}
+                <path d="M 98 94 A 20 20 0 0 1 106 91" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 99 92 A 22 22 0 0 1 107 90" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 96 109 A 20 20 0 0 0 106 95" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 188 45 A 35 35 0 0 0 186 55" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 179 59 A 45 45 0 0 0 186 52" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="90" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="135" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="65" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <text x="228" y="55" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="弧與圓周角成比例"
+            directFormula="\widehat{AB} : \widehat{BC} = \angle APB : \angle BPC"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <path d="M 100 20 L 40 153" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 100 20 L 100 180" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 100 20 L 160 153" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 85 52 A 40 40 0 0 0 100 60" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 100 60 A 40 40 0 0 0 115 52" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="95" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="30" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="95" y="195" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="165" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="等弦對等弧"
+            condition={<>若 <Latex math="AB = CD" inline />，</>}
+            conclusion="\widehat{AB} = \widehat{CD}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                
+                <line x1="45" y1="48" x2="38" y2="54" stroke="#334155" strokeWidth="1.5" />
+                <line x1="155" y1="151" x2="162" y2="145" stroke="#334155" strokeWidth="1.5" />
+                
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="等弧對等弦"
+            condition={<>若 <Latex math="\widehat{AB} = \widehat{CD}" inline />，</>}
+            conclusion="AB = CD"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                
+                <path d="M 40 40 L 46 45" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 37 42 L 43 47" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 160 159 L 154 154" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 163 157 L 157 152" stroke="#334155" strokeWidth="1.5" />
+                
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="等弧對等角 (圓心)"
+            condition={<>若 <Latex math="\widehat{AB} = \widehat{CD}" inline />，</>}
+            conclusion="\angle AOB = \angle COD"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                
+                <path d="M 40 40 L 46 45" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 37 42 L 43 47" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 160 159 L 154 154" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 163 157 L 157 152" stroke="#334155" strokeWidth="1.5" />
+                
+                <path d="M 87 77 A 25 25 0 0 0 80 87" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 113 123 A 25 25 0 0 0 120 113" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="等角對等弧"
+            condition={<>若 <Latex math="\angle AOB = \angle COD" inline />，</>}
+            conclusion="\widehat{AB} = \widehat{CD}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                
+                <path d="M 87 77 A 25 25 0 0 0 80 87" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 89 74 A 29 29 0 0 0 80 85" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 113 123 A 25 25 0 0 0 120 113" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 111 126 A 29 29 0 0 0 120 115" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="等弦對等角 (圓心)"
+            condition={<>若 <Latex math="AB = CD" inline />，</>}
+            conclusion="\angle AOB = \angle COD"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                
+                <line x1="45" y1="48" x2="38" y2="54" stroke="#334155" strokeWidth="1.5" />
+                <line x1="155" y1="151" x2="162" y2="145" stroke="#334155" strokeWidth="1.5" />
+                
+                <path d="M 87 77 A 25 25 0 0 0 80 87" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 113 123 A 25 25 0 0 0 120 113" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="等角對等弦"
+            condition={<>若 <Latex math="\angle AOB = \angle COD" inline />，</>}
+            conclusion="AB = CD"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                
+                <path d="M 87 77 A 25 25 0 0 0 80 87" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 89 74 A 29 29 0 0 0 80 85" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 113 123 A 25 25 0 0 0 120 113" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 111 126 A 29 29 0 0 0 120 115" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="圓內接四邊形對角"
+            condition={<>若 <Latex math="ABCD" inline /> 為圓內接四邊形，</>}
+            conclusion="\begin{aligned} \angle ABC + \angle ADC &= 180^\circ \\ \angle BAD + \angle BCD &= 180^\circ \end{aligned}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <polygon points="152,39 40,60 55,166 172,134" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <text x="160" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="25" y="55" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="40" y="180" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="180" y="145" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="圓內接四邊形外角"
+            condition={<>若 <Latex math="ABCD" inline /> 為圓內接四邊形，</>}
+            conclusion="\angle ABC = \angle ADE"
+            svg={() => (
+              <svg viewBox="0 0 240 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <polygon points="152,39 40,60 55,166 172,134" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <line x1="55" y1="166" x2="220" y2="120" stroke="#334155" strokeWidth="1.5" />
+                <text x="160" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="25" y="55" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="40" y="180" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="168" y="152" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="225" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>E</text>
+              </svg>
+            )}
+          />
         </div>
       </CollapsibleSection>
+
+      {/* 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 繪圖規格單 #1（可直接複製交給 @數學繪圖師）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+圖形名稱：切線性質
+所在章節：F5Notes — 常見圓形定理，CollapsibleSection id="circle-theorems"
+viewBox：建議 240 × 200
+
+點／線：
+  - 圓心 O。圓外一點 T。
+  - 從 T 畫兩條切線至圓，切點為 P, Q。
+  - 連接 OP, OQ, OT。
+  - P, Q 處有直角符號（因半徑垂直切線）。
+
+標記：
+  - ∠TOP 與 ∠TOQ 加上單弧雙弧。
+  - ∠OTP 與 ∠OTQ 加上弧。
+  - TP 與 TQ 加上等雙短線 (|)。
+
+對應手寫圖說明：Image 1：「切線性質」
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 繪圖規格單 #2（可直接複製交給 @數學繪圖師）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+圖形名稱：弧與圓周角成比例
+所在章節：F5Notes — 常見圓形定理，CollapsibleSection id="circle-theorems"
+viewBox：建議 200 × 200
+
+點／線：
+  - 圓，頂部圓周點 P。
+  - 底部圓周點 A, B, C，順序排列。
+  - 畫出 PA, PB, PC。
+
+對應手寫圖說明：Image 2 右側：「弧與圓周角成比例」
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 繪圖規格單 #3（可直接複製交給 @數學繪圖師）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+圖形名稱：等弦與等弧及等圓心角（各4個變體）
+所在章節：F5Notes — 常見圓形定理，CollapsibleSection id="circle-theorems"
+viewBox：建議 200 × 200 (共需 6 個類似小圖，分別放入對應 PropertyCard)
+
+點／線（共同結構）：
+  - 圓心 O。圓周上四點 A, B 與 C, D，形成弦 AB 及弦 CD。
+  - 畫線連接 O 到 A, B, C, D，形成兩個三角形 (AOB 及 COD)。
+圖 3a (等弦對等弧): 標記 AB, CD 為等弦 (單撇)
+圖 3b (等弧對等弦): 標記弧 AB, 弧 CD 等弧 (用小弧線交叉標記或文字說明)
+圖 3c (等弧對等角): 標記弧等長 + ∠AOB, ∠COD 內縮角。
+圖 3d (等角對等弧): 標記 ∠AOB, ∠COD 內縮角。
+圖 3e (等弦對等角): 標記弦 AB, CD 為等弦 + ∠AOB, ∠COD 小弧。
+圖 3f (等角對等弦): 標記 ∠AOB, ∠COD 小弧。
+對應手寫圖說明：Image 3, Image 4, Image 5
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 繪圖規格單 #4（可直接複製交給 @數學繪圖師）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+圖形名稱：圓內接四邊形
+所在章節：F5Notes — 常見圓形定理，CollapsibleSection id="circle-theorems"
+viewBox：建議 200 × 200 (共 2 個變體)
+
+點／線（共同結構）：
+  - 圓。圓上四點 A, B, C, D 形成四邊形。
+圖 4a (對角): 單純圓內接四邊形 ABCD。可免標角度。
+圖 4b (外角): 邊 CD 延長至點 E。
+對應手寫圖說明：Image 6：「圓內接四邊形對角」及「外角」
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+      */}
     </>
   );
 };
