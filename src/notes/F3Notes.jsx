@@ -1113,9 +1113,9 @@ export const TriangleLinesNotes = () => {
               <h4 className="text-lg font-bold text-red-600">2. 中線</h4>
               <div className="mt-2 text-sm text-left bg-white px-4 py-3 rounded-lg shadow-sm border border-slate-200 w-full">
                 <div className="font-bold text-green-700 mb-1">特徵：</div>
-                <div className="font-bold text-green-700 text-lg flex flex-col gap-1">
+                <div className="font-bold text-green-700 text-lg flex items-center justify-between">
                   <span>• 中點，長度相等</span>
-                  <span className="text-purple-700 text-xs font-normal text-right">（必須由頂點拉出來）</span>
+                  <span className="text-purple-700 text-xs font-normal">（必須由頂點拉出來）</span>
                 </div>
               </div>
             </div>
@@ -1156,9 +1156,9 @@ export const TriangleLinesNotes = () => {
               <h4 className="text-lg font-bold text-red-600">4. 垂直平分線</h4>
               <div className="mt-2 text-sm text-left bg-white px-4 py-3 rounded-lg shadow-sm border border-slate-200 w-full">
                 <div className="font-bold text-green-700 mb-1">特徵：</div>
-                <div className="font-bold text-green-700 text-lg flex flex-col gap-1">
+                <div className="font-bold text-green-700 text-lg flex items-center justify-between">
                   <span>• 垂直 (90°) + 長度相等</span>
-                  <span className="text-slate-500 text-xs font-normal text-right">（不一定由頂點拉出來）</span>
+                  <span className="text-slate-500 text-xs font-normal">（不一定由頂點拉出來）</span>
                 </div>
               </div>
             </div>
@@ -2502,7 +2502,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
 
             <div className="bg-red-50 rounded-lg p-4 border border-red-200">
               <h3 className="font-bold text-red-800 mb-3 text-lg flex items-center gap-2">
-                <span className="text-2xl">🔥</span> 進階技巧：面積比 $\rightarrow$ 體積比
+                <span className="text-2xl">🔥</span> 進階技巧：面積比 <Latex math="\rightarrow" inline /> 體積比
               </h3>
               <div className="bg-white rounded p-5 shadow-sm font-sans">
                 <p className="text-blue-900 font-bold mb-4 text-base md:text-lg">e.g. A 和 B 立體的面積比是 <Latex math="16 : 25" inline /></p>
@@ -2515,7 +2515,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                     <span className="text-green-700 font-bold text-sm md:ml-4 bg-green-100 px-2 py-0.5 rounded shrink-0"><Latex math="\leftarrow" inline /> 先轉換長度比</span>
                   </div>
                   
-                  <div className="flex flex-col md:flex-row md:items-center gap-2 border-l-4 border-blue-200 pl-3 md:pl-[2.75rem]">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 border-l-4 border-blue-200 pl-3">
                     <div className="flex items-center flex-wrap gap-2">
                       <span className="font-bold text-slate-800 underline decoration-blue-300 underline-offset-4 w-28 shrink-0">A 和 B 體積比</span>
                       <span className="text-blue-700 font-bold"><Latex math="= (4 : 5)^3 = 64 : 125" inline /></span>
