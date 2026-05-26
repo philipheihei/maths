@@ -1678,7 +1678,11 @@ const TreeDiagramSVG = () => (
       <text x="260" y="160" fill="#1e293b">A</text>
       <text x="380" y="160" fill="#1e293b">CVA</text>
       <text x="260" y="190" fill="#2563eb">B</text>
-      <text x="380" y="190" fill="#2563eb">CVB</text>
+      <text x="380" y="190">
+        <tspan fill="#ea580c">C</tspan>
+        <tspan fill="#16a34a">V</tspan>
+        <tspan fill="#2563eb">B</tspan>
+      </text>
       
       <text x="140" y="235" fill="#1e293b">M</text>
       <line x1="160" y1="230" x2="250" y2="215" stroke="#64748b" strokeWidth="2" />
@@ -1854,7 +1858,7 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
                 </div>
 
                 <div className="bg-indigo-50 p-4 rounded-lg mt-4 border border-indigo-200">
-                  <p className="mb-2">假設一定抽到，期望值：</p>
+                    <p className="mb-2">假設一定抽到其中一張現金卷，金額的期望值為：</p>
                   <p className="text-lg md:text-xl flex flex-wrap items-center gap-y-2 mt-2">
                     <Latex math="\dfrac{9}{10} \times \$50 + \dfrac{1}{10} \times \$100" />
                   </p>
@@ -2343,7 +2347,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
         </CollapsibleSection>
 
         {/* 2. 公式 */}
-        <CollapsibleSection id="formulas" title="2. 公式" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <CollapsibleSection id="formulas" title="2. 面積及體積公式" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
           <div className="space-y-4">
             
             <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">

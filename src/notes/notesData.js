@@ -29,7 +29,7 @@ import {
 } from './F2Notes';
 import { FactorizationNotes, LawsOfIndicesNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes, AreaVolumeF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
-import { VariationNotes } from './F5Notes';
+import { VariationNotes, StatisticsF5Notes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
 export const NOTES_DATA = {
@@ -333,7 +333,7 @@ export const NOTES_DATA = {
       color: 'teal',
       subtopics: [
         { id: 'basic-area', num: 1, title: '簡單圖形的面積', color: 'blue' },
-        { id: 'formulas', num: 2, title: '公式', color: 'green' },
+        { id: 'formulas', num: 2, title: '面積及體積公式', color: 'green' },
         { id: 'similar-shapes', num: 3, title: '相似圖形 / 相似立體', color: 'purple' },
       ]
     },
@@ -472,6 +472,18 @@ export const NOTES_DATA = {
         { id: 'variation-symbol', num: 2, title: '變分符號', color: 'purple' },
         { id: 'variation-questions', num: 3, title: '題目問法', color: 'green' },
       ]
+    },
+    {
+      id: 'statistics-f5',
+      topic: 'CH14 統計',
+      color: 'indigo',
+      subtopics: [
+        { id: 'stat-7-indicators', num: 1, title: '七個重要統計量', color: 'blue' },
+        { id: 'stat-raw-data', num: 2, title: '從獨立數據中找統計量', color: 'indigo' },
+        { id: 'stat-graphs', num: 3, title: '從圖表找統計量', color: 'purple' },
+        { id: 'stat-standard-score', num: 4, title: '標準分 (Standard Score)', color: 'sky' },
+        { id: 'stat-data-change', num: 5, title: '修改數據對各統計量的影響', color: 'red' },
+      ]
     }
   ],
   F6: [],
@@ -538,4 +550,5 @@ export const NOTES_COMPONENTS = {
   'functions': FunctionNotes,
   'straight-line-equation': StraightLineEquationNotes,
   'similar-triangles': SimilarTrianglesNotes,
+  'statistics-f5': StatisticsF5Notes,
 };
