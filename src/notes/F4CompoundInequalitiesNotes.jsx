@@ -93,7 +93,7 @@ viewBox：400 × 100
                 </div>
                 
                 <p className="mt-2 text-center font-bold text-slate-800">
-                  ans: <Latex math="2 < x < 5" />
+                  答案：<Latex math="2 < x < 5" />
                 </p>
               </div>
               
@@ -106,7 +106,7 @@ viewBox：400 × 100
                 </div>
                 
                 <p className="mt-2 text-center font-bold text-slate-800">
-                  ans: <span className="text-red-600">無解 (No solution)</span>
+                  答案：<span className="text-red-600">無解 (No solution)</span>
                 </p>
               </div>
             </div>
@@ -123,7 +123,7 @@ viewBox：400 × 100
                 </div>
                 
                 <p className="mt-2 text-center font-bold text-slate-800">
-                  ans: <span className="text-blue-600">所有實數 (All real numbers)</span>
+                  答案：<span className="text-blue-600">所有實數 (All real numbers)</span>
                 </p>
               </div>
               
@@ -136,7 +136,7 @@ viewBox：400 × 100
                 </div>
                 
                 <p className="mt-2 text-center font-bold text-slate-800">
-                  ans: <Latex math="x < 3" /> 或 <Latex math="x \geq 6" />
+                  答案：<Latex math="x < 3" /> 或 <Latex math="x \geq 6" />
                 </p>
               </div>
             </div>
@@ -201,7 +201,7 @@ viewBox：400 × 100
             </div>
 
             <div className="bg-green-100 text-green-800 p-3 rounded mt-4 text-center font-bold text-lg">
-              <span className="mr-2">ans:</span> <Latex math="-3 \leq x \leq 3" />
+              <span className="mr-2">答案：</span> <Latex math="-3 \leq x \leq 3" />
             </div>
 
           </div>
@@ -386,237 +386,301 @@ viewBox：約 200 × 100
 };
 
 // ==========================================
-// 數學繪圖師 - SVG Components
+// 數學繪圖師 - SVG Components (Compound Inequality Quiz Style)
 // ==========================================
 
-const MarkerArrow = ({ id, color }) => (
-  <marker id={id} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-    <path d="M 0 0 L 10 5 L 0 10 z" fill={color} />
-  </marker>
-);
-
 const NL_X_GE_3 = () => (
-  <svg viewBox="0 0 300 80" className="w-full h-auto max-w-[300px] mx-auto">
-    <defs>
-      <MarkerArrow id="nl1-axis" color="#64748b" />
-      <MarkerArrow id="nl1-blue" color="#0ea5e9" />
-    </defs>
-    <line x1="20" y1="60" x2="280" y2="60" stroke="#64748b" strokeWidth="2" markerEnd="url(#nl1-axis)" />
-    {[2, 3, 4].map((num, i) => (
-      <g key={num}>
-        <line x1={80 + i * 70} y1="56" x2={80 + i * 70} y2="64" stroke="#64748b" strokeWidth="2" />
-        <text x={80 + i * 70} y="78" fontSize="14" fill="#475569" textAnchor="middle">{num}</text>
-      </g>
-    ))}
-    {/* x >= 3 */}
-    <path d="M 150 25 L 260 25" fill="none" stroke="#0ea5e9" strokeWidth="3" markerEnd="url(#nl1-blue)" />
-    <line x1="150" y1="60" x2="150" y2="25" stroke="#0ea5e9" strokeWidth="2" />
-    <circle cx="150" cy="60" r="5" fill="#0ea5e9" />
-    <text x="205" y="15" fontSize="14" fill="#0284c7" fontWeight="bold">x ≥ 3</text>
+  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
+    
+    {[0, 1, 2, 3, 4, 5, 6].map((val) => {
+      const px = 100 + (val * 400) / 6;
+      return (
+        <g key={val}>
+          <line x1={px} y1="132" x2={px} y2="148" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="165" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      <rect x="300" y="79" width="264" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
+      <line x1="305" y1="95" x2="564" y2="95" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="300" cy="95" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
+      <polygon points="564,95 556,89 556,101" fill="#3b82f6" />
+      <line x1="300" y1="100" x2="300" y2="140" stroke="#3b82f6" strokeWidth="4" opacity="1" />
+    </g>
   </svg>
 );
 
 const NL_And_Overlap = () => (
-  <svg viewBox="0 0 250 80" className="w-full h-auto max-w-[250px] mx-auto space-y-2">
-    <defs>
-      <MarkerArrow id="and1-axis" color="#94a3b8" />
-      <MarkerArrow id="and1-blue" color="#3b82f6" />
-      <MarkerArrow id="and1-red" color="#ef4444" />
-    </defs>
-    <rect x="80" y="20" width="90" height="50" fill="rgba(34,197,94,0.15)" rx="4" />
-    <line x1="20" y1="65" x2="230" y2="65" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#and1-axis)" />
+  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
-    <line x1="80" y1="61" x2="80" y2="69" stroke="#94a3b8" strokeWidth="2" />
-    <text x="80" y="80" fontSize="12" fill="#64748b" textAnchor="middle">2</text>
-    
-    <line x1="170" y1="61" x2="170" y2="69" stroke="#94a3b8" strokeWidth="2" />
-    <text x="170" y="80" fontSize="12" fill="#64748b" textAnchor="middle">5</text>
-    
-    <path d="M 80 35 L 220 35" fill="none" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#and1-blue)" />
-    <line x1="80" y1="65" x2="80" y2="35" stroke="#3b82f6" strokeWidth="1" strokeDasharray="2,2" />
-    <circle cx="80" cy="65" r="4" fill="#fff" stroke="#3b82f6" strokeWidth="2" />
-    
-    <path d="M 170 20 L 30 20" fill="none" stroke="#ef4444" strokeWidth="2" markerEnd="url(#and1-red)" />
-    <line x1="170" y1="65" x2="170" y2="20" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" />
-    <circle cx="170" cy="65" r="4" fill="#fff" stroke="#ef4444" strokeWidth="2" />
+    {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
+      const px = 100 + val * 55;
+      return (
+        <g key={val}>
+          <line x1={px} y1="132" x2={px} y2="148" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="165" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      {/* 重疊高亮 */}
+      <rect x="210" y="44" width="165" height="68" fill="#f59e0b" opacity="0.45" rx="6" />
+      
+      {/* 左邊 x > 2 */}
+      <line x1="215" y1="95" x2="564" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="210" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+      <polygon points="564,95 556,89 556,101" fill="#ef4444" />
+      <line x1="210" y1="100" x2="210" y2="140" stroke="#ef4444" strokeWidth="4" />
+      
+      {/* 右邊 x < 5 */}
+      <line x1="36" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="375" cy="60" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
+      <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
+      <line x1="375" y1="65" x2="375" y2="140" stroke="#3b82f6" strokeWidth="4" />
+    </g>
   </svg>
 );
 
 const NL_And_NoSol = () => (
-  <svg viewBox="0 0 250 80" className="w-full h-auto max-w-[250px] mx-auto">
-    <defs>
-      <MarkerArrow id="and2-axis" color="#94a3b8" />
-      <MarkerArrow id="and2-blue" color="#3b82f6" />
-      <MarkerArrow id="and2-red" color="#ef4444" />
-    </defs>
-    <line x1="20" y1="65" x2="230" y2="65" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#and2-axis)" />
+  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
     
-    <line x1="80" y1="61" x2="80" y2="69" stroke="#94a3b8" strokeWidth="2" />
-    <text x="80" y="80" fontSize="12" fill="#64748b" textAnchor="middle">3</text>
-    
-    <line x1="170" y1="61" x2="170" y2="69" stroke="#94a3b8" strokeWidth="2" />
-    <text x="170" y="80" fontSize="12" fill="#64748b" textAnchor="middle">6</text>
-    
-    <path d="M 80 35 L 30 35" fill="none" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#and2-blue)" />
-    <line x1="80" y1="65" x2="80" y2="35" stroke="#3b82f6" strokeWidth="1" strokeDasharray="2,2" />
-    <circle cx="80" cy="65" r="4" fill="#fff" stroke="#3b82f6" strokeWidth="2" />
-    
-    <path d="M 170 20 L 220 20" fill="none" stroke="#ef4444" strokeWidth="2" markerEnd="url(#and2-red)" />
-    <line x1="170" y1="65" x2="170" y2="20" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" />
-    <circle cx="170" cy="65" r="4" fill="#ef4444" stroke="#ef4444" strokeWidth="2" />
+    {[1, 2, 3, 4, 5, 6, 7].map((val) => {
+      const px = 100 + (val-1) * 65;
+      return (
+        <g key={val}>
+          <line x1={px} y1="132" x2={px} y2="148" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="165" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      {/* x < 3 */}
+      <line x1="36" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="230" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+      <polygon points="36,95 44,89 44,101" fill="#ef4444" />
+      <line x1="230" y1="100" x2="230" y2="140" stroke="#ef4444" strokeWidth="4" />
+      
+      {/* x >= 6 */}
+      <line x1="430" y1="60" x2="564" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="425" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
+      <polygon points="564,60 556,54 556,66" fill="#3b82f6" />
+      <line x1="425" y1="65" x2="425" y2="140" stroke="#3b82f6" strokeWidth="4" />
+    </g>
   </svg>
 );
 
 const NL_Or_All = () => (
-  <svg viewBox="0 0 250 80" className="w-full h-auto max-w-[250px] mx-auto">
-    <defs>
-      <MarkerArrow id="or1-axis" color="#94a3b8" />
-      <MarkerArrow id="or1-blue" color="#3b82f6" />
-      <MarkerArrow id="or1-red" color="#ef4444" />
-    </defs>
-    <rect x="20" y="20" width="210" height="50" fill="rgba(34,197,94,0.15)" rx="4" />
-    <line x1="20" y1="65" x2="230" y2="65" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#or1-axis)" />
+  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
     
-    <line x1="80" y1="61" x2="80" y2="69" stroke="#94a3b8" strokeWidth="2" />
-    <text x="80" y="80" fontSize="12" fill="#64748b" textAnchor="middle">2</text>
-    
-    <line x1="170" y1="61" x2="170" y2="69" stroke="#94a3b8" strokeWidth="2" />
-    <text x="170" y="80" fontSize="12" fill="#64748b" textAnchor="middle">5</text>
-    
-    <path d="M 80 35 L 220 35" fill="none" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#or1-blue)" />
-    <line x1="80" y1="65" x2="80" y2="35" stroke="#3b82f6" strokeWidth="1" strokeDasharray="2,2" />
-    <circle cx="80" cy="65" r="4" fill="#fff" stroke="#3b82f6" strokeWidth="2" />
-    
-    <path d="M 170 20 L 30 20" fill="none" stroke="#ef4444" strokeWidth="2" markerEnd="url(#or1-red)" />
-    <line x1="170" y1="65" x2="170" y2="20" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" />
-    <circle cx="170" cy="65" r="4" fill="#fff" stroke="#ef4444" strokeWidth="2" />
+    {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
+      const px = 100 + val * 55;
+      return (
+        <g key={val}>
+          <line x1={px} y1="132" x2={px} y2="148" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="165" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      {/* x > 2 */}
+      <rect x="210" y="79" width="354" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
+      <line x1="215" y1="95" x2="564" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="210" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+      <polygon points="564,95 556,89 556,101" fill="#ef4444" />
+      <line x1="210" y1="100" x2="210" y2="140" stroke="#ef4444" strokeWidth="4" />
+      
+      {/* x < 5 */}
+      <rect x="36" y="44" width="339" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
+      <line x1="36" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="375" cy="60" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
+      <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
+      <line x1="375" y1="65" x2="375" y2="140" stroke="#3b82f6" strokeWidth="4" />
+    </g>
   </svg>
 );
 
 const NL_Or_Sep = () => (
-  <svg viewBox="0 0 250 80" className="w-full h-auto max-w-[250px] mx-auto">
-    <defs>
-      <MarkerArrow id="or2-axis" color="#94a3b8" />
-      <MarkerArrow id="or2-blue" color="#3b82f6" />
-      <MarkerArrow id="or2-red" color="#ef4444" />
-    </defs>
-    <rect x="25" y="20" width="55" height="50" fill="rgba(34,197,94,0.15)" rx="4" />
-    <rect x="170" y="15" width="55" height="55" fill="rgba(34,197,94,0.15)" rx="4" />
-    <line x1="20" y1="65" x2="230" y2="65" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#or2-axis)" />
+  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
     
-    <line x1="80" y1="61" x2="80" y2="69" stroke="#94a3b8" strokeWidth="2" />
-    <text x="80" y="80" fontSize="12" fill="#64748b" textAnchor="middle">3</text>
-    
-    <line x1="170" y1="61" x2="170" y2="69" stroke="#94a3b8" strokeWidth="2" />
-    <text x="170" y="80" fontSize="12" fill="#64748b" textAnchor="middle">6</text>
-    
-    <path d="M 80 35 L 30 35" fill="none" stroke="#3b82f6" strokeWidth="2" markerEnd="url(#or2-blue)" />
-    <line x1="80" y1="65" x2="80" y2="35" stroke="#3b82f6" strokeWidth="1" strokeDasharray="2,2" />
-    <circle cx="80" cy="65" r="4" fill="#fff" stroke="#3b82f6" strokeWidth="2" />
-    
-    <path d="M 170 20 L 220 20" fill="none" stroke="#ef4444" strokeWidth="2" markerEnd="url(#or2-red)" />
-    <line x1="170" y1="65" x2="170" y2="20" stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" />
-    <circle cx="170" cy="65" r="4" fill="#ef4444" stroke="#ef4444" strokeWidth="2" />
+    {[1, 2, 3, 4, 5, 6, 7].map((val) => {
+      const px = 100 + (val-1) * 65;
+      return (
+        <g key={val}>
+          <line x1={px} y1="132" x2={px} y2="148" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="165" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      {/* x < 3 */}
+      <rect x="36" y="79" width="194" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
+      <line x1="36" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="230" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+      <polygon points="36,95 44,89 44,101" fill="#ef4444" />
+      <line x1="230" y1="100" x2="230" y2="140" stroke="#ef4444" strokeWidth="4" />
+      
+      {/* x >= 6 */}
+      <rect x="425" y="44" width="139" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
+      <line x1="430" y1="60" x2="564" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="425" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
+      <polygon points="564,60 556,54 556,66" fill="#3b82f6" />
+      <line x1="425" y1="65" x2="425" y2="140" stroke="#3b82f6" strokeWidth="4" />
+    </g>
   </svg>
 );
 
 const NL_Combined_Ex = () => (
-  <svg viewBox="0 0 300 80" className="w-full h-auto max-w-[300px] mx-auto">
-    <defs>
-      <MarkerArrow id="comb-axis" color="#64748b" />
-      <MarkerArrow id="comb-blue" color="#0ea5e9" />
-      <MarkerArrow id="comb-red" color="#e11d48" />
-    </defs>
-    <rect x="90" y="20" width="120" height="50" fill="rgba(34,197,94,0.15)" rx="4" />
-    <line x1="30" y1="65" x2="270" y2="65" stroke="#64748b" strokeWidth="2" markerEnd="url(#comb-axis)" />
+  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
     
-    <line x1="90" y1="61" x2="90" y2="69" stroke="#64748b" strokeWidth="2" />
-    <text x="90" y="80" fontSize="14" fill="#475569" textAnchor="middle">-3</text>
-    
-    <line x1="210" y1="61" x2="210" y2="69" stroke="#64748b" strokeWidth="2" />
-    <text x="210" y="80" fontSize="14" fill="#475569" textAnchor="middle">3</text>
-    
-    {/* x >= -3 */}
-    <path d="M 90 35 L 260 35" fill="none" stroke="#e11d48" strokeWidth="2" markerEnd="url(#comb-red)" />
-    <line x1="90" y1="65" x2="90" y2="35" stroke="#e11d48" strokeWidth="2" />
-    <circle cx="90" cy="65" r="4" fill="#e11d48" />
-    
-    {/* x <= 3 */}
-    <path d="M 210 20 L 40 20" fill="none" stroke="#0ea5e9" strokeWidth="2" markerEnd="url(#comb-blue)" />
-    <line x1="210" y1="65" x2="210" y2="20" stroke="#0ea5e9" strokeWidth="2" />
-    <circle cx="210" cy="65" r="4" fill="#0ea5e9" />
+    {[-5,-4,-3,-2,-1,0,1,2,3,4,5].map((val) => {
+      const px = 100 + (val+5) * 40;
+      return (
+        <g key={val}>
+          <line x1={px} y1="132" x2={px} y2="148" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="165" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      <rect x="180" y="44" width="160" height="68" fill="#f59e0b" opacity="0.45" rx="6" />
+      
+      {/* x >= -3 */}
+      <line x1="185" y1="95" x2="564" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="180" cy="95" r="5" fill="#ef4444" stroke="#ef4444" strokeWidth="2" />
+      <polygon points="564,95 556,89 556,101" fill="#ef4444" />
+      <line x1="180" y1="100" x2="180" y2="140" stroke="#ef4444" strokeWidth="4" />
+      
+      {/* x <= 3 */}
+      <line x1="36" y1="60" x2="335" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="340" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
+      <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
+      <line x1="340" y1="65" x2="340" y2="140" stroke="#3b82f6" strokeWidth="4" />
+    </g>
   </svg>
 );
 
 const NL_Max_3_5 = () => (
-  <svg viewBox="0 0 250 80" className="w-full h-auto max-w-[250px] mx-auto">
-    <defs>
-      <MarkerArrow id="max-axis" color="#94a3b8" />
-      <MarkerArrow id="max-blue" color="#0ea5e9" />
-    </defs>
-    <line x1="20" y1="60" x2="230" y2="60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#max-axis)" />
-    {[2, 3, 4].map((num, i) => (
-      <g key={num}>
-        <line x1={70 + i * 50} y1="56" x2={70 + i * 50} y2="64" stroke="#94a3b8" strokeWidth="2" />
-        <text x={70 + i * 50} y="76" fontSize="12" fill="#64748b" textAnchor="middle">{num}</text>
-      </g>
-    ))}
+  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
     
-    <path d="M 145 25 L 30 25" fill="none" stroke="#0ea5e9" strokeWidth="2" markerEnd="url(#max-blue)" />
-    <line x1="145" y1="60" x2="145" y2="25" stroke="#0ea5e9" strokeWidth="1.5" />
-    <circle cx="145" cy="60" r="4" fill="#0ea5e9" />
-    <text x="145" y="78" fontSize="12" fill="#0ea5e9" textAnchor="middle">3.5</text>
-    
-    <path d="M 120 40 Q 120 50 110 55" fill="none" stroke="#14b8a6" strokeWidth="2" markerEnd="url(#max-axis)" />
-    <text x="120" y="32" fontSize="12" fill="#0f766e" textAnchor="middle" fontWeight="bold">最大整數</text>
-    <circle cx="120" cy="60" r="4" fill="#14b8a6" />
+    {[0,1,2,3,4,5].map((val) => {
+      const px = 100 + val * 80;
+      return (
+        <g key={val}>
+          <line x1={px} y1="132" x2={px} y2="148" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="165" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      {/* x <= 3.5 */}
+      <line x1="36" y1="60" x2="375" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="380" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
+      <text x="380" y="45" fontSize="14" fill="#3b82f6" fontWeight="bold" textAnchor="middle">3.5</text>
+      <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
+      <line x1="380" y1="65" x2="380" y2="140" stroke="#3b82f6" strokeWidth="4" />
+      
+      {/* Arrow pointing to Max integer = 3 */}
+      <path d="M 340 100 Q 300 80 260 110" fill="none" stroke="#10b981" strokeWidth="3" markerEnd="url(#arrow-max)"/>
+      <circle cx="340" cy="140" r="6" fill="#10b981" />
+      <text x="250" y="125" fontSize="16" fill="#047857" fontWeight="bold">最大整數</text>
+      <defs>
+        <marker id="arrow-max" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+        </marker>
+      </defs>
+    </g>
   </svg>
 );
 
 const NL_Min_2 = () => (
-  <svg viewBox="0 0 250 80" className="w-full h-auto max-w-[250px] mx-auto">
-    <defs>
-      <MarkerArrow id="min-axis" color="#94a3b8" />
-      <MarkerArrow id="min-blue" color="#0ea5e9" />
-    </defs>
-    <line x1="20" y1="60" x2="230" y2="60" stroke="#94a3b8" strokeWidth="2" markerEnd="url(#min-axis)" />
-    {[1, 2, 3, 4].map((num, i) => (
-      <g key={num}>
-        <line x1={50 + i * 50} y1="56" x2={50 + i * 50} y2="64" stroke="#94a3b8" strokeWidth="2" />
-        <text x={50 + i * 50} y="76" fontSize="12" fill="#64748b" textAnchor="middle">{num}</text>
-      </g>
-    ))}
+  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
     
-    <path d="M 100 25 L 220 25" fill="none" stroke="#0ea5e9" strokeWidth="2" markerEnd="url(#min-blue)" />
-    <line x1="100" y1="60" x2="100" y2="25" stroke="#0ea5e9" strokeWidth="1.5" strokeDasharray="2,2"/>
-    <circle cx="100" cy="60" r="4" fill="#fff" stroke="#0ea5e9" strokeWidth="2" />
-    
-    <path d="M 150 40 Q 150 50 155 55" fill="none" stroke="#14b8a6" strokeWidth="2" markerEnd="url(#min-axis)" />
-    <text x="150" y="32" fontSize="12" fill="#0f766e" textAnchor="middle" fontWeight="bold">最小整數</text>
-    <circle cx="150" cy="60" r="4" fill="#14b8a6" />
+    {[0,1,2,3,4,5].map((val) => {
+      const px = 100 + val * 80;
+      return (
+        <g key={val}>
+          <line x1={px} y1="132" x2={px} y2="148" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="165" textAnchor="middle" fontSize="14" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    <g>
+      {/* x > 2 */}
+      <line x1="265" y1="60" x2="564" y2="60" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <circle cx="260" cy="60" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+      <polygon points="564,60 556,54 556,66" fill="#ef4444" />
+      <line x1="260" y1="65" x2="260" y2="140" stroke="#ef4444" strokeWidth="4" />
+      
+      {/* Arrow pointing to Min integer = 3 */}
+      <path d="M 340 100 Q 380 80 420 110" fill="none" stroke="#10b981" strokeWidth="3" markerEnd="url(#arrow-min)"/>
+      <circle cx="340" cy="140" r="6" fill="#10b981" />
+      <text x="430" y="125" fontSize="16" fill="#047857" fontWeight="bold">最小整數</text>
+      <defs>
+        <marker id="arrow-min" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+        </marker>
+      </defs>
+    </g>
   </svg>
 );
 
 const NL_Quad_Parabola = () => (
-  <svg viewBox="0 0 200 120" className="w-full h-auto max-w-[200px] mx-auto">
-    <defs>
-      <MarkerArrow id="quad-axis" color="#64748b" />
-    </defs>
-    <rect x="25" y="4" width="45" height="56" fill="rgba(59,130,246,0.15)" />
-    <rect x="130" y="4" width="45" height="56" fill="rgba(59,130,246,0.15)" />
-    <path d="M 70 60 Q 100 120 130 60" fill="rgba(34,197,94,0.15)" />
+  <svg width="100%" height="200" viewBox="0 0 600 200" className="mt-4 max-w-[600px] mx-auto">
+    {/* Background color highlight for >0 and <0 */}
+    <rect x="250" y="20" width="100" height="120" fill="#22c55e" opacity="0.1" />
+    <rect x="50" y="20" width="200" height="120" fill="#3b82f6" opacity="0.1" />
+    <rect x="350" y="20" width="200" height="120" fill="#3b82f6" opacity="0.1" />
+
+    <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
-    <line x1="10" y1="60" x2="190" y2="60" stroke="#64748b" strokeWidth="2" markerEnd="url(#quad-axis)" />
-    <path d="M 30 10 Q 100 150 170 10" fill="none" stroke="#334155" strokeWidth="2" />
+    <path d="M 150 40 Q 300 220 450 40" fill="none" stroke="#1e293b" strokeWidth="3" />
     
-    <circle cx="70" cy="60" r="4" fill="#fff" stroke="#334155" strokeWidth="2" />
-    <text x="60" y="75" fontSize="14" fill="#475569" textAnchor="middle">-3</text>
+    <circle cx="250" cy="140" r="5" fill="white" stroke="#1e293b" strokeWidth="2" />
+    <text x="250" y="165" textAnchor="middle" fontSize="16" fill="#374151" fontWeight="bold">-3</text>
     
-    <circle cx="130" cy="60" r="4" fill="#fff" stroke="#334155" strokeWidth="2" />
-    <text x="140" y="75" fontSize="14" fill="#475569" textAnchor="middle">5</text>
-    
-    <text x="50" y="30" fontSize="14" fill="#1d4ed8" fontWeight="bold" textAnchor="middle">&gt; 0</text>
-    <text x="150" y="30" fontSize="14" fill="#1d4ed8" fontWeight="bold" textAnchor="middle">&gt; 0</text>
-    <text x="100" y="85" fontSize="14" fill="#15803d" fontWeight="bold" textAnchor="middle">&lt; 0</text>
+    <circle cx="350" cy="140" r="5" fill="white" stroke="#1e293b" strokeWidth="2" />
+    <text x="350" y="165" textAnchor="middle" fontSize="16" fill="#374151" fontWeight="bold">5</text>
+
+    {/* Labels */}
+    <text x="180" y="80" textAnchor="middle" fontSize="18" fill="#2563eb" fontWeight="bold">&gt; 0</text>
+    <text x="420" y="80" textAnchor="middle" fontSize="18" fill="#2563eb" fontWeight="bold">&gt; 0</text>
+    <text x="300" y="120" textAnchor="middle" fontSize="18" fill="#16a34a" fontWeight="bold">&lt; 0</text>
   </svg>
 );

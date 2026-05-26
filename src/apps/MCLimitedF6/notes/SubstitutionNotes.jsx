@@ -137,7 +137,7 @@ const SubstitutionNotes = ({ onBack }) => {
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 2</span> 題目代入（直接按機）：
                 <InlineMath math={`\\dfrac{9^{3(${h(H0, '2')})+1}}{(3^{2(${h(H0, '2')})+3})(27^{2(${h(H0, '2')})+1})}=\\dfrac{1}{6561}`} />
               </div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 代 <InlineMath math="n=2" /> 入選項（直接比對 ANS）：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 代 <InlineMath math="n=2" /> 入選項（直接比對答案）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
                   <li className="text-emerald-700 font-bold"><ChoiceColon label="A" /><InlineMath math={`9^{-${h(H0, '2')}-2}=\\dfrac{1}{6561}`} /> ✅ ← 答案</li>
                   <li><ChoiceColon label="B" /><InlineMath math={`9^{-${h(H0, '2')}-1}=\\dfrac{1}{729}`} /> ❌</li>
@@ -195,7 +195,7 @@ const SubstitutionNotes = ({ onBack }) => {
               <div className="font-bold text-indigo-800">📝 代入法步驟</div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 1</span> 代 <InlineMath math="x = 3" /></div>
               <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 2</span> 題目代入（直接按機）：<InlineMath math={`\\dfrac{(27\\cdot ${h(H0, '3')})^5}{(3\\cdot ${h(H0, '3')}^{-2})^4}\\approx 2.8243\\times 10^{11}`} /></div>
-              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 代選項（直接比對 ANS）：
+              <div><span className="bg-indigo-200 text-indigo-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 代選項（直接比對答案）：
                 <ul className="mt-1.5 ml-5 space-y-1 list-none">
                   <li><ChoiceColon label="A" /><InlineMath math={`3^2(${h(H0, '3')})^3=243`} /> ❌</li>
                   <li><ChoiceColon label="B" /><InlineMath math={`3^4(${h(H0, '3')})^3=2187`} /> ❌</li>

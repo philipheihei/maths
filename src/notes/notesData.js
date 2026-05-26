@@ -30,7 +30,7 @@ import {
 import { FactorizationNotes, LawsOfIndicesNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes, AreaVolumeF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
-import { VariationNotes, StatisticsF5Notes } from './F5Notes';
+import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes } from './F5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
 export const NOTES_DATA = {
@@ -475,6 +475,14 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'circle-properties',
+      topic: 'CH12-13 圓形性質',
+      color: 'emerald',
+      subtopics: [
+        { id: 'circle-theorems', num: 1, title: '常見圓形定理', color: 'emerald' },
+      ]
+    },
+    {
       id: 'statistics-f5',
       topic: 'CH14 統計',
       color: 'indigo',
@@ -484,14 +492,6 @@ export const NOTES_DATA = {
         { id: 'stat-graphs', num: 3, title: '從圖表找統計量', color: 'purple' },
         { id: 'stat-standard-score', num: 4, title: '標準分 (Standard Score)', color: 'sky' },
         { id: 'stat-data-change', num: 5, title: '修改數據對各統計量的影響', color: 'red' },
-      ]
-    },
-    {
-      id: 'circle-properties',
-      topic: 'CH12-13 圓形性質',
-      color: 'emerald',
-      subtopics: [
-        { id: 'circle-theorems', num: 1, title: '常見圓形定理', color: 'emerald' },
       ]
     },
     {
@@ -573,5 +573,6 @@ export const NOTES_COMPONENTS = {
   'straight-line-equation': StraightLineEquationNotes,
   'similar-triangles': SimilarTrianglesNotes,
   'statistics-f5': StatisticsF5Notes,
+  'circle-properties': CirclePropertiesNotes,
   'compound-inequalities': CompoundInequalitiesNotes,
 };

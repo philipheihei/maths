@@ -67,7 +67,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                   </div>
                   <p className="text-green-700 text-sm"><span className="inline-block w-6 h-6 rounded-full border-2 border-red-600 text-center text-xs leading-5">1</span> → 去答案2</p>
                 </div>
-                <p className="text-green-700 mt-2">∴ ANS是 -1 / -3</p>
+                <p className="text-green-700 mt-2">∴ 答案是 -1 / -3</p>
                 <p className="text-red-600 font-bold">寫： x = -1 或 -3</p>
               </div>
             </div>
