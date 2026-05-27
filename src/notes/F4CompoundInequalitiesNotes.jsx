@@ -232,12 +232,11 @@ viewBox：300 × 80
             
             <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
               <h3 className="font-bold text-orange-800 mb-3">1. 大括號形式</h3>
-              <div className="flex items-center space-x-4">
-                <div className="text-3xl font-light">{`{`}</div>
-                <div className="space-y-2">
-                  <Latex math="3x - 1 < 4x" />
-                  <br/>
-                  <Latex math="5x > 3" />
+              <div className="flex items-stretch space-x-4">
+                <div className="text-6xl leading-none font-light text-orange-700 flex items-center scale-y-150 origin-center select-none">{`{`}</div>
+                <div className="space-y-1 flex flex-col justify-center">
+                  <Latex math="3x - 1 < 4x" block={true} left={true} />
+                  <Latex math="5x > 3" block={true} left={true} />
                 </div>
               </div>
               <p className="mt-4 text-slate-700 bg-white p-2 border border-orange-100 rounded text-sm">
@@ -670,7 +669,7 @@ const NL_Quad_Parabola = () => (
     <polygon points="564,140 554,134 554,146" fill="#374151" />
     <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
-    <path d="M 150 40 Q 300 220 450 40" fill="none" stroke="#1e293b" strokeWidth="3" />
+    <path d="M 150 40 Q 300 265 450 40" fill="none" stroke="#1e293b" strokeWidth="3" />
     
     <circle cx="250" cy="140" r="5" fill="white" stroke="#1e293b" strokeWidth="2" />
     <text x="250" y="165" textAnchor="middle" fontSize="16" fill="#374151" fontWeight="bold">-3</text>
@@ -679,8 +678,8 @@ const NL_Quad_Parabola = () => (
     <text x="350" y="165" textAnchor="middle" fontSize="16" fill="#374151" fontWeight="bold">5</text>
 
     {/* Labels */}
-    <text x="180" y="80" textAnchor="middle" fontSize="18" fill="#2563eb" fontWeight="bold">&gt; 0</text>
-    <text x="420" y="80" textAnchor="middle" fontSize="18" fill="#2563eb" fontWeight="bold">&gt; 0</text>
+    <text x="180" y="70" textAnchor="middle" fontSize="18" fill="#2563eb" fontWeight="bold">&gt; 0</text>
+    <text x="420" y="70" textAnchor="middle" fontSize="18" fill="#2563eb" fontWeight="bold">&gt; 0</text>
     <text x="300" y="120" textAnchor="middle" fontSize="18" fill="#16a34a" fontWeight="bold">&lt; 0</text>
   </svg>
 );

@@ -1039,3 +1039,245 @@ viewBox：建議 200 × 200 (共 2 個變體)
     </>
   );
 };
+
+// ========================================
+// CH18 線性規劃 (F5)
+// ========================================
+export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-pink-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH18 線性規劃 (Linear Programming)</h1>
+        <p className="text-slate-600">透過線段的不等式找尋點的範圍、最大值及最小值</p>
+      </div>
+
+      <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg mb-6">
+        <p className="text-amber-800 font-bold">💡 考試小貼士：</p>
+        <ul className="list-disc pl-5 mt-1 text-sm text-amber-900 space-y-1">
+          <li>此課題為 DSE 冷門 topic，需認識但不會佔太多分。</li>
+          <li>DSE 通常考 3 條線或以上 (只考直線)。</li>
+        </ul>
+      </div>
+
+      <CollapsibleSection id="lp-range" title="透過線段的不等式找範圍" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">📝 判斷大細區域</h3>
+            <p className="text-sm text-slate-700 mb-4">
+              畫出直線後，可以透過 <Latex math="y" inline /> 的大細來判斷不等式所代表的區域範圍。
+            </p>
+            
+            {/* 📐 線性規劃大於小於區域圖 */}
+            <div className="bg-white border text-center border-slate-200 shadow-sm rounded-lg p-4 mb-4 flex justify-center">
+              <svg viewBox="0 0 300 240" className="w-full max-w-md">
+                <defs>
+                  <marker id="lp-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#334155" />
+                  </marker>
+                </defs>
+                
+                {/* 區域填色 */}
+                <polygon points="50,210 50,10 250,10" fill="#fef08a" opacity="0.4" />
+                <polygon points="50,210 250,210 250,10" fill="#fbcfe8" opacity="0.4" />
+
+                {/* 網格線 */}
+                <g stroke="#cbd5e1" strokeWidth="1" strokeDasharray="4,4">
+                  <line x1="70" y1="10" x2="70" y2="210" />
+                  <line x1="110" y1="10" x2="110" y2="210" />
+                  <line x1="190" y1="10" x2="190" y2="210" />
+                  <line x1="230" y1="10" x2="230" y2="210" />
+                  <line x1="50" y1="30" x2="250" y2="30" />
+                  <line x1="50" y1="70" x2="250" y2="70" />
+                  <line x1="50" y1="110" x2="250" y2="110" />
+                  <line x1="50" y1="190" x2="250" y2="190" />
+                </g>
+
+                {/* 坐標軸 */}
+                <line x1="40" y1="150" x2="270" y2="150" stroke="#334155" strokeWidth="1.5" markerEnd="url(#lp-arrow)" />
+                <line x1="150" y1="220" x2="150" y2="15" stroke="#334155" strokeWidth="1.5" markerEnd="url(#lp-arrow)" />
+
+                {/* 刻度標籤 */}
+                <g fontSize="10" fill="#64748b" textAnchor="middle">
+                  <text x="70" y="165">-2</text>
+                  <text x="110" y="165">-1</text>
+                  <text x="190" y="165">1</text>
+                  <text x="230" y="165">2</text>
+                </g>
+                <g fontSize="10" fill="#64748b" textAnchor="end">
+                  <text x="142" y="193">-1</text>
+                  <text x="142" y="113">1</text>
+                  <text x="142" y="73">2</text>
+                  <text x="142" y="33">3</text>
+                  <text x="142" y="165">0</text>
+                </g>
+
+                {/* 坐標軸標籤 */}
+                <text x="275" y="154" fontSize="12" fill="#334155" fontStyle="italic">x</text>
+                <text x="135" y="20" fontSize="12" fill="#334155" fontStyle="italic">y</text>
+
+                {/* 直線 y = x + 1 */}
+                <line x1="50" y1="210" x2="250" y2="10" stroke="#1e293b" strokeWidth="2" />
+                <text x="175" y="80" fontSize="12" fill="#1e293b" fontStyle="italic" fontWeight="bold">y = x + 1</text>
+
+                {/* 區域標籤與文字塊 */}
+                <text x="80" y="45" fontSize="14" fill="#a16207" fontWeight="bold" textAnchor="middle">區域 A</text>
+                <g transform="translate(40, 60)">
+                  <rect width="80" height="24" rx="4" fill="#fde047" opacity="0.9"/>
+                  <text x="40" y="16" fontSize="12" fill="#854d0e" fontWeight="bold" textAnchor="middle">y &gt; x + 1</text>
+                </g>
+
+                <text x="220" y="185" fontSize="14" fill="#be185d" fontWeight="bold" textAnchor="middle">區域 B</text>
+                <g transform="translate(180, 130)">
+                  <rect width="80" height="24" rx="4" fill="#fbcfe8" opacity="0.9"/>
+                  <text x="40" y="16" fontSize="12" fill="#9d174d" fontWeight="bold" textAnchor="middle">y &lt; x + 1</text>
+                </g>
+              </svg>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white p-3 rounded-lg border border-slate-200 text-center">
+                <span className="bg-yellow-200 px-2 py-1 rounded font-bold mb-2 inline-block"><Latex math="y > x + 1" inline /></span>
+                <p className="text-sm text-slate-600">代表直線<strong>上方</strong>的區域 (區域 A)</p>
+              </div>
+              <div className="bg-white p-3 rounded-lg border border-slate-200 text-center">
+                <span className="bg-pink-200 px-2 py-1 rounded font-bold mb-2 inline-block"><Latex math="y < x + 1" inline /></span>
+                <p className="text-sm text-slate-600">代表直線<strong>下方</strong>的區域 (區域 B)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="lp-mc" title="MC 主要題型：考最大值 / 最小值" num={2} color="red" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+            <h3 className="font-bold text-red-800 mb-2">📌 解題步驟</h3>
+            <ul className="text-sm text-slate-800 space-y-2 list-decimal pl-5">
+              <li>
+                <strong>找所有交點</strong>：將提供的不等式當成等式，互相聯立解方程，找出所有可能成為極值的「交點組合」。<br/>
+                <span className="text-slate-600 text-xs">（如果考 3 條線，則有 3 個交點；如果考 4 條線，則有 {'>'} 4 個交點。像畫「井」字可能有多個交點）</span>
+              </li>
+              <li><strong>逐個交點代入</strong>：將剛才找到的坐標逐一代入題目所求的數式，比較以找出最大值或最小值。</li>
+            </ul>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <div className="bg-slate-100 flex items-center justify-between px-3 py-1 rounded w-fit mb-3">
+              <span className="text-sm text-slate-600 font-bold">例題：2013-DSE-MC-Q37 (46%)</span>
+            </div>
+            <p className="text-sm text-slate-700 mb-2">考慮以下的不等式組，設 D 為表示以下的解之區域：</p>
+            <div className="bg-slate-50 p-3 rounded border border-slate-200 font-mono text-sm w-fit mb-3">
+              ① <Latex math="x \ge 2" inline /><br/>
+              ② <Latex math="y \ge 0" inline /><br/>
+              ③ <Latex math="x + 4y \le 22" inline /><br/>
+              ④ <Latex math="4x - y \le 20" inline />
+            </div>
+            <p className="text-sm text-slate-700 mb-3">
+              若 <Latex math="(x, y)" inline /> 為 D 中的一點，則 <span className="bg-green-100 px-1 rounded font-bold text-green-800"><Latex math="3y - 4x + 15" inline /></span> 的最大值為？
+            </p>
+
+            <div className="border-t border-slate-200 pt-3 mt-3">
+              <h4 className="font-bold text-indigo-700 mb-2">1. 找所有交點組合</h4>
+              
+              <div className="bg-indigo-50 p-3 rounded-lg text-sm mb-3">
+                <p className="font-bold text-indigo-800 mb-1">例如組合 ① + ③：</p>
+                <div className="ml-4 space-y-1">
+                  <p>把不等式當成 "=" 處理：用 <Latex math="x = 2" inline /> 和 <Latex math="x + 4y = 22" inline /></p>
+                  <p>代入計算 <Latex math="\Rightarrow 2 + 4y = 22 \Rightarrow 4y = 20 \Rightarrow y = 5" inline /></p>
+                  <p className="text-indigo-700 font-bold pt-1">→ <Latex math="(2, 5)" inline /> 是其中一個交點</p>
+                </div>
+              </div>
+              <p className="text-xs text-slate-500 mb-4">其他可能組合如 ①+②=(2, 0) 等等... 將找出所有合理交點。</p>
+
+              <h4 className="font-bold text-green-700 mb-2">2. 逐個交點代入數式比較最大值 / 最小值</h4>
+              <p className="text-sm text-slate-600 mb-2">將找到的交點 <Latex math="(2, 5)" inline /> 代入目標式子 <span className="text-red-500 font-mono bg-red-50 px-1 rounded">3y - 4x + 15</span>：</p>
+              <div className="bg-green-50 p-3 rounded-lg text-sm font-sans mx-auto md:mx-0 w-fit">
+                <Latex math="3(5) - 4(2) + 15" block />
+                <Latex math="= 15 - 8 + 15" block />
+                <Latex math="= 22" block />
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="lp-long" title="長答題型：設立約束條件 (求不等式組)" num={3} color="green" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-2">💡 概念與技巧</h3>
+            <p className="text-sm text-slate-700 mb-2">
+              計算總營養或總成本時，通常是需要將<span className="font-bold">不同食物/物品的份量相加</span>。
+            </p>
+            <p className="text-sm text-slate-700">
+              必須思考現實生活中：<span className="bg-yellow-200 px-1 rounded font-bold text-slate-800">變量可否是負數？</span><br/>
+              通常數量、重量不能為負，所以必定隱含 <Latex math="x \ge 0, y \ge 0" inline /> 的條件。
+            </p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="text-sm text-slate-700 mb-3">
+              <span className="font-bold">例子：</span>某廚師把 <Latex math="x\text{ kg}" inline /> 的食物 R 和 <Latex math="y\text{ kg}" inline /> 的食物 T 混合起來。<br/>
+              混合物中，<span className="border-b-2 border-blue-500">鉀的含量最少 16 單位</span>，而<span className="border-b-2 border-red-500">鐵的含量最少 20 單位</span>。<br/>
+              1 kg 食物 R 和 1 kg 食物 T 的營養成分如下表所示：
+            </p>
+
+            <div className="overflow-x-auto mb-4">
+              <table className="w-full max-w-sm text-center border-collapse border border-slate-400 text-sm text-slate-800 shadow-sm mx-auto md:mx-0">
+                <thead className="bg-[#fde68a]">
+                  <tr>
+                    <th className="border border-slate-400 p-2 w-1/3"></th>
+                    <th className="border border-slate-400 p-2 w-1/3">鉀</th>
+                    <th className="border border-slate-400 p-2 w-1/3">鐵</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-[#fef3c7]">
+                    <td className="border border-slate-400 p-2 font-bold">食物 R</td>
+                    <td className="border border-slate-400 p-2">3 單位</td>
+                    <td className="border border-slate-400 p-2">2 單位</td>
+                  </tr>
+                  <tr className="bg-white">
+                    <td className="border border-slate-400 p-2 font-bold">食物 T</td>
+                    <td className="border border-slate-400 p-2">2 單位</td>
+                    <td className="border border-slate-400 p-2">6 單位</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="bg-slate-50 p-4 border border-slate-200 rounded-lg">
+              <p className="font-bold text-slate-800 mb-2 bg-yellow-200 inline-block px-1 rounded">(a) 寫出所有關於 <Latex math="x" inline /> 和 <Latex math="y" inline /> 的約束條件：</p>
+              
+              <div className="flex bg-white p-4 rounded border border-slate-200 w-fit mx-auto md:mx-0">
+                <div className="text-4xl text-slate-300 font-light mr-3 mt-1 flex items-center justify-center">{'{'}</div>
+                <div className="space-y-2 text-slate-800 flex flex-col justify-center">
+                  <div className="flex gap-3 items-center min-h-8">
+                    <span className="text-blue-700 font-bold whitespace-nowrap text-lg leading-none"><Latex math="3x + 2y \ge 16" inline /></span>
+                    <span className="text-xs font-sans text-slate-500 bg-slate-100 px-2 py-0.5 rounded">← 鉀最少 16</span>
+                  </div>
+                  <div className="flex gap-3 items-center min-h-8">
+                    <span className="text-red-500 font-bold whitespace-nowrap text-lg leading-none"><Latex math="2x + 6y \ge 20" inline /></span>
+                    <span className="text-xs font-sans text-slate-500 bg-slate-100 px-2 py-0.5 rounded">← 鐵最少 20</span>
+                  </div>
+                  <div className="flex gap-3 items-center min-h-8">
+                    <span className="text-indigo-700 font-bold whitespace-nowrap text-lg leading-none"><Latex math="x \ge 0" inline /></span>
+                    <span className="text-xs font-sans text-slate-500 bg-slate-100 px-2 py-0.5 rounded">← 重量不可為負</span>
+                  </div>
+                  <div className="flex gap-3 items-center min-h-8">
+                    <span className="text-indigo-700 font-bold whitespace-nowrap text-lg leading-none"><Latex math="y \ge 0" inline /></span>
+                    <span className="text-xs font-sans text-slate-500 bg-slate-100 px-2 py-0.5 rounded">← 重量不可為負</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </CollapsibleSection>
+
+
+    </>
+  );
+};
