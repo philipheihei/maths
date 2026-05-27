@@ -1558,7 +1558,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left whitespace-nowrap">
-                  <Latex math="5 \times " /><span className="bg-purple-200 px-2 py-0.5 rounded font-bold ml-1 tracking-widest text-[#5b21b6]">2 \times 3</span>
+                  <Latex math="5 \times " /><span className="bg-purple-200 px-2 py-0.5 rounded font-bold ml-1 tracking-widest text-[#5b21b6]">2 × 3</span>
                 </div>
                 <div className="text-sm text-[#5b21b6] font-bold relative pl-4 w-full text-base">
                   <div>觀察有什麼分母，相乘</div>

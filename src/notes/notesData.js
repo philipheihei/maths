@@ -30,7 +30,9 @@ import {
 import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
+import { MoreEquationsNotes } from './F4MoreEquationsNotes';
 import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes } from './F5Notes';
+import { SequenceNotes } from './F6Notes';
 import { ProbabilityF5Notes } from './ProbabilityF5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
@@ -442,6 +444,20 @@ export const NOTES_DATA = {
         { id: 'general-form-line', num: 2, title: '直線的一般式', color: 'green' },
         { id: 'intersection-lines', num: 3, title: '兩直線的交點', color: 'purple' },
       ]
+    },
+    {
+      id: 'more-equations',
+      topic: 'CH8 續方程',
+      color: 'indigo',
+      subtopics: [
+        { id: 'simultaneous', num: 1, title: '1. 聯立方程', color: 'teal' },
+        { id: 'fractional', num: 2, title: '2A. 分式方程', color: 'emerald' },
+        { id: 'higher-degree', num: 3, title: '2B. 高次方程', color: 'purple' },
+        { id: 'exponential', num: 4, title: '2C. 指數方程', color: 'amber' },
+        { id: 'logarithmic', num: 5, title: '2D. 對數方程', color: 'cyan' },
+        { id: 'trigonometric', num: 6, title: '2E. 三角方程', color: 'rose' },
+        { id: 'radical', num: 7, title: '2F. 含有根號的方程', color: 'indigo' },
+      ]
     }
   ],
   F5: [
@@ -511,7 +527,20 @@ export const NOTES_DATA = {
       ]
     }
   ],
-  F6: [],
+  F6: [
+    {
+      id: 'sequence',
+      topic: 'CH20-21 數列',
+      color: 'indigo',
+      subtopics: [
+        { id: 'nth-term', num: 1, title: '通項 (nth term) 與公差/公比', color: 'indigo' },
+        { id: 'sum', num: 2, title: '求和 (Summation)', color: 'blue' },
+        { id: 'basic-questions', num: 3, title: '考核題型 (1)：分辨與找特定項', color: 'purple' },
+        { id: 'advanced-questions', num: 4, title: '考核題型 (2)：求項數與不等式應用', color: 'red' },
+        { id: 'other-sequence', num: 5, title: '其他數列', color: 'amber' },
+      ]
+    }
+  ],
   '高中甲(一)': [
     {
       id: 'simultaneous-eq',
@@ -563,6 +592,9 @@ export const NOTES_COMPONENTS = {
   'quadratic-equation': QuadraticEquationNotes,
   'nature-of-roots': NatureOfRootsNotes,
   'remainder-factor': RemainderFactorNotes,
+  'straight-line-equation': StraightLineEquationNotes,
+  'functions': FunctionNotes,
+  'more-equations': MoreEquationsNotes,
   'variation': VariationNotes,
   'circle-properties': CirclePropertiesNotes,
   'statistics-f5': StatisticsF5Notes,
@@ -578,4 +610,5 @@ export const NOTES_COMPONENTS = {
   'functions': FunctionNotes,
   'straight-line-equation': StraightLineEquationNotes,
   'similar-triangles': SimilarTrianglesNotes,
+  'sequence': SequenceNotes,
 };

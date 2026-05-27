@@ -1119,7 +1119,7 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
 
                 {/* 直線 y = x + 1 */}
                 <line x1="50" y1="210" x2="250" y2="10" stroke="#1e293b" strokeWidth="2" />
-                <text x="175" y="80" fontSize="12" fill="#1e293b" fontStyle="italic" fontWeight="bold">y = x + 1</text>
+                <text x="195" y="80" fontSize="12" fill="#1e293b" fontStyle="italic" fontWeight="bold">y = x + 1</text>
 
                 {/* 區域標籤與文字塊 */}
                 <text x="80" y="45" fontSize="14" fill="#a16207" fontWeight="bold" textAnchor="middle">區域 A</text>
