@@ -138,11 +138,6 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
       <text x="150" y="90" fontSize="15" fill="#334155" textAnchor="middle" fontWeight="bold">b</text>
       <text x="270" y="90" fontSize="15" fill="#334155" textAnchor="middle" fontWeight="bold">a</text>
       <text x="200" y="180" fontSize="15" fill="#334155" textAnchor="middle" fontWeight="bold">c</text>
-
-      {/* Highlights for "arms" hugging the angle */}
-      {/* Overlay paths with thicker translucent colors if needed, but circles around sides are requested */}
-      <ellipse cx="160" cy="100" rx="20" ry="12" fill="none" stroke="#ef4444" strokeWidth="2" transform="rotate(-50 160 100)" />
-      <ellipse cx="260" cy="100" rx="20" ry="12" fill="none" stroke="#ef4444" strokeWidth="2" transform="rotate(56 260 100)" />
     </svg>
   );
 
@@ -216,6 +211,23 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
               <div className="text-xl font-bold text-slate-400">→</div>
               <div className="text-xl font-bold text-blue-800">
                 <Latex math="73.5\text{ cm}^2" inline />
+              </div>
+            </div>
+
+            <div className="bg-white rounded p-4 mt-4 font-sans space-y-2 border border-blue-100">
+              <p className="font-bold text-slate-800">計算機 Step by Step（例：<Latex math="a=11,\ b=14,\ c=15" inline />）</p>
+              <div className="text-sm text-slate-700 space-y-1">
+                <p><span className="font-bold text-blue-700">Step 1：</span>按 <span className="bg-orange-500 text-white text-xs font-mono px-2 py-0.5 rounded">FMLA</span>，選 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">03</span>（Heron）。</p>
+                <p><span className="font-bold text-blue-700">Step 2：</span>依序輸入三邊邊長：<span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">11</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">14</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> → <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">15</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>。</p>
+                <p><span className="font-bold text-blue-700">Step 3：</span>計算機會顯示 <span className="font-semibold">73.484...</span>，按題目要求取近似值：<span className="font-semibold">73.5 cm²</span>（準確至3位有效數字）。</p>
+              </div>
+
+              <div className="pt-2 border-t border-slate-100 text-sm text-slate-700 space-y-1">
+                <p className="font-bold text-slate-800">同場手算對照：</p>
+                <Step math="s = \frac{11+14+15}{2} = 20" />
+                <Step math="\text{面積} = \sqrt{s(s-a)(s-b)(s-c)}" />
+                <Step math="\text{面積} = \sqrt{20(20-11)(20-14)(20-15)} = \sqrt{5400}" />
+                <Step math="\text{面積} = 73.5\text{ cm}^2\ (\text{準確至3位有效數字})" />
               </div>
             </div>
           </div>
