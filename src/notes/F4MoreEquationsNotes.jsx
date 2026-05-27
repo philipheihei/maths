@@ -28,19 +28,34 @@ export const MoreEquationsNotes = ({ activeSub }) => {
   }, [activeSub]);
 
   // Helper for step with explanation on right
-  const Step = ({ math, explain, indent }) => (
-    <div className={`flex flex-col md:flex-row md:items-baseline md:justify-between py-1 border-b border-slate-100 last:border-0 ${indent ? 'pl-8' : ''}`}>
-      <div className="flex-1 overflow-x-auto text-left">
-        <Latex math={math} block={false} />
-      </div>
-      {explain && (
-        <div className="md:w-1/2 mt-1 md:mt-0 text-red-600 text-sm md:text-right flex items-center md:justify-end gap-2">
-          <span className="opacity-60 hidden md:inline">←</span>
-          <span>{explain}</span>
+  const Step = ({ math, explain, indent, alignEq = true }) => {
+    const shouldAlignEq = alignEq && math.includes('=') && !math.includes('\\therefore');
+    const eqParts = shouldAlignEq ? math.match(/^(.*?)(=)(.*)$/) : null;
+
+    return (
+      <div className={`grid grid-cols-1 md:grid-cols-[max-content_minmax(220px,1fr)] gap-x-3 py-1 ${indent ? 'pl-8' : ''}`}>
+        <div className="min-w-0 text-left">
+          {eqParts ? (
+            <div className="w-full grid grid-cols-[136px_auto_minmax(0,1fr)] md:grid-cols-[190px_auto_minmax(0,1fr)] items-baseline gap-x-2">
+              <div className="text-right pr-1"><Latex math={eqParts[1].trim()} block={false} /></div>
+              <div><Latex math="=" block={false} /></div>
+              <div className="min-w-0"><Latex math={eqParts[3].trim()} block={false} /></div>
+            </div>
+          ) : (
+            <Latex math={math} block={false} />
+          )}
         </div>
-      )}
-    </div>
-  );
+        {explain ? (
+          <div className="mt-1 md:mt-0 text-red-600 text-sm flex items-start md:items-baseline md:justify-start gap-1.5 leading-snug">
+            <span className="opacity-60">←</span>
+            <span>{explain}</span>
+          </div>
+        ) : (
+          <div />
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-6">
@@ -70,7 +85,7 @@ export const MoreEquationsNotes = ({ activeSub }) => {
               <Step math="0 = x^2 + 2x - 3" explain="變為一般式" />
               <Step math="x = 1 \text{ 或 } -3" explain="FMLA 01" />
               
-              <div className="mt-4 pt-4 border-t border-slate-200 border-dashed">
+              <div className="mt-4 pt-4">
                 <Step math="\text{當 } x=1,\ y=4(1)+2=6" />
                 <Step math="\text{當 } x=-3,\ y=4(-3)+2=-10" explain="以 x 的答案找 y 的對應值" />
                 <Step math="\therefore \text{解是 } x=1, y=6 \text{ 和 } x=-3, y=-10" explain="需寫出2組的 x 和對應的 y 值（組合1 組合2）" />
@@ -211,7 +226,7 @@ export const MoreEquationsNotes = ({ activeSub }) => {
               <Step math="3\cos\theta - 2 + 2\cos^2\theta = 0" />
               <Step math="2\cos^2\theta + 3\cos\theta - 2 = 0" explain="重整為一般式" />
               
-              <div className="mt-4 pt-4 border-t border-slate-200 border-dashed">
+              <div className="mt-4 pt-4">
                 <Step math="\cos\theta = 0.5 \text{ 或 } -2\ (\text{捨去})" explain="cosθ 範圍是 -1 至 1" />
                 <Step math="\theta = 60^\circ \text{ 或 } 300^\circ" />
               </div>
