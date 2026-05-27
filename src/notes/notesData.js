@@ -31,6 +31,7 @@ import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, C
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { MoreEquationsNotes } from './F4MoreEquationsNotes';
+import { TrigApplicationsF4Notes } from './F4TrigApplicationsNotes';
 import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes } from './F5Notes';
 import { SequenceNotes } from './F6Notes';
 import { ProbabilityF5Notes } from './ProbabilityF5Notes';
@@ -458,6 +459,15 @@ export const NOTES_DATA = {
         { id: 'trigonometric', num: 6, title: '2E. 三角方程', color: 'rose' },
         { id: 'radical', num: 7, title: '2F. 含有根號的方程', color: 'indigo' },
       ]
+    },
+    {
+      id: 'trig-applications-f4',
+      topic: 'CH10 三角學的應用',
+      color: 'emerald',
+      subtopics: [
+        { id: 'area', num: 1, title: '1. 找 △ 面積', color: 'rose' },
+        { id: 'sides-angles', num: 2, title: '2. 找 △ 邊長 / 角度', color: 'emerald' },
+      ]
     }
   ],
   F5: [
@@ -595,6 +605,7 @@ export const NOTES_COMPONENTS = {
   'straight-line-equation': StraightLineEquationNotes,
   'functions': FunctionNotes,
   'more-equations': MoreEquationsNotes,
+  'trig-applications-f4': TrigApplicationsF4Notes,
   'variation': VariationNotes,
   'circle-properties': CirclePropertiesNotes,
   'statistics-f5': StatisticsF5Notes,

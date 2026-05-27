@@ -26,7 +26,7 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
       <div className={`grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(140px,160px)] gap-x-3 py-1 ${indent ? 'pl-8' : ''}`}>
         <div className="min-w-0 text-left pr-1">
           {eqParts ? (
-            <div className="w-full grid grid-cols-[92px_auto_minmax(0,1fr)] md:grid-cols-[118px_auto_minmax(0,1fr)] items-baseline gap-x-2">
+            <div className="w-full grid grid-cols-[76px_auto_minmax(0,1fr)] md:grid-cols-[96px_auto_minmax(0,1fr)] items-baseline gap-x-1.5">
               <div className="text-right pr-1"><Latex math={eqParts[1].trim()} block={false} /></div>
               <div><Latex math="=" block={false} /></div>
               <div className="min-w-0"><Latex math={eqParts[3].trim()} block={false} /></div>
