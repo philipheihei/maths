@@ -120,7 +120,7 @@ export const MoreEquationsNotes = ({ activeSub }) => {
               <Step math="\frac{8}{x^2 - 1} - \frac{4}{x - 1} = 1" explain="有理函數的四則運算" />
               <Step math="\frac{8}{(x+1)(x-1)} - \frac{4}{x - 1} = 1" explain="分母找 L.C.M. / 增補缺失的括號" />
               <Step math="\frac{8}{(x+1)(x-1)} - \frac{4(x+1)}{(x-1)(x+1)} = 1" />
-              <Step math="\frac{8 - 4(x+1)}{(x+1)(x-1)} = 1" explain="交叉相乘" />
+              <Step math="\frac{8 - 4(x+1)}{(x+1)(x-1)} = 1" explain="要交叉相乘" />
               <Step math="8 - 4(x+1) = (x+1)(x-1)" />
               <Step math="8 - 4x - 4 = x^2 - 1" />
               <Step math="4 - 4x = x^2 - 1" />
