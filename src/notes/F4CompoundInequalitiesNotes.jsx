@@ -109,6 +109,27 @@ viewBox：400 × 100
                   答案：<span className="text-red-600">無解 (No solution)</span>
                 </p>
               </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-100 mt-3">
+                <p className="font-bold text-slate-700 text-sm mb-2 text-center">箭嘴同方向的情況：取較嚴格（即範圍較小）者</p>
+                <div className="space-y-4">
+                  <div className="bg-slate-50 p-2 rounded text-center border border-slate-100">
+                    <div><Latex math="x > 2" /> <span className="text-green-700 font-bold mx-1">及</span> <Latex math="x > 5" /></div>
+                    <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
+                      <NL_And_SameGT />
+                    </div>
+                    <div className="font-bold mt-2 text-slate-800">答案：<Latex math="x > 5" /></div>
+                  </div>
+                  <div className="bg-slate-50 p-2 rounded text-center border border-slate-100">
+                    <div><Latex math="x < 3" /> <span className="text-green-700 font-bold mx-1">及</span> <Latex math="x < 6" /></div>
+                    <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
+                      <NL_And_SameLT />
+                    </div>
+                    <div className="font-bold mt-2 text-slate-800">答案：<Latex math="x < 3" /></div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
             <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
@@ -139,6 +160,27 @@ viewBox：400 × 100
                   答案：<Latex math="x < 3" /> 或 <Latex math="x \geq 6" />
                 </p>
               </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-100 mt-3">
+                <p className="font-bold text-slate-700 text-sm mb-2 text-center">箭嘴同方向的情況：取較寬鬆（即涵蓋較廣）者</p>
+                <div className="space-y-4">
+                  <div className="bg-slate-50 p-2 rounded text-center border border-slate-100">
+                    <div><Latex math="x > 2" /> <span className="text-amber-700 font-bold mx-1">或</span> <Latex math="x > 5" /></div>
+                    <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
+                      <NL_Or_SameGT />
+                    </div>
+                    <div className="font-bold mt-2 text-slate-800">答案：<Latex math="x > 2" /></div>
+                  </div>
+                  <div className="bg-slate-50 p-2 rounded text-center border border-slate-100">
+                    <div><Latex math="x < 3" /> <span className="text-amber-700 font-bold mx-1">或</span> <Latex math="x < 6" /></div>
+                    <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
+                      <NL_Or_SameLT />
+                    </div>
+                    <div className="font-bold mt-2 text-slate-800">答案：<Latex math="x < 6" /></div>
+                  </div>
+                </div>
+              </div>
+
             </div>
             
           </div>
@@ -183,8 +225,8 @@ viewBox：400 × 100
                   <div className="bg-red-100 px-2 py-1 rounded inline-block">
                     <Latex math="x \geq -3" />
                   </div>
-                  <div className="absolute text-xs text-red-600 top-full left-1/2 -translate-x-1/2 w-[160px] mt-1 font-bold">
-                    ↑ 乘/除負數，要變號!
+                  <div className="absolute text-xs text-red-600 top-full left-[14px] w-[180px] mt-1 font-bold text-left">
+                    ↑ 乘/除負數，要變不等號方向!
                   </div>
                 </div>
               </div>
@@ -319,7 +361,7 @@ viewBox：300 × 80
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
       */}
 
-      <CollapsibleSection id="quadratic-application" title="5. 適用: 二次不等式(乙部)" num={6} color="red" activeSub={activeSub} sectionRef={s6}>
+      <CollapsibleSection id="quadratic-application" title="5. 二次不等式 (乙部)" num={6} color="red" activeSub={activeSub} sectionRef={s6}>
         <div className="space-y-4">
           <div className="bg-red-50 rounded-lg p-4 border border-red-200">
             <h3 className="font-bold text-red-800 mb-3 text-lg">利用計數機 FMLA 01 (二次方程公式)</h3>
@@ -548,6 +590,122 @@ const NL_Or_Sep = () => (
       <polygon points="564,60 556,54 556,66" fill="#3b82f6" />
       <line x1="425" y1="65" x2="425" y2="140" stroke="#3b82f6" strokeWidth="4" />
     </g>
+  </svg>
+);
+
+const NL_And_SameGT = () => (
+  <svg width="100%" height="150" viewBox="0 0 600 150" className="max-w-[520px] mx-auto">
+    <line x1="36" y1="110" x2="564" y2="110" stroke="#374151" strokeWidth="2" />
+    <polygon points="564,110 554,104 554,116" fill="#374151" />
+    {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
+      const px = 100 + val * 55;
+      return (
+        <g key={val}>
+          <line x1={px} y1="102" x2={px} y2="118" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="136" textAnchor="middle" fontSize="13" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    {/* x > 2 */}
+    <line x1="215" y1="72" x2="564" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="210" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+    <polygon points="564,72 556,66 556,78" fill="#ef4444" />
+
+    {/* x > 5 */}
+    <line x1="380" y1="45" x2="564" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="375" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
+    <polygon points="564,45 556,39 556,51" fill="#3b82f6" />
+
+    {/* AND result = stricter one */}
+    <rect x="375" y="24" width="189" height="32" fill="#f59e0b" opacity="0.25" rx="6" />
+  </svg>
+);
+
+const NL_And_SameLT = () => (
+  <svg width="100%" height="150" viewBox="0 0 600 150" className="max-w-[520px] mx-auto">
+    <line x1="36" y1="110" x2="564" y2="110" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,110 46,104 46,116" fill="#374151" />
+    {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
+      const px = 100 + val * 55;
+      return (
+        <g key={val}>
+          <line x1={px} y1="102" x2={px} y2="118" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="136" textAnchor="middle" fontSize="13" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    {/* x < 3 */}
+    <line x1="36" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="265" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+    <polygon points="36,72 44,66 44,78" fill="#ef4444" />
+
+    {/* x < 6 */}
+    <line x1="36" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="430" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
+    <polygon points="36,45 44,39 44,51" fill="#3b82f6" />
+
+    {/* AND result = stricter one */}
+    <rect x="36" y="56" width="229" height="32" fill="#f59e0b" opacity="0.25" rx="6" />
+  </svg>
+);
+
+const NL_Or_SameGT = () => (
+  <svg width="100%" height="150" viewBox="0 0 600 150" className="max-w-[520px] mx-auto">
+    <line x1="36" y1="110" x2="564" y2="110" stroke="#374151" strokeWidth="2" />
+    <polygon points="564,110 554,104 554,116" fill="#374151" />
+    {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
+      const px = 100 + val * 55;
+      return (
+        <g key={val}>
+          <line x1={px} y1="102" x2={px} y2="118" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="136" textAnchor="middle" fontSize="13" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    {/* x > 2 */}
+    <line x1="215" y1="72" x2="564" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="210" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+    <polygon points="564,72 556,66 556,78" fill="#ef4444" />
+
+    {/* x > 5 */}
+    <line x1="380" y1="45" x2="564" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="375" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
+    <polygon points="564,45 556,39 556,51" fill="#3b82f6" />
+
+    {/* OR result = broader one */}
+    <rect x="210" y="56" width="354" height="32" fill="#f59e0b" opacity="0.25" rx="6" />
+  </svg>
+);
+
+const NL_Or_SameLT = () => (
+  <svg width="100%" height="150" viewBox="0 0 600 150" className="max-w-[520px] mx-auto">
+    <line x1="36" y1="110" x2="564" y2="110" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,110 46,104 46,116" fill="#374151" />
+    {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
+      const px = 100 + val * 55;
+      return (
+        <g key={val}>
+          <line x1={px} y1="102" x2={px} y2="118" stroke="#6b7280" strokeWidth="2" />
+          <text x={px} y="136" textAnchor="middle" fontSize="13" fill="#374151" fontWeight="500">{val}</text>
+        </g>
+      );
+    })}
+
+    {/* x < 3 */}
+    <line x1="36" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="265" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
+    <polygon points="36,72 44,66 44,78" fill="#ef4444" />
+
+    {/* x < 6 */}
+    <line x1="36" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <circle cx="430" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
+    <polygon points="36,45 44,39 44,51" fill="#3b82f6" />
+
+    {/* OR result = broader one */}
+    <rect x="36" y="56" width="394" height="32" fill="#f59e0b" opacity="0.25" rx="6" />
   </svg>
 );
 

@@ -523,7 +523,7 @@ export const NOTES_DATA = {
         { id: 'example-solving', num: 3, title: '2. 例子與解法', color: 'purple' },
         { id: 'other-formats', num: 4, title: '3. 其他問法', color: 'orange' },
         { id: 'integer-bounds', num: 5, title: '4. 問最大/最小整數', color: 'rose' },
-        { id: 'quadratic-application', num: 6, title: '5. 適用: 二次不等式', color: 'red' },
+        { id: 'quadratic-application', num: 6, title: '5. 二次不等式 (乙部)', color: 'red' },
       ]
     },
     {

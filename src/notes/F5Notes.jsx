@@ -307,7 +307,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                 <p>數據共 20 個：48, 49, 50, 52, 54, 55, 55, 56, 61, 63, 66, 69, 70, 71, 73, 76, 80, 81, 82, 84。</p>
                 <div className="grid grid-cols-2 gap-2 bg-violet-50 p-3 rounded mt-2">
                   <p><strong>平均數：</strong> 64.75 (建議用計數機)</p>
-                  <p><strong>眾數：</strong> 55 (只出現兩次)</p>
+                  <p><strong>眾數：</strong> 55 (出現最多次數)</p>
                   <p><strong>中位數：</strong> 第10與第11個數平均 <Latex inline math="= \frac{63+66}{2}=64.5" /></p>
                   <p><strong>分佈域：</strong> <Latex inline math="84-48=36" /></p>
                   <p><strong><Latex inline math="Q_1" />：</strong> 前 10 個數中位數 <Latex inline math="=54.5" /></p>
@@ -407,7 +407,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
           {/* 框線圖 */}
           <div className="bg-white rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-3 flex items-center gap-2">C. 框線圖 (Box-and-whisker plot)</h3>
-            <p className="text-sm text-slate-700 mb-2">框線圖直接顯示五個重要數值，無法找到平均數或標準差，但<span className="font-bold text-amber-600">可以直觀求 四分位數間距 與 分佈域</span>。</p>
+            <p className="text-sm text-slate-700 mb-2">框線圖直接顯示五個重要數值，可透過圖形直接找到：</p>
             
             <div className="bg-amber-50 rounded p-4 text-center border-l-4 border-amber-500 my-3">
               <svg viewBox="0 0 500 130" className="w-full max-w-lg mx-auto">
@@ -431,10 +431,12 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
               </svg>
             </div>
 
-            <ul className="text-sm text-slate-700 list-disc pl-5 mt-4">
+            <ul className="text-sm text-slate-700 list-disc pl-5 mt-4 space-y-1">
+              <li>中位數</li>
               <li>分佈域 = 最右邊條線 - 最左邊條線 (最大 - 最小)</li>
               <li>四分位數間距 = 框框的右邊界 - 框框的左邊界 (<Latex inline math="Q_3 - Q_1" />)</li>
             </ul>
+            <p className="text-sm text-slate-700 mt-3">框線圖<span className="font-bold text-red-600">未能顯示</span>平均數、眾數、標準差及方差。</p>
           </div>
         </div>
       </CollapsibleSection>
@@ -536,6 +538,24 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
               </table>
             </div>
             <p className="text-xs text-slate-500 mt-2">*方差的單位是平方，因此乘數必須配以 2 次方。</p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <h4 className="font-bold text-slate-800 mb-3 border-b-2 border-slate-100 pb-2">MC 例題（方差變換）</h4>
+            <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 space-y-3">
+              <p className="text-slate-800">若五個數 <Latex math="x_1,\ x_2,\ x_3,\ x_4,\ x_5" inline /> 的方差為 12，則</p>
+              <p className="text-slate-800"><Latex math="2x_1 - 3,\ 2x_2 - 3,\ 2x_3 - 3,\ 2x_4 - 3,\ 2x_5 - 3" inline /> 這五個數的方差為：</p>
+              <div className="grid grid-cols-1 gap-2 text-sm">
+                <div className="bg-white border border-slate-200 rounded p-2">A. 12</div>
+                <div className="bg-white border border-slate-200 rounded p-2">B. 21</div>
+                <div className="bg-white border border-slate-200 rounded p-2">C. 24</div>
+                <div className="bg-white border border-slate-200 rounded p-2 font-bold text-emerald-700 border-emerald-300">D. 48</div>
+              </div>
+              <div className="bg-emerald-50 border border-emerald-200 rounded p-3 text-sm text-emerald-900">
+                解題重點：<Latex math="-3" inline /> 不改變方差；<Latex math="\times 2" inline /> 令方差乘 <Latex math="2^2" inline />，
+                所以新方差 <Latex math="= 12 \times 4 = 48" inline />。
+              </div>
+            </div>
           </div>
         </div>
       </CollapsibleSection>

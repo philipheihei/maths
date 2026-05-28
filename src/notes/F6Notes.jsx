@@ -28,16 +28,16 @@ export const SequenceNotes = ({ activeSub }) => {
                 <MathDisplay latex="T(n) = a + (n-1)d" inline={false} className="text-xl text-red-700" />
               </div>
               <ul className="text-sm text-slate-600 mt-2 ml-4 list-disc space-y-1">
-                <li><MathDisplay latex="a" /> : <b>首項</b> (第一個數字)</li>
-                <li><MathDisplay latex="n" /> : <b>第幾項</b></li>
-                <li><MathDisplay latex="d" /> : <b>公差</b></li>
+                <li><MathDisplay latex="a" inline /> : <b>首項</b> (第一個數字)</li>
+                <li><MathDisplay latex="n" inline /> : <b>第幾項</b></li>
+                <li><MathDisplay latex="d" inline /> : <b>公差</b></li>
               </ul>
             </div>
 
             <div className="mb-4">
               <div className="font-bold text-slate-700 mb-1">公差 (d)：</div>
               <div className="bg-white p-3 rounded-md shadow-sm text-center">
-                <p className="text-red-700 font-bold mb-1">後項 <MathDisplay latex="-" /> 前項</p>
+                <p className="text-red-700 font-bold mb-1">後項 <MathDisplay latex="-" inline /> 前項</p>
                 <MathDisplay latex="d = T(2) - T(1)" inline={false} />
               </div>
             </div>
@@ -64,16 +64,16 @@ export const SequenceNotes = ({ activeSub }) => {
                 <MathDisplay latex="T(n) = a r^{n-1}" inline={false} className="text-xl text-purple-700" />
               </div>
               <ul className="text-sm text-slate-600 mt-2 ml-4 list-disc space-y-1">
-                <li><MathDisplay latex="a" /> : <b>首項</b></li>
-                <li><MathDisplay latex="n" /> : <b>第幾項</b></li>
-                <li><MathDisplay latex="r" /> : <b>公比</b></li>
+                <li><MathDisplay latex="a" inline /> : <b>首項</b></li>
+                <li><MathDisplay latex="n" inline /> : <b>第幾項</b></li>
+                <li><MathDisplay latex="r" inline /> : <b>公比</b></li>
               </ul>
             </div>
 
             <div className="mb-4">
               <div className="font-bold text-slate-700 mb-1">公比 (r)：</div>
               <div className="bg-white p-3 rounded-md shadow-sm text-center">
-                <p className="text-purple-700 font-bold mb-1">後項 <MathDisplay latex="\div" /> 前項</p>
+                <p className="text-purple-700 font-bold mb-1">後項 <MathDisplay latex="\div" inline /> 前項</p>
                 <MathDisplay latex="r = \frac{T(2)}{T(1)} = \frac{T(3)}{T(2)} = ..." inline={false} />
               </div>
             </div>
@@ -105,7 +105,7 @@ export const SequenceNotes = ({ activeSub }) => {
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mt-4 text-sm text-slate-700 space-y-2">
               <div className="font-bold text-yellow-800">📌 概念理解</div>
               <ul className="list-disc pl-5 space-y-1">
-                <li><MathDisplay latex="S(10) = T(1) + T(2) + ... + T(10)" /></li>
+                <li><MathDisplay latex="S(10) = T(1) + T(2) + ... + T(10)" inline /></li>
                 <li><b>常見考核題型：</b>求「第 10 項至第 20 項之和」<br/>
                     算法：<span className="text-red-600 font-bold"><MathDisplay latex="S(20) - S(9)" inline /></span>
                 </li>
@@ -146,14 +146,14 @@ export const SequenceNotes = ({ activeSub }) => {
               <div className="bg-red-50 p-3 rounded border border-red-100">
                 <div className="font-bold text-red-700 mb-1">成等差數列</div>
                 <div className="text-sm text-slate-700 space-y-1">
-                  <p>• 規律：加（<MathDisplay latex="+" />）或 減（<MathDisplay latex="-" />）</p>
+                  <p>• 規律：加（<MathDisplay latex="+" inline />）或 減（<MathDisplay latex="-" inline />）</p>
                   <p>• 代數字法：可代入 1, 3, 5, 7, 9, ... 測試</p>
                 </div>
               </div>
               <div className="bg-purple-50 p-3 rounded border border-purple-100">
                 <div className="font-bold text-purple-700 mb-1">成等比數列</div>
                 <div className="text-sm text-slate-700 space-y-1">
-                  <p>• 規律：乘（<MathDisplay latex="\times" />）或 除（<MathDisplay latex="\div" />）</p>
+                  <p>• 規律：乘（<MathDisplay latex="\times" inline />）或 除（<MathDisplay latex="\div" inline />）</p>
                   <p>• 代數字法：可代入 2, 4, 8, 16, 32, ... 測試</p>
                 </div>
               </div>
@@ -163,12 +163,12 @@ export const SequenceNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <h3 className="font-bold text-slate-800 mb-3">2. 得知 a 和 d / a 和 r 的值後，找 T(n)</h3>
             <div className="bg-slate-50 p-4 rounded-lg text-sm text-slate-700 space-y-2">
-              <p><span className="font-bold text-emerald-700">第一步：</span>先找出 首項 <MathDisplay latex="a" /> 及 公差/公比</p>
+              <p><span className="font-bold text-emerald-700">第一步：</span>先找出 首項 <MathDisplay latex="a" inline /> 及 公差/公比</p>
               <ul className="list-disc pl-6 space-y-1 text-slate-600 mb-3 block">
-                <li>公差 <MathDisplay latex="d =" /> 後項 <MathDisplay latex="-" /> 前項</li>
-                <li>首項 <MathDisplay latex="a =" /> 第一項</li>
+                <li>公差 <MathDisplay latex="d =" inline /> 後項 <MathDisplay latex="-" inline /> 前項</li>
+                <li>首項 <MathDisplay latex="a =" inline /> 第一項</li>
               </ul>
-              <p><span className="font-bold text-emerald-700">第二步：</span>設定 <MathDisplay latex="n" /> 為目標項數，代入通項公式。例如找第 8 項的值，即找 <MathDisplay latex="T(8)" />，代 <MathDisplay latex="n = 8" />。</p>
+              <p><span className="font-bold text-emerald-700">第二步：</span>設定 <MathDisplay latex="n" inline /> 為目標項數，代入通項公式。例如找第 8 項的值，即找 <MathDisplay latex="T(8)" inline />，代 <MathDisplay latex="n = 8" inline />。</p>
             </div>
           </div>
         </div>
@@ -204,14 +204,14 @@ export const SequenceNotes = ({ activeSub }) => {
               {/* 長答例子 */}
               <div className="bg-white p-3 rounded-md shadow-sm border border-red-100 text-sm">
                 <div className="font-bold text-slate-800 border-b pb-1 mb-2">📝 長答題例子 (2016-DSE-Q17)</div>
-                <p className="text-slate-600 mb-2 leading-relaxed">已知等差數列的第 1 項及第 38 項分別為 666 及 555。<br/>(a) 該數列的公差，<br/>(b) <MathDisplay latex="n" /> 的最大值使得該數列的首 <MathDisplay latex="n" /> 項之和為正值。</p>
+                <p className="text-slate-600 mb-2 leading-relaxed">已知等差數列的第 1 項及第 38 項分別為 666 及 555。<br/>(a) 該數列的公差，<br/>(b) <MathDisplay latex="n" inline /> 的最大值使得該數列的首 <MathDisplay latex="n" inline /> 項之和為正值。</p>
                 
                 <div className="space-y-1 mt-3">
                   <div className="text-blue-700 font-bold">a) 找公差 d：</div>
                   <MathDisplay latex="d = \frac{555 - 666}{38 - 1} = \frac{-111}{37} = -3" block />
                   
                   <div className="text-blue-700 font-bold mt-3">b) n 的最大值 (首 n 項和 > 0)：</div>
-                  <div className="text-emerald-700 text-xs mb-1">要求： <MathDisplay latex="S(n) > 0" /></div>
+                  <div className="text-emerald-700 text-xs mb-1">要求： <MathDisplay latex="S(n) > 0" inline /></div>
                   <MathDisplay latex="\frac{n}{2}[2a + (n-1)d] > 0" block />
                   <div className="text-emerald-700 text-xs mt-1 mb-1">代入 a=666, d=-3：</div>
                   <MathDisplay latex="\frac{n}{2}[2(666) + (n-1)(-3)] > 0" block />
@@ -268,21 +268,21 @@ export const SequenceNotes = ({ activeSub }) => {
           <div className="bg-white p-4 rounded-md shadow-sm border border-slate-200 text-sm space-y-3">
             <div className="flex flex-wrap items-baseline gap-2 mb-2 font-bold text-slate-800">
               <span>例子：已知</span>
-              <MathDisplay latex="a_{n+2} = a_{n+1} - a_n" />
+              <MathDisplay latex="a_{n+2} = a_{n+1} - a_n" inline />
               <span>，若</span>
-              <MathDisplay latex="a_5 = -13" /><span>，</span><MathDisplay latex="a_7 = 14" /><span>，</span>
+              <MathDisplay latex="a_5 = -13" inline /><span>，</span><MathDisplay latex="a_7 = 14" inline /><span>，</span>
               <span>求</span>
-              <MathDisplay latex="a_4 = ?" />
+              <MathDisplay latex="a_4 = ?" inline />
             </div>
 
             <div className="bg-slate-50 p-3 rounded border border-slate-100">
               <div className="text-emerald-700 font-bold mb-2">理解規矩：</div>
               <div className="flex gap-4 items-center">
-                <MathDisplay latex="a_{n+2}" className="text-lg font-bold" />
+                <MathDisplay latex="a_{n+2}" inline className="text-lg font-bold" />
                 <span>=</span>
-                <MathDisplay latex="a_{n+1}" className="text-lg font-bold" />
+                <MathDisplay latex="a_{n+1}" inline className="text-lg font-bold" />
                 <span>-</span>
-                <MathDisplay latex="a_n" className="text-lg font-bold" />
+                <MathDisplay latex="a_n" inline className="text-lg font-bold" />
               </div>
               <div className="flex gap-4 items-center text-xs text-slate-500 mt-1">
                 <span className="w-8 text-center text-red-600 font-bold">下兩項</span>
@@ -296,20 +296,20 @@ export const SequenceNotes = ({ activeSub }) => {
             <div className="space-y-2 mt-4">
               <div className="font-bold text-blue-700">逐步推算：</div>
               <p className="flex items-center gap-2">
-                1. 代入 <MathDisplay latex="n=5" /> 找 <MathDisplay latex="a_6" />：
-                <MathDisplay latex="a_7 = a_6 - a_5" />
+                1. 代入 <MathDisplay latex="n=5" inline /> 找 <MathDisplay latex="a_6" inline />：
+                <MathDisplay latex="a_7 = a_6 - a_5" inline />
                 <span className="text-slate-400">→</span>
-                <MathDisplay latex="14 = a_6 - (-13)" />
+                <MathDisplay latex="14 = a_6 - (-13)" inline />
                 <span className="text-slate-400">→</span>
-                <MathDisplay latex="a_6 = 1" className="font-bold text-emerald-700" />
+                <MathDisplay latex="a_6 = 1" inline className="font-bold text-emerald-700" />
               </p>
               <p className="flex items-center gap-2">
-                2. 代入 <MathDisplay latex="n=4" /> 找 <MathDisplay latex="a_4" />：
-                <MathDisplay latex="a_6 = a_5 - a_4" />
+                2. 代入 <MathDisplay latex="n=4" inline /> 找 <MathDisplay latex="a_4" inline />：
+                <MathDisplay latex="a_6 = a_5 - a_4" inline />
                 <span className="text-slate-400">→</span>
-                <MathDisplay latex="1 = -13 - a_4" />
+                <MathDisplay latex="1 = -13 - a_4" inline />
                 <span className="text-slate-400">→</span>
-                <MathDisplay latex="a_4 = -14" className="font-bold text-red-700" />
+                <MathDisplay latex="a_4 = -14" inline className="font-bold text-red-700" />
               </p>
             </div>
 
