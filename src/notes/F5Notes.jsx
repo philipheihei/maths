@@ -432,7 +432,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             </div>
 
             <ul className="text-sm text-slate-700 list-disc pl-5 mt-4 space-y-1">
-              <li>中位數</li>
+              <li>中位數是長方框內中間的<span className="font-bold text-red-600">紅色直線</span></li>
               <li>分佈域 = 最右邊條線 - 最左邊條線 (最大 - 最小)</li>
               <li>四分位數間距 = 框框的右邊界 - 框框的左邊界 (<Latex inline math="Q_3 - Q_1" />)</li>
             </ul>
@@ -696,13 +696,13 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="100" y2="20" stroke="#334155" strokeWidth="1.5" />
-                <line x1="20" y1="20" x2="180" y2="20" stroke="#334155" strokeWidth="1.5" />
-                <polygon points="100,20 100,30 110,30 110,20" fill="none" stroke="#334155" strokeWidth="1" />
-                <text x="20" y="40" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="175" y="40" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
-                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
-                <text x="105" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <line x1="100" y1="100" x2="100" y2="180" stroke="#334155" strokeWidth="1.5" />
+                <line x1="25" y1="180" x2="175" y2="180" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="100,180 100,170 110,170 110,180" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="12" y="184" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="180" y="184" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="95" y="196" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
+                <text x="95" y="90" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -714,13 +714,13 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="100" y2="20" stroke="#334155" strokeWidth="1.5" />
-                <line x1="20" y1="20" x2="180" y2="20" stroke="#334155" strokeWidth="1.5" />
-                <polygon points="100,20 100,30 110,30 110,20" fill="none" stroke="#334155" strokeWidth="1" />
-                <text x="20" y="40" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="175" y="40" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
-                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
-                <text x="105" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <line x1="100" y1="100" x2="100" y2="180" stroke="#334155" strokeWidth="1.5" />
+                <line x1="25" y1="180" x2="175" y2="180" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="100,180 100,170 110,170 110,180" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="12" y="184" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="180" y="184" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="95" y="196" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
+                <text x="95" y="90" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -732,29 +732,36 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 240 200" className="w-full max-w-[240px]">
                 <circle cx="80" cy="100" r="70" fill="none" stroke="#64748b" strokeWidth="1" />
-                <path d="M 80 100 L 98 33" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 80 100 L 129 150" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 80 100 L 90.4 30.8" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 80 100 L 131.8 147.1" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 80 100 L 220 50" fill="none" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
                 
-                <line x1="98" y1="33" x2="220" y2="50" stroke="#334155" strokeWidth="1.5" />
-                <line x1="129" y1="150" x2="220" y2="50" stroke="#334155" strokeWidth="1.5" />
+                <line x1="90.4" y1="30.8" x2="220" y2="50" stroke="#334155" strokeWidth="1.5" />
+                <line x1="131.8" y1="147.1" x2="220" y2="50" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* 垂直符號 */}
-                <polygon points="98,33 93,42 101,47 106,37" fill="none" stroke="#334155" strokeWidth="1" />
-                <polygon points="129,150 120,143 125,134 135,140" fill="none" stroke="#334155" strokeWidth="1" />
+                <polygon points="90.4,30.8 100.3,32.3 98.8,42.2 88.9,40.7" fill="none" stroke="#334155" strokeWidth="1" />
+                <polygon points="131.8,147.1 138.5,139.7 131.1,133.0 124.4,140.4" fill="none" stroke="#334155" strokeWidth="1" />
                 
-                {/* 等長標記 (TP, TQ) */}
-                <line x1="156" y1="36" x2="160" y2="45" stroke="#334155" strokeWidth="1.5" />
-                <line x1="172" y1="105" x2="178" y2="98" stroke="#334155" strokeWidth="1.5" />
+                {/* 等長標記 (TP, TQ) - 兩劃 */}
+                <line x1="152.5" y1="45.0" x2="153.9" y2="35.2" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="156.5" y1="45.6" x2="157.9" y2="35.8" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="178.3" y1="103.4" x2="170.9" y2="96.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="181.0" y1="100.4" x2="173.6" y2="93.7" stroke="#0ea5e9" strokeWidth="1.5" />
                 
-                {/* 角標記 */}
-                <path d="M 85.2 80.7 A 20 20 0 0 1 98.8 93.3" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 85.7 78.8 A 22 22 0 0 1 100.7 92.6" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 98.8 93.3 A 20 20 0 0 1 94.0 114.3" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 185.3 45.2 A 35 35 0 0 0 187.0 61.8" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 177.6 65.1 A 45 45 0 0 0 189.7 83.3" fill="none" stroke="#334155" strokeWidth="1" />
+                {/* 角標記 POT 兩劃 (半徑 18, 22) */}
+                <path d="M 82.7 82.2 A 18 18 0 0 1 97.0 93.9" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 83.3 78.3 A 22 22 0 0 1 100.7 92.6" fill="none" stroke="#334155" strokeWidth="1" />
                 
-                <text x="90" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                {/* 角標記 QOT 兩劃 (半徑 26, 30) */}
+                <path d="M 104.5 91.3 A 26 26 0 0 1 99.2 117.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 108.3 89.9 A 30 30 0 0 1 102.2 120.2" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                {/* 角標記 ∠OTP (半徑 35) 和 ∠OTQ (半徑 42) */}
+                <path d="M 185.4 44.9 A 35 35 0 0 0 187.0 61.8" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 180.4 64.1 A 42 42 0 0 0 191.8 81.1" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="82" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
                 <text x="135" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
                 <text x="65" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
                 <text x="228" y="55" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
@@ -772,7 +779,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 100 20 L 100 180" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 100 20 L 160 153" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 83.6 56.5 A 40 40 0 0 0 100 60" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 100 60 A 40 40 0 0 0 116.4 56.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 100 66 A 46 46 0 0 0 118.9 61.9" fill="none" stroke="#334155" strokeWidth="1" />
                 <text x="95" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
                 <text x="30" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="95" y="195" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
@@ -788,22 +795,29 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
-                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
-                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
-                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
                 <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
                 <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="45" y1="48" x2="38" y2="54" stroke="#334155" strokeWidth="1.5" />
-                <line x1="155" y1="151" x2="162" y2="145" stroke="#334155" strokeWidth="1.5" />
+                {/* 弦 AB 和 CD 的雙藍色相等標記 */}
+                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                
+                {/* 弧 AB 和 CD 的單劃藍色相等標記 */}
+                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#0ea5e9" strokeWidth="1.5" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
-                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -815,24 +829,29 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
-                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
-                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
-                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
                 <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
                 <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <path d="M 40 40 L 46 45" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 37 42 L 43 47" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 160 159 L 154 154" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 163 157 L 157 152" stroke="#334155" strokeWidth="1.5" />
+                {/* 弦 AB 和 CD 的雙藍色相等標記 */}
+                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                
+                {/* 弧 AB 和 CD 的單劃藍色相等標記 */}
+                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#0ea5e9" strokeWidth="1.5" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
-                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -849,22 +868,21 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
                 <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
-                <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                {/* AOB 和 COD 雙角標記 */}
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#334155" strokeWidth="1" />
                 
-                <path d="M 40 40 L 46 45" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 37 42 L 43 47" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 160 159 L 154 154" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 163 157 L 157 152" stroke="#334155" strokeWidth="1.5" />
-                
-                <path d="M 87.5 78.4 A 25 25 0 0 0 76.5 91.5" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 112.5 121.6 A 25 25 0 0 0 123.5 108.5" fill="none" stroke="#334155" strokeWidth="1" />
+                {/* 弧 AB 和 CD 的單劃藍色相等標記 */}
+                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#0ea5e9" strokeWidth="1.5" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
-                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -881,19 +899,21 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
                 <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
-                <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
+                {/* AOB 和 COD 雙角標記 */}
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#334155" strokeWidth="1" />
                 
-                <path d="M 87.5 78.4 A 25 25 0 0 0 76.5 91.5" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 85.5 74.9 A 29 29 0 0 0 72.7 90.2" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 112.5 121.6 A 25 25 0 0 0 123.5 108.5" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 114.5 125.1 A 29 29 0 0 0 127.3 109.8" fill="none" stroke="#334155" strokeWidth="1" />
+                {/* 弧 AB 和 CD 的單劃藍色相等標記 */}
+                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#0ea5e9" strokeWidth="1.5" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
-                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -913,17 +933,23 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
                 <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="45" y1="48" x2="38" y2="54" stroke="#334155" strokeWidth="1.5" />
-                <line x1="155" y1="151" x2="162" y2="145" stroke="#334155" strokeWidth="1.5" />
+                {/* 弦 AB 和 CD 的雙藍色相等標記 */}
+                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#0ea5e9" strokeWidth="1.5" />
                 
-                <path d="M 87.5 78.4 A 25 25 0 0 0 76.5 91.5" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 112.5 121.6 A 25 25 0 0 0 123.5 108.5" fill="none" stroke="#334155" strokeWidth="1" />
+                {/* AOB 和 COD 雙角標記 */}
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#334155" strokeWidth="1" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
-                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -943,16 +969,23 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
                 <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <path d="M 87.5 78.4 A 25 25 0 0 0 76.5 91.5" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 85.5 74.9 A 29 29 0 0 0 72.7 90.2" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 112.5 121.6 A 25 25 0 0 0 123.5 108.5" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 114.5 125.1 A 29 29 0 0 0 127.3 109.8" fill="none" stroke="#334155" strokeWidth="1" />
+                {/* 弦 AB 和 CD 的雙藍色相等標記 */}
+                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#0ea5e9" strokeWidth="1.5" />
+                
+                {/* AOB 和 COD 雙角標記 */}
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#334155" strokeWidth="1" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
-                <text x="105" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -1059,8 +1092,8 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="131" y1="145" x2="131" y2="155" stroke="#0ea5e9" strokeWidth="1.5" />
                 
                 <text x="108" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
-                <text x="108" y="28" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="108" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="100" y="15" textAnchor="middle" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="100" y="195" textAnchor="middle" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="25" y="155" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="168" y="155" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="85" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>N</text>
@@ -1125,6 +1158,74 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               </svg>
             )}
           />
+
+          <PropertyCard
+            title="交錯弓形圓周角逆定理"
+            condition={<>若 <Latex math="\angle QAC = \angle ABC" inline />，</>}
+            conclusion="\text{PQ 是圓在 A 點的切線}"
+            svg={() => (
+              <svg viewBox="0 0 200 240" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <polygon points="43.4,156.6 100,20 180,100" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <line x1="13.4" y1="126.6" x2="93.4" y2="206.6" stroke="#334155" strokeWidth="1.5" />
+                
+                {/* Angle QAC double arc */}
+                <path d="M 61.9 148.9 A 20 20 0 0 1 57.5 170.7" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 65.6 147.4 A 24 24 0 0 1 60.4 173.6" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                {/* Angle ABC double arc */}
+                <path d="M 114.1 34.1 A 20 20 0 0 1 92.3 38.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 117.0 37.0 A 24 24 0 0 1 90.8 42.2" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="25" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="188" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="5" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="100" y="215" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+              </svg>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <PropertyCard
+            title="對角互補 (圓內接逆定理)"
+            condition={<>若 <Latex math="\angle DAB + \angle BCD = 180^\circ" inline />，</>}
+            conclusion="\text{ABCD 共圓}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <polygon points="40,160 160,160 140,40 60,20" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 60 160 A 20 20 0 0 0 42.8 140.2" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 120.6 35.2 A 20 20 0 0 0 143.3 59.7" fill="none" stroke="#334155" strokeWidth="1.5" />
+                
+                <text x="25" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="165" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="145" y="30" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="45" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="外角=內對角 (逆定理)"
+            condition={<>若 <Latex math="\angle ADC = \angle CBE" inline />，</>}
+            conclusion="\text{ABCD 共圓}"
+            svg={() => (
+              <svg viewBox="0 0 240 200" className="w-full max-w-[240px]">
+                <polygon points="40,160 160,160 140,40 60,20" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <line x1="160" y1="160" x2="220" y2="160" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 57.2 39.8 A 20 20 0 0 0 79.4 24.8" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 156.7 140.3 A 20 20 0 0 1 180 160" fill="none" stroke="#334155" strokeWidth="1.5" />
+                
+                <text x="25" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="155" y="178" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="145" y="30" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="45" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="225" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>E</text>
+              </svg>
+            )}
+          />
+
         </div>
       </CollapsibleSection>
 
