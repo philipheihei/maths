@@ -604,6 +604,7 @@ const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormul
 
 export const CirclePropertiesNotes = ({ activeSub }) => {
   const s1 = useRef(null);
+  const s2 = useRef(null);
 
   return (
     <>
@@ -671,7 +672,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
           <PropertyCard
             title="弧與圓心角成比例"
-            directFormula="\widehat{AB} : \widehat{BC} = \angle AOB : \angle BOC"
+            directFormula="\overset{\frown}{AB} : \overset{\frown}{BC} = \angle AOB : \angle BOC"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
@@ -763,7 +764,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
           <PropertyCard
             title="弧與圓周角成比例"
-            directFormula="\widehat{AB} : \widehat{BC} = \angle APB : \angle BPC"
+            directFormula="\overset{\frown}{AB} : \overset{\frown}{BC} = \angle APB : \angle BPC"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
@@ -783,7 +784,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
           <PropertyCard
             title="等弦對等弧"
             condition={<>若 <Latex math="AB = CD" inline />，</>}
-            conclusion="\widehat{AB} = \widehat{CD}"
+            conclusion="\overset{\frown}{AB} = \overset{\frown}{CD}"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
@@ -809,7 +810,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
           <PropertyCard
             title="等弧對等弦"
-            condition={<>若 <Latex math="\widehat{AB} = \widehat{CD}" inline />，</>}
+            condition={<>若 <Latex math="\overset{\frown}{AB} = \overset{\frown}{CD}" inline />，</>}
             conclusion="AB = CD"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
@@ -838,7 +839,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
           <PropertyCard
             title="等弧對等角 (圓心)"
-            condition={<>若 <Latex math="\widehat{AB} = \widehat{CD}" inline />，</>}
+            condition={<>若 <Latex math="\overset{\frown}{AB} = \overset{\frown}{CD}" inline />，</>}
             conclusion="\angle AOB = \angle COD"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
@@ -871,7 +872,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
           <PropertyCard
             title="等角對等弧"
             condition={<>若 <Latex math="\angle AOB = \angle COD" inline />，</>}
-            conclusion="\widehat{AB} = \widehat{CD}"
+            conclusion="\overset{\frown}{AB} = \overset{\frown}{CD}"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
@@ -956,6 +957,11 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             )}
           />
 
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="other-theorems" title="其他圓形定理" num={2} color="teal" activeSub={activeSub} sectionRef={s2}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓內接四邊形對角"
             condition={<>若 <Latex math="ABCD" inline /> 為圓內接四邊形，</>}
