@@ -934,6 +934,11 @@ export const MeasurementErrorsNotes = ({ activeSub }) => {
               <p className="font-bold text-lg text-slate-800">
                 最大絕對誤差 = 精準度 <Latex math="\div" /> 2
               </p>
+              <div className="mt-3 inline-block bg-slate-50 rounded-md border border-slate-200 px-3 py-2 text-left text-sm">
+                <p className="font-bold text-slate-700">上限 = 量度值 + 最大絕對誤差</p>
+                <p className="font-bold text-slate-700">下限 = 量度值 - 最大絕對誤差</p>
+                <p className="text-slate-600 mt-1">範圍：下限 至 上限</p>
+              </div>
             </div>
 
             <div className="bg-amber-50 rounded p-3 border border-amber-200 mb-3">

@@ -216,37 +216,37 @@ viewBox：400 × 100
             <div className="grid grid-cols-2 gap-4 text-center mt-6 text-lg">
               <div>
                 <div className="space-y-1 flex flex-col items-center">
-                  <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
-                    <Latex math="4x" />
-                    <Latex math="\leq" />
-                    <Latex math="12" />
+                  <div className="grid grid-cols-[7.5rem_1.75rem_3rem] items-center gap-x-1">
+                    <span className="text-right"><Latex math="4x" /></span>
+                    <span className="text-center"><Latex math="\leq" /></span>
+                    <span className="text-left"><Latex math="12" /></span>
                   </div>
-                  <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
-                    <Latex math="x" />
-                    <Latex math="\leq" />
-                    <Latex math="3" />
+                  <div className="grid grid-cols-[7.5rem_1.75rem_3rem] items-center gap-x-1">
+                    <span className="text-right"><Latex math="x" /></span>
+                    <span className="text-center"><Latex math="\leq" /></span>
+                    <span className="text-left"><Latex math="3" /></span>
                   </div>
                 </div>
               </div>
               <div className="border-l border-slate-200">
                 <div className="space-y-1 flex flex-col items-center">
-                  <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
-                    <Latex math="-x - 2x" />
-                    <Latex math="\leq" />
-                    <Latex math="9" />
+                  <div className="grid grid-cols-[7.5rem_1.75rem_3rem] items-center gap-x-1">
+                    <span className="text-right"><Latex math="-x - 2x" /></span>
+                    <span className="text-center"><Latex math="\leq" /></span>
+                    <span className="text-left"><Latex math="9" /></span>
                   </div>
-                  <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
-                    <Latex math="-3x" />
-                    <Latex math="\leq" />
-                    <Latex math="9" />
+                  <div className="grid grid-cols-[7.5rem_1.75rem_3rem] items-center gap-x-1">
+                    <span className="text-right"><Latex math="-3x" /></span>
+                    <span className="text-center"><Latex math="\leq" /></span>
+                    <span className="text-left"><Latex math="9" /></span>
                   </div>
                 </div>
                 <div className="relative inline-block mt-2">
                   <div className="bg-red-100 px-2 py-1 rounded inline-block">
-                    <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
-                      <Latex math="x" />
-                      <Latex math="\geq" />
-                      <Latex math="-3" />
+                    <div className="grid grid-cols-[7.5rem_1.75rem_3rem] items-center gap-x-1">
+                      <span className="text-right"><Latex math="x" /></span>
+                      <span className="text-center"><Latex math="\geq" /></span>
+                      <span className="text-left"><Latex math="-3" /></span>
                     </div>
                   </div>
                   <div className="absolute text-xs text-red-600 top-full left-[14px] w-[180px] mt-1 font-bold text-left">

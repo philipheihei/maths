@@ -27,7 +27,7 @@ import {
   FactorizationF2Notes,
   CirclesCylindersF2Notes,
 } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes } from './F3Notes';
+import { FactorizationNotes, LawsOfIndicesNotes, PercentageF3Notes, AreaVolumeF3Notes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { MoreEquationsNotes } from './F4MoreEquationsNotes';
@@ -313,6 +313,16 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'laws-of-indices',
+      topic: 'CH2 指數定律',
+      color: 'blue',
+      subtopics: [
+        { id: 'laws', num: 1, title: '指數定律（核心）', color: 'blue' },
+        { id: 'scientific-notation', num: 2, title: '科學記數法', color: 'green' },
+        { id: 'binary-conversion', num: 3, title: '二進制轉換', color: 'purple' },
+      ]
+    },
+    {
       id: 'percentage-f3',
       topic: 'CH3 百分法(二)',
       color: 'emerald',
@@ -320,6 +330,16 @@ export const NOTES_DATA = {
         { id: 'successive-change', num: 1, title: '連續百分變化', color: 'blue' },
         { id: 'growth-depreciation', num: 2, title: '增長/衰減', color: 'green' },
         { id: 'simple-interest', num: 3, title: '利息 (單利息)', color: 'amber' },
+      ]
+    },
+    {
+      id: 'area-volume-f3',
+      topic: 'CH4 面積與體積',
+      color: 'teal',
+      subtopics: [
+        { id: 'basic-area', num: 1, title: '平面圖形面積', color: 'blue' },
+        { id: 'formulas', num: 2, title: '面積與體積公式', color: 'green' },
+        { id: 'similar-shapes', num: 3, title: '相似圖形 / 立體比例', color: 'purple' },
       ]
     },
     {
@@ -591,7 +611,9 @@ export const NOTES_COMPONENTS = {
   'pythagoras-f2': PythagorasF2Notes,
   'trig-ratios-f2': TrigRatiosF2Notes,
   'factorization': FactorizationNotes,
+  'laws-of-indices': LawsOfIndicesNotes,
   'percentage-f3': PercentageF3Notes,
+  'area-volume-f3': AreaVolumeF3Notes,
   'trig-identities': TrigonometricIdentitiesNotes,
   'quadrilateral': QuadrilateralNotes,
   'triangle-lines': TriangleLinesNotes,

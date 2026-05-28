@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Latex, CollapsibleSection } from './shared';
 import { CoordinateGeometryFormulaTable } from '../components/CoordinateGeometryFormulaTable';
+import IndexLawsNotes from '../components/IndexLawsNotes';
 
 // ========================================
 // 因式分解 (F3)
@@ -1943,6 +1944,106 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+// ========================================
+// CH2 指數定律 (F3)
+// ========================================
+export const LawsOfIndicesNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH2 指數定律</h1>
+        <p className="text-slate-600">拆括號、負指數與科學記數法重點</p>
+      </div>
+
+      <CollapsibleSection id="laws" title="指數定律（核心）" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="text-sm text-slate-700 mb-2">常用規則：</p>
+            <div className="space-y-2">
+              <Latex math="a^m \cdot a^n = a^{m+n}" block />
+              <Latex math="\frac{a^m}{a^n} = a^{m-n}" block />
+              <Latex math="(a^m)^n = a^{mn}" block />
+              <Latex math="a^{-n} = \frac{1}{a^n}" block />
+            </div>
+          </div>
+          <div className="mt-4 bg-white rounded-lg p-2 border border-slate-200 overflow-auto">
+            <IndexLawsNotes />
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="scientific-notation" title="科學記數法" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+          <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-2">
+            <p className="text-slate-700 text-sm">標準形式：<Latex inline math="a \times 10^n" />，其中 <Latex inline math="1 \le a < 10" />。</p>
+            <Latex math="1.496 \times 10^8 = 149600000" block />
+            <Latex math="5.62 \times 10^{-5} = 0.0000562" block />
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="binary-conversion" title="二進制轉換" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+          <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-2 text-sm text-slate-700">
+            <p>十進制轉二進制：連續除 2，倒序讀餘數。</p>
+            <p>二進制轉十進制：按位乘權值後相加。</p>
+            <Latex math="101101_2 = 1\times2^5 + 0\times2^4 + 1\times2^3 + 1\times2^2 + 0\times2^1 + 1\times2^0 = 45_{10}" block />
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+// ========================================
+// CH4 面積與體積 (F3)
+// ========================================
+export const AreaVolumeF3Notes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH4 面積與體積</h1>
+        <p className="text-slate-600">重溫平面圖形面積、立體體積與相似圖形比例關係</p>
+      </div>
+
+      <CollapsibleSection id="basic-area" title="平面圖形面積" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+          <div className="bg-white rounded-lg p-4 border border-slate-200 grid md:grid-cols-2 gap-3 text-sm text-slate-700">
+            <p>長方形：<Latex inline math="A = lw" /></p>
+            <p>三角形：<Latex inline math="A = \frac{1}{2}bh" /></p>
+            <p>平行四邊形：<Latex inline math="A = bh" /></p>
+            <p>梯形：<Latex inline math="A = \frac{1}{2}(a+b)h" /></p>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="formulas" title="面積與體積公式" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+          <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-2">
+            <Latex math="V_{\text{prism}} = Ah" block />
+            <Latex math="V_{\text{cylinder}} = \pi r^2 h" block />
+            <Latex math="\text{TSA}_{\text{cylinder}} = 2\pi r^2 + 2\pi rh" block />
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="similar-shapes" title="相似圖形／立體比例" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+          <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-2 text-sm text-slate-700">
+            <p>若長度比為 <Latex inline math="k" />：</p>
+            <p>面積比為 <Latex inline math="k^2" />，體積比為 <Latex inline math="k^3" />。</p>
+            <Latex math="\frac{A_1}{A_2} = \left(\frac{l_1}{l_2}\right)^2,\quad \frac{V_1}{V_2} = \left(\frac{l_1}{l_2}\right)^3" block />
           </div>
         </div>
       </CollapsibleSection>
