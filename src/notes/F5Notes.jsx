@@ -696,12 +696,12 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
-                <line x1="20" y1="54" x2="140" y2="-15" stroke="#334155" strokeWidth="1.5" />
-                <polygon points="60,31 66,27 71,36 65,40" fill="none" stroke="#334155" strokeWidth="1" />
-                <text x="10" y="70" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="150" y="-3" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
-                <text x="40" y="28" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
+                <line x1="100" y1="100" x2="100" y2="20" stroke="#334155" strokeWidth="1.5" />
+                <line x1="20" y1="20" x2="180" y2="20" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="100,20 100,30 110,30 110,20" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="20" y="40" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="175" y="40" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
                 <text x="105" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -714,12 +714,12 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
-                <line x1="20" y1="54" x2="140" y2="-15" stroke="#334155" strokeWidth="1.5" />
-                <polygon points="60,31 66,27 71,36 65,40" fill="none" stroke="#334155" strokeWidth="1" />
-                <text x="10" y="70" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="150" y="-3" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
-                <text x="40" y="28" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
+                <line x1="100" y1="100" x2="100" y2="20" stroke="#334155" strokeWidth="1.5" />
+                <line x1="20" y1="20" x2="180" y2="20" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="100,20 100,30 110,30 110,20" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="20" y="40" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="175" y="40" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
                 <text x="105" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -996,72 +996,138 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             )}
           />
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <PropertyCard
+            title="圓心至弦的垂線平分弦"
+            condition={<>若 <Latex math="\text{ON} \perp \text{AB}" inline />，</>}
+            conclusion="\text{AN} = \text{NB}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                {/* 弦 AB: y=150, 從 x=100 - sqrt(80^2-50^2) = 100 - 62.45 = 37.55 到 162.45 */}
+                <line x1="37.5" y1="150" x2="162.5" y2="150" stroke="#334155" strokeWidth="1.5" />
+                {/* 圓心到弦 ON */}
+                <line x1="100" y1="100" x2="100" y2="150" stroke="#334155" strokeWidth="1.5" />
+                {/* 直角符號 */}
+                <polygon points="100,150 100,140 90,140 90,150" fill="none" stroke="#334155" strokeWidth="1" />
+                <text x="100" y="90" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }} textAnchor="middle">O</text>
+                <text x="25" y="155" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="168" y="155" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="100" y="168" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }} textAnchor="middle">N</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="圓心至弦中點的連線垂直弦"
+            condition={<>若 <Latex math="\text{AN} = \text{NB}" inline />，</>}
+            conclusion="\text{ON} \perp \text{AB} \ (\angle \text{ANO} \text{ 及 } \angle \text{ONB} = 90^\circ)"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="37.5" y1="150" x2="162.5" y2="150" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="100" y2="150" stroke="#334155" strokeWidth="1.5" />
+                {/* 相等標記 */}
+                <line x1="68" y1="145" x2="68" y2="155" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="131" y1="145" x2="131" y2="155" stroke="#0ea5e9" strokeWidth="1.5" />
+                <text x="100" y="90" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }} textAnchor="middle">O</text>
+                <text x="25" y="155" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="168" y="155" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="100" y="168" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }} textAnchor="middle">N</text>
+              </svg>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <PropertyCard
+            title="弦的垂直平分線穿過圓心"
+            condition={<>若 <Latex math="\text{AN} = \text{NB}" inline /> 及 <Latex math="\text{CD} \perp \text{AB}" inline />，</>}
+            conclusion="\text{CD 穿過圓心 O}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="37.5" y1="150" x2="162.5" y2="150" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="20" x2="100" y2="180" stroke="#334155" strokeWidth="1.5" />
+                
+                {/* 垂直標記 */}
+                <polygon points="100,150 100,140 110,140 110,150" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                {/* 弦等長標記 */}
+                <line x1="68" y1="145" x2="68" y2="155" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="131" y1="145" x2="131" y2="155" stroke="#0ea5e9" strokeWidth="1.5" />
+                
+                <text x="108" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                <text x="108" y="28" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="108" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="25" y="155" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="168" y="155" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="85" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>N</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="等弦與圓心等距"
+            condition={<>若 <Latex math="\text{AB} = \text{CD}" inline />、<Latex math="\text{OM} \perp \text{AB}" inline /> 及 <Latex math="\text{ON} \perp \text{CD}" inline />，</>}
+            conclusion="\text{OM} = \text{ON}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="24.8" y1="72.6" x2="151.4" y2="38.7" stroke="#334155" strokeWidth="1.5" />
+                <line x1="24.8" y1="127.4" x2="151.4" y2="161.3" stroke="#334155" strokeWidth="1.5" />
+                
+                <line x1="100" y1="100" x2="88.1" y2="55.6" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="88.1" y2="144.3" stroke="#334155" strokeWidth="1.5" />
+                
+                <polygon points="88.1,55.6 95.8,53.5 97.9,61.2 90.2,63.3" fill="none" stroke="#334155" strokeWidth="1" />
+                <polygon points="88.1,144.3 95.8,146.4 97.9,138.7 90.2,136.6" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="156" y="36" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="156" y="172" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="14" y="128" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="75" y="48" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>M</text>
+                <text x="75" y="160" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>N</text>
+                <text x="108" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="與圓心等距的弦等長"
+            condition={<>若 <Latex math="\text{OM} = \text{ON}" inline />、<Latex math="\text{OM} \perp \text{AB}" inline /> 及 <Latex math="\text{ON} \perp \text{CD}" inline />，</>}
+            conclusion="\text{AB} = \text{CD}"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <line x1="24.8" y1="72.6" x2="151.4" y2="38.7" stroke="#334155" strokeWidth="1.5" />
+                <line x1="24.8" y1="127.4" x2="151.4" y2="161.3" stroke="#334155" strokeWidth="1.5" />
+                
+                <line x1="100" y1="100" x2="88.1" y2="55.6" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="88.1" y2="144.3" stroke="#334155" strokeWidth="1.5" />
+                
+                <polygon points="88.1,55.6 95.8,53.5 97.9,61.2 90.2,63.3" fill="none" stroke="#334155" strokeWidth="1" />
+                <polygon points="88.1,144.3 95.8,146.4 97.9,138.7 90.2,136.6" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                {/* 相等距離標記 on OM and ON */}
+                <line x1="90" y1="78.8" x2="98" y2="76.8" stroke="#0ea5e9" strokeWidth="1.5" />
+                <line x1="90" y1="121.2" x2="98" y2="123.2" stroke="#0ea5e9" strokeWidth="1.5" />
+
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="156" y="36" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="156" y="172" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="14" y="128" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="75" y="48" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>M</text>
+                <text x="75" y="160" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>N</text>
+                <text x="108" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+        </div>
       </CollapsibleSection>
 
-      {/* 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📐 繪圖規格單 #1（可直接複製交給 @數學繪圖師）
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-圖形名稱：切線性質
-所在章節：F5Notes — 常見圓形定理，CollapsibleSection id="circle-theorems"
-viewBox：建議 240 × 200
-
-點／線：
-  - 圓心 O。圓外一點 T。
-  - 從 T 畫兩條切線至圓，切點為 P, Q。
-  - 連接 OP, OQ, OT。
-  - P, Q 處有直角符號（因半徑垂直切線）。
-
-標記：
-  - ∠TOP 與 ∠TOQ 加上單弧雙弧。
-  - ∠OTP 與 ∠OTQ 加上弧。
-  - TP 與 TQ 加上等雙短線 (|)。
-
-對應手寫圖說明：Image 1：「切線性質」
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📐 繪圖規格單 #2（可直接複製交給 @數學繪圖師）
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-圖形名稱：弧與圓周角成比例
-所在章節：F5Notes — 常見圓形定理，CollapsibleSection id="circle-theorems"
-viewBox：建議 200 × 200
-
-點／線：
-  - 圓，頂部圓周點 P。
-  - 底部圓周點 A, B, C，順序排列。
-  - 畫出 PA, PB, PC。
-
-對應手寫圖說明：Image 2 右側：「弧與圓周角成比例」
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📐 繪圖規格單 #3（可直接複製交給 @數學繪圖師）
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-圖形名稱：等弦與等弧及等圓心角（各4個變體）
-所在章節：F5Notes — 常見圓形定理，CollapsibleSection id="circle-theorems"
-viewBox：建議 200 × 200 (共需 6 個類似小圖，分別放入對應 PropertyCard)
-
-點／線（共同結構）：
-  - 圓心 O。圓周上四點 A, B 與 C, D，形成弦 AB 及弦 CD。
-  - 畫線連接 O 到 A, B, C, D，形成兩個三角形 (AOB 及 COD)。
-圖 3a (等弦對等弧): 標記 AB, CD 為等弦 (單撇)
-圖 3b (等弧對等弦): 標記弧 AB, 弧 CD 等弧 (用小弧線交叉標記或文字說明)
-圖 3c (等弧對等角): 標記弧等長 + ∠AOB, ∠COD 內縮角。
-圖 3d (等角對等弧): 標記 ∠AOB, ∠COD 內縮角。
-圖 3e (等弦對等角): 標記弦 AB, CD 為等弦 + ∠AOB, ∠COD 小弧。
-圖 3f (等角對等弦): 標記 ∠AOB, ∠COD 小弧。
-對應手寫圖說明：Image 3, Image 4, Image 5
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📐 繪圖規格單 #4（可直接複製交給 @數學繪圖師）
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-圖形名稱：圓內接四邊形
-所在章節：F5Notes — 常見圓形定理，CollapsibleSection id="circle-theorems"
-viewBox：建議 200 × 200 (共 2 個變體)
-
-點／線（共同結構）：
-  - 圓。圓上四點 A, B, C, D 形成四邊形。
-圖 4a (對角): 單純圓內接四邊形 ABCD。可免標角度。
-圖 4b (外角): 邊 CD 延長至點 E。
-對應手寫圖說明：Image 6：「圓內接四邊形對角」及「外角」
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
-      */}
     </>
   );
 };
