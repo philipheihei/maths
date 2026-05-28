@@ -963,9 +963,9 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <polygon points="152,39 40,60 55,166 172,134" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="151.8,39.1 33.4,55.6 54.9,166.1 172.3,134.1" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <text x="160" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="25" y="55" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="15" y="50" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="40" y="180" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="180" y="145" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
               </svg>
@@ -979,10 +979,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 240 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <polygon points="152,39 40,60 55,166 172,134" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <line x1="55" y1="166" x2="220" y2="120" stroke="#334155" strokeWidth="1.5" />
+                <polygon points="151.8,39.1 33.4,55.6 54.9,166.1 172.3,134.1" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <line x1="54.9" y1="166.1" x2="219.3" y2="121.3" stroke="#334155" strokeWidth="1.5" />
                 <text x="160" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="25" y="55" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="15" y="50" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="40" y="180" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="168" y="152" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="225" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>E</text>
