@@ -215,15 +215,39 @@ viewBox：400 × 100
 
             <div className="grid grid-cols-2 gap-4 text-center mt-6 text-lg">
               <div>
-                <MathDisplay latex="4x \leq 12" />
-                <MathDisplay latex="x \leq 3" />
+                <div className="space-y-1 flex flex-col items-center">
+                  <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
+                    <Latex math="4x" />
+                    <Latex math="\leq" />
+                    <Latex math="12" />
+                  </div>
+                  <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
+                    <Latex math="x" />
+                    <Latex math="\leq" />
+                    <Latex math="3" />
+                  </div>
+                </div>
               </div>
               <div className="border-l border-slate-200">
-                <MathDisplay latex="-x - 2x \leq 9" />
-                <MathDisplay latex="-3x \leq 9" />
+                <div className="space-y-1 flex flex-col items-center">
+                  <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
+                    <Latex math="-x - 2x" />
+                    <Latex math="\leq" />
+                    <Latex math="9" />
+                  </div>
+                  <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
+                    <Latex math="-3x" />
+                    <Latex math="\leq" />
+                    <Latex math="9" />
+                  </div>
+                </div>
                 <div className="relative inline-block mt-2">
                   <div className="bg-red-100 px-2 py-1 rounded inline-block">
-                    <Latex math="x \geq -3" />
+                    <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-2">
+                      <Latex math="x" />
+                      <Latex math="\geq" />
+                      <Latex math="-3" />
+                    </div>
                   </div>
                   <div className="absolute text-xs text-red-600 top-full left-[14px] w-[180px] mt-1 font-bold text-left">
                     ↑ 乘/除負數，要變不等號方向!
