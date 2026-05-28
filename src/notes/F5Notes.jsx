@@ -657,10 +657,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="31" y1="140" x2="169" y2="140" stroke="#334155" strokeWidth="1" />
                 <path d="M 31 140 L 70 25 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 31 140 L 155 42 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 64 39 A 15 15 0 0 0 78 37" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 62 42 A 15 15 0 0 0 79 40" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 139 52 A 20 20 0 0 0 157 58" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 137 55 A 20 20 0 0 0 156 61" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 63.6 43.9 A 20 20 0 0 0 83.0 40.2" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 62.6 46.8 A 23 23 0 0 0 85.0 42.4" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 139.3 54.4 A 20 20 0 0 0 157.8 61.8" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 137.0 56.3 A 23 23 0 0 0 158.2 64.8" fill="none" stroke="#334155" strokeWidth="1" />
                 <text x="17" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="175" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="65" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
@@ -678,8 +678,8 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 100 100 L 31 60" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 100 100 L 140 31" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 100 100 L 178 117" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 85 91 A 18 18 0 0 1 109 84" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 115 88 A 20 20 0 0 1 120 103" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 84.5 91 A 18 18 0 0 1 109.0 84.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 110.0 82.8 A 20 20 0 0 1 119.5 104.3" fill="none" stroke="#334155" strokeWidth="1" />
                 <text x="17" y="52" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="145" y="22" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="185" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
@@ -747,11 +747,11 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="172" y1="105" x2="178" y2="98" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* 角標記 */}
-                <path d="M 98 94 A 20 20 0 0 1 106 91" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 99 92 A 22 22 0 0 1 107 90" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 96 109 A 20 20 0 0 0 106 95" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 188 45 A 35 35 0 0 0 186 55" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 179 59 A 45 45 0 0 0 186 52" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 85.2 80.7 A 20 20 0 0 1 98.8 93.3" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 85.7 78.8 A 22 22 0 0 1 100.7 92.6" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 98.8 93.3 A 20 20 0 0 1 94.0 114.3" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 185.3 45.2 A 35 35 0 0 0 187.0 61.8" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 177.6 65.1 A 45 45 0 0 0 189.7 83.3" fill="none" stroke="#334155" strokeWidth="1" />
                 
                 <text x="90" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
                 <text x="135" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
@@ -770,8 +770,8 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 100 20 L 40 153" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 100 20 L 100 180" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 100 20 L 160 153" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 85 52 A 40 40 0 0 0 100 60" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 100 60 A 40 40 0 0 0 115 52" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 83.6 56.5 A 40 40 0 0 0 100 60" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 100 60 A 40 40 0 0 0 116.4 56.5" fill="none" stroke="#334155" strokeWidth="1" />
                 <text x="95" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
                 <text x="30" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="95" y="195" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
@@ -856,8 +856,8 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 160 159 L 154 154" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 163 157 L 157 152" stroke="#334155" strokeWidth="1.5" />
                 
-                <path d="M 87 77 A 25 25 0 0 0 80 87" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 113 123 A 25 25 0 0 0 120 113" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 87.5 78.4 A 25 25 0 0 0 76.5 91.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 112.5 121.6 A 25 25 0 0 0 123.5 108.5" fill="none" stroke="#334155" strokeWidth="1" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
@@ -883,10 +883,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
                 <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1" strokeDasharray="3,3" />
                 
-                <path d="M 87 77 A 25 25 0 0 0 80 87" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 89 74 A 29 29 0 0 0 80 85" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 113 123 A 25 25 0 0 0 120 113" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 111 126 A 29 29 0 0 0 120 115" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 87.5 78.4 A 25 25 0 0 0 76.5 91.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 85.5 74.9 A 29 29 0 0 0 72.7 90.2" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 112.5 121.6 A 25 25 0 0 0 123.5 108.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 114.5 125.1 A 29 29 0 0 0 127.3 109.8" fill="none" stroke="#334155" strokeWidth="1" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
@@ -915,8 +915,8 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="45" y1="48" x2="38" y2="54" stroke="#334155" strokeWidth="1.5" />
                 <line x1="155" y1="151" x2="162" y2="145" stroke="#334155" strokeWidth="1.5" />
                 
-                <path d="M 87 77 A 25 25 0 0 0 80 87" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 113 123 A 25 25 0 0 0 120 113" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 87.5 78.4 A 25 25 0 0 0 76.5 91.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 112.5 121.6 A 25 25 0 0 0 123.5 108.5" fill="none" stroke="#334155" strokeWidth="1" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
@@ -942,10 +942,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="60" y1="31" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
                 <line x1="140" y1="169" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <path d="M 87 77 A 25 25 0 0 0 80 87" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 89 74 A 29 29 0 0 0 80 85" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 113 123 A 25 25 0 0 0 120 113" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 111 126 A 29 29 0 0 0 120 115" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 87.5 78.4 A 25 25 0 0 0 76.5 91.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 85.5 74.9 A 29 29 0 0 0 72.7 90.2" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 112.5 121.6 A 25 25 0 0 0 123.5 108.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 114.5 125.1 A 29 29 0 0 0 127.3 109.8" fill="none" stroke="#334155" strokeWidth="1" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
