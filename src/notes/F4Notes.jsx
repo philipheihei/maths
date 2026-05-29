@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Latex, CollapsibleSection } from './shared';
+import { Latex, CollapsibleSection, MathDisplay } from './shared';
 export { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 
 // ========================================
@@ -812,6 +812,229 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
                 <p>如 <span className="bg-orange-500 text-white px-1 py-0.5 rounded font-mono text-[10px]">Prog</span> <span className="bg-gray-900 text-white px-1 py-0.5 rounded font-mono text-[10px]">1</span> 出 <span className="text-red-600 font-bold">Maths Error</span>，</p>
                 <p>則<span className="font-bold">沒有交點</span> / <span className="font-bold">無限交點</span>（看 <span className="text-green-700 font-bold">y截距</span> 是否一樣）</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+// ========================================
+// CH6-7 指數函數與對數函數 (log) (F4)
+// ========================================
+export const LogFunctionNotes = ({ activeSub }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-purple-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH6-7 指數函數與對數函數 (log)</h1>
+        <p className="text-slate-600">掌握指數與對數的轉換及運算法則</p>
+      </div>
+
+      <CollapsibleSection id="simplify-indices" title="簡化指數算式" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">（初中只限整數次方 ／ 高中包括分數次方）</h3>
+            <div className="space-y-4">
+              <div className="bg-white p-3 rounded-lg flex items-center gap-6">
+                <Latex math="\dfrac{\sqrt[3]{x^4}}{\sqrt{x}}" />
+                <div className="flex flex-col gap-1 items-center">
+                  <span className="font-bold text-slate-400">→</span>
+                  <span className="font-bold text-slate-400">→</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <Latex math="x^{\frac{4}{3}}" />
+                  <Latex math="x^{\frac{1}{2}}" />
+                </div>
+              </div>
+
+              <div className="bg-white p-3 rounded-lg flex items-center justify-between">
+                <Latex math="\sqrt[5]{a^2 b^2}" />
+                <span className="font-bold text-blue-500">→</span>
+                <Latex math="(a^2 b^2)^{\frac{1}{5}}" />
+                <span className="font-bold text-blue-500">→</span>
+                <Latex math="a^{\frac{2}{5}} b^{\frac{2}{5}}" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="log-definition" title="log 的定義與對數性質" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-2">📝 log 的定義</h3>
+            <div className="bg-white p-4 rounded-lg flex flex-col gap-3">
+              <div className="flex items-center gap-4">
+                <span className="text-red-600 font-bold"><Latex math="\because 10^2 = 100" /></span>
+                <span className="text-green-700 font-bold">← 指數形式（會考轉換）</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="text-slate-700 font-bold"><Latex math="\therefore \log_{10} 100 = 2" /></span>
+                <span className="text-green-700 font-bold">← 對數形式</span>
+              </div>
+            </div>
+            
+            <p className="text-blue-700 font-bold mt-3">💡 常用對數，set做例子幫你想其他題</p>
+            <p className="text-blue-700 font-bold mt-1">應記住： <Latex math="\log 10 = 1" /> ， <Latex math="\log 100 = 2" /> ， <Latex math="\log 1000 = 3" /></p>
+          </div>
+
+          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+            <h3 className="font-bold text-indigo-800 mb-3">📝 對數的性質</h3>
+            <ul className="space-y-3 text-slate-700 list-decimal list-inside">
+              <li><Latex math="\log_a 1 = 0 \quad \Rightarrow a^0 = 1" /></li>
+              <li><Latex math="\log_a a = 1 \quad \Rightarrow \text{e.g. } \log_3 3 = 1" /></li>
+              <li>
+                <Latex math="\log_a MN = \log_a M + \log_a N" />
+                <span className="text-red-500 font-bold ml-2">（乘數 → + ，合併/分拆 log）</span>
+              </li>
+              <li>
+                <Latex math="\log_a \frac{M}{N} = \log_a M - \log_a N" />
+                <span className="text-red-500 font-bold ml-2">（除數 → - ）</span>
+              </li>
+              <li>
+                <Latex math="\log_a M^k = k \log_a M" />
+                <span className="text-slate-500 ml-2">e.g. <Latex math="\log 10^3 \rightarrow 3\log 10" /></span>
+              </li>
+              <li>
+                <div className="inline-flex items-center gap-2">
+                  <Latex math="\log_a M = \frac{\log_b M}{\log_b a}" />
+                  <span className="text-green-700 font-bold">換底公式</span>
+                  <span className="text-slate-500">→ e.g. <Latex math="\log_{16} 5 \rightarrow \frac{\log_{10} 5}{\log_{10} 16}" /></span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="text-sm text-slate-600 mb-2">例子 (Q19)：化簡</p>
+            <MathDisplay math="
+\begin{aligned}
+\frac{\log \sqrt{x^5}}{\log \sqrt{x} + \log x} &= \frac{\log(x^5)^{\frac{1}{2}}}{\log x^{\frac{1}{2}} + \log x} \\
+&= \frac{\frac{5}{2} \log x}{\log \left( x^{\frac{1}{2}} \cdot x^1 \right)} \\
+&= \frac{\frac{5}{2} \log x}{\log x^{\frac{3}{2}}} \\
+&= \frac{\frac{5}{2} \log x}{\frac{3}{2} \log x} \quad \leftarrow \frac{5}{2} \div \frac{3}{2} \\
+&= \frac{5}{3}
+\end{aligned}
+            " />
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <p className="text-sm text-slate-600 mb-2">例子：已知 <Latex math="\log 2 = a" />, <Latex math="\log 3 = b" />，以 <Latex math="a" /> 和 <Latex math="b" /> 表達 <Latex math="\log 150" />。</p>
+            <p className="text-sm text-red-600 font-bold mb-2">（關鍵：如何將 150 以 2, 3, 10 表示）</p>
+            <MathDisplay math="
+\begin{aligned}
+\log 150 &= \log (15 \times 10) \quad \leftarrow (\neq \log 15 \times 10) \\
+&= \log (3 \times 5 \times 10) \\
+&= \log \left(3 \times \frac{10}{2} \times 10 \right) \quad \leftarrow \text{2, 3, 10 的組合} \\
+&= \log 3 + \log 10 - \log 2 + \log 10 \quad \leftarrow \text{分拆 log} \\
+&= b + 1 - a + 1 \\
+&= 2 + b - a
+\end{aligned}
+            " />
+            <p className="text-sm text-red-600 font-bold mt-2">提示：</p>
+            <ul className="text-sm text-red-600">
+              <li><Latex math="5 \rightarrow \frac{10}{2}" /></li>
+              <li><Latex math="50 \rightarrow \frac{100}{2}" /></li>
+            </ul>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="log-equations" title="指數方程與對數方程" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+              <h3 className="font-bold text-red-800 mb-2">🎈 指數相等</h3>
+              <p className="text-slate-700 mb-2"><Latex math="\textcolor{red}{a}^{\textcolor{blue}{x}} = 3^{\textcolor{blue}{x}} \rightarrow \textcolor{red}{a} = 3" /></p>
+              <p className="text-sm text-slate-500">e.g. <Latex math="2^5 = a^5 \rightarrow 2 = a" /></p>
+            </div>
+            <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+              <h3 className="font-bold text-orange-800 mb-2">🎈 底數字相等</h3>
+              <p className="text-slate-700 mb-2"><Latex math="\textcolor{purple}{2}^{\textcolor{red}{5}} = \textcolor{purple}{2}^{\textcolor{red}{y}} \rightarrow 5 = \textcolor{red}{y}" /></p>
+              <p className="text-sm text-slate-500">e.g. <Latex math="2^x = 64 \rightarrow 2^x = 2^6 \rightarrow x = 6" /></p>
+            </div>
+          </div>
+
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-3">💡 如看見方程的未知數 (x) 在指數部份，需兩邊加 log！</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white p-3 rounded-lg">
+                <MathDisplay math="
+\begin{aligned}
+2^x &= 30 \quad \leftarrow \text{(準確至 3 位有效數字)} \\
+\log(2^x) &= \log 30 \quad \leftarrow \text{要加括號} \\
+x \log 2 &= \log 30 \\
+x &= \frac{\log 30}{\log 2} \\
+x &= 4.91
+\end{aligned}
+                " />
+              </div>
+              <div className="bg-white p-3 rounded-lg">
+                <MathDisplay math="
+\begin{aligned}
+8^x &= 50 \quad \leftarrow \log(8^x) = \log 50 \\
+x \log 8 &= \log 50 \\
+x &= \frac{\log 50}{\log 8} \quad \leftarrow \text{計算機出 ANS} \\
+x &= 1.88
+\end{aligned}
+                " />
+              </div>
+            </div>
+            <div className="bg-slate-100 p-3 mt-3 rounded-lg">
+              <p className="text-sm text-slate-600 mb-1">例：(右邊為多項式也一樣)</p>
+              <Latex math="2^x = 30 + y" /> <br />
+              <Latex math="\log (2^x) = \log(30 + y)" /> <span className="text-red-600 text-sm font-bold">← 要加括號</span>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">💡 如原本有 log，需想辦法刪除 log 部份</h3>
+            <div className="bg-white p-4 rounded-lg mb-3">
+              <p className="text-sm text-slate-600 mb-2">e.g. 13.</p>
+              <MathDisplay math="
+\begin{aligned}
+\log (x - 1) &= -1 \quad \leftarrow \text{1, 2, 3 可轉化成為 } \log (\log \cdots) \\
+\log (x - 1) &= -\log 10 \quad \left( 或 \log \frac{1}{10} \right) \\
+\log (x - 1) &= \log 10^{-1} \\
+x - 1 &= 10^{-1} \\
+x - 1 &= \frac{1}{10} \\
+x &= \frac{11}{10}
+\end{aligned}
+              " />
+            </div>
+            <div className="bg-white p-4 rounded-lg">
+              <p className="text-sm text-slate-600 mb-2">e.g. 25.</p>
+              <MathDisplay math="
+\begin{aligned}
+\log (4x - 1) &= \log 5(2x + 1) - 1 \\
+\log (4x - 1) &= \log 5(2x + 1) - \log 10 \\
+\log (4x - 1) &= \log \left[ \frac{5(2x + 1)}{10} \right] \\
+\log (4x - 1) &= \log \left( \frac{2x + 1}{2} \right) \\
+4x - 1 &= \frac{2x + 1}{2} \\
+8x - 2 &= 2x + 1 \\
+6x &= 3 \\
+x &= 0.5
+\end{aligned}
+              " />
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="log-applications" title="應用題" num={4} color="amber" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">常見應用題型</h3>
+            <div className="flex items-start gap-4">
+              <ul className="text-slate-700 list-none space-y-1 mt-1 font-bold">
+                <li>- 黎克特制地震</li>
+                <li>- 聲音的強度</li>
+                <li>- 其他</li>
+              </ul>
+              <span className="text-red-600 font-bold mt-4 text-xl">{"}"} 不用記公式，題目會提供</span>
             </div>
           </div>
         </div>

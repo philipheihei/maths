@@ -28,7 +28,7 @@ import {
   CirclesCylindersF2Notes,
 } from './F2Notes';
 import { FactorizationNotes, LawsOfIndicesNotes, PercentageF3Notes, AreaVolumeF3Notes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes } from './F3Notes';
-import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes } from './F4Notes';
+import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes, LogFunctionNotes } from './F4Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { MoreEquationsNotes } from './F4MoreEquationsNotes';
 import { TrigApplicationsF4Notes } from './F4TrigApplicationsNotes';
@@ -467,6 +467,17 @@ export const NOTES_DATA = {
       ]
     },
     {
+      id: 'log-function',
+      topic: 'CH6-7 指數函數與對數函數 (log)',
+      color: 'purple',
+      subtopics: [
+        { id: 'simplify-indices', num: 1, title: '簡化指數算式', color: 'blue' },
+        { id: 'log-definition', num: 2, title: 'log 的定義與對數性質', color: 'green' },
+        { id: 'log-equations', num: 3, title: '指數方程與對數方程', color: 'purple' },
+        { id: 'log-applications', num: 4, title: '應用題', color: 'amber' },
+      ]
+    },
+    {
       id: 'more-equations',
       topic: 'CH8 續方程',
       color: 'indigo',
@@ -627,6 +638,7 @@ export const NOTES_COMPONENTS = {
   'straight-line-equation': StraightLineEquationNotes,
   'functions': FunctionNotes,
   'more-equations': MoreEquationsNotes,
+  'log-function': LogFunctionNotes,
   'trig-applications-f4': TrigApplicationsF4Notes,
   'variation': VariationNotes,
   'circle-properties': CirclePropertiesNotes,
