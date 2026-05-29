@@ -910,7 +910,7 @@ export const LogFunctionNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <p className="text-sm text-slate-600 mb-2">例子 (Q19)：化簡</p>
-            <MathDisplay math="
+            <MathDisplay latex={String.raw`
 \begin{aligned}
 \frac{\log \sqrt{x^5}}{\log \sqrt{x} + \log x} &= \frac{\log(x^5)^{\frac{1}{2}}}{\log x^{\frac{1}{2}} + \log x} \\
 &= \frac{\frac{5}{2} \log x}{\log \left( x^{\frac{1}{2}} \cdot x^1 \right)} \\
@@ -918,13 +918,13 @@ export const LogFunctionNotes = ({ activeSub }) => {
 &= \frac{\frac{5}{2} \log x}{\frac{3}{2} \log x} \quad \leftarrow \frac{5}{2} \div \frac{3}{2} \\
 &= \frac{5}{3}
 \end{aligned}
-            " />
+            `} />
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <p className="text-sm text-slate-600 mb-2">例子：已知 <Latex math="\log 2 = a" />, <Latex math="\log 3 = b" />，以 <Latex math="a" /> 和 <Latex math="b" /> 表達 <Latex math="\log 150" />。</p>
             <p className="text-sm text-red-600 font-bold mb-2">（關鍵：如何將 150 以 2, 3, 10 表示）</p>
-            <MathDisplay math="
+            <MathDisplay latex={String.raw`
 \begin{aligned}
 \log 150 &= \log (15 \times 10) \quad \leftarrow (\neq \log 15 \times 10) \\
 &= \log (3 \times 5 \times 10) \\
@@ -933,7 +933,7 @@ export const LogFunctionNotes = ({ activeSub }) => {
 &= b + 1 - a + 1 \\
 &= 2 + b - a
 \end{aligned}
-            " />
+            `} />
             <p className="text-sm text-red-600 font-bold mt-2">提示：</p>
             <ul className="text-sm text-red-600">
               <li><Latex math="5 \rightarrow \frac{10}{2}" /></li>
@@ -962,7 +962,7 @@ export const LogFunctionNotes = ({ activeSub }) => {
             <h3 className="font-bold text-purple-800 mb-3">💡 如看見方程的未知數 (x) 在指數部份，需兩邊加 log！</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white p-3 rounded-lg">
-                <MathDisplay math="
+                <MathDisplay latex={String.raw`
 \begin{aligned}
 2^x &= 30 \quad \leftarrow \text{(準確至 3 位有效數字)} \\
 \log(2^x) &= \log 30 \quad \leftarrow \text{要加括號} \\
@@ -970,17 +970,17 @@ x \log 2 &= \log 30 \\
 x &= \frac{\log 30}{\log 2} \\
 x &= 4.91
 \end{aligned}
-                " />
+                `} />
               </div>
               <div className="bg-white p-3 rounded-lg">
-                <MathDisplay math="
+                <MathDisplay latex={String.raw`
 \begin{aligned}
 8^x &= 50 \quad \leftarrow \log(8^x) = \log 50 \\
 x \log 8 &= \log 50 \\
 x &= \frac{\log 50}{\log 8} \quad \leftarrow \text{計算機出 ANS} \\
 x &= 1.88
 \end{aligned}
-                " />
+                `} />
               </div>
             </div>
             <div className="bg-slate-100 p-3 mt-3 rounded-lg">
@@ -994,20 +994,20 @@ x &= 1.88
             <h3 className="font-bold text-blue-800 mb-3">💡 如原本有 log，需想辦法刪除 log 部份</h3>
             <div className="bg-white p-4 rounded-lg mb-3">
               <p className="text-sm text-slate-600 mb-2">e.g. 13.</p>
-              <MathDisplay math="
+              <MathDisplay latex={String.raw`
 \begin{aligned}
-\log (x - 1) &= -1 \quad \leftarrow \text{1, 2, 3 可轉化成為 } \log (\log \cdots) \\
-\log (x - 1) &= -\log 10 \quad \left( 或 \log \frac{1}{10} \right) \\
+\log (x - 1) &= -1 \quad \leftarrow \text{1, 2, 3 可轉化成為 } \log (\text{對數}) \\
+\log (x - 1) &= -\log 10 \quad ( \text{或 } \log \frac{1}{10} ) \\
 \log (x - 1) &= \log 10^{-1} \\
 x - 1 &= 10^{-1} \\
 x - 1 &= \frac{1}{10} \\
 x &= \frac{11}{10}
 \end{aligned}
-              " />
+              `} />
             </div>
             <div className="bg-white p-4 rounded-lg">
               <p className="text-sm text-slate-600 mb-2">e.g. 25.</p>
-              <MathDisplay math="
+              <MathDisplay latex={String.raw`
 \begin{aligned}
 \log (4x - 1) &= \log 5(2x + 1) - 1 \\
 \log (4x - 1) &= \log 5(2x + 1) - \log 10 \\
@@ -1018,7 +1018,7 @@ x &= \frac{11}{10}
 6x &= 3 \\
 x &= 0.5
 \end{aligned}
-              " />
+              `} />
             </div>
           </div>
         </div>
