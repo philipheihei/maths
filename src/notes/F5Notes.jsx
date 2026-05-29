@@ -412,13 +412,13 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             <div className="bg-amber-50 rounded p-4 text-center border-l-4 border-amber-500 my-3">
               <svg viewBox="0 0 500 130" className="w-full max-w-lg mx-auto">
                 {/* Whiskers */}
-                <line x1="50" y1="50" x2="150" y2="50" stroke="#3b82f6" strokeWidth="2" />
-                <line x1="350" y1="50" x2="450" y2="50" stroke="#3b82f6" strokeWidth="2" />
+                <line x1="50" y1="50" x2="150" y2="50" stroke="#334155" strokeWidth="2" />
+                <line x1="350" y1="50" x2="450" y2="50" stroke="#334155" strokeWidth="2" />
                 {/* Min/Max caps */}
                 <line x1="50" y1="30" x2="50" y2="70" stroke="#b45309" strokeWidth="2" />
                 <line x1="450" y1="30" x2="450" y2="70" stroke="#b45309" strokeWidth="2" />
                 {/* Box */}
-                <rect x="150" y="20" width="200" height="60" fill="white" stroke="#3b82f6" strokeWidth="2" />
+                <rect x="150" y="20" width="200" height="60" fill="white" stroke="#334155" strokeWidth="2" />
                 {/* Q1 / Q3 Box Edges */}
                 <line x1="150" y1="20" x2="150" y2="80" stroke="#16a34a" strokeWidth="2" />
                 <line x1="350" y1="20" x2="350" y2="80" stroke="#16a34a" strokeWidth="2" />
