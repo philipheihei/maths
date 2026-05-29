@@ -567,14 +567,14 @@ const NL_Or_All = () => (
     <g>
       {/* x > 2 */}
       <rect x="210" y="79" width="354" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="215" y1="95" x2="564" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="215" y1="95" x2="556" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="210" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
       <polygon points="564,95 556,89 556,101" fill="#ef4444" />
       <line x1="210" y1="100" x2="210" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x < 5 */}
       <rect x="36" y="44" width="339" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="36" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="44" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="375" cy="60" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
       <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
       <line x1="375" y1="65" x2="375" y2="140" stroke="#3b82f6" strokeWidth="4" />
@@ -601,14 +601,14 @@ const NL_Or_Sep = () => (
     <g>
       {/* x < 3 */}
       <rect x="36" y="79" width="194" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="36" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="44" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="230" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
       <polygon points="36,95 44,89 44,101" fill="#ef4444" />
       <line x1="230" y1="100" x2="230" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x >= 6 */}
       <rect x="425" y="44" width="139" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="430" y1="60" x2="564" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="430" y1="60" x2="556" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="425" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
       <polygon points="564,60 556,54 556,66" fill="#3b82f6" />
       <line x1="425" y1="65" x2="425" y2="140" stroke="#3b82f6" strokeWidth="4" />
@@ -631,13 +631,13 @@ const NL_And_SameGT = () => (
     })}
 
     {/* x > 2 */}
-    <line x1="215" y1="72" x2="564" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <line x1="215" y1="72" x2="556" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="210" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
     <polygon points="564,72 556,66 556,78" fill="#ef4444" />
     <line x1="210" y1="77" x2="210" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x > 5 */}
-    <line x1="380" y1="45" x2="564" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <line x1="380" y1="45" x2="556" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="375" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
     <polygon points="564,45 556,39 556,51" fill="#3b82f6" />
     <line x1="375" y1="50" x2="375" y2="110" stroke="#3b82f6" strokeWidth="4" />
@@ -662,13 +662,13 @@ const NL_And_SameLT = () => (
     })}
 
     {/* x < 3 */}
-    <line x1="36" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <line x1="44" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="265" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
     <polygon points="36,72 44,66 44,78" fill="#ef4444" />
     <line x1="265" y1="77" x2="265" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x < 6 */}
-    <line x1="36" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <line x1="44" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="430" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
     <polygon points="36,45 44,39 44,51" fill="#3b82f6" />
     <line x1="430" y1="50" x2="430" y2="110" stroke="#3b82f6" strokeWidth="4" />
@@ -693,13 +693,13 @@ const NL_Or_SameGT = () => (
     })}
 
     {/* x > 2 */}
-    <line x1="215" y1="72" x2="564" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <line x1="215" y1="72" x2="556" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="210" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
     <polygon points="564,72 556,66 556,78" fill="#ef4444" />
     <line x1="210" y1="77" x2="210" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x > 5 */}
-    <line x1="380" y1="45" x2="564" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <line x1="380" y1="45" x2="556" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="375" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
     <polygon points="564,45 556,39 556,51" fill="#3b82f6" />
     <line x1="375" y1="50" x2="375" y2="110" stroke="#3b82f6" strokeWidth="4" />
@@ -724,13 +724,13 @@ const NL_Or_SameLT = () => (
     })}
 
     {/* x < 3 */}
-    <line x1="36" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <line x1="44" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="265" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
     <polygon points="36,72 44,66 44,78" fill="#ef4444" />
     <line x1="265" y1="77" x2="265" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x < 6 */}
-    <line x1="36" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <line x1="44" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="430" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
     <polygon points="36,45 44,39 44,51" fill="#3b82f6" />
     <line x1="430" y1="50" x2="430" y2="110" stroke="#3b82f6" strokeWidth="4" />
@@ -760,13 +760,13 @@ const NL_Combined_Ex = () => (
       <rect x="180" y="44" width="160" height="68" fill="#f59e0b" opacity="0.45" rx="6" />
       
       {/* x >= -3 */}
-      <line x1="185" y1="95" x2="564" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="185" y1="95" x2="556" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="180" cy="95" r="5" fill="#ef4444" stroke="#ef4444" strokeWidth="2" />
       <polygon points="564,95 556,89 556,101" fill="#ef4444" />
       <line x1="180" y1="100" x2="180" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x <= 3 */}
-      <line x1="36" y1="60" x2="335" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="44" y1="60" x2="335" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="340" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
       <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
       <line x1="340" y1="65" x2="340" y2="140" stroke="#3b82f6" strokeWidth="4" />
@@ -792,7 +792,7 @@ const NL_Max_3_5 = () => (
 
     <g>
       {/* x <= 3.5 */}
-      <line x1="36" y1="60" x2="375" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="44" y1="60" x2="375" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="380" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
       <text x="380" y="45" fontSize="14" fill="#3b82f6" fontWeight="bold" textAnchor="middle">3.5</text>
       <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
@@ -829,7 +829,7 @@ const NL_Min_2 = () => (
 
     <g>
       {/* x > 2 */}
-      <line x1="265" y1="60" x2="564" y2="60" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="265" y1="60" x2="556" y2="60" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="260" cy="60" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
       <polygon points="564,60 556,54 556,66" fill="#ef4444" />
       <line x1="260" y1="65" x2="260" y2="140" stroke="#ef4444" strokeWidth="4" />
