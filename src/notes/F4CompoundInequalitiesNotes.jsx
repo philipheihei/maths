@@ -472,9 +472,9 @@ const NL_X_GE_3 = () => (
 
     <g>
       <rect x="300" y="79" width="264" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="305" y1="95" x2="556" y2="95" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="305" y1="95" x2="554" y2="95" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="300" cy="95" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
-      <polygon points="564,95 556,89 556,101" fill="#3b82f6" />
+      <polygon points="564,95 554,89 554,101" fill="#3b82f6" />
       <line x1="300" y1="100" x2="300" y2="140" stroke="#3b82f6" strokeWidth="4" opacity="1" />
     </g>
   </svg>
@@ -502,15 +502,15 @@ const NL_And_Overlap = () => (
       <rect x="210" y="44" width="165" height="68" fill="#f59e0b" opacity="0.45" rx="6" />
       
       {/* 左邊 x > 2 */}
-      <line x1="215" y1="95" x2="556" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="215" y1="95" x2="554" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="210" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-      <polygon points="564,95 556,89 556,101" fill="#ef4444" />
+      <polygon points="564,95 554,89 554,101" fill="#ef4444" />
       <line x1="210" y1="100" x2="210" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x < 5 */}
-      <line x1="44" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="46" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="375" cy="60" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
-      <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
+      <polygon points="36,60 46,54 46,66" fill="#3b82f6" />
       <line x1="375" y1="65" x2="375" y2="140" stroke="#3b82f6" strokeWidth="4" />
     </g>
   </svg>
@@ -521,6 +521,7 @@ const NL_And_NoSol = () => (
     <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
     <polygon points="36,140 46,134 46,146" fill="#374151" />
     <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
     {[1, 2, 3, 4, 5, 6, 7].map((val) => {
       const px = 100 + (val-1) * 65;
@@ -534,15 +535,15 @@ const NL_And_NoSol = () => (
 
     <g>
       {/* x < 3 */}
-      <line x1="44" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="46" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="230" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-      <polygon points="36,95 44,89 44,101" fill="#ef4444" />
+      <polygon points="36,95 46,89 46,101" fill="#ef4444" />
       <line x1="230" y1="100" x2="230" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x >= 6 */}
-      <line x1="430" y1="60" x2="556" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="430" y1="60" x2="554" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="425" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
-      <polygon points="564,60 556,54 556,66" fill="#3b82f6" />
+      <polygon points="564,60 554,54 554,66" fill="#3b82f6" />
       <line x1="425" y1="65" x2="425" y2="140" stroke="#3b82f6" strokeWidth="4" />
     </g>
   </svg>
@@ -553,6 +554,7 @@ const NL_Or_All = () => (
     <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
     <polygon points="36,140 46,134 46,146" fill="#374151" />
     <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
     {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
       const px = 100 + val * 55;
@@ -567,16 +569,16 @@ const NL_Or_All = () => (
     <g>
       {/* x > 2 */}
       <rect x="210" y="79" width="354" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="215" y1="95" x2="556" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="215" y1="95" x2="554" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="210" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-      <polygon points="564,95 556,89 556,101" fill="#ef4444" />
+      <polygon points="564,95 554,89 554,101" fill="#ef4444" />
       <line x1="210" y1="100" x2="210" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x < 5 */}
       <rect x="36" y="44" width="339" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="44" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="46" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="375" cy="60" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
-      <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
+      <polygon points="36,60 46,54 46,66" fill="#3b82f6" />
       <line x1="375" y1="65" x2="375" y2="140" stroke="#3b82f6" strokeWidth="4" />
     </g>
   </svg>
@@ -587,6 +589,7 @@ const NL_Or_Sep = () => (
     <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
     <polygon points="36,140 46,134 46,146" fill="#374151" />
     <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
     {[1, 2, 3, 4, 5, 6, 7].map((val) => {
       const px = 100 + (val-1) * 65;
@@ -601,16 +604,16 @@ const NL_Or_Sep = () => (
     <g>
       {/* x < 3 */}
       <rect x="36" y="79" width="194" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="44" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="46" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="230" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-      <polygon points="36,95 44,89 44,101" fill="#ef4444" />
+      <polygon points="36,95 46,89 46,101" fill="#ef4444" />
       <line x1="230" y1="100" x2="230" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x >= 6 */}
       <rect x="425" y="44" width="139" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="430" y1="60" x2="556" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="430" y1="60" x2="554" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="425" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
-      <polygon points="564,60 556,54 556,66" fill="#3b82f6" />
+      <polygon points="564,60 554,54 554,66" fill="#3b82f6" />
       <line x1="425" y1="65" x2="425" y2="140" stroke="#3b82f6" strokeWidth="4" />
     </g>
   </svg>
@@ -619,7 +622,9 @@ const NL_Or_Sep = () => (
 const NL_And_SameGT = () => (
   <svg width="100%" height="150" viewBox="0 0 600 150" className="max-w-[520px] mx-auto">
     <line x1="36" y1="110" x2="564" y2="110" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,110 46,104 46,116" fill="#374151" />
     <polygon points="564,110 554,104 554,116" fill="#374151" />
+    <text x="579" y="115" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
       const px = 100 + val * 55;
       return (
@@ -631,15 +636,15 @@ const NL_And_SameGT = () => (
     })}
 
     {/* x > 2 */}
-    <line x1="215" y1="72" x2="556" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <line x1="215" y1="72" x2="554" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="210" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-    <polygon points="564,72 556,66 556,78" fill="#ef4444" />
+    <polygon points="564,72 554,66 554,78" fill="#ef4444" />
     <line x1="210" y1="77" x2="210" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x > 5 */}
-    <line x1="380" y1="45" x2="556" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <line x1="380" y1="45" x2="554" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="375" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
-    <polygon points="564,45 556,39 556,51" fill="#3b82f6" />
+    <polygon points="564,45 554,39 554,51" fill="#3b82f6" />
     <line x1="375" y1="50" x2="375" y2="110" stroke="#3b82f6" strokeWidth="4" />
 
     {/* AND result = stricter one (cover both red/blue lines) */}
@@ -651,6 +656,8 @@ const NL_And_SameLT = () => (
   <svg width="100%" height="150" viewBox="0 0 600 150" className="max-w-[520px] mx-auto">
     <line x1="36" y1="110" x2="564" y2="110" stroke="#374151" strokeWidth="2" />
     <polygon points="36,110 46,104 46,116" fill="#374151" />
+    <polygon points="564,110 554,104 554,116" fill="#374151" />
+    <text x="579" y="115" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
       const px = 100 + val * 55;
       return (
@@ -662,15 +669,15 @@ const NL_And_SameLT = () => (
     })}
 
     {/* x < 3 */}
-    <line x1="44" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <line x1="46" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="265" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-    <polygon points="36,72 44,66 44,78" fill="#ef4444" />
+    <polygon points="36,72 46,66 46,78" fill="#ef4444" />
     <line x1="265" y1="77" x2="265" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x < 6 */}
-    <line x1="44" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <line x1="46" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="430" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
-    <polygon points="36,45 44,39 44,51" fill="#3b82f6" />
+    <polygon points="36,45 46,39 46,51" fill="#3b82f6" />
     <line x1="430" y1="50" x2="430" y2="110" stroke="#3b82f6" strokeWidth="4" />
 
     {/* AND result = stricter one (cover both red/blue lines) */}
@@ -681,7 +688,9 @@ const NL_And_SameLT = () => (
 const NL_Or_SameGT = () => (
   <svg width="100%" height="150" viewBox="0 0 600 150" className="max-w-[520px] mx-auto">
     <line x1="36" y1="110" x2="564" y2="110" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,110 46,104 46,116" fill="#374151" />
     <polygon points="564,110 554,104 554,116" fill="#374151" />
+    <text x="579" y="115" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
       const px = 100 + val * 55;
       return (
@@ -693,15 +702,15 @@ const NL_Or_SameGT = () => (
     })}
 
     {/* x > 2 */}
-    <line x1="215" y1="72" x2="556" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <line x1="215" y1="72" x2="554" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="210" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-    <polygon points="564,72 556,66 556,78" fill="#ef4444" />
+    <polygon points="564,72 554,66 554,78" fill="#ef4444" />
     <line x1="210" y1="77" x2="210" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x > 5 */}
-    <line x1="380" y1="45" x2="556" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <line x1="380" y1="45" x2="554" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="375" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
-    <polygon points="564,45 556,39 556,51" fill="#3b82f6" />
+    <polygon points="564,45 554,39 554,51" fill="#3b82f6" />
     <line x1="375" y1="50" x2="375" y2="110" stroke="#3b82f6" strokeWidth="4" />
 
     {/* OR result = broader one */}
@@ -713,6 +722,8 @@ const NL_Or_SameLT = () => (
   <svg width="100%" height="150" viewBox="0 0 600 150" className="max-w-[520px] mx-auto">
     <line x1="36" y1="110" x2="564" y2="110" stroke="#374151" strokeWidth="2" />
     <polygon points="36,110 46,104 46,116" fill="#374151" />
+    <polygon points="564,110 554,104 554,116" fill="#374151" />
+    <text x="579" y="115" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     {[0, 1, 2, 3, 4, 5, 6, 7].map((val) => {
       const px = 100 + val * 55;
       return (
@@ -724,15 +735,15 @@ const NL_Or_SameLT = () => (
     })}
 
     {/* x < 3 */}
-    <line x1="44" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+    <line x1="46" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="265" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-    <polygon points="36,72 44,66 44,78" fill="#ef4444" />
+    <polygon points="36,72 46,66 46,78" fill="#ef4444" />
     <line x1="265" y1="77" x2="265" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x < 6 */}
-    <line x1="44" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+    <line x1="46" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="430" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
-    <polygon points="36,45 44,39 44,51" fill="#3b82f6" />
+    <polygon points="36,45 46,39 46,51" fill="#3b82f6" />
     <line x1="430" y1="50" x2="430" y2="110" stroke="#3b82f6" strokeWidth="4" />
 
     {/* OR result = broader one */}
@@ -745,6 +756,7 @@ const NL_Combined_Ex = () => (
     <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
     <polygon points="36,140 46,134 46,146" fill="#374151" />
     <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
     {[-5,-4,-3,-2,-1,0,1,2,3,4,5].map((val) => {
       const px = 100 + (val+5) * 40;
@@ -760,15 +772,15 @@ const NL_Combined_Ex = () => (
       <rect x="180" y="44" width="160" height="68" fill="#f59e0b" opacity="0.45" rx="6" />
       
       {/* x >= -3 */}
-      <line x1="185" y1="95" x2="556" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="185" y1="95" x2="554" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="180" cy="95" r="5" fill="#ef4444" stroke="#ef4444" strokeWidth="2" />
-      <polygon points="564,95 556,89 556,101" fill="#ef4444" />
+      <polygon points="564,95 554,89 554,101" fill="#ef4444" />
       <line x1="180" y1="100" x2="180" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x <= 3 */}
-      <line x1="44" y1="60" x2="335" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="46" y1="60" x2="335" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="340" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
-      <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
+      <polygon points="36,60 46,54 46,66" fill="#3b82f6" />
       <line x1="340" y1="65" x2="340" y2="140" stroke="#3b82f6" strokeWidth="4" />
     </g>
   </svg>
@@ -779,6 +791,7 @@ const NL_Max_3_5 = () => (
     <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
     <polygon points="36,140 46,134 46,146" fill="#374151" />
     <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
     {[0,1,2,3,4,5].map((val) => {
       const px = 100 + val * 80;
@@ -792,10 +805,10 @@ const NL_Max_3_5 = () => (
 
     <g>
       {/* x <= 3.5 */}
-      <line x1="44" y1="60" x2="375" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="46" y1="60" x2="375" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="380" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
       <text x="380" y="45" fontSize="14" fill="#3b82f6" fontWeight="bold" textAnchor="middle">3.5</text>
-      <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
+      <polygon points="36,60 46,54 46,66" fill="#3b82f6" />
       <line x1="380" y1="65" x2="380" y2="140" stroke="#3b82f6" strokeWidth="4" />
       
       {/* Arrow pointing to Max integer = 3 */}
@@ -816,6 +829,7 @@ const NL_Min_2 = () => (
     <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
     <polygon points="36,140 46,134 46,146" fill="#374151" />
     <polygon points="564,140 554,134 554,146" fill="#374151" />
+    <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
     {[0,1,2,3,4,5].map((val) => {
       const px = 100 + val * 80;
@@ -829,9 +843,9 @@ const NL_Min_2 = () => (
 
     <g>
       {/* x > 2 */}
-      <line x1="265" y1="60" x2="556" y2="60" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="265" y1="60" x2="554" y2="60" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="260" cy="60" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
-      <polygon points="564,60 556,54 556,66" fill="#ef4444" />
+      <polygon points="564,60 554,54 554,66" fill="#ef4444" />
       <line x1="260" y1="65" x2="260" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* Arrow pointing to Min integer = 3 */}
@@ -855,6 +869,7 @@ const NL_Quad_Parabola = () => (
     <rect x="350" y="20" width="200" height="120" fill="#3b82f6" opacity="0.1" />
 
     <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
+    <polygon points="36,140 46,134 46,146" fill="#374151" />
     <polygon points="564,140 554,134 554,146" fill="#374151" />
     <text x="579" y="145" fontSize="16" fill="#374151" fontWeight="500" fontStyle="italic">x</text>
     
