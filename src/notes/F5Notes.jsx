@@ -415,26 +415,29 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                 <line x1="50" y1="50" x2="150" y2="50" stroke="#3b82f6" strokeWidth="2" />
                 <line x1="350" y1="50" x2="450" y2="50" stroke="#3b82f6" strokeWidth="2" />
                 {/* Min/Max caps */}
-                <line x1="50" y1="30" x2="50" y2="70" stroke="#3b82f6" strokeWidth="2" />
-                <line x1="450" y1="30" x2="450" y2="70" stroke="#3b82f6" strokeWidth="2" />
+                <line x1="50" y1="30" x2="50" y2="70" stroke="#b45309" strokeWidth="2" />
+                <line x1="450" y1="30" x2="450" y2="70" stroke="#b45309" strokeWidth="2" />
                 {/* Box */}
                 <rect x="150" y="20" width="200" height="60" fill="white" stroke="#3b82f6" strokeWidth="2" />
+                {/* Q1 / Q3 Box Edges */}
+                <line x1="150" y1="20" x2="150" y2="80" stroke="#16a34a" strokeWidth="2" />
+                <line x1="350" y1="20" x2="350" y2="80" stroke="#16a34a" strokeWidth="2" />
                 {/* Median */}
                 <line x1="230" y1="20" x2="230" y2="80" stroke="#ef4444" strokeWidth="2" />
                 
                 {/* Labels */}
-                <text x="50" y="95" textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="bold">最小值</text>
-                <text x="150" y="95" textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="bold">Q₁</text>
+                <text x="50" y="95" textAnchor="middle" fontSize="14" fill="#b45309" fontWeight="bold">最小值</text>
+                <text x="150" y="95" textAnchor="middle" fontSize="14" fill="#16a34a" fontWeight="bold">Q₁</text>
                 <text x="230" y="105" textAnchor="middle" fontSize="14" fill="#ef4444" fontWeight="bold">中位數</text>
-                <text x="350" y="95" textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="bold">Q₃</text>
-                <text x="450" y="95" textAnchor="middle" fontSize="14" fill="#64748b" fontWeight="bold">最大值</text>
+                <text x="350" y="95" textAnchor="middle" fontSize="14" fill="#16a34a" fontWeight="bold">Q₃</text>
+                <text x="450" y="95" textAnchor="middle" fontSize="14" fill="#b45309" fontWeight="bold">最大值</text>
               </svg>
             </div>
 
             <ul className="text-sm text-slate-700 list-disc pl-5 mt-4 space-y-1">
               <li>中位數是長方框內中間的<span className="font-bold text-red-600">紅色直線</span></li>
-              <li>分佈域 = 最右邊條線 - 最左邊條線 (最大 - 最小)</li>
-              <li>四分位數間距 = 框框的右邊界 - 框框的左邊界 (<Latex inline math="Q_3 - Q_1" />)</li>
+              <li>分佈域 = <span className="font-bold text-amber-700">最右邊條線</span> - <span className="font-bold text-amber-700">最左邊條線</span> (<span className="font-bold text-amber-700">最大 - 最小</span>)</li>
+              <li>四分位數間距 = <span className="font-bold text-green-600">框框的右邊界</span> - <span className="font-bold text-green-600">框框的左邊界</span> (<Latex inline math="Q_3 - Q_1" />)</li>
             </ul>
             <p className="text-sm text-slate-700 mt-3">框線圖<span className="font-bold text-red-600">未能顯示</span>平均數、眾數、標準差及方差。</p>
           </div>
