@@ -256,7 +256,7 @@ viewBox：400 × 100
             </div>
 
             <div className="flex justify-center items-center mt-10">
-               <span className="font-bold mr-4 whitespace-nowrap">畫圖找總結：</span>
+               <span className="font-bold mr-4">結合：</span>
               <div className="bg-slate-50 p-3 rounded w-full max-w-[920px] text-center">
                  {/* 📐 待繪製：[x <= 3 及 x >= -3 的數線] — 繪製完成 */}
                 <div className="bg-white rounded-lg p-3 text-center text-slate-400 text-sm min-h-[96px]">
