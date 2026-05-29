@@ -36,13 +36,12 @@ export const CompoundInequalitiesNotes = ({ activeSub }) => {
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <Latex math="\geq" /> / <Latex math="\leq" /> (包括等號)：
-                <span className="font-bold text-teal-700">● 實心圓形黑點</span>
-                <span className="bg-yellow-200 px-1 rounded">(有 `=` = 填滿)</span>
+                <span className="font-bold text-teal-700">● 實心圓圈</span>
               </div>
               
               <div className="flex items-center space-x-4">
                 <Latex math=">" /> / <Latex math="<" /> (不包括)：
-                <span className="font-bold text-rose-500">○ 空心圓形點</span>
+                <span className="font-bold text-rose-500">○ 空心圓圈</span>
               </div>
             </div>
             
@@ -110,24 +109,24 @@ viewBox：400 × 100
                 </p>
               </div>
 
-              <div className="bg-white p-3 rounded shadow-sm border border-slate-100 mt-3">
-                <p className="font-bold text-slate-700 text-sm mb-2 text-center">箭嘴同方向的情況：取較嚴格（即範圍較小）者</p>
-                <div className="space-y-4">
-                  <div className="bg-slate-50 p-2 rounded text-center border border-slate-100">
-                    <div><Latex math="x > 2" /> <span className="text-green-700 font-bold mx-1">及</span> <Latex math="x > 5" /></div>
-                    <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
-                      <NL_And_SameGT />
-                    </div>
-                    <div className="font-bold mt-2 text-slate-800">答案：<Latex math="x > 5" /></div>
-                  </div>
-                  <div className="bg-slate-50 p-2 rounded text-center border border-slate-100">
-                    <div><Latex math="x < 3" /> <span className="text-green-700 font-bold mx-1">及</span> <Latex math="x < 6" /></div>
-                    <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
-                      <NL_And_SameLT />
-                    </div>
-                    <div className="font-bold mt-2 text-slate-800">答案：<Latex math="x < 3" /></div>
-                  </div>
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-100 mt-3 mb-3">
+                <Latex math="x > 2" /> <span className="text-green-700 font-bold mx-2">及</span> <Latex math="x > 5" />
+                <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
+                  <NL_And_SameGT />
                 </div>
+                <p className="mt-2 text-center font-bold text-slate-800">
+                  答案：<Latex math="x > 5" />
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-100">
+                <Latex math="x < 3" /> <span className="text-green-700 font-bold mx-2">及</span> <Latex math="x < 6" />
+                <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
+                  <NL_And_SameLT />
+                </div>
+                <p className="mt-2 text-center font-bold text-slate-800">
+                  答案：<Latex math="x < 3" />
+                </p>
               </div>
 
             </div>
@@ -161,24 +160,24 @@ viewBox：400 × 100
                 </p>
               </div>
 
-              <div className="bg-white p-3 rounded shadow-sm border border-slate-100 mt-3">
-                <p className="font-bold text-slate-700 text-sm mb-2 text-center">箭嘴同方向的情況：取較寬鬆（即涵蓋較廣）者</p>
-                <div className="space-y-4">
-                  <div className="bg-slate-50 p-2 rounded text-center border border-slate-100">
-                    <div><Latex math="x > 2" /> <span className="text-amber-700 font-bold mx-1">或</span> <Latex math="x > 5" /></div>
-                    <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
-                      <NL_Or_SameGT />
-                    </div>
-                    <div className="font-bold mt-2 text-slate-800">答案：<Latex math="x > 2" /></div>
-                  </div>
-                  <div className="bg-slate-50 p-2 rounded text-center border border-slate-100">
-                    <div><Latex math="x < 3" /> <span className="text-amber-700 font-bold mx-1">或</span> <Latex math="x < 6" /></div>
-                    <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
-                      <NL_Or_SameLT />
-                    </div>
-                    <div className="font-bold mt-2 text-slate-800">答案：<Latex math="x < 6" /></div>
-                  </div>
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-100 mt-3 mb-3">
+                <Latex math="x > 2" /> <span className="text-amber-700 font-bold mx-2">或</span> <Latex math="x > 5" />
+                <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
+                  <NL_Or_SameGT />
                 </div>
+                <p className="mt-2 text-center font-bold text-slate-800">
+                  答案：<Latex math="x > 2" />
+                </p>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm border border-slate-100">
+                <Latex math="x < 3" /> <span className="text-amber-700 font-bold mx-2">或</span> <Latex math="x < 6" />
+                <div className="mt-2 bg-white rounded-lg p-2 text-center text-slate-400 text-sm">
+                  <NL_Or_SameLT />
+                </div>
+                <p className="mt-2 text-center font-bold text-slate-800">
+                  答案：<Latex math="x < 6" />
+                </p>
               </div>
 
             </div>
@@ -257,17 +256,17 @@ viewBox：400 × 100
             </div>
 
             <div className="flex justify-center items-center mt-10">
-               <span className="font-bold mr-4">結合：</span>
-               <div className="bg-slate-50 p-2 rounded w-64 text-center">
+               <span className="font-bold mr-4 whitespace-nowrap">畫圖找總結：</span>
+              <div className="bg-slate-50 p-3 rounded w-full max-w-[920px] text-center">
                  {/* 📐 待繪製：[x <= 3 及 x >= -3 的數線] — 繪製完成 */}
-                 <div className="bg-white rounded-lg p-2 text-center text-slate-400 text-sm min-h-[60px]">
+                <div className="bg-white rounded-lg p-3 text-center text-slate-400 text-sm min-h-[96px]">
                     <NL_Combined_Ex />
                  </div>
                </div>
             </div>
 
             <div className="bg-green-100 text-green-800 p-3 rounded mt-4 text-center font-bold text-lg">
-              <span className="mr-2">答案：</span> <Latex math="-3 \leq x \leq 3" />
+              <Latex math="\therefore\ -3 \leq x \leq 3" />
             </div>
 
           </div>
@@ -473,7 +472,7 @@ const NL_X_GE_3 = () => (
 
     <g>
       <rect x="300" y="79" width="264" height="32" fill="#f59e0b" opacity="0.18" rx="6" />
-      <line x1="305" y1="95" x2="564" y2="95" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="305" y1="95" x2="556" y2="95" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="300" cy="95" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
       <polygon points="564,95 556,89 556,101" fill="#3b82f6" />
       <line x1="300" y1="100" x2="300" y2="140" stroke="#3b82f6" strokeWidth="4" opacity="1" />
@@ -503,13 +502,13 @@ const NL_And_Overlap = () => (
       <rect x="210" y="44" width="165" height="68" fill="#f59e0b" opacity="0.45" rx="6" />
       
       {/* 左邊 x > 2 */}
-      <line x1="215" y1="95" x2="564" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="215" y1="95" x2="556" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="210" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
       <polygon points="564,95 556,89 556,101" fill="#ef4444" />
       <line x1="210" y1="100" x2="210" y2="140" stroke="#ef4444" strokeWidth="4" />
       
-      {/* 右邊 x < 5 */}
-      <line x1="36" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      {/* x < 5 */}
+      <line x1="44" y1="60" x2="370" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="375" cy="60" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
       <polygon points="36,60 44,54 44,66" fill="#3b82f6" />
       <line x1="375" y1="65" x2="375" y2="140" stroke="#3b82f6" strokeWidth="4" />
@@ -535,13 +534,13 @@ const NL_And_NoSol = () => (
 
     <g>
       {/* x < 3 */}
-      <line x1="36" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+      <line x1="44" y1="95" x2="225" y2="95" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
       <circle cx="230" cy="95" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
       <polygon points="36,95 44,89 44,101" fill="#ef4444" />
       <line x1="230" y1="100" x2="230" y2="140" stroke="#ef4444" strokeWidth="4" />
       
       {/* x >= 6 */}
-      <line x1="430" y1="60" x2="564" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
+      <line x1="430" y1="60" x2="556" y2="60" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
       <circle cx="425" cy="60" r="5" fill="#3b82f6" stroke="#3b82f6" strokeWidth="2" />
       <polygon points="564,60 556,54 556,66" fill="#3b82f6" />
       <line x1="425" y1="65" x2="425" y2="140" stroke="#3b82f6" strokeWidth="4" />
@@ -635,14 +634,16 @@ const NL_And_SameGT = () => (
     <line x1="215" y1="72" x2="564" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="210" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
     <polygon points="564,72 556,66 556,78" fill="#ef4444" />
+    <line x1="210" y1="77" x2="210" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x > 5 */}
     <line x1="380" y1="45" x2="564" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="375" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
     <polygon points="564,45 556,39 556,51" fill="#3b82f6" />
+    <line x1="375" y1="50" x2="375" y2="110" stroke="#3b82f6" strokeWidth="4" />
 
-    {/* AND result = stricter one */}
-    <rect x="375" y="24" width="189" height="32" fill="#f59e0b" opacity="0.25" rx="6" />
+    {/* AND result = stricter one (cover both red/blue lines) */}
+    <rect x="375" y="40" width="189" height="40" fill="#f59e0b" opacity="0.25" rx="6" />
   </svg>
 );
 
@@ -664,14 +665,16 @@ const NL_And_SameLT = () => (
     <line x1="36" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="265" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
     <polygon points="36,72 44,66 44,78" fill="#ef4444" />
+    <line x1="265" y1="77" x2="265" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x < 6 */}
     <line x1="36" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="430" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
     <polygon points="36,45 44,39 44,51" fill="#3b82f6" />
+    <line x1="430" y1="50" x2="430" y2="110" stroke="#3b82f6" strokeWidth="4" />
 
-    {/* AND result = stricter one */}
-    <rect x="36" y="56" width="229" height="32" fill="#f59e0b" opacity="0.25" rx="6" />
+    {/* AND result = stricter one (cover both red/blue lines) */}
+    <rect x="36" y="40" width="229" height="40" fill="#f59e0b" opacity="0.25" rx="6" />
   </svg>
 );
 
@@ -693,11 +696,13 @@ const NL_Or_SameGT = () => (
     <line x1="215" y1="72" x2="564" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="210" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
     <polygon points="564,72 556,66 556,78" fill="#ef4444" />
+    <line x1="210" y1="77" x2="210" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x > 5 */}
     <line x1="380" y1="45" x2="564" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="375" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
     <polygon points="564,45 556,39 556,51" fill="#3b82f6" />
+    <line x1="375" y1="50" x2="375" y2="110" stroke="#3b82f6" strokeWidth="4" />
 
     {/* OR result = broader one */}
     <rect x="210" y="56" width="354" height="32" fill="#f59e0b" opacity="0.25" rx="6" />
@@ -722,11 +727,13 @@ const NL_Or_SameLT = () => (
     <line x1="36" y1="72" x2="260" y2="72" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
     <circle cx="265" cy="72" r="5" fill="white" stroke="#ef4444" strokeWidth="2" />
     <polygon points="36,72 44,66 44,78" fill="#ef4444" />
+    <line x1="265" y1="77" x2="265" y2="110" stroke="#ef4444" strokeWidth="4" />
 
     {/* x < 6 */}
     <line x1="36" y1="45" x2="425" y2="45" stroke="#3b82f6" strokeWidth="4" strokeLinecap="round" />
     <circle cx="430" cy="45" r="5" fill="white" stroke="#3b82f6" strokeWidth="2" />
     <polygon points="36,45 44,39 44,51" fill="#3b82f6" />
+    <line x1="430" y1="50" x2="430" y2="110" stroke="#3b82f6" strokeWidth="4" />
 
     {/* OR result = broader one */}
     <rect x="36" y="56" width="394" height="32" fill="#f59e0b" opacity="0.25" rx="6" />
@@ -734,7 +741,7 @@ const NL_Or_SameLT = () => (
 );
 
 const NL_Combined_Ex = () => (
-  <svg width="100%" height="180" viewBox="0 0 600 180" className="mt-4 max-w-[600px] mx-auto">
+  <svg viewBox="0 0 600 180" className="w-full h-auto mt-2 max-w-[900px] mx-auto">
     <line x1="36" y1="140" x2="564" y2="140" stroke="#374151" strokeWidth="2" />
     <polygon points="36,140 46,134 46,146" fill="#374151" />
     <polygon points="564,140 554,134 554,146" fill="#374151" />

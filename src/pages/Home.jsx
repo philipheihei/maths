@@ -265,7 +265,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['百分數', '折扣', '盈利虧蝕', '複利息'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'probability-quiz',
@@ -299,7 +299,7 @@ const Home = () => {
       ],
       category: '初中',
       topics: ['提取公因式', '併項法', '二次多項式', '十字相乘法'],
-      inDevelopment: true
+      inDevelopment: false
     },
     {
       id: 'trig-quiz',

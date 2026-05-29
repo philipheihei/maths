@@ -838,13 +838,16 @@ export const LogFunctionNotes = ({ activeSub }) => {
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">（初中只限整數次方 ／ 高中包括分數次方）</h3>
             <div className="space-y-4">
-              <div className="bg-white p-3 rounded-lg flex items-center gap-6">
-                <Latex math="\dfrac{\sqrt[3]{x^4}}{\sqrt{x}}" />
-                <div className="flex flex-col gap-1 items-center">
+              <div className="bg-white p-4 rounded-lg flex items-center gap-6 w-fit mx-auto md:mx-0 shadow-sm border border-slate-100">
+                <div className="flex flex-col gap-3">
+                  <Latex math="\sqrt[3]{x^4}" />
+                  <Latex math="\sqrt{x}" />
+                </div>
+                <div className="flex flex-col gap-3 items-center">
                   <span className="font-bold text-slate-400">→</span>
                   <span className="font-bold text-slate-400">→</span>
                 </div>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-3">
                   <Latex math="x^{\frac{4}{3}}" />
                   <Latex math="x^{\frac{1}{2}}" />
                 </div>
