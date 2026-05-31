@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+svg { border: 1px solid #ccc; background: white; margin: 10px; }
+.grid-line { stroke: #e2e8f0; stroke-width: 1; }
+.axis-line { stroke: #10b981; stroke-width: 2; }
+.bar { fill: #fcd34d; stroke: #000; stroke-width: 1; }
+.point { fill: none; stroke: currentColor; stroke-width: 2; }
+.line { fill: none; stroke: #000; stroke-width: 2; }
+.curve { fill: none; stroke: #f97316; stroke-width: 2; }
+text { font-family: sans-serif; font-size: 12px; fill: #1e293b; text-anchor: middle; }
+.y-label { text-anchor: end; dominant-baseline: middle; }
+</style>
+</head>
+<body>
+
+<h3>Histogram</h3>
+<svg width="400" height="300" viewBox="0 0 400 300">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+    </pattern>
+    <pattern id="grid-major" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="url(#grid)" />
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#grid-major)" />
+
+  <!-- Y axis grid lines -->
+  <line x1="40" y1="250" x2="380" y2="250" class="axis-line" />
+  <line x1="60" y1="40" x2="60" y2="260" class="axis-line" />
+  
+  <!-- Discontinuity mark on X-axis -->
+  <polyline points="45,250 50,240 55,260 60,250" fill="none" stroke="#10b981" stroke-width="2" />
+  
+  <!-- Y labels -->
+  <!-- Let 10 units = 25px, so y=250 is 0, y=50 is 8. 200px / 8 = 25px per unit -->
+  <text x="50" y="250" class="y-label">0</text>
+  <text x="50" y="200" class="y-label">2</text>
+  <text x="50" y="150" class="y-label">4</text>
+  <text x="50" y="100" class="y-label">6</text>
+  <text x="50" y="50" class="y-label">8</text>
+
+  <!-- X labels: 39.5, 49.5... start at x=80, gap=50 -->
+  <g transform="translate(0, 265)">
+    <text x="80">39.5</text>
+    <text x="130">49.5</text>
+    <text x="180">59.5</text>
+    <text x="230">69.5</text>
+    <text x="280">79.5</text>
+    <text x="330">89.5</text>
+  </g>
+
+  <!-- Bars -->
+  <!-- 39.5-49.5: 8 -> height 200, y=50 -->
+  <rect x="80" y="50" width="50" height="200" class="bar" />
+  <!-- 49.5-59.5: 5 -> height 125, y=125 -->
+  <rect x="130" y="125" width="50" height="125" class="bar" />
+  <!-- 59.5-69.5: 7 -> height 175, y=75 -->
+  <rect x="180" y="75" width="50" height="175" class="bar" />
+  <!-- 69.5-79.5: 3 -> height 75, y=175 -->
+  <rect x="230" y="175" width="50" height="75" class="bar" />
+  <!-- 79.5-89.5: 2 -> height 50, y=200 -->
+  <rect x="280" y="200" width="50" height="50" class="bar" />
+
+  <!-- Y axis title -->
+  <text x="20" y="150" style="writing-mode: tb; letter-spacing: 5px;">頻數</text>
+  <!-- X axis title -->
+  <text x="205" y="285">通話時間 (秒)</text>
+</svg>
+
+</body>
+</html>

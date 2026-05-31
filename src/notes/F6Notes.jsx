@@ -385,6 +385,7 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
                 <th className="p-3 border-b border-slate-300">變換種類</th>
                 <th className="p-3 border-b border-slate-300">以代數方法表示 (<Latex math="k > 0" inline />)</th>
                 <th className="p-3 border-b border-slate-300">以幾何方法表示</th>
+                <th className="p-3 border-b border-slate-300">圖像示例</th>
               </tr>
             </thead>
             <tbody className="text-sm">
@@ -392,19 +393,95 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
                 <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200" rowSpan="2">垂直平移</td>
                 <td className="p-3 border-r border-slate-200"><Latex math="y = f(x) + k" inline /></td>
                 <td className="p-3 text-left pl-6">向<span className="font-bold text-blue-700 mx-1">上</span>平移 <Latex math="k" inline /> 單位</td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 100 L 180 100" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 50 140 L 50 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,96 180,100 176,104" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="46,14 50,10 54,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="112" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="38" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+                    
+                    <path d="M 10,110 C 40,0 70,110 110,50 C 130,20 150,20 180,110" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="150" y="125" fontSize="11" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 10,80 C 40,-30 70,80 110,20 C 130,-10 150,-10 180,80" stroke="#3b82f6" strokeWidth="2" fill="none" />
+                    <text x="125" y="65" fontSize="11" fill="#3b82f6" fontFamily="serif" fontStyle="italic">y=f(x)+k</text>
+                    <path d="M 110,45 L 110,25" stroke="#1d4ed8" strokeWidth="1.5" />
+                    <polyline points="107,29 110,25 113,29" fill="none" stroke="#1d4ed8" strokeWidth="1.5" />
+                    <text x="115" y="40" fontSize="12" fill="#1d4ed8" fontFamily="sans-serif">+k</text>
+                  </svg>
+                </td>
               </tr>
               <tr className="border-b border-slate-200">
                 <td className="p-3 border-r border-slate-200"><Latex math="y = f(x) - k" inline /></td>
                 <td className="p-3 text-left pl-6">向<span className="font-bold text-blue-700 mx-1">下</span>平移 <Latex math="k" inline /> 單位</td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 100 L 180 100" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 50 140 L 50 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,96 180,100 176,104" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="46,14 50,10 54,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="112" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="38" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+
+                    <path d="M 10,110 C 40,0 70,110 110,50 C 130,20 150,20 180,110" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="145" y="95" fontSize="11" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 10,140 C 40,30 70,140 110,80 C 130,50 150,50 180,140" stroke="#3b82f6" strokeWidth="2" fill="none" />
+                    <text x="125" y="150" fontSize="11" fill="#3b82f6" fontFamily="serif" fontStyle="italic">y=f(x)-k</text>
+                    <path d="M 110,55 L 110,75" stroke="#1d4ed8" strokeWidth="1.5" />
+                    <polyline points="107,71 110,75 113,71" fill="none" stroke="#1d4ed8" strokeWidth="1.5" />
+                    <text x="115" y="70" fontSize="12" fill="#1d4ed8" fontFamily="sans-serif">-k</text>
+                  </svg>
+                </td>
               </tr>
               <tr className="border-b border-slate-200">
                 <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200" rowSpan="2">水平平移</td>
                 <td className="p-3 border-r border-slate-200"><Latex math="y = f(x + k)" inline /></td>
                 <td className="p-3 text-left pl-6">向<span className="font-bold text-green-700 mx-1">左</span>平移 <Latex math="k" inline /> 單位</td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 100 L 180 100" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 50 140 L 50 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,96 180,100 176,104" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="46,14 50,10 54,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="112" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="38" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+
+                    <path d="M 10,110 C 40,0 70,110 110,50 C 130,20 150,20 180,110" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="145" y="125" fontSize="11" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+                    
+                    <path d="M -20,110 C 10,0 40,110 80,50 C 100,20 120,20 150,110" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="5" y="45" fontSize="11" fill="#16a34a" fontFamily="serif" fontStyle="italic">y=f(x+k)</text>
+                    <path d="M 98,35 L 72,35" stroke="#15803d" strokeWidth="1.5" />
+                    <polyline points="76,31 72,35 76,39" fill="none" stroke="#15803d" strokeWidth="1.5" />
+                    <text x="80" y="27" fontSize="12" fill="#15803d" fontFamily="sans-serif">-k</text>
+                  </svg>
+                </td>
               </tr>
               <tr className="border-b border-slate-200">
                 <td className="p-3 border-r border-slate-200"><Latex math="y = f(x - k)" inline /></td>
                 <td className="p-3 text-left pl-6">向<span className="font-bold text-green-700 mx-1">右</span>平移 <Latex math="k" inline /> 單位</td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 100 L 180 100" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 50 140 L 50 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,96 180,100 176,104" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="46,14 50,10 54,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="112" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="38" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+
+                    <path d="M 10,110 C 40,0 70,110 110,50 C 130,20 150,20 180,110" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="110" y="125" fontSize="11" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 40,110 C 70,0 100,110 140,50 C 160,20 180,20 210,110" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="155" y="65" fontSize="11" fill="#16a34a" fontFamily="serif" fontStyle="italic">y=f(x-k)</text>
+                    <path d="M 122,35 L 148,35" stroke="#15803d" strokeWidth="1.5" />
+                    <polyline points="144,31 148,35 144,39" fill="none" stroke="#15803d" strokeWidth="1.5" />
+                    <text x="127" y="27" fontSize="12" fill="#15803d" fontFamily="sans-serif">+k</text>
+                  </svg>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -416,21 +493,56 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
           <table className="w-full text-center border-collapse">
             <thead>
               <tr className="bg-slate-100 text-slate-700">
-                <th className="p-3 border-b border-slate-300 w-1/3">變換種類</th>
-                <th className="p-3 border-b border-slate-300 w-1/3">以代數方法表示</th>
-                <th className="p-3 border-b border-slate-300 w-1/3">以幾何方法表示</th>
+                <th className="p-3 border-b border-slate-300">變換種類</th>
+                <th className="p-3 border-b border-slate-300">以代數方法表示</th>
+                <th className="p-3 border-b border-slate-300">以幾何方法表示</th>
+                <th className="p-3 border-b border-slate-300">圖像示例</th>
               </tr>
             </thead>
             <tbody className="text-sm">
               <tr className="border-b border-slate-200">
                 <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200">沿 x 軸</td>
                 <td className="p-3 border-r border-slate-200"><Latex math="y = -f(x)" inline /></td>
-                <td className="p-3">沿 x 軸反射</td>
+                <td className="p-3">沿 <Latex math="x" inline /> 軸反射</td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 75 L 180 75" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 100 140 L 100 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,71 180,75 176,79" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="96,14 100,10 104,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="87" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="88" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+                    <text x="92" y="86" fontSize="10" fill="#64748b" fontFamily="sans-serif">0</text>
+                    
+                    <path d="M 20,130 C 50,20 90,20 100,75 C 110,130 150,130 180,20" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="145" y="45" fontSize="11" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 20,20 C 50,130 90,130 100,75 C 110,20 150,20 180,130" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="145" y="145" fontSize="11" fill="#16a34a" fontFamily="serif" fontStyle="italic">y=-f(x)</text>
+                  </svg>
+                </td>
               </tr>
               <tr className="border-b border-slate-200">
                 <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200">沿 y 軸</td>
                 <td className="p-3 border-r border-slate-200"><Latex math="y = f(-x)" inline /></td>
-                <td className="p-3">沿 y 軸反射</td>
+                <td className="p-3">沿 <Latex math="y" inline /> 軸反射</td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 75 L 180 75" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 100 140 L 100 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,71 180,75 176,79" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="96,14 100,10 104,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="87" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="88" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+                    <text x="92" y="86" fontSize="10" fill="#64748b" fontFamily="sans-serif">0</text>
+                    
+                    <path d="M 20,130 C 50,20 90,20 100,75 C 110,130 150,130 180,20" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="145" y="45" fontSize="11" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 180,130 C 150,20 110,20 100,75 C 90,130 50,130 20,20" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="25" y="145" fontSize="11" fill="#16a34a" fontFamily="serif" fontStyle="italic">y=f(-x)</text>
+                  </svg>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -448,6 +560,7 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
                 <th className="p-3 border-b border-slate-300">變換種類</th>
                 <th className="p-3 border-b border-slate-300">以代數方法表示 (<Latex math="k > 1" inline />)</th>
                 <th className="p-3 border-b border-slate-300">以幾何方法表示</th>
+                <th className="p-3 border-b border-slate-300">圖像示例</th>
               </tr>
             </thead>
             <tbody className="text-sm">
@@ -455,19 +568,93 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
                 <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200" rowSpan="2">垂直伸展 / 收縮</td>
                 <td className="p-3 border-r border-slate-200"><Latex math="y = kf(x)" inline /></td>
                 <td className="p-3 text-left pl-6">垂直伸展至原來的 <Latex math="k" inline /> 倍</td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 75 L 180 75" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 20 140 L 20 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,71 180,75 176,79" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="16,14 20,10 24,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="87" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="8" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+                    <text x="8" y="86" fontSize="10" fill="#64748b" fontFamily="sans-serif">0</text>
+                    
+                    <path d="M 20,75 Q 60,25 100,75 T 180,75" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="145" y="95" fontSize="10" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 20,75 Q 60,-25 100,75 T 180,75" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="145" y="145" fontSize="11" fill="#16a34a" fontFamily="serif" fontStyle="italic">y=kf(x)</text>
+                  </svg>
+                </td>
               </tr>
               <tr className="border-b border-slate-200">
                 <td className="p-3 border-r border-slate-200"><Latex math="y = \frac{1}{k}f(x)" inline /></td>
-                <td className="p-3 text-left pl-6">垂直收縮至原來的 <Latex math="\frac{1}{k}" inline /> </td>
+                <td className="p-3 text-left pl-6">垂直收縮至原來的 <Latex math="\frac{1}{k}" inline /></td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 75 L 180 75" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 20 140 L 20 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,71 180,75 176,79" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="16,14 20,10 24,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="87" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="8" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+                    <text x="8" y="86" fontSize="10" fill="#64748b" fontFamily="sans-serif">0</text>
+                    
+                    <path d="M 20,75 Q 60,-25 100,75 T 180,75" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="145" y="145" fontSize="10" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 20,75 Q 60,25 100,75 T 180,75" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="135" y="95" fontSize="11" fill="#16a34a" fontFamily="serif" fontStyle="italic">y=f(x)/k</text>
+                  </svg>
+                </td>
               </tr>
               <tr className="border-b border-slate-200">
                 <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200" rowSpan="2">水平伸展 / 收縮</td>
                 <td className="p-3 border-r border-slate-200"><Latex math="y = f(kx)" inline /></td>
-                <td className="p-3 text-left pl-6">水平收縮至原來的 <Latex math="\frac{1}{k}" inline /> </td>
+                <td className="p-3 text-left pl-6">水平收縮至原來的 <Latex math="\frac{1}{k}" inline /></td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 75 L 180 75" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 20 140 L 20 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,71 180,75 176,79" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="16,14 20,10 24,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="87" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="8" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+                    <text x="8" y="86" fontSize="10" fill="#64748b" fontFamily="sans-serif">0</text>
+                    
+                    <path d="M 20,75 Q 60,15 100,75 T 180,75" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+                    <text x="90" y="40" fontSize="10" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 20,75 Q 30,15 40,75 T 60,75 Q 70,15 80,75 T 100,75 Q 110,15 120,75 T 140,75 Q 150,15 160,75 T 180,75 Q 190,15 200,75" stroke="#16a34a" strokeWidth="2" fill="none" clipPath="url(#clip)" />
+                    <text x="135" y="40" fontSize="11" fill="#16a34a" fontFamily="serif" fontStyle="italic">y=f(kx)</text>
+                    <defs>
+                      <clipPath id="clip"><rect x="0" y="0" width="180" height="150" /></clipPath>
+                    </defs>
+                  </svg>
+                </td>
               </tr>
               <tr className="border-b border-slate-200">
                 <td className="p-3 border-r border-slate-200"><Latex math="y = f\left(\frac{1}{k}x\right)" inline /></td>
                 <td className="p-3 text-left pl-6">水平伸展至原來的 <Latex math="k" inline /> 倍</td>
+                <td className="p-3 border-l border-slate-200">
+                  <svg viewBox="0 0 200 150" className="w-[230px] mx-auto overflow-visible">
+                    <path d="M 20 75 L 180 75" stroke="#64748b" strokeWidth="1" />
+                    <path d="M 20 140 L 20 10" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="176,71 180,75 176,79" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <polyline points="16,14 20,10 24,14" fill="none" stroke="#64748b" strokeWidth="1" />
+                    <text x="180" y="87" fontSize="10" fill="#64748b" fontFamily="sans-serif">x</text>
+                    <text x="8" y="15" fontSize="10" fill="#64748b" fontFamily="sans-serif">y</text>
+                    <text x="8" y="86" fontSize="10" fill="#64748b" fontFamily="sans-serif">0</text>
+                    
+                    <path d="M 20,75 Q 40,15 60,75 T 100,75 Q 120,15 140,75 T 180,75 Q 200,15 220,75" stroke="#9ca3af" strokeWidth="1.5" strokeDasharray="4 4" fill="none" clipPath="url(#clip2)" />
+                    <text x="50" y="125" fontSize="10" fill="#9ca3af" fontFamily="serif" fontStyle="italic">y=f(x)</text>
+
+                    <path d="M 20,75 Q 60,15 100,75 T 180,75" stroke="#16a34a" strokeWidth="2" fill="none" />
+                    <text x="100" y="25" fontSize="11" fill="#16a34a" fontFamily="serif" fontStyle="italic">y=f(x/k)</text>
+                    <defs>
+                      <clipPath id="clip2"><rect x="0" y="0" width="180" height="150" /></clipPath>
+                    </defs>
+                  </svg>
+                </td>
               </tr>
             </tbody>
           </table>

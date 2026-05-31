@@ -970,27 +970,27 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 
                 {/* Arcs */}
-                <path d="M 43.4 43.4 A 80 80 0 0 1 156.6 43.4" fill="none" stroke="#22c55e" strokeWidth="2.5" />
-                <path d="M 156.6 156.6 A 80 80 0 0 1 43.4 156.6" fill="none" stroke="#f97316" strokeWidth="2.5" />
+                <path d="M 60 30.7 A 80 80 0 0 1 140 30.7" fill="none" stroke="#22c55e" strokeWidth="2.5" />
+                <path d="M 169.3 140.0 A 80 80 0 0 1 30.7 140.0" fill="none" stroke="#f97316" strokeWidth="2.5" />
                 
                 {/* Radii */}
-                <line x1="100" y1="100" x2="43.4" y2="43.4" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="156.6" y2="43.4" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="156.6" y2="156.6" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="43.4" y2="156.6" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="60" y2="30.7" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="30.7" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="169.3" y2="140.0" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="30.7" y2="140.0" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* Angles */}
-                <path d="M 85.9 85.9 A 20 20 0 0 1 114.1 85.9" fill="none" stroke="#22c55e" strokeWidth="1.5" />
-                <path d="M 114.1 114.1 A 20 20 0 0 1 85.9 114.1" fill="none" stroke="#f97316" strokeWidth="1.5" />
+                <path d="M 90.0 82.7 A 20 20 0 0 1 110.0 82.7" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                <path d="M 117.3 110.0 A 20 20 0 0 1 82.7 110.0" fill="none" stroke="#f97316" strokeWidth="1.5" />
                 
                 {/* Labels */}
                 <text x="100" y="76" fill="#22c55e" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
-                <text x="100" y="136" fill="#f97316" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
+                <text x="100" y="130" fill="#f97316" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
                 
-                <text x="35" y="35" fill="#475569" fontSize="13" textAnchor="end" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="165" y="35" fill="#475569" fontSize="13" textAnchor="start" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="165" y="165" fill="#475569" fontSize="13" textAnchor="start" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="35" y="165" fill="#475569" fontSize="13" textAnchor="end" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="50" y="25" fill="#475569" fontSize="13" textAnchor="end" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="150" y="25" fill="#475569" fontSize="13" textAnchor="start" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="175" y="150" fill="#475569" fontSize="13" textAnchor="start" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="25" y="150" fill="#475569" fontSize="13" textAnchor="end" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="85" y="104" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -998,19 +998,37 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
           <PropertyCard
             title="弧與圓周角成比例"
-            directFormula="\overset{\frown}{AB} : \overset{\frown}{BC} = \angle APB : \angle BPC"
+            directFormula="\overset{\frown}{AB} : \overset{\frown}{CD} = p : q"
+            formulaRemark="(弧與圓周角成比例)"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <path d="M 100 20 L 40 153" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 100 20 L 100 180" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 100 20 L 160 153" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 83.6 56.5 A 40 40 0 0 0 100 60" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 100 66 A 46 46 0 0 0 118.9 61.9" fill="none" stroke="#334155" strokeWidth="1" />
-                <text x="95" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="30" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="95" y="195" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="165" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                
+                {/* Arcs */}
+                <path d="M 30.7 140 A 80 80 0 0 0 86.1 178.8" fill="none" stroke="#22c55e" strokeWidth="2.5" />
+                <path d="M 140 169.3 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2.5" />
+                
+                {/* Lines for Angle E */}
+                <path d="M 72.6 24.8 L 30.7 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 72.6 24.8 L 86.1 178.8" fill="none" stroke="#334155" strokeWidth="1.5" />
+                
+                {/* Lines for Angle F */}
+                <path d="M 127.4 24.8 L 140 169.3" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 127.4 24.8 L 178.8 113.9" fill="none" stroke="#334155" strokeWidth="1.5" />
+                
+                {/* Angle arcs */}
+                <path d="M 64.1 48.3 A 25 25 0 0 0 74.8 49.7" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                <path d="M 130.0 54.7 A 30 30 0 0 0 142.4 50.8" fill="none" stroke="#f97316" strokeWidth="1.5" />
+                
+                <text x="69" y="65" fill="#22c55e" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>p</text>
+                <text x="136" y="66" fill="#f97316" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>q</text>
+                
+                <text x="73" y="15" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>E</text>
+                <text x="127" y="15" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>F</text>
+                <text x="21" y="145" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="80" y="195" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="145" y="185" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="185" y="115" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
               </svg>
             )}
           />
