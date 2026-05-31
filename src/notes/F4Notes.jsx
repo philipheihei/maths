@@ -267,6 +267,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                 {/* 軸 */}
                 <line x1="30" y1="60" x2="355" y2="60" stroke="#334155" strokeWidth="2" />
                 <polyline points="347,54 355,60 347,66" fill="none" stroke="#334155" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <text x="372" y="65" fontSize="16" fill="#334155" fontStyle="italic" fontWeight="bold" textAnchor="middle">x</text>
                 
                 {/* 刻度與數字 */}
                 {[ -4, -3, -2, -1, 0, 1, 2, 3, 4 ].map((num, i) => (
@@ -278,19 +279,18 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 
                 {/* 區域文字標籤 */}
                 <text x="112.5" y="113" fontSize="14" fill="#16a34a" fontWeight="bold" textAnchor="middle">負數區</text>
-                <text x="247.5" y="113" fontSize="14" fill="#ca8a04" fontWeight="bold" textAnchor="middle">非負數</text>
+                <text x="247.5" y="113" fontSize="14" fill="#ca8a04" fontWeight="bold" textAnchor="middle">正數區</text>
                 
                 {/* 虛線分隔 (在 0 的位置, 即 x=180) */}
                 <line x1="180" y1="35" x2="180" y2="115" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
 
                 {/* x > -3.5 範例箭頭 */}
-                <line x1="75" y1="39" x2="75" y2="60" stroke="#94a3b8" strokeWidth="2" strokeDasharray="4,4" /> {/* 連接 -3.5 的向下虛線 */}
+                <line x1="75" y1="39" x2="75" y2="60" stroke="#3b82f6" strokeWidth="2" /> {/* 連接 -3.5 的向下實線 */}
                 <circle cx="75" cy="35" r="4" fill="white" stroke="#3b82f6" strokeWidth="2" /> {/* -3.5 空心圓 */}
                 <line x1="79" y1="35" x2="330" y2="35" stroke="#3b82f6" strokeWidth="2" />
                 <polyline points="322,29 330,35 322,41" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 
                 <text x="75" y="22" fontSize="13" fill="#3b82f6" fontWeight="bold" textAnchor="middle">-3.5</text>
-                <text x="200" y="22" fontSize="13" fill="#3b82f6" fontWeight="bold" textAnchor="middle">x &gt; -3.5</text>
               </svg>
             </div>
           </div>

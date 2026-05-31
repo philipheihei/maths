@@ -319,7 +319,7 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
                   <Step math="64 - 162 = -162\cos\theta" explain="移項至 cosθ = ?" />
                   <Step math="-98 = -162\cos\theta" />
                   <Step math="\frac{-98}{-162} = \cos\theta" explain="cos⁻¹θ" />
-                  <p className="text-center font-bold mt-2"><Latex math="\theta = 52.8^\circ" /></p>
+                  <Step math="\theta = 52.8^\circ" />
                 </div>
               </div>
             </div>

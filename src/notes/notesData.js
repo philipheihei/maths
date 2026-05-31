@@ -499,11 +499,11 @@ export const NOTES_DATA = {
       topic: 'CH9 三角學',
       color: 'cyan',
       subtopics: [
-        { id: 'astc-quadrants', num: 1, title: '1. ASTC 象限圖', color: 'cyan' },
-        { id: 'find-ratios', num: 2, title: '2. 透過象限找三角比', color: 'blue' },
-        { id: 'trig-graphs', num: 3, title: '3. sin/cos/tan 的圖像', color: 'purple' },
-        { id: 'simplify-ratios', num: 4, title: '4. 簡化三角比', color: 'rose' },
-        { id: 'trig-equations', num: 5, title: '5. 三角方程', color: 'indigo' },
+        { id: 'astc-quadrants', num: 1, title: 'ASTC 象限圖', color: 'cyan' },
+        { id: 'find-ratios', num: 2, title: '透過象限找三角比', color: 'blue' },
+        { id: 'trig-graphs', num: 3, title: 'sinθ/cosθ/tanθ 的圖像', color: 'purple' },
+        { id: 'simplify-ratios', num: 4, title: '簡化三角比', color: 'rose' },
+        { id: 'trig-equations', num: 5, title: '三角方程', color: 'indigo' },
       ]
     },
     {

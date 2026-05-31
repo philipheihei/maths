@@ -49,35 +49,36 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
   };
 
   const AstcSvg = () => (
-    <svg viewBox="0 0 300 300" className="w-full max-w-xs mx-auto">
+    <svg viewBox="-15 0 370 320" className="w-full max-w-[360px] mx-auto">
       {/* Axes */}
-      <line x1="20" y1="150" x2="280" y2="150" stroke="#334155" strokeWidth="2" />
-      <line x1="150" y1="20" x2="150" y2="280" stroke="#334155" strokeWidth="2" />
-      <polyline points="275,145 280,150 275,155" fill="none" stroke="#334155" strokeWidth="2" />
-      <polyline points="145,25 150,20 155,25" fill="none" stroke="#334155" strokeWidth="2" />
+      <line x1="26" y1="160" x2="314" y2="160" stroke="#334155" strokeWidth="2" />
+      <line x1="170" y1="26" x2="170" y2="294" stroke="#334155" strokeWidth="2" />
+      <polyline points="309,155 314,160 309,165" fill="none" stroke="#334155" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <polyline points="165,31 170,26 175,31" fill="none" stroke="#334155" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 
       {/* Degrees */}
-      <text x="285" y="145" fontSize="12" fill="#334155">0°/360°</text>
-      <text x="160" y="20" fontSize="12" fill="#334155">90°</text>
-      <text x="10" y="145" fontSize="12" fill="#334155">180°</text>
-      <text x="135" y="295" fontSize="12" fill="#334155">270°</text>
+      <text x="300" y="151" fontSize="12" fill="#334155">0°</text>
+      <text x="293" y="176" fontSize="12" fill="#334155">360°</text>
+      <text x="170" y="18" fontSize="12" fill="#334155" textAnchor="middle">90°</text>
+      <text x="20" y="164" fontSize="12" fill="#334155" textAnchor="end">180°</text>
+      <text x="170" y="312" fontSize="12" fill="#334155" textAnchor="middle">270°</text>
 
       {/* Quadrants and ASTC */}
-      <text x="215" y="100" fontSize="36" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
-      <text x="215" y="120" fontSize="12" fill="#334155" textAnchor="middle">I (0°-90°)</text>
-      <text x="215" y="135" fontSize="12" fill="#334155" textAnchor="middle">全部 +ve</text>
+      <text x="240" y="108" fontSize="40" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+      <text x="240" y="130" fontSize="12" fill="#334155" textAnchor="middle">I (0°-90°)</text>
+      <text x="240" y="146" fontSize="12" fill="#334155" textAnchor="middle">全部 +ve</text>
 
-      <text x="85" y="100" fontSize="36" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
-      <text x="85" y="120" fontSize="12" fill="#334155" textAnchor="middle">II (90°-180°)</text>
-      <text x="85" y="135" fontSize="12" fill="#2563eb" textAnchor="middle">得 sin +ve</text>
+      <text x="100" y="108" fontSize="40" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+      <text x="100" y="130" fontSize="12" fill="#334155" textAnchor="middle">II (90°-180°)</text>
+      <text x="100" y="146" fontSize="12" fill="#2563eb" textAnchor="middle">得 sin +ve</text>
 
-      <text x="85" y="210" fontSize="36" fill="#16a34a" fontWeight="bold" textAnchor="middle">T</text>
-      <text x="85" y="230" fontSize="12" fill="#334155" textAnchor="middle">III (180°-270°)</text>
-      <text x="85" y="245" fontSize="12" fill="#2563eb" textAnchor="middle">得 tan +ve</text>
+      <text x="100" y="226" fontSize="40" fill="#16a34a" fontWeight="bold" textAnchor="middle">T</text>
+      <text x="100" y="248" fontSize="12" fill="#334155" textAnchor="middle">III (180°-270°)</text>
+      <text x="100" y="264" fontSize="12" fill="#2563eb" textAnchor="middle">得 tan +ve</text>
 
-      <text x="215" y="210" fontSize="36" fill="#16a34a" fontWeight="bold" textAnchor="middle">C</text>
-      <text x="215" y="230" fontSize="12" fill="#334155" textAnchor="middle">IV (270°-360°)</text>
-      <text x="215" y="245" fontSize="12" fill="#2563eb" textAnchor="middle">得 cos +ve</text>
+      <text x="240" y="226" fontSize="40" fill="#16a34a" fontWeight="bold" textAnchor="middle">C</text>
+      <text x="240" y="248" fontSize="12" fill="#334155" textAnchor="middle">IV (270°-360°)</text>
+      <text x="240" y="264" fontSize="12" fill="#2563eb" textAnchor="middle">得 cos +ve</text>
     </svg>
   );
 
@@ -107,34 +108,147 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
     </svg>
   );
 
+  const TanGraphSvg = () => {
+    const pts1 = [], pts2 = [], pts3 = [];
+    for (let x = 0; x <= 44.5; x += 0.5) {
+      const y = -15 * Math.tan((x / 180) * 2 * Math.PI);
+      pts1.push(`${x},${y}`);
+    }
+    for (let x = 45.5; x <= 134.5; x += 0.5) {
+      const y = -15 * Math.tan((x / 180) * 2 * Math.PI);
+      pts2.push(`${x},${y}`);
+    }
+    for (let x = 135.5; x <= 180; x += 0.5) {
+      const y = -15 * Math.tan((x / 180) * 2 * Math.PI);
+      pts3.push(`${x},${y}`);
+    }
+    return (
+      <svg viewBox="-20 -65 220 130" className="w-full h-auto min-w-[120px] max-w-[200px] mx-auto">
+        <defs>
+          <clipPath id="tan-clip">
+            <rect x="-20" y="-60" width="220" height="120" />
+          </clipPath>
+        </defs>
+        <line x1="-10" y1="0" x2="190" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
+        <line x1="0" y1="-55" x2="0" y2="55" stroke="#94a3b8" strokeWidth="1.5" />
+        <polyline points="186,-4 190,0 186,4" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+        <polyline points="-4,-51 0,-55 4,-51" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+        
+        <line x1="45" y1="-55" x2="45" y2="55" stroke="#f43f5e" strokeDasharray="4 4" strokeWidth="1" />
+        <line x1="135" y1="-55" x2="135" y2="55" stroke="#f43f5e" strokeDasharray="4 4" strokeWidth="1" />
+        
+        <text x="45" y="63" fontSize="10" fill="#64748b" textAnchor="middle">90°</text>
+        <text x="90" y="14" fontSize="10" fill="#64748b" textAnchor="middle">180°</text>
+        <text x="135" y="63" fontSize="10" fill="#64748b" textAnchor="middle">270°</text>
+        <text x="180" y="14" fontSize="10" fill="#64748b" textAnchor="middle">360°</text>
+        <text x="-5" y="14" fontSize="10" fill="#64748b" textAnchor="end">0</text>
+
+        <g clipPath="url(#tan-clip)">
+          <polyline points={pts1.join(' ')} fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinejoin="round" />
+          <polyline points={pts2.join(' ')} fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinejoin="round" />
+          <polyline points={pts3.join(' ')} fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinejoin="round" />
+        </g>
+      </svg>
+    );
+  };
+
+  const CosGraphSvg = () => {
+    const pts = [];
+    for (let x = 0; x <= 180; x += 5) {
+      const y = -30 * Math.cos((x / 180) * 2 * Math.PI);
+      pts.push(`${x},${y}`);
+    }
+    return (
+      <svg viewBox="-20 -65 220 130" className="w-full h-auto min-w-[120px] max-w-[200px] mx-auto">
+        <line x1="-10" y1="0" x2="190" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
+        <line x1="0" y1="-55" x2="0" y2="55" stroke="#94a3b8" strokeWidth="1.5" />
+        <polyline points="186,-4 190,0 186,4" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+        <polyline points="-4,-51 0,-55 4,-51" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+        
+        <line x1="-5" y1="-30" x2="180" y2="-30" stroke="#cbd5e1" strokeDasharray="3 3" />
+        <line x1="-5" y1="30" x2="180" y2="30" stroke="#cbd5e1" strokeDasharray="3 3" />
+        <text x="-8" y="-27" fontSize="10" fill="#64748b" textAnchor="end">1</text>
+        <text x="-8" y="33" fontSize="10" fill="#64748b" textAnchor="end">-1</text>
+        
+        <text x="45" y="14" fontSize="10" fill="#64748b" textAnchor="middle">90°</text>
+        <text x="135" y="14" fontSize="10" fill="#64748b" textAnchor="middle">270°</text>
+        <text x="180" y="-36" fontSize="10" fill="#64748b" textAnchor="middle">360°</text>
+        <text x="-5" y="14" fontSize="10" fill="#64748b" textAnchor="end">0</text>
+
+        <polyline points={pts.join(' ')} fill="none" stroke="#10b981" strokeWidth="2" strokeLinejoin="round" />
+        
+        <circle cx="0" cy="-30" r="3" fill="#ef4444" />
+        <circle cx="90" cy="30" r="3" fill="#ef4444" />
+        <circle cx="180" cy="-30" r="3" fill="#ef4444" />
+      </svg>
+    );
+  };
+
+  const SinGraphSvg = () => {
+    const pts = [];
+    for (let x = 0; x <= 180; x += 5) {
+      const y = -30 * Math.sin((x / 180) * 2 * Math.PI);
+      pts.push(`${x},${y}`);
+    }
+    return (
+      <svg viewBox="-20 -65 220 130" className="w-full h-auto min-w-[120px] max-w-[200px] mx-auto">
+        <line x1="-10" y1="0" x2="190" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
+        <line x1="0" y1="-55" x2="0" y2="55" stroke="#94a3b8" strokeWidth="1.5" />
+        <polyline points="186,-4 190,0 186,4" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+        <polyline points="-4,-51 0,-55 4,-51" fill="none" stroke="#94a3b8" strokeWidth="1.5" />
+        
+        <line x1="-5" y1="-30" x2="180" y2="-30" stroke="#cbd5e1" strokeDasharray="3 3" />
+        <line x1="-5" y1="30" x2="180" y2="30" stroke="#cbd5e1" strokeDasharray="3 3" />
+        <text x="-8" y="-27" fontSize="10" fill="#64748b" textAnchor="end">1</text>
+        <text x="-8" y="33" fontSize="10" fill="#64748b" textAnchor="end">-1</text>
+        
+        <text x="90" y="14" fontSize="10" fill="#64748b" textAnchor="middle">180°</text>
+        <text x="180" y="14" fontSize="10" fill="#64748b" textAnchor="middle">360°</text>
+        <text x="-5" y="14" fontSize="10" fill="#64748b" textAnchor="end">0</text>
+
+        <polyline points={pts.join(' ')} fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinejoin="round" />
+        
+        <circle cx="45" cy="-30" r="3" fill="#ef4444" />
+        <circle cx="135" cy="30" r="3" fill="#ef4444" />
+      </svg>
+    );
+  };
+
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-cyan-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">CH9 三角學</h1>
-        <p className="text-slate-600">此課重點為學習利用 <span className="font-bold text-slate-800">ASTC 圖</span>，分辨 <Latex math="\sin, \cos, \tan" /> 於 <Latex math="0^\circ - 360^\circ" /> 情況下的正負值及求角解方程。</p>
+        <p className="text-slate-600">此課重點為學習利用 <span className="font-bold text-slate-800">ASTC 圖</span>，分辨 <Latex math="\sin\theta, \cos\theta, \tan\theta" /> 於 <Latex math="0^\circ - 360^\circ" /> 情況下的正負值及求角解方程。</p>
       </div>
 
       {/* 1. ASTC 象限圖 */}
-      <CollapsibleSection id="astc-quadrants" title="1. ASTC 象限圖" num={1} color="cyan" activeSub={activeSub} sectionRef={s1}>
+      <CollapsibleSection id="astc-quadrants" title="ASTC 象限圖" num={1} color="cyan" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-cyan-50 rounded-lg p-4 border border-cyan-200 flex flex-col md:flex-row items-center gap-6">
             <div className="flex-1 w-full text-slate-700">
               <h3 className="font-bold text-cyan-800 mb-3 text-lg">分辨正負值</h3>
               <p className="mb-2">解讀：出現該英文字，代表該區域為正數</p>
+              <p className="mb-3 text-sm text-slate-700">
+                口訣：
+                <span className="font-bold text-green-700">A</span>h{' '}
+                <span className="font-bold text-green-700">S</span>ir{' '}
+                <span className="font-bold text-green-700">T</span>each{' '}
+                <span className="font-bold text-green-700">C</span>hinese
+              </p>
               <ul className="list-disc pl-5 space-y-1 mb-4">
                 <li><span className="font-bold text-green-700">A</span>ll <Latex math="\rightarrow" /> 全部為正數</li>
                 <li><span className="font-bold text-green-700">S</span>in <Latex math="\rightarrow" /> 只有 <Latex math="\sin\theta" /> 是 +ve</li>
                 <li><span className="font-bold text-green-700">T</span>an <Latex math="\rightarrow" /> 只有 <Latex math="\tan\theta" /> 是 +ve</li>
                 <li><span className="font-bold text-green-700">C</span>os <Latex math="\rightarrow" /> 只有 <Latex math="\cos\theta" /> 是 +ve</li>
               </ul>
-              <div className="bg-white p-3 rounded border border-slate-200 shadow-sm text-sm">
+              <div className="bg-white p-3 rounded border border-slate-200 shadow-sm text-sm w-full md:w-[420px]">
                 <p className="font-bold text-slate-800 mb-1">例子：</p>
                 <p><Latex math="\sin 91^\circ" /> 為 +ve（因落在第二象限 S）</p>
                 <p><Latex math="\cos 91^\circ" /> / <Latex math="\tan 91^\circ" /> 為 -ve</p>
               </div>
-              <p className="mt-4 text-red-600 font-bold">象限 <Latex inline math="\rightarrow" /> 認象限是方便去分辨 sin/cos/tan 的正/負值</p>
+              <p className="mt-4 text-red-600 font-bold">象限 <Latex inline math="\rightarrow" /> 認象限是方便去分辨 sinθ/cosθ/tanθ 的正/負值</p>
             </div>
-            <div className="w-full max-w-[280px]">
+            <div className="w-full max-w-[360px]">
               <AstcSvg />
             </div>
           </div>
@@ -142,14 +256,14 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
       </CollapsibleSection>
 
       {/* 2. 透過象限找三角比 */}
-      <CollapsibleSection id="find-ratios" title="2. 透過象限找三角比" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
+      <CollapsibleSection id="find-ratios" title="透過象限找三角比" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3 text-lg">📝 步驟 (已知 P 點坐標或三角比，求其他三角比)</h3>
             <ol className="list-decimal pl-5 space-y-2 text-slate-700 font-medium">
               <li>分辨角度的大小範圍（在哪個象限）</li>
               <li>畫相應 <Latex math="\Delta" /> <span className="text-red-600 font-bold">（必定痴住 <Latex math="x" /> 軸的 <Latex math="\Delta" />，加 1 條線）</span>，<span className="text-blue-800 line-through">絕對不可貼 y 軸</span></li>
-              <li>Mark 低標示角 <Latex math="\theta" />（貼原點 <Latex math="(0,0)" />）、<Latex math="\Delta" /> 高度和底 <span className="text-blue-800">（負數照寫）</span></li>
+              <li>Mark 低標示角 <Latex math="\theta" /> <span className="text-green-700">（貼原點 <Latex math="(0,0)" />）</span>、<Latex math="\Delta" /> 高度和底 <span className="text-blue-800">（負數照寫）</span></li>
               <li>找 <Latex math="r" />（黑色線斜邊）的長度 / 已知 <Latex math="r" />，找未知邊 <span className="text-blue-800">（畢氏定理）</span></li>
               <li>當寫好 <Latex math="\Delta" /> 3 條邊的長度，便可找 <Latex math="\sin\theta / \cos\theta / \tan\theta" /> <span className="text-green-700">（初中方法）</span></li>
             </ol>
@@ -158,7 +272,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Example 1 */}
             <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-              <p className="text-slate-700 font-bold mb-3">例：P 位於角 <Latex math="\theta" /> 的終邊上，求 <Latex math="\sin, \cos, \tan" />。</p>
+              <p className="text-slate-700 font-bold mb-3">例：P 位於角 <Latex math="\theta" /> 的終邊上，求 <Latex math="\sin\theta, \cos\theta, \tan\theta" />。</p>
               <div className="flex justify-center mb-4">
                 <DrawTriangleSvg />
               </div>
@@ -226,7 +340,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
       </CollapsibleSection>
 
       {/* 3. sin/cos/tan 的圖像 */}
-      <CollapsibleSection id="trig-graphs" title="3. sin/cos/tan 的圖像" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+      <CollapsibleSection id="trig-graphs" title="sin/cos/tan 的圖像" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-purple-800 mb-3 text-lg">極大值與極小值</h3>
@@ -242,6 +356,12 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
                   </tr>
                 </thead>
                 <tbody className="text-slate-700">
+                  <tr className="border-b border-slate-200">
+                    <td className="p-2 font-bold bg-slate-50 border-r border-slate-200">圖像</td>
+                    <td className="p-2 border-r border-slate-200"><SinGraphSvg /></td>
+                    <td className="p-2 border-r border-slate-200"><CosGraphSvg /></td>
+                    <td className="p-2"><TanGraphSvg /></td>
+                  </tr>
                   <tr className="border-b border-slate-200">
                     <td className="p-2 font-bold bg-slate-50 border-r border-slate-200">極大值 (Max)</td>
                     <td className="p-2 border-r border-slate-200 text-blue-700 font-bold">1</td>
@@ -260,6 +380,12 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
                     <td className="p-2 border-r border-slate-200"><Latex math="360^\circ" /></td>
                     <td className="p-2"><Latex math="180^\circ" /></td>
                   </tr>
+                  <tr className="border-b border-slate-200">
+                    <td className="p-2 font-bold bg-slate-50 border-r border-slate-200">x 軸截距 <span className="font-normal text-sm block">(y=0)</span></td>
+                    <td className="p-2 border-r border-slate-200 font-bold"><Latex math="0^\circ,\ 180^\circ,\ 360^\circ" /></td>
+                    <td className="p-2 border-r border-slate-200 font-bold"><Latex math="90^\circ,\ 270^\circ" /></td>
+                    <td className="p-2 font-bold"><Latex math="0^\circ,\ 180^\circ,\ 360^\circ" /></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -277,14 +403,19 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
       </CollapsibleSection>
 
       {/* 4. 簡化三角比 */}
-      <CollapsibleSection id="simplify-ratios" title="4. 簡化三角比" num={4} color="rose" activeSub={activeSub} sectionRef={s4}>
+      <CollapsibleSection id="simplify-ratios" title="簡化三角比" num={4} color="rose" activeSub={activeSub} sectionRef={s4}>
         <div className="space-y-4">
           <div className="bg-rose-50 rounded-lg p-4 border border-rose-200">
-            <h3 className="font-bold text-rose-800 mb-3 text-lg">💡 口訣：直變橫不變，符號看象限</h3>
+            <h3 className="font-bold text-rose-800 mb-3 text-lg">
+              💡 口訣：
+              <span className="text-blue-700">直變橫不變</span>
+              ，
+              <span className="text-green-700">符號看象限</span>
+            </h3>
             
             <div className="bg-white rounded p-4 border border-slate-200 shadow-sm mb-4">
               <ul className="list-disc pl-5 space-y-2 text-slate-700">
-                <li><span className="font-bold text-indigo-700">決定是否要轉換</span>：若用 <Latex math="90^\circ, 270^\circ" />（直軸）轉換，<Latex math="\tan \leftrightarrow \frac{1}{\tan}, \sin \leftrightarrow \cos" />；用 <Latex math="180^\circ, 360^\circ" />（橫軸）不變。</li>
+                <li><span className="font-bold text-blue-700">決定是否要轉換</span>：若用 <Latex math="90^\circ, 270^\circ" />（直軸）轉換，<Latex math="\tan \leftrightarrow \frac{1}{\tan}, \sin \leftrightarrow \cos" />；用 <Latex math="180^\circ, 360^\circ" />（橫軸）不變。</li>
                 <li><span className="font-bold text-green-700">畫 ASTC 圖看符號</span>：原角落在不在原本那個函數為正的象限。</li>
               </ul>
               
@@ -293,7 +424,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
                 <div className="font-sans space-y-2">
                   <Step math="\sin 300^\circ = \sin(360^\circ - 60^\circ)" explain="1. 將度數轉換成最接近的橫/直軸 ±" />
                   <Step math="= -\sin 60^\circ" explain="看象限：300° 在第四象限(C)，sin 是負的，加 '-'" />
-                  <Step math="= -0.866" explain="計算機驗證" alignEq={false} />
+                  <Step math="= -0.866" explain="計算機驗證" />
                 </div>
               </div>
             </div>
@@ -314,7 +445,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
       </CollapsibleSection>
 
       {/* 5. 三角方程 */}
-      <CollapsibleSection id="trig-equations" title="5. 三角方程" num={5} color="indigo" activeSub={activeSub} sectionRef={s5}>
+      <CollapsibleSection id="trig-equations" title="三角方程" num={5} color="indigo" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
             <h3 className="font-bold text-indigo-800 mb-3 text-lg">由 <Latex math="0 \le \theta < 90^\circ" /> 到 <Latex math="0 \le \theta < 360^\circ" /></h3>
@@ -324,7 +455,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
               <div className="flex-1 bg-white p-4 rounded border border-slate-200 shadow-sm">
                  <p className="font-bold text-slate-800 mb-2">例：解方程 <Latex math="\sin\theta = \frac{1}{3}" /> <span className="font-normal text-sm">對於 <Latex math="0^\circ \le \theta < 360^\circ" /></span></p>
                  <ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm mb-3">
-                   <li>按計算機找出基礎銳角：<Latex math="\theta_{ref} = 19.5^\circ" /></li>
+                   <li>按計算機找出基礎銳角：<Latex math="\theta = 19.5^\circ" /></li>
                    <li>因為 <Latex math="\sin\theta > 0" />，答案在 <strong>I 象限 (A)</strong> 及 <strong>II 象限 (S)</strong>。</li>
                    <li>套用公式找第 2 個答案。</li>
                  </ol>
@@ -338,6 +469,9 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
                 <svg viewBox="0 0 200 200" className="w-full">
                   <line x1="10" y1="100" x2="190" y2="100" stroke="#334155" strokeWidth="2" />
                   <line x1="100" y1="10" x2="100" y2="190" stroke="#334155" strokeWidth="2" />
+                  <polyline points="185,95 190,100 185,105" fill="none" stroke="#334155" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  <polyline points="95,15 100,10 105,15" fill="none" stroke="#334155" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  
                   <text x="140" y="60" fontSize="24" fill="#16a34a" fontWeight="bold">A</text>
                   <text x="140" y="80" fontSize="14" fill="#334155" fontWeight="bold">θ</text>
                   
