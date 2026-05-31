@@ -566,7 +566,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
 // ========================================
 // CH12-13 圓形性質 (F5)
 // ========================================
-const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormula, desc, className = "" }) => (
+const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormula, formulaRemark, desc, className = "" }) => (
   <div className={`bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col h-full hover:shadow-md transition-shadow ${className}`}>
     <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 font-bold text-slate-800 md:text-lg text-base">
       {title}
@@ -579,7 +579,12 @@ const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormul
         {directFormula ? (
           <div className="flex items-center gap-3 w-full">
             <div className="w-1 h-8 bg-emerald-500 rounded-full shrink-0"></div>
-            <p className="text-slate-800 mb-0 font-medium text-lg leading-none pt-2"><Latex math={directFormula} inline={false} block /></p>
+            <div className="flex flex-col md:flex-row md:items-center w-full">
+              <p className="text-slate-800 mb-0 font-medium text-lg leading-none pt-2 shrink-0 md:mr-6"><Latex math={directFormula} inline={false} block /></p>
+              {formulaRemark && (
+                <p className="text-red-600 font-bold mt-2 md:mt-0 pt-2 text-sm">{formulaRemark}</p>
+              )}
+            </div>
           </div>
         ) : (
           <div className="space-y-3 w-full">
@@ -621,6 +626,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
           <PropertyCard
             title="圓心角兩倍於圓周角"
             directFormula="x = 2y"
+            formulaRemark="必須要由兩隻相同的點拉出來的角作比較"
             className="md:col-span-2"
             svg={() => (
               <div className="flex flex-col md:flex-row w-full justify-around items-center gap-4 py-2">
@@ -1067,42 +1073,6 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="other-theorems" title="其他圓形定理" num={2} color="teal" activeSub={activeSub} sectionRef={s2}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <PropertyCard
-            title="圓內接四邊形對角"
-            condition={<>若 <Latex math="ABCD" inline /> 為圓內接四邊形，</>}
-            conclusion="\begin{aligned} \angle ABC + \angle ADC &= 180^\circ \\ \angle BAD + \angle BCD &= 180^\circ \end{aligned}"
-            svg={() => (
-              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
-                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <polygon points="151.8,39.1 33.4,55.6 54.9,166.1 172.3,134.1" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <text x="160" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="15" y="50" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="40" y="180" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="180" y="145" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
-              </svg>
-            )}
-          />
-
-          <PropertyCard
-            title="圓內接四邊形外角"
-            condition={<>若 <Latex math="ABCD" inline /> 為圓內接四邊形，</>}
-            conclusion="\angle ABC = \angle ADE"
-            svg={() => (
-              <svg viewBox="0 0 240 200" className="w-full max-w-[240px]">
-                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <polygon points="151.8,39.1 33.4,55.6 54.9,166.1 172.3,134.1" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <line x1="54.9" y1="166.1" x2="219.3" y2="121.3" stroke="#334155" strokeWidth="1.5" />
-                <text x="160" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="15" y="50" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="40" y="180" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="168" y="152" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
-                <text x="225" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>E</text>
-              </svg>
-            )}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <PropertyCard
             title="圓心至弦的垂線平分弦"
             condition={<>若 <Latex math="\text{ON} \perp \text{AB}" inline />，</>}
