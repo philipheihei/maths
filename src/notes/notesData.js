@@ -33,7 +33,7 @@ import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { MoreEquationsNotes } from './F4MoreEquationsNotes';
 import { TrigonometryF4Notes } from './F4TrigonometryNotes';
 import { TrigApplicationsF4Notes } from './F4TrigApplicationsNotes';
-import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes } from './F5Notes';
+import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes, LocusAndCircleNotes } from './F5Notes';
 import { SequenceNotes } from './F6Notes';
 import { ProbabilityF5Notes } from './ProbabilityF5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
@@ -580,6 +580,18 @@ export const NOTES_DATA = {
         { id: 'lp-range', num: 1, title: '透過線段找範圍', color: 'blue' },
         { id: 'lp-mc', num: 2, title: 'MC：考最大值 / 最小值', color: 'red' },
         { id: 'lp-long', num: 3, title: '長答：設立約束條件 (求不等式組)', color: 'green' },
+      ]
+    },
+    {
+      id: 'locus-and-circle',
+      topic: 'CH19 軌跡及圓的方程',
+      color: 'teal',
+      subtopics: [
+        { id: 'locus-drawing', num: 1, title: '繪畫及描述軌跡', color: 'blue' },
+        { id: 'circle-equation', num: 2, title: '圓形方程', color: 'green' },
+        { id: 'circle-features', num: 3, title: '找圓心及半徑', color: 'purple' },
+        { id: 'point-and-circle', num: 4, title: '點與圓形的位置關係', color: 'orange' },
+        { id: 'line-and-circle', num: 5, title: '直線和圓形的交點數目', color: 'red' },
       ]
     }
   ],
