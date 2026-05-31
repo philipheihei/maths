@@ -2950,3 +2950,296 @@ export const Statistics2F2Notes = ({ activeSub }) => {
     </>
   );
 };
+
+// ========================================
+// CH11 幾何證明 (F2)
+// ========================================
+export const GeometryProofF2Notes = ({ activeSub }) => {
+  const s1 = React.useRef(null), s2 = React.useRef(null), s3 = React.useRef(null), s4 = React.useRef(null);
+
+  React.useEffect(() => {
+    if (activeSub === 'prove-line') s1.current?.scrollIntoView({ behavior: 'smooth' });
+    else if (activeSub === 'prove-parallel') s2.current?.scrollIntoView({ behavior: 'smooth' });
+    else if (activeSub === 'prove-perpendicular') s3.current?.scrollIntoView({ behavior: 'smooth' });
+    else if (activeSub === 'prove-congruent-similar') s4.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [activeSub]);
+
+  return (
+    <>
+      <div className="space-y-6 max-w-4xl mx-auto pb-12">
+
+        {/* ======== 1. 證明是直線 ======== */}
+        <CollapsibleSection id="prove-line" title="證明是直線" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+          <div className="space-y-4 p-4">
+            <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
+              <h3 className="text-blue-800 font-bold mb-2">💡 概念與方法</h3>
+              <p className="text-slate-700">
+                題目問法：「證明某某是直線」 <br />
+                <span className="inline-block mt-2 font-semibold text-blue-700">➡ 找 180° (總和)</span>
+              </p>
+              <div className="mt-3 p-3 bg-red-50 text-red-700 border-l-4 border-red-500 font-bold">
+                ⚠️ 注意：證明題必須寫理由！
+              </div>
+            </div>
+            {/* 📐 待繪製：證明是直線 (a+b=180) */}
+            <div className="bg-white border rounded-xl shadow-sm flex flex-col max-w-md overflow-hidden">
+              <div className="bg-slate-50 border-b p-3 font-medium text-slate-700 text-sm">證明 AOB 是一條直線</div>
+              <div className="p-4 flex items-center justify-center">
+                <svg viewBox="0 0 200 120" className="w-full max-w-[200px]">
+                  <line x1="20" y1="80" x2="180" y2="80" stroke="#334155" strokeWidth="2" />
+                  <line x1="100" y1="80" x2="60" y2="20" stroke="#334155" strokeWidth="2" />
+                  <path d="M 125 80 A 25 25 0 0 0 86 40" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <path d="M 86 40 A 25 25 0 0 0 75 80" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                  <text x="10" y="85" fontSize="14" fill="#334155" fontWeight="bold">A</text>
+                  <text x="100" y="100" fontSize="14" fill="#334155" fontWeight="bold">O</text>
+                  <text x="185" y="85" fontSize="14" fill="#334155" fontWeight="bold">B</text>
+                  <text x="50" y="15" fontSize="14" fill="#334155" fontWeight="bold">C</text>
+                  <text x="120" y="60" fontSize="14" fill="#2563eb">b</text>
+                  <text x="70" y="65" fontSize="14" fill="#ea580c">a</text>
+                </svg>
+              </div>
+              <div className="bg-slate-50 p-3 text-sm border-t border-slate-200">
+                若 <Latex math="a + b = 180^\circ" inline />，則 <strong>AOB 是一條直線</strong>。 <br/>
+                <span className="text-slate-500">(理由：鄰角互補)</span>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* ======== 2. 證明是平行線 ======== */}
+        <CollapsibleSection id="prove-parallel" title="證明是平行線" num={2} color="indigo" activeSub={activeSub} sectionRef={s2}>
+          <div className="space-y-4 p-4">
+            <div className="bg-indigo-50 rounded-lg p-5 border border-indigo-200">
+              <h3 className="text-indigo-800 font-bold mb-2">💡 概念與方法</h3>
+              <p className="text-slate-700">
+                題目問法：「證明 AB // CD」 <br />
+                <span className="inline-block mt-2 font-semibold text-indigo-700">➡ 找已知兩角為以下其中一款，並符合條件</span>
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* 內錯角 */}
+              <div className="bg-white border rounded-xl overflow-hidden shadow-sm flex flex-col">
+                <div className="bg-slate-50 border-b p-3 font-medium text-slate-700 text-sm text-center">內錯角相等</div>
+                <div className="p-4 flex items-center justify-center">
+                  <svg viewBox="0 0 150 150" className="w-full max-w-[120px]">
+                    <line x1="20" y1="50" x2="130" y2="50" stroke="#334155" strokeWidth="2" />
+                    <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
+                    <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
+                    <path d="M 68 50 A 15 15 0 0 0 74 72" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d="M 82 100 A 15 15 0 0 0 76 78" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <text x="50" y="65" fontSize="14" fill="#2563eb">a</text>
+                    <text x="95" y="90" fontSize="14" fill="#ea580c">b</text>
+                  </svg>
+                </div>
+                <div className="p-3 text-sm text-center border-t bg-slate-50">
+                  若 <Latex math="a = b" inline />，則 <strong>AB // CD</strong>。<br/>
+                  <span className="text-red-500 font-bold block mt-1">若 <Latex math="a \neq b" inline />，互不平行。</span>
+                </div>
+              </div>
+
+              {/* 同位角 */}
+              <div className="bg-white border rounded-xl overflow-hidden shadow-sm flex flex-col">
+                <div className="bg-slate-50 border-b p-3 font-medium text-slate-700 text-sm text-center">同位角相等</div>
+                <div className="p-4 flex items-center justify-center">
+                  <svg viewBox="0 0 150 150" className="w-full max-w-[120px]">
+                    <line x1="20" y1="50" x2="130" y2="50" stroke="#334155" strokeWidth="2" />
+                    <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
+                    <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
+                    <path d="M 74 72 A 15 15 0 0 0 88 50" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d="M 83 123 A 15 15 0 0 0 97 100" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <text x="95" y="65" fontSize="14" fill="#2563eb">c</text>
+                    <text x="105" y="115" fontSize="14" fill="#ea580c">b</text>
+                  </svg>
+                </div>
+                <div className="p-3 text-sm text-center border-t bg-slate-50">
+                  若 <Latex math="c = b" inline />，則 <strong>AB // CD</strong>。<br/>
+                  <span className="text-red-500 font-bold block mt-1">若 <Latex math="c \neq b" inline />，互不平行。</span>
+                </div>
+              </div>
+
+              {/* 同旁內角 */}
+              <div className="bg-white border rounded-xl overflow-hidden shadow-sm flex flex-col">
+                <div className="bg-slate-50 border-b p-3 font-medium text-slate-700 text-sm text-center">同旁內角互補</div>
+                <div className="p-4 flex items-center justify-center">
+                  <svg viewBox="0 0 150 150" className="w-full max-w-[120px]">
+                    <line x1="20" y1="50" x2="130" y2="50" stroke="#334155" strokeWidth="2" />
+                    <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
+                    <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
+                    <path d="M 74 72 A 15 15 0 0 0 88 50" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d="M 82 100 A 15 15 0 0 0 76 78" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <text x="95" y="65" fontSize="14" fill="#2563eb">d</text>
+                    <text x="95" y="90" fontSize="14" fill="#ea580c">b</text>
+                  </svg>
+                </div>
+                <div className="p-3 text-sm text-center border-t bg-slate-50">
+                  若 <Latex math="d + b = 180^\circ" inline />，則 <strong>AB // CD</strong>。<br/>
+                  <span className="text-red-500 font-bold block mt-1">若 <Latex math="d + b \neq 180^\circ" inline />，互不平行。</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </CollapsibleSection>
+
+        {/* ======== 3. 證明垂直 ======== */}
+        <CollapsibleSection id="prove-perpendicular" title="證明垂直" num={3} color="emerald" activeSub={activeSub} sectionRef={s3}>
+          <div className="space-y-4 p-4">
+            <div className="bg-emerald-50 rounded-lg p-5 border border-emerald-200">
+              <h3 className="text-emerald-800 font-bold mb-2">💡 概念與方法</h3>
+              <p className="text-slate-700">
+                題目問法：「證明 AB ⊥ BC」 <br />
+                <span className="inline-block mt-2 font-semibold text-emerald-700">➡ 需計算並顯示出該角（例如 ∠ABC）等於 90°</span>
+              </p>
+            </div>
+
+            <div className="bg-white border rounded-xl shadow-sm flex flex-col md:flex-row overflow-hidden">
+              <div className="p-4 flex items-center justify-center bg-slate-50 md:border-r border-b md:border-b-0 min-w-[250px]">
+                <svg viewBox="0 0 200 150" className="w-full max-w-[200px]">
+                  <polygon points="50,130 150,50 170,120" fill="none" stroke="#334155" strokeWidth="2" />
+                  <path d="M 68 116 A 25 25 0 0 0 67 130" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <path d="M 160 112 A 25 25 0 0 0 151 54" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                  <text x="35" y="140" fontSize="14" fill="#334155" fontWeight="bold">B</text>
+                  <text x="145" y="40" fontSize="14" fill="#334155" fontWeight="bold">A</text>
+                  <text x="180" y="130" fontSize="14" fill="#334155" fontWeight="bold">C</text>
+                  <text x="65" y="110" fontSize="12" fill="#2563eb">54°</text>
+                  <text x="165" y="85" fontSize="12" fill="#ea580c">36°</text>
+                </svg>
+              </div>
+              <div className="p-5 flex-1 text-slate-700 text-sm leading-loose">
+                <p className="mb-2 font-semibold">例：圖中，∠A = 36° 及 ∠C = 54°。證明 AB ⊥ BC。</p>
+                <div className="bg-slate-100 p-3 rounded-lg border border-slate-200">
+                  <p>在 △ABC 中，</p>
+                  <div className="flex">
+                    <div className="w-48"><Latex math="\angle A + \angle B + \angle C = 180^\circ" inline /></div>
+                    <div className="text-slate-500">(△ 內角和)</div>
+                  </div>
+                  <div className="flex mt-1">
+                    <div className="w-48 pl-12"><Latex math="\angle B = 180^\circ - 36^\circ - 54^\circ" inline /></div>
+                  </div>
+                  <div className="flex mt-1">
+                    <div className="w-48 pl-12"><span className="bg-yellow-200 px-1 rounded font-bold">= 90°</span></div>
+                  </div>
+                  <p className="mt-2 font-bold text-emerald-700">即 AB ⊥ BC</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* ======== 4. 證明全等/相似三角形 ======== */}
+        <CollapsibleSection id="prove-congruent-similar" title="證明全等/相似三角形" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
+          <div className="space-y-6 p-4">
+            <div className="bg-purple-50 rounded-lg p-5 border border-purple-200">
+              <h3 className="text-purple-800 font-bold mb-2">💡 概念與方法</h3>
+              <p className="text-slate-700">
+                題目問法：「證明 △ABC ≅ △XYZ」(全等) 或 「證明 △ABC ~ △XYZ」(相似) <br />
+                <span className="inline-block mt-2 font-semibold text-purple-700">➡ 找 <span className="text-red-600 bg-red-100 px-1 rounded font-bold">三對</span> 角或邊相同 (或成比例)！</span>
+              </p>
+            </div>
+
+            {/* 例 1: 全等 */}
+            <div className="bg-white border rounded-xl shadow-sm flex flex-col md:flex-row overflow-hidden">
+              <div className="p-4 flex flex-col items-center justify-center bg-slate-50 md:border-r border-b md:border-b-0 min-w-[250px]">
+                <div className="font-semibold text-purple-800 self-start mb-2 w-full border-b pb-1">例 1：證明全等 (≅)</div>
+                <svg viewBox="0 0 200 200" className="w-full max-w-[180px]">
+                  <polygon points="50,50 150,50 100,100" fill="#f8fafc" stroke="#334155" strokeWidth="2" />
+                  <polygon points="50,150 150,150 100,100" fill="#f8fafc" stroke="#334155" strokeWidth="2" />
+                  <line x1="50" y1="50" x2="150" y2="150" stroke="#334155" strokeWidth="2" />
+                  <line x1="150" y1="50" x2="50" y2="150" stroke="#334155" strokeWidth="2" />
+                  
+                  {/* Arrow and ticks */}
+                  <path d="M 95 45 L 105 50 L 95 55" fill="none" stroke="#2563eb" strokeWidth="2" />
+                  <path d="M 95 145 L 105 150 L 95 155" fill="none" stroke="#2563eb" strokeWidth="2" />
+                  <line x1="80" y1="45" x2="80" y2="55" stroke="#2563eb" strokeWidth="2" />
+                  <line x1="84" y1="45" x2="84" y2="55" stroke="#2563eb" strokeWidth="2" />
+                  <line x1="116" y1="145" x2="116" y2="155" stroke="#2563eb" strokeWidth="2" />
+                  <line x1="120" y1="145" x2="120" y2="155" stroke="#2563eb" strokeWidth="2" />
+
+                  {/* Arcs (Z angle) */}
+                  <path d="M 70 50 A 20 20 0 0 0 62 62" fill="none" stroke="#ea580c" strokeWidth="2" />
+                  <path d="M 130 150 A 20 20 0 0 0 138 138" fill="none" stroke="#ea580c" strokeWidth="2" />
+                  <path d="M 130 50 A 20 20 0 0 1 138 62" fill="none" stroke="#10b981" strokeWidth="2" />
+                  <path d="M 70 150 A 20 20 0 0 1 62 138" fill="none" stroke="#10b981" strokeWidth="2" />
+                  
+                  <text x="35" y="45" fontSize="14" fill="#334155" fontWeight="bold">A</text>
+                  <text x="160" y="45" fontSize="14" fill="#334155" fontWeight="bold">C</text>
+                  <text x="35" y="160" fontSize="14" fill="#334155" fontWeight="bold">D</text>
+                  <text x="160" y="160" fontSize="14" fill="#334155" fontWeight="bold">B</text>
+                  <text x="110" y="105" fontSize="14" fill="#334155" fontWeight="bold">E</text>
+                </svg>
+              </div>
+              <div className="p-5 flex-1 text-slate-700 text-sm leading-loose">
+                <p className="mb-2">已知 AC = DB 及 AC // DB。<br/>證明 △ACE ≅ △BDE。</p>
+                <div className="bg-slate-100 p-3 rounded-lg border border-slate-200">
+                  <p>在 △ACE 和 △BDE 中，</p>
+                  <div className="flex">
+                    <div className="w-48"><Latex math="\angle ACE = \angle BDE" inline /></div>
+                    <div className="text-slate-500">(內錯角，AC // DB)</div>
+                  </div>
+                  <div className="flex">
+                    <div className="w-48"><Latex math="AC = BD" inline /></div>
+                    <div className="text-slate-500">(已知)</div>
+                  </div>
+                  <div className="flex">
+                    <div className="w-48"><Latex math="\angle CAE = \angle DBE" inline /></div>
+                    <div className="text-slate-500">(內錯角，AC // DB)</div>
+                  </div>
+                  <div className="flex mt-2 font-bold text-purple-700">
+                    <div className="w-48"><Latex math="\therefore \triangle ACE \cong \triangle BDE" inline /></div>
+                    <div>(ASA)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 例 2: 相似 */}
+            <div className="bg-white border rounded-xl shadow-sm flex flex-col md:flex-row overflow-hidden">
+              <div className="p-4 flex flex-col items-center justify-center bg-slate-50 md:border-r border-b md:border-b-0 min-w-[250px]">
+                <div className="font-semibold text-purple-800 self-start mb-2 w-full border-b pb-1">例 2：證明相似 (~)</div>
+                <svg viewBox="0 0 200 150" className="w-full max-w-[200px]">
+                  <polygon points="50,50 90,30 90,120" fill="none" stroke="#2563eb" strokeWidth="2" />
+                  <polygon points="90,30 180,20 90,120" fill="none" stroke="#10b981" strokeWidth="2" />
+                  <text x="35" y="55" fontSize="14" fill="#334155" fontWeight="bold">A</text>
+                  <text x="80" y="20" fontSize="14" fill="#334155" fontWeight="bold">D</text>
+                  <text x="80" y="135" fontSize="14" fill="#334155" fontWeight="bold">B</text>
+                  <text x="185" y="20" fontSize="14" fill="#334155" fontWeight="bold">C</text>
+                  
+                  <text x="60" y="32" fontSize="12" fill="#334155">2</text>
+                  <text x="55" y="90" fontSize="12" fill="#334155">3</text>
+                  <text x="95" y="80" fontSize="12" fill="#334155">4</text>
+                  <text x="130" y="15" fontSize="12" fill="#334155">6</text>
+                  <text x="135" y="85" fontSize="12" fill="#334155">8</text>
+                </svg>
+              </div>
+              <div className="p-5 flex-1 text-slate-700 text-sm leading-loose">
+                <p className="mb-2">圖中 AB=3, AD=2, BC=8, BD=4 及 CD=6。<br/>證明 △ABD ~ △DCB。</p>
+                <div className="bg-slate-100 p-3 rounded-lg border border-slate-200">
+                  <p>在 △ABD 和 △DCB 中，</p>
+                  <div className="flex">
+                    <div className="w-48"><Latex math="\frac{AD}{DB} = \frac{2}{4} = \frac{1}{2}" inline /></div>
+                  </div>
+                  <div className="flex mt-1">
+                    <div className="w-48"><Latex math="\frac{AB}{DC} = \frac{3}{6} = \frac{1}{2}" inline /></div>
+                  </div>
+                  <div className="flex mt-1">
+                    <div className="w-48"><Latex math="\frac{BD}{CB} = \frac{4}{8} = \frac{1}{2}" inline /></div>
+                  </div>
+                  <div className="flex mt-3 border-t border-slate-300 pt-2">
+                    <div className="w-64"><Latex math="\therefore \frac{AD}{DB} = \frac{AB}{DC} = \frac{BD}{CB}" inline /></div>
+                  </div>
+                  <div className="flex mt-2 font-bold text-purple-700">
+                    <div className="w-48"><Latex math="\therefore \triangle ABD \sim \triangle DCB" inline /></div>
+                    <div>(三邊成比例)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </CollapsibleSection>
+
+      </div>
+    </>
+  );
+};

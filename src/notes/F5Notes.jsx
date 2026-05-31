@@ -1879,18 +1879,33 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
           
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <h4 className="font-bold text-blue-800 mb-2">以代數法找：</h4>
-            <div className="flex items-center justify-around my-4 bg-white p-4 rounded shadow-sm">
-              <div className="text-center">
-                <div className="text-green-600 font-bold text-lg border-b-2 border-green-600 px-2 pb-1 mb-1">代入結果 &lt; 0</div>
-                <div className="text-green-800 font-bold text-xl">內 (負數)</div>
+            
+            <div className="flex flex-col md:flex-row items-center gap-4 my-4">
+              <div className="flex-shrink-0 w-32 h-32 bg-white rounded-lg shadow-sm flex items-center justify-center border border-slate-200">
+                <svg viewBox="0 0 100 100" className="w-28 h-28">
+                  <circle cx="40" cy="60" r="30" fill="none" stroke="#dc2626" strokeWidth="2" />
+                  {/* 內 (Green) */}
+                  <path d="M 33 57 L 41 65 M 33 65 L 41 57" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" />
+                  {/* 在圓上 (Blue) */}
+                  <path d="M 57 35 L 65 43 M 57 43 L 65 35" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" />
+                  {/* 外 (Purple) */}
+                  <path d="M 80 15 L 88 23 M 80 23 L 88 15" stroke="#9333ea" strokeWidth="2.5" strokeLinecap="round" />
+                </svg>
               </div>
-              <div className="text-center">
-                <div className="text-blue-600 font-bold text-lg border-b-2 border-blue-600 px-2 pb-1 mb-1">代入結果 = 0</div>
-                <div className="text-blue-800 font-bold text-xl">在圓上</div>
-              </div>
-              <div className="text-center">
-                <div className="text-purple-600 font-bold text-lg border-b-2 border-purple-600 px-2 pb-1 mb-1">代入結果 &gt; 0</div>
-                <div className="text-purple-800 font-bold text-xl">外 (正數)</div>
+
+              <div className="flex-1 w-full flex items-center justify-around bg-white p-4 rounded shadow-sm">
+                <div className="text-center">
+                  <div className="text-green-600 font-bold text-lg border-b-2 border-green-600 px-2 pb-1 mb-1">代入結果 &lt; 0</div>
+                  <div className="text-green-800 font-bold text-xl">內 (負數)</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-blue-600 font-bold text-lg border-b-2 border-blue-600 px-2 pb-1 mb-1">代入結果 = 0</div>
+                  <div className="text-blue-800 font-bold text-xl">在圓上</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-purple-600 font-bold text-lg border-b-2 border-purple-600 px-2 pb-1 mb-1">代入結果 &gt; 0</div>
+                  <div className="text-purple-800 font-bold text-xl">外 (正數)</div>
+                </div>
               </div>
             </div>
 

@@ -27,6 +27,7 @@ import {
   FactorizationF2Notes,
   CirclesCylindersF2Notes,
   Statistics2F2Notes,
+  GeometryProofF2Notes,
 } from './F2Notes';
 import { FactorizationNotes, LawsOfIndicesNotes, PercentageF3Notes, AreaVolumeF3Notes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes, LogFunctionNotes } from './F4Notes';
@@ -37,7 +38,7 @@ import { TrigApplicationsF4Notes } from './F4TrigApplicationsNotes';
 import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes, LocusAndCircleNotes } from './F5Notes';
 import { SequenceNotes, FunctionTransformNotes } from './F6Notes';
 import { ProbabilityF5Notes } from './ProbabilityF5Notes';
-import { SimEqCalculatorNotes } from './A1Notes';
+import { SimEqCalculatorNotes, MCTopicsNotes } from './A1Notes';
 
 export const NOTES_DATA = {
   F1: [
@@ -293,6 +294,17 @@ export const NOTES_DATA = {
       color: 'blue',
       subtopics: [
         { id: 'pythagoras-core', num: 1, title: '畢氏定理', color: 'blue' },
+      ]
+    },
+    {
+      id: 'geometry-proof-f2',
+      topic: 'CH11 幾何證明',
+      color: 'indigo',
+      subtopics: [
+        { id: 'prove-line', num: 1, title: '證明是直線', color: 'blue' },
+        { id: 'prove-parallel', num: 2, title: '證明是平行線', color: 'indigo' },
+        { id: 'prove-perpendicular', num: 3, title: '證明垂直', color: 'emerald' },
+        { id: 'prove-congruent-similar', num: 4, title: '證明全等/相似三角形', color: 'purple' },
       ]
     },
     {
@@ -635,6 +647,14 @@ export const NOTES_DATA = {
   ],
   '高中甲(一)': [
     {
+      id: 'mc-topics',
+      topic: 'MC 課題',
+      color: 'green',
+      subtopics: [
+        { id: 'shape-proportion', num: 4, title: '圖形比例 (較深)', color: 'green' },
+      ]
+    },
+    {
       id: 'simultaneous-eq',
       topic: '聯立方程',
       color: 'blue',
@@ -701,10 +721,12 @@ export const NOTES_COMPONENTS = {
   'linear-programming': LinearProgrammingNotes,
   'locus-and-circle': LocusAndCircleNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
+  'mc-topics': MCTopicsNotes,
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
   'angles': AnglesNotes,
   'congruent-triangles': CongruentTrianglesNotes,
+  'geometry-proof-f2': GeometryProofF2Notes,
   'rate-ratio': RateRatioNotes,
   'functions': FunctionNotes,
   'straight-line-equation': StraightLineEquationNotes,

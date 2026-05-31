@@ -147,7 +147,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-red-50 border-2 border-red-400 p-4 rounded-lg">
-            <p className="text-red-600 font-bold text-xl">Maths Error → 沒有根</p>
+            <p className="text-red-600 font-bold text-xl">Maths Error → 沒有實根</p>
           </div>
         </div>
       </CollapsibleSection>
