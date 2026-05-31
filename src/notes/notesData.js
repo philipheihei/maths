@@ -34,7 +34,7 @@ import { MoreEquationsNotes } from './F4MoreEquationsNotes';
 import { TrigonometryF4Notes } from './F4TrigonometryNotes';
 import { TrigApplicationsF4Notes } from './F4TrigApplicationsNotes';
 import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes, LocusAndCircleNotes } from './F5Notes';
-import { SequenceNotes } from './F6Notes';
+import { SequenceNotes, FunctionTransformNotes } from './F6Notes';
 import { ProbabilityF5Notes } from './ProbabilityF5Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
@@ -607,6 +607,17 @@ export const NOTES_DATA = {
         { id: 'advanced-questions', num: 4, title: '考核題型 (2)：求項數與不等式應用', color: 'red' },
         { id: 'other-sequence', num: 5, title: '其他數列', color: 'amber' },
       ]
+    },
+    {
+      id: 'function-transform',
+      topic: 'CH22 函數圖像變換',
+      color: 'teal',
+      subtopics: [
+        { id: 'transform-rules', num: 1, title: '變換方向口訣', color: 'blue' },
+        { id: 'translation', num: 2, title: '平移 (Translation)', color: 'green' },
+        { id: 'reflection', num: 3, title: '反射 (Reflection)', color: 'red' },
+        { id: 'stretch', num: 4, title: '伸展及收縮 (Stretch / Contraction)', color: 'purple' },
+      ]
     }
   ],
   '高中甲(一)': [
@@ -674,6 +685,7 @@ export const NOTES_COMPONENTS = {
   'probability-f5': ProbabilityF5Notes,
   'compound-inequalities': CompoundInequalitiesNotes,
   'linear-programming': LinearProgrammingNotes,
+  'locus-and-circle': LocusAndCircleNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
@@ -684,4 +696,5 @@ export const NOTES_COMPONENTS = {
   'straight-line-equation': StraightLineEquationNotes,
   'similar-triangles': SimilarTrianglesNotes,
   'sequence': SequenceNotes,
+  'function-transform': FunctionTransformNotes,
 };

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Latex, MathDisplay, CollapsibleSection } from './shared';
 
 export const SequenceNotes = ({ activeSub }) => {
@@ -210,7 +210,7 @@ export const SequenceNotes = ({ activeSub }) => {
                   <div className="text-blue-700 font-bold">a) 找公差 d：</div>
                   <MathDisplay latex="d = \frac{555 - 666}{38 - 1} = \frac{-111}{37} = -3" block />
                   
-                  <div className="text-blue-700 font-bold mt-3">b) n 的最大值 (首 n 項和 > 0)：</div>
+                    <div className="text-blue-700 font-bold mt-3">b) n 的最 大值 (首 n 項和 &gt; 0)：</div>
                   <div className="text-emerald-700 text-xs mb-1">要求： <MathDisplay latex="S(n) > 0" inline /></div>
                   <MathDisplay latex="\frac{n}{2}[2a + (n-1)d] > 0" block />
                   <div className="text-emerald-700 text-xs mt-1 mb-1">代入 a=666, d=-3：</div>
@@ -314,6 +314,163 @@ export const SequenceNotes = ({ activeSub }) => {
             </div>
 
           </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
+export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+
+  useEffect(() => {
+    const refs = { 'transform-rules': s1, 'translation': s2, 'reflection': s3, 'stretch': s4 };
+    if (activeSub && refs[activeSub]?.current) {
+      refs[activeSub].current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [activeSub]);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500 mt-8">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH22 函數圖像變換 (Transformations of Graphs)</h1>
+        <p className="text-slate-600">總結函數變換的規律：平移、反射、伸展及收縮</p>
+      </div>
+
+      <CollapsibleSection id="transform-rules" title="變換方向口訣" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
+        <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
+          <h3 className="font-bold text-blue-900 mb-4">只需記以下變化基本原則：</h3>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
+            <div className="relative inline-block text-4xl mt-6 mb-4">
+              <span className="text-emerald-700 font-bold">f(x)</span>
+              <span className="text-green-700 font-bold mx-3">+</span>
+              <span className="text-green-700 font-bold">k</span>
+              
+              <div className="absolute -top-8 left-0 w-32 pb-1 pl-2 font-sans">
+                <span className="absolute -top-6 -left-2 text-indigo-700 font-bold text-sm whitespace-nowrap">括號內：左右變化</span>
+                <span className="absolute -bottom-1 left-4 text-indigo-700 text-2xl font-bold">↓</span>
+              </div>
+              <div className="absolute -top-8 right-0 w-24 pb-1 pr-2 font-sans">
+                <span className="absolute -top-6 -right-6 text-indigo-700 font-bold text-sm whitespace-nowrap">括號外：上下變化</span>
+                <span className="absolute -bottom-1 -left-2 text-indigo-700 text-xl font-bold origin-center -rotate-45">↓</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-sans mt-2">
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+              <div className="text-lg font-bold text-blue-800 mb-2">1. 平移 (加減)</div>
+              <ul className="text-sm text-slate-700 space-y-2">
+                <li className="flex items-start"><span className="text-blue-600 mr-2 font-bold">•</span><span className="font-bold">y 移動</span>，函數<span className="text-red-500 font-bold mx-1">外相同方向</span></li>
+                <li className="flex items-start"><span className="text-blue-600 mr-2 font-bold">•</span><span className="font-bold">x 移動</span>，函數<span className="text-red-500 font-bold mx-1">內相反方向</span></li>
+              </ul>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+              <div className="text-lg font-bold text-red-800 mb-2">2. 反射</div>
+              <p className="text-sm font-bold text-slate-700 flex items-center h-full">反射加負號 (﹣)</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
+              <div className="text-lg font-bold text-purple-800 mb-2">3. 伸展 / 收縮</div>
+              <p className="text-sm font-bold text-slate-700 flex items-center h-full">放大 / 縮小，加係數</p>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="translation" title="平移 (Translation)" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+          <table className="w-full text-center border-collapse">
+            <thead>
+              <tr className="bg-slate-100 text-slate-700">
+                <th className="p-3 border-b border-slate-300">變換種類</th>
+                <th className="p-3 border-b border-slate-300">以代數方法表示 (<Latex math="k > 0" inline />)</th>
+                <th className="p-3 border-b border-slate-300">以幾何方法表示</th>
+              </tr>
+            </thead>
+            <tbody className="text-sm">
+              <tr className="border-b border-slate-200">
+                <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200" rowSpan="2">垂直平移</td>
+                <td className="p-3 border-r border-slate-200"><Latex math="y = f(x) + k" inline /></td>
+                <td className="p-3 text-left pl-6">向<span className="font-bold text-blue-700 mx-1">上</span>平移 <Latex math="k" inline /> 單位</td>
+              </tr>
+              <tr className="border-b border-slate-200">
+                <td className="p-3 border-r border-slate-200"><Latex math="y = f(x) - k" inline /></td>
+                <td className="p-3 text-left pl-6">向<span className="font-bold text-blue-700 mx-1">下</span>平移 <Latex math="k" inline /> 單位</td>
+              </tr>
+              <tr className="border-b border-slate-200">
+                <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200" rowSpan="2">水平平移</td>
+                <td className="p-3 border-r border-slate-200"><Latex math="y = f(x + k)" inline /></td>
+                <td className="p-3 text-left pl-6">向<span className="font-bold text-green-700 mx-1">左</span>平移 <Latex math="k" inline /> 單位</td>
+              </tr>
+              <tr className="border-b border-slate-200">
+                <td className="p-3 border-r border-slate-200"><Latex math="y = f(x - k)" inline /></td>
+                <td className="p-3 text-left pl-6">向<span className="font-bold text-green-700 mx-1">右</span>平移 <Latex math="k" inline /> 單位</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="reflection" title="反射 (Reflection)" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
+        <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+          <table className="w-full text-center border-collapse">
+            <thead>
+              <tr className="bg-slate-100 text-slate-700">
+                <th className="p-3 border-b border-slate-300 w-1/3">變換種類</th>
+                <th className="p-3 border-b border-slate-300 w-1/3">以代數方法表示</th>
+                <th className="p-3 border-b border-slate-300 w-1/3">以幾何方法表示</th>
+              </tr>
+            </thead>
+            <tbody className="text-sm">
+              <tr className="border-b border-slate-200">
+                <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200">沿 x 軸</td>
+                <td className="p-3 border-r border-slate-200"><Latex math="y = -f(x)" inline /></td>
+                <td className="p-3">沿 x 軸反射</td>
+              </tr>
+              <tr className="border-b border-slate-200">
+                <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200">沿 y 軸</td>
+                <td className="p-3 border-r border-slate-200"><Latex math="y = f(-x)" inline /></td>
+                <td className="p-3">沿 y 軸反射</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="p-3 bg-red-50 text-red-800 text-sm font-bold border-t border-red-100 text-center">
+            💡 口訣：外負反上下 (沿 x 軸)；內負反左右 (沿 y 軸)
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="stretch" title="伸展及收縮 (Stretch / Contraction)" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
+        <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+          <table className="w-full text-center border-collapse">
+            <thead>
+              <tr className="bg-slate-100 text-slate-700">
+                <th className="p-3 border-b border-slate-300">變換種類</th>
+                <th className="p-3 border-b border-slate-300">以代數方法表示 (<Latex math="k > 1" inline />)</th>
+                <th className="p-3 border-b border-slate-300">以幾何方法表示</th>
+              </tr>
+            </thead>
+            <tbody className="text-sm">
+              <tr className="border-b border-slate-200">
+                <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200" rowSpan="2">垂直伸展 / 收縮</td>
+                <td className="p-3 border-r border-slate-200"><Latex math="y = kf(x)" inline /></td>
+                <td className="p-3 text-left pl-6">垂直伸展至原來的 <Latex math="k" inline /> 倍</td>
+              </tr>
+              <tr className="border-b border-slate-200">
+                <td className="p-3 border-r border-slate-200"><Latex math="y = \frac{1}{k}f(x)" inline /></td>
+                <td className="p-3 text-left pl-6">垂直收縮至原來的 <Latex math="\frac{1}{k}" inline /> </td>
+              </tr>
+              <tr className="border-b border-slate-200">
+                <td className="p-3 bg-slate-50 font-bold text-slate-700 border-r border-slate-200" rowSpan="2">水平伸展 / 收縮</td>
+                <td className="p-3 border-r border-slate-200"><Latex math="y = f(kx)" inline /></td>
+                <td className="p-3 text-left pl-6">水平收縮至原來的 <Latex math="\frac{1}{k}" inline /> </td>
+              </tr>
+              <tr className="border-b border-slate-200">
+                <td className="p-3 border-r border-slate-200"><Latex math="y = f\left(\frac{1}{k}x\right)" inline /></td>
+                <td className="p-3 text-left pl-6">水平伸展至原來的 <Latex math="k" inline /> 倍</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </CollapsibleSection>
     </>
