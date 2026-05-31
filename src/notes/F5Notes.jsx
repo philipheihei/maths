@@ -756,30 +756,30 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 {/* 橙色弧 AB 和 CD */}
-                <path d="M 60 31 A 80 80 0 0 0 25 73" fill="none" stroke="#f97316" strokeWidth="2" />
-                <path d="M 140 169 A 80 80 0 0 0 175 127" fill="none" stroke="#f97316" strokeWidth="2" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 72.6 24.8 A 80 80 0 0 0 21.2 86.1" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 127.4 175.2 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2" />
+                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="60" y1="31" x2="25" y2="73" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="140" y1="169" x2="175" y2="127" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="72.6" y1="24.8" x2="21.2" y2="86.1" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="53.2" y1="55.7" x2="45.6" y2="49.3" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="48.2" y1="61.6" x2="40.6" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="146.8" y1="144.3" x2="154.4" y2="150.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="151.8" y1="138.4" x2="159.4" y2="144.8" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
-                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
-                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="165.1" y1="154.6" x2="157.5" y2="148.2" stroke="#f97316" strokeWidth="1.5" />
                 
-                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -793,30 +793,30 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 {/* 橙色弧 AB 和 CD */}
-                <path d="M 60 31 A 80 80 0 0 0 25 73" fill="none" stroke="#f97316" strokeWidth="2" />
-                <path d="M 140 169 A 80 80 0 0 0 175 127" fill="none" stroke="#f97316" strokeWidth="2" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 72.6 24.8 A 80 80 0 0 0 21.2 86.1" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 127.4 175.2 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2" />
+                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="60" y1="31" x2="25" y2="73" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="140" y1="169" x2="175" y2="127" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="72.6" y1="24.8" x2="21.2" y2="86.1" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="53.2" y1="55.7" x2="45.6" y2="49.3" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="48.2" y1="61.6" x2="40.6" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="146.8" y1="144.3" x2="154.4" y2="150.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="151.8" y1="138.4" x2="159.4" y2="144.8" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
-                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
-                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="165.1" y1="154.6" x2="157.5" y2="148.2" stroke="#f97316" strokeWidth="1.5" />
                 
-                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -830,27 +830,27 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 {/* 橙色弧 AB 和 CD */}
-                <path d="M 60 31 A 80 80 0 0 0 25 73" fill="none" stroke="#f97316" strokeWidth="2" />
-                <path d="M 140 169 A 80 80 0 0 0 175 127" fill="none" stroke="#f97316" strokeWidth="2" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 72.6 24.8 A 80 80 0 0 0 21.2 86.1" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 127.4 175.2 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2" />
+                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 91.1 75.6 A 26 26 0 0 0 74.4 95.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 107.5 120.7 A 22 22 0 0 0 121.7 103.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 108.9 124.4 A 26 26 0 0 0 125.6 104.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
-                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
-                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="165.1" y1="154.6" x2="157.5" y2="148.2" stroke="#f97316" strokeWidth="1.5" />
                 
-                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -864,27 +864,27 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 {/* 橙色弧 AB 和 CD */}
-                <path d="M 60 31 A 80 80 0 0 0 25 73" fill="none" stroke="#f97316" strokeWidth="2" />
-                <path d="M 140 169 A 80 80 0 0 0 175 127" fill="none" stroke="#f97316" strokeWidth="2" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 72.6 24.8 A 80 80 0 0 0 21.2 86.1" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 127.4 175.2 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2" />
+                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 91.1 75.6 A 26 26 0 0 0 74.4 95.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 107.5 120.7 A 22 22 0 0 0 121.7 103.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 108.9 124.4 A 26 26 0 0 0 125.6 104.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
-                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
-                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="165.1" y1="154.6" x2="157.5" y2="148.2" stroke="#f97316" strokeWidth="1.5" />
                 
-                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -897,30 +897,30 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="60" y1="31" x2="25" y2="73" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="140" y1="169" x2="175" y2="127" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="72.6" y1="24.8" x2="21.2" y2="86.1" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="53.2" y1="55.7" x2="45.6" y2="49.3" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="48.2" y1="61.6" x2="40.6" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="146.8" y1="144.3" x2="154.4" y2="150.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="151.8" y1="138.4" x2="159.4" y2="144.8" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 91.1 75.6 A 26 26 0 0 0 74.4 95.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 107.5 120.7 A 22 22 0 0 0 121.7 103.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 108.9 124.4 A 26 26 0 0 0 125.6 104.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
-                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -933,30 +933,30 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="60" y1="31" x2="25" y2="73" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="140" y1="169" x2="175" y2="127" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="72.6" y1="24.8" x2="21.2" y2="86.1" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="53.2" y1="55.7" x2="45.6" y2="49.3" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="48.2" y1="61.6" x2="40.6" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="146.8" y1="144.3" x2="154.4" y2="150.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="151.8" y1="138.4" x2="159.4" y2="144.8" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 91.1 75.6 A 26 26 0 0 0 74.4 95.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 107.5 120.7 A 22 22 0 0 0 121.7 103.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 108.9 124.4 A 26 26 0 0 0 125.6 104.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
-                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -1270,7 +1270,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <polygon points="88.1,55.6 95.8,53.5 97.9,61.2 90.2,63.3" fill="none" stroke="#334155" strokeWidth="1" />
                 <polygon points="88.1,144.3 95.8,146.4 97.9,138.7 90.2,136.6" fill="none" stroke="#334155" strokeWidth="1" />
                 
-                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="156" y="36" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="156" y="172" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="14" y="128" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
@@ -1301,7 +1301,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="90" y1="78.8" x2="98" y2="76.8" stroke="#0ea5e9" strokeWidth="1.5" />
                 <line x1="90" y1="121.2" x2="98" y2="123.2" stroke="#0ea5e9" strokeWidth="1.5" />
 
-                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="156" y="36" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="156" y="172" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="14" y="128" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
