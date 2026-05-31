@@ -566,8 +566,8 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
 // ========================================
 // CH12-13 圓形性質 (F5)
 // ========================================
-const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormula }) => (
-  <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col h-full hover:shadow-md transition-shadow">
+const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormula, desc, className = "" }) => (
+  <div className={`bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col h-full hover:shadow-md transition-shadow ${className}`}>
     <div className="bg-slate-50 px-4 py-3 border-b border-slate-200 font-bold text-slate-800 md:text-lg text-base">
       {title}
     </div>
@@ -575,29 +575,32 @@ const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormul
       <SVGComp />
     </div>
     <div className="px-4 py-4 border-t border-slate-200 bg-white min-h-[90px] flex items-center">
-      {directFormula ? (
-        <div className="flex items-center gap-3 w-full">
-          <div className="w-1 h-8 bg-emerald-500 rounded-full shrink-0"></div>
-          <p className="text-slate-800 mb-0 font-medium text-lg leading-none pt-2"><Latex math={directFormula} inline={false} block /></p>
-        </div>
-      ) : (
-        <div className="space-y-3 w-full">
-          <div className="flex gap-3 items-stretch">
-            <div className="w-1 bg-slate-300 rounded-full shrink-0"></div>
-            <div>
-              <span className="text-xs font-bold text-slate-400 block mb-0.5">條件</span>
-              <span className="text-slate-600 font-medium">{condition}</span>
+      <div className="w-full">
+        {directFormula ? (
+          <div className="flex items-center gap-3 w-full">
+            <div className="w-1 h-8 bg-emerald-500 rounded-full shrink-0"></div>
+            <p className="text-slate-800 mb-0 font-medium text-lg leading-none pt-2"><Latex math={directFormula} inline={false} block /></p>
+          </div>
+        ) : (
+          <div className="space-y-3 w-full">
+            <div className="flex gap-3 items-stretch">
+              <div className="w-1 bg-slate-300 rounded-full shrink-0"></div>
+              <div>
+                <span className="text-xs font-bold text-slate-400 block mb-0.5">條件</span>
+                <span className="text-slate-600 font-medium">{condition}</span>
+              </div>
+            </div>
+            <div className="flex gap-3 items-stretch mt-3">
+              <div className="w-1 bg-emerald-500 rounded-full shrink-0"></div>
+              <div>
+                <span className="text-xs font-bold text-emerald-600 block mb-0.5">結論</span>
+                <p className="text-slate-800 m-0 leading-none pt-1"><Latex math={conclusion} inline={false} /></p>
+              </div>
             </div>
           </div>
-          <div className="flex gap-3 items-stretch mt-3">
-            <div className="w-1 bg-emerald-500 rounded-full shrink-0"></div>
-            <div>
-              <span className="text-xs font-bold text-emerald-600 block mb-0.5">結論</span>
-              <p className="text-slate-800 m-0 leading-none pt-1"><Latex math={conclusion} inline={false} /></p>
-            </div>
-          </div>
-        </div>
-      )}
+        )}
+        {desc && <div className="mt-3 text-red-600 font-bold text-sm text-center">{desc}</div>}
+      </div>
     </div>
   </div>
 );
@@ -617,41 +620,86 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心角兩倍於圓周角"
-            directFormula="\angle AOB = 2\angle ACB"
+            directFormula="x = 2y"
+            className="md:col-span-2"
             svg={() => (
-              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
-                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <path d="M 31 140 L 100 100 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 31 140 L 100 20 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <text x="15" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="175" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="95" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
-              </svg>
-            )}
-          />
-          
-          <PropertyCard
-            title="半圓上的圓周角"
-            condition={<>若 <Latex math="\text{AB}" inline /> 是圓的直徑，</>}
-            conclusion="\angle ACB = 90^\circ"
-            svg={() => (
-              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
-                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="20" y1="100" x2="180" y2="100" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 20 100 L 60 31 L 180 100" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <polygon points="60,31 56,38 63,42 67,35" fill="none" stroke="#334155" strokeWidth="1" />
-                <text x="5" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="185" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="53" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="95" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
-              </svg>
+              <div className="flex flex-col md:flex-row w-full justify-around items-center gap-4 py-2">
+                {/* Image 1: Standard Arrowhead */}
+                <svg viewBox="0 0 200 200" className="w-full max-w-[180px]">
+                  <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                  {/* Purple angle at O */}
+                  <path d="M 100 100 L 87 107.5 A 15 15 0 0 0 113 107.5 Z" fill="#d8b4fe" stroke="#a855f7" strokeWidth="1" />
+                  {/* Yellow angle at C */}
+                  <path d="M 100 20 L 109 35.6 A 18 18 0 0 1 91 35.6 Z" fill="#fde047" stroke="#eab308" strokeWidth="1" />
+                  
+                  <path d="M 31 140 L 100 100 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <path d="M 31 140 L 100 20 L 169 140" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  
+                  <circle cx="31" cy="140" r="3" fill="#ef4444" />
+                  <circle cx="169" cy="140" r="3" fill="#ef4444" />
+                  
+                  <text x="100" y="52" fill="#475569" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
+                  <text x="100" y="125" fill="#475569" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
+                  
+                  <text x="15" y="150" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                  <text x="175" y="150" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                  <text x="100" y="12" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                  <text x="100" y="93" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                </svg>
+
+                {/* Image 2: Reflex Kite */}
+                <svg viewBox="0 0 200 200" className="w-full max-w-[180px]">
+                  <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                  {/* Purple angle at O (reflex) */}
+                  <path d="M 100 100 L 114.1 94.9 A 15 15 0 1 1 85.9 94.9 Z" fill="#d8b4fe" stroke="#a855f7" strokeWidth="1" />
+                  {/* Yellow angle at C */}
+                  <path d="M 100 20 L 114.7 30.4 A 18 18 0 0 1 85.3 30.4 Z" fill="#fde047" stroke="#eab308" strokeWidth="1" />
+                  
+                  <path d="M 25 73 L 100 100 L 175 73" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <path d="M 25 73 L 100 20 L 175 73" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  
+                  <circle cx="25" cy="73" r="3" fill="#ef4444" />
+                  <circle cx="175" cy="73" r="3" fill="#ef4444" />
+                  
+                  <text x="100" y="48" fill="#475569" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
+                  <text x="100" y="130" fill="#475569" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
+                  
+                  <text x="15" y="80" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                  <text x="180" y="80" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                  <text x="100" y="12" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                  <text x="100" y="93" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                </svg>
+
+                {/* Image 3: Crossed Lines */}
+                <svg viewBox="0 0 200 200" className="w-full max-w-[180px]">
+                  <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                  {/* Purple angle at O */}
+                  <path d="M 100 100 L 113.0 107.5 A 15 15 0 0 1 94.9 114.1 Z" fill="#d8b4fe" stroke="#a855f7" strokeWidth="1" />
+                  {/* Yellow angle at C */}
+                  <path d="M 21.2 86.1 L 41.9 93.6 A 22 22 0 0 1 32.2 105.2 Z" fill="#fde047" stroke="#eab308" strokeWidth="1" />
+                  
+                  <path d="M 72.6 175.2 L 100 100 L 169.3 140.0" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <path d="M 72.6 175.2 L 21.2 86.1 L 169.3 140.0" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  
+                  <circle cx="72.6" cy="175.2" r="3" fill="#ef4444" />
+                  <circle cx="169.3" cy="140.0" r="3" fill="#ef4444" />
+                  
+                  <text x="44" y="108" fill="#475569" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
+                  <text x="110" y="130" fill="#475569" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
+                  
+                  <text x="65" y="190" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                  <text x="175" y="150" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                  <text x="15" y="80" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                  <text x="100" y="93" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                </svg>
+              </div>
             )}
           />
 
           <PropertyCard
             title="同弓形內的圓周角"
             directFormula="\angle APB = \angle AQB"
+            desc="必須要由兩隻相同的點拉出來的角作比較"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
@@ -662,6 +710,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 62.6 46.8 A 23 23 0 0 0 85.0 42.4" fill="none" stroke="#334155" strokeWidth="1" />
                 <path d="M 139.3 54.4 A 20 20 0 0 0 157.8 61.8" fill="none" stroke="#334155" strokeWidth="1" />
                 <path d="M 137.0 56.3 A 23 23 0 0 0 158.2 64.8" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <circle cx="31" cy="140" r="3" fill="#ef4444" />
+                <circle cx="169" cy="140" r="3" fill="#ef4444" />
+                
                 <text x="17" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="175" y="150" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="65" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
@@ -986,6 +1038,26 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+              </svg>
+            )}
+          />
+
+          <PropertyCard
+            title="半圓上的圓周角"
+            condition={<>若 <Latex math="\text{AB}" inline /> 是圓的直徑，</>}
+            conclusion="\angle ACB = 90^\circ"
+            svg={() => (
+              <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                {/* Center O mark 'x' */}
+                <path d="M 97 97 L 103 103 M 97 103 L 103 97" stroke="#334155" strokeWidth="1.5" />
+                <line x1="20" y1="100" x2="180" y2="100" stroke="#16a34a" strokeWidth="1.5" />
+                <path d="M 20 100 L 60 31 L 180 100" fill="none" stroke="#f97316" strokeWidth="1.5" />
+                <polygon points="60,31 56,38 63,42 67,35" fill="none" stroke="#f97316" strokeWidth="1" />
+                <text x="5" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="185" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="53" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="95" y="120" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
