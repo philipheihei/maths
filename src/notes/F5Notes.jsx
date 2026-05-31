@@ -965,7 +965,6 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
           <PropertyCard
             title="弧與圓心角成比例"
             directFormula="\overset{\frown}{AB} : \overset{\frown}{CD} = x : y"
-            formulaRemark="(弧與圓心角成比例)"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
