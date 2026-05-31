@@ -838,10 +838,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
                 <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
@@ -872,10 +872,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
                 <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
@@ -912,10 +912,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
@@ -948,10 +948,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
                 <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
@@ -971,8 +971,8 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 100 100 L 31 60" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 100 100 L 140 31" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 100 100 L 178 117" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 84.5 91 A 18 18 0 0 1 109.0 84.5" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 110.0 82.8 A 20 20 0 0 1 119.5 104.3" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 84.5 91 A 18 18 0 0 1 109.0 84.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 110.0 82.8 A 20 20 0 0 1 119.5 104.3" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 <text x="17" y="52" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="145" y="22" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="185" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
