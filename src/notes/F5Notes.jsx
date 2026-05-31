@@ -1113,8 +1113,32 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             )}
           />
 
-          {/* Spacer: keep row 8 right side empty on desktop so next two cards become row 9 */}
-          <div className="hidden md:block" aria-hidden="true"></div>
+          <PropertyCard
+            title="交錯弓形的圓周角"
+            condition={<>若 <Latex math="\text{PQ}" inline /> 是圓在 <Latex math="\text{A}" inline /> 點的切線，</>}
+            conclusion="\angle QAC = \angle ABC"
+            svg={() => (
+              <svg viewBox="0 0 200 240" className="w-full max-w-[240px]">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
+                <polygon points="43.4,156.6 100,20 180,100" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <line x1="13.4" y1="126.6" x2="93.4" y2="206.6" stroke="#334155" strokeWidth="1.5" />
+                
+                {/* Angle QAC double arc */}
+                <path d="M 61.9 148.9 A 20 20 0 0 1 57.5 170.7" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 65.6 147.4 A 24 24 0 0 1 60.4 173.6" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                {/* Angle ABC double arc */}
+                <path d="M 114.1 34.1 A 20 20 0 0 1 92.3 38.5" fill="none" stroke="#334155" strokeWidth="1" />
+                <path d="M 117.0 37.0 A 24 24 0 0 1 90.8 42.2" fill="none" stroke="#334155" strokeWidth="1" />
+                
+                <text x="25" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="188" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="5" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="100" y="215" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+              </svg>
+            )}
+          />
 
           <PropertyCard
             title="圓內接四邊形對角"
