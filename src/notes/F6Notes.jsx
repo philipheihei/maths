@@ -340,19 +340,26 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
       <CollapsibleSection id="transform-rules" title="變換方向口訣" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
           <h3 className="font-bold text-blue-900 mb-4">只需記以下變化基本原則：</h3>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
-            <div className="relative inline-block text-4xl mt-6 mb-4">
-              <span className="text-emerald-700 font-bold">f(x)</span>
-              <span className="text-green-700 font-bold mx-3">+</span>
-              <span className="text-green-700 font-bold">k</span>
-              
-              <div className="absolute -top-8 left-0 w-32 pb-1 pl-2 font-sans">
-                <span className="absolute -top-6 -left-2 text-indigo-700 font-bold text-sm whitespace-nowrap">括號內：左右變化</span>
-                <span className="absolute -bottom-1 left-4 text-indigo-700 text-2xl font-bold">↓</span>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-16 mb-12">
+            <div className="relative flex items-end text-5xl font-bold font-serif italic">
+              {/* 括號內 */}
+              <div className="relative">
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex flex-col items-center">
+                  <span className="text-indigo-700 text-[15px] font-bold whitespace-nowrap mb-1 font-sans not-italic">括號內：左右變化</span>
+                  <span className="text-indigo-700 text-3xl font-black font-sans not-italic">↓</span>
+                </div>
+                <span className="text-emerald-700">f(x)</span>
               </div>
-              <div className="absolute -top-8 right-0 w-24 pb-1 pr-2 font-sans">
-                <span className="absolute -top-6 -right-6 text-indigo-700 font-bold text-sm whitespace-nowrap">括號外：上下變化</span>
-                <span className="absolute -bottom-1 -left-2 text-indigo-700 text-xl font-bold origin-center -rotate-45">↓</span>
+              
+              <span className="text-green-700 mx-4 not-italic font-sans mb-1">+</span>
+              
+              {/* 括號外 */}
+              <div className="relative">
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 flex flex-col items-center">
+                  <span className="text-indigo-700 text-[15px] font-bold whitespace-nowrap mb-1 font-sans not-italic">括號外：上下變化</span>
+                  <span className="text-indigo-700 text-3xl font-black font-sans not-italic origin-center rotate-[30deg] translate-x-[-15px]">↓</span>
+                </div>
+                <span className="text-green-700 not-italic font-sans">k</span>
               </div>
             </div>
           </div>

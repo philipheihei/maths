@@ -26,6 +26,7 @@ import {
   IdentitiesF2Notes,
   FactorizationF2Notes,
   CirclesCylindersF2Notes,
+  Statistics2F2Notes,
 } from './F2Notes';
 import { FactorizationNotes, LawsOfIndicesNotes, PercentageF3Notes, AreaVolumeF3Notes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes, LogFunctionNotes } from './F4Notes';
@@ -250,6 +251,18 @@ export const NOTES_DATA = {
         { id: 'precision-absolute-error', num: 1, title: '精準度與絕對誤差', color: 'orange' },
         { id: 'max-absolute-error', num: 2, title: '最大絕對誤差', color: 'green' },
         { id: 'relative-percentage-error', num: 3, title: '相對誤差與百分誤差', color: 'red' },
+      ]
+    },
+    {
+      id: 'statistics-2-f2',
+      topic: 'CH7 統計(二)',
+      color: 'blue',
+      subtopics: [
+        { id: 'freq-table', num: 1, title: '頻數分佈表的名詞', color: 'rose' },
+        { id: 'histogram', num: 2, title: '直方圖', color: 'blue' },
+        { id: 'freq-polygon', num: 3, title: '頻數多邊形和曲線', color: 'indigo' },
+        { id: 'cumulative-freq', num: 4, title: '累積頻數多邊形和曲線', color: 'emerald' },
+        { id: 'quartiles', num: 5, title: '百分位數、四分位數和中位數', color: 'fuchsia' },
       ]
     },
     {
@@ -654,6 +667,7 @@ export const NOTES_COMPONENTS = {
   'identities-f2': IdentitiesF2Notes,
   'factorization-f2': FactorizationF2Notes,
   'circles-cylinders-f2': CirclesCylindersF2Notes,
+  'statistics-2-f2': Statistics2F2Notes,
   'measurement-errors': MeasurementErrorsNotes,
   'inequality': InequalityNotes,
   'simultaneous-eq-f2': SimultaneousEqF2Notes,

@@ -2565,3 +2565,388 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
     </>
   );
 };
+
+// ========================================
+// CH7 統計(二) (F2)
+// ========================================
+export const Statistics2F2Notes = ({ activeSub }) => {
+  const s0 = React.useRef(null), s1 = React.useRef(null), s2 = React.useRef(null), s3 = React.useRef(null), s4 = React.useRef(null);
+
+  React.useEffect(() => {
+    if (activeSub === 'freq-table') s0.current?.scrollIntoView({ behavior: 'smooth' });
+    else if (activeSub === 'histogram') s1.current?.scrollIntoView({ behavior: 'smooth' });
+    else if (activeSub === 'freq-polygon') s2.current?.scrollIntoView({ behavior: 'smooth' });
+    else if (activeSub === 'cumulative-freq') s3.current?.scrollIntoView({ behavior: 'smooth' });
+    else if (activeSub === 'quartiles') s4.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [activeSub]);
+
+  return (
+    <>
+      <div className="space-y-6 max-w-4xl mx-auto pb-12">
+        {/* ======== 1. 頻數分佈表的名詞 ======== */}
+        <CollapsibleSection id="freq-table" title="頻數分佈表的名詞" num={1} color="rose" activeSub={activeSub} sectionRef={s0}>
+          <div className="grid grid-cols-1 gap-6 p-4">
+            <div className="bg-rose-50/50 p-5 rounded-xl shadow-sm border border-rose-100 text-sm md:text-base text-slate-700">
+              <p className="font-bold text-rose-800 text-lg mb-3">需記住以下名詞的意思和尋找方法</p>
+              <p className="mb-4">以 <span className="font-semibold text-rose-700 bg-rose-100 px-2 py-0.5 rounded">60 秒 &ndash; 69 秒</span> 這一組為例：</p>
+              
+              <ul className="space-y-4 list-none pl-0 mb-0">
+                <li className="flex flex-col md:flex-row md:items-center bg-white p-3 rounded-lg border border-rose-100 shadow-sm">
+                  <span className="font-bold text-rose-700 md:w-32 flex-shrink-0">1. 組區間：</span>
+                  <span className="flex-1">即是<strong>範圍</strong> <span className="text-slate-400 mx-2">→</span> <span className="font-mono bg-slate-100 px-1 rounded">60 - 69</span></span>
+                </li>
+                <li className="flex flex-col md:flex-row md:items-center bg-white p-3 rounded-lg border border-rose-100 shadow-sm">
+                  <span className="font-bold text-rose-700 md:w-32 flex-shrink-0">2. 下/上組限：</span>
+                  <span className="flex-1">範圍的下限與上限 <span className="text-slate-400 mx-2">→</span> 下組限：<strong className="text-blue-600">60</strong>，上組限：<strong className="text-blue-600">69</strong></span>
+                </li>
+                <li className="flex flex-col md:flex-row md:items-center bg-white p-3 rounded-lg border border-rose-100 shadow-sm">
+                  <span className="font-bold text-emerald-600 md:w-32 flex-shrink-0">3. 組中點：</span>
+                  <span className="flex-1 flex flex-wrap items-center">
+                    <Latex math="\frac{\text{頭} + \text{尾}}{2}" inline />
+                    <span className="mx-2 text-slate-400">→</span>
+                    <Latex math="\frac{60 + 69}{2} = 64.5\text{ (秒)}" inline />
+                  </span>
+                </li>
+                <li className="flex flex-col md:flex-row md:items-start bg-white p-3 rounded-lg border border-rose-100 shadow-sm">
+                  <span className="font-bold text-rose-700 md:w-32 flex-shrink-0 mt-1">4. 下/上組界：</span>
+                  <span className="flex-1 space-y-2">
+                    <div>兩組範圍中間的數 <Latex math="\frac{\text{尾} + \text{頭}}{2}" inline /></div>
+                    <div className="pl-2 border-l-2 border-rose-200">
+                      下組界 = <Latex math="\frac{59 + 60}{2}" inline /> = <strong className="text-orange-600">59.5</strong><br/>
+                      <span className="text-xs text-slate-500">(上一組的尾 + 這一組的頭) ÷ 2</span>
+                    </div>
+                    <div className="pl-2 border-l-2 border-rose-200">
+                      上組界 = <Latex math="\frac{69 + 70}{2}" inline /> = <strong className="text-orange-600">69.5</strong><br/>
+                      <span className="text-xs text-slate-500">(這一組的尾 + 下一組的頭) ÷ 2</span>
+                    </div>
+                  </span>
+                </li>
+                <li className="flex flex-col md:flex-row md:items-center bg-white p-3 rounded-lg border border-rose-100 shadow-sm">
+                  <span className="font-bold text-emerald-600 md:w-32 flex-shrink-0">5. 組距：</span>
+                  <span className="flex-1">
+                    上組界 &ndash; 下組界
+                    <span className="mx-2 text-slate-400">→</span>
+                    <Latex math="69.5 - 59.5 = 10\text{ (秒)}" inline />
+                  </span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
+              <div className="bg-slate-50 border-b border-slate-200 px-4 py-2 font-medium text-slate-700 text-sm">
+                圖解示意
+              </div>
+              <div className="w-full p-4 overflow-x-auto flex justify-center">
+                <svg viewBox="0 0 600 230" className="min-w-[550px] w-full max-w-[700px]">
+                  {/* 背景棒 */}
+                  <rect x="50" y="80" width="100" height="40" fill="#bbf7d0" stroke="#10b981" strokeWidth="2" rx="4" />
+                  <rect x="200" y="80" width="200" height="40" fill="#86efac" stroke="#059669" strokeWidth="2" rx="4" />
+                  <rect x="450" y="80" width="100" height="40" fill="#bbf7d0" stroke="#10b981" strokeWidth="2" rx="4" />
+                  
+                  {/* 數字 */}
+                  <text x="140" y="105" fontSize="16" fill="#1e293b" textAnchor="middle">59</text>
+                  
+                  <text x="215" y="105" fontSize="16" fill="#1e293b" textAnchor="middle">60</text>
+                  <text x="300" y="105" fontSize="16" fill="#065f46" textAnchor="middle" fontWeight="bold">64.5</text>
+                  <text x="385" y="105" fontSize="16" fill="#1e293b" textAnchor="middle">69</text>
+
+                  <text x="460" y="105" fontSize="16" fill="#1e293b" textAnchor="middle">70</text>
+                  <text x="540" y="105" fontSize="16" fill="#1e293b" textAnchor="middle">79</text>
+
+                  {/* 組中點 (Class mark) */}
+                  <line x1="300" y1="80" x2="300" y2="50" stroke="#059669" strokeWidth="2" strokeDasharray="3,3" />
+                  <text x="300" y="40" fontSize="15" fill="#059669" textAnchor="middle" fontWeight="bold">組中點</text>
+
+                  {/* 組限 (Limits) */}
+                  <path d="M 215 130 L 215 150 M 215 150 L 385 150 M 385 130 L 385 150" fill="none" stroke="#2563eb" strokeWidth="2" />
+                  <text x="215" y="170" fontSize="14" fill="#2563eb" textAnchor="middle" fontWeight="bold">下組限</text>
+                  <text x="385" y="170" fontSize="14" fill="#2563eb" textAnchor="middle" fontWeight="bold">上組限</text>
+                  <text x="300" y="145" fontSize="14" fill="#2563eb" textAnchor="middle" fontWeight="bold">組區間: 60 - 69</text>
+
+                  {/* 組界 (Boundaries) */}
+                  <line x1="175" y1="60" x2="175" y2="180" stroke="#ea580c" strokeWidth="2.5" strokeDasharray="5,3" />
+                  <text x="175" y="50" fontSize="14" fill="#ea580c" textAnchor="middle" fontWeight="bold">下組界 (59.5)</text>
+
+                  <line x1="425" y1="60" x2="425" y2="180" stroke="#ea580c" strokeWidth="2.5" strokeDasharray="5,3" />
+                  <text x="425" y="50" fontSize="14" fill="#ea580c" textAnchor="middle" fontWeight="bold">上組界 (69.5)</text>
+
+                  {/* 組距 (Class width) */}
+                  <path d="M 175 190 L 175 200 M 425 190 L 425 200 M 175 195 L 425 195" fill="none" stroke="#ea580c" strokeWidth="2" />
+                  <text x="300" y="215" fontSize="15" fill="#ea580c" textAnchor="middle" fontWeight="bold">組距 = 69.5 - 59.5 = 10</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* ======== 2. 直方圖 ======== */}
+        <CollapsibleSection id="histogram" title="直方圖" num={2} color="blue" activeSub={activeSub} sectionRef={s1}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+            <div className="space-y-4">
+              <div className="bg-blue-50/50 p-4 rounded-xl shadow-sm border border-blue-100">
+                <p className="text-slate-700 leading-relaxed">
+                  直方圖是一種適合用來表達連續數據的<span className="font-semibold text-blue-700">頻數分佈</span>的統計圖。
+                </p>
+                <div className="mt-4 text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200">
+                  <p className="font-bold text-slate-700 mb-1">注意：</p>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>每個組區間的頻數以對應棒條的<strong>高度</strong>來表示。</li>
+                    <li>相鄰棒條之間是<strong>沒有任何空間</strong>的。</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
+              <div className="bg-slate-50 border-b border-slate-200 px-4 py-2 font-medium text-slate-700 text-sm">
+                例子：陳先生的 25 次手機通話的時間
+              </div>
+              <div className="flex-1 p-4 flex items-center justify-center">
+                <svg viewBox="0 0 350 250" className="w-full max-w-[320px]">
+                  <defs>
+                    <pattern id="grid-hist" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f5f9" strokeWidth="1"/>
+                    </pattern>
+                  </defs>
+                  <rect x="40" y="20" width="290" height="180" fill="url(#grid-hist)" />
+                  <line x1="30" y1="200" x2="340" y2="200" stroke="#10b981" strokeWidth="1.5" />
+                  <line x1="40" y1="20" x2="40" y2="210" stroke="#10b981" strokeWidth="1.5" />
+                  <polyline points="32,200 37,192 42,208 47,200" fill="none" stroke="#10b981" strokeWidth="1.5" />
+                  
+                  <g fontSize="11" fill="#64748b" textAnchor="end">
+                    <text x="32" y="204">0</text><text x="32" y="164">2</text><text x="32" y="124">4</text>
+                    <text x="32" y="84">6</text><text x="32" y="44">8</text>
+                  </g>
+                  
+                  <g fontSize="11" fill="#64748b" textAnchor="middle">
+                    <text x="65" y="220">39.5</text><text x="105" y="220">49.5</text><text x="145" y="220">59.5</text>
+                    <text x="185" y="220">69.5</text><text x="225" y="220">79.5</text><text x="265" y="220">89.5</text>
+                  </g>
+                  
+                  <g fill="#fcd34d" stroke="#334155" strokeWidth="1">
+                    <rect x="45" y="40" width="40" height="160" />
+                    <rect x="85" y="100" width="40" height="100" />
+                    <rect x="125" y="60" width="40" height="140" />
+                    <rect x="165" y="140" width="40" height="60" />
+                    <rect x="205" y="160" width="40" height="40" />
+                  </g>
+                  
+                  <text x="15" y="110" fontSize="12" fill="#334155" style={{ writingMode: 'vertical-rl' }}>頻數</text>
+                  <text x="165" y="240" fontSize="12" fill="#334155">通話時間 (秒)</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* ======== 3. 頻數多邊形和曲線 ======== */}
+        <CollapsibleSection id="freq-polygon" title="頻數多邊形和曲線" num={3} color="indigo" activeSub={activeSub} sectionRef={s2}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+            <div className="space-y-4">
+              <div className="bg-indigo-50/50 p-4 rounded-xl shadow-sm border border-indigo-100">
+                <h4 className="font-bold text-indigo-800 mb-2">(a) 頻數多邊形</h4>
+                <p className="text-slate-700 leading-relaxed text-sm">
+                  頻數多邊形是一種適合用來表達連續數據的頻數分佈的統計圖。<br/>
+                  <span className="text-indigo-600 mt-1 block">
+                    (將直方圖各長方形的頂部中點相連而成，並將兩端連接橫軸。)
+                  </span>
+                </p>
+              </div>
+              <div className="bg-indigo-50/50 p-4 rounded-xl shadow-sm border border-indigo-100">
+                <h4 className="font-bold text-indigo-800 mb-2">(b) 頻數曲線</h4>
+                <p className="text-slate-700 leading-relaxed text-sm">
+                  頻數曲線可以顯示任何組距的組區間的頻數。<br/>
+                  <span className="text-indigo-600 mt-1 block">
+                    (若數據呈平滑趨勢，則用曲線連接。)
+                  </span>
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
+              <div className="bg-slate-50 border-b border-slate-200 px-4 py-2 font-medium text-slate-700 text-sm">
+                例子 (頻數多邊形)
+              </div>
+              <div className="flex-1 p-2 flex items-center justify-center">
+                <svg viewBox="0 0 350 250" className="w-full max-w-[320px]">
+                  <defs>
+                    <pattern id="grid-poly" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f5f9" strokeWidth="1"/>
+                    </pattern>
+                  </defs>
+                  <rect x="40" y="20" width="290" height="180" fill="url(#grid-poly)" />
+                  <line x1="30" y1="200" x2="340" y2="200" stroke="#10b981" strokeWidth="1.5" />
+                  <line x1="40" y1="20" x2="40" y2="210" stroke="#10b981" strokeWidth="1.5" />
+                  <polyline points="32,200 37,192 42,208 47,200" fill="none" stroke="#10b981" strokeWidth="1.5" />
+                  
+                  <g fontSize="11" fill="#64748b" textAnchor="end">
+                    <text x="35" y="204">0</text><text x="35" y="164">2</text><text x="35" y="124">4</text>
+                    <text x="35" y="84">6</text><text x="35" y="44">8</text>
+                  </g>
+                  
+                  <g fontSize="11" fill="#64748b" textAnchor="middle">
+                    <text x="65" y="220">34.5</text><text x="105" y="220">44.5</text><text x="145" y="220">54.5</text>
+                    <text x="185" y="220">64.5</text><text x="225" y="220">74.5</text><text x="265" y="220">84.5</text><text x="305" y="220">94.5</text>
+                  </g>
+                  
+                  <polyline points="65,200 105,40 145,100 185,60 225,140 265,160 305,200" fill="none" stroke="#0f172a" strokeWidth="1.5" />
+                  {[ [65,200], [105,40], [145,100], [185,60], [225,140], [265,160], [305,200] ].map((p, i) => (
+                    <path key={i} d={`M ${p[0]-4} ${p[1]-4} l 8 8 M ${p[0]+4} ${p[1]-4} l -8 8`} stroke="#0ea5e9" strokeWidth="1.5" />
+                  ))}
+                  
+                  <text x="15" y="110" fontSize="12" fill="#334155" style={{ writingMode: 'vertical-rl' }}>頻數</text>
+                  <text x="185" y="240" fontSize="12" fill="#334155">通話時間 (秒)</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* ======== 4. 累積頻數多邊形和曲線 ======== */}
+        <CollapsibleSection id="cumulative-freq" title="累積頻數多邊形和曲線" num={4} color="emerald" activeSub={activeSub} sectionRef={s3}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+            <div className="space-y-4">
+              <div className="bg-emerald-50/50 p-4 rounded-xl shadow-sm border border-emerald-100">
+                <h4 className="font-bold text-emerald-800 mb-2">(a) 累積頻數表</h4>
+                <p className="text-slate-700 leading-relaxed text-sm">
+                  我們可以根據一個頻數分佈表製作對應的累積頻數表，以顯示小於某個值的數據的頻數。
+                </p>
+                <div className="mt-4 overflow-x-auto text-sm">
+                  <table className="w-full text-center border-collapse border border-emerald-200 bg-white">
+                    <thead className="bg-emerald-100">
+                      <tr>
+                        <th className="border border-emerald-200 p-2 font-medium">通話時間少於(秒)</th>
+                        <th className="border border-emerald-200 p-2 font-medium">累積頻數</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td className="border border-emerald-200 p-1.5">39.5</td><td className="border border-emerald-200 p-1.5 text-blue-600 font-bold">0</td></tr>
+                      <tr><td className="border border-emerald-200 p-1.5">49.5</td><td className="border border-emerald-200 p-1.5">8</td></tr>
+                      <tr><td className="border border-emerald-200 p-1.5">59.5</td><td className="border border-emerald-200 p-1.5">13</td></tr>
+                      <tr><td className="border border-emerald-200 p-1.5">69.5</td><td className="border border-emerald-200 p-1.5">20</td></tr>
+                      <tr><td className="border border-emerald-200 p-1.5">79.5</td><td className="border border-emerald-200 p-1.5">23</td></tr>
+                      <tr><td className="border border-emerald-200 p-1.5">89.5</td><td className="border border-emerald-200 p-1.5">25</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="bg-emerald-50/50 p-4 rounded-xl shadow-sm border border-emerald-100">
+                <h4 className="font-bold text-emerald-800 mb-2">(b) 累積頻數多邊形及曲線</h4>
+                <p className="text-slate-700 leading-relaxed text-sm">
+                  適合用來表達連續數據的分佈。它必定由左至右向上升。
+                </p>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
+                <div className="bg-slate-50 border-b border-slate-200 px-4 py-2 font-medium text-slate-700 text-sm">
+                  例如 (累積頻數曲線)
+                </div>
+                <div className="flex-1 p-2 flex items-center justify-center">
+                  <svg viewBox="0 0 350 250" className="w-full max-w-[320px]">
+                    <defs>
+                      <pattern id="grid-cum" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f5f9" strokeWidth="1"/>
+                      </pattern>
+                    </defs>
+                    <rect x="40" y="20" width="290" height="180" fill="url(#grid-cum)" />
+                    <line x1="30" y1="200" x2="340" y2="200" stroke="#10b981" strokeWidth="1.5" />
+                    <line x1="40" y1="20" x2="40" y2="210" stroke="#10b981" strokeWidth="1.5" />
+                    <polyline points="32,200 37,192 42,208 47,200" fill="none" stroke="#10b981" strokeWidth="1.5" />
+                    
+                    <g fontSize="11" fill="#64748b" textAnchor="end">
+                      <text x="35" y="204">0</text><text x="35" y="144">10</text><text x="35" y="84">20</text><text x="35" y="24">30</text>
+                    </g>
+                    
+                    <g fontSize="11" fill="#64748b" textAnchor="middle">
+                      <text x="65" y="220">20.5</text><text x="105" y="220">40.5</text><text x="145" y="220">60.5</text>
+                      <text x="185" y="220">80.5</text><text x="225" y="220">100.5</text><text x="265" y="220">120.5</text>
+                    </g>
+                    
+                    <path d="M 65 200 C 90 200, 100 180, 105 180 C 120 180, 130 140, 145 140 C 160 140, 170 80, 185 80 C 200 80, 210 50, 225 50 C 240 50, 250 30, 265 30" fill="none" stroke="#f97316" strokeWidth="2" />
+                    
+                    <text x="15" y="110" fontSize="12" fill="#334155" style={{ writingMode: 'vertical-rl' }}>累積頻數</text>
+                    <text x="165" y="240" fontSize="12" fill="#334155">時間 (分鐘)</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+        {/* ======== 5. 百分位數、四分位數和中位數 ======== */}
+        <CollapsibleSection id="quartiles" title="百分位數、四分位數和中位數" num={5} color="fuchsia" activeSub={activeSub} sectionRef={s4}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+            <div className="space-y-4">
+              <div className="bg-fuchsia-50/50 p-4 rounded-xl shadow-sm border border-fuchsia-100">
+                <p className="text-slate-700 leading-relaxed text-sm mb-3">
+                  我們可以從累積頻數多邊形或累積頻數曲線得出百分位數、四分位數和中位數。
+                </p>
+                <div className="space-y-3 text-sm text-slate-700">
+                  <div className="flex">
+                    <span className="font-bold text-fuchsia-700 mr-2">(a)</span>
+                    <p>第 <Latex math="n" inline /> 個百分位數是 <Latex math="t" inline /> 這個值，使得有 <Latex math="n\%" inline /> 的數據小於 <Latex math="t" inline />。</p>
+                  </div>
+                  <div className="flex">
+                    <span className="font-bold text-fuchsia-700 mr-2">(b)</span>
+                    <ul className="space-y-1">
+                      <li><span className="font-medium">下四分位數</span> = 第 25 個百分位數</li>
+                      <li><span className="font-medium text-fuchsia-700">中位數</span> = 第 50 個百分位數</li>
+                      <li><span className="font-medium">上四分位數</span> = 第 75 個百分位數</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col">
+              <div className="bg-slate-50 border-b border-slate-200 px-4 py-2 font-medium text-slate-700 text-sm">
+                例如：某組學生的身高 (引伸計算)
+              </div>
+              <div className="flex-1 p-2 flex items-center justify-center">
+                <svg viewBox="0 0 350 250" className="w-full max-w-[320px]">
+                  <defs>
+                    <pattern id="grid-q" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#f1f5f9" strokeWidth="1"/>
+                    </pattern>
+                  </defs>
+                  <rect x="40" y="20" width="290" height="180" fill="url(#grid-q)" />
+                  <line x1="30" y1="200" x2="340" y2="200" stroke="#10b981" strokeWidth="1.5" />
+                  <line x1="40" y1="20" x2="40" y2="210" stroke="#10b981" strokeWidth="1.5" />
+                  <polyline points="32,200 37,192 42,208 47,200" fill="none" stroke="#10b981" strokeWidth="1.5" />
+                  
+                  <g fontSize="11" fill="#64748b" textAnchor="end">
+                    <text x="35" y="204">0</text><text x="35" y="155">25</text><text x="35" y="110">50</text>
+                    <text x="35" y="65">75</text><text x="35" y="20">100</text>
+                  </g>
+                  
+                  <g fontSize="11" fill="#64748b" textAnchor="middle">
+                    <text x="65" y="220">150.5</text><text x="145" y="220">160.5</text><text x="225" y="220">170.5</text><text x="305" y="220">180.5</text>
+                  </g>
+                  
+                  <path d="M 60 200 C 100 200, 110 155, 130 155 C 140 155, 145 110, 160 110 C 180 110, 190 65, 215 65 C 240 65, 260 20, 310 20" fill="none" stroke="#0f172a" strokeWidth="2" />
+                  
+                  <g stroke="#a855f7" strokeWidth="1.5" strokeDasharray="4,4">
+                    <line x1="40" y1="155" x2="130" y2="155" /><line x1="130" y1="155" x2="130" y2="200" />
+                    <line x1="40" y1="110" x2="160" y2="110" /><line x1="160" y1="110" x2="160" y2="200" />
+                    <line x1="40" y1="65" x2="215" y2="65" /><line x1="215" y1="65" x2="215" y2="200" />
+                  </g>
+                  <g fill="#a855f7">
+                    <polygon points="130,200 125,190 135,190" />
+                    <polygon points="160,200 155,190 165,190" />
+                    <polygon points="215,200 210,190 220,190" />
+                  </g>
+                  
+                  <text x="15" y="110" fontSize="12" fill="#334155" style={{ writingMode: 'vertical-rl' }}>累積頻數</text>
+                  <text x="165" y="235" fontSize="12" fill="#334155">身高 (cm)</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </CollapsibleSection>
+
+      </div>
+    </>
+  );
+};
