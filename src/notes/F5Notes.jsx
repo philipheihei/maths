@@ -670,7 +670,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                   <text x="100" y="48" fill="#475569" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
                   <text x="100" y="130" fill="#475569" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
                   
-                  <text x="15" y="80" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                  <text x="8" y="80" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                   <text x="180" y="80" fill="#475569" fontSize="13" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                   <text x="100" y="12" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                   <text x="100" y="93" fill="#475569" fontSize="13" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
@@ -964,19 +964,35 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
           <PropertyCard
             title="弧與圓心角成比例"
-            directFormula="\overset{\frown}{AB} : \overset{\frown}{BC} = \angle AOB : \angle BOC"
+            directFormula="\overset{\frown}{AB} : \overset{\frown}{CD} = x : y"
+            formulaRemark="(弧與圓心角成比例)"
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <path d="M 100 100 L 31 60" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 100 100 L 140 31" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 100 100 L 178 117" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <path d="M 84.5 91 A 18 18 0 0 1 109.0 84.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 110.0 82.8 A 20 20 0 0 1 119.5 104.3" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <text x="17" y="52" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="145" y="22" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="185" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="91" y="115" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
+                
+                {/* Arcs */}
+                <path d="M 43.4 43.4 A 80 80 0 0 1 156.6 43.4" fill="none" stroke="#22c55e" strokeWidth="2.5" />
+                <path d="M 156.6 156.6 A 80 80 0 0 1 43.4 156.6" fill="none" stroke="#f97316" strokeWidth="2.5" />
+                
+                {/* Radii */}
+                <line x1="100" y1="100" x2="43.4" y2="43.4" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="156.6" y2="43.4" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="156.6" y2="156.6" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="43.4" y2="156.6" stroke="#334155" strokeWidth="1.5" />
+                
+                {/* Angles */}
+                <path d="M 85.9 85.9 A 20 20 0 0 1 114.1 85.9" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                <path d="M 114.1 114.1 A 20 20 0 0 1 85.9 114.1" fill="none" stroke="#f97316" strokeWidth="1.5" />
+                
+                {/* Labels */}
+                <text x="100" y="76" fill="#22c55e" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
+                <text x="100" y="136" fill="#f97316" fontSize="14" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
+                
+                <text x="35" y="35" fill="#475569" fontSize="13" textAnchor="end" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="165" y="35" fill="#475569" fontSize="13" textAnchor="start" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="165" y="165" fill="#475569" fontSize="13" textAnchor="start" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="35" y="165" fill="#475569" fontSize="13" textAnchor="end" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="85" y="104" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
           />
@@ -1091,6 +1107,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 <polygon points="151.8,39.1 33.4,55.6 54.9,166.1 172.3,134.1" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 156.0 58.7 A 20 20 0 0 1 132.0 41.9" fill="none" stroke="#22c55e" strokeWidth="2" />
+                <path d="M 51.1 146.5 A 20 20 0 0 1 74.2 160.8" fill="none" stroke="#22c55e" strokeWidth="2" />
+                <path d="M 53.2 52.8 A 20 20 0 0 1 37.2 75.2" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 153.0 139.4 A 20 20 0 0 1 168.1 114.5" fill="none" stroke="#f97316" strokeWidth="2" />
                 <text x="160" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="15" y="50" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="40" y="180" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
@@ -1108,6 +1128,8 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 <polygon points="151.8,39.1 33.4,55.6 54.9,166.1 172.3,134.1" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <line x1="54.9" y1="166.1" x2="219.3" y2="121.3" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 53.2 52.8 A 20 20 0 0 1 37.2 75.2" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 168.1 114.5 A 20 20 0 0 1 191.6 128.8" fill="none" stroke="#f97316" strokeWidth="2" />
                 <text x="160" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="15" y="50" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="40" y="180" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
