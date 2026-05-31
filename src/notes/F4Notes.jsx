@@ -6,7 +6,7 @@ export { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 // CH1 二次方程 (F4)
 // ========================================
 export const QuadraticEquationNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null), s6 = useRef(null), s7 = useRef(null);
 
   return (
     <>
@@ -184,6 +184,164 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               <li>檢查答案是否合理（考慮限制條件）</li>
               <li>捨去不合理的負數或零值（視情況而定）</li>
             </ul>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="number-systems" title="數系" num={6} color="teal" activeSub={activeSub} sectionRef={s6}>
+        <div className="space-y-4">
+          <div className="bg-teal-50 rounded-lg p-4 border border-teal-200">
+            <h3 className="font-bold text-teal-800 mb-3">1. 數系分類</h3>
+            <div className="space-y-4">
+              <div className="bg-white p-3 rounded shadow-sm">
+                <p className="font-bold text-slate-800">A. 整數 <span className="text-red-500 font-normal">→ 不是小數的數</span></p>
+                <div className="mt-2 text-slate-700">
+                  <p>e.g. <span className="text-green-600 font-bold border-b-2 border-green-400"> -3 , -1 </span> , <span className="text-green-600 font-bold border-b-2 border-green-400"> 1 , 3 </span></p>
+                  <p className="text-xs text-green-600 mt-1">&nbsp;&nbsp;&nbsp;&nbsp; ↑負整數 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑正整數</p>
+                </div>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm">
+                <p className="font-bold text-slate-800">B. 有理數 <span className="text-red-500 font-normal">→ 整數的分數 (分子/分母)</span></p>
+                <div className="mt-2 text-slate-700 flex flex-wrap gap-4 items-center">
+                  <p>e.g. <Latex math="3, \frac{1}{3}, 0.8, \sqrt{4}, 0.\dot{3}" /></p>
+                  <span className="text-green-600 font-bold bg-green-50 px-2 py-1 rounded">靚數字 / 有規律</span>
+                </div>
+                <div className="mt-2 border border-slate-200 rounded p-2 bg-slate-50 text-sm font-mono inline-block">
+                  <p>5 ÷ 11</p>
+                  <p className="text-right text-lg">0.454545454</p>
+                </div>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-green-600 font-bold text-sm bg-green-50 px-2 py-1 rounded">不是有理數 → </span>
+                  <p className="font-bold text-slate-800">C. 無理數 <span className="text-red-500 font-normal">→ 有理數的相反</span></p>
+                </div>
+                <div className="mt-2 text-slate-700 flex flex-wrap gap-4 items-center">
+                  <p>e.g. <Latex math="\sqrt{2}, \sin 29^\circ, \pi" /></p>
+                  <span className="text-red-600 font-bold bg-red-50 px-2 py-1 rounded">數字核突 / 無規律</span>
+                </div>
+                <div className="mt-2 border border-slate-200 rounded p-2 bg-slate-50 text-sm font-mono inline-block">
+                  <p>sin(1)</p>
+                  <p className="text-right text-lg">0.017452406</p>
+                </div>
+              </div>
+
+              <div className="bg-white p-3 rounded shadow-sm">
+                <p className="font-bold text-slate-800">D. 實數 / 虛數 <span className="text-purple-600 font-normal">→ 統稱為「複數 (有i的數)」</span></p>
+                <ul className="mt-2 text-slate-700 list-disc list-inside">
+                  <li><span className="font-bold">實數：</span>沒有 <Latex math="i" /> 的數</li>
+                  <li><span className="font-bold text-purple-600">複數：</span>有 <Latex math="i" /> 的數</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">2. 正整數/負整數在不等式的應用</h3>
+            <p className="text-red-600 font-bold mb-3 bg-red-50 inline-block px-2 py-1 rounded">⚠️ 0 不是正數，也不是負數</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 text-slate-700">
+              <div className="bg-white p-3 rounded shadow-sm">
+                <p>e.g. <Latex math="x < 4" /> 的<span className="font-bold text-blue-600">所有正整數</span>：<br/> <Latex math="1, 2, 3" /></p>
+              </div>
+              <div className="bg-white p-3 rounded shadow-sm">
+                <p>e.g. <Latex math="x < 4" /> 的<span className="font-bold text-blue-600">最大整數</span>：<br/> <Latex math="3" /></p>
+              </div>
+              <div className="bg-white p-3 rounded shadow-sm">
+                <p>e.g. <Latex math="x > -3.5" /> 的<span className="font-bold text-blue-600">所有負整數</span>：<br/> <Latex math="-3, -2, -1" /></p>
+              </div>
+              <div className="bg-white p-3 rounded shadow-sm">
+                <p>e.g. <Latex math="x > -3.5" /> 的<span className="font-bold text-blue-600">最小整數</span>：<br/> <Latex math="-3" /></p>
+              </div>
+            </div>
+
+            {/* 📐 數線與負數、非負數區間 */}
+            <div className="bg-white border-2 border-slate-200 rounded-lg p-4 flex justify-center overflow-x-auto">
+              <svg viewBox="0 0 400 120" className="w-full max-w-md mx-auto">
+                {/* 負數區與非負數區背景 highlight */}
+                <rect x="45" y="70" width="135" height="24" fill="#dcfce7" /> {/* 綠色 highlight for 負數區 (-4..0 前) */}
+                <rect x="180" y="70" width="135" height="24" fill="#fef08a" /> {/* 黃色 highlight for 非負數區 (0..4) */}
+                
+                {/* 軸 */}
+                <line x1="30" y1="60" x2="355" y2="60" stroke="#334155" strokeWidth="2" />
+                <polyline points="347,54 355,60 347,66" fill="none" stroke="#334155" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                
+                {/* 刻度與數字 */}
+                {[ -4, -3, -2, -1, 0, 1, 2, 3, 4 ].map((num, i) => (
+                  <g key={num}>
+                    <line x1={60 + i * 30} y1="54" x2={60 + i * 30} y2="66" stroke="#334155" strokeWidth="2" />
+                    <text x={60 + i * 30} y="87" fontSize="14" fill={num < 0 ? "#16a34a" : "#ca8a04"} fontWeight="bold" textAnchor="middle">{num}</text>
+                  </g>
+                ))}
+
+                {/* 區域文字標籤 */}
+                <text x="112.5" y="113" fontSize="14" fill="#16a34a" fontWeight="bold" textAnchor="middle">負數區</text>
+                <text x="247.5" y="113" fontSize="14" fill="#ca8a04" fontWeight="bold" textAnchor="middle">非負數</text>
+                
+                {/* 虛線分隔 (在 0 的位置, 即 x=180) */}
+                <line x1="180" y1="35" x2="180" y2="115" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
+
+                {/* x > -3.5 範例箭頭 */}
+                <line x1="75" y1="39" x2="75" y2="60" stroke="#94a3b8" strokeWidth="2" strokeDasharray="4,4" /> {/* 連接 -3.5 的向下虛線 */}
+                <circle cx="75" cy="35" r="4" fill="white" stroke="#3b82f6" strokeWidth="2" /> {/* -3.5 空心圓 */}
+                <line x1="79" y1="35" x2="330" y2="35" stroke="#3b82f6" strokeWidth="2" />
+                <polyline points="322,29 330,35 322,41" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                
+                <text x="75" y="22" fontSize="13" fill="#3b82f6" fontWeight="bold" textAnchor="middle">-3.5</text>
+                <text x="200" y="22" fontSize="13" fill="#3b82f6" fontWeight="bold" textAnchor="middle">x &gt; -3.5</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="recurring-decimals" title="循環小數轉分數 (計算機方法)" num={7} color="indigo" activeSub={activeSub} sectionRef={s7}>
+        <div className="space-y-4">
+          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+            <h3 className="font-bold text-indigo-800 mb-3">利用計算機轉換循環小數</h3>
+            
+            <div className="bg-white rounded-lg p-4 mb-4 shadow-sm">
+              <div className="flex items-center gap-4 mb-3">
+                <p className="text-xl font-bold text-slate-800">e.g. <Latex math="0.\dot{8}" /></p>
+                <span className="text-green-600 bg-green-50 px-2 py-1 rounded text-sm font-bold">← 點上面的數字不斷重複</span>
+              </div>
+              
+              <div className="flex flex-col md:flex-row gap-4 items-center">
+                <div className="border border-slate-300 rounded p-3 bg-slate-100 font-mono text-xl shadow-inner w-full md:w-auto relative">
+                  0.888888888888<span className="animate-pulse">_</span>
+                  <div className="absolute -right-4 -bottom-4 translate-x-full md:translate-y-full md:translate-x-0 md:-ml-8 md:bottom-auto md:top-full md:mt-2 text-red-600 text-sm font-bold bg-white border border-red-200 px-3 py-2 rounded shadow-lg whitespace-nowrap">
+                    ← 不斷打重複的數字<br/>直至 mon 移位 (8)
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-14 md:mt-8 flex items-center gap-3">
+                <p className="text-slate-700 font-bold">然後按：</p>
+                <span className="bg-gray-500 text-white text-sm font-mono px-3 py-1.5 rounded-sm shadow">a b/c</span>
+                <span className="text-red-500 font-bold">→</span>
+                <div className="border border-slate-300 rounded px-3 py-1 bg-slate-50 font-mono font-bold text-lg">
+                  8 ˩ 9
+                </div>
+                <span className="text-slate-500">即是 <Latex math="\frac{8}{9}" /></span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4 shadow-sm border-l-4 border-indigo-400">
+                <p className="font-bold text-slate-800 mb-2">例子 1：</p>
+                <p className="text-lg"><Latex math="0.\dot{1}\dot{7} = 0.171717... = \frac{17}{99}" /></p>
+                <p className="text-sm text-slate-500 mt-1">計算機輸入：0.1717171717... 直至移位，再按 a b/c</p>
+              </div>
+              
+              <div className="bg-white rounded-lg p-4 shadow-sm border-l-4 border-indigo-400">
+                <p className="font-bold text-slate-800 mb-2">例子 2：</p>
+                <p className="text-lg"><Latex math="0.\dot{2}3\dot{4} = 0.234234... = \frac{26}{111}" /></p>
+                <p className="text-sm text-slate-500 mt-1">首尾有點，代表中間也重複 (234重複)</p>
+              </div>
+            </div>
+            
           </div>
         </div>
       </CollapsibleSection>

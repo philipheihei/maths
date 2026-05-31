@@ -31,6 +31,7 @@ import { FactorizationNotes, LawsOfIndicesNotes, PercentageF3Notes, AreaVolumeF3
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes, LogFunctionNotes } from './F4Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { MoreEquationsNotes } from './F4MoreEquationsNotes';
+import { TrigonometryF4Notes } from './F4TrigonometryNotes';
 import { TrigApplicationsF4Notes } from './F4TrigApplicationsNotes';
 import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes } from './F5Notes';
 import { SequenceNotes } from './F6Notes';
@@ -424,6 +425,8 @@ export const NOTES_DATA = {
         { id: 'square-root', num: 3, title: '取平方根法', color: 'blue' },
         { id: 'calculator', num: 4, title: '計算機解未知數', color: 'orange' },
         { id: 'applications', num: 5, title: '二次方程應用題', color: 'purple' },
+        { id: 'number-systems', num: 6, title: '數系', color: 'teal' },
+        { id: 'recurring-decimals', num: 7, title: '循環小數轉分數', color: 'indigo' },
       ]
     },
     {
@@ -489,6 +492,18 @@ export const NOTES_DATA = {
         { id: 'logarithmic', num: 5, title: '2D. 對數方程', color: 'cyan' },
         { id: 'trigonometric', num: 6, title: '2E. 三角方程', color: 'rose' },
         { id: 'radical', num: 7, title: '2F. 含有根號的方程', color: 'indigo' },
+      ]
+    },
+    {
+      id: 'trigonometry-astc',
+      topic: 'CH9 三角學',
+      color: 'cyan',
+      subtopics: [
+        { id: 'astc-quadrants', num: 1, title: '1. ASTC 象限圖', color: 'cyan' },
+        { id: 'find-ratios', num: 2, title: '2. 透過象限找三角比', color: 'blue' },
+        { id: 'trig-graphs', num: 3, title: '3. sin/cos/tan 的圖像', color: 'purple' },
+        { id: 'simplify-ratios', num: 4, title: '4. 簡化三角比', color: 'rose' },
+        { id: 'trig-equations', num: 5, title: '5. 三角方程', color: 'indigo' },
       ]
     },
     {
@@ -639,6 +654,7 @@ export const NOTES_COMPONENTS = {
   'functions': FunctionNotes,
   'more-equations': MoreEquationsNotes,
   'log-function': LogFunctionNotes,
+  'trigonometry-astc': TrigonometryF4Notes,
   'trig-applications-f4': TrigApplicationsF4Notes,
   'variation': VariationNotes,
   'circle-properties': CirclePropertiesNotes,
