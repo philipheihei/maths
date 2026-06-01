@@ -767,10 +767,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="53.2" y1="55.7" x2="45.6" y2="49.3" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="48.2" y1="61.6" x2="40.6" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="146.8" y1="144.3" x2="154.4" y2="150.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="151.8" y1="138.4" x2="159.4" y2="144.8" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="52.0" y1="57.2" x2="44.4" y2="50.8" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="49.5" y1="60.1" x2="41.9" y2="53.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="148.1" y1="142.8" x2="155.7" y2="149.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="150.6" y1="139.9" x2="158.2" y2="146.3" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
                 <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
@@ -804,10 +804,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="53.2" y1="55.7" x2="45.6" y2="49.3" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="48.2" y1="61.6" x2="40.6" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="146.8" y1="144.3" x2="154.4" y2="150.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="151.8" y1="138.4" x2="159.4" y2="144.8" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="52.0" y1="57.2" x2="44.4" y2="50.8" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="49.5" y1="60.1" x2="41.9" y2="53.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="148.1" y1="142.8" x2="155.7" y2="149.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="150.6" y1="139.9" x2="158.2" y2="146.3" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
                 <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
@@ -906,10 +906,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="53.2" y1="55.7" x2="45.6" y2="49.3" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="48.2" y1="61.6" x2="40.6" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="146.8" y1="144.3" x2="154.4" y2="150.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="151.8" y1="138.4" x2="159.4" y2="144.8" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="52.0" y1="57.2" x2="44.4" y2="50.8" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="49.5" y1="60.1" x2="41.9" y2="53.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="148.1" y1="142.8" x2="155.7" y2="149.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="150.6" y1="139.9" x2="158.2" y2="146.3" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
                 <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
@@ -942,10 +942,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="53.2" y1="55.7" x2="45.6" y2="49.3" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="48.2" y1="61.6" x2="40.6" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="146.8" y1="144.3" x2="154.4" y2="150.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="151.8" y1="138.4" x2="159.4" y2="144.8" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="52.0" y1="57.2" x2="44.4" y2="50.8" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="49.5" y1="60.1" x2="41.9" y2="53.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="148.1" y1="142.8" x2="155.7" y2="149.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="150.6" y1="139.9" x2="158.2" y2="146.3" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
                 <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
