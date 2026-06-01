@@ -1115,27 +1115,45 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
           <PropertyCard
             title="交錯弓形的圓周角"
-            condition={<>若 <Latex math="\text{PQ}" inline /> 是圓在 <Latex math="\text{A}" inline /> 點的切線，</>}
-            conclusion="\angle QAC = \angle ABC"
+            condition={<>若 <Latex math="\text{PQ}" inline /> 是圓在 <Latex math="\text{T}" inline /> 點的切線，</>}
+            conclusion="\begin{aligned} \angle ATQ &= \angle ABT \\ \angle BTP &= \angle BAT \end{aligned}"
             svg={() => (
               <svg viewBox="0 0 200 240" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <polygon points="43.4,156.6 100,20 180,100" fill="none" stroke="#334155" strokeWidth="1.5" />
-                <line x1="13.4" y1="126.6" x2="93.4" y2="206.6" stroke="#334155" strokeWidth="1.5" />
+                {/* Triangle TAB */}
+                <polygon points="100,180 151.4,38.7 24.8,72.6" fill="none" stroke="#334155" strokeWidth="1.5" />
+                {/* Tangent PQ */}
+                <line x1="20" y1="180" x2="180" y2="180" stroke="#334155" strokeWidth="1.5" />
                 
-                {/* Angle QAC double arc */}
-                <path d="M 61.9 148.9 A 20 20 0 0 1 57.5 170.7" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 65.6 147.4 A 24 24 0 0 1 60.4 173.6" fill="none" stroke="#334155" strokeWidth="1" />
+                {/* Angle ATQ (x) */}
+                <path d="M 100 180 L 120 180 A 20 20 0 0 0 106.8 161.2 Z" fill="#f97316" opacity="0.4" />
+                <path d="M 120 180 A 20 20 0 0 0 106.8 161.2" fill="none" stroke="#f97316" strokeWidth="2" />
                 
-                {/* Angle ABC double arc */}
-                <path d="M 114.1 34.1 A 20 20 0 0 1 92.3 38.5" fill="none" stroke="#334155" strokeWidth="1" />
-                <path d="M 117.0 37.0 A 24 24 0 0 1 90.8 42.2" fill="none" stroke="#334155" strokeWidth="1" />
+                {/* Angle ABT (y) */}
+                <path d="M 24.8 72.6 L 44.1 67.4 A 20 20 0 0 1 36.3 89.0 Z" fill="#f97316" opacity="0.4" />
+                <path d="M 44.1 67.4 A 20 20 0 0 1 36.3 89.0" fill="none" stroke="#f97316" strokeWidth="2" />
                 
-                <text x="25" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="188" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="5" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="100" y="215" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                {/* Angle BTP (b) */}
+                <path d="M 100 180 L 80 180 A 20 20 0 0 1 88.5 163.6 Z" fill="#22c55e" opacity="0.4" />
+                <path d="M 82 180 A 18 18 0 0 1 89.6 165.2" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                <path d="M 78 180 A 22 22 0 0 1 87.3 161.9" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                
+                {/* Angle BAT (a) */}
+                <path d="M 151.4 38.7 L 144.5 57.4 A 20 20 0 0 1 132.0 43.8 Z" fill="#22c55e" opacity="0.4" />
+                <path d="M 145.2 55.6 A 18 18 0 0 1 134.0 43.3" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                <path d="M 143.8 59.3 A 22 22 0 0 1 130.1 44.3" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                
+                {/* Labels */}
+                <text x="110" y="174" fill="#ea580c" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
+                <text x="44" y="83" fill="#ea580c" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
+                <text x="135" y="58" fill="#16a34a" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>a</text>
+                <text x="82" y="174" fill="#16a34a" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>b</text>
+                
+                <text x="156" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="12" y="75" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="100" y="196" fill="#475569" fontSize="12" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
+                <text x="15" y="175" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
+                <text x="180" y="175" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
               </svg>
             )}
           />
