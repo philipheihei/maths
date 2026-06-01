@@ -400,6 +400,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
               <div className="bg-emerald-50 p-2 rounded font-mono">
                 10 <span className="bg-gray-300 text-yellow-700 text-xs px-2 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs px-2 py-0.5 rounded mr-1">,</span> 2 <span className="bg-gray-900 text-white text-xs px-2 py-0.5 rounded">M+</span>
               </div>
+              <p>眾數：能直接從棒型圖睇到，最高柱係 13（頻數 8），所以眾數為 <strong>13</strong></p>
               <p>中位數看法：總共 23 個數，找第 12 個。前面 10佔了2個位，11佔了5個位，12佔了3個位 (第1-10位)，13佔第11-18位，因此中位數在 13。</p>
             </div>
           </div>
