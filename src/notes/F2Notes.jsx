@@ -109,9 +109,9 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                   {/* 小三角形 ABC */}
                   <g transform="translate(30, 20)">
                     <polygon points="50,10 10,90 90,90" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                    <text x="50" y="-5" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">C</text>
-                    <text x="-5" y="105" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
-                    <text x="105" y="105" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
+                    <text x="50" y="-5" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">C</text>
+                    <text x="-5" y="105" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
+                    <text x="105" y="105" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
                     {/* 角 x */}
                     <path d="M 30 90 A 20 20 0 0 0 18.9 72.1" fill="none" stroke="#2563eb" strokeWidth="1.5" />
                     <text x="35" y="82" fontSize="14" fill="#334155" textAnchor="middle" fontStyle="italic">x</text>
@@ -126,9 +126,9 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                   {/* 大三角形 PQR */}
                   <g transform="translate(180, 10)">
                     <polygon points="66,13 13,120 120,120" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                    <text x="66" y="3" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">R</text>
-                    <text x="-5" y="135" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">P</text>
-                    <text x="135" y="135" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">Q</text>
+                    <text x="66" y="3" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">R</text>
+                    <text x="-5" y="135" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">P</text>
+                    <text x="135" y="135" fontSize="14" fill="#334155" fontStyle="italic" textAnchor="middle">Q</text>
                     {/* 角 56° */}
                     <path d="M 33 120 A 20 20 0 0 0 21.9 102.1" fill="none" stroke="#2563eb" strokeWidth="1.5" />
                     <text x="35" y="112" fontSize="14" fill="#334155">56°</text>
@@ -376,10 +376,10 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
       <CollapsibleSection id="similar-example" title="4. 求未知量例題 (短中長)" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <h3 className="font-bold text-purple-800 mb-3">📝 4. 求下列各對相似三角形中的未知量。</h3>
+            <h3 className="font-bold text-purple-800 mb-3">📝 求以下相似三角形中的未知量。</h3>
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <div className="font-bold text-lg mb-3 flex items-center gap-4">
-                <span>19. <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△ABC</span> ~ <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△EDC</span></span>
+                <span>已知 <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△ABC</span> ~ <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△EDC</span></span>
                 <span className="text-red-600 text-sm bg-red-50 px-2 py-1 rounded-full flex items-center gap-1 group relative">
                   ← 1. 先看已知對應邊
                 </span>
@@ -391,55 +391,46 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                   <svg viewBox="0 0 400 180" className="w-full mx-auto relative z-10 touch-none my-2">
                 {/* ABCD 對接於 C。 A=(100,20), B=(40, 140), C=(220,100), D=(320, 70), E=(280, 150) */}
                 <g transform="translate(10, 0)">
-                  {/* BC-DC 線段 highlighted */}
-                  <line x1="40" y1="140" x2="320" y2="70" stroke="#16a34a" strokeWidth="4" />
-                  
                   {/* 大三角形 ABC */}
                   <polygon points="100,20 40,140 220,100" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                  <text x="100" y="10" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
-                  <text x="30" y="155" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
-                  <text x="210" y="90" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">C</text>
+                  <text x="100" y="17" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">A</text>
+                  <text x="35" y="155" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">B</text>
+                  <text x="222" y="93" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">C</text>
                   
                   {/* 中間大字 */}
-                  <text x="120" y="95" fontSize="28" fill="#7e22ce" fontWeight="bold">大</text>
+                  <text x="110" y="95" fontSize="20" fill="#7e22ce" fontWeight="bold">大</text>
                   
                   {/* AB = 8 (中) */}
-                  <text x="50" y="75" fontSize="16" fill="#334155" textAnchor="middle">8</text>
-                  <text x="70" y="65" fontSize="14" fill="#0284c7" fontWeight="bold">中</text>
-                  <path d="M 68 68 L 60 78 L 72 73" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                  <text x="63" y="75" fontSize="16" fill="#334155" textAnchor="middle">8</text>
+                  <text x="63" y="60" fontSize="14" fill="#0284c7" fontWeight="bold">中</text>
                   
                   {/* BC = 10 (長) */}
                   <text x="140" y="135" fontSize="16" fill="#334155" textAnchor="middle">10</text>
                   <text x="165" y="135" fontSize="14" fill="#0284c7" fontWeight="bold">長</text>
-                  <path d="M 160 120 L 150 115 L 155 125" fill="none" stroke="#0284c7" strokeWidth="1.5" />
                   
                   {/* AC = x (短) */}
-                  <text x="175" y="65" fontSize="16" fill="#334155" fontStyle="italic">x</text>
-                  <text x="160" y="55" fontSize="14" fill="#0284c7" fontWeight="bold">短</text>
-                  <path d="M 168 58 L 175 62 L 165 65" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                  <text x="160" y="55" fontSize="16" fill="#334155" fontStyle="italic">x</text>
+                  <text x="140" y="44" fontSize="14" fill="#0284c7" fontWeight="bold">短</text>
 
                   {/* 小三角形 EDC (E=280,150, D=320,70, C=220,100) */}
                   <polygon points="280,150 320,70 220,100" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
-                  <text x="330" y="65" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">D</text>
+                  <text x="330" y="70" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">D</text>
                   <text x="280" y="168" fontSize="16" fill="#334155" fontStyle="italic" textAnchor="middle">E</text>
                   
                   {/* 中間小字 */}
-                  <text x="280" y="115" fontSize="24" fill="#7e22ce" fontWeight="bold">小</text>
+                  <text x="260" y="115" fontSize="20" fill="#7e22ce" fontWeight="bold">小</text>
                   
                   {/* ED = y (中) */}
                   <text x="305" y="125" fontSize="16" fill="#334155" fontStyle="italic">y</text>
                   <text x="320" y="125" fontSize="14" fill="#0284c7" fontWeight="bold">中</text>
-                  <path d="M 315 120 L 308 115 L 310 125" fill="none" stroke="#0284c7" strokeWidth="1.5" />
                   
                   {/* DC = 5 (長) */}
                   <text x="270" y="80" fontSize="16" fill="#334155" textAnchor="middle">5</text>
-                  <text x="290" y="70" fontSize="14" fill="#0284c7" fontWeight="bold">長</text>
-                  <path d="M 285 75 L 275 80 L 285 85" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                  <text x="280" y="75" fontSize="14" fill="#0284c7" fontWeight="bold">長</text>
                   
                   {/* EC = 3 (短) */}
                   <text x="245" y="135" fontSize="16" fill="#334155" textAnchor="middle">3</text>
-                  <text x="235" y="145" fontSize="14" fill="#0284c7" fontWeight="bold">短</text>
-                  <path d="M 245 140 L 252 135 L 255 145" fill="none" stroke="#0284c7" strokeWidth="1.5" />
+                  <text x="235" y="150" fontSize="14" fill="#0284c7" fontWeight="bold">短</text>
                 </g>
               </svg>
                 </div>
