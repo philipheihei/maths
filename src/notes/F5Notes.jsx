@@ -623,7 +623,9 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
         <p className="text-slate-600">圖形定理、性質整理及其格式寫法</p>
       </div>
 
-      <CollapsibleSection id="circle-theorems" title="常見圓形定理" num={1} color="emerald" activeSub={activeSub} sectionRef={s1}>
+      <div className="flex flex-col">
+      <div className="order-2">
+      <CollapsibleSection id="circle-theorems" title="常見圓形定理" num={2} color="emerald" activeSub={activeSub} sectionRef={s1}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心角兩倍於圓周角"
@@ -1200,7 +1202,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="other-theorems" title="其他圓形定理" num={2} color="teal" activeSub={activeSub} sectionRef={s2}>
+      </div>
+
+      <div className="order-3">
+      <CollapsibleSection id="other-theorems" title="其他圓形定理" num={3} color="teal" activeSub={activeSub} sectionRef={s2}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心至弦的垂線平分弦"
@@ -1400,7 +1405,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="circle-parts-concepts" title="圓的不同部份與相關概念" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+      </div>
+
+      <div className="order-1">
+      <CollapsibleSection id="circle-parts-concepts" title="圓的基本概念" num={1} color="purple" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200 flex flex-col md:flex-row items-center gap-6">
             
@@ -1472,6 +1480,9 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
           </div>
         </div>
       </CollapsibleSection>
+
+      </div>
+      </div>
 
     </>
   );

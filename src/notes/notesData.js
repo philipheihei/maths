@@ -557,8 +557,9 @@ export const NOTES_DATA = {
       topic: 'CH12-13 圓形性質',
       color: 'emerald',
       subtopics: [
-        { id: 'circle-theorems', num: 1, title: '常見圓形定理', color: 'emerald' },
-        { id: 'other-theorems', num: 2, title: '其他圓形定理', color: 'teal' },
+        { id: 'circle-parts-concepts', num: 1, title: '圓的基本概念', color: 'purple' },
+        { id: 'circle-theorems', num: 2, title: '常見圓形定理', color: 'emerald' },
+        { id: 'other-theorems', num: 3, title: '其他圓形定理', color: 'teal' },
       ]
     },
     {
