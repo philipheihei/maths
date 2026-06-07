@@ -400,6 +400,11 @@ export default function App() {
     const identityType = q.identityType; 
     const finalAnswer = q.answers[0];
     const isExpand = q.mode.startsWith('展開');
+
+    const parseLeadingCoeff = (termStr) => {
+      const match = String(termStr).match(/^(\d+)/);
+      return match ? parseInt(match[1], 10) : 1;
+    };
     
     let steps = [{ label: '題目', math: q.text }];
 
@@ -431,7 +436,14 @@ export default function App() {
           const redB = divideTerm(B, d);
           const reducedA2 = reduceTermWithFactor(q.A2_str, cf);
           const reducedB2 = reduceTermWithFactor(q.B2_str, cf);
-          steps.push({ label: '提取公因數', math: `${cf}(${reducedA2} - ${reducedB2})` });
+          const innerCF = getCommonFactor([
+            parseLeadingCoeff(reducedA2),
+            parseLeadingCoeff(reducedB2),
+          ]);
+
+          if (innerCF > 1) {
+            steps.push({ label: '提取公因數', math: `${cf}(${reducedA2} - ${reducedB2})` });
+          }
           steps.push({ label: '識別 a^2 - b^2 結構', math: `${cf}[(${redA})^2 - (${redB})^2]` });
           steps.push({ label: '最終答案 (因式分解)', math: finalAnswer });
         } else {
@@ -449,7 +461,15 @@ export default function App() {
           const reducedA2 = reduceTermWithFactor(q.A2_str, cf);
           const reduced2AB = reduceTermWithFactor(q._2AB_str, cf);
           const reducedB2 = reduceTermWithFactor(q.B2_str, cf);
-          steps.push({ label: '提取公因數', math: `${cf}(${reducedA2} ${middleTermSign} ${reduced2AB} + ${reducedB2})` });
+          const innerCF = getCommonFactor([
+            parseLeadingCoeff(reducedA2),
+            parseLeadingCoeff(reduced2AB),
+            parseLeadingCoeff(reducedB2),
+          ]);
+
+          if (innerCF > 1) {
+            steps.push({ label: '提取公因數', math: `${cf}(${reducedA2} ${middleTermSign} ${reduced2AB} + ${reducedB2})` });
+          }
           steps.push({ label: `識別括號內 a^2 ${middleTermSign} 2ab + b^2 結構`, math: `${cf}[(${redA})^2 ${middleTermSign} 2(${redA})(${redB}) + (${redB})^2]` });
           steps.push({ label: '最終答案 (因式分解)', math: finalAnswer });
         } else {
