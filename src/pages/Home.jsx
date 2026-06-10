@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Calculator, ArrowRight, BookOpen, Award, BarChart2, FileText, Search, X, Layers
+  Calculator, ArrowRight, BookOpen, Award, BarChart2, FileText, Search, X, Layers, Wrench
 } from 'lucide-react';
 
 const Home = () => {
@@ -72,7 +72,8 @@ const Home = () => {
         { level: 'F2', chapter: 'CH4', subject: '因式分解' }
       ],
       category: '初中',
-      topics: ['完全平方', '展開', '因式分解']
+      topics: ['完全平方', '展開', '因式分解'],
+      inRepair: true
     },
     {
       id: 'index-laws',
@@ -589,6 +590,12 @@ const Home = () => {
                     {app.inDevelopment && (
                       <div className="absolute top-2 right-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1">
                         ⚠️ 開發中
+                      </div>
+                    )}
+                    {app.inRepair && (
+                      <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1">
+                        <Wrench className="w-3 h-3" />
+                        修復中
                       </div>
                     )}
                     <div className="flex items-center justify-between mb-4">

@@ -452,6 +452,102 @@ export const NOTES_DATA = {
         { id: 'variation-symbol', num: 2, title: '變分符號', color: 'purple' },
         { id: 'variation-questions', num: 3, title: '題目問法', color: 'green' },
       ]
+<<<<<<< HEAD
+=======
+    },
+    {
+      id: 'circle-properties',
+      topic: 'CH12-13 圓形性質',
+      color: 'emerald',
+      subtopics: [
+        { id: 'circle-parts-concepts', num: 1, title: '圓的基本概念', color: 'purple' },
+        { id: 'circle-theorems', num: 2, title: '常見圓形定理', color: 'emerald' },
+        { id: 'other-theorems', num: 3, title: '其他圓形定理', color: 'teal' },
+      ]
+    },
+    {
+      id: 'statistics-f5',
+      topic: 'CH14 統計',
+      color: 'indigo',
+      subtopics: [
+        { id: 'stat-7-indicators', num: 1, title: '七個重要統計量', color: 'blue' },
+        { id: 'stat-raw-data', num: 2, title: '從獨立數據中找統計量', color: 'indigo' },
+        { id: 'stat-graphs', num: 3, title: '從圖表找統計量', color: 'purple' },
+        { id: 'stat-standard-score', num: 4, title: '標準分 (Standard Score)', color: 'sky' },
+        { id: 'stat-data-change', num: 5, title: '修改數據對各統計量的影響', color: 'red' },
+      ]
+    },
+    {
+      id: 'probability-f5',
+      topic: 'CH15-16 排列與組合 + 概率',
+      color: 'amber',
+      subtopics: [
+        { id: 'perm-comb-concepts', num: 1, title: '1. 排列 (nPr) vs 組合 (nCr)', color: 'blue' },
+        { id: 'AND-OR-rules', num: 2, title: '2. 排列組合的基本法则 (AND / OR)', color: 'purple' },
+        { id: 'probability-advanced', num: 3, title: '3. 進階概率計算', color: 'rose' },
+        { id: 'at-least-rule', num: 4, title: '4. 「至少」題型', color: 'emerald' },
+      ]
+    },
+    {
+      id: 'compound-inequalities',
+      topic: 'CH17 複合不等式',
+      color: 'rose',
+      subtopics: [
+        { id: 'basics', num: 1, title: '0. 基礎知識', color: 'blue' },
+        { id: 'drawing', num: 2, title: '1. 畫圖找答案', color: 'green' },
+        { id: 'example-solving', num: 3, title: '2. 例子與解法', color: 'purple' },
+        { id: 'other-formats', num: 4, title: '3. 其他問法', color: 'orange' },
+        { id: 'integer-bounds', num: 5, title: '4. 問最大/最小整數', color: 'rose' },
+        { id: 'quadratic-application', num: 6, title: '5. 二次不等式 (乙部)', color: 'red' },
+      ]
+    },
+    {
+      id: 'linear-programming',
+      topic: 'CH18 線性規劃',
+      color: 'pink',
+      subtopics: [
+        { id: 'lp-range', num: 1, title: '透過線段找範圍', color: 'blue' },
+        { id: 'lp-mc', num: 2, title: 'MC：考最大值 / 最小值', color: 'red' },
+        { id: 'lp-long', num: 3, title: '長答：設立約束條件 (求不等式組)', color: 'green' },
+      ]
+    },
+    {
+      id: 'locus-and-circle',
+      topic: 'CH19 軌跡及圓的方程',
+      color: 'teal',
+      subtopics: [
+        { id: 'locus-drawing', num: 1, title: '繪畫及描述軌跡', color: 'blue' },
+        { id: 'circle-equation', num: 2, title: '圓形方程', color: 'green' },
+        { id: 'circle-features', num: 3, title: '找圓心及半徑', color: 'purple' },
+        { id: 'point-and-circle', num: 4, title: '點與圓形的位置關係', color: 'orange' },
+        { id: 'line-and-circle', num: 5, title: '直線和圓形的交點數目', color: 'red' },
+      ]
+    }
+  ],
+  F6: [
+    {
+      id: 'sequence',
+      topic: 'CH20-21 數列',
+      color: 'indigo',
+      subtopics: [
+        { id: 'nth-term', num: 1, title: '通項 (nth term) 與公差/公比', color: 'indigo' },
+        { id: 'sum', num: 2, title: '求和 (Summation)', color: 'blue' },
+        { id: 'basic-questions', num: 3, title: '考核題型 (1)：分辨與找特定項', color: 'purple' },
+        { id: 'advanced-questions', num: 4, title: '考核題型 (2)：求項數與不等式應用', color: 'red' },
+        { id: 'other-sequence', num: 5, title: '其他數列', color: 'amber' },
+      ]
+    },
+    {
+      id: 'function-transform',
+      topic: 'CH22 函數圖像變換',
+      color: 'teal',
+      subtopics: [
+        { id: 'transform-rules', num: 1, title: '變換方向口訣', color: 'blue' },
+        { id: 'translation', num: 2, title: '平移 (Translation)', color: 'green' },
+        { id: 'reflection', num: 3, title: '反射 (Reflection)', color: 'red' },
+        { id: 'stretch', num: 4, title: '伸展及收縮 (Stretch / Contraction)', color: 'purple' },
+      ]
+>>>>>>> 950d977db56ac9d8fde47845514335d36d111235
     }
   ],
   F6: [],

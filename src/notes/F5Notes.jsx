@@ -614,6 +614,7 @@ const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormul
 export const CirclePropertiesNotes = ({ activeSub }) => {
   const s1 = useRef(null);
   const s2 = useRef(null);
+  const s3 = useRef(null);
 
   return (
     <>
@@ -622,7 +623,9 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
         <p className="text-slate-600">圖形定理、性質整理及其格式寫法</p>
       </div>
 
-      <CollapsibleSection id="circle-theorems" title="常見圓形定理" num={1} color="emerald" activeSub={activeSub} sectionRef={s1}>
+      <div className="flex flex-col">
+      <div className="order-2">
+      <CollapsibleSection id="circle-theorems" title="常見圓形定理" num={2} color="emerald" activeSub={activeSub} sectionRef={s1}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心角兩倍於圓周角"
@@ -1136,19 +1139,17 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 
                 {/* Angle BTP (b) */}
                 <path d="M 100 180 L 80 180 A 20 20 0 0 1 88.5 163.6 Z" fill="#22c55e" opacity="0.4" />
-                <path d="M 82 180 A 18 18 0 0 1 89.6 165.2" fill="none" stroke="#22c55e" strokeWidth="1.5" />
-                <path d="M 78 180 A 22 22 0 0 1 87.3 161.9" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                <path d="M 80 180 A 20 20 0 0 1 88.5 163.6" fill="none" stroke="#22c55e" strokeWidth="2" />
                 
                 {/* Angle BAT (a) */}
                 <path d="M 151.4 38.7 L 144.5 57.4 A 20 20 0 0 1 132.0 43.8 Z" fill="#22c55e" opacity="0.4" />
-                <path d="M 145.2 55.6 A 18 18 0 0 1 134.0 43.3" fill="none" stroke="#22c55e" strokeWidth="1.5" />
-                <path d="M 143.8 59.3 A 22 22 0 0 1 130.1 44.3" fill="none" stroke="#22c55e" strokeWidth="1.5" />
+                <path d="M 144.5 57.4 A 20 20 0 0 1 132.0 43.8" fill="none" stroke="#22c55e" strokeWidth="2" />
                 
                 {/* Labels */}
-                <text x="110" y="174" fill="#ea580c" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
-                <text x="44" y="83" fill="#ea580c" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
-                <text x="135" y="58" fill="#16a34a" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>a</text>
-                <text x="82" y="174" fill="#16a34a" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>b</text>
+                <text x="120" y="168" fill="#ea580c" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
+                <text x="48" y="83" fill="#ea580c" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
+                <text x="127" y="61" fill="#16a34a" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>a</text>
+                <text x="71" y="171" fill="#16a34a" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>b</text>
                 
                 <text x="156" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="12" y="75" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
@@ -1201,7 +1202,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="other-theorems" title="其他圓形定理" num={2} color="teal" activeSub={activeSub} sectionRef={s2}>
+      </div>
+
+      <div className="order-3">
+      <CollapsibleSection id="other-theorems" title="其他圓形定理" num={3} color="teal" activeSub={activeSub} sectionRef={s2}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心至弦的垂線平分弦"
@@ -1320,10 +1324,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="90" y1="78.8" x2="98" y2="76.8" stroke="#0ea5e9" strokeWidth="1.5" />
                 <line x1="90" y1="121.2" x2="98" y2="123.2" stroke="#0ea5e9" strokeWidth="1.5" />
 
-                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="12" y="78" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="156" y="36" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="156" y="172" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="14" y="128" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="12" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="75" y="48" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>M</text>
                 <text x="75" y="160" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>N</text>
                 <text x="108" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
@@ -1349,11 +1353,11 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 114.1 34.1 A 20 20 0 0 1 92.3 38.5" fill="none" stroke="#334155" strokeWidth="1" />
                 <path d="M 117.0 37.0 A 24 24 0 0 1 90.8 42.2" fill="none" stroke="#334155" strokeWidth="1" />
                 
-                <text x="25" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="33" y="167" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="188" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="5" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="100" y="215" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="95" y="215" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
               </svg>
             )}
           />
@@ -1370,10 +1374,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 60 160 A 20 20 0 0 0 42.8 140.2" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 120.6 35.2 A 20 20 0 0 0 143.3 59.7" fill="none" stroke="#334155" strokeWidth="1.5" />
                 
-                <text x="25" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="28" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="165" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="145" y="30" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="45" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="142" y="35" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="50" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
               </svg>
             )}
           />
@@ -1389,10 +1393,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 57.2 39.8 A 20 20 0 0 0 79.4 24.8" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 156.7 140.3 A 20 20 0 0 1 180 160" fill="none" stroke="#334155" strokeWidth="1.5" />
                 
-                <text x="25" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="28" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="155" y="178" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="145" y="30" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="45" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="142" y="35" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="50" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="225" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>E</text>
               </svg>
             )}
@@ -1400,6 +1404,85 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
         </div>
       </CollapsibleSection>
+
+      </div>
+
+      <div className="order-1">
+      <CollapsibleSection id="circle-parts-concepts" title="圓的基本概念" num={1} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200 flex flex-col md:flex-row items-center gap-6">
+            
+            {/* 圖形區 */}
+            <div className="bg-white border border-slate-200 shadow-sm rounded-lg p-4 flex-shrink-0 w-full md:w-auto flex justify-center">
+              <svg viewBox="0 0 240 240" className="w-[200px] h-[200px] md:w-[240px] md:h-[240px]">
+                {/* 背景圓 */}
+                <circle cx="120" cy="120" r="80" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
+                
+                {/* 圓心 Center */}
+                <circle cx="120" cy="120" r="3" fill="#ef4444" />
+                <text x="90" y="135" fill="#ef4444" fontSize="12" fontWeight="bold">圓心 (Center)</text>
+                
+                {/* 半徑 Radius */}
+                <line x1="120" y1="120" x2="189.3" y2="80" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4,2" />
+                <text x="165" y="110" fill="#f59e0b" fontSize="12" fontWeight="bold">半徑 (Radius)</text>
+                
+                {/* 弦 Chord */}
+                <line x1="50.7" y1="80" x2="80" y2="189.3" stroke="#3b82f6" strokeWidth="2" />
+                <text x="0" y="140" fill="#3b82f6" fontSize="12" fontWeight="bold">弦 (Chord)</text>
+                
+                {/* 弧 Arc */}
+                <path d="M 120 200 A 80 80 0 0 0 200 120" fill="none" stroke="#10b981" strokeWidth="4" />
+                <text x="190" y="175" fill="#10b981" fontSize="12" fontWeight="bold">弧 (Arc)</text>
+                
+                {/* 切線 Tangent */}
+                <line x1="60" y1="40" x2="180" y2="40" stroke="#8b5cf6" strokeWidth="2" />
+                <circle cx="120" cy="40" r="3" fill="#8b5cf6" />
+                <text x="90" y="32" fill="#8b5cf6" fontSize="12" fontWeight="bold">切線 (Tangent)</text>
+
+                {/* 共圓 Concyclic */}
+                <g fill="#ec4899">
+                  <circle cx="63.4" cy="63.4" r="4" />
+                  <circle cx="176.6" cy="63.4" r="4" />
+                  <circle cx="176.6" cy="176.6" r="4" />
+                  <circle cx="80" cy="189.3" r="4" />
+                </g>
+                <text x="75" y="215" fill="#ec4899" fontSize="11" fontWeight="bold">點在圓上 (Concyclic)</text>
+              </svg>
+            </div>
+
+            {/* 文字解釋區 */}
+            <div className="flex-grow space-y-3">
+              <h3 className="font-bold text-purple-800 text-lg border-b border-purple-200 pb-2">名詞解釋</h3>
+              <ul className="space-y-2 text-sm text-slate-700">
+                <li className="flex items-start gap-2">
+                  <span className="text-[#8b5cf6] font-bold min-w-[50px]">切線：</span>
+                  <span>剛好接觸圓周邊緣「一點」的直線。該接觸點稱為切點。</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#ec4899] font-bold min-w-[50px]">共圓：</span>
+                  <span>兩個或以上的點，剛好位於同一個圓的圓周上，我們稱這些點為「共圓點」。</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#3b82f6] font-bold min-w-[50px]">弦：</span>
+                  <span>連接圓周上任意兩點的線段。（最長的弦就是穿過圓心的直徑）。</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#10b981] font-bold min-w-[50px]">弧：</span>
+                  <span>圓周上的其中一段連續曲線。</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-[#f59e0b] font-bold min-w-[50px]">半徑：</span>
+                  <span>從圓心連接到圓周的線段。同一個圓內所有半徑長度必定相等。</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      </div>
+      </div>
 
     </>
   );
