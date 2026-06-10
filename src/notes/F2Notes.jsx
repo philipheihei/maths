@@ -2143,7 +2143,7 @@ export const FactorizationF2Notes = ({ activeSub }) => {
               <ul className="text-sm text-slate-700 space-y-1">
                 <li>• 先找數字的公因數</li>
                 <li>• 再找代數的公因式（取最低次方）</li>
-                <li>• 記住：<Latex math="a^3 \\div a = a^2" />（次方相減）</li>
+                <li>• 記住：<Latex math="\frac{a^3}{a} = a^2" />（次方相減）</li>
               </ul>
             </div>
           </div>
