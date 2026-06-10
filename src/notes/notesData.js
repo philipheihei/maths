@@ -209,7 +209,7 @@ export const NOTES_DATA = {
       topic: 'CH2 有關三角形和直線的角',
       color: 'green',
       subtopics: [
-        { id: 'advanced-angle-theorems', num: 1, title: '進階平面幾何角定理 (6-12)', color: 'green' },
+        { id: 'advanced-angle-theorems', num: 1, title: '角度定理', color: 'green' },
       ]
     },
     {
