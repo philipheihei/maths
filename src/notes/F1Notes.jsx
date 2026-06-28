@@ -3690,7 +3690,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <p className="text-red-600">A ↓ <span className="text-green-600">B ↑</span></p>
                 </div>
                 <div className="flex-1 text-xl flex items-center gap-2 font-bold justify-center font-sans">
-                  <span className="font-sans">公式：</span> <span className="text-red-600">xy = k</span>
+                  <span className="font-sans">公式：</span> <span className="text-red-600"><Latex math="xy = k" /></span>
                 </div>
               </div>
             </div>
