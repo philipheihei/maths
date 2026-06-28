@@ -246,17 +246,17 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 </div>
               </div>
               <ul className="text-sm space-y-2">
-                <li className="grid grid-cols-[9rem_auto_4.5rem_1fr] gap-x-1 items-baseline">
-                  <span className="font-bold">3個數的<span className="bg-green-200 px-1 rounded">因數</span></span>
+                <li className="flex items-baseline gap-1">
+                  <span className="font-bold inline-block w-[6.5rem] text-right">3個數的<span className="bg-green-200 px-1 rounded">因數</span></span>
                   <span className="font-bold">→</span>
-                  <span className="font-bold">H.C.F.</span>
-                  <span>= <span className="font-bold text-blue-700">2</span></span>
+                  <span className="font-bold">H.C.F.=</span>
+                  <span><span className="font-bold text-blue-700">2</span></span>
                 </li>
-                <li className="grid grid-cols-[9rem_auto_4.5rem_1fr] gap-x-1 items-baseline">
-                  <span className="font-bold"><span className="bg-yellow-200 px-1">L</span> 形</span>
+                <li className="flex items-baseline gap-1">
+                  <span className="font-bold inline-block w-[6.5rem] text-right"><span className="bg-yellow-200 px-1">L</span> 形</span>
                   <span className="font-bold">→</span>
-                  <span className="font-bold">L.C.M.</span>
-                  <span>= 2 × 3 × 2 × 3 × 5 × 2 = <span className="font-bold text-blue-700">360</span></span>
+                  <span className="font-bold">L.C.M.=</span>
+                  <span>2 × 3 × 2 × 3 × 5 × 2 = <span className="font-bold text-blue-700">360</span></span>
                 </li>
               </ul>
             </div>
