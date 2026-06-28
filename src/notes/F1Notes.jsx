@@ -33,11 +33,11 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 3 整除</div>
-                <div className="col-span-2">將該數的每一個數字相加，看是否 <span className="bg-yellow-200 px-1 rounded">3 的倍數</span></div>
+                <div className="col-span-2">將該數的<span className="bg-yellow-200 px-1 rounded">每一個數字相加</span>，看是否 <span className="bg-yellow-200 px-1 rounded">3 的倍數</span></div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 4 整除</div>
-                <div className="col-span-2">將尾 2 個數 ÷ 4，看有沒有餘數（沒有 <span className="text-green-600 font-bold">→ 能整除</span>）</div>
+                <div className="col-span-2">將尾 2 個數 ÷ 4，看有沒有餘數（有 <span className="text-green-600 font-bold">→ 能整除</span>；沒有<span className="text-red-600 font-bold">→ 不能整除</span>）</div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 5 整除</div>
@@ -49,11 +49,11 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 8 整除</div>
-                <div className="col-span-2">將尾 3 個數 ÷ 8，看有沒有餘數（沒有 <span className="text-green-600 font-bold">→ 能整除</span>）</div>
+                <div className="col-span-2">將尾 3 個數 ÷ 8，看有沒有餘數（有 <span className="text-green-600 font-bold">→ 能整除</span>；沒有<span className="text-red-600 font-bold">→ 不能整除</span>）</div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 9 整除</div>
-                <div className="col-span-2">將該數的每一個數字相加，看是否 <span className="bg-yellow-200 px-1 rounded">9 的倍數</span></div>
+                <div className="col-span-2">將該數的<span className="bg-yellow-200 px-1 rounded">每一個數字相加</span>，看是否 <span className="bg-yellow-200 px-1 rounded">9 的倍數</span></div>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div className="font-bold text-slate-700">被 10 整除</div>
@@ -201,7 +201,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <ul className="text-sm space-y-2">
                 <li><span className="font-bold text-green-700">只看打直 → H.C.F.：</span> 2 × 2 = <span className="font-bold text-blue-700">4</span></li>
-                <li><span className="font-bold text-green-700">看 L 形 → L.C.M.：</span> 2 × 2 × 5 × 8 = <span className="font-bold text-blue-700">160</span></li>
+                <li className="ml-2"><span className="font-bold text-green-700">看 L 形 → L.C.M.：</span> 2 × 2 × 5 × 8 = <span className="font-bold text-blue-700">160</span></li>
               </ul>
               <p className="text-xs text-slate-500 mt-2">提示：L.C.M. 的數 {'>'} H.C.F. 的數</p>
             </div>
@@ -283,7 +283,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 </div>
                 <div></div>
                 <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 + <span className="text-blue-600 border-b-2 border-red-500">20</span> - 6</div>
+                <div className="font-bold text-slate-700">3 + <span className="text-slate-900 border-b-2 border-red-500">20</span> - 6</div>
                 <div></div>
                 <div className="font-bold text-slate-700">=</div>
                 <div className="font-bold text-slate-700">17</div>
@@ -450,18 +450,21 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
               <p className="text-slate-600 mb-1">e.g. 16. 把 -5，+7，0 和 -11 按遞减次序排列。</p>
               <div className="flex items-center justify-between gap-4 ml-6">
                 <p className="font-bold text-blue-700 text-lg">+7, 0, -5, -11</p>
-                <span className="font-bold text-green-700 whitespace-nowrap">11 &gt; 5</span>
+                <div className="flex items-center gap-2 whitespace-nowrap">
+                  <span className="font-bold text-green-700">11 &gt; 5</span>
+                  <span className="invisible bg-yellow-200 px-2 py-1 rounded font-bold text-green-700">正負數的大小次序相反</span>
+                </div>
               </div>
             </div>
             <div>
               <p className="text-slate-600 mb-1">17. 把 -6.3，+7.4，-6.9 和 +6.2 按遞增次序排列。</p>
               <div className="flex items-center justify-between gap-4 ml-6">
                 <p className="font-bold text-blue-700 text-lg">-6.9, -6.3, +6.2, +7.4</p>
-                <span className="font-bold text-green-700 whitespace-nowrap">但 -11 &lt; -5</span>
+                <div className="flex items-center gap-2 whitespace-nowrap">
+                  <span className="font-bold text-green-700">但 -11 &lt; -5</span>
+                  <span className="bg-yellow-200 px-2 py-1 rounded font-bold text-green-700">正負數的大小次序相反</span>
+                </div>
               </div>
-            </div>
-            <div className="pt-2 border-t border-slate-200 flex items-center justify-end">
-              <span className="bg-yellow-200 px-2 py-1 rounded font-bold text-green-700">正負數的大小次序相反</span>
             </div>
           </div>
 
@@ -480,8 +483,8 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                     {[...Array(11)].map((_, i) => {
                       const x = 50 + i * 40;
                       const val = i - 5;
-                      const showLabel = val === -5 || val === -3 || val === 0 || val === 1 || val === 3 || val === 5;
                       const isMark = val === 5 || val === -5 || val === 3 || val === -3;
+                      const showLabel = !isMark && (val === 0 || val === 1);
                       
                       return (
                         <g key={i}>
@@ -492,10 +495,10 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                             </text>
                           )}
                           {isMark && (
-                            <g stroke="red" strokeWidth="2" strokeLinecap="round">
+                            <g stroke="#38bdf8" strokeWidth="2" strokeLinecap="round">
                               <line x1={x - 5} y1="25" x2={x + 5} y2="35" />
                               <line x1={x - 5} y1="35" x2={x + 5} y2="25" />
-                              <text x={x} y="15" textAnchor="middle" fontSize="14" fill="red">{val > 0 ? `+${val}` : val}</text>
+                              <text x={x} y="15" textAnchor="middle" fontSize="14" fill="#38bdf8" stroke="none">{val > 0 ? `+${val}` : val}</text>
                             </g>
                           )}
                         </g>
@@ -517,7 +520,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                       const x = 40 + i * 35;
                       const val = (i - 6) * 0.5;
                       const isMark = val === -1 || val === 2.5 || val === -3 || val === -2.5 || val === -1.5;
-                      const showLabel = val === -3 || val === -2.5 || val === -1.5 || val === -1 || val === 0 || val === 0.5 || val === 1 || val === 2.5;
+                      const showLabel = !isMark && (val === 0 || val === 0.5 || val === 1);
                       
                       return (
                         <g key={i}>
@@ -528,10 +531,10 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                             </text>
                           )}
                           {isMark && (
-                            <g stroke="red" strokeWidth="2" strokeLinecap="round">
+                            <g stroke="#38bdf8" strokeWidth="2" strokeLinecap="round">
                               <line x1={x - 5} y1="25" x2={x + 5} y2="35" />
                               <line x1={x - 5} y1="35" x2={x + 5} y2="25" />
-                              <text x={x} y="15" textAnchor="middle" fontSize="14" fill="red">{val > 0 ? `+${val}` : val}</text>
+                              <text x={x} y="15" textAnchor="middle" fontSize="14" fill="#38bdf8" stroke="none">{val > 0 ? `+${val}` : val}</text>
                             </g>
                           )}
                         </g>
@@ -548,28 +551,40 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="operations" title="有向數的乘除變化" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
-          <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg flex flex-col md:flex-row gap-6">
-            <div className="space-y-2 text-lg">
-              <div className="flex items-center gap-4">
-                <span className="font-bold text-green-700 w-24 tracking-widest">+ + ➔ +</span>
-                <span className="font-bold text-green-700 w-24">正正得正</span>
-                <span className="text-red-600 text-sm">小學時已學！</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="font-bold text-green-700 w-24 tracking-widest">- - ➔ +</span>
-                <span className="font-bold text-green-700 w-24">負負得正</span>
-                <MathDisplay latex={String.raw`(-2) \times (-3) = +6`} inline className="text-blue-700 text-base" />
-                <MathDisplay latex="(-x)(-x) = +x^2" inline className="text-red-700 text-base ml-2" />
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="font-bold text-green-700 w-24 tracking-widest">+ - ➔ -</span>
-                <span className="font-bold text-green-700 w-24">正負得負</span>
-                <MathDisplay latex={String.raw`(+2) \times (-3) = -6`} inline className="text-blue-700 text-base" />
-              </div>
-              <div className="flex items-center gap-4">
-                <span className="font-bold text-green-700 w-24 tracking-widest">- + ➔ -</span>
-                <span className="font-bold text-green-700 w-24">負正得負</span>
-                <MathDisplay latex={String.raw`(-2) \times (+3) = -6`} inline className="text-blue-700 text-base" />
+          <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg">
+            <div className="w-full overflow-x-auto">
+              <div className="space-y-2 text-lg min-w-[700px]">
+                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
+                  <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">+</span><span className="w-5 text-center">+</span></span>
+                  <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
+                  <span className="font-bold text-green-700 text-center leading-none text-2xl">+</span>
+                  <span className="font-bold text-green-700">正正得正</span>
+                  <span className="text-red-600 text-sm">小學時已學！</span>
+                </div>
+                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
+                  <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">−</span><span className="w-5 text-center">−</span></span>
+                  <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
+                  <span className="font-bold text-green-700 text-center leading-none text-2xl">+</span>
+                  <span className="font-bold text-green-700">負負得正</span>
+                  <div className="flex items-center gap-2">
+                    <MathDisplay latex={String.raw`(-2) \times (-3) = +6`} inline className="text-blue-700 text-base" />
+                    <MathDisplay latex="(-x)(-x) = +x^2" inline className="text-red-700 text-base" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
+                  <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">+</span><span className="w-5 text-center">−</span></span>
+                  <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
+                  <span className="font-bold text-green-700 text-center leading-none text-2xl">−</span>
+                  <span className="font-bold text-green-700">正負得負</span>
+                  <MathDisplay latex={String.raw`(+2) \times (-3) = -6`} inline className="text-blue-700 text-base" />
+                </div>
+                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
+                  <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">−</span><span className="w-5 text-center">+</span></span>
+                  <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
+                  <span className="font-bold text-green-700 text-center leading-none text-2xl">−</span>
+                  <span className="font-bold text-green-700">負正得負</span>
+                  <MathDisplay latex={String.raw`(-2) \times (+3) = -6`} inline className="text-blue-700 text-base" />
+                </div>
               </div>
             </div>
           </div>
@@ -581,15 +596,15 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
             
             <div className="grid md:grid-cols-2 gap-6 pt-2">
               <div className="space-y-1 font-sans text-lg text-blue-800">
-                <div className="flex items-start"><span className="w-12 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)-(-42)" block left /></div></div>
-                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math="= +24 + 42" block left /></div></div>
-                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math="= +66" block left /></div></div>
+                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)-(-42)" block left /></div></div>
+                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +24 + 42" block left /></div></div>
+                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +66" block left /></div></div>
               </div>
               <div className="space-y-1 font-sans text-lg text-blue-800 relative">
-                <div className="flex items-start"><span className="w-12 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(-3)(-4)-5" block left /></div><div className="absolute right-4 top-2 text-sm text-green-600 font-bold">中間是 ×</div></div>
-                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math={`= +(3 \\times 4)-5`} block left /></div></div>
-                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math="= +12-5" block left /></div></div>
-                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math="= +7" block left /></div></div>
+                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(-3)(-4)-5" block left /></div><div className="absolute right-4 top-2 text-sm text-green-600 font-bold">中間是 ×</div></div>
+                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math={`= +(3 \\times 4)-5`} block left /></div></div>
+                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +12-5" block left /></div></div>
+                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +7" block left /></div></div>
               </div>
             </div>
           </div>
@@ -601,19 +616,19 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                 <div className="flex-1 max-w-xs">
                   <Latex math={`\\dfrac{-6+(-12)}{-3+5}`} block left />
                 </div>
-                <span className="text-green-600 text-sm font-bold ml-2">← 分數上下分開計</span>
+                <span className="text-green-600 text-sm font-bold">← 分數上下分開計</span>
               </div>
               
               <div className="flex items-center gap-4">
-                <span className="w-8 flex justify-end flex-shrink-0">=</span>
+                <span className="w-8 flex justify-end flex-shrink-0"><span className="inline-block origin-right [transform:scaleX(1.35)]">=</span></span>
                 <div className="flex-1 max-w-xs ml-2">
                   <Latex math={`\\dfrac{-18}{+2}`} block left />
                 </div>
-                <span className="text-green-600 text-sm font-bold ml-2">← 上下剩一個數，可計除數</span>
+                <span className="text-green-600 text-sm font-bold">← 上下剩一個數，可計除數</span>
               </div>
 
               <div className="flex items-center gap-4">
-                <span className="w-8 flex justify-end flex-shrink-0">=</span>
+                <span className="w-8 flex justify-end flex-shrink-0"><span className="inline-block origin-right [transform:scaleX(1.35)]">=</span></span>
                 <div className="flex-1 max-w-xs ml-2">
                   <Latex math="-9" block left />
                 </div>
