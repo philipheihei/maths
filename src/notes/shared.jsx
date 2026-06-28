@@ -12,15 +12,6 @@ export const Latex = ({ math, block = false, left = false }) => {
     if (isLoaded && window.katex && containerRef.current) {
       try {
         window.katex.render(math, containerRef.current, { throwOnError: false, displayMode: block, strict: false, trust: true });
-        if (block && left) {
-          const displayEl = containerRef.current.querySelector('.katex-display');
-          if (displayEl) {
-            displayEl.style.margin = '0';
-            displayEl.style.textAlign = 'left';
-            const katexEl = displayEl.querySelector('.katex');
-            if (katexEl) katexEl.style.textAlign = 'left';
-          }
-        }
       } catch (e) { containerRef.current.textContent = math; }
     }
   }, [math, block, isLoaded]);

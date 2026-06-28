@@ -491,7 +491,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
         <p className="text-slate-600">認識進階幾何角度定理、等腰三角形及多邊形的性質</p>
       </div>
 
-      <CollapsibleSection id="advanced-angle-theorems" title="角度定理" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
+      <CollapsibleSection id="advanced-angle-theorems" title="進階幾何角度定理 (6-12)" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* 6. 等腰三角形底角 */}
@@ -1927,23 +1927,9 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
               </div>
 
               <div className="bg-slate-50 p-4 rounded-lg">
-                <div className="space-y-1 font-semibold text-slate-800">
-                  <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                    <span>左方</span>
-                    <span>=</span>
-                    <Latex math="(3x+1)(x+7)" />
-                  </div>
-                  <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                    <span className="invisible">左方</span>
-                    <span>=</span>
-                    <Latex math="3x^2 + 21x + x + 7" />
-                  </div>
-                  <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                    <span className="invisible">左方</span>
-                    <span>=</span>
-                    <Latex math="3x^2 + 22x + 7" />
-                  </div>
-                </div>
+                <MathDisplay math="左方 = (3x+1)(x+7)" />
+                <MathDisplay math="= 3x^2 + 21x + x + 7" />
+                <MathDisplay math="= 3x^2 + 22x + 7" />
               </div>
               
               <div className="mt-4 bg-slate-50 p-4 rounded-lg flex flex-col md:flex-row gap-6 justify-center">
@@ -1978,53 +1964,19 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
              <div className="space-y-6 pt-6 border-t border-rose-200">
                <div>
                   <h4 className="font-bold text-rose-800 mb-2">例子 1: <Latex math="(a+b)^2" /></h4>
-                  <div className="space-y-1 font-semibold text-slate-800">
-                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                      <Latex math="(x+8)^2" />
-                      <span>=</span>
-                      <Latex math="x^2 + 2(8)(x) + 8^2" />
-                    </div>
-                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                      <span className="invisible"><Latex math="(x+8)^2" /></span>
-                      <span>=</span>
-                      <Latex math="x^2 + 16x + 64" />
-                    </div>
-                  </div>
+                  <MathDisplay math="(x+8)^2 = x^2 + 2(8)(x) + 8^2" />
+                  <MathDisplay math="= x^2 + 16x + 64" />
                </div>
                <div>
                   <h4 className="font-bold text-rose-800 mb-2">例子 2: <Latex math="(a-b)^2" /></h4>
-                  <div className="space-y-1 font-semibold text-slate-800">
-                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                      <Latex math="(2x-5)^2" />
-                      <span>=</span>
-                      <Latex math="(2x)^2 - 2(2x)(5) + 5^2" />
-                    </div>
-                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                      <span className="invisible"><Latex math="(2x-5)^2" /></span>
-                      <span>=</span>
-                      <Latex math="4x^2 - 20x + 25" />
-                    </div>
-                  </div>
+                  <MathDisplay math="(2x-5)^2 = (2x)^2 - 2(2x)(5) + 5^2" />
+                  <MathDisplay math="= 4x^2 - 20x + 25" />
                </div>
                <div>
                   <h4 className="font-bold text-rose-800 mb-2">例子 3: <Latex math="(a+b)(a-b)" /></h4>
-                  <div className="space-y-1 font-semibold text-slate-800">
-                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                      <Latex math="2(m+6n)(m-6n)" />
-                      <span>=</span>
-                      <Latex math="2[m^2 - (6n)^2]" />
-                    </div>
-                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                      <span className="invisible"><Latex math="2(m+6n)(m-6n)" /></span>
-                      <span>=</span>
-                      <Latex math="2(m^2 - 36n^2)" />
-                    </div>
-                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                      <span className="invisible"><Latex math="2(m+6n)(m-6n)" /></span>
-                      <span>=</span>
-                      <Latex math="2m^2 - 72n^2" />
-                    </div>
-                  </div>
+                  <MathDisplay math="2(m+6n)(m-6n) = 2[m^2 - (6n)^2]" />
+                  <MathDisplay math="= 2(m^2 - 36n^2)" />
+                  <MathDisplay math="= 2m^2 - 72n^2" />
                </div>
              </div>
           </div>
@@ -2143,7 +2095,7 @@ export const FactorizationF2Notes = ({ activeSub }) => {
               <ul className="text-sm text-slate-700 space-y-1">
                 <li>• 先找數字的公因數</li>
                 <li>• 再找代數的公因式（取最低次方）</li>
-                <li>• 記住：<Latex math="\frac{a^3}{a} = a^2" />（次方相減）</li>
+                <li>• 記住：<Latex math="a^3 \\div a = a^2" />（次方相減）</li>
               </ul>
             </div>
           </div>

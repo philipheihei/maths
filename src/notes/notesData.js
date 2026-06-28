@@ -20,24 +20,25 @@ import {
   PythagorasF2Notes,
   TrigRatiosF2Notes,
   MeasurementErrorsNotes,
-  Statistics2F2Notes,
-  GeometryProofF2Notes,
   SimilarTrianglesNotes,
   TriangleLineAnglesNotes,
   AlgebraicFractionsNotes,
   IdentitiesF2Notes,
   FactorizationF2Notes,
   CirclesCylindersF2Notes,
+  Statistics2F2Notes,
+  GeometryProofF2Notes,
 } from './F2Notes';
-import { FactorizationNotes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes, PercentageF3Notes } from './F3Notes';
-import { LawsOfIndicesNotes } from './F3LawsOfIndicesNotes';
-import { AreaVolumeF3Notes } from './F3AreaVolumeNotes';
+import { FactorizationNotes, LawsOfIndicesNotes, PercentageF3Notes, AreaVolumeF3Notes, TrigonometricIdentitiesNotes, QuadrilateralNotes, CoordinateGeometryF3Notes, TrigonometryApplicationsNotes, TriangleLinesNotes, CentralTendencyNotes, ProbabilityF3Notes } from './F3Notes';
 import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, FunctionNotes, StraightLineEquationNotes, LogFunctionNotes } from './F4Notes';
+import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { MoreEquationsNotes } from './F4MoreEquationsNotes';
 import { TrigonometryF4Notes } from './F4TrigonometryNotes';
 import { TrigApplicationsF4Notes } from './F4TrigApplicationsNotes';
-import { VariationNotes } from './F5Notes';
-import { SimEqCalculatorNotes } from './A1Notes';
+import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes, LocusAndCircleNotes } from './F5Notes';
+import { SequenceNotes, FunctionTransformNotes } from './F6Notes';
+import { ProbabilityF5Notes } from './ProbabilityF5Notes';
+import { SimEqCalculatorNotes, MCTopicsNotes } from './A1Notes';
 
 export const NOTES_DATA = {
   F1: [
@@ -208,7 +209,7 @@ export const NOTES_DATA = {
       topic: 'CH2 有關三角形和直線的角',
       color: 'green',
       subtopics: [
-        { id: 'advanced-angle-theorems', num: 1, title: '角度定理', color: 'green' },
+        { id: 'advanced-angle-theorems', num: 1, title: '進階平面幾何角定理 (6-12)', color: 'green' },
       ]
     },
     {
@@ -258,11 +259,11 @@ export const NOTES_DATA = {
       topic: 'CH7 統計(二)',
       color: 'blue',
       subtopics: [
-        { id: 'freq-table', num: 1, title: '頻數分佈表的補充', color: 'rose' },
+        { id: 'freq-table', num: 1, title: '頻數分佈表的名詞', color: 'rose' },
         { id: 'histogram', num: 2, title: '直方圖', color: 'blue' },
-        { id: 'freq-polygon', num: 3, title: '頻數分佈多邊形', color: 'indigo' },
-        { id: 'cumulative-freq', num: 4, title: '累積頻數分佈多邊形', color: 'emerald' },
-        { id: 'quartiles', num: 5, title: '四分位數及箱形圖', color: 'fuchsia' },
+        { id: 'freq-polygon', num: 3, title: '頻數多邊形和曲線', color: 'indigo' },
+        { id: 'cumulative-freq', num: 4, title: '累積頻數多邊形和曲線', color: 'emerald' },
+        { id: 'quartiles', num: 5, title: '百分位數、四分位數和中位數', color: 'fuchsia' },
       ]
     },
     {
@@ -300,8 +301,8 @@ export const NOTES_DATA = {
       topic: 'CH11 幾何證明',
       color: 'indigo',
       subtopics: [
-        { id: 'prove-line', num: 1, title: '證明線段關係', color: 'blue' },
-        { id: 'prove-parallel', num: 2, title: '證明平行', color: 'indigo' },
+        { id: 'prove-line', num: 1, title: '證明是直線', color: 'blue' },
+        { id: 'prove-parallel', num: 2, title: '證明是平行線', color: 'indigo' },
         { id: 'prove-perpendicular', num: 3, title: '證明垂直', color: 'emerald' },
         { id: 'prove-congruent-similar', num: 4, title: '證明全等/相似三角形', color: 'purple' },
       ]
@@ -342,7 +343,7 @@ export const NOTES_DATA = {
       topic: 'CH2 指數定律',
       color: 'blue',
       subtopics: [
-        { id: 'laws', num: 1, title: '指數定律（及新學知識）', color: 'blue' },
+        { id: 'laws', num: 1, title: '指數定律（核心）', color: 'blue' },
         { id: 'scientific-notation', num: 2, title: '科學記數法', color: 'green' },
         { id: 'binary-conversion', num: 3, title: '二進制轉換', color: 'purple' },
       ]
@@ -359,12 +360,12 @@ export const NOTES_DATA = {
     },
     {
       id: 'area-volume-f3',
-      topic: 'CH4 面積與體積(三)',
+      topic: 'CH4 面積與體積',
       color: 'teal',
       subtopics: [
-        { id: 'basic-area', num: 1, title: '簡單圖形的面積', color: 'blue' },
-        { id: 'formulas', num: 2, title: '公式', color: 'green' },
-        { id: 'similar-shapes', num: 3, title: '相似圖形 / 相似立體', color: 'purple' },
+        { id: 'basic-area', num: 1, title: '平面圖形面積', color: 'blue' },
+        { id: 'formulas', num: 2, title: '面積與體積公式', color: 'green' },
+        { id: 'similar-shapes', num: 3, title: '相似圖形 / 立體比例', color: 'purple' },
       ]
     },
     {
@@ -449,6 +450,8 @@ export const NOTES_DATA = {
         { id: 'square-root', num: 3, title: '取平方根法', color: 'blue' },
         { id: 'calculator', num: 4, title: '計算機解未知數', color: 'orange' },
         { id: 'applications', num: 5, title: '二次方程應用題', color: 'purple' },
+        { id: 'number-systems', num: 6, title: '數系', color: 'teal' },
+        { id: 'recurring-decimals', num: 7, title: '循環小數轉分數', color: 'indigo' },
       ]
     },
     {
@@ -493,18 +496,18 @@ export const NOTES_DATA = {
     },
     {
       id: 'log-function',
-      topic: 'CH6-7 指數函數與對數函數(log)',
+      topic: 'CH6-7 指數函數與對數函數 (log)',
       color: 'purple',
       subtopics: [
         { id: 'simplify-indices', num: 1, title: '簡化指數算式', color: 'blue' },
-        { id: 'log-definition', num: 2, title: 'log 的定義與運算性質', color: 'green' },
+        { id: 'log-definition', num: 2, title: 'log 的定義與對數性質', color: 'green' },
         { id: 'log-equations', num: 3, title: '指數方程與對數方程', color: 'purple' },
         { id: 'log-applications', num: 4, title: '應用題', color: 'amber' },
       ]
     },
     {
       id: 'more-equations',
-      topic: 'CH8 更多方程',
+      topic: 'CH8 續方程',
       color: 'indigo',
       subtopics: [
         { id: 'simultaneous', num: 1, title: '1. 聯立方程', color: 'teal' },
@@ -513,7 +516,7 @@ export const NOTES_DATA = {
         { id: 'exponential', num: 4, title: '2C. 指數方程', color: 'amber' },
         { id: 'logarithmic', num: 5, title: '2D. 對數方程', color: 'cyan' },
         { id: 'trigonometric', num: 6, title: '2E. 三角方程', color: 'rose' },
-        { id: 'radical', num: 7, title: '2F. 根式方程與無理方程', color: 'indigo' },
+        { id: 'radical', num: 7, title: '2F. 含有根號的方程', color: 'indigo' },
       ]
     },
     {
@@ -521,9 +524,9 @@ export const NOTES_DATA = {
       topic: 'CH9 三角學',
       color: 'cyan',
       subtopics: [
-        { id: 'astc-quadrants', num: 1, title: 'ASTC 象限口訣', color: 'cyan' },
-        { id: 'find-ratios', num: 2, title: '利用象限求三角比', color: 'blue' },
-        { id: 'trig-graphs', num: 3, title: 'sin/cos/tan 圖像', color: 'purple' },
+        { id: 'astc-quadrants', num: 1, title: 'ASTC 象限圖', color: 'cyan' },
+        { id: 'find-ratios', num: 2, title: '透過象限找三角比', color: 'blue' },
+        { id: 'trig-graphs', num: 3, title: 'sin/cos/tan 的圖像', color: 'purple' },
         { id: 'simplify-ratios', num: 4, title: '簡化三角比', color: 'rose' },
         { id: 'trig-equations', num: 5, title: '三角方程', color: 'indigo' },
       ]
@@ -533,8 +536,8 @@ export const NOTES_DATA = {
       topic: 'CH10 三角學的應用',
       color: 'emerald',
       subtopics: [
-        { id: 'area', num: 1, title: '1. 三角形面積', color: 'rose' },
-        { id: 'sides-angles', num: 2, title: '2. 求邊長 / 角度', color: 'emerald' },
+        { id: 'area', num: 1, title: '1. 找 △ 面積', color: 'rose' },
+        { id: 'sides-angles', num: 2, title: '2. 找 △ 邊長 / 角度', color: 'emerald' },
       ]
     }
   ],
@@ -645,6 +648,14 @@ export const NOTES_DATA = {
   ],
   '高中甲(一)': [
     {
+      id: 'mc-topics',
+      topic: 'MC 課題',
+      color: 'green',
+      subtopics: [
+        { id: 'shape-proportion', num: 4, title: '圖形比例 (較深)', color: 'green' },
+      ]
+    },
+    {
       id: 'simultaneous-eq',
       topic: '聯立方程',
       color: 'blue',
@@ -682,7 +693,6 @@ export const NOTES_COMPONENTS = {
   'inequality': InequalityNotes,
   'simultaneous-eq-f2': SimultaneousEqF2Notes,
   'pythagoras-f2': PythagorasF2Notes,
-  'geometry-proof-f2': GeometryProofF2Notes,
   'trig-ratios-f2': TrigRatiosF2Notes,
   'factorization': FactorizationNotes,
   'laws-of-indices': LawsOfIndicesNotes,
@@ -698,18 +708,30 @@ export const NOTES_COMPONENTS = {
   'quadratic-equation': QuadraticEquationNotes,
   'nature-of-roots': NatureOfRootsNotes,
   'remainder-factor': RemainderFactorNotes,
-  'log-function': LogFunctionNotes,
+  'straight-line-equation': StraightLineEquationNotes,
+  'functions': FunctionNotes,
   'more-equations': MoreEquationsNotes,
+  'log-function': LogFunctionNotes,
   'trigonometry-astc': TrigonometryF4Notes,
   'trig-applications-f4': TrigApplicationsF4Notes,
   'variation': VariationNotes,
+  'circle-properties': CirclePropertiesNotes,
+  'statistics-f5': StatisticsF5Notes,
+  'probability-f5': ProbabilityF5Notes,
+  'compound-inequalities': CompoundInequalitiesNotes,
+  'linear-programming': LinearProgrammingNotes,
+  'locus-and-circle': LocusAndCircleNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
+  'mc-topics': MCTopicsNotes,
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
   'angles': AnglesNotes,
   'congruent-triangles': CongruentTrianglesNotes,
+  'geometry-proof-f2': GeometryProofF2Notes,
   'rate-ratio': RateRatioNotes,
   'functions': FunctionNotes,
   'straight-line-equation': StraightLineEquationNotes,
   'similar-triangles': SimilarTrianglesNotes,
+  'sequence': SequenceNotes,
+  'function-transform': FunctionTransformNotes,
 };
