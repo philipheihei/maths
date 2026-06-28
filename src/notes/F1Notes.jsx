@@ -161,8 +161,8 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                   </tr>
                   <tr>
                     <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left">2 × <span className="bg-yellow-200 px-1">2 × 2</span> × 5</td>
-                    <td></td>
+                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1">2 × 2 × 2</span> × 5</td>
+                    <td className="pl-4 text-green-700 text-sm">← 直至全部數字都是質數</td>
                   </tr>
                   <tr>
                     <td className="text-right pr-2">=</td>
@@ -246,8 +246,18 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 </div>
               </div>
               <ul className="text-sm space-y-2">
-                <li><span className="font-bold text-green-700">3個數的因數 → H.C.F.：</span> = <span className="font-bold text-blue-700">2</span></li>
-                <li><span className="font-bold bg-yellow-200 px-1 text-green-700">L 形 → L.C.M.：</span> 2 × 3 × 2 × 3 × 5 × 2 = <span className="font-bold text-blue-700">360</span></li>
+                <li className="grid grid-cols-[9rem_auto_4.5rem_1fr] gap-x-1 items-baseline">
+                  <span className="font-bold">3個數的<span className="bg-green-200 px-1 rounded">因數</span></span>
+                  <span className="font-bold">→</span>
+                  <span className="font-bold">H.C.F.</span>
+                  <span>= <span className="font-bold text-blue-700">2</span></span>
+                </li>
+                <li className="grid grid-cols-[9rem_auto_4.5rem_1fr] gap-x-1 items-baseline">
+                  <span className="font-bold"><span className="bg-yellow-200 px-1">L</span> 形</span>
+                  <span className="font-bold">→</span>
+                  <span className="font-bold">L.C.M.</span>
+                  <span>= 2 × 3 × 2 × 3 × 5 × 2 = <span className="font-bold text-blue-700">360</span></span>
+                </li>
               </ul>
             </div>
           </div>
@@ -257,23 +267,26 @@ export const BasicCalculationNotes = ({ activeSub }) => {
       <CollapsibleSection id="arithmetic" title="5. 四則運算" num={5} color="blue" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200 mb-4 inline-block">
-            <h3 className="font-bold text-amber-800">💡 運算次序：先把括號，再乘除，後加減</h3>
+            <h3 className="font-bold text-amber-800">💡 運算次序：先處理括號，再乘除，後加減</h3>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg p-4 border border-slate-200">
-              <div className="font-sans text-lg mb-2 relative">
-                <span className="mr-2">e.g.</span>
-                <span>3 + </span>
-                <span className="border-2 border-red-500 px-1 relative">
-                  4 × 5
-                  <span className="absolute -top-6 left-1/2 text-sm text-red-600 whitespace-nowrap -translate-x-1/2">← 先計乘</span>
-                </span>
-                <span> - 6</span>
-              </div>
-              <div className="pl-12 font-sans font-bold text-slate-700 space-y-1">
-                <div>= 3 + <span className="text-blue-600 border-b-2 border-red-500">20</span> - 6</div>
-                <div>= 17</div>
+              <div className="font-sans text-lg mb-2 grid grid-cols-[2.75rem_1rem_1fr] gap-x-1 gap-y-1 items-baseline">
+                <div className="font-bold text-slate-700">e.g.</div>
+                <div></div>
+                <div>
+                  <span>3 + </span>
+                  <span className="border-2 border-red-500 px-1">4 × 5</span>
+                  <span> - 6</span>
+                  <span className="text-red-500 text-sm font-normal ml-2 whitespace-nowrap">← 先計乘</span>
+                </div>
+                <div></div>
+                <div className="font-bold text-slate-700">=</div>
+                <div className="font-bold text-slate-700">3 + <span className="text-blue-600 border-b-2 border-red-500">20</span> - 6</div>
+                <div></div>
+                <div className="font-bold text-slate-700">=</div>
+                <div className="font-bold text-slate-700">17</div>
               </div>
             </div>
 
@@ -283,18 +296,23 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <span>[ ] 中括號</span>
                 <span>{`{ }`} 大括號</span>
               </div>
-              <div className="font-sans text-lg mb-2 mt-4 relative">
-                <span className="mr-2">e.g.</span>
-                <span>3 × </span>
-                <span className="bg-yellow-200 px-1 relative">
-                  [24 - (6 + 2)]
-                  <span className="absolute -top-6 right-0 text-sm text-red-600 whitespace-nowrap">← 先計小括號，再計中括號</span>
-                </span>
-              </div>
-              <div className="pl-12 font-sans font-bold text-slate-700 space-y-1 mt-6">
-                <div>= 3 × (24 - <span className="text-blue-600">8</span>) <span className="text-red-500 text-sm font-normal">← 中括號轉小括號</span></div>
-                <div>= 3 × 16</div>
-                <div>= 48</div>
+              <div className="font-sans text-lg mb-2 mt-4 grid grid-cols-[2.75rem_1rem_1fr] gap-x-1 gap-y-1 items-baseline">
+                <div className="font-bold text-slate-700">e.g.</div>
+                <div></div>
+                <div>
+                  <span>3 × </span>
+                  <span className="bg-yellow-200 px-1">[24 - (6 + 2)]</span>
+                  <span className="text-red-500 text-sm font-normal ml-2 whitespace-nowrap">← 先計小括號，再計中括號</span>
+                </div>
+                <div></div>
+                <div className="font-bold text-slate-700">=</div>
+                <div className="font-bold text-slate-700">3 × (24 - <span className="text-blue-600">8</span>) <span className="text-red-500 text-sm font-normal">← 中括號轉小括號</span></div>
+                <div></div>
+                <div className="font-bold text-slate-700">=</div>
+                <div className="font-bold text-slate-700">3 × 16</div>
+                <div></div>
+                <div className="font-bold text-slate-700">=</div>
+                <div className="font-bold text-slate-700">48</div>
               </div>
             </div>
           </div>

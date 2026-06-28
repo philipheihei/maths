@@ -452,8 +452,6 @@ export const NOTES_DATA = {
         { id: 'variation-symbol', num: 2, title: '變分符號', color: 'purple' },
         { id: 'variation-questions', num: 3, title: '題目問法', color: 'green' },
       ]
-<<<<<<< HEAD
-=======
     },
     {
       id: 'circle-properties',
@@ -547,10 +545,8 @@ export const NOTES_DATA = {
         { id: 'reflection', num: 3, title: '反射 (Reflection)', color: 'red' },
         { id: 'stretch', num: 4, title: '伸展及收縮 (Stretch / Contraction)', color: 'purple' },
       ]
->>>>>>> 950d977db56ac9d8fde47845514335d36d111235
     }
   ],
-  F6: [],
   '高中甲(一)': [
     {
       id: 'simultaneous-eq',
