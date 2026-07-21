@@ -33,11 +33,11 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 3 整除</div>
-                <div className="col-span-2">將該數的<span className="bg-yellow-200 px-1 rounded">每一個數字相加</span>，看是否 <span className="bg-yellow-200 px-1 rounded">3 的倍數</span></div>
+                <div className="col-span-2">將該數的每一個數字相加，看是否 <span className="bg-yellow-200 px-1 rounded">3 的倍數</span></div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 4 整除</div>
-                <div className="col-span-2">將尾 2 個數 ÷ 4，看有沒有餘數（有 <span className="text-green-600 font-bold">→ 能整除</span>；沒有<span className="text-red-600 font-bold">→ 不能整除</span>）</div>
+                <div className="col-span-2">將尾 2 個數 ÷ 4，看有沒有餘數（沒有 <span className="text-green-600 font-bold">→ 能整除</span>）</div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 5 整除</div>
@@ -49,11 +49,11 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 8 整除</div>
-                <div className="col-span-2">將尾 3 個數 ÷ 8，看有沒有餘數（有 <span className="text-green-600 font-bold">→ 能整除</span>；沒有<span className="text-red-600 font-bold">→ 不能整除</span>）</div>
+                <div className="col-span-2">將尾 3 個數 ÷ 8，看有沒有餘數（沒有 <span className="text-green-600 font-bold">→ 能整除</span>）</div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 9 整除</div>
-                <div className="col-span-2">將該數的<span className="bg-yellow-200 px-1 rounded">每一個數字相加</span>，看是否 <span className="bg-yellow-200 px-1 rounded">9 的倍數</span></div>
+                <div className="col-span-2">將該數的每一個數字相加，看是否 <span className="bg-yellow-200 px-1 rounded">9 的倍數</span></div>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div className="font-bold text-slate-700">被 10 整除</div>
@@ -161,8 +161,8 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                   </tr>
                   <tr>
                     <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1">2 × 2 × 2</span> × 5</td>
-                    <td className="pl-4 text-green-700 text-sm">← 直至全部數字都是質數</td>
+                    <td className="font-bold text-left">2 × <span className="bg-yellow-200 px-1">2 × 2</span> × 5</td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td className="text-right pr-2">=</td>
@@ -201,7 +201,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <ul className="text-sm space-y-2">
                 <li><span className="font-bold text-green-700">只看打直 → H.C.F.：</span> 2 × 2 = <span className="font-bold text-blue-700">4</span></li>
-                <li className="ml-2"><span className="font-bold text-green-700">看 L 形 → L.C.M.：</span> 2 × 2 × 5 × 8 = <span className="font-bold text-blue-700">160</span></li>
+                <li><span className="font-bold text-green-700">看 L 形 → L.C.M.：</span> 2 × 2 × 5 × 8 = <span className="font-bold text-blue-700">160</span></li>
               </ul>
               <p className="text-xs text-slate-500 mt-2">提示：L.C.M. 的數 {'>'} H.C.F. 的數</p>
             </div>
@@ -246,18 +246,8 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 </div>
               </div>
               <ul className="text-sm space-y-2">
-                <li className="flex items-baseline gap-1">
-                  <span className="font-bold inline-block w-[6.5rem] text-right">3個數的<span className="bg-green-200 px-1 rounded">因數</span></span>
-                  <span className="font-bold">→</span>
-                  <span className="font-bold">H.C.F.=</span>
-                  <span><span className="font-bold text-blue-700">2</span></span>
-                </li>
-                <li className="flex items-baseline gap-1">
-                  <span className="font-bold inline-block w-[6.5rem] text-right"><span className="bg-yellow-200 px-1">L</span> 形</span>
-                  <span className="font-bold">→</span>
-                  <span className="font-bold">L.C.M.=</span>
-                  <span>2 × 3 × 2 × 3 × 5 × 2 = <span className="font-bold text-blue-700">360</span></span>
-                </li>
+                <li><span className="font-bold text-green-700">3個數的因數 → H.C.F.：</span> = <span className="font-bold text-blue-700">2</span></li>
+                <li><span className="font-bold bg-yellow-200 px-1 text-green-700">L 形 → L.C.M.：</span> 2 × 3 × 2 × 3 × 5 × 2 = <span className="font-bold text-blue-700">360</span></li>
               </ul>
             </div>
           </div>
@@ -267,26 +257,23 @@ export const BasicCalculationNotes = ({ activeSub }) => {
       <CollapsibleSection id="arithmetic" title="5. 四則運算" num={5} color="blue" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200 mb-4 inline-block">
-            <h3 className="font-bold text-amber-800">💡 運算次序：先處理括號，再乘除，後加減</h3>
+            <h3 className="font-bold text-amber-800">💡 運算次序：先把括號，再乘除，後加減</h3>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-lg p-4 border border-slate-200">
-              <div className="font-sans text-lg mb-2 grid grid-cols-[2.75rem_1rem_1fr] gap-x-1 gap-y-1 items-baseline">
-                <div className="font-bold text-slate-700">e.g.</div>
-                <div></div>
-                <div>
-                  <span>3 + </span>
-                  <span className="border-2 border-red-500 px-1">4 × 5</span>
-                  <span> - 6</span>
-                  <span className="text-red-500 text-sm font-normal ml-2 whitespace-nowrap">← 先計乘</span>
-                </div>
-                <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 + <span className="text-slate-900 border-b-2 border-red-500">20</span> - 6</div>
-                <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">17</div>
+              <div className="font-sans text-lg mb-2 relative">
+                <span className="mr-2">e.g.</span>
+                <span>3 + </span>
+                <span className="border-2 border-red-500 px-1 relative">
+                  4 × 5
+                  <span className="absolute -top-6 left-1/2 text-sm text-red-600 whitespace-nowrap -translate-x-1/2">← 先計乘</span>
+                </span>
+                <span> - 6</span>
+              </div>
+              <div className="pl-12 font-sans font-bold text-slate-700 space-y-1">
+                <div>= 3 + <span className="text-blue-600 border-b-2 border-red-500">20</span> - 6</div>
+                <div>= 17</div>
               </div>
             </div>
 
@@ -296,23 +283,18 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <span>[ ] 中括號</span>
                 <span>{`{ }`} 大括號</span>
               </div>
-              <div className="font-sans text-lg mb-2 mt-4 grid grid-cols-[2.75rem_1rem_1fr] gap-x-1 gap-y-1 items-baseline">
-                <div className="font-bold text-slate-700">e.g.</div>
-                <div></div>
-                <div>
-                  <span>3 × </span>
-                  <span className="bg-yellow-200 px-1">[24 - (6 + 2)]</span>
-                  <span className="text-red-500 text-sm font-normal ml-2 whitespace-nowrap">← 先計小括號，再計中括號</span>
-                </div>
-                <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 × (24 - <span className="text-blue-600">8</span>) <span className="text-red-500 text-sm font-normal">← 中括號轉小括號</span></div>
-                <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 × 16</div>
-                <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">48</div>
+              <div className="font-sans text-lg mb-2 mt-4 relative">
+                <span className="mr-2">e.g.</span>
+                <span>3 × </span>
+                <span className="bg-yellow-200 px-1 relative">
+                  [24 - (6 + 2)]
+                  <span className="absolute -top-6 right-0 text-sm text-red-600 whitespace-nowrap">← 先計小括號，再計中括號</span>
+                </span>
+              </div>
+              <div className="pl-12 font-sans font-bold text-slate-700 space-y-1 mt-6">
+                <div>= 3 × (24 - <span className="text-blue-600">8</span>) <span className="text-red-500 text-sm font-normal">← 中括號轉小括號</span></div>
+                <div>= 3 × 16</div>
+                <div>= 48</div>
               </div>
             </div>
           </div>
@@ -450,21 +432,18 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
               <p className="text-slate-600 mb-1">e.g. 16. 把 -5，+7，0 和 -11 按遞减次序排列。</p>
               <div className="flex items-center justify-between gap-4 ml-6">
                 <p className="font-bold text-blue-700 text-lg">+7, 0, -5, -11</p>
-                <div className="flex items-center gap-2 whitespace-nowrap">
-                  <span className="font-bold text-green-700">11 &gt; 5</span>
-                  <span className="invisible bg-yellow-200 px-2 py-1 rounded font-bold text-green-700">正負數的大小次序相反</span>
-                </div>
+                <span className="font-bold text-green-700 whitespace-nowrap">11 &gt; 5</span>
               </div>
             </div>
             <div>
               <p className="text-slate-600 mb-1">17. 把 -6.3，+7.4，-6.9 和 +6.2 按遞增次序排列。</p>
               <div className="flex items-center justify-between gap-4 ml-6">
                 <p className="font-bold text-blue-700 text-lg">-6.9, -6.3, +6.2, +7.4</p>
-                <div className="flex items-center gap-2 whitespace-nowrap">
-                  <span className="font-bold text-green-700">但 -11 &lt; -5</span>
-                  <span className="bg-yellow-200 px-2 py-1 rounded font-bold text-green-700">正負數的大小次序相反</span>
-                </div>
+                <span className="font-bold text-green-700 whitespace-nowrap">但 -11 &lt; -5</span>
               </div>
+            </div>
+            <div className="pt-2 border-t border-slate-200 flex items-center justify-end">
+              <span className="bg-yellow-200 px-2 py-1 rounded font-bold text-green-700">正負數的大小次序相反</span>
             </div>
           </div>
 
@@ -483,8 +462,8 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                     {[...Array(11)].map((_, i) => {
                       const x = 50 + i * 40;
                       const val = i - 5;
+                      const showLabel = val === -5 || val === -3 || val === 0 || val === 1 || val === 3 || val === 5;
                       const isMark = val === 5 || val === -5 || val === 3 || val === -3;
-                      const showLabel = !isMark && (val === 0 || val === 1);
                       
                       return (
                         <g key={i}>
@@ -495,10 +474,10 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                             </text>
                           )}
                           {isMark && (
-                            <g stroke="#38bdf8" strokeWidth="2" strokeLinecap="round">
+                            <g stroke="red" strokeWidth="2" strokeLinecap="round">
                               <line x1={x - 5} y1="25" x2={x + 5} y2="35" />
                               <line x1={x - 5} y1="35" x2={x + 5} y2="25" />
-                              <text x={x} y="15" textAnchor="middle" fontSize="14" fill="#38bdf8" stroke="none">{val > 0 ? `+${val}` : val}</text>
+                              <text x={x} y="15" textAnchor="middle" fontSize="14" fill="red">{val > 0 ? `+${val}` : val}</text>
                             </g>
                           )}
                         </g>
@@ -520,7 +499,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                       const x = 40 + i * 35;
                       const val = (i - 6) * 0.5;
                       const isMark = val === -1 || val === 2.5 || val === -3 || val === -2.5 || val === -1.5;
-                      const showLabel = !isMark && (val === 0 || val === 0.5 || val === 1);
+                      const showLabel = val === -3 || val === -2.5 || val === -1.5 || val === -1 || val === 0 || val === 0.5 || val === 1 || val === 2.5;
                       
                       return (
                         <g key={i}>
@@ -531,10 +510,10 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                             </text>
                           )}
                           {isMark && (
-                            <g stroke="#38bdf8" strokeWidth="2" strokeLinecap="round">
+                            <g stroke="red" strokeWidth="2" strokeLinecap="round">
                               <line x1={x - 5} y1="25" x2={x + 5} y2="35" />
                               <line x1={x - 5} y1="35" x2={x + 5} y2="25" />
-                              <text x={x} y="15" textAnchor="middle" fontSize="14" fill="#38bdf8" stroke="none">{val > 0 ? `+${val}` : val}</text>
+                              <text x={x} y="15" textAnchor="middle" fontSize="14" fill="red">{val > 0 ? `+${val}` : val}</text>
                             </g>
                           )}
                         </g>
@@ -551,40 +530,28 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="operations" title="有向數的乘除變化" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
-          <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg">
-            <div className="w-full overflow-x-auto">
-              <div className="space-y-2 text-lg min-w-[700px]">
-                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
-                  <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">+</span><span className="w-5 text-center">+</span></span>
-                  <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
-                  <span className="font-bold text-green-700 text-center leading-none text-2xl">+</span>
-                  <span className="font-bold text-green-700">正正得正</span>
-                  <span className="text-red-600 text-sm">小學時已學！</span>
-                </div>
-                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
-                  <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">−</span><span className="w-5 text-center">−</span></span>
-                  <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
-                  <span className="font-bold text-green-700 text-center leading-none text-2xl">+</span>
-                  <span className="font-bold text-green-700">負負得正</span>
-                  <div className="flex items-center gap-2">
-                    <MathDisplay latex={String.raw`(-2) \times (-3) = +6`} inline className="text-blue-700 text-base" />
-                    <MathDisplay latex="(-x)(-x) = +x^2" inline className="text-red-700 text-base" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
-                  <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">+</span><span className="w-5 text-center">−</span></span>
-                  <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
-                  <span className="font-bold text-green-700 text-center leading-none text-2xl">−</span>
-                  <span className="font-bold text-green-700">正負得負</span>
-                  <MathDisplay latex={String.raw`(+2) \times (-3) = -6`} inline className="text-blue-700 text-base" />
-                </div>
-                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
-                  <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">−</span><span className="w-5 text-center">+</span></span>
-                  <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
-                  <span className="font-bold text-green-700 text-center leading-none text-2xl">−</span>
-                  <span className="font-bold text-green-700">負正得負</span>
-                  <MathDisplay latex={String.raw`(-2) \times (+3) = -6`} inline className="text-blue-700 text-base" />
-                </div>
+          <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg flex flex-col md:flex-row gap-6">
+            <div className="space-y-2 text-lg">
+              <div className="flex items-center gap-4">
+                <span className="font-bold text-green-700 w-24 tracking-widest">+ + ➔ +</span>
+                <span className="font-bold text-green-700 w-24">正正得正</span>
+                <span className="text-red-600 text-sm">小學時已學！</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="font-bold text-green-700 w-24 tracking-widest">- - ➔ +</span>
+                <span className="font-bold text-green-700 w-24">負負得正</span>
+                <MathDisplay latex={String.raw`(-2) \times (-3) = +6`} inline className="text-blue-700 text-base" />
+                <MathDisplay latex="(-x)(-x) = +x^2" inline className="text-red-700 text-base ml-2" />
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="font-bold text-green-700 w-24 tracking-widest">+ - ➔ -</span>
+                <span className="font-bold text-green-700 w-24">正負得負</span>
+                <MathDisplay latex={String.raw`(+2) \times (-3) = -6`} inline className="text-blue-700 text-base" />
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="font-bold text-green-700 w-24 tracking-widest">- + ➔ -</span>
+                <span className="font-bold text-green-700 w-24">負正得負</span>
+                <MathDisplay latex={String.raw`(-2) \times (+3) = -6`} inline className="text-blue-700 text-base" />
               </div>
             </div>
           </div>
@@ -596,15 +563,15 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
             
             <div className="grid md:grid-cols-2 gap-6 pt-2">
               <div className="space-y-1 font-sans text-lg text-blue-800">
-                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)-(-42)" block left /></div></div>
-                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +24 + 42" block left /></div></div>
-                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +66" block left /></div></div>
+                <div className="flex items-start"><span className="w-12 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)-(-42)" block left /></div></div>
+                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math="= +24 + 42" block left /></div></div>
+                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math="= +66" block left /></div></div>
               </div>
               <div className="space-y-1 font-sans text-lg text-blue-800 relative">
-                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(-3)(-4)-5" block left /></div><div className="absolute right-4 top-2 text-sm text-green-600 font-bold">中間是 ×</div></div>
-                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math={`= +(3 \\times 4)-5`} block left /></div></div>
-                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +12-5" block left /></div></div>
-                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +7" block left /></div></div>
+                <div className="flex items-start"><span className="w-12 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(-3)(-4)-5" block left /></div><div className="absolute right-4 top-2 text-sm text-green-600 font-bold">中間是 ×</div></div>
+                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math={`= +(3 \\times 4)-5`} block left /></div></div>
+                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math="= +12-5" block left /></div></div>
+                <div className="flex items-start"><span className="w-12 flex-shrink-0"></span><div className="flex-1"><Latex math="= +7" block left /></div></div>
               </div>
             </div>
           </div>
@@ -616,19 +583,19 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                 <div className="flex-1 max-w-xs">
                   <Latex math={`\\dfrac{-6+(-12)}{-3+5}`} block left />
                 </div>
-                <span className="text-green-600 text-sm font-bold">← 分數上下分開計</span>
+                <span className="text-green-600 text-sm font-bold ml-2">← 分數上下分開計</span>
               </div>
               
               <div className="flex items-center gap-4">
-                <span className="w-8 flex justify-end flex-shrink-0"><span className="inline-block origin-right [transform:scaleX(1.35)]">=</span></span>
+                <span className="w-8 flex justify-end flex-shrink-0">=</span>
                 <div className="flex-1 max-w-xs ml-2">
                   <Latex math={`\\dfrac{-18}{+2}`} block left />
                 </div>
-                <span className="text-green-600 text-sm font-bold">← 上下剩一個數，可計除數</span>
+                <span className="text-green-600 text-sm font-bold ml-2">← 上下剩一個數，可計除數</span>
               </div>
 
               <div className="flex items-center gap-4">
-                <span className="w-8 flex justify-end flex-shrink-0"><span className="inline-block origin-right [transform:scaleX(1.35)]">=</span></span>
+                <span className="w-8 flex justify-end flex-shrink-0">=</span>
                 <div className="flex-1 max-w-xs ml-2">
                   <Latex math="-9" block left />
                 </div>
@@ -695,14 +662,13 @@ export const PolynomialsNotes = ({ activeSub }) => {
 
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">📌 係數 (Coefficient)</h3>
-            <p className="text-slate-700 mb-2">定義：某代數旁邊的數字</p>
             <div className="bg-white p-3 rounded border border-slate-200">
-              <MathDisplay math="1x^2 - 4x^3 + 8" />
+              <p className="text-slate-700 mb-2">例子：<Latex math="x^2 - 4x^3 + 8" /></p>
+              <p className="text-slate-700 mb-2">係數：某代數旁邊的數字</p>
               <div className="flex flex-col gap-1 mt-2 mb-4">
                 <p>• <Latex math="x^2" /> 的係數 = <Latex math="1" /></p>
                 <p>• <Latex math="x^3" /> 的係數 = <Latex math="-4" /></p>
               </div>
-              <p className="text-sm text-slate-500 border-t pt-2">多項式：<Latex math="0x^2 + 2x + 3" /> （項數為 3）</p>
             </div>
           </div>
 
@@ -767,36 +733,33 @@ export const PolynomialsNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-4">
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 1：</p>
-              <pre className="whitespace-pre font-sans text-lg">
-                <Latex math="3x + 4x + 2x" /> <span className="text-sm text-slate-400">(3+4+2=9)</span>{'\n'}
-=               <Latex math="9x" />
-              </pre>
+              <pre className="whitespace-pre font-sans text-lg"><span className="invisible">= </span><Latex math="3x + 4x + 2x" /> <span className="text-sm text-slate-400">(3+4+2=9)</span>{'\n'}{'= '}<Latex math="9x" /></pre>
             </div>
             <hr />
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 2：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <Latex math="3y - 5y + 6y" /> <span className="text-sm text-slate-400">(3-5+6=4)</span>{'\n'}
-=               <Latex math="4y" />
+                <span className="invisible">= </span><Latex math="3y - 5y + 6y" /> <span className="text-sm text-slate-400">(3-5+6=4)</span>{'\n'}
+= <Latex math="4y" />
               </pre>
             </div>
             <hr />
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 3 (分類)：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <Latex math="2x - 3y - 7x - y" />{'\n'}
-=               <Latex math="2x - 7x - 3y - y" /> <span className="text-sm text-slate-400">(-3-1)</span>{'\n'}
-=               <Latex math="-5x - 4y" />
+                <span className="invisible">= </span><Latex math="2x - 3y - 7x - y" />{'\n'}
+= <Latex math="2x - 7x - 3y - y" /> <span className="text-sm text-slate-400">(-3-1)</span>{'\n'}
+= <Latex math="-5x - 4y" />
               </pre>
             </div>
             <hr />
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 4 (拆括號)：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <Latex math="5x + 3y - (4x - 3y)" />{'\n'}
-=               <Latex math="5x + 3y - 4x + 3y" /> <span className="text-sm text-red-500 font-bold">← 正負調轉 (-4x +3y)</span>{'\n'}
-=               <Latex math="5x - 4x + 3y + 3y" />{'\n'}
-=               <Latex math="x + 6y" />
+                <span className="invisible">= </span><Latex math="5x + 3y - (4x - 3y)" />{'\n'}
+= <Latex math="5x + 3y - 4x + 3y" /> <span className="text-sm text-red-500 font-bold">← 正負調轉 (-4x +3y)</span>{'\n'}
+= <Latex math="5x - 4x + 3y + 3y" />{'\n'}
+= <Latex math="x + 6y" />
               </pre>
             </div>
           </div>
@@ -833,17 +796,17 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <div className="bg-white p-4 rounded border border-slate-200 space-y-4">
               <div>
                 <pre className="whitespace-pre font-sans text-lg">
-                  <Latex math="5x(2x + 3)" />{'\n'}
-=                 <Latex math="5x(2x) + 5x(3)" />{'\n'}
-=                 <Latex math="10x^2 + 15x" /> <span className="text-sm text-slate-500">(同類項才能加)</span>
+                  <span className="invisible">= </span><Latex math="5x(2x + 3)" />{'\n'}
+= <Latex math="5x(2x) + 5x(3)" />{'\n'}
+= <Latex math="10x^2 + 15x" /> <span className="text-sm text-slate-500">(同類項才能加)</span>
                 </pre>
               </div>
               <hr />
               <div>
                 <pre className="whitespace-pre font-sans text-lg">
-                  <Latex math="(x + 5)(6x^2)" />{'\n'}
-=                 <Latex math="x(6x^2) + 5(6x^2)" />{'\n'}
-=                 <Latex math="6x^3 + 30x^2" />
+                  <span className="invisible">= </span><Latex math="(x + 5)(6x^2)" />{'\n'}
+= <Latex math="x(6x^2) + 5(6x^2)" />{'\n'}
+= <Latex math="6x^3 + 30x^2" />
                 </pre>
               </div>
             </div>
@@ -854,11 +817,11 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <p className="text-slate-700 mb-2 text-sm">認住位置乘：<Latex math="(①+②)(③+④) = ①×③ + ①×④ + ②×③ + ②×④" /></p>
             <div className="bg-white p-4 rounded border border-slate-200">
               <pre className="whitespace-pre font-sans text-lg">
-                <Latex math="(4 - 5x)(5 + 6x)" />{'\n'}
-=               <Latex math="4(5) + 4(6x) - 5x(5) - 5x(6x)" /> <span className="text-sm text-slate-500">(按順序乘)</span>{'\n'}
-=               <Latex math="20 + 24x - 25x - 30x^2" /> <span className="text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}
-=               <Latex math="20 - x - 30x^2" />{'\n'}
-=               <Latex math="-30x^2 - x + 20" />
+                <span className="invisible">= </span><Latex math="(4 - 5x)(5 + 6x)" />{'\n'}
+= <Latex math="4(5) + 4(6x) - 5x(5) - 5x(6x)" /> <span className="text-sm text-slate-500">(按順序乘)</span>{'\n'}
+= <Latex math="20 + 24x - 25x - 30x^2" /> <span className="text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}
+= <Latex math="20 - x - 30x^2" />{'\n'}
+= <Latex math="-30x^2 - x + 20" />
               </pre>
             </div>
           </div>
@@ -1205,44 +1168,37 @@ export const AreaVolumeNotes = ({ activeSub }) => {
             <div className="md:w-1/3">
               {/* 三角柱體標記圖 */}
               <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 flex items-center justify-center h-full">
-                <svg viewBox="0 0 200 200" className="w-full max-w-[200px] h-auto">
-                  {/* Top Triangle */}
-                  <polygon points="60,40 140,80 40,90" fill="rgba(167,243,208,0.5)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                <svg viewBox="0 0 200 240" className="w-full max-w-[220px] h-auto font-sans mx-auto">
+                  {/* Dashed back bottom edge */}
+                  <line x1="60" y1="160" x2="160" y2="160" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
                   
-                  {/* Bottom Triangle (hidden back lines) */}
-                  <polyline points="40,170 140,160 60,120" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" strokeLinejoin="round" />
-                  <line x1="40" y1="170" x2="60" y2="120" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
-
-                  {/* Vertical Edges */}
-                  <line x1="40" y1="90" x2="40" y2="170" stroke="#334155" strokeWidth="2" />
-                  <line x1="140" y1="80" x2="140" y2="160" stroke="#334155" strokeWidth="2" />
-                  <line x1="60" y1="40" x2="60" y2="120" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
+                  {/* Prism Front Faces Fill (Optional, for better visual) */}
+                  <polygon points="60,40 60,160 124,208 124,88" fill="rgba(251,146,60,0.2)" stroke="none" />
+                  <polygon points="160,40 160,160 124,208 124,88" fill="rgba(251,146,60,0.3)" stroke="none" />
                   
-                  {/* Right Angle symbol in Top Triangle (Assuming 40,90 is the right angle based on 12, 16, 20) */}
-                  {/* Let's say sides are: 40,90 to 60,40 = 20, 60,40 to 140,80 = 16, 40,90 to 140,80 = 12 this doesn't form a correct right angle.
-                      Let's just draw a symbol at 40,90 */}
-                  <polyline points="50,85 55,95 45,100" stroke="#e63946" strokeWidth="1.5" fill="none" transform="rotate(-20 40 90)" />
-
+                  {/* Prism Top Face Fill */}
+                  <polygon points="60,40 160,40 124,88" fill="rgba(253,230,138,0.5)" stroke="none" />
+                  
+                  {/* Solid Edges - Left front face */}
+                  <polygon points="60,40 60,160 124,208 124,88" fill="none" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  {/* Solid Edges - Right front face */}
+                  <polygon points="160,40 160,160 124,208 124,88" fill="none" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  {/* Solid Edges - Top face */}
+                  <polygon points="60,40 160,40 124,88" fill="none" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+                  
+                  {/* Right Angle Marker */}
+                  <polyline points="114,81 122,71 131,78" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+                  
                   {/* Labels */}
-                  <text x="35" y="60" fontSize="12" fill="#475569" textAnchor="end">20 cm</text>
-                  <text x="50" y="80" fontSize="12" fill="#475569" textAnchor="start">16 cm</text>
-                  <text x="95" y="95" fontSize="12" fill="#475569" textAnchor="middle">12 cm</text>
+                  <text x="110" y="30" fontSize="14" fill="#475569" textAnchor="middle">20 cm</text>
+                  <text x="52" y="105" fontSize="14" fill="#475569" textAnchor="end">24 cm</text>
+                  <text x="85" y="198" fontSize="14" fill="#475569" textAnchor="end">16 cm</text>
+                  <text x="150" y="195" fontSize="14" fill="#475569" textAnchor="start">12 cm</text>
                   
-                  {/* Height */}
-                  <text x="25" y="135" fontSize="12" fill="#475569" textAnchor="end">24 cm</text>
-
-                  {/* Highlight Labels */}
-                  <text x="95" y="65" fontSize="14" fill="#047857" fontWeight="bold" textAnchor="middle">底</text>
-                  <text x="90" y="135" fontSize="14" fill="#6b21a8" fontWeight="bold" textAnchor="middle">側</text>
-
-                  <path d="M 80,70 Q 75,75 65,70" fill="none" stroke="#047857" strokeWidth="1.5" markerStart="url(#arrow)" />
-                  <path d="M 75,135 Q 65,135 50,135" fill="none" stroke="#6b21a8" strokeWidth="1.5" markerEnd="url(#arrow)" />
-                  
-                  <defs>
-                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                      <polygon points="0,0 10,5 0,10" fill="#475569" />
-                    </marker>
-                  </defs>
+                  {/* Highlight Labels without arrows */}
+                  <text x="110" y="62" fontSize="16" fill="#15803d" fontWeight="bold" textAnchor="middle">底</text>
+                  <text x="85" y="135" fontSize="16" fill="#7e22ce" fontWeight="bold" textAnchor="middle">側</text>
+                  <text x="145" y="130" fontSize="16" fill="#7e22ce" fontWeight="bold" textAnchor="middle">側</text>
                 </svg>
               </div>
             </div>
@@ -1324,9 +1280,9 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <rect x="40" y="40" width="100" height="60" fill="none" stroke="#22c55e" strokeWidth="2" />
                   
                   {/* Dashed lines for back rectangle where hidden */}
-                  <polyline points="70,80 70,20 170,20 170,80" fill="none" stroke="#22c55e" strokeWidth="2" />
+                  <polyline points="70,20 170,20 170,80" fill="none" stroke="#22c55e" strokeWidth="2" />
                   <line x1="70" y1="80" x2="170" y2="80" stroke="#dc2626" strokeWidth="2" strokeDasharray="5,5" />
-                  <line x1="70" y1="80" x2="70" y2="40" stroke="#dc2626" strokeWidth="2" strokeDasharray="5,5" />
+                  <line x1="70" y1="80" x2="70" y2="20" stroke="#dc2626" strokeWidth="2" strokeDasharray="5,5" />
                 </svg>
               </div>
             </div>
@@ -1591,7 +1547,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left whitespace-nowrap">
-                  <Latex math="5 \times " /><span className="bg-purple-200 px-2 py-0.5 rounded font-bold ml-1 tracking-widest text-[#5b21b6]">2 × 3</span>
+                  <Latex math="5 \times " /><span className="bg-purple-200 px-2 py-0.5 rounded font-bold ml-1 tracking-widest text-[#5b21b6]"><Latex math="2 \times 3" /></span>
                 </div>
                 <div className="text-sm text-[#5b21b6] font-bold relative pl-4 w-full text-base">
                   <div>觀察有什麼分母，相乘</div>
@@ -1964,7 +1920,7 @@ export const StatisticsNotes = ({ activeSub }) => {
             
             <div className="grid grid-cols-5 gap-y-2 gap-x-6 text-xl font-sans mb-8 text-center text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-100 w-full max-w-sm">
               <div>1</div>
-              <div className="bg-yellow-200 px-1 rounded">21</div>
+              <div>21</div>
               <div>10</div>
               <div>47</div>
               <div>45</div>
@@ -1991,7 +1947,7 @@ export const StatisticsNotes = ({ activeSub }) => {
                   <td className="px-5 py-2 border-r-[3px] border-slate-700 text-center">1</td>
                   <td className="px-5 py-2 tracking-[0.5em]">0 0</td>
                 </tr>
-                <tr className="hover:bg-slate-50 transition bg-yellow-50">
+                <tr className="hover:bg-slate-50 transition">
                   <td className="px-5 py-2 border-r-[3px] border-slate-700 font-bold text-center">2</td>
                   <td className="px-5 py-2 tracking-[0.5em] font-bold">1 3 4</td>
                 </tr>
@@ -2011,7 +1967,7 @@ export const StatisticsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-4 text-xl border-b border-blue-200 pb-2">幹葉圖</h3>
             <ul className="text-slate-700 font-bold text-lg space-y-3 list-disc ml-6 mb-6">
               <li>能清楚知道每一個數據</li>
-              <li>按大小<span className="bg-yellow-200 px-1 rounded text-slate-800">順序</span>排列數據</li>
+              <li>按大小<span className="px-1 text-slate-800">順序</span>排列數據</li>
               <li>能看到<span className="text-red-500 px-1">最大 / 最小</span>的數據</li>
               <li>可以得知<span className="text-red-500 px-1">總人數</span>
                 <div className="text-slate-600 font-normal mt-1 border-l-4 border-slate-300 pl-3 ml-2 text-base">↳ 數葉（右方）的數字出現了多少次</div>
@@ -2112,7 +2068,7 @@ export const StatisticsNotes = ({ activeSub }) => {
           <div className="space-y-6 pt-4 flex flex-col justify-center">
             <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg flex items-start">
               <span className="text-blue-700 font-bold text-2xl mr-3">1.</span>
-              <p className="text-blue-800 font-bold text-lg pt-1">以 <span className="bg-yellow-200 px-1 rounded">highlight 筆顏色</span> / <span className="underline decoration-blue-400 decoration-2 underline-offset-4">原子筆形狀</span> 分辨不同數據</p>
+              <p className="text-blue-800 font-bold text-lg pt-1">以 <span className="bg-yellow-200 px-1 rounded">瑩光筆顏色highlight</span> / <span className="underline decoration-blue-400 decoration-2 underline-offset-4">原子筆畫形狀</span> 分辨不同數據</p>
             </div>
             
             <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg flex items-start">
@@ -2142,7 +2098,7 @@ export const StatisticsNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="discrete-continuous" title="5. 連續數據 / 離散數據" num={5} color="red" activeSub={activeSub} sectionRef={s5}>
-        <div className="bg-white rounded-xl p-6 border-l-[6px] border-l-red-500 shadow-md max-w-3xl mx-auto">
+        <div className="bg-white rounded-xl p-6 border-l-[6px] border-l-red-500 shadow-md w-full max-w-5xl mx-auto">
           <p className="text-red-700 font-bold mb-4">- 需分辨數據為離散數據還是連續數據</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-red-50 p-6 rounded-xl border border-red-200 transition hover:shadow-md">
@@ -2159,7 +2115,7 @@ export const StatisticsNotes = ({ activeSub }) => {
               <p className="text-slate-700 text-lg mb-4"><span className="text-blue-600 font-bold border-b-2 border-blue-300 pb-1">量度</span>所得</p>
               <div className="bg-white p-3 rounded-lg border border-blue-100">
                 <p className="text-blue-800 text-sm font-bold opacity-80 mb-1">例子：</p>
-                <p className="text-slate-700 font-medium">身高、體重、溫度、時間、容量、體積 ...</p>
+                <p className="text-slate-700 font-medium md:whitespace-nowrap">身高、體重、溫度、時間、容量、體積 ...</p>
               </div>
             </div>
           </div>
@@ -2299,7 +2255,7 @@ export const CoordinateNotes = ({ activeSub }) => {
               <h4 className="font-bold text-red-800 mb-2">⚠️ 陷阱注意</h4>
               <p className="text-slate-700">其中一個坐標為 0，則<span className="font-bold underline">不屬於任何象限</span>。</p>
               <p className="text-sm text-slate-600 mt-2 bg-white p-2 rounded">
-                e.g. <Latex math="(6,0)" /> 不屬於 I, II, III, IV 任何一個象限。它位於 <Latex math="x" /> 軸上。
+                e.g. <Latex math="(6,0)" /> 位於 <Latex math="x" /> 軸上，在 <Latex math="x" /> / <Latex math="y" /> 軸上的點 不屬於 I, II, III, IV 任何一個象限。
               </p>
             </div>
           </div>
@@ -2353,7 +2309,7 @@ export const CoordinateNotes = ({ activeSub }) => {
       <CollapsibleSection id="transformation" title="點的轉換" num={4} color="red" activeSub={activeSub} sectionRef={s4}>
         <div className="space-y-4">
           <div className="bg-red-50 rounded-lg p-4 border border-red-200">
-            <h3 className="font-bold text-red-800 mb-2">🔄 需分辨平移、旋轉、反射</h3>
+            <h3 className="font-bold text-red-800 mb-2">🔄 需分辨平移、反射、旋轉</h3>
             
             <div className="space-y-3 mt-3">
               <div className="bg-white p-3 rounded-lg border border-red-100">
@@ -2394,18 +2350,18 @@ export const CoordinateNotes = ({ activeSub }) => {
 
               {/* A 平移 */}
               {drawPoint(5, 4, "", "#16a34a", 25)}
-              <text x="105" y="-110" fontSize="12" fill="#db2777" fontWeight="bold">A(5, 4)</text>
+              <text x="135" y="-105" fontSize="12" fill="#db2777" fontWeight="bold">A(5, 4)</text>
               {drawPoint(1, 4, "", "#16a34a", 25)}
-              <text x="25" y="-105" fontSize="12" fill="#db2777" fontWeight="bold">A'(1, 4)</text>
+              <text x="5" y="-115" fontSize="12" fill="#db2777" fontWeight="bold">A'(1, 4)</text>
               <line x1="120" y1="-100" x2="35" y2="-100" stroke="#db2777" strokeWidth="2" strokeDasharray="4 2" />
               <polyline points="40,-104 35,-100 40,-96" fill="none" stroke="#db2777" strokeWidth="2" />
-              <text x="75" y="-110" fontSize="12" fill="#db2777" textAnchor="middle">向左平移 4單位</text>
+              <text x="75" y="-115" fontSize="12" fill="#db2777" textAnchor="middle">向左平移 4單位</text>
 
               {/* B 反射 */}
               {drawPoint(-3, 2, "", "#16a34a", 25)}
-              <text x="-75" y="-60" fontSize="12" fill="#0284c7" fontWeight="bold" textAnchor="end">B(-3, 2)</text>
+              <text x="-85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" textAnchor="end">B(-3, 2)</text>
               {drawPoint(3, 2, "", "#16a34a", 25)}
-              <text x="75" y="-60" fontSize="12" fill="#0284c7" fontWeight="bold">B'(3, 2)</text>
+              <text x="85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold">B'(3, 2)</text>
               
               <path d="M -70 -55 Q -35 -80 0 -55 Q 35 -80 70 -55" fill="none" stroke="#0284c7" strokeWidth="2" />
               <polyline points="-5,-60 0,-55 -8,-52" fill="none" stroke="#0284c7" strokeWidth="2" />
@@ -2415,9 +2371,9 @@ export const CoordinateNotes = ({ activeSub }) => {
 
               {/* C 旋轉 */}
               {drawPoint(2, -4, "", "#16a34a", 25)}
-              <text x="55" y="90" fontSize="12" fill="#7e22ce" fontWeight="bold">C(2, -4)</text>
+              <text x="55" y="115" fontSize="12" fill="#7e22ce" fontWeight="bold">C(2, -4)</text>
               {drawPoint(-4, -2, "", "#16a34a", 25)}
-              <text x="-105" y="60" fontSize="12" fill="#7e22ce" fontWeight="bold">C'(-4, -2)</text>
+              <text x="-120" y="65" fontSize="12" fill="#7e22ce" fontWeight="bold">C'(-4, -2)</text>
               
               <path d="M 45 105 Q 0 130 -95 65" fill="none" stroke="#7e22ce" strokeWidth="2" />
               <polyline points="-85,65 -95,65 -92,74" fill="none" stroke="#7e22ce" strokeWidth="2" />
@@ -2426,7 +2382,7 @@ export const CoordinateNotes = ({ activeSub }) => {
               {/* C 逆時針箭頭示意 (僅線條) */}
               <path d="M 55 90 Q 75 70 85 45" fill="none" stroke="#7e22ce" strokeWidth="1.5" strokeDasharray="3 3"/>
               <polyline points="80,50 85,45 88,52" fill="none" stroke="#7e22ce" strokeWidth="1.5" />
-              <text x="82" y="60" fontSize="12" fill="#7e22ce">逆時針向</text>
+              <text x="90" y="75" fontSize="12" fill="#7e22ce">逆時針</text>
               
               {/* 原點 */}
               <text x="-10" y="15" fontSize="12" fill="#16a34a" fontWeight="bold">0</text>
@@ -3297,7 +3253,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
                 <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="3a + 1" /> 的第 21 項是？</p>
                 <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4 relative">
                   <div className="absolute left-[130px] -top-5 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 a = 21</div>
-                  <p>第 21 項 <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"> (21) </span><Latex math=" + 1" /></p>
+                  <p>第 21 項 <Latex math="= 3" /><span className="text-red-600"> (21) </span><Latex math=" + 1" /></p>
                   <p className="pl-[72px]"><Latex math="= 64" /></p>
                 </div>
               </div>
@@ -3305,10 +3261,9 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
               <hr className="border-slate-100" />
 
               <div>
-                <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="\frac{a^2 + 2}{2a - 3}" /> 的第 5 項是？</p>
+                <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="\frac{a^2 + 2}{2a - 3}" /> 的第 <span className="relative inline-block text-red-600">5<span className="absolute left-1/2 -translate-x-1/2 -top-8 text-sm text-green-700 font-bold whitespace-nowrap text-center leading-tight">a 代 5<br />↓</span></span> 項是？</p>
                 <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4 relative">
-                  <div className="absolute left-[100px] -top-5 text-sm text-green-700 font-bold whitespace-nowrap">a 代 5 ↓</div>
-                  <p>第 5 項 <Latex math="= \frac{\color{red}(\color{red}5\color{red})^2 + 2}{2\color{red}(\color{red}5\color{red}) - 3}" /> <Latex math="= \frac{27}{7}" /></p>
+                  <p>第 5 項 <Latex math="= \frac{\textcolor{red}{(5)}^2 + 2}{2\textcolor{red}{(5)} - 3}" /> <Latex math="= \frac{27}{7}" /></p>
                 </div>
               </div>
             </div>
@@ -3405,11 +3360,11 @@ export const RateRatioNotes = ({ activeSub }) => {
             <p className="mb-4 text-lg text-center">
               例子：<span className="text-blue-800 font-bold">m</span>{' '}
               <span className="relative inline-flex text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">
-                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-green-700 text-base font-bold">↓</span>/
+                <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-green-700 text-base font-bold">↓</span>/
               </span>{' '}
               <span className="text-blue-800 font-bold">s</span> ， <span className="text-blue-800 font-bold">$</span>{' '}
               <span className="relative inline-flex text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">
-                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-green-700 text-base font-bold">↓</span>/
+                <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-green-700 text-base font-bold">↓</span>/
               </span>{' '}
               <span className="text-blue-800 font-bold border-b-2 border-transparent">小時</span>
             </p>
@@ -3661,14 +3616,13 @@ export const RateRatioNotes = ({ activeSub }) => {
       <CollapsibleSection id="proportion" title="6. 正比/反比" num={6} color="rose" activeSub={activeSub} sectionRef={s6}>
         <div className="space-y-4">
           <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <h3 className="font-bold text-slate-800 mb-6 text-lg tracking-wide">- 認清情況是正比 / 反比</h3>
+            <h3 className="font-bold text-slate-800 mb-6 text-lg tracking-wide">- 分辨情況是正比 / 反比</h3>
             
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row gap-4 items-center bg-rose-50 p-4 rounded-lg">
                 <div className="font-bold text-xl min-w-[80px]">正比：</div>
-                <div className="min-w-[100px] text-center md:text-left text-lg">
-                  <p>兩個數字</p>
-                  <p>相同方向</p>
+                <div className="min-w-[150px] text-center md:text-left text-lg whitespace-nowrap">
+                  <p>兩個數字相同方向</p>
                 </div>
                 <div className="flex-1 text-green-600 font-bold text-xl leading-relaxed flex flex-col items-center font-sans">
                   <p>A ↑ B ↑</p>
@@ -3681,16 +3635,15 @@ export const RateRatioNotes = ({ activeSub }) => {
 
               <div className="flex flex-col md:flex-row gap-4 items-center bg-blue-50 p-4 rounded-lg">
                 <div className="font-bold text-xl min-w-[80px]">反比：</div>
-                <div className="min-w-[100px] text-center md:text-left text-lg">
-                  <p>兩個數字</p>
-                  <p>相反方向</p>
+                <div className="min-w-[150px] text-center md:text-left text-lg whitespace-nowrap">
+                  <p>兩個數字相反方向</p>
                 </div>
                 <div className="flex-1 text-green-600 font-bold text-xl leading-relaxed flex flex-col items-center font-sans">
                   <p>A ↑ <span className="text-red-600">B ↓</span></p>
                   <p className="text-red-600">A ↓ <span className="text-green-600">B ↑</span></p>
                 </div>
                 <div className="flex-1 text-xl flex items-center gap-2 font-bold justify-center font-sans">
-                  <span className="font-sans">公式：</span> <span className="text-red-600"><Latex math="xy = k" /></span>
+                  <span className="font-sans">公式：</span> <span className="text-red-600">xy = k</span>
                 </div>
               </div>
             </div>
@@ -3762,15 +3715,12 @@ const CorrespondingPartsSVG = () => {
 };
 
 const CongruentConditionsSVG = () => {
+  // A list of conditions to render triangles
+  // 5 rows: 0 to 4. Each row takes ~120px height
   return (
-    <svg viewBox="0 0 520 720" className="w-full h-auto bg-green-50/50 rounded-lg">
+    <svg viewBox="0 0 400 650" className="w-full h-auto bg-green-50/50 rounded-lg">
       <defs>
-        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
-        </marker>
-        <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 0 L 10 5 L 0 10 z" fill="#0284c7" />
-        </marker>
+        {/* Right angle rect */}
         <g id="right-ang">
           <polyline points="0,-12 12,-12 12,0" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
         </g>
@@ -3778,143 +3728,134 @@ const CongruentConditionsSVG = () => {
 
       {/* Row 1: SAS */}
       <g transform="translate(0, 0)">
-        <text x="20" y="40" fontSize="16" fontWeight="bold" fill="#334155">(a) [簡記 : SAS]</text>
-        <text x="140" y="97" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">夾角 →</text>
-        
-        {/* T1 */}
-        <path d="M 230,20 L 160,90 L 300,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        {/* Left Side Tick (Center: 195, 55, slope of line=-1, normal=1) */}
-        <line x1="190" y1="50" x2="200" y2="60" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Bottom Side Ticks (Center: 230, 90, vertical normal) */}
-        <line x1="227" y1="85" x2="227" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="233" y1="85" x2="233" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Bottom-left Arc (Center 160, 90, R=20) */}
-        <path d="M 180 90 A 20 20 0 0 0 174.1 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        
-        <text x="180" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="230" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
-        <text x="155" y="97" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
-
-        {/* T2 */}
-        <path d="M 400,20 L 330,90 L 470,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        <line x1="360" y1="50" x2="370" y2="60" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="397" y1="85" x2="397" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="403" y1="85" x2="403" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 350 90 A 20 20 0 0 0 344.1 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(a) [簡記 : SAS]</text>
+        <path d="M 160,20 L 110,80 L 210,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        {/* Ticks & Arcs */}
+        <line x1="129" y1="48" x2="141" y2="52" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="249" y1="48" x2="261" y2="52" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="160" y1="75" x2="160" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 0 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 0 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        {/* Labels */}
+        <text x="125" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="96" y="78" fontSize="14" fill="#334155" textAnchor="end" fontWeight="bold">夾角 →</text>
       </g>
 
       {/* Row 2: ASA */}
-      <g transform="translate(0, 140)">
-        <text x="20" y="40" fontSize="16" fontWeight="bold" fill="#334155">(b) [簡記 : ASA]</text>
-
-        {/* T1 */}
-        <path d="M 230,20 L 160,90 L 300,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        <line x1="230" y1="85" x2="230" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Left arc */}
-        <path d="M 180 90 A 20 20 0 0 0 174.1 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Right double arc */}
-        <path d="M 280 90 A 20 20 0 0 1 285.9 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 276 90 A 24 24 0 0 1 283.1 73.0" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-
-        <text x="155" y="97" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
-        <text x="230" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
-        <text x="305" y="97" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">A</text>
-
-        <text x="230" y="60" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">夾邊</text>
-        <path d="M 230 65 Q 230 80 230 80" fill="none" stroke="#334155" strokeWidth="1" markerEnd="url(#arrow)" />
-
-        {/* T2 */}
-        <path d="M 400,20 L 330,90 L 470,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        <line x1="400" y1="85" x2="400" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 350 90 A 20 20 0 0 0 344.1 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 450 90 A 20 20 0 0 1 455.9 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 446 90 A 24 24 0 0 1 453.1 73.0" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+      <g transform="translate(0, 110)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(b) [簡記 : ASA]</text>
+        <path d="M 160,20 L 110,80 L 210,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <line x1="160" y1="75" x2="160" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 0 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 0 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 190 80 A 20 20 0 0 1 197 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 186 80 A 24 24 0 0 1 194 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 310 80 A 20 20 0 0 1 317 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 306 80 A 24 24 0 0 1 314 60" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        {/* Labels */}
+        <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="205" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="160" y="50" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">夾邊</text>
+        <path d="M 160 55 L 160 70" fill="none" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrow)" />
       </g>
 
       {/* Row 3: AAS */}
-      <g transform="translate(0, 280)">
-        <text x="20" y="40" fontSize="16" fontWeight="bold" fill="#334155">(c) [簡記 : AAS]</text>
-        
-        {/* T1 */}
-        <path d="M 230,20 L 160,90 L 300,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        {/* Right Side Tick (Center: 265, 55, slope 1, normal slope -1) */}
-        <line x1="260" y1="60" x2="270" y2="50" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Top arc (230, 20) */}
-        <path d="M 215.9 34.1 A 20 20 0 0 0 244.1 34.1" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Left double arc */}
-        <path d="M 180 90 A 20 20 0 0 0 174.1 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 184 90 A 24 24 0 0 0 176.9 73.0" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-
-        <text x="230" y="17" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
-        <text x="155" y="97" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
-        <text x="275" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="285" y="55" fontSize="15" fill="#334155" fontWeight="bold">← 不是夾邊</text>
-
-        {/* T2 */}
-        <path d="M 400,20 L 330,90 L 470,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        <line x1="430" y1="60" x2="440" y2="50" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 385.9 34.1 A 20 20 0 0 0 414.1 34.1" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 350 90 A 20 20 0 0 0 344.1 75.9" fill="none" stroke="#0ea5e9" strokeWidth="2" />
-        <path d="M 354 90 A 24 24 0 0 0 346.9 73.0" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+      <g transform="translate(0, 220)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(c) [簡記 : AAS]</text>
+        <path d="M 160,20 L 110,80 L 210,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <line x1="179" y1="41" x2="191" y2="59" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="299" y1="41" x2="311" y2="59" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 130 80 A 20 20 0 0 0 123 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 250 80 A 20 20 0 0 0 243 64" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 152 30 A 20 20 0 0 0 170 33" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 148 25 A 25 25 0 0 0 173 29" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 272 30 A 20 20 0 0 0 290 33" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        <path d="M 268 25 A 25 25 0 0 0 293 29" fill="none" stroke="#0ea5e9" strokeWidth="2" />
+        {/* Labels */}
+        <text x="115" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="160" y="15" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">A</text>
+        <text x="200" y="65" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="215" y="60" fontSize="14" fill="#334155" fontWeight="bold" textAnchor="start">← 不是夾邊</text>
       </g>
 
       {/* Row 4: SSS */}
-      <g transform="translate(0, 420)">
-        <text x="20" y="40" fontSize="16" fontWeight="bold" fill="#334155">(d) [簡記 : SSS]</text>
+      <g transform="translate(0, 330)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(d) [簡記 : SSS]</text>
+        <path d="M 160,20 L 110,80 L 210,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 280,20 L 230,80 L 330,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
         
-        {/* T1 */}
-        <path d="M 230,20 L 160,90 L 300,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        {/* Left 1 */}
-        <line x1="190" y1="50" x2="200" y2="60" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Right 2 (Center 265, 55, slope 1, normal slope -1) */}
-        <line x1="258" y1="58" x2="268" y2="48" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="262" y1="62" x2="272" y2="52" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Bottom 3 */}
-        <line x1="224" y1="85" x2="224" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="230" y1="85" x2="230" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="236" y1="85" x2="236" y2="95" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="129" y1="48" x2="141" y2="52" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="249" y1="48" x2="261" y2="52" stroke="#0ea5e9" strokeWidth="2" />
+        
+        <line x1="181" y1="46" x2="191" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="178" y1="50" x2="188" y2="58" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="301" y1="46" x2="311" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="298" y1="50" x2="308" y2="58" stroke="#0ea5e9" strokeWidth="2" />
 
-        <text x="180" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="275" y="55" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">S</text>
-        <text x="230" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <line x1="156" y1="75" x2="156" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="160" y1="75" x2="160" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="164" y1="75" x2="164" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="276" y1="75" x2="276" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="284" y1="75" x2="284" y2="85" stroke="#0ea5e9" strokeWidth="2" />
 
-        {/* T2 */}
-        <path d="M 400,20 L 330,90 L 470,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        <line x1="360" y1="50" x2="370" y2="60" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="428" y1="58" x2="438" y2="48" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="432" y1="62" x2="442" y2="52" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="394" y1="85" x2="394" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="400" y1="85" x2="400" y2="95" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="406" y1="85" x2="406" y2="95" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="125" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="195" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="160" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
       </g>
 
       {/* Row 5: RHS */}
-      <g transform="translate(0, 560)">
-        <text x="20" y="40" fontSize="16" fontWeight="bold" fill="#334155">(e) [簡記 : RHS]</text>
-        <text x="140" y="100" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">
-          <tspan x="140" dy="0">不是夾角,</tspan>
-          <tspan x="140" dy="20">但是直角</tspan>
-        </text>
+      <g transform="translate(0, 440)">
+        <text x="30" y="40" fontSize="16" fontWeight="bold" fill="#334155">(e) [簡記 : RHS]</text>
+        <path d="M 110,20 L 110,80 L 190,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 240,20 L 240,80 L 320,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <use href="#right-ang" x="110" y="80" />
+        <use href="#right-ang" x="240" y="80" />
+        <line x1="150" y1="75" x2="150" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="147" y1="46" x2="155" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="144" y1="50" x2="152" y2="58" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="277" y1="46" x2="285" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="274" y1="50" x2="282" y2="58" stroke="#0ea5e9" strokeWidth="2" />
         
-        {/* T1 */}
-        {/* Right angled at X=160, Y=90 */}
-        <path d="M 160,20 L 160,90 L 300,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        <use href="#right-ang" x="160" y="90" />
-        {/* Hypotenuse Tick (230, 55, normal dx=-3 dy=6 => inverted to have length 7) */}
-        <line x1="227" y1="61" x2="233" y2="49" stroke="#0ea5e9" strokeWidth="2" />
-        {/* Bottom Tick (230, 90) */}
-        <line x1="230" y1="85" x2="230" y2="95" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="96" y="90" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">A</text>
+        <text x="150" y="100" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
+        <text x="165" y="42" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
         
-        <text x="170" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="end">R</text>
-        <text x="230" y="45" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold">H</text>
-        <text x="230" y="110" fontSize="18" fontStyle="italic" fill="#16a34a" fontWeight="bold" textAnchor="middle">S</text>
-
-        {/* T2 */}
-        <path d="M 330,20 L 330,90 L 470,90 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
-        <use href="#right-ang" x="330" y="90" />
-        <line x1="397" y1="61" x2="403" y2="49" stroke="#0ea5e9" strokeWidth="2" />
-        <line x1="400" y1="85" x2="400" y2="95" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="100" y="15" fontSize="14" fill="#0284c7" fontWeight="bold" textAnchor="end">直角</text>
+        <path d="M 95 20 Q 95 65 102 70" fill="none" stroke="#0284c7" strokeWidth="1.5" markerEnd="url(#arrow)" />
+        <text x="96" y="100" fontSize="14" fill="#334155" textAnchor="end" fontWeight="bold">不是夾角 →</text>
+        <text x="96" y="120" fontSize="14" fill="#0284c7" textAnchor="end" fontWeight="bold">但是直角(特別例子)</text>
       </g>
+
+      {/* Row 6: SAS (Right angle trap) */}
+      <g transform="translate(0, 560)">
+        <path d="M 110,20 L 110,80 L 190,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <path d="M 240,20 L 240,80 L 320,80 Z" fill="rgba(59,130,246,0.1)" stroke="#334155" strokeWidth="2" />
+        <use href="#right-ang" x="110" y="80" stroke="#ef4444" />
+        <use href="#right-ang" x="240" y="80" stroke="#ef4444" />
+        <line x1="150" y1="75" x2="150" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="280" y1="75" x2="280" y2="85" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="105" y1="50" x2="115" y2="50" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="105" y1="54" x2="115" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="235" y1="50" x2="245" y2="50" stroke="#0ea5e9" strokeWidth="2" />
+        <line x1="235" y1="54" x2="245" y2="54" stroke="#0ea5e9" strokeWidth="2" />
+        <text x="350" y="65" fontSize="24" fontStyle="italic" fill="#16a34a" fontWeight="bold">SAS</text>
+      </g>
+
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+        </marker>
+      </defs>
     </svg>
   );
 };
@@ -4017,23 +3958,6 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
                  <p className="text-slate-700 mt-2 relative z-10 text-[15px] leading-relaxed">
                    必須是 <strong>直角</strong> (R) + <strong>斜邊</strong> (H) 相等 + <strong>另一條邊</strong> (S) 相等，才算是 <span className="font-bold text-blue-700 bg-blue-100 px-1 rounded">RHS</span>。
                  </p>
-                  <svg width="240" height="90" viewBox="0 0 240 90" className="mx-auto mt-4 block relative z-10">
-                    <g transform="translate(15, 15)">
-                      <path d="M 0 0 L 0 60 L 50 60 Z" fill="#ebf8ff" stroke="#1e3a5f" strokeWidth="2" strokeLinejoin="round" />
-                      <rect x="0" y="50" width="10" height="10" fill="none" stroke="#ef4444" strokeWidth="1.5" />
-                      <line x1="-7" y1="30" x2="7" y2="30" stroke="#0ea5e9" strokeWidth="2" />
-                      <line x1="21" y1="53" x2="21" y2="67" stroke="#0ea5e9" strokeWidth="2" />
-                      <line x1="29" y1="53" x2="29" y2="67" stroke="#0ea5e9" strokeWidth="2" />
-                    </g>
-                    <g transform="translate(145, 15) scale(-1, 1)">
-                      <path d="M 0 0 L 0 60 L 50 60 Z" fill="#ebf8ff" stroke="#1e3a5f" strokeWidth="2" strokeLinejoin="round" />
-                      <rect x="0" y="50" width="10" height="10" fill="none" stroke="#ef4444" strokeWidth="1.5" />
-                      <line x1="-7" y1="30" x2="7" y2="30" stroke="#0ea5e9" strokeWidth="2" />
-                      <line x1="21" y1="53" x2="21" y2="67" stroke="#0ea5e9" strokeWidth="2" />
-                      <line x1="29" y1="53" x2="29" y2="67" stroke="#0ea5e9" strokeWidth="2" />
-                    </g>
-                    <text x="165" y="45" fontSize="20" fontWeight="bold" fill="#dc2626" dominantBaseline="middle">SAS</text>
-                  </svg>
                </div>
             </div>
           </div>
