@@ -2995,6 +2995,31 @@ export const Statistics2F2Notes = ({ activeSub }) => {
 // ========================================
 export const GeometryProofF2Notes = ({ activeSub }) => {
   const s1 = React.useRef(null), s2 = React.useRef(null), s3 = React.useRef(null), s4 = React.useRef(null);
+  const transversalStart = { x: 60, y: 20 };
+  const transversalEnd = { x: 90, y: 130 };
+  const transversalDx = transversalEnd.x - transversalStart.x;
+  const transversalDy = transversalEnd.y - transversalStart.y;
+  const transversalAngle = (Math.atan2(transversalDy, transversalDx) * 180) / Math.PI;
+  const oppositeAngle = (transversalAngle + 180) % 360;
+  const upperCrossY = 50;
+  const lowerCrossY = 100;
+  const upperCrossX = transversalStart.x + ((upperCrossY - transversalStart.y) * transversalDx) / transversalDy;
+  const lowerCrossX = transversalStart.x + ((lowerCrossY - transversalStart.y) * transversalDx) / transversalDy;
+
+  const arcPath = (cx, cy, r, startAngle, endAngle, sweepFlag = 1) => {
+    const startRad = (startAngle * Math.PI) / 180;
+    const endRad = (endAngle * Math.PI) / 180;
+    const x1 = cx + r * Math.cos(startRad);
+    const y1 = cy + r * Math.sin(startRad);
+    const x2 = cx + r * Math.cos(endRad);
+    const y2 = cy + r * Math.sin(endRad);
+
+    let diff = endAngle - startAngle;
+    if (diff < 0) diff += 360;
+    const largeArcFlag = diff > 180 ? 1 : 0;
+
+    return `M ${x1} ${y1} A ${r} ${r} 0 ${largeArcFlag} ${sweepFlag} ${x2} ${y2}`;
+  };
 
   React.useEffect(() => {
     if (activeSub === 'prove-line') s1.current?.scrollIntoView({ behavior: 'smooth' });
@@ -3021,14 +3046,23 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
               </div>
             </div>
             {/* 📐 待繪製：證明是直線 (a+b=180) */}
+            {(() => {
+              const lineCenterX = 100;
+              const lineCenterY = 80;
+              const bArcRadius = 25;
+              const aArcRadius = 20;
+              const cAngle = (Math.atan2(20 - lineCenterY, 60 - lineCenterX) * 180) / Math.PI;
+              const cAngleNormalized = cAngle < 0 ? cAngle + 360 : cAngle;
+
+              return (
             <div className="bg-white border rounded-xl shadow-sm flex flex-col max-w-md overflow-hidden">
               <div className="bg-slate-50 border-b p-3 font-medium text-slate-700 text-sm">證明 AOB 是一條直線</div>
               <div className="p-4 flex items-center justify-center">
                 <svg viewBox="0 0 200 120" className="w-full max-w-[200px]">
                   <line x1="20" y1="80" x2="180" y2="80" stroke="#334155" strokeWidth="2" />
                   <line x1="100" y1="80" x2="60" y2="20" stroke="#334155" strokeWidth="2" />
-                  <path d="M 125 80 A 25 25 0 0 0 86 40" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                  <path d="M 86 40 A 25 25 0 0 0 75 80" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                  <path d={arcPath(lineCenterX, lineCenterY, aArcRadius, 180, cAngleNormalized, 1)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                  <path d={arcPath(lineCenterX, lineCenterY, bArcRadius, cAngleNormalized, 360, 1)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
                   <text x="10" y="85" fontSize="14" fill="#334155" fontWeight="bold">A</text>
                   <text x="100" y="100" fontSize="14" fill="#334155" fontWeight="bold">O</text>
                   <text x="185" y="85" fontSize="14" fill="#334155" fontWeight="bold">B</text>
@@ -3042,6 +3076,8 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                 <span className="text-slate-500">(理由：鄰角互補)</span>
               </div>
             </div>
+              );
+            })()}
           </div>
         </CollapsibleSection>
 
@@ -3065,8 +3101,8 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                     <line x1="20" y1="50" x2="130" y2="50" stroke="#334155" strokeWidth="2" />
                     <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
                     <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
-                    <path d="M 68 50 A 15 15 0 0 0 74 72" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                    <path d="M 82 100 A 15 15 0 0 0 76 78" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <path d={arcPath(upperCrossX, upperCrossY, 15, 0, transversalAngle)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d={arcPath(lowerCrossX, lowerCrossY, 15, oppositeAngle, 360)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
                     <text x="50" y="65" fontSize="14" fill="#2563eb">a</text>
                     <text x="95" y="90" fontSize="14" fill="#ea580c">b</text>
                   </svg>
@@ -3085,8 +3121,8 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                     <line x1="20" y1="50" x2="130" y2="50" stroke="#334155" strokeWidth="2" />
                     <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
                     <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
-                    <path d="M 74 72 A 15 15 0 0 0 88 50" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                    <path d="M 83 123 A 15 15 0 0 0 97 100" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <path d={arcPath(upperCrossX, upperCrossY, 15, oppositeAngle, 360)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d={arcPath(lowerCrossX, lowerCrossY, 15, oppositeAngle, 360)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
                     <text x="95" y="65" fontSize="14" fill="#2563eb">c</text>
                     <text x="105" y="115" fontSize="14" fill="#ea580c">b</text>
                   </svg>
@@ -3105,8 +3141,8 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                     <line x1="20" y1="50" x2="130" y2="50" stroke="#334155" strokeWidth="2" />
                     <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
                     <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
-                    <path d="M 74 72 A 15 15 0 0 0 88 50" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                    <path d="M 82 100 A 15 15 0 0 0 76 78" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <path d={arcPath(upperCrossX, upperCrossY, 15, transversalAngle, 180)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d={arcPath(lowerCrossX, lowerCrossY, 15, oppositeAngle, 360)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
                     <text x="95" y="65" fontSize="14" fill="#2563eb">d</text>
                     <text x="95" y="90" fontSize="14" fill="#ea580c">b</text>
                   </svg>
