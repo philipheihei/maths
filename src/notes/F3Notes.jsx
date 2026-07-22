@@ -1043,9 +1043,9 @@ export const TriangleLinesNotes = () => {
               <h4 className="text-lg font-bold text-red-600">2. 中線</h4>
               <div className="mt-2 text-sm text-left bg-white px-4 py-3 rounded-lg shadow-sm border border-slate-200 w-full">
                 <div className="font-bold text-green-700 mb-1">特徵：</div>
-                <div className="font-bold text-green-700 text-lg flex flex-col gap-1">
+                <div className="font-bold text-green-700 text-lg flex items-center justify-between">
                   <span>• 中點，長度相等</span>
-                  <span className="text-purple-700 text-xs font-normal text-right">（必須由頂點拉出來）</span>
+                  <span className="text-purple-700 text-xs font-normal">（必須由頂點拉出來）</span>
                 </div>
               </div>
             </div>
@@ -1086,9 +1086,9 @@ export const TriangleLinesNotes = () => {
               <h4 className="text-lg font-bold text-red-600">4. 垂直平分線</h4>
               <div className="mt-2 text-sm text-left bg-white px-4 py-3 rounded-lg shadow-sm border border-slate-200 w-full">
                 <div className="font-bold text-green-700 mb-1">特徵：</div>
-                <div className="font-bold text-green-700 text-lg flex flex-col gap-1">
+                <div className="font-bold text-green-700 text-lg flex items-center justify-between">
                   <span>• 垂直 (90°) + 長度相等</span>
-                  <span className="text-slate-500 text-xs font-normal text-right">（不一定由頂點拉出來）</span>
+                  <span className="text-slate-500 text-xs font-normal">（不一定由頂點拉出來）</span>
                 </div>
               </div>
             </div>
@@ -1608,7 +1608,7 @@ const TreeDiagramSVG = () => (
       <text x="260" y="160" fill="#1e293b">A</text>
       <text x="380" y="160" fill="#1e293b">CVA</text>
       <text x="260" y="190" fill="#2563eb">B</text>
-      <text x="380" y="190" fill="#2563eb">CVB</text>
+      <text x="380" y="190"><tspan fill="#ea580c">C</tspan><tspan fill="#16a34a">V</tspan><tspan fill="#2563eb">B</tspan></text>
       
       <text x="140" y="235" fill="#1e293b">M</text>
       <line x1="160" y1="230" x2="250" y2="215" stroke="#64748b" strokeWidth="2" />

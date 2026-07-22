@@ -150,8 +150,10 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
                 <div className="border-t pt-3">
                   <p className="text-sm text-red-600 font-bold mb-2">目標：k / k 的變種做主項</p>
                   <div className="space-y-1 ml-4 text-sm">
-                    <Latex math="P = \frac{kx}{\sqrt{y}}" block />
-                    <Latex math="\frac{P\sqrt{y}}{x} = k" block />
+                    <Latex math="\begin{aligned}
+P &= \frac{kx}{\sqrt{y}} \\
+\frac{P\sqrt{y}}{x} &= k
+\end{aligned}" block />
                   </div>
                   <p className="text-sm text-slate-600 mt-2">→ 答案 A</p>
                   <p className="text-xs text-slate-500 mt-1">💡 如在選擇中找不到 k 的答案，可找 <Latex math="k^2" /> / <Latex math="\frac{1}{k}" /></p>

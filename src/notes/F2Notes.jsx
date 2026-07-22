@@ -3171,12 +3171,17 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                 <svg viewBox="0 0 200 150" className="w-full max-w-[200px]">
                   <polygon points="50,130 150,50 170,120" fill="none" stroke="#334155" strokeWidth="2" />
                   <path d="M 69.52 114.38 A 25 25 0 0 1 74.91 127.92" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                  <path d="M 159.62 83.65 A 35 35 0 0 1 122.67 71.86" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                  {/* Reduce 36 deg arc radius from 35 to 25. 
+                      A = (150,50), B = (50,130), C = (170,120)
+                      Vector AB = (-100, 80). Length = sqrt(10000+6400) = sqrt(16400) ≈ 128.06. Unit = (-0.7809, 0.6247). Point on AB at r=25: A + 25*Unit = (130.48, 65.62)
+                      Vector AC = (20, 70). Length = sqrt(400+4900) = sqrt(5300) ≈ 72.80. Unit = (0.2747, 0.9615). Point on AC at r=25: A + 25*Unit = (156.87, 74.04)
+                  */}
+                  <path d="M 156.87 74.04 A 25 25 0 0 1 130.48 65.62" fill="none" stroke="#ea580c" strokeWidth="1.5" />
                   <text x="35" y="140" fontSize="14" fill="#334155" fontWeight="bold">B</text>
                   <text x="145" y="40" fontSize="14" fill="#334155" fontWeight="bold">A</text>
                   <text x="180" y="130" fontSize="14" fill="#334155" fontWeight="bold">C</text>
-                  <text x="65" y="110" fontSize="12" fill="#2563eb">54°</text>
-                  <text x="165" y="85" fontSize="12" fill="#ea580c">36°</text>
+                  <text x="80" y="118" fontSize="12" fill="#2563eb">54°</text>
+                  <text x="135" y="85" fontSize="12" fill="#ea580c">36°</text>
                 </svg>
               </div>
               <div className="p-5 flex-1 text-slate-700 text-sm leading-loose">
@@ -3234,11 +3239,22 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                   <line x1="116" y1="145" x2="116" y2="155" stroke="#2563eb" strokeWidth="2" />
                   <line x1="120" y1="145" x2="120" y2="155" stroke="#2563eb" strokeWidth="2" />
 
-                  {/* Arcs (Z angle) */}
-                  <path d="M 70 50 A 20 20 0 0 0 62 62" fill="none" stroke="#ea580c" strokeWidth="2" />
-                  <path d="M 130 150 A 20 20 0 0 0 138 138" fill="none" stroke="#ea580c" strokeWidth="2" />
-                  <path d="M 130 50 A 20 20 0 0 1 138 62" fill="none" stroke="#10b981" strokeWidth="2" />
-                  <path d="M 70 150 A 20 20 0 0 1 62 138" fill="none" stroke="#10b981" strokeWidth="2" />
+                  {/* Arcs */}
+                  {/* ∠CAE, vertex A(50,50), sides AC(to right) and AE(to bottom-right) */}
+                  {/* Start on AE, end on AC -> sweep=0 (or 1 depending on orientation) 
+                      Since Y is down, Angle A is a left-bottom angle opening right-down. 
+                      Let's sweep from AC to AE. Start (70, 50), end roughly (64.14, 64.14).
+                  */}
+                  <path d="M 70 50 A 20 20 0 0 1 64.1 64.1" fill="none" stroke="#ea580c" strokeWidth="2" />
+                  
+                  {/* ∠DBE, vertex B(150,150), sides BD(to left) and BE(to top-left) */}
+                  <path d="M 130 150 A 20 20 0 0 1 135.9 135.9" fill="none" stroke="#ea580c" strokeWidth="2" />
+                  
+                  {/* ∠ACE, vertex C(150,50), sides CA(to left) and CE(to bottom-left) */}
+                  <path d="M 130 50 A 20 20 0 0 0 135.9 64.1" fill="none" stroke="#10b981" strokeWidth="2" />
+                  
+                  {/* ∠BDE, vertex D(50,150), sides DB(to right) and DE(to top-right) */}
+                  <path d="M 70 150 A 20 20 0 0 0 64.1 135.9" fill="none" stroke="#10b981" strokeWidth="2" />
                   
                   <text x="35" y="45" fontSize="14" fill="#334155" fontWeight="bold">A</text>
                   <text x="160" y="45" fontSize="14" fill="#334155" fontWeight="bold">C</text>

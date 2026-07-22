@@ -525,8 +525,8 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
               <div className="bg-blue-50 rounded p-3 overflow-x-auto">
                 <Latex math="\begin{aligned}
 &a=3,\ b=-5,\ c=2 \\
-&\alpha+\beta=-\frac{b}{a}=-\frac{-5}{3}=\frac{5}{3} \\
-&\alpha\beta=\frac{c}{a}=\frac{2}{3}
+\alpha+\beta&=-\frac{b}{a}=-\frac{-5}{3}=\frac{5}{3} \\
+\alpha\beta&=\frac{c}{a}=\frac{2}{3}
 \end{aligned}" block />
               </div>
             </div>
@@ -544,9 +544,9 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
               </div>
               <div className="bg-emerald-50 rounded p-3 overflow-x-auto">
                 <Latex math="\begin{aligned}
-&\alpha+\beta=-\frac{b}{a}=-k,\quad \alpha\beta=\frac{c}{a}=-3 \\
-&\alpha^2+\beta^2=(\alpha+\beta)^2-2\alpha\beta \\
-&\qquad\qquad\ =(-k)^2-2(-3) \\
+&\colorbox{#fef08a}{$\alpha+\beta$}=-\frac{b}{a}=\colorbox{#fef08a}{$-k$},\quad \colorbox{#fbcfe8}{$\alpha\beta$}=\frac{c}{a}=\colorbox{#fbcfe8}{$-3$} \\
+&\alpha^2+\beta^2=(\colorbox{#fef08a}{$\alpha+\beta$})^2-2\colorbox{#fbcfe8}{$\alpha\beta$} \\
+&\qquad\qquad\ =(\colorbox{#fef08a}{$-k$})^2-2(\colorbox{#fbcfe8}{$-3$}) \\
 &\qquad\qquad\ =k^2+6
 \end{aligned}" block />
               </div>
@@ -709,8 +709,7 @@ export const FunctionNotes = ({ activeSub }) => {
             <p className="text-sm text-green-700 mb-2">題目：<Latex math="f(x) = \frac{2}{x+3}" />，<Latex math="g(x) = x^2 + 3" /></p>
             <div className="bg-white rounded-lg p-3 text-sm">
               <span className="text-blue-600 font-bold">答案：</span>
-              <p className="mb-1"><Latex math="f(2) \cdot g(-2)" /></p>
-              <Latex math="= \left(\frac{2}{2+3}\right) \cdot \left((-2)^2 + 3\right) = \frac{2}{5} \times 7 = \frac{14}{5}" block />
+              <Latex math="f(2) \cdot g(-2) = \left(\frac{2}{2+3}\right) \cdot \left((-2)^2 + 3\right) = \frac{2}{5} \times 7 = \frac{14}{5}" />
             </div>
           </div>
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
@@ -744,12 +743,22 @@ export const FunctionNotes = ({ activeSub }) => {
               <p className="text-blue-600 font-bold text-sm mb-2">答案：</p>
               <p className="text-blue-600 font-bold text-sm mb-2">a. 代 x = -1：</p>
               <div className="text-sm space-y-1 ml-4">
-                <div className="flex items-start gap-2">
-                  <Latex math="2(-1)^2 + a(-1) = 1" />
-                  <span className="text-red-500">← 利用方程計算 a 值</span>
+                <div className="grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2">
+                  <span className="justify-self-end"><Latex math="2(-1)^2 + a(-1)" /></span>
+                  <Latex math="=" />
+                  <Latex math="1" />
+                  <span className="text-red-500 whitespace-nowrap">← 利用方程計算 a 值</span>
                 </div>
-                <Latex math="2 - a = 1" block />
-                <Latex math="a = 1" block />
+                <div className="grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2">
+                  <span className="justify-self-end"><Latex math="2 - a" /></span>
+                  <Latex math="=" />
+                  <Latex math="1" />
+                </div>
+                <div className="grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2">
+                  <span className="justify-self-end"><Latex math="a" /></span>
+                  <Latex math="=" />
+                  <Latex math="1" />
+                </div>
               </div>
             </div>
 

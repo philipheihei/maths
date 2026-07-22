@@ -36,7 +36,10 @@ import { QuadraticEquationNotes, NatureOfRootsNotes, RemainderFactorNotes, Funct
 import { MoreEquationsNotes } from './F4MoreEquationsNotes';
 import { TrigonometryF4Notes } from './F4TrigonometryNotes';
 import { TrigApplicationsF4Notes } from './F4TrigApplicationsNotes';
-import { VariationNotes } from './F5Notes';
+import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgrammingNotes, LocusAndCircleNotes } from './F5Notes';
+import { ProbabilityF5Notes } from './ProbabilityF5Notes';
+import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
+import { SequenceNotes, FunctionTransformNotes } from './F6Notes';
 import { SimEqCalculatorNotes } from './A1Notes';
 
 export const NOTES_DATA = {
@@ -504,7 +507,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'more-equations',
-      topic: 'CH8 更多方程',
+      topic: 'CH8 續方程',
       color: 'indigo',
       subtopics: [
         { id: 'simultaneous', num: 1, title: '1. 聯立方程', color: 'teal' },
@@ -703,6 +706,14 @@ export const NOTES_COMPONENTS = {
   'trigonometry-astc': TrigonometryF4Notes,
   'trig-applications-f4': TrigApplicationsF4Notes,
   'variation': VariationNotes,
+  'circle-properties': CirclePropertiesNotes,
+  'statistics-f5': StatisticsF5Notes,
+  'probability-f5': ProbabilityF5Notes,
+  'compound-inequalities': CompoundInequalitiesNotes,
+  'linear-programming': LinearProgrammingNotes,
+  'locus-and-circle': LocusAndCircleNotes,
+  'sequence': SequenceNotes,
+  'function-transform': FunctionTransformNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
