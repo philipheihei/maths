@@ -3172,8 +3172,8 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
               <div className="p-4 flex items-center justify-center bg-slate-50 md:border-r border-b md:border-b-0 min-w-[250px]">
                 <svg viewBox="0 0 200 150" className="w-full max-w-[200px]">
                   <polygon points="50,130 150,50 170,120" fill="none" stroke="#334155" strokeWidth="2" />
-                  <path d="M 68 116 A 25 25 0 0 0 67 130" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                  <path d="M 160 112 A 25 25 0 0 0 151 54" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                  <path d="M 69.52 114.38 A 25 25 0 0 1 74.91 127.92" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                  <path d="M 159.62 83.65 A 35 35 0 0 1 122.67 71.86" fill="none" stroke="#ea580c" strokeWidth="1.5" />
                   <text x="35" y="140" fontSize="14" fill="#334155" fontWeight="bold">B</text>
                   <text x="145" y="40" fontSize="14" fill="#334155" fontWeight="bold">A</text>
                   <text x="180" y="130" fontSize="14" fill="#334155" fontWeight="bold">C</text>
@@ -3185,17 +3185,22 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                 <p className="mb-2 font-semibold">例：圖中，∠A = 36° 及 ∠C = 54°。證明 AB ⊥ BC。</p>
                 <div className="bg-slate-100 p-3 rounded-lg border border-slate-200">
                   <p>在 △ABC 中，</p>
-                  <div className="flex">
-                    <div className="w-48"><Latex math="\angle A + \angle B + \angle C = 180^\circ" inline /></div>
-                    <div className="text-slate-500">(△ 內角和)</div>
+                  <div className="grid grid-cols-[9.5rem_auto] items-center whitespace-nowrap">
+                    <Latex math="\angle A + \angle B + \angle C" inline />
+                    <div className="flex items-center gap-3">
+                      <Latex math="= 180^\circ" inline />
+                      <span className="text-slate-500">(△ 內角和)</span>
+                    </div>
                   </div>
-                  <div className="flex mt-1">
-                    <div className="w-48 pl-12"><Latex math="\angle B = 180^\circ - 36^\circ - 54^\circ" inline /></div>
+                  <div className="grid grid-cols-[9.5rem_auto] items-center mt-1 whitespace-nowrap">
+                    <Latex math="\angle B" inline />
+                    <Latex math="= 180^\circ - 36^\circ - 54^\circ" inline />
                   </div>
-                  <div className="flex mt-1">
-                    <div className="w-48 pl-12"><span className="bg-yellow-200 px-1 rounded font-bold">= 90°</span></div>
+                  <div className="grid grid-cols-[9.5rem_auto] items-center mt-1 whitespace-nowrap">
+                    <span aria-hidden="true" />
+                    <span className="bg-yellow-200 px-1 rounded font-bold inline-block w-fit"><Latex math="= 90^\circ" inline /></span>
                   </div>
-                  <p className="mt-2 font-bold text-emerald-700">即 AB ⊥ BC</p>
+                  <p className="mt-2 font-bold text-emerald-700">∴ AB ⊥ BC</p>
                 </div>
               </div>
             </div>

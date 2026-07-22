@@ -354,7 +354,7 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'successive-change', num: 1, title: '連續百分變化', color: 'blue' },
         { id: 'growth-depreciation', num: 2, title: '增長/衰減', color: 'green' },
-        { id: 'simple-interest', num: 3, title: '利息 (單利息)', color: 'amber' },
+        { id: 'simple-interest', num: 3, title: '利息 (單利息/複利息)', color: 'amber' },
       ]
     },
     {

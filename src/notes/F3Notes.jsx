@@ -316,6 +316,63 @@ export const PercentageF3Notes = ({ activeSub }) => {
                 </div>
               </div>
             </div>
+
+            <div className="border-t border-amber-300 pt-5 mt-5">
+              <h3 className="font-bold text-amber-800 mb-2">3.2 複利息 (Compound Interest)</h3>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                <h4 className="font-bold text-blue-700 mb-3">複利息公式</h4>
+                <div className="bg-white rounded-lg p-4 text-center">
+                  <Latex math="\text{本金} \times \left(1 + \frac{\text{年利率}}{\text{結算頻率}}\right)^{\text{期數}}" block />
+                </div>
+
+                <div className="mt-4 bg-blue-50 border border-blue-300 rounded-lg p-3">
+                  <p className="text-sm text-blue-800 mb-2">
+                    <span className="font-bold">例子：</span>本金 $10,000，年利率 6%，半年一結，年期 3 年
+                  </p>
+                  <div className="text-sm text-blue-900 my-2">
+                    <Latex math="\text{本金} \times \left(1 + \frac{6\%}{2}\right)^{6} = 10{,}000 \times (1.03)^{6}" />
+                  </div>
+                  <p className="text-xs text-blue-700 mt-2">
+                    💡 期數 = 年期 × 每年結算次數 = 3 × 2 = 6
+                  </p>
+                </div>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse text-sm">
+                  <thead>
+                    <tr className="bg-blue-100">
+                      <th className="border border-blue-200 px-3 py-2">結算週期</th>
+                      <th className="border border-blue-200 px-3 py-2">n (每年次數)</th>
+                      <th className="border border-blue-200 px-3 py-2">例子：年利率 6%</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="bg-white">
+                      <td className="border border-blue-200 px-3 py-2 text-center">一年一結</td>
+                      <td className="border border-blue-200 px-3 py-2 text-center font-bold">1</td>
+                      <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="\left(1+\frac{6\%}{1}\right)^{t} = (1+6\%)^{t}" /></td>
+                    </tr>
+                    <tr className="bg-gray-50">
+                      <td className="border border-blue-200 px-3 py-2 text-center">半年一結</td>
+                      <td className="border border-blue-200 px-3 py-2 text-center font-bold">2</td>
+                      <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="\left(1+\frac{6\%}{2}\right)^{2t} = (1+3\%)^{2t}" /></td>
+                    </tr>
+                    <tr className="bg-white">
+                      <td className="border border-blue-200 px-3 py-2 text-center">一季一結</td>
+                      <td className="border border-blue-200 px-3 py-2 text-center font-bold">4</td>
+                      <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="\left(1+\frac{6\%}{4}\right)^{4t} = (1+1.5\%)^{4t}" /></td>
+                    </tr>
+                    <tr className="bg-gray-50">
+                      <td className="border border-blue-200 px-3 py-2 text-center">一月一結</td>
+                      <td className="border border-blue-200 px-3 py-2 text-center font-bold">12</td>
+                      <td className="border border-blue-200 px-3 py-2 text-center"><Latex math="\left(1+\frac{6\%}{12}\right)^{12t} = (1+0.5\%)^{12t}" /></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </CollapsibleSection>
