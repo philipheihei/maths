@@ -348,7 +348,7 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
                   <span className="text-indigo-700 text-[15px] font-bold whitespace-nowrap mb-1 font-sans not-italic">括號內：左右變化</span>
                   <span className="text-indigo-700 text-3xl font-black font-sans not-italic">↓</span>
                 </div>
-                <span className="text-emerald-700">f(x)</span>
+                <span className="text-emerald-700 font-sans not-italic">f(x)</span>
               </div>
               
               <span className="text-green-700 mx-4 not-italic font-sans mb-1">+</span>

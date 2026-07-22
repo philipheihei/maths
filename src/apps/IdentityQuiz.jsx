@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { Lightbulb, Check, X, Trophy, GraduationCap, ArrowRight, Home as HomeIcon } from 'lucide-react';
 
 // --- 動態載入 KaTeX 資源 (確保無外部依賴即可運作) ---
@@ -652,9 +653,15 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-start p-4 font-sans select-none">
+      <div className="w-full max-w-2xl mb-2 mt-2">
+        <Link to="/" className="flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors">
+          <HomeIcon className="w-5 h-5" />
+          <span className="text-sm font-medium">返回主頁</span>
+        </Link>
+      </div>
       
       {/* 頂部裝飾列 */}
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-md overflow-hidden mb-4 border border-slate-100 mt-2">
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-md overflow-hidden mb-4 border border-slate-100">
         <div className="bg-white p-4 md:p-6 flex flex-wrap justify-between items-center gap-4 border-b border-slate-100">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-indigo-100 rounded-lg">
