@@ -1391,26 +1391,36 @@ export const LinearEquationNotes = ({ activeSub }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-xl p-5 border border-slate-200">
               <p className="text-slate-600 font-bold mb-4">例子 1：左移右，<Latex math="+3" /> 的相反數為 <Latex math="-3" /></p>
-              <pre className="whitespace-pre font-sans text-xl leading-relaxed">
-                <Latex math="x " /> <span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="+ 3" /></span> <Latex math=" = 5" />
-                <br/>
-                <Latex math="x = 5 " /> <span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 3" /></span>
-                <br/>
-                <Latex math="x = 2" />
-              </pre>
+              <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed">
+                <div className="flex justify-end items-center"><Latex math="x " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="+ 3" /></span></div>
+                <div><Latex math="=" /></div>
+                <div><Latex math="5" /></div>
+
+                <div className="flex justify-end"><Latex math="x" /></div>
+                <div><Latex math="=" /></div>
+                <div><Latex math="5 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 3" /></span></div>
+
+                <div className="flex justify-end"><Latex math="x" /></div>
+                <div><Latex math="=" /></div>
+                <div><Latex math="2" /></div>
+              </div>
             </div>
 
             <div className="bg-white rounded-xl p-5 border border-slate-200">
               <p className="text-slate-600 font-bold mb-4">例子 2：左右調動，<Latex math="\times 3" /> 的相反為 <Latex math="\div 3" /></p>
-              <pre className="whitespace-pre font-sans text-xl leading-relaxed">
-                <span className="bg-yellow-200 py-1 px-[2px] rounded inline-block"><Latex math="3" /></span><Latex math="y = 63" />
-                <br/>
-                <Latex math="y = " /> <span className="bg-yellow-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}>
-                  <Latex math="\frac{63}{3}" />
-                </span> <span className="text-base text-green-700 ml-4 inline-block align-middle font-bold">← <Latex math="\frac{63}{3}" /> 與 <Latex math="63 \div 3" /> 相同</span>
-                <br/>
-                <Latex math="y = 21" />
-              </pre>
+              <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed">
+                <div className="flex justify-end items-center"><span className="bg-yellow-200 py-1 px-[2px] rounded inline-block"><Latex math="3" /></span><Latex math="y" /></div>
+                <div><Latex math="=" /></div>
+                <div><Latex math="63" /></div>
+
+                <div className="flex justify-end"><Latex math="y" /></div>
+                <div><Latex math="=" /></div>
+                <div className="flex flex-wrap items-center gap-x-4"><span className="bg-yellow-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{63}{3}" /></span><span className="text-base text-green-700 font-bold">← <Latex math="\frac{63}{3}" /> 與 <Latex math="63 \div 3" /> 相同</span></div>
+
+                <div className="flex justify-end"><Latex math="y" /></div>
+                <div><Latex math="=" /></div>
+                <div><Latex math="21" /></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1422,54 +1432,82 @@ export const LinearEquationNotes = ({ activeSub }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             <div className="bg-white rounded-xl p-5 border border-slate-200">
-              <pre className="whitespace-pre font-sans text-xl leading-relaxed">
-                <div className="flex items-center flex-wrap">
-                  <Latex math="19 = " /> <span className="border-2 border-purple-500 rounded-full px-3 py-1 bg-purple-50 ml-1 inline-block"><Latex math="4" /> <Latex math=" + 3x" /></span>
-                </div>
-                <div className="text-base text-slate-500 my-2 whitespace-normal font-medium">← 大畫面為「+」數，先移「+」變「-」</div>
-                
-                <Latex math="19 " /> <span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 4" /></span> <Latex math=" = " /> <span className="bg-green-200 px-1 rounded inline-block"><Latex math="3" /></span><Latex math="x" />
-                <br/>
-                <Latex math="15 = " /> <span className="bg-green-200 px-1 rounded inline-block"><Latex math="3" /></span><Latex math="x" />
-                <div className="text-base text-slate-500 my-2 whitespace-normal font-medium">← 大畫面為「×」數，可移另一方至「÷」</div>
-                
-                <span className="bg-green-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}>
-                  <Latex math="\frac{15}{3}" />
-                </span> <Latex math=" = x" />
-                <br/>
-                <Latex math="x = 5" />
-              </pre>
+              <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed">
+                <div className="flex justify-end"><Latex math="19" /></div>
+                <div><Latex math="=" /></div>
+                <div><span className="border-2 border-purple-500 rounded-full px-3 py-1 bg-purple-50 inline-block"><Latex math="4" /> <Latex math="+ 3x" /></span></div>
+
+                <div className="col-span-3 text-base text-slate-500 my-2 font-medium">← 大畫面為「+」數，先移「+」變「-」</div>
+
+                <div className="flex justify-end items-center"><Latex math="19 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 4" /></span></div>
+                <div><Latex math="=" /></div>
+                <div><span className="bg-green-200 px-1 rounded inline-block"><Latex math="3" /></span><Latex math="x" /></div>
+
+                <div className="flex justify-end"><Latex math="15" /></div>
+                <div><Latex math="=" /></div>
+                <div><span className="bg-green-200 px-1 rounded inline-block"><Latex math="3" /></span><Latex math="x" /></div>
+
+                <div className="col-span-3 text-base text-slate-500 my-2 font-medium">← 大畫面為「×」數，可移另一方至「÷」</div>
+
+                <div className="flex justify-end"><span className="bg-green-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{15}{3}" /></span></div>
+                <div><Latex math="=" /></div>
+                <div><Latex math="x" /></div>
+
+                <div className="flex justify-end"><Latex math="x" /></div>
+                <div><Latex math="=" /></div>
+                <div><Latex math="5" /></div>
+              </div>
             </div>
             
             <div className="space-y-6">
               <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">分數即「÷」數</div>
-                <pre className="whitespace-pre font-sans text-xl leading-relaxed mt-2 text-center">
-                  <Latex math="\frac{a + 11}{6} = 4" />
-                  <br/>
-                  <Latex math="a " /> <span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="+ 11" /></span> <Latex math=" = 4 \times " /> <span className="bg-green-200 px-1 rounded inline-block"><Latex math="6" /></span>
-                  <br/>
-                  <Latex math="a " /> <span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="+ 11" /></span> <Latex math=" = 24" />
-                  <br/>
-                  <Latex math="a = 24 " /> <span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 11" /></span>
-                  <br/>
-                  <Latex math="a = 13" />
-                </pre>
+                <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed mt-2">
+                  <div className="flex justify-end"><Latex math="\frac{a + 11}{6}" /></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="4" /></div>
+
+                  <div className="flex justify-end items-center"><Latex math="a " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="+ 11" /></span></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="4 \times " /><span className="bg-green-200 px-1 rounded inline-block"><Latex math="6" /></span></div>
+
+                  <div className="flex justify-end items-center"><Latex math="a " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="+ 11" /></span></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="24" /></div>
+
+                  <div className="flex justify-end"><Latex math="a" /></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="24 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 11" /></span></div>
+
+                  <div className="flex justify-end"><Latex math="a" /></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="13" /></div>
+                </div>
               </div>
 
               <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">括號即「×」數</div>
-                <pre className="whitespace-pre font-sans text-xl leading-relaxed mt-2 text-center">
-                  <span className="bg-green-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="(b " /> <span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span><Latex math=") = 20" />
-                  <br/>
-                  <Latex math="b " /> <span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span> <Latex math=" = " /> <span className="bg-green-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{20}{2}" /></span>
-                  <br/>
-                  <Latex math="b " /> <span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span> <Latex math=" = 10" />
-                  <br/>
-                  <Latex math="b = 10 " /> <span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="+ 5" /></span>
-                  <br/>
-                  <Latex math="b = 15" />
-                </pre>
+                <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed mt-2">
+                  <div className="flex justify-end items-center"><span className="bg-green-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="(b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span><Latex math=")" /></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="20" /></div>
+
+                  <div className="flex justify-end items-center"><Latex math="b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span></div>
+                  <div><Latex math="=" /></div>
+                  <div><span className="bg-green-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{20}{2}" /></span></div>
+
+                  <div className="flex justify-end items-center"><Latex math="b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="10" /></div>
+
+                  <div className="flex justify-end"><Latex math="b" /></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="10 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="+ 5" /></span></div>
+
+                  <div className="flex justify-end"><Latex math="b" /></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="15" /></div>
+                </div>
               </div>
             </div>
 
