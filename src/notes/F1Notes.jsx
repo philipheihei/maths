@@ -3295,9 +3295,11 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
 
               <div>
                 <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="3a + 1" /> 的第 21 項是？</p>
-                <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4 relative">
-                  <div className="absolute left-[130px] -top-5 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 a = 21</div>
-                  <p>第 21 項 <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"> (21) </span><Latex math=" + 1" /></p>
+                <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4">
+                  <p>
+                    第 21 項 <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"> (21) </span><Latex math=" + 1" />
+                    <span className="ml-3 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 a = 21</span>
+                  </p>
                   <p className="pl-[72px]"><Latex math="= 64" /></p>
                 </div>
               </div>
