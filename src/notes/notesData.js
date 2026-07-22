@@ -262,7 +262,7 @@ export const NOTES_DATA = {
         { id: 'histogram', num: 2, title: '直方圖', color: 'blue' },
         { id: 'freq-polygon', num: 3, title: '頻數分佈多邊形', color: 'indigo' },
         { id: 'cumulative-freq', num: 4, title: '累積頻數分佈多邊形', color: 'emerald' },
-        { id: 'quartiles', num: 5, title: '四分位數及箱形圖', color: 'fuchsia' },
+        { id: 'quartiles', num: 5, title: '百分位數、四分位數和中位數', color: 'fuchsia' },
       ]
     },
     {

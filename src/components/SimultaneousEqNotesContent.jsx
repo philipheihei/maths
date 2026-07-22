@@ -77,7 +77,7 @@ export const SimultaneousEqNotesContent = ({
             <span className="text-green-600 font-bold px-1 rounded border border-green-200 bg-white">1 次方</span>
           </div>
           <p className="text-slate-600 mb-4 bg-white p-3 border border-blue-100 rounded-lg flex items-center justify-center text-lg shadow-sm">
-            <span className="font-serif italic text-blue-800 mr-4 text-base">e.g.</span>
+            <span className="font-serif italic text-blue-800 mr-4 text-base">例子</span>
             <Latex math="x + y = 3" />
           </p>
           <p className="text-sm text-center text-slate-600">
@@ -655,7 +655,7 @@ export const SimultaneousEqNotesContent = ({
               {/* e.g. 1 */}
               <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
                 <div className="grid grid-cols-1 lg:grid-cols-[64px_minmax(0,1fr)_auto_minmax(0,1fr)_auto_92px] items-center justify-items-center gap-x-3 gap-y-3">
-                  <span className="font-bold text-blue-800 italic text-base">e.g. 1</span>
+                  <span className="font-bold text-blue-800 italic text-base">例子1</span>
 
                   <Latex math="\begin{cases} 12x + 15y = 5 & \cdots\textcircled{1} \\ 4x + 5y = 2 & \cdots\textcircled{2} \end{cases}" />
 
@@ -672,11 +672,11 @@ export const SimultaneousEqNotesContent = ({
               {/* e.g. 2 */}
               <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
                 <div className="grid grid-cols-1 lg:grid-cols-[64px_minmax(0,1fr)_auto_minmax(0,1fr)_auto_92px] items-center justify-items-center gap-x-3 gap-y-3">
-                  <span className="font-bold text-blue-800 italic text-base">e.g. 2</span>
+                  <span className="font-bold text-blue-800 italic text-base">例子2</span>
 
-                  <Latex math="\begin{cases} 9x - 7y = 5 \\ 18x - 16y = 14 \end{cases}" />
+                  <Latex math="\begin{cases} 9x - 7y = 5 & \cdots\textcircled{1} \\ 18x - 16y = 14 & \cdots\textcircled{2} \end{cases}" />
 
-                  <span className="text-slate-500 text-2xl leading-none">⇒</span>
+                  <Latex math="\xrightarrow{\text{\textcircled{1}}\times 2}" />
 
                   <Latex math="\begin{cases} 18x - 14y = 10 \\ 18x - 16y = 14 \end{cases}" />
 
@@ -689,9 +689,9 @@ export const SimultaneousEqNotesContent = ({
               {/* e.g. 3 */}
               <div className="bg-slate-50 rounded-lg p-5 border border-slate-200">
                 <div className="grid grid-cols-1 lg:grid-cols-[64px_minmax(0,1fr)_auto_minmax(0,1fr)_auto_92px] items-center justify-items-center gap-x-3 gap-y-3">
-                  <span className="font-bold text-blue-800 italic text-base">e.g. 3</span>
+                  <span className="font-bold text-blue-800 italic text-base">例子3</span>
 
-                  <Latex math="\begin{cases} 24x + 12y = -48 \\ 4x + 2y = -8 \end{cases}" />
+                  <Latex math="\begin{cases} 24x + 12y = -48 & \cdots\textcircled{1} \\ 4x + 2y = -8 & \cdots\textcircled{2} \end{cases}" />
 
                   <Latex math="\xrightarrow{\text{\textcircled{2}}\times 6}" />
 

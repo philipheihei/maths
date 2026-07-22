@@ -1280,9 +1280,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                 <div className="space-y-3 font-sans text-sm md:text-base">
                   <div className="flex gap-4 items-center">
                     <Latex math="n(m-5) = 3m + 2n" block left />
-                  </div>
-                  <div className="text-xs text-purple-700 font-bold ml-4">
-                    沒分數 → 有括號，拆 →
+                    <span className="text-xs text-purple-700 font-bold whitespace-nowrap">{'← 沒分數，有括號 → 拆'}</span>
                   </div>
                   <div className="flex gap-4 items-center">
                     <Latex math="\boldsymbol{nm} - \boldsymbol{5n} = 3m + \boldsymbol{2n}" block left />
@@ -1781,7 +1779,7 @@ export const InequalityNotes = ({ activeSub }) => {
                   <div className="text-center font-bold px-2"><Latex math="<" /></div>
                   <div className="text-left flex items-center gap-2">
                     <Latex math="\frac{-20}{5}" />
-                    <span className="text-emerald-600 text-xs font-bold whitespace-nowrap hidden sm:inline">← 除正數不轉</span>
+                    <span className="text-emerald-600 text-xs font-bold whitespace-nowrap hidden sm:inline">← 除正數不需轉不等號</span>
                   </div>
                   
                   <div className="col-span-3 pb-1"></div>
