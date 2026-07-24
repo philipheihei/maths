@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Latex, MathDisplay, CollapsibleSection } from './shared';
+import { Latex, MathDisplay, CollapsibleSection, ChapterHeader } from './shared';
 
 // ========================================
 // CH11 變分 (F5)
@@ -10,10 +10,11 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH11 變分 (Variation)</h1>
-        <p className="text-slate-600">掌握四條變分公式及其應用</p>
-      </div>
+      <ChapterHeader
+        title="CH11 變分 (Variation)"
+        description="掌握四條變分公式及其應用"
+        accent="blue"
+      />
 
       <CollapsibleSection id="variation-formulas" title="四條公式 & 備註" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
@@ -189,10 +190,11 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-indigo-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH14 統計 (Statistics)</h1>
-        <p className="text-slate-600">從離散數據找尋 7 個統計量、各類圖表的判讀，以及標準分與數據更動對離差的影響</p>
-      </div>
+      <ChapterHeader
+        title="CH14 統計 (Statistics)"
+        description="從離散數據找尋 7 個統計量、各類圖表的判讀，以及標準分與數據更動對離差的影響"
+        accent="indigo"
+      />
 
       <CollapsibleSection id="stat-7-indicators" title="七個重要統計量" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
@@ -620,10 +622,11 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
   return (
     <>
-      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-emerald-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH12-13 圓形性質 (Circle Properties)</h1>
-        <p className="text-slate-600">圖形定理、性質整理及其格式寫法</p>
-      </div>
+      <ChapterHeader
+        title="CH12-13 圓形性質 (Circle Properties)"
+        description="圖形定理、性質整理及其格式寫法"
+        accent="emerald"
+      />
 
       <div className="flex flex-col">
       <div className="order-2">
@@ -1498,10 +1501,11 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-pink-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH18 線性規劃 (Linear Programming)</h1>
-        <p className="text-slate-600">透過線段的不等式找尋點的範圍、最大值及最小值</p>
-      </div>
+      <ChapterHeader
+        title="CH18 線性規劃 (Linear Programming)"
+        description="透過線段的不等式找尋點的範圍、最大值及最小值"
+        accent="rose"
+      />
 
       <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg mb-6">
         <p className="text-amber-800 font-bold">💡 考試小貼士：</p>
@@ -1743,10 +1747,11 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH19 軌跡及圓的方程</h1>
-        <p className="text-slate-600">軌跡的代數方程及圓形相關運算</p>
-      </div>
+      <ChapterHeader
+        title="CH19 軌跡及圓的方程"
+        description="軌跡的代數方程及圓形相關運算"
+        accent="teal"
+      />
 
       <CollapsibleSection id="locus-drawing" title="繪畫及描述軌跡" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">

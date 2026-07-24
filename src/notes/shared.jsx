@@ -42,6 +42,32 @@ export const MathDisplay = ({ latex, inline = false, className = '' }) => {
   return <span ref={ref} className={`${inline ? 'inline-block' : 'block text-center my-1'} ${className}`} />;
 };
 
+// 統一章節標題卡
+export const ChapterHeader = ({ title, description, accent = 'blue' }) => {
+  const accentBorder = {
+    blue: 'border-blue-500',
+    green: 'border-green-500',
+    purple: 'border-purple-500',
+    teal: 'border-teal-500',
+    indigo: 'border-indigo-500',
+    orange: 'border-orange-500',
+    red: 'border-red-500',
+    rose: 'border-rose-500',
+    sky: 'border-sky-500',
+    emerald: 'border-emerald-500',
+    amber: 'border-amber-500',
+    cyan: 'border-cyan-500',
+    slate: 'border-slate-500',
+  };
+
+  return (
+    <div className={`bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 ${accentBorder[accent] || accentBorder.blue}`}>
+      <h1 className="text-2xl font-bold text-slate-800 mb-2">{title}</h1>
+      <p className="text-slate-600">{description}</p>
+    </div>
+  );
+};
+
 // 可摺疊區段組件
 export const CollapsibleSection = ({ id, title, num, color = 'blue', activeSub, sectionRef, children }) => {
   useEffect(() => {
