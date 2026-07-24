@@ -15,7 +15,7 @@ export const SequenceNotes = ({ activeSub }) => {
       </div>
 
       {/* 1. 通項對比 */}
-      <CollapsibleSection id="nth-term" title="1. 通項 (nth term) 與公差/公比" num={1} color="indigo" activeSub={activeSub} sectionRef={s1}>
+      <CollapsibleSection id="nth-term" title="通項 (nth term) 與公差/公比" num={1} color="indigo" activeSub={activeSub} sectionRef={s1}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
           {/* 左：等差 */}
@@ -92,7 +92,7 @@ export const SequenceNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       {/* 2. 求和對比 */}
-      <CollapsibleSection id="sum" title="2. 求和 (Summation)" num={2} color="indigo" activeSub={activeSub} sectionRef={s2}>
+      <CollapsibleSection id="sum" title="求和 (Summation)" num={2} color="indigo" activeSub={activeSub} sectionRef={s2}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
           {/* 左：等差求和 */}
@@ -136,7 +136,7 @@ export const SequenceNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       {/* 3. 基本題型：分辨與找 T(n) */}
-      <CollapsibleSection id="basic-questions" title="3. 考核題型 (1)：分辨與找特定項" num={3} color="indigo" activeSub={activeSub} sectionRef={s3}>
+      <CollapsibleSection id="basic-questions" title="考核題型 (1)：分辨與找特定項" num={3} color="indigo" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <h3 className="font-bold text-slate-800 mb-3">1. 分辨等差數列 / 等比數列</h3>
@@ -175,7 +175,7 @@ export const SequenceNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       {/* 4. 進階題型：找 n 項次 */}
-      <CollapsibleSection id="advanced-questions" title="4. 考核題型 (2)：求項數與不等式應用" num={4} color="indigo" activeSub={activeSub} sectionRef={s4}>
+      <CollapsibleSection id="advanced-questions" title="考核題型 (2)：求項數與不等式應用" num={4} color="indigo" activeSub={activeSub} sectionRef={s4}>
         <div className="space-y-4">
           
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
@@ -185,10 +185,28 @@ export const SequenceNotes = ({ activeSub }) => {
             <div className="bg-white p-4 rounded-md border border-blue-100 font-sans text-sm space-y-2 text-slate-700">
               <div className="flex gap-4">
                 <div className="flex-1 space-y-1">
-                  <div className="flex items-center gap-2"><MathDisplay latex="T(n) = 9 + (n-1)(4)" /><span className="text-emerald-700 font-bold ml-2">← 1. 先找通項 (a=9, d=4)</span></div>
-                  <div className="flex items-center gap-2"><MathDisplay latex="113 = 5 + 4n" /><span className="text-emerald-700 font-bold ml-2">← 2. 化簡並代入最尾項的值 (113)</span></div>
-                  <MathDisplay latex="108 = 4n" block />
-                  <MathDisplay latex="n = 27" block />
+                  <div className="grid grid-cols-[9rem_auto_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="T(n)" />
+                    <MathDisplay latex="=" />
+                    <MathDisplay latex="9 + (n-1)(4)" />
+                    <span className="text-emerald-700 font-bold ml-2">← 1. 先找通項 (a=9, d=4)</span>
+                  </div>
+                  <div className="grid grid-cols-[9rem_auto_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="113" />
+                    <MathDisplay latex="=" />
+                    <MathDisplay latex="5 + 4n" />
+                    <span className="text-emerald-700 font-bold ml-2">← 2. 化簡並代入最尾項的值 (113)</span>
+                  </div>
+                  <div className="grid grid-cols-[9rem_auto_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="108" />
+                    <MathDisplay latex="=" />
+                    <MathDisplay latex="4n" />
+                  </div>
+                  <div className="grid grid-cols-[9rem_auto_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="n" />
+                    <MathDisplay latex="=" />
+                    <MathDisplay latex="27" />
+                  </div>
                 </div>
               </div>
               <div className="mt-2 font-bold text-blue-800">∴ 總共有 27 項</div>
@@ -212,14 +230,38 @@ export const SequenceNotes = ({ activeSub }) => {
                   
                     <div className="text-blue-700 font-bold mt-3">b) n 的最 大值 (首 n 項和 &gt; 0)：</div>
                   <div className="text-emerald-700 text-xs mb-1">要求： <MathDisplay latex="S(n) > 0" inline /></div>
-                  <MathDisplay latex="\frac{n}{2}[2a + (n-1)d] > 0" block />
+                  <div className="grid grid-cols-[12rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="\frac{n}{2}[2a + (n-1)d]" inline className="justify-self-end" />
+                    <MathDisplay latex=">" inline />
+                    <MathDisplay latex="0" inline />
+                  </div>
                   <div className="text-emerald-700 text-xs mt-1 mb-1">代入 a=666, d=-3：</div>
-                  <MathDisplay latex="\frac{n}{2}[2(666) + (n-1)(-3)] > 0" block />
-                  <MathDisplay latex="\frac{n}{2}(1332 - 3n + 3) > 0" block />
+                  <div className="grid grid-cols-[12rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="\frac{n}{2}[2(666) + (n-1)(-3)]" inline className="justify-self-end" />
+                    <MathDisplay latex=">" inline />
+                    <MathDisplay latex="0" inline />
+                  </div>
+                  <div className="grid grid-cols-[12rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="\frac{n}{2}(1332 - 3n + 3)" inline className="justify-self-end" />
+                    <MathDisplay latex=">" inline />
+                    <MathDisplay latex="0" inline />
+                  </div>
                   <div className="text-emerald-700 text-xs mt-1 mb-1">✨ n 不能為 0 (否則會漏答案)，直接把 n 及 /2 移走/除走：</div>
-                  <MathDisplay latex="1335 - 3n > 0" block />
-                  <MathDisplay latex="1335 > 3n" block />
-                  <MathDisplay latex="n < 445" block />
+                  <div className="grid grid-cols-[12rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="1335 - 3n" inline className="justify-self-end" />
+                    <MathDisplay latex=">" inline />
+                    <MathDisplay latex="0" inline />
+                  </div>
+                  <div className="grid grid-cols-[12rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="1335" inline className="justify-self-end" />
+                    <MathDisplay latex=">" inline />
+                    <MathDisplay latex="3n" inline />
+                  </div>
+                  <div className="grid grid-cols-[12rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="n" inline className="justify-self-end" />
+                    <MathDisplay latex="<" inline />
+                    <MathDisplay latex="445" inline />
+                  </div>
                   <div className="font-bold text-red-700 mt-2">∴ n 的最大整數值為 444</div>
                 </div>
               </div>
@@ -235,14 +277,38 @@ export const SequenceNotes = ({ activeSub }) => {
                 <div className="space-y-1 text-slate-700">
                   <div className="text-blue-700 font-bold">解題步驟：</div>
                   <div className="text-emerald-700 text-xs mb-1">1. 找出通項 T(n) (已知 a=2006, d=-8)：</div>
-                  <MathDisplay latex="T(n) = 2006 + (n-1)(-8)" block />
-                  <MathDisplay latex="T(n) = 2006 - 8n + 8" block />
-                  <MathDisplay latex="T(n) = 2014 - 8n" block />
+                  <div className="grid grid-cols-[5rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="T(n)" inline className="justify-self-end" />
+                    <MathDisplay latex="=" inline />
+                    <MathDisplay latex="2006 + (n-1)(-8)" inline />
+                  </div>
+                  <div className="grid grid-cols-[5rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="T(n)" inline className="justify-self-end" />
+                    <MathDisplay latex="=" inline />
+                    <MathDisplay latex="2006 - 8n + 8" inline />
+                  </div>
+                  <div className="grid grid-cols-[5rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="T(n)" inline className="justify-self-end" />
+                    <MathDisplay latex="=" inline />
+                    <MathDisplay latex="2014 - 8n" inline />
+                  </div>
                   
                   <div className="text-emerald-700 text-xs mt-3 mb-1">2. 設 T(n) &lt; 0 (首個負值項)：</div>
-                  <MathDisplay latex="2014 - 8n < 0" block />
-                  <MathDisplay latex="2014 < 8n" block />
-                  <MathDisplay latex="251.75 < n" block />
+                  <div className="grid grid-cols-[5rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="2014 - 8n" inline className="justify-self-end" />
+                    <MathDisplay latex="<" inline />
+                    <MathDisplay latex="0" inline />
+                  </div>
+                  <div className="grid grid-cols-[5rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="2014" inline className="justify-self-end" />
+                    <MathDisplay latex="<" inline />
+                    <MathDisplay latex="8n" inline />
+                  </div>
+                  <div className="grid grid-cols-[5rem_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="251.75" inline className="justify-self-end" />
+                    <MathDisplay latex="<" inline />
+                    <MathDisplay latex="n" inline />
+                  </div>
                   
                   <div className="text-emerald-700 text-xs mt-3 mb-1">3. 找符合條件的 n 的最小整數值：</div>
                   <p className="ml-4 font-bold text-slate-800">∴ 滿足要求的 n 是 252 (第 252 項)</p>
@@ -259,7 +325,7 @@ export const SequenceNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       {/* 5. 其他數列 */}
-      <CollapsibleSection id="other-sequence" title="5. 其他數列 (無「等差」「等比」字眼)" num={5} color="indigo" activeSub={activeSub} sectionRef={s5}>
+      <CollapsibleSection id="other-sequence" title="其他數列 (無「等差」「等比」字眼)" num={5} color="indigo" activeSub={activeSub} sectionRef={s5}>
         <div className="bg-amber-50 rounded-lg p-5 border border-amber-200">
           <h3 className="font-bold text-amber-800 mb-3 text-lg text-center border-b border-amber-200 pb-2">DSE 題目若沒提及「等差」或「等比」字眼，則為其他數列</h3>
           
@@ -285,11 +351,11 @@ export const SequenceNotes = ({ activeSub }) => {
                 <MathDisplay latex="a_n" inline className="text-lg font-bold" />
               </div>
               <div className="flex gap-4 items-center text-xs text-slate-500 mt-1">
-                <span className="w-8 text-center text-red-600 font-bold">下兩項</span>
-                <span className="w-4"></span>
-                <span className="w-8 text-center text-green-600 font-bold">下一項</span>
-                <span className="w-4"></span>
-                <span className="w-8 text-center text-blue-600 font-bold">某項</span>
+                <span className="w-12 text-center whitespace-nowrap text-red-600 font-bold">下兩項</span>
+                <span className="w-1"></span>
+                <span className="w-8 text-center whitespace-nowrap text-green-600 font-bold">下一項</span>
+                <span className="w-0"></span>
+                <span className="w-12 text-center whitespace-nowrap text-blue-600 font-bold">某項</span>
               </div>
             </div>
 
