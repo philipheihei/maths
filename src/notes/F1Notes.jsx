@@ -413,6 +413,11 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
 
   return (
     <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-green-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH2 有向數</h1>
+        <p className="text-slate-600">正負數概念、數線比較與有向數乘除規律</p>
+      </div>
+
       <CollapsibleSection id="positive-negative" title="有向數即正負數" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
@@ -647,6 +652,11 @@ export const PolynomialsNotes = ({ activeSub }) => {
 
   return (
     <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-purple-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH6 多項式</h1>
+        <p className="text-slate-600">單項式與多項式、項數係數、次數排列與四則運算</p>
+      </div>
+
       {/* 1. 分辨單項式與多項式 */}
       <CollapsibleSection id="definition" title="分辨單項式與多項式" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
@@ -871,6 +881,11 @@ export const AreaVolumeNotes = ({ activeSub }) => {
 
   return (
     <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-orange-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH5 面積與體積 (一)</h1>
+        <p className="text-slate-600">平面圖形面積、多邊形分割法、柱體體積與表面面積</p>
+      </div>
+
       {/* 1. 簡單圖形的面積 */}
       <CollapsibleSection id="basic-area" title="簡單圖形的面積" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
@@ -2216,7 +2231,7 @@ export const CoordinateNotes = ({ activeSub }) => {
     const cx = x * step;
     const cy = -y * step;
     return (
-      <g key={label}>
+      <g>
         <path d={`M ${cx - 4} ${cy - 4} L ${cx + 4} ${cy + 4} M ${cx + 4} ${cy - 4} L ${cx - 4} ${cy + 4}`} stroke={color} strokeWidth="2.5" />
         <text x={cx + 8} y={cy - 8} fontSize="14" fill="#000" fontWeight="bold">{label}</text>
       </g>
@@ -2225,6 +2240,11 @@ export const CoordinateNotes = ({ activeSub }) => {
 
   return (
     <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-sky-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH10 坐標幾何</h1>
+        <p className="text-slate-600">直角坐標、象限判斷、坐標找長度與點的轉換</p>
+      </div>
+
       <CollapsibleSection id="coordinate-system" title="坐標系統 (直角坐標)" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
@@ -2472,6 +2492,11 @@ export const PercentageNotes = ({ activeSub }) => {
 
   return (
     <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-emerald-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH9 百分數</h1>
+        <p className="text-slate-600">百分數互化、部份百分率、比較與百分變化</p>
+      </div>
+
       <CollapsibleSection id="interconversion" title="1. 百分數 / 小數 / 分數互化" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
@@ -2691,6 +2716,11 @@ export const AnglesNotes = ({ activeSub }) => {
 
   return (
     <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-rose-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH11 直線相關的角</h1>
+        <p className="text-slate-600">線和角命名、基礎角度定理與常見幾何角題型</p>
+      </div>
+
       <CollapsibleSection id="lines-angles-naming" title="基礎知識：線和角的命名" num={0} color="slate" activeSub={activeSub} sectionRef={s0}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-green-50 rounded-lg p-3 border border-green-200">
@@ -3353,6 +3383,11 @@ export const RateRatioNotes = ({ activeSub }) => {
 
   return (
     <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH14 率與比</h1>
+        <p className="text-slate-600">單位轉換、率與比、連比、比例圖與正反比</p>
+      </div>
+
       {/* 1. 單位轉換 */}
       <CollapsibleSection id="unit-conversion" title="1. 單位轉換" num={1} color="slate" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
@@ -3953,6 +3988,11 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
 
   return (
     <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH12 全等三角形</h1>
+        <p className="text-slate-600">全等概念、對應邊角與常用判定條件</p>
+      </div>
+
       {/* 1. 認識概念 全等 */}
       <CollapsibleSection id="concept" title="1. 認識概念 (全等)" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">

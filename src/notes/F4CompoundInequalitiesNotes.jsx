@@ -27,6 +27,10 @@ export const CompoundInequalitiesNotes = ({ activeSub }) => {
 
   return (
     <div className="space-y-6">
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-rose-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH17 複合不等式</h1>
+        <p className="text-slate-600">數線作圖、及/或判斷、整數範圍與二次不等式應用</p>
+      </div>
 
       <CollapsibleSection id="basics" title="0. 基礎知識" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">

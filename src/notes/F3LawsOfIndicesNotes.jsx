@@ -8,6 +8,11 @@ export const LawsOfIndicesNotes = ({ activeSub }) => {
 
   return (
     <div className="space-y-6">
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH2 指數定律</h1>
+        <p className="text-slate-600">指數運算規則、科學記數法與二進制轉換</p>
+      </div>
+
       <CollapsibleSection id="laws" title="指數定律 (及新學知識)" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">

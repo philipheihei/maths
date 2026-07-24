@@ -1799,7 +1799,15 @@ export const InequalityNotes = ({ activeSub }) => {
 };
 
 export const SimultaneousEqF2Notes = ({ activeSub }) => {
-  return <SimultaneousEqNotesContent cheatsheet={SIMULTANEOUS_EQ_CHEATSHEET} activeSub={activeSub} />;
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH9 二元一次聯立方程</h1>
+        <p className="text-slate-600">圖解法、代入法、加減法與應用題</p>
+      </div>
+      <SimultaneousEqNotesContent cheatsheet={SIMULTANEOUS_EQ_CHEATSHEET} activeSub={activeSub} />
+    </>
+  );
 };
 
 export const IdentitiesF2Notes = ({ activeSub }) => {
@@ -2620,6 +2628,11 @@ export const Statistics2F2Notes = ({ activeSub }) => {
   return (
     <>
       <div className="space-y-6 max-w-4xl mx-auto pb-12">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">CH7 統計(二)</h1>
+          <p className="text-slate-600">頻數分佈圖、累積頻數圖與四分位數</p>
+        </div>
+
         {/* ======== 1. 頻數分佈表的名詞 ======== */}
         <CollapsibleSection id="freq-table" title="頻數分佈表的名詞" num={1} color="rose" activeSub={activeSub} sectionRef={s0}>
           <div className="grid grid-cols-1 gap-6 p-4">
@@ -3029,6 +3042,10 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
   return (
     <>
       <div className="space-y-6 max-w-4xl mx-auto pb-12">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-indigo-500">
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">CH11 幾何證明</h1>
+          <p className="text-slate-600">直線、平行、垂直與全等相似三角形證明策略</p>
+        </div>
 
         {/* ======== 1. 證明是直線 ======== */}
         <CollapsibleSection id="prove-line" title="證明是直線" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>

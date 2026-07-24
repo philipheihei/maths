@@ -11,7 +11,7 @@ export const FactorizationNotes = ({ activeSub }) => {
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-purple-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">因式分解</h1>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH1 因式分解</h1>
         <p className="text-slate-600">掌握三大因式分解技巧：提取公因式、併項法、二次多項式</p>
       </div>
       <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
@@ -999,8 +999,14 @@ export const QuadrilateralNotes = ({ activeSub }) => {
 
 export const TriangleLinesNotes = () => {
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-5">
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-orange-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH6 三角形的心</h1>
+        <p className="text-slate-600">高線、中線、角平分線與垂直平分線的辨認重點</p>
+      </div>
+
+      <div className="space-y-6">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-5">
         <div className="flex items-center gap-2 mb-4">
           <span className="bg-orange-100 text-orange-800 border border-orange-300 px-2.5 py-1 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">
             重點
@@ -1095,8 +1101,9 @@ export const TriangleLinesNotes = () => {
           </div>
         </div>
 
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -1378,7 +1385,7 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">三角學的應用</h1>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH8 三角學的應用</h1>
         <p className="text-slate-600">探討斜坡斜率與傾角的關係</p>
       </div>
 

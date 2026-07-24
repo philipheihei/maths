@@ -11,7 +11,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
   return (
     <>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">CH19 軌跡及圓的方程</h1>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH19 軌跡及圓的方程</h1>
         <p className="text-slate-600">軌跡的代數方程及圓形相關運算</p>
       </div>
 
