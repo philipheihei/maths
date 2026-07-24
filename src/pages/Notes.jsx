@@ -10,6 +10,19 @@ const Notes = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const requestedTopic = searchParams.get('topic');
+  const isPrintMode = searchParams.get('print') === '1';
+  const isPrintPreview = isPrintMode && searchParams.get('preview') === '1';
+  const printLevel = searchParams.get('level');
+  const printGroup = searchParams.get('group');
+
+  const seniorLevels = ['F4', 'F5', 'F6'];
+  const printableJuniorLevels = ['F1', 'F2', 'F3'];
+  const printLevels = printGroup === 'senior'
+    ? seniorLevels
+    : (printLevel && printableJuniorLevels.includes(printLevel) ? [printLevel] : []);
+  const printTopics = printLevels.flatMap((lvl) =>
+    (NOTES_DATA[lvl] || []).map((topic) => ({ ...topic, _level: lvl }))
+  );
 
   const getInitialState = () => {
     if (requestedTopic) {
@@ -155,6 +168,44 @@ const Notes = () => {
       </nav>
     );
   };
+
+  if (isPrintMode) {
+    return (
+      <div className={`print-root min-h-screen bg-white px-4 py-6 md:px-8 ${isPrintPreview ? 'print-preview' : ''}`}>
+        {isPrintPreview && (
+          <div className="print-preview-toolbar sticky top-0 z-30 mx-auto mb-4 max-w-5xl rounded-xl border border-slate-200 bg-white/95 px-4 py-3 backdrop-blur">
+            <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
+              <p className="text-slate-600">A4 Reader 預覽模式（已套用列印分頁規則）</p>
+              <button
+                onClick={() => window.print()}
+                className="rounded-lg bg-indigo-600 px-3 py-1.5 font-bold text-white hover:bg-indigo-700"
+              >
+                列印 / 另存 PDF
+              </button>
+            </div>
+          </div>
+        )}
+        {printTopics.length === 0 ? (
+          <div className="max-w-3xl mx-auto border border-amber-300 bg-amber-50 text-amber-800 rounded-xl p-4">
+            <h2 className="text-lg font-bold">列印模式參數無效</h2>
+            <p className="mt-2 text-sm">初中請使用 ?print=1&level=F1/F2/F3；高中請使用 ?print=1&group=senior。</p>
+          </div>
+        ) : (
+          printTopics.map((topic) => {
+            const TopicComponent = NOTES_COMPONENTS[topic.id];
+            if (!TopicComponent) return null;
+            return (
+              <section key={`${topic._level}-${topic.id}`} className="print-topic-page">
+                <div className="print-topic-sheet">
+                  <TopicComponent activeSub={null} onNavigate={() => {}} />
+                </div>
+              </section>
+            );
+          })
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
