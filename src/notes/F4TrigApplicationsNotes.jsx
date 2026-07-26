@@ -225,8 +225,8 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
               <div className="pt-2 border-t border-slate-100 text-sm text-slate-700 space-y-1">
                 <p className="font-bold text-slate-800">同場手算對照：</p>
                 <Step math="s = \frac{11+14+15}{2} = 20" />
-                <Step math="\text{面積} = \sqrt{s(s-a)(s-b)(s-c)}" />
-                <Step math="\text{面積} = \sqrt{20(20-11)(20-14)(20-15)} = \sqrt{5400}" />
+                <Step math="\text{面積} = \sqrt{s(s−a)(s−b)(s−c)}" />
+                <Step math="\text{面積} = \sqrt{20(20−11)(20−14)(20−15)} = \sqrt{5400}" />
                 <Step math="\text{面積} = 73.5\text{ cm}^2\ (\text{準確至3位有效數字})" />
               </div>
             </div>
@@ -282,7 +282,7 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
               <div className="flex-1 text-center">
                 <p className="text-green-700 font-bold mb-1">公式：</p>
                 <div className="text-xl">
-                  <Latex math="c^2 = a^2 + b^2 - 2(a)(b)\cos\theta" inline />
+                  <Latex math="c^2 = a^2 + b^2 − 2(a)(b)\cos\theta" inline />
                 </div>
                 <p className="text-red-600 font-bold mt-2">一式走天涯便可!</p>
               </div>
@@ -301,7 +301,7 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
                 </div>
                 <p className="text-green-700 font-bold mb-2">先找已知角度的對邊 ↓</p>
                 <div className="font-sans space-y-1">
-                  <Step math="x^2 = 11^2 + 16^2 - 2(11)(16)\cos 114^\circ" explain="11, 16為其餘邊" />
+                  <Step math="x^2 = 11^2 + 16^2 − 2(11)(16)\cos 114^\circ" explain="11, 16為其餘邊" />
                   <Step math="x^2 = 520.17" explain="因沒有未知數，所以直接按計算機" />
                   <Step math="x = 22.8" />
                 </div>
@@ -314,11 +314,11 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
                 </div>
                 <p className="text-green-700 font-bold mb-2"><Latex math="\theta" inline /> 的對邊 ↓</p>
                 <div className="font-sans space-y-1">
-                  <Step math="8^2 = 9^2 + 9^2 - 2(9)(9)\cos\theta" explain="9, 9為其餘邊" />
-                  <Step math="64 = 162 - 162\cos\theta" explain="按紅線分隔用計算機簡化" />
-                  <Step math="64 - 162 = -162\cos\theta" explain="移項至 cosθ = ?" />
-                  <Step math="-98 = -162\cos\theta" />
-                  <Step math="\frac{-98}{-162} = \cos\theta" explain="cos⁻¹θ" />
+                  <Step math="8^2 = 9^2 + 9^2 − 2(9)(9)\cos\theta" explain="9, 9為其餘邊" />
+                  <Step math="64 = 162 − 162\cos\theta" explain="按紅線分隔用計算機簡化" />
+                  <Step math="64 − 162 = −162\cos\theta" explain="移項至 cosθ = ?" />
+                  <Step math="−98 = −162\cos\theta" />
+                  <Step math="\frac{−98}{−162} = \cos\theta" explain="cos⁻¹θ" />
                   <Step math="\theta = 52.8^\circ" />
                 </div>
               </div>

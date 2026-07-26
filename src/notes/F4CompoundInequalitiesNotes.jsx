@@ -213,7 +213,7 @@ viewBox：400 × 100
             <p className="text-slate-600 font-bold mb-2 text-lg border-b pb-2">例子 e.g. 解複合不等式：</p>
             
             <div className="text-center font-bold text-slate-800 my-4 text-xl">
-              <Latex math="4x + 1 \leq 13" /> <span className="text-green-600 mx-2">及</span> <Latex math="-x \leq 2x + 9" />
+              <Latex math="4x + 1 \leq 13" /> <span className="text-green-600 mx-2">及</span> <Latex math="−x \leq 2x + 9" />
             </div>
 
             <div className="grid grid-cols-2 gap-4 text-center mt-6 text-lg">
@@ -234,12 +234,12 @@ viewBox：400 × 100
               <div className="border-l border-slate-200">
                 <div className="space-y-1 flex flex-col items-center">
                   <div className="grid grid-cols-[7.5rem_1.75rem_3rem] items-center gap-x-1">
-                    <span className="text-right"><Latex math="-x - 2x" /></span>
+                    <span className="text-right"><Latex math="−x − 2x" /></span>
                     <span className="text-center"><Latex math="\leq" /></span>
                     <span className="text-left"><Latex math="9" /></span>
                   </div>
                   <div className="grid grid-cols-[7.5rem_1.75rem_3rem] items-center gap-x-1">
-                    <span className="text-right"><Latex math="-3x" /></span>
+                    <span className="text-right"><Latex math="−3x" /></span>
                     <span className="text-center"><Latex math="\leq" /></span>
                     <span className="text-left"><Latex math="9" /></span>
                   </div>
@@ -249,7 +249,7 @@ viewBox：400 × 100
                     <div className="grid grid-cols-[7.5rem_1.75rem_3rem] items-center gap-x-1">
                       <span className="text-right"><Latex math="x" /></span>
                       <span className="text-center"><Latex math="\geq" /></span>
-                      <span className="text-left"><Latex math="-3" /></span>
+                      <span className="text-left"><Latex math="−3" /></span>
                     </div>
                   </div>
                   <div className="absolute text-xs text-red-600 top-full left-[14px] w-[180px] mt-1 font-bold text-left">
@@ -270,7 +270,7 @@ viewBox：400 × 100
             </div>
 
             <div className="bg-green-100 text-green-800 p-3 rounded mt-4 text-center font-bold text-lg">
-              <Latex math="\therefore\ -3 \leq x \leq 3" />
+              <Latex math="\therefore\ −3 \leq x \leq 3" />
             </div>
 
           </div>
@@ -301,12 +301,8 @@ viewBox：300 × 80
             
             <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
               <h3 className="font-bold text-orange-800 mb-3">1. 大括號形式</h3>
-              <div className="flex items-stretch space-x-4">
-                <div className="text-6xl leading-none font-light text-orange-700 flex items-center scale-y-150 origin-center select-none">{`{`}</div>
-                <div className="space-y-1 flex flex-col justify-center">
-                  <Latex math="3x - 1 < 4x" block={true} left={true} />
-                  <Latex math="5x > 3" block={true} left={true} />
-                </div>
+              <div className="flex justify-center">
+                <Latex math="\left\{\begin{aligned} 3x − 1 &< 4x \\ 5x &> 3 \end{aligned}\right." block />
               </div>
               <p className="mt-4 text-slate-700 bg-white p-2 border border-orange-100 rounded text-sm">
                 即是暗指 <span className="font-bold text-green-600">『及(AND)』</span>
@@ -315,12 +311,12 @@ viewBox：300 × 80
 
             <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
               <h3 className="font-bold text-orange-800 mb-3">2. 串連形式</h3>
-              <MathDisplay latex="3 < 2x - 1 \leq 7" />
+              <MathDisplay latex="3 < 2x − 1 \leq 7" />
               <p className="text-slate-700 font-bold mt-2 text-center text-sm">拆分成2條：</p>
               <div className="bg-white p-3 rounded mt-2 border border-orange-100 flex justify-center items-center font-bold">
-                <Latex math="3 < 2x - 1" />
+                <Latex math="3 < 2x − 1" />
                 <span className="text-green-600 mx-3 text-lg">及</span>
-                <Latex math="2x - 1 \leq 7" />
+                <Latex math="2x − 1 \leq 7" />
               </div>
             </div>
 
@@ -394,7 +390,7 @@ viewBox：300 × 80
             <h3 className="font-bold text-red-800 mb-3 text-lg">利用計數機 FMLA 01 (二次方程公式)</h3>
             
             <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
-              <p className="font-bold text-slate-800 mb-2">例子: <Latex math="x^2 - 2x - 15 > 0" /></p>
+              <p className="font-bold text-slate-800 mb-2">例子: <Latex math="x^2 − 2x − 15 > 0" /></p>
               
               <div className="flex flex-col md:flex-row gap-4 items-center">
                 <div className="flex-1">
@@ -418,14 +414,14 @@ viewBox：300 × 80
                       大於零 <Latex math="(> 0)" />
                     </p>
                     <p className="text-sm text-slate-600">取 x 軸上方的兩旁</p>
-                    <MathDisplay latex="x < -3 \quad \text{或} \quad x > 5" />
+                    <MathDisplay latex="x < −3 \quad \text{或} \quad x > 5" />
                   </div>
                   <div className="bg-green-50 p-3 rounded border border-green-100 text-center">
                     <p className="font-bold bg-white px-2 py-1 rounded inline-block text-green-800 mb-2">
                        小於零 <Latex math="(< 0)" />
                     </p>
                     <p className="text-sm text-slate-600">取 x 軸下方的中間</p>
-                    <MathDisplay latex="-3 < x < 5" />
+                    <MathDisplay latex="−3 < x < 5" />
                   </div>
                 </div>
               </div>

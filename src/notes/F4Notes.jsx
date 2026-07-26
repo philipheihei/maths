@@ -31,7 +31,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-green-700 mb-2">題目：</p>
               <div className="text-blue-700">
-                <Latex math="\begin{aligned} -x &= 5 + 2x^2 \\\\ 0 &= 5 + 2x^2 + x \\\\ 5 + 2x^2 + x &= 0 \\\\ 2x^2 + x + 5 &= 0 \end{aligned}" block />
+                <Latex math="\begin{aligned} −x &= 5 + 2x^2 \\\\ 0 &= 5 + 2x^2 + x \\\\ 5 + 2x^2 + x &= 0 \\\\ 2x^2 + x + 5 &= 0 \end{aligned}" block />
               </div>
               <div className="mt-3 p-2 bg-red-50 rounded text-sm text-red-600">
                 <p className="font-bold">← 合格的一般式：</p>
@@ -80,7 +80,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3 text-lg">二次公式</h3>
             <div className="text-center my-4">
-              <Latex math="x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}" block />
+              <Latex math="x = \frac{−b \pm \sqrt{b^2−4ac}}{2a}" block />
             </div>
           </div>
 
@@ -88,12 +88,12 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <p className="text-sm text-green-700 mb-2">題目：解 <Latex math="x^2 + 2x = 2" /> <span className="text-red-500">(開方 - 以根式表示答案)</span></p>
             <div>
               <div className="flex items-start gap-2 mb-2">
-                <Latex math="x^2 + 2x - 2 = 0" />
+                <Latex math="x^2 + 2x − 2 = 0" />
                 <span className="text-red-500 text-sm">← 變做一般式，解讀 a/b/c = ?</span>
               </div>
-              <p className="text-green-600 mb-2"><Latex math="a=1, \quad b=2, \quad c=-2" /></p>
+              <p className="text-green-600 mb-2"><Latex math="a=1, \quad b=2, \quad c=−2" /></p>
               <div className="text-blue-700">
-                <Latex math="\begin{aligned} x &= \frac{-2 \pm \sqrt{2^2-4(1)(-2)}}{2(1)} \\\\ &= \frac{-2 \pm \sqrt{12}}{2} \quad \textcolor{red}{\text{← 已經接受此答案}} \\\\ &= \frac{-2}{2} \pm \frac{\sqrt{12}}{2} \\\\ &= -1 \pm \frac{\sqrt{12}}{2} \end{aligned}" block />
+                <Latex math="\begin{aligned} x &= \frac{−2 \pm \sqrt{2^2−4(1)(−2)}}{2(1)} \\\\ &= \frac{−2 \pm \sqrt{12}}{2} \quad \textcolor{red}{\text{← 已經接受此答案}} \\\\ &= \frac{−2}{2} \pm \frac{\sqrt{12}}{2} \\\\ &= −1 \pm \frac{\sqrt{12}}{2} \end{aligned}" block />
               </div>
             </div>
           </div>
@@ -117,7 +117,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <p className="text-sm text-green-700 mb-2">題目：</p>
             <div className="text-blue-700">
-              <Latex math="\begin{aligned} 4(5m+3)^2 - 28 &= 0 \\\\ 4(5m+3)^2 &= 28 && \textcolor{green}{\text{← 處理 + - (-28)}} \\\\ (5m+3)^2 &= 7 && \textcolor{green}{\text{← 處理 × ÷ (28÷4=7)}} \\\\ 5m+3 &= \pm\sqrt{7} && \textcolor{green}{\text{← 取平方根法}} \\\\ 5m &= -3 \pm\sqrt{7} && \textcolor{green}{\text{← 先處理 + -}} \\\\ m &= \frac{-3 \pm \sqrt{7}}{5} && \textcolor{green}{\text{← 後處理 × ÷}} \end{aligned}" block />
+              <Latex math="\begin{aligned} 4(5m+3)^2 − 28 &= 0 \\\\ 4(5m+3)^2 &= 28 && \textcolor{green}{\text{← 處理 + − (−28)}} \\\\ (5m+3)^2 &= 7 && \textcolor{green}{\text{← 處理 × ÷ (28÷4=7)}} \\\\ 5m+3 &= \pm\sqrt{7} && \textcolor{green}{\text{← 取平方根法}} \\\\ 5m &= −3 \pm\sqrt{7} && \textcolor{green}{\text{← 先處理 + −}} \\\\ m &= \frac{−3 \pm \sqrt{7}}{5} && \textcolor{green}{\text{← 後處理 × ÷}} \end{aligned}" block />
             </div>
           </div>
         </div>
@@ -131,7 +131,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               <p className="text-red-600 font-bold mb-3">FMLA → 01 → a? b? c? → x₁=?, x₂=?</p>
             </div>
             <div className="bg-blue-50 p-3 rounded">
-              <p className="text-blue-600 mb-2"><Latex math="x^2 - 4x + 4 = 0" /></p>
+              <p className="text-blue-600 mb-2"><Latex math="x^2 − 4x + 4 = 0" /></p>
               <p className="text-black" style={{wordSpacing: '20px'}}>1 -4 4</p>
             </div>
           </div>
@@ -140,7 +140,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-green-800 mb-3">原本的話，需二次方程計算</h3>
             <div>
               <div className="text-blue-700">
-                <Latex math="\begin{aligned} x &= \frac{-(-4) \pm \sqrt{(-4)^2-4(1)(4)}}{2(1)} && \textcolor{green}{\leftarrow \frac{-b \pm \sqrt{b^2-4ac}}{2a}} \\\\ &= \frac{4 \pm \sqrt{0}}{2} \\\\ &= \frac{4}{2} \\\\ &= 2 \end{aligned}" block />
+                <Latex math="\begin{aligned} x &= \frac{−(−4) \pm \sqrt{(−4)^2−4(1)(4)}}{2(1)} && \textcolor{green}{\leftarrow \frac{−b \pm \sqrt{b^2−4ac}}{2a}} \\\\ &= \frac{4 \pm \sqrt{0}}{2} \\\\ &= \frac{4}{2} \\\\ &= 2 \end{aligned}" block />
               </div>
               <p className="text-blue-600 font-bold mt-2">答案： x = 2 (二重根)</p>
             </div>
@@ -250,10 +250,10 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                 <p>e.g. <Latex math="x < 4" /> 的<span className="font-bold text-blue-600">最大整數</span>：<br/> <Latex math="3" /></p>
               </div>
               <div className="bg-white p-3 rounded shadow-sm">
-                <p>e.g. <Latex math="x > -3.5" /> 的<span className="font-bold text-blue-600">所有負整數</span>：<br/> <Latex math="-3, -2, -1" /></p>
+                <p>e.g. <Latex math="x > −3.5" /> 的<span className="font-bold text-blue-600">所有負整數</span>：<br/> <Latex math="−3, −2, −1" /></p>
               </div>
               <div className="bg-white p-3 rounded shadow-sm">
-                <p>e.g. <Latex math="x > -3.5" /> 的<span className="font-bold text-blue-600">最小整數</span>：<br/> <Latex math="-3" /></p>
+                <p>e.g. <Latex math="x > −3.5" /> 的<span className="font-bold text-blue-600">最小整數</span>：<br/> <Latex math="−3" /></p>
               </div>
             </div>
 
@@ -369,7 +369,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             <p className="text-slate-700 mb-2">判別式是用來判斷一元二次方程式的根的情況，不用真的解方程就能知道答案的性質。</p>
             <p className="text-slate-700 mb-2">考慮二次方程 <Latex math="ax^2 + bx + c = 0" />，其中 <Latex math="a \neq 0" />：</p>
             <div className="text-center my-4 bg-white p-3 rounded shadow-sm border border-slate-200">
-              <span className="text-xl font-bold text-blue-600"><Latex math="\Delta = b^2 - 4ac" /></span>
+              <span className="text-xl font-bold text-blue-600"><Latex math="\Delta = b^2 − 4ac" /></span>
             </div>
             <div className="grid gap-3">
               <div className="bg-white p-3 rounded flex items-center shadow-sm">
@@ -469,7 +469,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
               <p><Latex math="\because" /> 方程有一個二重實根</p>
               <p><Latex math="\therefore \Delta = 0" /></p>
               <div className="my-2 bg-slate-100 p-2 rounded">
-                <Latex math="\begin{aligned} (k)^2 - 4(16)(1) &= 0 \\ k^2 - 64 &= 0 \\ k^2 &= 64 \\ k &= 8 \text{ 或 } -8 \end{aligned}" block />
+                <Latex math="\begin{aligned} (k)^2 − 4(16)(1) &= 0 \\ k^2 − 64 &= 0 \\ k^2 &= 64 \\ k &= 8 \text{ 或 } −8 \end{aligned}" block />
               </div>
             </div>
           </div>
@@ -477,16 +477,16 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <div className="bg-blue-50 p-3 rounded mb-3">
               <p className="text-sm text-green-700 mb-2">題目：</p>
-              <p className="text-slate-800 mb-2">若 <Latex math="y = 3x^2 + 6x - (k + 2)" /> 的圖像與 <Latex math="x" /> 軸並不相交，求 <Latex math="k" /> 的取值範圍。</p>
+              <p className="text-slate-800 mb-2">若 <Latex math="y = 3x^2 + 6x − (k + 2)" /> 的圖像與 <Latex math="x" /> 軸並不相交，求 <Latex math="k" /> 的取值範圍。</p>
             </div>
             
             <div className="pl-4 border-l-2 border-slate-300 space-y-2 text-slate-700">
               <p><Latex math="\because" /> 圖像與 <Latex math="x" /> 軸並不相交</p>
               <p><Latex math="\therefore \Delta < 0" /></p>
               <div className="my-2 bg-slate-100 p-2 rounded overflow-x-auto">
-                <Latex math="\begin{aligned} 6^2 - 4(3)[-(k+2)] &< 0 \\ 36 + 12(k+2) &< 0 \\ 3 + (k+2) &< 0 &\textcolor{blue}{\leftarrow \text{全式除以12}} \\ k &< -5 \end{aligned}" block />
+                <Latex math="\begin{aligned} 6^2 − 4(3)[−(k+2)] &< 0 \\ 36 + 12(k+2) &< 0 \\ 3 + (k+2) &< 0 &\textcolor{blue}{\leftarrow \text{全式除以12}} \\ k &< −5 \end{aligned}" block />
               </div>
-              <p className="text-slate-700 font-bold mt-2"><Latex math="\therefore k" /> 的取值範圍是 <Latex math="k < -5" />。</p>
+              <p className="text-slate-700 font-bold mt-2"><Latex math="\therefore k" /> 的取值範圍是 <Latex math="k < −5" />。</p>
             </div>
           </div>
         </div>
@@ -501,7 +501,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 flex flex-col items-center justify-center">
                 <span className="text-slate-600 mb-2 font-bold">兩根之和 (Sum of roots)</span>
-                <span className="text-xl text-purple-700 font-bold"><Latex math="\alpha + \beta = -\frac{b}{a}" /></span>
+                <span className="text-xl text-purple-700 font-bold"><Latex math="\alpha + \beta = −\frac{b}{a}" /></span>
               </div>
               <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 flex flex-col items-center justify-center">
                 <span className="text-slate-600 mb-2 font-bold">兩根之積 (Product of roots)</span>
@@ -513,19 +513,19 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
               <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">常見變種</h4>
               <p className="text-slate-700 text-sm mb-2">題目有機會考 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 以外的變種，可將它們轉換為只包含 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 的形式：</p>
               <div className="text-center bg-slate-50 p-3 rounded">
-                <span className="text-lg font-bold text-blue-800"><Latex math="\alpha^2 + \beta^2 = (\alpha + \beta)^2 - 2\alpha\beta" /></span>
+                <span className="text-lg font-bold text-blue-800"><Latex math="\alpha^2 + \beta^2 = (\alpha + \beta)^2 − 2\alpha\beta" /></span>
               </div>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 mt-4">
               <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">長答例題</h4>
               <div className="bg-slate-50 rounded p-3 mb-3 text-slate-800">
-                <p>已知二次方程 <Latex math="3x^2 - 5x + 2 = 0" /> 的根為 <Latex math="\alpha" />、<Latex math="\beta" />，求兩根之和及兩根之積。</p>
+                <p>已知二次方程 <Latex math="3x^2 − 5x + 2 = 0" /> 的根為 <Latex math="\alpha" />、<Latex math="\beta" />，求兩根之和及兩根之積。</p>
               </div>
               <div className="bg-blue-50 rounded p-3 overflow-x-auto">
                 <Latex math="\begin{aligned}
-&a=3,\ b=-5,\ c=2 \\
-\alpha+\beta&=-\frac{b}{a}=-\frac{-5}{3}=\frac{5}{3} \\
+&a=3,\ b=−5,\ c=2 \\
+\alpha+\beta&=−\frac{b}{a}=−\frac{−5}{3}=\frac{5}{3} \\
 \alpha\beta&=\frac{c}{a}=\frac{2}{3}
 \end{aligned}" block />
               </div>
@@ -534,19 +534,19 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 mt-4">
               <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">MC例題</h4>
               <div className="bg-slate-50 rounded p-3 mb-3 text-slate-800">
-                <p>設 <Latex math="k" /> 為常數。若二次方程 <Latex math="x^2 + kx - 3 = 0" /> 的根為 <Latex math="\alpha" /> 及 <Latex math="\beta" />，則 <Latex math="\alpha^2+\beta^2" /> = ?</p>
+                <p>設 <Latex math="k" /> 為常數。若二次方程 <Latex math="x^2 + kx − 3 = 0" /> 的根為 <Latex math="\alpha" /> 及 <Latex math="\beta" />，則 <Latex math="\alpha^2+\beta^2" /> = ?</p>
               </div>
               <div className="bg-white rounded p-3 mb-3 border border-slate-200 text-slate-700 text-sm">
                 <p className="mb-1">A. <Latex math="k^2 + 4" /></p>
                 <p className="mb-1">B. <Latex math="k^2 + 6" /></p>
-                <p className="mb-1">C. <Latex math="k^2 - 4" /></p>
-                <p>D. <Latex math="k^2 - 8" /></p>
+                <p className="mb-1">C. <Latex math="k^2 − 4" /></p>
+                <p>D. <Latex math="k^2 − 8" /></p>
               </div>
               <div className="bg-emerald-50 rounded p-3 overflow-x-auto">
                 <Latex math="\begin{aligned}
-&\colorbox{#fef08a}{$\alpha+\beta$}=-\frac{b}{a}=\colorbox{#fef08a}{$-k$},\quad \colorbox{#fbcfe8}{$\alpha\beta$}=\frac{c}{a}=\colorbox{#fbcfe8}{$-3$} \\
-&\alpha^2+\beta^2=(\colorbox{#fef08a}{$\alpha+\beta$})^2-2\colorbox{#fbcfe8}{$\alpha\beta$} \\
-&\qquad\qquad\ =(\colorbox{#fef08a}{$-k$})^2-2(\colorbox{#fbcfe8}{$-3$}) \\
+&\colorbox{#fef08a}{$\alpha+\beta$}=−\frac{b}{a}=\colorbox{#fef08a}{$−k$},\quad \colorbox{#fbcfe8}{$\alpha\beta$}=\frac{c}{a}=\colorbox{#fbcfe8}{$−3$} \\
+&\alpha^2+\beta^2=(\colorbox{#fef08a}{$\alpha+\beta$})^2−2\colorbox{#fbcfe8}{$\alpha\beta$} \\
+&\qquad\qquad\ =(\colorbox{#fef08a}{$−k$})^2−2(\colorbox{#fbcfe8}{$−3$}) \\
 &\qquad\qquad\ =k^2+6
 \end{aligned}" block />
               </div>
@@ -579,10 +579,10 @@ export const RemainderFactorNotes = ({ activeSub }) => {
             <p className="text-slate-700 mb-3">當 <Latex math="f(x)" /> 除以<span className="text-red-600 font-bold">除式</span>，所得的餘數可以用 <Latex math="f(\text{相反數})" /> 求得</p>
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-sm text-slate-600 mb-2">例子：</p>
-              <p className="text-slate-700"><Latex math="f(x)" /> 除以 <span className="bg-yellow-200 px-1 rounded"><Latex math="x + 3" /></span>，所得的餘數是 <Latex math="-8" /></p>
+              <p className="text-slate-700"><Latex math="f(x)" /> 除以 <span className="bg-yellow-200 px-1 rounded"><Latex math="x + 3" /></span>，所得的餘數是 <Latex math="−8" /></p>
               <div className="mt-2 pl-4 border-l-2 border-teal-300">
                 <p className="text-sm text-slate-600"><span className="text-green-600 font-bold">3</span> 的相反是 <span className="text-red-600 font-bold">-3</span></p>
-                <p className="text-lg mt-1"><Latex math="f(-3) = -8" /> ← <span className="text-sm text-slate-500">填餘數</span></p>
+                <p className="text-lg mt-1"><Latex math="f(−3) = −8" /> ← <span className="text-sm text-slate-500">填餘數</span></p>
               </div>
             </div>
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
@@ -596,16 +596,16 @@ export const RemainderFactorNotes = ({ activeSub }) => {
               <table className="w-full text-sm">
                 <thead><tr className="border-b border-slate-200"><th className="text-left py-2 px-3 text-slate-600">除式</th><th className="text-left py-2 px-3 text-slate-600">找</th></tr></thead>
                 <tbody>
-                  <tr className="border-b border-slate-100"><td className="py-2 px-3">除以 <Latex math="x + 3" /></td><td className="py-2 px-3">→ 找 <Latex math="f(-3)" /></td></tr>
-                  <tr className="border-b border-slate-100"><td className="py-2 px-3">除以 <Latex math="x - 4" /></td><td className="py-2 px-3">→ 找 <Latex math="f(4)" /></td></tr>
-                  <tr className="border-b border-slate-100"><td className="py-2 px-3">除以 <Latex math="2x + 5" /></td><td className="py-2 px-3">→ 找 <Latex math="f(-\frac{5}{2})" /></td></tr>
-                  <tr><td className="py-2 px-3">除以 <Latex math="3x - 7" /></td><td className="py-2 px-3">→ 找 <Latex math="f(\frac{7}{3})" /></td></tr>
+                  <tr className="border-b border-slate-100"><td className="py-2 px-3">除以 <Latex math="x + 3" /></td><td className="py-2 px-3">→ 找 <Latex math="f(−3)" /></td></tr>
+                  <tr className="border-b border-slate-100"><td className="py-2 px-3">除以 <Latex math="x − 4" /></td><td className="py-2 px-3">→ 找 <Latex math="f(4)" /></td></tr>
+                  <tr className="border-b border-slate-100"><td className="py-2 px-3">除以 <Latex math="2x + 5" /></td><td className="py-2 px-3">→ 找 <Latex math="f(−\frac{5}{2})" /></td></tr>
+                  <tr><td className="py-2 px-3">除以 <Latex math="3x − 7" /></td><td className="py-2 px-3">→ 找 <Latex math="f(\frac{7}{3})" /></td></tr>
                 </tbody>
               </table>
             </div>
             <div className="mt-4 bg-blue-50 rounded-lg p-3 border border-blue-200">
               <p className="text-sm text-blue-800"><span className="font-bold">💡 技巧（當 <Latex math="ax + b" /> 形式）：</span></p>
-              <div className="mt-2 flex items-center gap-2 text-sm"><span>令 <Latex math="ax + b = 0" /></span><span>→</span><span><Latex math="x = -\frac{b}{a}" /></span></div>
+              <div className="mt-2 flex items-center gap-2 text-sm"><span>令 <Latex math="ax + b = 0" /></span><span>→</span><span><Latex math="x = −\frac{b}{a}" /></span></div>
               <p className="text-sm text-slate-600 mt-2"><span className="bg-cyan-200 px-1 rounded">前面數字</span>放分母，<span className="bg-pink-200 px-1 rounded">後面數字相反數</span>放分子</p>
             </div>
           </div>
@@ -620,13 +620,13 @@ export const RemainderFactorNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3 space-y-3">
               <div>
                 <p className="text-sm text-slate-600 mb-1">例子 1：</p>
-                <p className="text-slate-700"><Latex math="f(x)" /> 可被 <Latex math="x - 2" /> <span className="bg-yellow-200 px-1 rounded font-bold">整除</span></p>
+                <p className="text-slate-700"><Latex math="f(x)" /> 可被 <Latex math="x − 2" /> <span className="bg-yellow-200 px-1 rounded font-bold">整除</span></p>
                 <p className="text-lg mt-1 pl-4">→ <Latex math="f(2) = 0" /></p>
               </div>
               <div className="border-t border-slate-200 pt-3">
                 <p className="text-sm text-slate-600 mb-1">例子 2：</p>
                 <p className="text-slate-700">已知 <Latex math="x + 3" /> 是 <Latex math="f(x)" /> 的<span className="bg-yellow-200 px-1 rounded font-bold">因式</span></p>
-                <p className="text-lg mt-1 pl-4">→ <Latex math="f(-3) = 0" /></p>
+                <p className="text-lg mt-1 pl-4">→ <Latex math="f(−3) = 0" /></p>
               </div>
             </div>
           </div>
@@ -635,7 +635,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
             <div className="bg-amber-50 rounded-lg p-3">
               <p className="text-sm text-slate-600 mb-2">例：判斷 <Latex math="x + 4" /> 是否 <Latex math="f(x)" /> 的因式?</p>
               <div className="mt-2 space-y-2">
-                <p className="text-slate-700">→ 代數計 <Latex math="f(-4)" /> 是否 <Latex math="= 0" /> ？</p>
+                <p className="text-slate-700">→ 代數計 <Latex math="f(−4)" /> 是否 <Latex math="= 0" /> ？</p>
                 <div className="flex items-center gap-4 text-sm mt-2">
                   <span className="bg-green-100 text-green-700 px-2 py-1 rounded">= 0 → Yes ✓</span>
                   <span className="bg-red-100 text-red-700 px-2 py-1 rounded">≠ 0 → No ✗</span>
@@ -684,14 +684,14 @@ export const FunctionNotes = ({ activeSub }) => {
       <CollapsibleSection id="basic-sub" title="簡單代數字" num={1} color="indigo" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
-            <p className="text-sm text-green-700 mb-2">題目：<Latex math="f(x) = 5x - 1" />，求 <Latex math="f(2)" /> 和 <Latex math="2f(3)" /></p>
+            <p className="text-sm text-green-700 mb-2">題目：<Latex math="f(x) = 5x − 1" />，求 <Latex math="f(2)" /> 和 <Latex math="2f(3)" /></p>
             <div className="bg-white rounded-lg p-3 space-y-2 text-sm">
               <div>
                 <span className="text-blue-600 font-bold">答案：</span>
-                <Latex math="f(2) = 5(2) - 1 = 9" />
+                <Latex math="f(2) = 5(2) − 1 = 9" />
               </div>
               <div>
-                <Latex math="2f(3) = 2[5(3) - 1] = 2 \times 14 = 28" />
+                <Latex math="2f(3) = 2[5(3) − 1] = 2 \times 14 = 28" />
                 <span className="text-slate-500 ml-2">← 2×f(3)</span>
               </div>
               <p className="text-red-500 font-bold mt-1">必須寫在計算什麼</p>
@@ -709,7 +709,7 @@ export const FunctionNotes = ({ activeSub }) => {
             <p className="text-sm text-green-700 mb-2">題目：<Latex math="f(x) = \frac{2}{x+3}" />，<Latex math="g(x) = x^2 + 3" /></p>
             <div className="bg-white rounded-lg p-3 text-sm">
               <span className="text-blue-600 font-bold">答案：</span>
-              <Latex math="f(2) \cdot g(-2) = \left(\frac{2}{2+3}\right) \cdot \left((-2)^2 + 3\right) = \frac{2}{5} \times 7 = \frac{14}{5}" />
+              <Latex math="f(2) \cdot g(−2) = \left(\frac{2}{2+3}\right) \cdot \left((−2)^2 + 3\right) = \frac{2}{5} \times 7 = \frac{14}{5}" />
             </div>
           </div>
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
@@ -736,7 +736,7 @@ export const FunctionNotes = ({ activeSub }) => {
       <CollapsibleSection id="find-unknown" title="用 f(x) 找未知數" num={2} color="purple" activeSub={activeSub} sectionRef={s2}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <p className="text-sm font-bold text-slate-700 mb-2">16. 考慮 <Latex math="g(x) = 2x^2 + ax" /> 其中 a 是一個常數，且 <Latex math="g(-1) = 1" /></p>
+            <p className="text-sm font-bold text-slate-700 mb-2">16. 考慮 <Latex math="g(x) = 2x^2 + ax" /> 其中 a 是一個常數，且 <Latex math="g(−1) = 1" /></p>
             <p className="text-xs text-slate-500 mb-3">(a) 求 a 的值 &nbsp; (b) 若 g(t) = 6，求 t 的值</p>
 
             <div className="bg-white rounded-lg p-3 mb-3">
@@ -744,13 +744,13 @@ export const FunctionNotes = ({ activeSub }) => {
               <p className="text-blue-600 font-bold text-sm mb-2">a. 代 x = -1：</p>
               <div className="text-sm space-y-1 ml-4">
                 <div className="grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2">
-                  <span className="justify-self-end"><Latex math="2(-1)^2 + a(-1)" /></span>
+                  <span className="justify-self-end"><Latex math="2(−1)^2 + a(−1)" /></span>
                   <Latex math="=" />
                   <Latex math="1" />
                   <span className="text-red-500 whitespace-nowrap">← 利用方程計算 a 值</span>
                 </div>
                 <div className="grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2">
-                  <span className="justify-self-end"><Latex math="2 - a" /></span>
+                  <span className="justify-self-end"><Latex math="2 − a" /></span>
                   <Latex math="=" />
                   <Latex math="1" />
                 </div>
@@ -775,7 +775,7 @@ export const FunctionNotes = ({ activeSub }) => {
                   <span className="text-red-500">← 2次方程需用 FMLA 01</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <Latex math="0 = 2t^2 + t - 6" />
+                  <Latex math="0 = 2t^2 + t − 6" />
                   <span className="text-red-500">← 先轉一般式，才 FMLA 01</span>
                 </div>
                 <p className="mt-2 text-slate-700"><span className="font-bold">∴ t = 1.5 或 -2</span></p>
@@ -827,7 +827,7 @@ export const FunctionNotes = ({ activeSub }) => {
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">📌 例子</h3>
             <div className="bg-white rounded-lg p-3 text-sm">
-              <Latex math="-5x^2 + 6x + 3 = 0" block />
+              <Latex math="−5x^2 + 6x + 3 = 0" block />
               <div className="flex gap-6 mt-2">
                 <span><span className="text-red-600 font-bold">a = -5</span> → 開口向下 ∩</span>
                 <span><span className="text-green-600 font-bold">c = 3</span> → y截距 = 3</span>
@@ -883,7 +883,7 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">1.1 點斜式 <span className="text-sm bg-red-100 text-red-600 px-2 py-0.5 rounded ml-2">最常用</span></h3>
             <div className="bg-white rounded-lg p-3 text-center my-3 shadow-sm border border-blue-100">
-              <span className="text-xl font-bold text-blue-700"><Latex math="y - y_1 = m(x - x_1)" /></span>
+              <span className="text-xl font-bold text-blue-700"><Latex math="y − y_1 = m(x − x_1)" /></span>
             </div>
             <div className="flex flex-col gap-2">
               <p className="text-slate-700"><span className="font-bold text-purple-700">需：</span>一點坐標 + 斜率</p>
@@ -921,31 +921,31 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
             <div className="bg-yellow-100 border border-yellow-300 rounded p-3 mb-3">
               <p className="text-slate-800 font-bold mb-1">* 可用來找：</p>
               <div className="text-center text-lg text-red-600 font-bold">
-                斜率 <Latex math="= -\frac{A}{B}" />
+                斜率 <Latex math="= −\frac{A}{B}" />
               </div>
             </div>
             <p className="text-slate-700 text-sm">亦可透過代 <Latex math="x = 0" /> / <Latex math="y = 0" /> 找 <span className="bg-pink-200 px-1 rounded text-pink-800">y截距</span> / <span className="bg-green-200 px-1 rounded text-green-800">x截距</span></p>
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <p className="text-sm text-slate-600 mb-2">例子： <Latex math="-2x + 4y - 1 = 0" /></p>
+            <p className="text-sm text-slate-600 mb-2">例子： <Latex math="−2x + 4y − 1 = 0" /></p>
             <div className="bg-yellow-50 border-4 border-yellow-300 rounded p-3 text-center mb-4">
-              <span className="font-bold text-blue-700">斜率 <Latex math="= -\frac{A}{B} = -\left(\frac{-2}{4}\right)" /> <Latex math="= \frac{1}{2}" /></span>
+              <span className="font-bold text-blue-700">斜率 <Latex math="= −\frac{A}{B} = −\left(\frac{−2}{4}\right)" /> <Latex math="= \frac{1}{2}" /></span>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4 text-sm mt-3">
               <div className="border-4 border-green-400 bg-green-50 rounded-lg p-3">
                 <p className="font-bold text-green-700 mb-2">代 <Latex math="y = 0" /> 找 x 截距 →</p>
                 <div className="text-slate-700 text-center">
-                  <Latex math="\begin{aligned} -2x + 4(0) - 1 &= 0 \\ -2x - 1 &= 0 \\ x &= -\frac{1}{2} \end{aligned}" block />
+                  <Latex math="\begin{aligned} −2x + 4(0) − 1 &= 0 \\ −2x − 1 &= 0 \\ x &= −\frac{1}{2} \end{aligned}" block />
                 </div>
-                <p className="font-bold text-blue-700 mt-2 text-center">x截距：<Latex math="-\frac{1}{2}" /></p>
+                <p className="font-bold text-blue-700 mt-2 text-center">x截距：<Latex math="−\frac{1}{2}" /></p>
               </div>
 
               <div className="border-4 border-pink-300 bg-pink-50 rounded-lg p-3">
                 <p className="font-bold text-green-700 mb-2">代 <Latex math="x = 0" /> 找 y 截距：</p>
                 <div className="text-slate-700 text-center">
-                  <Latex math="\begin{aligned} -2(0) + 4y - 1 &= 0 \\ 4y - 1 &= 0 \\ y &= \frac{1}{4} \end{aligned}" block />
+                  <Latex math="\begin{aligned} −2(0) + 4y − 1 &= 0 \\ 4y − 1 &= 0 \\ y &= \frac{1}{4} \end{aligned}" block />
                 </div>
                 <p className="font-bold text-blue-700 mt-2 text-center">y截距：<Latex math="\frac{1}{4}" /></p>
               </div>
@@ -963,12 +963,12 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
             <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200 flex flex-col items-center justify-center gap-4 mb-4">
               <div className="text-sm flex flex-col sm:flex-row items-center gap-4">
                 <div>
-                  <p><Latex math="L_1 : x + 2y - 5 = 0" /></p>
-                  <p><Latex math="L_2 : x - y + 1 = 0" /></p>
+                  <p><Latex math="L_1 : x + 2y − 5 = 0" /></p>
+                  <p><Latex math="L_2 : x − y + 1 = 0" /></p>
                 </div>
                 <span className="font-bold text-xl">→</span>
                 <div>
-                  <Latex math="\begin{cases} x + 2y = 5 \\ x - y = -1 \end{cases}" />
+                  <Latex math="\begin{cases} x + 2y = 5 \\ x − y = −1 \end{cases}" />
                 </div>
               </div>
             </div>
@@ -1061,7 +1061,7 @@ export const LogFunctionNotes = ({ activeSub }) => {
                 <span className="text-red-500 font-bold ml-2">（乘數 → + ，合併/分拆 log）</span>
               </li>
               <li>
-                <Latex math="\log_a \frac{M}{N} = \log_a M - \log_a N" />
+                <Latex math="\log_a \frac{M}{N} = \log_a M − \log_a N" />
                 <span className="text-red-500 font-bold ml-2">（除數 → - ）</span>
               </li>
               <li>
@@ -1099,9 +1099,9 @@ export const LogFunctionNotes = ({ activeSub }) => {
 \log 150 &= \log (15 \times 10) \quad \leftarrow (\neq \log 15 \times 10) \\
 &= \log (3 \times 5 \times 10) \\
 &= \log \left(3 \times \frac{10}{2} \times 10 \right) \quad \leftarrow \text{2, 3, 10 的組合} \\
-&= \log 3 + \log 10 - \log 2 + \log 10 \quad \leftarrow \text{分拆 log} \\
-&= b + 1 - a + 1 \\
-&= 2 + b - a
+&= \log 3 + \log 10 − \log 2 + \log 10 \quad \leftarrow \text{分拆 log} \\
+&= b + 1 − a + 1 \\
+&= 2 + b − a
 \end{aligned}
             `} />
             <p className="text-sm text-red-600 font-bold mt-2">提示：</p>
@@ -1166,11 +1166,11 @@ x &= 1.88
               <p className="text-sm text-slate-600 mb-2">e.g. 13.</p>
               <MathDisplay latex={String.raw`
 \begin{aligned}
-\log (x - 1) &= -1 \quad \leftarrow \text{1, 2, 3 可轉化成為 } \log (\text{對數}) \\
-\log (x - 1) &= -\log 10 \quad ( \text{或 } \log \frac{1}{10} ) \\
-\log (x - 1) &= \log 10^{-1} \\
-x - 1 &= 10^{-1} \\
-x - 1 &= \frac{1}{10} \\
+\log (x − 1) &= −1 \quad \leftarrow \text{1, 2, 3 可轉化成為 } \log (\text{對數}) \\
+\log (x − 1) &= −\log 10 \quad ( \text{或 } \log \frac{1}{10} ) \\
+\log (x − 1) &= \log 10^{−1} \\
+x − 1 &= 10^{−1} \\
+x − 1 &= \frac{1}{10} \\
 x &= \frac{11}{10}
 \end{aligned}
               `} />
@@ -1179,12 +1179,12 @@ x &= \frac{11}{10}
               <p className="text-sm text-slate-600 mb-2">e.g. 25.</p>
               <MathDisplay latex={String.raw`
 \begin{aligned}
-\log (4x - 1) &= \log 5(2x + 1) - 1 \\
-\log (4x - 1) &= \log 5(2x + 1) - \log 10 \\
-\log (4x - 1) &= \log \left[ \frac{5(2x + 1)}{10} \right] \\
-\log (4x - 1) &= \log \left( \frac{2x + 1}{2} \right) \\
-4x - 1 &= \frac{2x + 1}{2} \\
-8x - 2 &= 2x + 1 \\
+\log (4x − 1) &= \log 5(2x + 1) − 1 \\
+\log (4x − 1) &= \log 5(2x + 1) − \log 10 \\
+\log (4x − 1) &= \log \left[ \frac{5(2x + 1)}{10} \right] \\
+\log (4x − 1) &= \log \left( \frac{2x + 1}{2} \right) \\
+4x − 1 &= \frac{2x + 1}{2} \\
+8x − 2 &= 2x + 1 \\
 6x &= 3 \\
 x &= 0.5
 \end{aligned}

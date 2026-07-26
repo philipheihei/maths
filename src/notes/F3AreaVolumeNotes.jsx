@@ -293,7 +293,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                 </div>
                 <div className="bg-white p-3 flex flex-wrap items-center justify-between rounded shadow-sm gap-2">
                   <span className="font-bold text-slate-700 whitespace-nowrap">平截頭體體積</span>
-                  <span className="whitespace-nowrap">大錐體體積 <Latex math="-" /> 小錐體體積</span>
+                  <span className="whitespace-nowrap">大錐體體積 <Latex math="−" /> 小錐體體積</span>
                 </div>
               </div>
             </div>

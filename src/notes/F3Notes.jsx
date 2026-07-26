@@ -84,7 +84,7 @@ export const FactorizationNotes = ({ activeSub }) => {
           </div>
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <p className="text-sm text-slate-600 mb-2">例子 2：已有括號</p>
-            <Latex math="\begin{aligned} &(2x-5) - (2x-5)y \\ &= (2x-5)(1-y) \end{aligned}" block />
+            <Latex math="\begin{aligned} &(2x−5) − (2x−5)y \\ &= (2x−5)(1−y) \end{aligned}" block />
             <p className="text-sm text-slate-500 mt-2">💡 抽相同括號放前，剩餘部分放後括號</p>
           </div>
         </div>
@@ -99,28 +99,28 @@ export const FactorizationNotes = ({ activeSub }) => {
               <p className="text-sm font-bold text-slate-700 mb-2">步驟：</p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">1</span><span>開啟 FMLA 01（按 FMLA 輸入 01）</span></div>
-                <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">2</span><span>輸入 a, b, c（如 <Latex math="8x^2 - 17x + 21" />：輸入 8, -17, 21）</span></div>
+                <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">2</span><span>輸入 a, b, c（如 <Latex math="8x^2 − 17x + 21" />：輸入 8, -17, 21）</span></div>
                 <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">3</span><span>按 EXE 得出兩個答案</span></div>
               </div>
             </div>
             <div className="bg-white rounded-lg p-3">
-              <p className="text-base font-bold text-slate-700 mb-3">例子：<Latex math="8x^2 - 17x - 21" /></p>
+              <p className="text-base font-bold text-slate-700 mb-3">例子：<Latex math="8x^2 − 17x − 21" /></p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-gray-50 p-3 rounded">
                   <p className="font-bold text-center mb-2 text-base">答案 1（整數）</p>
                   <p className="text-center text-3xl font-sans mb-2">3</p>
                   <p className="text-center text-sm text-slate-600 mt-2">→ 相反數：-3</p>
-                  <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(x-3)" /></p>
+                  <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(x−3)" /></p>
                 </div>
                 <div className="bg-gray-50 p-3 rounded">
                   <p className="font-bold text-center mb-2 text-base">答案 2（分數）</p>
                   <p className="text-center text-3xl font-sans mb-2">-0.875</p>
-                  <p className="text-center text-sm text-slate-600 mt-2">= <Latex math="-\frac{7}{8}" /></p>
+                  <p className="text-center text-sm text-slate-600 mt-2">= <Latex math="−\frac{7}{8}" /></p>
                   <p className="text-center text-sm text-slate-600">分母放前，分子相反數放後</p>
                   <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(8x+7)" /></p>
                 </div>
               </div>
-              <p className="text-center mt-4 font-bold text-green-700 text-base">∴ 答案 <Latex math="= (x-3)(8x+7)" /></p>
+              <p className="text-center mt-4 font-bold text-green-700 text-base">∴ 答案 <Latex math="= (x−3)(8x+7)" /></p>
             </div>
           </div>
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
@@ -128,12 +128,12 @@ export const FactorizationNotes = ({ activeSub }) => {
             <p className="text-sm text-slate-700 mb-2">十字相乘法 / FMLA 01 需以 <Latex math="ax^2 + bx + c" /> 形式才能計算正確</p>
             <div className="bg-white rounded-lg p-3 mb-2">
               <p className="text-sm text-slate-600 mb-1">例子 1：調動次序</p>
-              <Latex math="\begin{aligned} &50 - 15m + m^2 \\ &= m^2 - 15m + 50 \end{aligned}" block />
+              <Latex math="\begin{aligned} &50 − 15m + m^2 \\ &= m^2 − 15m + 50 \end{aligned}" block />
               <p className="text-xs text-slate-500">以 2次方/1次方/0次方(沒代數) 順序作調動</p>
             </div>
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-slate-600 mb-1">例子 2：<Latex math="a^2" /> 係數需是正數</p>
-              <Latex math="\begin{aligned} &36 + 5a - a^2 \\ &= -a^2 + 5a + 36 \\ &= -(a^2 - 5a - 36) \\ &= -(a-9)(a+4) \end{aligned}" block />
+              <Latex math="\begin{aligned} &36 + 5a − a^2 \\ &= −a^2 + 5a + 36 \\ &= −(a^2 − 5a − 36) \\ &= −(a−9)(a+4) \end{aligned}" block />
               <p className="text-xs text-red-500 mt-2">⚠️ 若沒有抽負，因式分解答案會錯！</p>
             </div>
           </div>
@@ -143,7 +143,7 @@ export const FactorizationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3">
               <p className="text-xs text-slate-500 mb-2">💡 方法：先當只有前面的代數 x 用FMLA01去組成括號，最後再在每個括號後補上後面的代數 y</p>
               <p className="text-sm text-slate-600 mb-1">例子：</p>
-              <Latex math="\begin{aligned} &6r^2 - 13rs - 28s^2 \\ &= (2r-7s)(3r+4s) \end{aligned}" block />
+              <Latex math="\begin{aligned} &6r^2 − 13rs − 28s^2 \\ &= (2r−7s)(3r+4s) \end{aligned}" block />
             </div>
           </div>
         </div>
@@ -156,26 +156,26 @@ export const FactorizationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-slate-600 mb-3">DSE 常見：(a) 和 (b) 有關聯</p>
               <div className="space-y-2 text-sm mb-3">
-                <div className="flex items-start gap-2"><span className="font-bold text-slate-700">(a)</span><span>因式分解 <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 - 13rs - 28s^2" /></span></span></div>
-                <div className="flex items-start gap-2"><span className="font-bold text-slate-700">(b)</span><span>因式分解 <Latex math="4r - 14s +" /> <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 - 13rs - 28s^2" /></span></span></div>
+                <div className="flex items-start gap-2"><span className="font-bold text-slate-700">(a)</span><span>因式分解 <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 − 13rs − 28s^2" /></span></span></div>
+                <div className="flex items-start gap-2"><span className="font-bold text-slate-700">(b)</span><span>因式分解 <Latex math="4r − 14s +" /> <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 − 13rs − 28s^2" /></span></span></div>
               </div>
               <div className="bg-green-50 border border-green-200 rounded-lg p-2 mb-3">
                 <p className="text-sm font-bold text-green-700 mb-1">📝 (a) 部答案：</p>
-                <Latex math="(2r-7s)(3r+4s)" block />
+                <Latex math="(2r−7s)(3r+4s)" block />
               </div>
               <div className="bg-yellow-50 p-2 rounded">
                 <p className="text-slate-700 text-sm">➜ 找 (a) 題目部分（黃色 highlight），套用 (a) 部答案：</p>
-                <Latex math="\begin{aligned} &= 4r - 14s + (2r-7s)(3r+4s) \\ &= 2(2r-7s) + (2r-7s)(3r+4s) \\ &= (2r-7s)(2 + 3r + 4s) \end{aligned}" block />
+                <Latex math="\begin{aligned} &= 4r − 14s + (2r−7s)(3r+4s) \\ &= 2(2r−7s) + (2r−7s)(3r+4s) \\ &= (2r−7s)(2 + 3r + 4s) \end{aligned}" block />
               </div>
             </div>
           </div>
           <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
             <h3 className="font-bold text-orange-800 mb-3">❓ 問特定因式（MC 限定）</h3>
             <div className="bg-white rounded-lg p-3">
-              <p className="text-sm text-slate-600 mb-2">例：下列何者是 <Latex math="4x^2 + 2x - 12" /> 的因式？</p>
+              <p className="text-sm text-slate-600 mb-2">例：下列何者是 <Latex math="4x^2 + 2x − 12" /> 的因式？</p>
               <div className="ml-4 text-sm space-y-1"><p>I. 2</p><p>II. 2x - 3</p><p>III. x - 2</p></div>
               <div className="bg-blue-50 p-2 rounded mt-3">
-                <p className="text-sm"><span className="font-bold">①</span> 先因式分解：<Latex math="2(2x^2 + x - 6) = 2(2x-3)(x+2)" /></p>
+                <p className="text-sm"><span className="font-bold">①</span> 先因式分解：<Latex math="2(2x^2 + x − 6) = 2(2x−3)(x+2)" /></p>
                 <p className="text-sm mt-1"><span className="font-bold">②</span> 因式即問有哪個括號 → 2 / (2x-3) → 選項 I + II</p>
               </div>
             </div>
@@ -208,9 +208,9 @@ export const PercentageF3Notes = ({ activeSub }) => {
             <Latex math="\rightarrow 24 \times (1 + 20\%) = 28.8" block />
           </div>
           <div className="bg-white rounded-lg p-4 border border-red-200">
-            <p className="text-red-700 font-bold mb-2">減少 <Latex math="n\%" /> → <Latex math="\times (1-n\%)" /></p>
+            <p className="text-red-700 font-bold mb-2">減少 <Latex math="n\%" /> → <Latex math="\times (1−n\%)" /></p>
             <p className="text-slate-600 text-sm">例：30 減少 20%</p>
-            <Latex math="\rightarrow 30 \times (1 - 20\%) = 24" block />
+            <Latex math="\rightarrow 30 \times (1 − 20\%) = 24" block />
           </div>
         </div>
       </div>
@@ -222,7 +222,7 @@ export const PercentageF3Notes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <p className="text-slate-700 text-sm mb-3">
                 <span className="font-bold text-blue-700">例：</span>
-                一間飲品店引入了一款新飲料。從該新飲料的每月售出杯數的報告可知，該店在第二個月<span className="bg-yellow-200 px-1 rounded">多售出 25%</span> (<Latex inline math="\times (1 + 25\%)" />) 及在第三個月<span className="bg-yellow-200 px-1 rounded">少售出 45%</span> (<Latex inline math="\times (1 - 45\%)" />)。若該店在第三個月售出了 <span className="underline decoration-purple-600 underline-offset-4 font-bold">2475</span> (結果) 杯新飲料，求首月所售出的新飲料杯數。
+                一間飲品店引入了一款新飲料。從該新飲料的每月售出杯數的報告可知，該店在第二個月<span className="bg-yellow-200 px-1 rounded">多售出 25%</span> (<Latex inline math="\times (1 + 25\%)" />) 及在第三個月<span className="bg-yellow-200 px-1 rounded">少售出 45%</span> (<Latex inline math="\times (1 − 45\%)" />)。若該店在第三個月售出了 <span className="underline decoration-purple-600 underline-offset-4 font-bold">2475</span> (結果) 杯新飲料，求首月所售出的新飲料杯數。
               </p>
               
               <div className="space-y-3 bg-slate-50 p-4 rounded-lg">
@@ -238,14 +238,14 @@ export const PercentageF3Notes = ({ activeSub }) => {
                   <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">2</span>
                   <div>
                     <span className="text-slate-600 text-sm block mb-1">列式 (接駁答案)：</span>
-                    <Latex math="y(1 + 25\%)(1 - 45\%) = 2475" />
+                    <Latex math="y(1 + 25\%)(1 − 45\%) = 2475" />
                   </div>
                 </div>
                 
                 <div className="flex gap-2">
                   <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">3</span>
                   <div>
-                    <span className="text-slate-600 text-sm block mb-1">按計算機 (<Latex math="(1 + 25\%)(1 - 45\%)" />)：</span>
+                    <span className="text-slate-600 text-sm block mb-1">按計算機 (<Latex math="(1 + 25\%)(1 − 45\%)" />)：</span>
                     <pre className="whitespace-pre font-sans text-blue-700">
                       <span className="bg-yellow-200 px-1 rounded">0.6875</span> y = 2475{'\n'}
                                  y = 3600
@@ -284,7 +284,7 @@ export const PercentageF3Notes = ({ activeSub }) => {
             <div className="bg-slate-50 p-3 rounded">
               <p className="text-sm text-slate-600">列式：</p>
               <Latex
-                math="\begin{aligned} \text{價值} &= \$8720 \times (1 - 10\%)^{8} \\ &= \$3754 \end{aligned}"
+                math="\begin{aligned} \text{價值} &= \$8720 \times (1 − 10\%)^{8} \\ &= \$3754 \end{aligned}"
                 block
                 left
               />
@@ -443,7 +443,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                   <div className="flex-1">
                     <p className="text-green-600 mb-2">因題目是直角△，可用畢氏定理得出剩下的邊</p>
                     <div className="text-sm [&_.katex-display]:my-0.5">
-                      <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\[-3px] RQ &= 5 \end{aligned}" block left />
+                      <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\[−3px] RQ &= 5 \end{aligned}" block left />
                     </div>
                     <p className="text-green-600 mt-3 text-sm">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold">sin θ / cos θ / tan θ</span></p>
                   </div>
@@ -480,7 +480,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                   <p className="text-slate-700 mb-2">1. 如果題目沒提供 △ 圖像，需自行繪畫</p>
                   <p className="text-slate-700 mb-3">2. 利用畢氏定理找未知邊的長度</p>
                   <div className="text-green-600 [&_.katex-display]:my-0.5">
-                    <Latex math="\begin{aligned} x^2 + 3^2 &= 7^2 \\\\[-3px] x^2 &= 40 \\\\[-3px] x &= \sqrt{40} \end{aligned}" block left />
+                    <Latex math="\begin{aligned} x^2 + 3^2 &= 7^2 \\\\[−3px] x^2 &= 40 \\\\[−3px] x &= \sqrt{40} \end{aligned}" block left />
                   </div>
                 </div>
                   <div className="flex items-center justify-center md:justify-end mt-2 md:mt-0">
@@ -562,7 +562,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <div className="text-lg mb-4">
-              <Latex math="2\sin\theta - \sqrt{3} = 0" />
+              <Latex math="2\sin\theta − \sqrt{3} = 0" />
               <span className="text-green-600 text-sm ml-4">目標：找 sin θ = ? (將 sin θ 以外的項移走)</span>
             </div>
             <div className="bg-white rounded-lg p-4">
@@ -598,7 +598,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                 {
                   label: 'A.',
                   orig: <Latex math="\sin^2\theta + \cos^2\theta = 1" />,
-                  vars: [<Latex key="1" math="\sin^2\theta = 1 - \cos^2\theta" />, <Latex key="2" math="\cos^2\theta = 1 - \sin^2\theta" />]
+                  vars: [<Latex key="1" math="\sin^2\theta = 1 − \cos^2\theta" />, <Latex key="2" math="\cos^2\theta = 1 − \sin^2\theta" />]
                 },
                 {
                   label: 'B.',
@@ -607,18 +607,18 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                 },
                 {
                   label: 'C.',
-                  orig: <Latex math="\sin(90° - \theta) = \cos\theta" />,
+                  orig: <Latex math="\sin(90° − \theta) = \cos\theta" />,
                   vars: ['—']
                 },
                 {
                   label: 'D.',
-                  orig: <Latex math="\cos(90° - \theta) = \sin\theta" />,
+                  orig: <Latex math="\cos(90° − \theta) = \sin\theta" />,
                   vars: ['—']
                 },
                 {
                   label: 'E.',
-                  orig: <Latex math="\frac{1}{\tan(90° - \theta)} = \tan\theta" />,
-                  vars: [<Latex key="1" math="\tan(90° - \theta) = \frac{1}{\tan\theta}" />]
+                  orig: <Latex math="\frac{1}{\tan(90° − \theta)} = \tan\theta" />,
+                  vars: [<Latex key="1" math="\tan(90° − \theta) = \frac{1}{\tan\theta}" />]
                 },
               ].map((item, i) => (
                 <div key={i} className="bg-white rounded-lg p-3">

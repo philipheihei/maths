@@ -45,7 +45,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 6 整除</div>
-                <div className="col-span-2">檢查是否同時被 2 和 3 整除（套用上兩行方法）</div>
+                <div className="col-span-2">檢查是否同時被 2 和 3 整除 </div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 8 整除</div>
@@ -68,14 +68,11 @@ export const BasicCalculationNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">💡 概念分辨</h3>
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-4">
-                <Latex math={`3 \\times 5 = 3 + 3 + 3 + 3 + 3`} />
+            <div className="flex flex-col gap-2 items-start">
+              <div className="[&>span]:!text-left">
+                <Latex math={`\\begin{aligned} 3 \\times 5 &= 3 + 3 + 3 + 3 + 3 \\\\ 3^5 &= 3 \\times 3 \\times 3 \\times 3 \\times 3 \\end{aligned}`} block />
               </div>
-              <div className="flex items-center gap-4">
-                <Latex math={`3^5 = 3 \\times 3 \\times 3 \\times 3 \\times 3`} />
-                <span className="text-slate-600 text-sm">（5 個 3 相乘）</span>
-              </div>
+              <span className="text-slate-600 text-sm">（5 個 3 相乘）</span>
             </div>
           </div>
           
@@ -223,8 +220,9 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <div className="pl-2 pr-4 border-l-2 border-b-2 border-black pb-1 flex gap-4 w-max">
                   <span className="bg-yellow-200 px-1 w-6 text-center">9</span><span className="w-6 text-center">10</span><span className="bg-yellow-200 px-1 w-6 text-center">12</span>
                 </div>
-                <div className="pl-2 pb-1 flex items-center">
-                  <span className="text-green-700 text-sm font-sans">← 可選其中兩數的公因數繼續找 L.C.M.</span>
+                <div className="pl-2 pb-1 flex flex-col justify-center">
+                  <span className="text-green-700 text-sm font-sans">← 如果三個數沒公因數，</span>
+                  <span className="text-green-700 text-sm font-sans">　可選其中兩數的公因數繼續找 L.C.M.</span>
                 </div>
 
                 <div className="pr-2 pb-1 text-right">
@@ -572,8 +570,8 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">+</span>
                   <span className="font-bold text-green-700">負負得正</span>
                   <div className="flex items-center gap-2">
-                    <MathDisplay latex={String.raw`(-2) \times (-3) = +6`} inline className="text-blue-700 text-base" />
-                    <MathDisplay latex="(-x)(-x) = +x^2" inline className="text-red-700 text-base" />
+                    <MathDisplay latex={String.raw`(−2) \times (−3) = +6`} inline className="text-blue-700 text-base" />
+                    <MathDisplay latex="(−x)(−x) = +x^2" inline className="text-red-700 text-base" />
                   </div>
                 </div>
                 <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
@@ -581,14 +579,14 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">−</span>
                   <span className="font-bold text-green-700">正負得負</span>
-                  <MathDisplay latex={String.raw`(+2) \times (-3) = -6`} inline className="text-blue-700 text-base" />
+                  <MathDisplay latex={String.raw`(+2) \times (−3) = −6`} inline className="text-blue-700 text-base" />
                 </div>
                 <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
                   <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">−</span><span className="w-5 text-center">+</span></span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">−</span>
                   <span className="font-bold text-green-700">負正得負</span>
-                  <MathDisplay latex={String.raw`(-2) \times (+3) = -6`} inline className="text-blue-700 text-base" />
+                  <MathDisplay latex={String.raw`(−2) \times (+3) = −6`} inline className="text-blue-700 text-base" />
                 </div>
               </div>
             </div>
@@ -601,14 +599,14 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
             
             <div className="grid md:grid-cols-2 gap-6 pt-2">
               <div className="space-y-1 font-sans text-lg text-blue-800">
-                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)-(-42)" block left /></div></div>
+                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)−(−42)" block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +24 + 42" block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +66" block left /></div></div>
               </div>
               <div className="space-y-1 font-sans text-lg text-blue-800 relative">
-                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(-3)(-4)-5" block left /></div><div className="absolute right-4 top-2 text-sm text-green-600 font-bold">中間是 ×</div></div>
-                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math={`= +(3 \\times 4)-5`} block left /></div></div>
-                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +12-5" block left /></div></div>
+                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(−3)(−4)−5" block left /></div><div className="absolute right-4 top-2 text-sm text-green-600 font-bold">中間是 ×</div></div>
+                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math={`= +(3 \\times 4)−5`} block left /></div></div>
+                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +12−5" block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +7" block left /></div></div>
               </div>
             </div>
@@ -619,7 +617,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
               <div className="flex items-center gap-4">
                 <span className="w-8 text-slate-500 text-sm flex-shrink-0">e.g.</span>
                 <div className="flex-1 max-w-xs">
-                  <Latex math={`\\dfrac{-6+(-12)}{-3+5}`} block left />
+                  <Latex math={`\\dfrac{−6+(−12)}{−3+5}`} block left />
                 </div>
                 <span className="text-green-600 text-sm font-bold">← 分數上下分開計</span>
               </div>
@@ -627,7 +625,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
               <div className="flex items-center gap-4">
                 <span className="w-8 flex justify-end flex-shrink-0"><span className="inline-block origin-right [transform:scaleX(1.35)]">=</span></span>
                 <div className="flex-1 max-w-xs ml-2">
-                  <Latex math={`\\dfrac{-18}{+2}`} block left />
+                  <Latex math={`\\dfrac{−18}{+2}`} block left />
                 </div>
                 <span className="text-green-600 text-sm font-bold">← 上下剩一個數，可計除數</span>
               </div>
@@ -635,7 +633,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
               <div className="flex items-center gap-4">
                 <span className="w-8 flex justify-end flex-shrink-0"><span className="inline-block origin-right [transform:scaleX(1.35)]">=</span></span>
                 <div className="flex-1 max-w-xs ml-2">
-                  <Latex math="-9" block left />
+                  <Latex math="−9" block left />
                 </div>
               </div>
             </div>
@@ -665,10 +663,10 @@ export const PolynomialsNotes = ({ activeSub }) => {
               <h3 className="font-bold text-blue-800 mb-3">📝 單項式 (Monomial)</h3>
               <p className="text-slate-700 mb-2">特徵：<strong>只有一項</strong></p>
               <ul className="text-sm text-slate-700 space-y-2">
-                <li>• 包含一個數字（例：<Latex math="2" />, <Latex math="\frac{5}{2}" />, <Latex math="-3.4" />）</li>
+                <li>• 包含一個數字（例：<Latex math="2" />, <Latex math="\frac{5}{2}" />, <Latex math="−3.4" />）</li>
                 <li>• 包含一個代數（例：<Latex math="x" />, <Latex math="y^2" />, <Latex math="a^3" />）</li>
-                <li>• 只有乘，沒加減的項（例：<Latex math="2y" />, <Latex math="4x^2" />, <Latex math="-5m^3n^4" />）</li>
-                <li>• 分母<strong>沒有代數</strong>的分數（例：<Latex math="\frac{x}{2}" />, <Latex math="-\frac{3y}{2}" />）</li>
+                <li>• 只有乘，沒加減的項（例：<Latex math="2y" />, <Latex math="4x^2" />, <Latex math="−5m^3n^4" />）</li>
+                <li>• 分母<strong>沒有代數</strong>的分數（例：<Latex math="\frac{x}{2}" />, <Latex math="−\frac{3y}{2}" />）</li>
               </ul>
             </div>
 
@@ -677,10 +675,10 @@ export const PolynomialsNotes = ({ activeSub }) => {
               <p className="text-slate-700 mb-2">特徵：<strong>多於一項</strong>，或包含以下情況</p>
               <ul className="text-sm text-slate-700 space-y-2">
                 <li>• 分母<strong>有代數</strong>的分數（例：<Latex math="\frac{2}{x}" />, <Latex math="\frac{2x}{y}" />）</li>
-                <li>• 有 <Latex math="+" /> 或 <Latex math="-" /> 連接的式子（例：<Latex math="3x+4y" />）</li>
+                <li>• 有 <Latex math="+" /> 或 <Latex math="−" /> 連接的式子（例：<Latex math="3x+4y" />）</li>
               </ul>
               <div className="mt-3 bg-white p-2 text-center rounded border border-green-100">
-                <p className="text-sm font-bold text-green-800">一條式只要有 <Latex math="+" /> 或 <Latex math="-" /> 連接，便是多項式</p>
+                <p className="text-sm font-bold text-green-800">一條式只要有 <Latex math="+" /> 或 <Latex math="−" /> 連接，便是多項式</p>
               </div>
             </div>
           </div>
@@ -693,7 +691,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
           
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-2">📌 項數 (Number of terms)</h3>
-            <p className="text-slate-700 mb-2">方法：按住 <Latex math="+" /> / <Latex math="-" /> 的前面分開，再數項數</p>
+            <p className="text-slate-700 mb-2">方法：按住 <Latex math="+" /> / <Latex math="−" /> 的前面分開，再數項數</p>
             <div className="bg-white p-3 rounded border border-slate-200 flex items-center gap-4">
               <span className="text-slate-600">例子：</span>
               <span className="bg-yellow-200 px-2 py-1 rounded">5</span>
@@ -707,10 +705,10 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-amber-800 mb-2">📌 係數 (Coefficient)</h3>
             <p className="text-slate-700 mb-2">定義：某代數旁邊的數字</p>
             <div className="bg-white p-3 rounded border border-slate-200">
-              <MathDisplay math="1x^2 - 4x^3 + 8" />
+              <MathDisplay math="1x^2 − 4x^3 + 8" />
               <div className="flex flex-col gap-1 mt-2 mb-4">
                 <p>• <Latex math="x^2" /> 的係數 = <Latex math="1" /></p>
-                <p>• <Latex math="x^3" /> 的係數 = <Latex math="-4" /></p>
+                <p>• <Latex math="x^3" /> 的係數 = <Latex math="−4" /></p>
               </div>
               <p className="text-sm text-slate-500 border-t pt-2">多項式：<Latex math="0x^2 + 2x + 3" /> （項數為 3）</p>
             </div>
@@ -720,8 +718,8 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-purple-800 mb-2">📌 常數項 (Constant Term)</h3>
             <p className="text-slate-700 mb-2">定義：沒有代數的項的數字</p>
             <div className="bg-white p-3 rounded border border-slate-200">
-              <Latex math="-5x^2y^3 + 2x^3y - 6 + x" block />
-              <p className="text-center font-bold mt-2 text-purple-700">常數項是 <Latex math="-6" /></p>
+              <Latex math="−5x^2y^3 + 2x^3y − 6 + x" block />
+              <p className="text-center font-bold mt-2 text-purple-700">常數項是 <Latex math="−6" /></p>
             </div>
           </div>
 
@@ -745,15 +743,15 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-2">📌 排列多項式 (升冪 / 降冪)</h3>
             <p className="text-slate-700 mb-2">方法：按次方的大小重新排多項式（冪 = 次方）</p>
             <div className="bg-white p-4 rounded border border-slate-200 space-y-3">
-              <Latex math="5x - 3x^3 + 2x^2" block />
+              <Latex math="5x − 3x^3 + 2x^2" block />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-2 rounded">
                   <p className="font-bold text-slate-700 mb-1">降冪 <span className="text-sm font-normal">（次方大到小 ↓）</span></p>
-                  <Latex math="-3x^3 + 2x^2 + 5x" block />
+                  <Latex math="−3x^3 + 2x^2 + 5x" block />
                 </div>
                 <div className="bg-slate-50 p-2 rounded">
                   <p className="font-bold text-slate-700 mb-1">升冪 <span className="text-sm font-normal">（次方小到大 ↑）</span></p>
-                  <Latex math="5x + 2x^2 - 3x^3" block />
+                  <Latex math="5x + 2x^2 − 3x^3" block />
                 </div>
               </div>
             </div>
@@ -783,7 +781,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 2：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible">= </span><Latex math="3y - 5y + 6y" /> <span className="text-sm text-slate-400">(3-5+6=4)</span>{'\n'}
+                <span className="invisible">= </span><Latex math="3y − 5y + 6y" /> <span className="text-sm text-slate-400">(3-5+6=4)</span>{'\n'}
 = <Latex math="4y" />
               </pre>
             </div>
@@ -791,18 +789,18 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 3 (分類)：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible">= </span><Latex math="2x - 3y - 7x - y" />{'\n'}
-= <Latex math="2x - 7x - 3y - y" /> <span className="text-sm text-slate-400">(-3-1)</span>{'\n'}
-= <Latex math="-5x - 4y" />
+                <span className="invisible">= </span><Latex math="2x − 3y − 7x − y" />{'\n'}
+= <Latex math="2x − 7x − 3y − y" /> <span className="text-sm text-slate-400">(-3-1)</span>{'\n'}
+= <Latex math="−5x − 4y" />
               </pre>
             </div>
             <hr />
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 4 (拆括號)：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible">= </span><Latex math="5x + 3y - (4x - 3y)" />{'\n'}
-= <Latex math="5x + 3y - 4x + 3y" /> <span className="text-sm text-red-500 font-bold">← 正負調轉 (-4x +3y)</span>{'\n'}
-= <Latex math="5x - 4x + 3y + 3y" />{'\n'}
+                <span className="invisible">= </span><Latex math="5x + 3y − (4x − 3y)" />{'\n'}
+= <Latex math="5x + 3y − 4x + 3y" /> <span className="text-sm text-red-500 font-bold">← 正負調轉 (-4x +3y)</span>{'\n'}
+= <Latex math="5x − 4x + 3y + 3y" />{'\n'}
 = <Latex math="x + 6y" />
               </pre>
             </div>
@@ -828,8 +826,8 @@ export const PolynomialsNotes = ({ activeSub }) => {
                 <Latex math="= 6x^2" block />
               </div>
               <div className="bg-white p-3 rounded border border-slate-200 text-center">
-                <Latex math="(-\frac{3}{y})(5y)" block />
-                <Latex math="= -15y^2" block />
+                <Latex math="(−\frac{3}{y})(5y)" block />
+                <Latex math="= −15y^2" block />
               </div>
             </div>
           </div>
@@ -861,11 +859,11 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <p className="text-slate-700 mb-2 text-sm">認住位置乘：<Latex math="(①+②)(③+④) = ①×③ + ①×④ + ②×③ + ②×④" /></p>
             <div className="bg-white p-4 rounded border border-slate-200">
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible">= </span><Latex math="(4 - 5x)(5 + 6x)" />{'\n'}
-= <Latex math="4(5) + 4(6x) - 5x(5) - 5x(6x)" /> <span className="text-sm text-slate-500">(按順序乘)</span>{'\n'}
-= <Latex math="20 + 24x - 25x - 30x^2" /> <span className="text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}
-= <Latex math="20 - x - 30x^2" />{'\n'}
-= <Latex math="-30x^2 - x + 20" />
+                <span className="invisible">= </span><Latex math="(4 − 5x)(5 + 6x)" />{'\n'}
+= <Latex math="4(5) + 4(6x) − 5x(5) − 5x(6x)" /> <span className="text-sm text-slate-500">(按順序乘)</span>{'\n'}
+= <Latex math="20 + 24x − 25x − 30x^2" /> <span className="text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}
+= <Latex math="20 − x − 30x^2" />{'\n'}
+= <Latex math="−30x^2 − x + 20" />
               </pre>
             </div>
           </div>
@@ -1373,14 +1371,14 @@ export const LinearEquationNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-5 border border-green-200 inline-block w-full md:w-auto">
             <h3 className="font-bold text-green-800 mb-3 text-lg">📝 規矩：</h3>
             <ul className="text-slate-700 font-bold text-lg space-y-2 list-disc ml-6">
-              <li><Latex math="+" /> / <Latex math="-" /> 為相反</li>
+              <li><Latex math="+" /> / <Latex math="−" /> 為相反</li>
               <li><Latex math="\times" /> / <Latex math="\div" /> 為相反</li>
             </ul>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-xl p-5 border border-slate-200">
-              <p className="text-slate-600 font-bold mb-4">例子 1：左移右，<Latex math="+3" /> 的相反數為 <Latex math="-3" /></p>
+              <p className="text-slate-600 font-bold mb-4">例子 1：左移右，<Latex math="+3" /> 的相反數為 <Latex math="−3" /></p>
               <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed">
                 <div className="flex justify-end items-center"><Latex math="x " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="+ 3" /></span></div>
                 <div><Latex math="=" /></div>
@@ -1388,7 +1386,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
 
                 <div className="flex justify-end"><Latex math="x" /></div>
                 <div><Latex math="=" /></div>
-                <div><Latex math="5 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 3" /></span></div>
+                <div><Latex math="5 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="− 3" /></span></div>
 
                 <div className="flex justify-end"><Latex math="x" /></div>
                 <div><Latex math="=" /></div>
@@ -1429,7 +1427,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
 
                 <div className="col-span-3 text-base text-slate-500 my-2 font-medium">← 大畫面為「+」數，先移「+」變「-」</div>
 
-                <div className="flex justify-end items-center"><Latex math="19 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 4" /></span></div>
+                <div className="flex justify-end items-center"><Latex math="19 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="− 4" /></span></div>
                 <div><Latex math="=" /></div>
                 <div><span className="bg-green-200 px-1 rounded inline-block"><Latex math="3" /></span><Latex math="x" /></div>
 
@@ -1467,7 +1465,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
 
                   <div className="flex justify-end"><Latex math="a" /></div>
                   <div><Latex math="=" /></div>
-                  <div><Latex math="24 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="- 11" /></span></div>
+                  <div><Latex math="24 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="− 11" /></span></div>
 
                   <div className="flex justify-end"><Latex math="a" /></div>
                   <div><Latex math="=" /></div>
@@ -1478,15 +1476,15 @@ export const LinearEquationNotes = ({ activeSub }) => {
               <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">括號即「×」數</div>
                 <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed mt-2">
-                  <div className="flex justify-end items-center"><span className="bg-green-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="(b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span><Latex math=")" /></div>
+                  <div className="flex justify-end items-center"><span className="bg-green-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="(b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="− 5" /></span><Latex math=")" /></div>
                   <div><Latex math="=" /></div>
                   <div><Latex math="20" /></div>
 
-                  <div className="flex justify-end items-center"><Latex math="b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span></div>
+                  <div className="flex justify-end items-center"><Latex math="b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="− 5" /></span></div>
                   <div><Latex math="=" /></div>
                   <div><span className="bg-green-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{20}{2}" /></span></div>
 
-                  <div className="flex justify-end items-center"><Latex math="b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="- 5" /></span></div>
+                  <div className="flex justify-end items-center"><Latex math="b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="− 5" /></span></div>
                   <div><Latex math="=" /></div>
                   <div><Latex math="10" /></div>
 
@@ -1512,7 +1510,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
             <h4 className="font-bold text-green-700 mb-6 text-xl">大畫面「-」數</h4>
             
             <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-3 items-center text-2xl leading-loose tracking-wide">
-              <div className="flex justify-end items-center"><Latex math="\frac{2x}{3} " /><span className="bg-yellow-200 px-2 rounded inline-block"><Latex math="- 4" /></span></div>
+              <div className="flex justify-end items-center"><Latex math="\frac{2x}{3} " /><span className="bg-yellow-200 px-2 rounded inline-block"><Latex math="− 4" /></span></div>
               <div><Latex math="=" /></div>
               <div><Latex math="8" /></div>
 
@@ -1571,14 +1569,14 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
               <p className="font-bold text-slate-700 mb-4">例子 1：</p>
               <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-4 items-center pl-4 pr-4">
                 <div className="text-right flex justify-end items-center">
-                  <Latex math="\frac{x}{4} - \frac{x}{5}" />
+                  <Latex math="\frac{x}{4} − \frac{x}{5}" />
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="10" /></div>
                 <div className="text-sm text-slate-500 font-bold tracking-widest text-blue-600 pl-4 w-full">例：4×5=20</div>
 
                 <div className="text-right flex justify-end items-center">
-                  <span className="border-b-[3px] border-green-700 font-bold text-green-700 mr-2 text-xl pb-1">20</span><Latex math="\left(\frac{x}{4} - \frac{x}{5}\right)" />
+                  <span className="border-b-[3px] border-green-700 font-bold text-green-700 mr-2 text-xl pb-1">20</span><Latex math="\left(\frac{x}{4} − \frac{x}{5}\right)" />
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left whitespace-nowrap">
@@ -1592,7 +1590,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 </div>
 
                 <div className="text-right relative">
-                  <Latex math="5x - 4x" />
+                  <Latex math="5x − 4x" />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm text-red-500 font-bold whitespace-nowrap flex items-center gap-6">
                     <span className="relative"><span className="absolute -top-3 right-full text-xl translate-x-2">↗</span><span className="ml-[6px]">20÷4=5</span></span>
                     <span className="relative"><span className="absolute -top-3 left-0 text-xl -translate-x-1">↖</span><span className="mr-[6px]">20÷5=4</span></span>
@@ -1622,13 +1620,13 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
             <div className="min-w-[700px]">
               <p className="font-bold text-slate-700 mb-4">例子 2：</p>
               <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-6 items-center pl-4 pr-4">
-                <div className="text-right"><Latex math="\frac{4x}{3} - \frac{x}{2}" /></div>
+                <div className="text-right"><Latex math="\frac{4x}{3} − \frac{x}{2}" /></div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="5" /></div>
                 <div className="text-sm text-green-700 font-bold text-base pl-4 tracking-wide">題目目標：弄走分數</div>
 
                 <div className="text-right flex items-center justify-end">
-                  <span className="bg-purple-200 px-2 py-0.5 rounded font-bold mr-2 tracking-widest text-[#5b21b6]">2×3</span><Latex math="\times \left(\frac{4x}{\colorbox{#eab308}{3}} - \frac{x}{\colorbox{#eab308}{2}}\right)" />
+                  <span className="bg-purple-200 px-2 py-0.5 rounded font-bold mr-2 tracking-widest text-[#5b21b6]">2×3</span><Latex math="\times \left(\frac{4x}{\colorbox{#eab308}{3}} − \frac{x}{\colorbox{#eab308}{2}}\right)" />
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left whitespace-nowrap">
@@ -1641,7 +1639,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                   </div>
                 </div>
 
-                <div className="text-right pt-6 pb-2"><Latex math="6\left(\frac{4x}{3} - \frac{x}{2}\right)" /></div>
+                <div className="text-right pt-6 pb-2"><Latex math="6\left(\frac{4x}{3} − \frac{x}{2}\right)" /></div>
                 <div className="text-center pt-6 pb-2"><Latex math="=" /></div>
                 <div className="text-left pt-6 pb-2"><Latex math="30" /></div>
                 <div className="text-sm pt-6 pb-2"></div>
@@ -1679,12 +1677,12 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 <div className="text-left"><Latex math="30" /></div>
                 <div className="text-sm"></div>
 
-                <div className="text-right pt-2"><Latex math="2(4x) - 3x" /></div>
+                <div className="text-right pt-2"><Latex math="2(4x) − 3x" /></div>
                 <div className="text-center pt-2"><Latex math="=" /></div>
                 <div className="text-left pt-2"><Latex math="30" /></div>
                 <div className="text-sm"></div>
 
-                <div className="text-right"><Latex math="8x - 3x" /></div>
+                <div className="text-right"><Latex math="8x − 3x" /></div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="30" /></div>
                 <div className="text-sm"></div>
@@ -1707,12 +1705,12 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
 
             <div className="min-w-[650px]">
               <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-5 items-center pl-4 pr-4">
-                <div className="text-right"><Latex math="2(x-3) + 3x" /></div>
+                <div className="text-right"><Latex math="2(x−3) + 3x" /></div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="14" /></div>
                 <div className="text-sm"></div>
 
-                <div className="text-right"><Latex math="2x - 6 + 3x" /></div>
+                <div className="text-right"><Latex math="2x − 6 + 3x" /></div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="14" /></div>
                 <div className="text-sm text-slate-700 flex items-center pl-4">
@@ -1721,7 +1719,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                   <div className="text-[#5b21b6] ml-3 font-bold px-1 relative text-base flex items-center whitespace-nowrap">
                     <span className="absolute -top-3 left-[16px] text-lg rotate-12">↷</span>
                     <span className="absolute -top-4 left-4 text-lg">↷</span>
-                    <Latex math="2(x-3) = 2(x)-2(3) = 2x-6" />
+                    <Latex math="2(x−3) = 2(x)−2(3) = 2x−6" />
                   </div>
                 </div>
 
@@ -1886,7 +1884,7 @@ export const StatisticsNotes = ({ activeSub }) => {
               <ul className="text-slate-700 font-bold text-base space-y-4 list-disc ml-6">
                   <li>
                     圓形圖角度總和是 <span className="text-red-600">360°</span>，因此能找 x 的角度
-                    <div className="text-slate-600 font-normal mt-2 ml-2">例：<Latex math="x = 360^\circ - 120^\circ - 30^\circ - 45^\circ - 69^\circ = 96^\circ" /></div>
+                    <div className="text-slate-600 font-normal mt-2 ml-2">例：<Latex math="x = 360^\circ − 120^\circ − 30^\circ − 45^\circ − 69^\circ = 96^\circ" /></div>
                   </li>
                   <li>
                     若知總人數，能推出每格人數
@@ -2081,7 +2079,7 @@ export const StatisticsNotes = ({ activeSub }) => {
                 </table>
               </div>
               <p className="text-blue-800 font-bold mt-2 text-sm md:text-base">若指出<span className="text-red-600">最大</span>跟<span className="text-red-600">最小</span>的數據差 15，便可得知：</p>
-              <p className="text-green-700 font-bold text-center mt-2 text-lg break-all"><Latex math="\because 28 - 15 = 13 \rightarrow b = 3" /></p>
+              <p className="text-green-700 font-bold text-center mt-2 text-lg break-all"><Latex math="\because 28 − 15 = 13 \rightarrow b = 3" /></p>
             </div>
           </div>
         </div>
@@ -2298,7 +2296,7 @@ export const CoordinateNotes = ({ activeSub }) => {
               {drawPoint(-4, -2, "D", "#0284c7")}
               {drawPoint(-1, 2, "E", "#0284c7")}
             </svg>
-            <p className="text-sm text-slate-500 mt-2">找坐標例子：<Latex math="B(1,-2)" />、<Latex math="C(-3,-3)" />、<Latex math="D(-4,-2)" />、<Latex math="E(-1,2)" /></p>
+            <p className="text-sm text-slate-500 mt-2">找坐標例子：<Latex math="B(1,−2)" />、<Latex math="C(−3,−3)" />、<Latex math="D(−4,−2)" />、<Latex math="E(−1,2)" /></p>
           </div>
         </div>
       </CollapsibleSection>
@@ -2388,7 +2386,7 @@ export const CoordinateNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <p className="mb-2 text-slate-700">上述例子的長度為：</p>
-            <Latex math="5 - 1 = 4 \text{ 單位}" block />
+            <Latex math="5 − 1 = 4 \text{ 單位}" block />
             
             <div className="mt-4 bg-slate-50 p-3 rounded-lg border-l-4 border-slate-400 text-sm">
               <p className="font-bold text-slate-800">💡 考試提示：</p>
@@ -2421,7 +2419,7 @@ export const CoordinateNotes = ({ activeSub }) => {
                   每轉 90°，<Latex math="(x,y)" /> 必須<span className="bg-yellow-200 px-1 rounded font-bold">調轉寫正值</span>，再<span className="font-bold text-red-600">按其象限加回相應負號</span>。
                 </p>
                 <div className="mt-2 pl-2 border-l-2 border-purple-300 bg-purple-50 p-2 rounded text-xs text-purple-800">
-                  <p>例如：<Latex math="C(2,-4)" /> 轉 90°，先調轉 <Latex math="\rightarrow(4,2)" />。<br/>畫圖可見若 <span className="font-bold">順時針</span> 轉 90° 會到第 III 象限，所以加負號得 <span className="font-bold text-red-600"><Latex math="(-4,-2)" /></span>。</p>
+                  <p>例如：<Latex math="C(2,−4)" /> 轉 90°，先調轉 <Latex math="\rightarrow(4,2)" />。<br/>畫圖可見若 <span className="font-bold">順時針</span> 轉 90° 會到第 III 象限，所以加負號得 <span className="font-bold text-red-600"><Latex math="(−4,−2)" /></span>。</p>
                 </div>
                 <div className="mt-2 text-xs text-slate-500">
                   <p>註1：如轉 180° 即不用調轉 <Latex math="x,y" /> (因為調了兩次會抵銷)。順時針 270° 即等於 逆時針 90°。</p>
@@ -2665,7 +2663,7 @@ export const PercentageNotes = ({ activeSub }) => {
             
             <div className="flex flex-col md:flex-row items-center gap-4 mb-4 bg-white p-4 rounded-lg">
               <div className="text-xl">
-                <Latex math="\frac{\color{green}\text{新} - \color{green}\text{舊}}{\color{green}\text{舊}} \times 100\%" />
+                <Latex math="\frac{\color{green}\text{新} − \color{green}\text{舊}}{\color{green}\text{舊}} \times 100\%" />
               </div>
               <div className="text-red-600 font-bold ml-4 relative">
                 <span className="absolute -left-6 top-1/2 -translate-y-1/2">←</span>
@@ -3180,7 +3178,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
                 <p className="text-sm text-slate-700 font-bold mb-1">註 1：基本運算字元</p>
                 <ul className="text-sm text-slate-700 pl-4 space-y-1">
                   <li><span className="text-emerald-700 font-bold">和</span> <Latex math="\rightarrow +" /></li>
-                  <li><span className="text-emerald-700 font-bold">差</span> <Latex math="\rightarrow -" /></li>
+                  <li><span className="text-emerald-700 font-bold">差</span> <Latex math="\rightarrow −" /></li>
                   <li><span className="text-emerald-700 font-bold">積</span> <Latex math="\rightarrow \times" /></li>
                   <li><span className="text-emerald-700 font-bold">商</span> <Latex math="\rightarrow \div" /></li>
                 </ul>
@@ -3189,7 +3187,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
                 <p className="text-sm text-slate-700 font-bold mb-1">註 2：出現<span className="text-red-600 mx-1">「的結果」</span>字眼 <Latex math="\rightarrow" /> 即加括號</p>
                 <div className="bg-white p-2 rounded border border-purple-100 text-sm mt-1">
                   <p className="mb-1">e.g. <Latex math="x" /> 乘以 2 減 y 的<span className="text-blue-600 font-bold border-b border-blue-600">結果</span></p>
-                  <p className="text-emerald-700 font-bold"><Latex math="= x(2-y)" /> <span className="text-red-600 text-xs ml-2 font-bold">← 要加括號</span></p>
+                  <p className="text-emerald-700 font-bold"><Latex math="= x(2−y)" /> <span className="text-red-600 text-xs ml-2 font-bold">← 要加括號</span></p>
                 </div>
               </div>
             </div>
@@ -3207,37 +3205,33 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
           <div className="grid grid-cols-1 gap-4">
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <p className="text-slate-800 font-bold mb-3">
-                e.g. <Latex math="y = 50 - x" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">x = 40</span> ，求 y 的值
+                e.g. <Latex math="y = 50 − x" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">x = 40</span> ，求 y 的值
               </p>
-              <div className="pl-6 font-bold text-slate-700 space-y-1">
-                <p><Latex math="y = 50 - " /><span className="text-blue-600">(40)</span></p>
-                <p><Latex math="y = 10" /></p>
+              <div className="pl-6 font-bold text-slate-700 [&>span]:!text-left">
+                <Latex math={String.raw`\begin{aligned} y &= 50 − \textcolor{#2563eb}{(40)} \\ y &= 10 \end{aligned}`} block />
               </div>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-slate-200 relative">
               <p className="text-slate-800 font-bold mb-3">
-                e.g. <Latex math="H = k^2 - 1" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">k = -4</span> ，求 H 的值
+                e.g. <Latex math="H = k^2 − 1" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">k = -4</span> ，求 H 的值
               </p>
-              <div className="pl-6 font-bold text-slate-700 space-y-1">
-                <p><Latex math="H = " /><span className="bg-yellow-200 px-1 rounded">(-4)</span><Latex math="^2 - 1" /></p>
-                <p><Latex math="= 16 - 1" /></p>
-                <p><Latex math="= 15" /></p>
+              <div className="pl-6 font-bold text-slate-700 [&>span]:!text-left">
+                <Latex math={String.raw`\begin{aligned} H &= \colorbox{#fef08a}{(−4)}^2 − 1 \\ &= 16 − 1 \\ &= 15 \end{aligned}`} block />
               </div>
               <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:block bg-red-50 p-3 rounded-lg border border-red-200">
                 <p className="text-xs text-red-800 font-bold mb-1 border-b border-red-200 pb-1">括號的分別：</p>
-                <p className="text-sm font-bold text-slate-700"><Latex math="(-4)^2 = +16" /> <span className="text-green-600 ml-1">✓</span></p>
-                <p className="text-sm font-bold text-slate-700"><Latex math="-4^2 = -16" /> <span className="text-red-500 ml-1">×</span></p>
+                <p className="text-sm font-bold text-slate-700"><Latex math="(−4)^2 = +16" /> <span className="text-green-600 ml-1">✓</span></p>
+                <p className="text-sm font-bold text-slate-700"><Latex math="−4^2 = −16" /> <span className="text-red-500 ml-1">×</span></p>
               </div>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <p className="text-slate-800 font-bold mb-3">
-                e.g. <Latex math="T = (n - 1)d" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">n = 4</span> 和 <span className="bg-green-200 px-1 rounded font-sans">d = -2</span> ，求 T 的值
+                e.g. <Latex math="T = (n − 1)d" /> ， 若 <span className="bg-yellow-200 px-1 rounded font-sans">n = 4</span> 和 <span className="bg-green-200 px-1 rounded font-sans">d = -2</span> ，求 T 的值
               </p>
-              <div className="pl-6 font-bold text-slate-700 space-y-1">
-                <p><Latex math="T = (" /><span className="bg-yellow-200 px-1 rounded">4</span><Latex math="- 1)" /><span className="bg-green-200 px-1 rounded">(-2)</span></p>
-                <p><Latex math="= -6" /></p>
+              <div className="pl-6 font-bold text-slate-700 [&>span]:!text-left">
+                <Latex math={String.raw`\begin{aligned} T &= (\colorbox{#fef08a}{4} − 1)\colorbox{#bbf7d0}{(−2)} \\ &= −6 \end{aligned}`} block />
               </div>
             </div>
           </div>
@@ -3368,10 +3362,10 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
               <hr className="border-slate-100" />
 
               <div>
-                <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="\frac{a^2 + 2}{2a - 3}" /> 的第 5 項是？</p>
+                <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="\frac{a^2 + 2}{2a − 3}" /> 的第 5 項是？</p>
                 <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4 relative">
                   <div className="absolute left-[100px] -top-5 text-sm text-green-700 font-bold whitespace-nowrap">a 代 5 ↓</div>
-                  <p>第 5 項 <Latex math="= \frac{\color{red}(\color{red}5\color{red})^2 + 2}{2\color{red}(\color{red}5\color{red}) - 3}" /> <Latex math="= \frac{27}{7}" /></p>
+                  <p>第 5 項 <Latex math="= \frac{\color{red}(\color{red}5\color{red})^2 + 2}{2\color{red}(\color{red}5\color{red}) − 3}" /> <Latex math="= \frac{27}{7}" /></p>
                 </div>
               </div>
             </div>

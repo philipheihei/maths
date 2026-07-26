@@ -218,7 +218,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
     <div className="space-y-6">
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-cyan-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">CH9 三角學</h1>
-        <p className="text-slate-600">此課重點為學習利用 <span className="font-bold text-slate-800">ASTC 圖</span>，分辨 <Latex math="\sin\theta, \cos\theta, \tan\theta" /> 於 <Latex math="0^\circ - 360^\circ" /> 情況下的正負值及求角解方程。</p>
+        <p className="text-slate-600">此課重點為學習利用 <span className="font-bold text-slate-800">ASTC 圖</span>，分辨 <Latex math="\sin\theta, \cos\theta, \tan\theta" /> 於 <Latex math="0^\circ − 360^\circ" /> 情況下的正負值及求角解方程。</p>
       </div>
 
       {/* 1. ASTC 象限圖 */}
@@ -278,8 +278,8 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
               </div>
               <div className="space-y-1 bg-slate-50 p-3 rounded">
                 <Step math="\sin\theta = \frac{4}{5}" alignEq={false} />
-                <Step math="\cos\theta = -\frac{3}{5}" alignEq={false} />
-                <Step math="\tan\theta = -\frac{4}{3}" alignEq={false} />
+                <Step math="\cos\theta = −\frac{3}{5}" alignEq={false} />
+                <Step math="\tan\theta = −\frac{4}{3}" alignEq={false} />
               </div>
             </div>
 
@@ -287,7 +287,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm flex flex-col justify-center">
               <p className="text-slate-700 font-bold mb-3">知道不同的問法：</p>
               <ul className="list-disc pl-5 space-y-2 text-slate-700 mb-4 text-sm">
-                <li><span className="font-bold">直接比角度範圍</span>：<Latex math="(180^\circ - 270^\circ)" /></li>
+                <li><span className="font-bold">直接比角度範圍</span>：<Latex math="(180^\circ − 270^\circ)" /></li>
                 <li><span className="font-bold">象限</span>：(象限 IV)</li>
                 <li><span className="font-bold">比大細</span>：<Latex math="\sin\theta / \cos\theta / \tan\theta > 0 \text{ 或 } < 0" /></li>
               </ul>
@@ -298,11 +298,11 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
                   <Step math="x^2 + y^2 = r^2" alignEq={false} />
                   <Step math="4^2 + a^2 = 5^2" />
                   <Step math="a = \pm 3" />
-                  <p className="text-slate-700 mt-1 pl-4">因為在 IV 象限，<Latex math="y" /> 軸為負，<Latex math="a = -3" />（捨去正數）</p>
+                  <p className="text-slate-700 mt-1 pl-4">因為在 IV 象限，<Latex math="y" /> 軸為負，<Latex math="a = −3" />（捨去正數）</p>
                 </div>
                 <div className="space-y-1 font-bold">
-                  <Step math="\sin\theta = -\frac{3}{5}" alignEq={false} />
-                  <Step math="\tan\theta = -\frac{3}{4}" alignEq={false} />
+                  <Step math="\sin\theta = −\frac{3}{5}" alignEq={false} />
+                  <Step math="\tan\theta = −\frac{3}{4}" alignEq={false} />
                 </div>
               </div>
             </div>
@@ -312,11 +312,11 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
             <h4 className="font-bold text-slate-800 mb-2">進階推斷象限例子：</h4>
             <div className="bg-slate-50 p-4 rounded flex flex-col md:flex-row items-center gap-6">
               <div className="flex-1">
-                <p className="font-bold text-slate-700 mb-2">若 <Latex math="\sin\theta = -\frac{1}{3}" /> 和 <Latex math="\cos\theta > 0" />，求 <Latex math="\cos\theta" /> 和 <Latex math="\tan\theta" />：</p>
+                <p className="font-bold text-slate-700 mb-2">若 <Latex math="\sin\theta = −\frac{1}{3}" /> 和 <Latex math="\cos\theta > 0" />，求 <Latex math="\cos\theta" /> 和 <Latex math="\tan\theta" />：</p>
                 <ul className="space-y-1 text-sm text-slate-700 list-disc pl-5">
                   <li><Latex math="\sin\theta" /> 是 -ve <Latex math="\rightarrow" /> 範圍在 T (III) 或 C (IV) 象限</li>
                   <li><Latex math="\cos\theta > 0" /> (+ve) <Latex math="\rightarrow" /> 範圍在 A (I) 或 C (IV) 象限</li>
-                  <li><span className="font-bold text-red-600">重疊條件在 IV 象限 <Latex math="(270^\circ - 360^\circ)" /></span></li>
+                  <li><span className="font-bold text-red-600">重疊條件在 IV 象限 <Latex math="(270^\circ − 360^\circ)" /></span></li>
                 </ul>
               </div>
               <div className="flex-1 w-full flex justify-center">
@@ -420,11 +420,11 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
               </ul>
               
               <div className="mt-4 bg-slate-50 p-3 rounded">
-                <p className="font-bold text-slate-800 mb-2">例：計算 <Latex math="\sin 300^\circ" /> <span className="font-normal text-slate-500">（以 <Latex math="0^\circ - 90^\circ" /> 銳角表示）</span></p>
+                <p className="font-bold text-slate-800 mb-2">例：計算 <Latex math="\sin 300^\circ" /> <span className="font-normal text-slate-500">（以 <Latex math="0^\circ − 90^\circ" /> 銳角表示）</span></p>
                 <div className="font-sans space-y-2">
-                  <Step math="\sin 300^\circ = \sin(360^\circ - 60^\circ)" explain="1. 將度數轉換成最接近的橫/直軸 ±" />
-                  <Step math="= -\sin 60^\circ" explain="看象限：300° 在第四象限(C)，sin 是負的，加 '-'" />
-                  <Step math="= -0.866" explain="計算機驗證" />
+                  <Step math="\sin 300^\circ = \sin(360^\circ − 60^\circ)" explain="1. 將度數轉換成最接近的橫/直軸 ±" />
+                  <Step math="= −\sin 60^\circ" explain="看象限：300° 在第四象限(C)，sin 是負的，加 '-'" />
+                  <Step math="= −0.866" explain="計算機驗證" />
                 </div>
               </div>
             </div>
@@ -449,7 +449,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
             <h3 className="font-bold text-indigo-800 mb-3 text-lg">由 <Latex math="0 \le \theta < 90^\circ" /> 到 <Latex math="0 \le \theta < 360^\circ" /></h3>
-            <p className="text-slate-700 mb-3">初中時按計算機（如 <Latex math="\sin^{-1}(1/3)" />）會給出 <Latex math="\theta = 19.5^\circ" />。<br/>但在高中，因為 <Latex math="\theta" /> 擴展到 <Latex math="360^\circ" />，<strong className="text-indigo-800">每個基礎三角方程通常都有 2 個答案。</strong></p>
+            <p className="text-slate-700 mb-3">初中時按計算機（如 <Latex math="\sin^{−1}(1/3)" />）會給出 <Latex math="\theta = 19.5^\circ" />。<br/>但在高中，因為 <Latex math="\theta" /> 擴展到 <Latex math="360^\circ" />，<strong className="text-indigo-800">每個基礎三角方程通常都有 2 個答案。</strong></p>
 
             <div className="flex flex-col lg:flex-row gap-6 mb-4">
               <div className="flex-1 bg-white p-4 rounded border border-slate-200 shadow-sm">
@@ -462,7 +462,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
                  <div className="space-y-1 font-bold text-indigo-800 bg-indigo-50 p-2 rounded">
                    <Step math="\theta = 19.5^\circ" alignEq={false} />
                    <div className="text-slate-600 text-sm">或</div>
-                   <Step math="\theta = 180^\circ - 19.5^\circ = 160.5^\circ" alignEq={false} />
+                   <Step math="\theta = 180^\circ − 19.5^\circ = 160.5^\circ" alignEq={false} />
                  </div>
               </div>
               <div className="w-full max-w-[200px] flex items-center justify-center mx-auto">
@@ -490,7 +490,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
             <div className="bg-red-50 p-3 flex gap-2 items-start rounded border border-red-200">
               <span className="text-xl">⚠️</span>
               <p className="text-sm text-red-800">
-                <strong>注意：</strong>如果 <Latex math="\theta" /> 答案超出 <Latex math="0^\circ \le \theta < 360^\circ" /> 的範圍（例如因為平移得出負數），則需要 <strong><Latex math="+360^\circ / -360^\circ" /></strong> 使它回到正確的同界角範圍內。
+                <strong>注意：</strong>如果 <Latex math="\theta" /> 答案超出 <Latex math="0^\circ \le \theta < 360^\circ" /> 的範圍（例如因為平移得出負數），則需要 <strong><Latex math="+360^\circ / −360^\circ" /></strong> 使它回到正確的同界角範圍內。
               </p>
             </div>
           </div>

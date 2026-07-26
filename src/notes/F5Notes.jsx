@@ -210,8 +210,8 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-2">2. 離差 (Dispersion) — 數據的分散程度</h3>
             <ul className="text-slate-700 space-y-2 list-disc pl-5">
-              <li><span className="font-bold text-slate-900">分佈域 (Range)</span>：最大值 <Latex math="-" inline /> 最小值</li>
-              <li><span className="font-bold text-slate-900">四分位數間距 (Interquartile Range)</span>：上四分位數 (<Latex math="Q_3" inline />) <Latex math="-" inline /> 下四分位數 (<Latex math="Q_1" inline />)</li>
+              <li><span className="font-bold text-slate-900">分佈域 (Range)</span>：最大值 <Latex math="−" inline /> 最小值</li>
+              <li><span className="font-bold text-slate-900">四分位數間距 (Interquartile Range)</span>：上四分位數 (<Latex math="Q_3" inline />) <Latex math="−" inline /> 下四分位數 (<Latex math="Q_1" inline />)</li>
               <li><span className="font-bold text-slate-900">標準差 (Standard Deviation, <Latex math="\sigma" inline />)</span>：量度數據偏離平均數的程度，數值越大代表數據越分散。計算機可直出。</li>
               <li><span className="font-bold text-slate-900">方差 (Variance, <Latex math="\sigma^2" inline />)</span>：標準差的平方（即 <Latex math="\text{方差} = (\text{標準差})^2" inline />）</li>
             </ul>
@@ -235,10 +235,10 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
               <div className="bg-green-50 p-3 rounded">
                 <p className="font-bold mb-1">手算離差</p>
                 <ul className="text-sm space-y-1">
-                  <li>分佈域 = <Latex math="15 - 2 = 13" inline /></li>
+                  <li>分佈域 = <Latex math="15 − 2 = 13" inline /></li>
                   <li>下四分位數 <Latex math="Q_1 = 5" inline /> (前半 2,5,8 的中間)</li>
                   <li>上四分位數 <Latex math="Q_3 = 12" inline /> (後半 8,12,15 的中間)</li>
-                  <li>四分位數間距 = <Latex math="12 - 5 = 7" inline /></li>
+                  <li>四分位數間距 = <Latex math="12 − 5 = 7" inline /></li>
                 </ul>
               </div>
             </div>
@@ -313,10 +313,10 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                   <p><strong>平均數：</strong> 64.75 (建議用計數機)</p>
                   <p><strong>眾數：</strong> 55 (出現最多次數)</p>
                   <p><strong>中位數：</strong> 第10與第11個數平均 <Latex inline math="= \frac{63+66}{2}=64.5" /></p>
-                  <p><strong>分佈域：</strong> <Latex inline math="84-48=36" /></p>
+                  <p><strong>分佈域：</strong> <Latex inline math="84−48=36" /></p>
                   <p><strong><Latex inline math="Q_1" />：</strong> 前 10 個數中位數 <Latex inline math="=54.5" /></p>
                   <p><strong><Latex inline math="Q_3" />：</strong> 後 10 個數中位數 <Latex inline math="=74.5" /></p>
-                  <p className="col-span-2"><strong>四分位數間距：</strong> <Latex inline math="Q_3-Q_1=74.5-54.5=20" /></p>
+                  <p className="col-span-2"><strong>四分位數間距：</strong> <Latex inline math="Q_3−Q_1=74.5−54.5=20" /></p>
                 </div>
               </div>
             </div>
@@ -439,7 +439,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             <ul className="text-sm text-slate-700 list-disc pl-5 mt-4 space-y-1">
               <li>中位數是長方框內中間的<span className="font-bold text-red-600">紅色直線</span></li>
               <li>分佈域 = 最右邊條線 - 最左邊條線 (最大 - 最小)</li>
-              <li>四分位數間距 = 框框的右邊界 - 框框的左邊界 (<Latex inline math="Q_3 - Q_1" />)</li>
+              <li>四分位數間距 = 框框的右邊界 - 框框的左邊界 (<Latex inline math="Q_3 − Q_1" />)</li>
             </ul>
             <p className="text-sm text-slate-700 mt-3">框線圖<span className="font-bold text-red-600">未能顯示</span>平均數、眾數、標準差及方差。</p>
           </div>
@@ -451,7 +451,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
           <div className="bg-sky-50 rounded-lg p-5 border border-sky-300">
             <h3 className="font-bold text-sky-800 mb-3 text-lg">📝 公式</h3>
             <div className="bg-white p-4 rounded-lg shadow-sm w-fit mx-auto border border-slate-200">
-              <MathDisplay latex="\text{標準分 } (z) = \frac{\text{某位學生分數 } (x) - \text{平均分數 } (\bar{x})}{\text{標準差 } (\sigma)}" block />
+              <MathDisplay latex="\text{標準分 } (z) = \frac{\text{某位學生分數 } (x) − \text{平均分數 } (\bar{x})}{\text{標準差 } (\sigma)}" block />
             </div>
           </div>
           
@@ -478,7 +478,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
           <div className="bg-red-50 rounded-lg p-4 border-2 border-red-300">
             <h3 className="font-bold text-red-800 text-lg mb-2">🔥 核心口訣</h3>
             <ul className="list-disc pl-5 text-slate-800 font-bold text-lg space-y-2">
-              <li>「<Latex math="+" inline /> / <Latex math="-" inline />」：只有 3M 會變，離差<span className="text-red-600 underline">不變</span></li>
+              <li>「<Latex math="+" inline /> / <Latex math="−" inline />」：只有 3M 會變，離差<span className="text-red-600 underline">不變</span></li>
               <li>「<Latex math="\times" inline /> / <Latex math="\div" inline />」：全部皆變</li>
             </ul>
             <p className="text-sm mt-3 text-red-700">*註：3M 指 平均數 (Mean)、中位數 (Median)、眾數 (Mode)<br/>離差 指 分佈域 (Range)、四分位數間距、標準差 (<Latex math="\sigma" inline />)、方差 (<Latex math="\sigma^2" inline />)</p>
@@ -549,7 +549,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             <h4 className="font-bold text-slate-800 mb-3 border-b-2 border-slate-100 pb-2">MC 例題（方差變換）</h4>
             <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 space-y-3">
               <p className="text-slate-800">若五個數 <Latex math="x_1,\ x_2,\ x_3,\ x_4,\ x_5" inline /> 的方差為 12，則</p>
-              <p className="text-slate-800"><Latex math="2x_1 - 3,\ 2x_2 - 3,\ 2x_3 - 3,\ 2x_4 - 3,\ 2x_5 - 3" inline /> 這五個數的方差為：</p>
+              <p className="text-slate-800"><Latex math="2x_1 − 3,\ 2x_2 − 3,\ 2x_3 − 3,\ 2x_4 − 3,\ 2x_5 − 3" inline /> 這五個數的方差為：</p>
               <div className="grid grid-cols-1 gap-2 text-sm">
                 <div className="bg-white border border-slate-200 rounded p-2">A. 12</div>
                 <div className="bg-white border border-slate-200 rounded p-2">B. 21</div>
@@ -557,7 +557,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                 <div className="bg-white border border-slate-200 rounded p-2 font-bold text-emerald-700 border-emerald-300">D. 48</div>
               </div>
               <div className="bg-emerald-50 border border-emerald-200 rounded p-3 text-sm text-emerald-900">
-                解題重點：<Latex math="-3" inline /> 不改變方差；<Latex math="\times 2" inline /> 令方差乘 <Latex math="2^2" inline />，
+                解題重點：<Latex math="−3" inline /> 不改變方差；<Latex math="\times 2" inline /> 令方差乘 <Latex math="2^2" inline />，
                 所以新方差 <Latex math="= 12 \times 4 = 48" inline />。
               </div>
             </div>
@@ -1626,10 +1626,10 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
               ① <Latex math="x \ge 2" inline /><br/>
               ② <Latex math="y \ge 0" inline /><br/>
               ③ <Latex math="x + 4y \le 22" inline /><br/>
-              ④ <Latex math="4x - y \le 20" inline />
+              ④ <Latex math="4x − y \le 20" inline />
             </div>
             <p className="text-sm text-slate-700 mb-3">
-              若 <Latex math="(x, y)" inline /> 為 D 中的一點，則 <span className="bg-green-100 px-1 rounded font-bold text-green-800"><Latex math="3y - 4x + 15" inline /></span> 的最大值為？
+              若 <Latex math="(x, y)" inline /> 為 D 中的一點，則 <span className="bg-green-100 px-1 rounded font-bold text-green-800"><Latex math="3y − 4x + 15" inline /></span> 的最大值為？
             </p>
 
             <div className="border-t border-slate-200 pt-3 mt-3">
@@ -1648,7 +1648,7 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
               <h4 className="font-bold text-green-700 mb-2">2. 逐個交點代入數式比較最大值 / 最小值</h4>
               <p className="text-sm text-slate-600 mb-2">將找到的交點 <Latex math="(2, 5)" inline /> 代入目標式子 <span className="text-red-500 font-mono bg-red-50 px-1 rounded">3y - 4x + 15</span>：</p>
               <div className="bg-green-50 p-3 rounded-lg text-sm font-sans mx-auto md:mx-0 w-fit">
-                <Latex math="\begin{aligned} &\quad 3(5) - 4(2) + 15 \\ &= 15 - 8 + 15 \\ &= 22 \end{aligned}" block />
+                <Latex math="\begin{aligned} &\quad 3(5) − 4(2) + 15 \\ &= 15 − 8 + 15 \\ &= 22 \end{aligned}" block />
               </div>
             </div>
           </div>
@@ -1894,14 +1894,14 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 mt-6">
             <h3 className="font-bold text-slate-800 mb-3">📝 軌跡的代數方程例子</h3>
-            <p className="text-sm text-slate-600 mb-3">已知一動點 <Latex math="P" inline /> 與 <Latex math="A(3, 7)" inline /> 和 <Latex math="B(-4, 0)" inline /> 兩點保持相等距離。求 <Latex math="P" inline /> 的軌跡方程。</p>
+            <p className="text-sm text-slate-600 mb-3">已知一動點 <Latex math="P" inline /> 與 <Latex math="A(3, 7)" inline /> 和 <Latex math="B(−4, 0)" inline /> 兩點保持相等距離。求 <Latex math="P" inline /> 的軌跡方程。</p>
             <div className="flex flex-col md:flex-row gap-6">
               <div className="flex-1 bg-slate-50 p-3 rounded">
                 <p className="text-slate-700 mb-2">設 <Latex math="P" inline /> 的坐標為 <Latex math="(x, y)" inline />。</p>
                 <div className="flex flex-col items-center">
-                  <Latex math="\begin{aligned} AP &= BP \\ \sqrt{(x - 3)^2 + (y - 7)^2} &= \sqrt{[x - (-4)]^2 + (y - 0)^2} \\ (x - 3)^2 + (y - 7)^2 &= (x + 4)^2 + y^2 \\ -14x - 14y + 42 &= 0 \\ x + y - 3 &= 0 \end{aligned}" block />
+                  <Latex math="\begin{aligned} AP &= BP \\ \sqrt{(x − 3)^2 + (y − 7)^2} &= \sqrt{[x − (−4)]^2 + (y − 0)^2} \\ (x − 3)^2 + (y − 7)^2 &= (x + 4)^2 + y^2 \\ −14x − 14y + 42 &= 0 \\ x + y − 3 &= 0 \end{aligned}" block />
                 </div>
-                <p className="text-slate-700 mt-2">∴ <Latex math="P" inline /> 的軌跡方程是 <Latex math="x + y - 3 = 0" inline />。</p>
+                <p className="text-slate-700 mt-2">∴ <Latex math="P" inline /> 的軌跡方程是 <Latex math="x + y − 3 = 0" inline />。</p>
               </div>
               <div className="flex-1 text-sm text-blue-700 space-y-3 pt-6 border-l-2 border-blue-200 pl-4 hidden md:block">
                 <p>步驟 1： 設動點的坐標為 <Latex math="(x, y)" inline />。</p>
@@ -1922,13 +1922,13 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-900 mb-3">📝 2.1 標準式</h3>
-            <MathDisplay math="(x - \text{x坐標})^2 + (y - \text{y坐標})^2 = \text{半徑}^2" />
+            <MathDisplay math="(x − \text{x坐標})^2 + (y − \text{y坐標})^2 = \text{半徑}^2" />
             <div className="bg-white border border-slate-200 rounded p-4 mt-3">
-              <p className="text-blue-800 font-bold mb-2">e.g. 已知一圓的圓心 <Latex math="(-1, 6)" inline /> 和半徑 9，可列出：</p>
+              <p className="text-blue-800 font-bold mb-2">e.g. 已知一圓的圓心 <Latex math="(−1, 6)" inline /> 和半徑 9，可列出：</p>
               <pre className="whitespace-pre font-sans text-lg text-blue-900 flex flex-col items-center">
                 <div>
-                  <Latex math="[x - (-1)]^2 + (y - 6)^2 = 9^2" block />
-                  <Latex math="(x + 1)^2 + (y - 6)^2 = 81" block />
+                  <Latex math="[x − (−1)]^2 + (y − 6)^2 = 9^2" block />
+                  <Latex math="(x + 1)^2 + (y − 6)^2 = 81" block />
                 </div>
               </pre>
               <p className="text-purple-700 text-sm mt-3 text-right">← 不需展開有代數的 <Latex math="(\ )^2" inline />，只需化簡數字</p>
@@ -1944,8 +1944,8 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <h3 className="font-bold text-amber-900 mb-3">📝 2.2 一般式</h3>
             <MathDisplay math="x^2 + y^2 + Dx + Ey + F = 0" />
             <div className="mt-4 flex flex-col md:flex-row justify-between items-center bg-white p-3 rounded border border-slate-200">
-              <span className="text-blue-800 font-bold text-lg"><span className="text-slate-600">圓心：</span><Latex math="\left( -\frac{D}{2}, -\frac{E}{2} \right)" inline /></span>
-              <span className="text-blue-800 font-bold text-lg mt-3 md:mt-0"><span className="text-slate-600">半徑：</span><Latex math="\sqrt{\left(\frac{D}{2}\right)^2 + \left(\frac{E}{2}\right)^2 - F}" inline /></span>
+              <span className="text-blue-800 font-bold text-lg"><span className="text-slate-600">圓心：</span><Latex math="\left( −\frac{D}{2}, −\frac{E}{2} \right)" inline /></span>
+              <span className="text-blue-800 font-bold text-lg mt-3 md:mt-0"><span className="text-slate-600">半徑：</span><Latex math="\sqrt{\left(\frac{D}{2}\right)^2 + \left(\frac{E}{2}\right)^2 − F}" inline /></span>
             </div>
           </div>
 
@@ -1972,7 +1972,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <div className="mt-4">
               <div className="bg-slate-50 p-3 rounded mb-3">
                 <span className="text-red-500 font-bold mr-2">標準式：</span>
-                <Latex math="(x - \color{#16a34a}{3})^2 + (y - \color{#9333ea}{4})^2 = \color{#2563eb}{36}" block />
+                <Latex math="(x − \color{#16a34a}{3})^2 + (y − \color{#9333ea}{4})^2 = \color{#2563eb}{36}" block />
                 <div className="text-center mt-3 text-slate-800 font-bold text-lg">
                   ∴ 圓心：<Latex math="(\color{#16a34a}{3}, \color{#9333ea}{4})" inline />，半徑：<Latex math="\sqrt{\color{#2563eb}{36}} = 6" inline />
                 </div>
@@ -1981,20 +1981,20 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="bg-slate-50 p-3 rounded mt-6">
                 <span className="text-red-500 font-bold mr-2">一般式：</span>
-                <Latex math="x^2 + y^2 \color{#16a34a}{-6}x \color{#9333ea}{+8}y \color{#2563eb}{-11} = 0" block />
+                <Latex math="x^2 + y^2 \color{#16a34a}{−6}x \color{#9333ea}{+8}y \color{#2563eb}{−11} = 0" block />
                 <div className="text-center mt-3 text-slate-800 font-bold text-lg">
-                  圓心：<Latex math="\left( \frac{\color{#16a34a}{-6}}{-2}, \frac{\color{#9333ea}{+8}}{-2} \right) \rightarrow (3, -4)" inline />
+                  圓心：<Latex math="\left( \frac{\color{#16a34a}{−6}}{−2}, \frac{\color{#9333ea}{+8}}{−2} \right) \rightarrow (3, −4)" inline />
                 </div>
                 <div className="text-center mt-2 text-slate-800 font-bold text-lg">
-                  半徑：<Latex math="\sqrt{(3)^2 + (-4)^2 - (\color{#2563eb}{-11})} = \sqrt{36} = 6" inline />
+                  半徑：<Latex math="\sqrt{(3)^2 + (−4)^2 − (\color{#2563eb}{−11})} = \sqrt{36} = 6" inline />
                 </div>
                 
                 <div className="mt-5 border-t border-slate-200 pt-4 flex flex-col md:flex-row gap-4 items-center">
                   <div className="flex-1">
                     <p className="text-blue-800 font-bold text-sm mb-1">e.g. 若 <Latex math="x^2" inline /> 和 <Latex math="y^2" inline /> 係數不為 1，需先全式除之：</p>
-                    <Latex math="\color{#0e7490}{2x^2 + 2y^2 - 12x + 16y - 22 = 0}" block />
+                    <Latex math="\color{#0e7490}{2x^2 + 2y^2 − 12x + 16y − 22 = 0}" block />
                     <p className="text-green-600 font-bold text-sm text-center my-1">全式 ÷ 2 ↓</p>
-                    <Latex math="\color{#16a34a}{\underline{x^2 + y^2}} \color{#0e7490}{- 6x + 8y - 11 = 0}" block />
+                    <Latex math="\color{#16a34a}{\underline{x^2 + y^2}} \color{#0e7490}{− 6x + 8y − 11 = 0}" block />
                   </div>
                   <div className="text-green-600 font-bold text-lg bg-green-50 px-3 py-2 rounded shrink-0">
                     <Latex math="x^2" inline /> 和 <Latex math="y^2" inline /> 的係數必定為 1
@@ -2044,10 +2044,10 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
             <div className="bg-white rounded p-4 border border-slate-200 mt-4">
               <p className="text-blue-800 font-bold mb-2 text-sm md:text-base">
-                e.g. <Latex math="A(0, 1)" inline /> 在圓形 <Latex math="x^2 + y^2 - 6x + 8y - 11 = 0" inline /> 的圓內、圓外或圓上？
+                e.g. <Latex math="A(0, 1)" inline /> 在圓形 <Latex math="x^2 + y^2 − 6x + 8y − 11 = 0" inline /> 的圓內、圓外或圓上？
               </p>
               <pre className="whitespace-pre font-sans text-blue-900 mt-2">
-                <Latex math="\begin{aligned} &\quad x^2 + y^2 - 6x + 8y - 11 \\ &= (\color{#ef4444}{0})^2 + (\color{#22c55e}{1})^2 - 6(\color{#ef4444}{0}) + 8(\color{#22c55e}{1}) - 11 \\ &= -2 \\ &\quad -2 < 0 \end{aligned}" block />
+                <Latex math="\begin{aligned} &\quad x^2 + y^2 − 6x + 8y − 11 \\ &= (\color{#ef4444}{0})^2 + (\color{#22c55e}{1})^2 − 6(\color{#ef4444}{0}) + 8(\color{#22c55e}{1}) − 11 \\ &= −2 \\ &\quad −2 < 0 \end{aligned}" block />
               </pre>
               <p className="text-slate-800 font-bold mt-2">∴ <Latex math="A" inline /> 點位於圖形內</p>
             </div>
@@ -2069,7 +2069,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
               <div className="flex-1">
                 <p className="text-blue-800 font-bold text-lg mb-2">e.g.</p>
                 <div className="pl-4 border-l-2 border-slate-300 space-y-1">
-                  <p className="text-blue-900"><span className="mr-2">圓形 C :</span> <Latex math="x^2 + y^2 + 8x + 8y - 32 = 0" inline /></p>
+                  <p className="text-blue-900"><span className="mr-2">圓形 C :</span> <Latex math="x^2 + y^2 + 8x + 8y − 32 = 0" inline /></p>
                   <p className="text-blue-900"><span className="mr-2">直線 L :</span> <Latex math="x + y + 2 = 0" inline /></p>
                 </div>
               </div>
@@ -2078,7 +2078,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex justify-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\color{#dc2626}{x = -y - 2}" block />
+                  <Latex math="\color{#dc2626}{x = −y − 2}" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   1. 先將直線方程轉為 <Latex math="x = ? / y = ?" inline />
@@ -2087,7 +2087,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex justify-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\color{#dc2626}{(-y-2)}^2 + y^2 + 8\color{#dc2626}{(-y-2)} + 8y - 32 = 0" block />
+                  <Latex math="\color{#dc2626}{(−y−2)}^2 + y^2 + 8\color{#dc2626}{(−y−2)} + 8y − 32 = 0" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   2. 把 x 代 y / 把 y 代 x<br/>
@@ -2101,7 +2101,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex flex-col items-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\begin{aligned} y^2 + 4y + 4 + y^2 - 8y - 16 + 8y - 32 &= 0 \\ \textcolor{#1d4ed8}{2y^2 + 4y - 44} &= \textcolor{#1d4ed8}{0} \\ \underline{\overset{\textcolor{#9333ea}{\large a}}{y^2} + \overset{\textcolor{#9333ea}{\large b}}{\vphantom{y^2}2}y - \overset{\textcolor{#9333ea}{\large c}}{\vphantom{y^2}22}} &= \underline{0} \end{aligned}" block />
+                  <Latex math="\begin{aligned} y^2 + 4y + 4 + y^2 − 8y − 16 + 8y − 32 &= 0 \\ \textcolor{#1d4ed8}{2y^2 + 4y − 44} &= \textcolor{#1d4ed8}{0} \\ \underline{\overset{\textcolor{#9333ea}{\large a}}{y^2} + \overset{\textcolor{#9333ea}{\large b}}{\vphantom{y^2}2}y − \overset{\textcolor{#9333ea}{\large c}}{\vphantom{y^2}22}} &= \underline{0} \end{aligned}" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   3. 化簡至一元二次方程的一般式
@@ -2110,7 +2110,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex flex-col items-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\begin{aligned} \Delta &= b^2 - 4ac \\ &= 2^2 - 4(1)(-22) \\ &= 92 > 0 \end{aligned}" block />
+                  <Latex math="\begin{aligned} \Delta &= b^2 − 4ac \\ &= 2^2 − 4(1)(−22) \\ &= 92 > 0 \end{aligned}" block />
                   <div className="mt-3 font-bold text-blue-900 border-t border-slate-300 pt-2">
                     ∴ 圓形 C 和直線 L 有 2 個交點
                   </div>
@@ -2145,11 +2145,11 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <h3 className="font-bold text-amber-900 mb-3">💡 直線和圓形方程的交點坐標：計算機 Prog 02</h3>
             <div className="bg-white p-3 rounded border border-slate-200 flex flex-col md:flex-row items-center justify-between">
               <div className="flex-1">
-                <Latex math="\begin{cases} \enspace\color{#fbbf24}{1}x \color{#fbbf24}{-5}y = \color{#fbbf24}{-3} \\ \enspace x^2 + y^2 + 2x - 6y - 3 = 0 \end{cases}" block />
+                <Latex math="\begin{cases} \enspace\color{#fbbf24}{1}x \color{#fbbf24}{−5}y = \color{#fbbf24}{−3} \\ \enspace x^2 + y^2 + 2x − 6y − 3 = 0 \end{cases}" block />
               </div>
               <div className="flex-1 text-slate-800 font-bold text-center mt-3 md:mt-0">
-                <span className="text-blue-600 mr-2 text-xl">⇒</span> <Latex math="x = -3, y = 0 \enspace ; \enspace x = 2, y = 1" inline />
-                <p className="mt-2 text-emerald-700">∴ 交點：<Latex math="(-3, 0), (2, 1)" inline /></p>
+                <span className="text-blue-600 mr-2 text-xl">⇒</span> <Latex math="x = −3, y = 0 \enspace ; \enspace x = 2, y = 1" inline />
+                <p className="mt-2 text-emerald-700">∴ 交點：<Latex math="(−3, 0), (2, 1)" inline /></p>
               </div>
             </div>
             <p className="text-xs text-slate-500 mt-2">註：順序輸入：紅1、紅2、紅3... 為計算機輸入次序及位置</p>
