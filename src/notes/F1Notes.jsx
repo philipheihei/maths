@@ -2356,23 +2356,28 @@ export const CoordinateNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-3">📏 計算水平或鉛垂線段長度</h3>
-            <div className="bg-white p-4 rounded-lg my-3 border border-amber-100 flex items-center justify-center space-x-6">
+            <div className="bg-white p-4 rounded-lg my-3 border border-amber-100 flex items-center justify-center gap-4 flex-wrap">
               <div className="text-lg">
-                (<span className="font-bold">1</span>, <span className="bg-yellow-300 px-1 rounded font-bold">2</span>)
+                (<span className="font-bold text-blue-600">1</span>,{' '}
+                <span className="bg-yellow-300 px-1 rounded font-bold text-green-600">2</span>)
               </div>
-              <div className="w-16 h-0.5 bg-green-500 relative">
-                <div className="absolute -top-1.5 -left-1 w-3 h-3 border border-green-500 rounded-full bg-white"></div>
-                <div className="absolute -top-1.5 -right-1 w-3 h-3 border border-green-500 rounded-full bg-white"></div>
-              </div>
+              <svg viewBox="0 0 160 40" width="160" height="40" className="overflow-visible">
+                <line x1="20" y1="20" x2="140" y2="20" stroke="#16a34a" strokeWidth="2.5" />
+                <line x1="13" y1="13" x2="27" y2="27" stroke="#dc2626" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="27" y1="13" x2="13" y2="27" stroke="#dc2626" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="133" y1="13" x2="147" y2="27" stroke="#dc2626" strokeWidth="2.5" strokeLinecap="round" />
+                <line x1="147" y1="13" x2="133" y2="27" stroke="#dc2626" strokeWidth="2.5" strokeLinecap="round" />
+              </svg>
               <div className="text-lg">
-                (<span className="font-bold">5</span>, <span className="bg-yellow-300 px-1 rounded font-bold">2</span>)
+                (<span className="font-bold text-blue-600">5</span>,{' '}
+                <span className="bg-yellow-300 px-1 rounded font-bold text-green-600">2</span>)
               </div>
             </div>
 
             <div className="space-y-3 mt-4 text-slate-700">
               <p className="flex items-start">
                 <span className="text-green-600 font-bold mr-2 mt-0.5">Step 1：</span>
-                <span>找前／後的數字相同，用螢光筆 highlight （如上圖的 2）。</span>
+                <span>找前／後的數字相同，用螢光筆 highlight （如上圖的 <span className="bg-yellow-300 px-1 rounded font-bold">2</span>）。</span>
               </p>
               <p className="flex items-start">
                 <span className="text-green-600 font-bold mr-2 mt-0.5">Step 2：</span>

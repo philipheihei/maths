@@ -1881,11 +1881,13 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
                   <text x="135" y="55" fontSize="14" fill="#ef4444" fontWeight="bold">P</text>
                   
                   <line x1="130" y1="60" x2="130" y2="80" stroke="#94a3b8" strokeWidth="1.5" />
-                  <line x1="130" y1="60" x2="114" y2="50" stroke="#94a3b8" strokeWidth="1.5" />
+                  <line x1="130" y1="60" x2="118.5" y2="52.3" stroke="#94a3b8" strokeWidth="1.5" />
 
-                  {/* Right angles */}
-                  <polyline points="130,75 125,75 125,80" fill="none" stroke="#64748b" strokeWidth="1.5" />
-                  <polyline points="116,46 119,42 123,45" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  {/* Right angle marks (proper squares) */}
+                  {/* Foot on horizontal line: (130,80), square toward P (up) */}
+                  <polyline points="135,80 135,75 130,75" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  {/* Foot on slanted line: (118.5,52.3), square toward P */}
+                  <polyline points="121.2,48.2 125.4,50.9 122.6,55.1" fill="none" stroke="#64748b" strokeWidth="1.5" />
                 </svg>
               </div>
             </div>
