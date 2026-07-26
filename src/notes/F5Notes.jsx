@@ -1648,9 +1648,7 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
               <h4 className="font-bold text-green-700 mb-2">2. 逐個交點代入數式比較最大值 / 最小值</h4>
               <p className="text-sm text-slate-600 mb-2">將找到的交點 <Latex math="(2, 5)" inline /> 代入目標式子 <span className="text-red-500 font-mono bg-red-50 px-1 rounded">3y - 4x + 15</span>：</p>
               <div className="bg-green-50 p-3 rounded-lg text-sm font-sans mx-auto md:mx-0 w-fit">
-                <Latex math="3(5) - 4(2) + 15" block />
-                <Latex math="= 15 - 8 + 15" block />
-                <Latex math="= 22" block />
+                <Latex math="\begin{aligned} &\quad 3(5) - 4(2) + 15 \\ &= 15 - 8 + 15 \\ &= 22 \end{aligned}" block />
               </div>
             </div>
           </div>
@@ -1993,7 +1991,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
                 
                 <div className="mt-5 border-t border-slate-200 pt-4 flex flex-col md:flex-row gap-4 items-center">
                   <div className="flex-1">
-                    <p className="text-blue-800 font-bold text-sm mb-1">e.g. 若係數不為 1，需先全式除之：</p>
+                    <p className="text-blue-800 font-bold text-sm mb-1">e.g. 若 <Latex math="x^2" inline /> 和 <Latex math="y^2" inline /> 係數不為 1，需先全式除之：</p>
                     <Latex math="\color{#0e7490}{2x^2 + 2y^2 - 12x + 16y - 22 = 0}" block />
                     <p className="text-green-600 font-bold text-sm text-center my-1">全式 ÷ 2 ↓</p>
                     <Latex math="\color{#16a34a}{\underline{x^2 + y^2}} \color{#0e7490}{- 6x + 8y - 11 = 0}" block />
@@ -2089,7 +2087,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex justify-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="(\color{#dc2626}{-y-2})^2 + y^2 + 8(\color{#dc2626}{-y-2}) + 8y - 32 = 0" block />
+                  <Latex math="\color{#dc2626}{(-y-2)}^2 + y^2 + 8\color{#dc2626}{(-y-2)} + 8y - 32 = 0" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   2. 把 x 代 y / 把 y 代 x<br/>
@@ -2103,13 +2101,10 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex flex-col items-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="y^2 + 4y + 4 + y^2 - 8y - 16 + 8y - 32 = 0" block />
-                  <Latex math="\color{#1d4ed8}{2y^2 + 4y - 44 = 0}" block />
-                  <p className="text-xs text-purple-700 mt-1 mb-2">a &emsp;&emsp; b &emsp;&emsp; c</p>
-                  <Latex math="\underline{y^2 + 2y - 22 = 0}" block />
+                  <Latex math="\begin{aligned} y^2 + 4y + 4 + y^2 - 8y - 16 + 8y - 32 &= 0 \\ \textcolor{#1d4ed8}{2y^2 + 4y - 44} &= \textcolor{#1d4ed8}{0} \\ \underline{\overset{\textcolor{#9333ea}{\large a}}{y^2} + \overset{\textcolor{#9333ea}{\large b}}{\vphantom{y^2}2}y - \overset{\textcolor{#9333ea}{\large c}}{\vphantom{y^2}22}} &= \underline{0} \end{aligned}" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
-                  3. 化簡至一般式一元二次方程
+                  3. 化簡至一元二次方程的一般式
                 </div>
               </div>
 

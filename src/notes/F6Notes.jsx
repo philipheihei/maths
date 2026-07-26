@@ -185,25 +185,25 @@ export const SequenceNotes = ({ activeSub }) => {
             <div className="bg-white p-4 rounded-md border border-blue-100 font-sans text-sm space-y-2 text-slate-700">
               <div className="flex gap-4">
                 <div className="flex-1 space-y-1">
-                  <div className="grid grid-cols-[9rem_auto_auto_1fr] items-center gap-x-2">
-                    <MathDisplay latex="T(n)" />
+                  <div className="grid grid-cols-[3.5rem_auto_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="T(n)" inline className="justify-self-end" />
                     <MathDisplay latex="=" />
                     <MathDisplay latex="9 + (n-1)(4)" />
                     <span className="text-emerald-700 font-bold ml-2">← 1. 先找通項 (a=9, d=4)</span>
                   </div>
-                  <div className="grid grid-cols-[9rem_auto_auto_1fr] items-center gap-x-2">
-                    <MathDisplay latex="113" />
+                  <div className="grid grid-cols-[3.5rem_auto_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="113" inline className="justify-self-end" />
                     <MathDisplay latex="=" />
                     <MathDisplay latex="5 + 4n" />
                     <span className="text-emerald-700 font-bold ml-2">← 2. 化簡並代入最尾項的值 (113)</span>
                   </div>
-                  <div className="grid grid-cols-[9rem_auto_auto_1fr] items-center gap-x-2">
-                    <MathDisplay latex="108" />
+                  <div className="grid grid-cols-[3.5rem_auto_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="108" inline className="justify-self-end" />
                     <MathDisplay latex="=" />
                     <MathDisplay latex="4n" />
                   </div>
-                  <div className="grid grid-cols-[9rem_auto_auto_1fr] items-center gap-x-2">
-                    <MathDisplay latex="n" />
+                  <div className="grid grid-cols-[3.5rem_auto_auto_1fr] items-center gap-x-2">
+                    <MathDisplay latex="n" inline className="justify-self-end" />
                     <MathDisplay latex="=" />
                     <MathDisplay latex="27" />
                   </div>
