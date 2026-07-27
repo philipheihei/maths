@@ -347,7 +347,7 @@ export const SequenceNotes = ({ activeSub }) => {
                 <MathDisplay latex="a_{n+2}" inline className="text-lg font-bold" />
                 <span>=</span>
                 <MathDisplay latex="a_{n+1}" inline className="text-lg font-bold" />
-                <span>-</span>
+                <span>−</span>
                 <MathDisplay latex="a_n" inline className="text-lg font-bold" />
               </div>
               <div className="flex gap-4 items-center text-xs text-slate-500 mt-1">

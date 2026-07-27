@@ -395,7 +395,7 @@ viewBox：300 × 80
               <div className="flex flex-col md:flex-row gap-4 items-center">
                 <div className="flex-1">
                   <p className="text-sm text-slate-600 mb-2">1. 計數機入 1, -2, -15</p>
-                  <p className="text-sm text-slate-600 mb-2">2. 得出根為 <span className="font-bold text-slate-800">5</span> 及 <span className="font-bold text-slate-800">-3</span></p>
+                  <p className="text-sm text-slate-600 mb-2">2. 得出根為 <span className="font-bold text-slate-800">5</span> 及 <span className="font-bold text-slate-800">−3</span></p>
                   <p className="text-sm text-slate-600">3. 畫簡單開口向上的拋物線 (因為 <Latex math="x^2" /> 是正數)</p>
                 </div>
                 
@@ -876,7 +876,7 @@ const NL_Quad_Parabola = () => (
     <path d="M 150 40 Q 300 265 450 40" fill="none" stroke="#1e293b" strokeWidth="3" />
     
     <circle cx="250" cy="140" r="5" fill="white" stroke="#1e293b" strokeWidth="2" />
-    <text x="250" y="165" textAnchor="middle" fontSize="16" fill="#374151" fontWeight="bold">-3</text>
+    <text x="250" y="165" textAnchor="middle" fontSize="16" fill="#374151" fontWeight="bold">−3</text>
     
     <circle cx="350" cy="140" r="5" fill="white" stroke="#1e293b" strokeWidth="2" />
     <text x="350" y="165" textAnchor="middle" fontSize="16" fill="#374151" fontWeight="bold">5</text>

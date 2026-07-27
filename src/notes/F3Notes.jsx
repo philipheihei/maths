@@ -26,11 +26,11 @@ export const FactorizationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-sm text-slate-600 mb-2">例子 1：找出相同代數 及 公因數，然後抽出來寫前面，後面加括號裝剩下的代數/因數。</p>
               <div className="flex items-center gap-2 flex-wrap text-lg">
-                <span><span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">6</span>u<span className="bg-yellow-200 px-1 rounded">v</span> <span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">8</span><span className="bg-yellow-200 px-1 rounded">v</span>w</span>
+                <span><span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">6</span>u<span className="bg-yellow-200 px-1 rounded">v</span> <span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">8</span><span className="bg-yellow-200 px-1 rounded">v</span>w</span>
               </div>
               <div className="flex items-center gap-2 flex-wrap text-lg mt-1">
                 <span className="text-slate-500">=</span>
-                <span><span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">2</span><span className="bg-yellow-200 px-1 rounded">v</span>(<span className="bg-green-200 px-1 rounded">3</span>u+<span className="bg-green-200 px-1 rounded">4</span>w)</span>
+                <span><span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">2</span><span className="bg-yellow-200 px-1 rounded">v</span>(<span className="bg-green-200 px-1 rounded">3</span>u+<span className="bg-green-200 px-1 rounded">4</span>w)</span>
               </div>
               <div className="mt-3 text-sm space-y-1">
                 <div className="flex items-center gap-2">
@@ -114,7 +114,7 @@ export const FactorizationNotes = ({ activeSub }) => {
                 </div>
                 <div className="bg-gray-50 p-3 rounded">
                   <p className="font-bold text-center mb-2 text-base">答案 2（分數）</p>
-                  <p className="text-center text-3xl font-sans mb-2">-0.875</p>
+                  <p className="text-center text-3xl font-sans mb-2">−0.875</p>
                   <p className="text-center text-sm text-slate-600 mt-2">= <Latex math="−\frac{7}{8}" /></p>
                   <p className="text-center text-sm text-slate-600">分母放前，分子相反數放後</p>
                   <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(8x+7)" /></p>
@@ -1415,8 +1415,8 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">💡 斜率關係</h3>
             <ul className="text-sm text-slate-700 space-y-2 mb-3 list-none">
-              <li><span className="text-red-500">-</span> 斜坡的斜率<span className="text-red-600 font-bold">越大</span> → <span className="text-red-600 font-bold">越斜</span></li>
-              <li><span className="text-red-500">-</span> 斜坡的斜率<span className="text-red-600 font-bold">越小</span> → <span className="text-red-600 font-bold">越平坦</span></li>
+              <li><span className="text-red-500">−</span> 斜坡的斜率<span className="text-red-600 font-bold">越大</span> → <span className="text-red-600 font-bold">越斜</span></li>
+              <li><span className="text-red-500">−</span> 斜坡的斜率<span className="text-red-600 font-bold">越小</span> → <span className="text-red-600 font-bold">越平坦</span></li>
             </ul>
             <p className="text-sm text-slate-600 bg-white p-2 rounded border border-amber-100">
               斜率可以 1:4 / 1比4 / <Latex math="\frac{1}{4}" /> / 25% 的形式表達
@@ -1437,12 +1437,12 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
           <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
             <h3 className="font-bold text-emerald-800 mb-3">📍 用途與特點</h3>
             <ul className="text-sm text-slate-700 space-y-2 list-none">
-              <li><span className="text-emerald-600 font-bold">-</span> 遠足 / 測量地勢用</li>
+              <li><span className="text-emerald-600 font-bold">−</span> 遠足 / 測量地勢用</li>
               <li>
-                <span className="text-emerald-600 font-bold">-</span> 題目會提供水平距離 <span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">(走多遠)</span>
+                <span className="text-emerald-600 font-bold">−</span> 題目會提供水平距離 <span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">(走多遠)</span>
               </li>
               <li>
-                <span className="text-emerald-600 font-bold">-</span> 能從地圖中找到鉛垂距離 <span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">(爬升高度)</span>
+                <span className="text-emerald-600 font-bold">−</span> 能從地圖中找到鉛垂距離 <span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">(爬升高度)</span>
               </li>
             </ul>
           </div>

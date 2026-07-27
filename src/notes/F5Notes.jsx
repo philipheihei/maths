@@ -1554,13 +1554,13 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
 
                 {/* 刻度標籤 */}
                 <g fontSize="10" fill="#64748b" textAnchor="middle">
-                  <text x="70" y="165">-2</text>
-                  <text x="110" y="165">-1</text>
+                  <text x="70" y="165">−2</text>
+                  <text x="110" y="165">−1</text>
                   <text x="190" y="165">1</text>
                   <text x="230" y="165">2</text>
                 </g>
                 <g fontSize="10" fill="#64748b" textAnchor="end">
-                  <text x="142" y="193">-1</text>
+                  <text x="142" y="193">−1</text>
                   <text x="142" y="113">1</text>
                   <text x="142" y="73">2</text>
                   <text x="142" y="33">3</text>

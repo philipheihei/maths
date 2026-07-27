@@ -196,7 +196,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               <div className="bg-white p-3 rounded shadow-sm">
                 <p className="font-bold text-slate-800">A. 整數 <span className="text-red-500 font-normal">→ 不是小數的數</span></p>
                 <div className="mt-2 text-slate-700">
-                  <p>e.g. <span className="text-green-600 font-bold border-b-2 border-green-400"> -3 , -1 </span> , <span className="text-green-600 font-bold border-b-2 border-green-400"> 1 , 3 </span></p>
+                  <p>e.g. <span className="text-green-600 font-bold border-b-2 border-green-400"> −3 , -1 </span> , <span className="text-green-600 font-bold border-b-2 border-green-400"> 1 , 3 </span></p>
                   <p className="text-xs text-green-600 mt-1">&nbsp;&nbsp;&nbsp;&nbsp; ↑負整數 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑正整數</p>
                 </div>
               </div>
@@ -284,13 +284,13 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                 {/* 虛線分隔 (在 0 的位置, 即 x=180) */}
                 <line x1="180" y1="35" x2="180" y2="115" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
 
-                {/* x > -3.5 範例箭頭 */}
+                {/* x > −3.5 範例箭頭 */}
                 <line x1="75" y1="39" x2="75" y2="60" stroke="#3b82f6" strokeWidth="2" /> {/* 連接 -3.5 的向下實線 */}
                 <circle cx="75" cy="35" r="4" fill="white" stroke="#3b82f6" strokeWidth="2" /> {/* -3.5 空心圓 */}
                 <line x1="79" y1="35" x2="330" y2="35" stroke="#3b82f6" strokeWidth="2" />
                 <polyline points="322,29 330,35 322,41" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 
-                <text x="75" y="22" fontSize="13" fill="#3b82f6" fontWeight="bold" textAnchor="middle">-3.5</text>
+                <text x="75" y="22" fontSize="13" fill="#3b82f6" fontWeight="bold" textAnchor="middle">−3.5</text>
               </svg>
             </div>
           </div>
@@ -581,7 +581,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
               <p className="text-sm text-slate-600 mb-2">例子：</p>
               <p className="text-slate-700"><Latex math="f(x)" /> 除以 <span className="bg-yellow-200 px-1 rounded"><Latex math="x + 3" /></span>，所得的餘數是 <Latex math="−8" /></p>
               <div className="mt-2 pl-4 border-l-2 border-teal-300">
-                <p className="text-sm text-slate-600"><span className="text-green-600 font-bold">3</span> 的相反是 <span className="text-red-600 font-bold">-3</span></p>
+                <p className="text-sm text-slate-600"><span className="text-green-600 font-bold">3</span> 的相反是 <span className="text-red-600 font-bold">−3</span></p>
                 <p className="text-lg mt-1"><Latex math="f(−3) = −8" /> ← <span className="text-sm text-slate-500">填餘數</span></p>
               </div>
             </div>

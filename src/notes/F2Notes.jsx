@@ -1509,7 +1509,7 @@ export const InequalityNotes = ({ activeSub }) => {
                           <line x1="10" y1="20" x2="150" y2="20" stroke="currentColor" strokeWidth="2.5" />
                           <polygon points="150,15 160,20 150,25" fill="currentColor" />
                           <line x1="80" y1="14" x2="80" y2="26" stroke="currentColor" strokeWidth="2.5" />
-                          <text x="80" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">-2</text>
+                          <text x="80" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">−2</text>
                         </svg>
                       </td>
                     </tr>
@@ -1538,7 +1538,7 @@ export const InequalityNotes = ({ activeSub }) => {
                             <line x1="0" y1="20" x2="110" y2="20" stroke="currentColor" strokeWidth="2.5" />
                             <polygon points="110,15 120,20 110,25" fill="currentColor" />
                             <line x1="40" y1="14" x2="40" y2="26" stroke="currentColor" strokeWidth="2.5" />
-                            <text x="40" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">-2</text>
+                            <text x="40" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">−2</text>
                             <line x1="80" y1="14" x2="80" y2="26" stroke="currentColor" strokeWidth="2.5" />
                             <text x="80" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">0</text>
                           </svg>
@@ -1585,7 +1585,7 @@ export const InequalityNotes = ({ activeSub }) => {
                             <line x1="10" y1="20" x2="150" y2="20" stroke="currentColor" strokeWidth="2.5" />
                             <polygon points="150,15 160,20 150,25" fill="currentColor" />
                             <line x1="65" y1="14" x2="65" y2="26" stroke="currentColor" strokeWidth="2.5" />
-                            <text x="65" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">-2</text>
+                            <text x="65" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">−2</text>
                             <line x1="115" y1="14" x2="115" y2="26" stroke="currentColor" strokeWidth="2.5" />
                             <text x="115" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">0</text>
                             
@@ -1635,7 +1635,7 @@ export const InequalityNotes = ({ activeSub }) => {
                             <line x1="10" y1="20" x2="150" y2="20" stroke="currentColor" strokeWidth="2.5" />
                             <polygon points="150,15 160,20 150,25" fill="currentColor" />
                             <line x1="65" y1="14" x2="65" y2="26" stroke="currentColor" strokeWidth="2.5" />
-                            <text x="65" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">-2</text>
+                            <text x="65" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">−2</text>
                             <line x1="115" y1="14" x2="115" y2="26" stroke="currentColor" strokeWidth="2.5" />
                             <text x="115" y="44" textAnchor="middle" fill="currentColor" className="text-base font-bold font-serif">0</text>
                             
@@ -1687,7 +1687,7 @@ export const InequalityNotes = ({ activeSub }) => {
                 <span className="bg-violet-100 text-violet-800 px-2 py-0.5 rounded font-bold text-xs">例二</span>
                 <span className="font-bold text-slate-800"><Latex math="y \leq −3" /></span>
                 <span className="text-slate-400">→</span>
-                <span className="text-slate-700 whitespace-nowrap"><Latex math="y" /> 可以 <Latex math="=" /> -3, -4, -5, -6...</span>
+                <span className="text-slate-700 whitespace-nowrap"><Latex math="y" /> 可以 <Latex math="=" /> −3, -4, -5, -6...</span>
               </div>
               <div className="bg-rose-50 text-rose-800 p-2 rounded text-sm font-bold border border-rose-100">
                 符合 <Latex math="y \leq −3" /> 的最大整數是 <Latex math="−3" />
@@ -2110,11 +2110,11 @@ export const FactorizationF2Notes = ({ activeSub }) => {
               <div className="bg-white rounded-lg p-3 mb-3">
                 <p className="text-sm text-slate-600 mb-2">例子 1：找出相同代數及公因數，先抽出到前面，再加括號裝剩餘部分。</p>
                 <div className="flex items-center gap-2 flex-wrap text-lg">
-                  <span><span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">6</span>u<span className="bg-yellow-200 px-1 rounded">v</span> <span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">8</span><span className="bg-yellow-200 px-1 rounded">v</span>w</span>
+                  <span><span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">6</span>u<span className="bg-yellow-200 px-1 rounded">v</span> <span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">8</span><span className="bg-yellow-200 px-1 rounded">v</span>w</span>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap text-lg mt-1">
                   <span className="text-slate-500">=</span>
-                  <span><span className="bg-yellow-200 px-1 rounded">-</span><span className="bg-green-200 px-1 rounded">2</span><span className="bg-yellow-200 px-1 rounded">v</span>(<span className="bg-green-200 px-1 rounded">3</span>u+<span className="bg-green-200 px-1 rounded">4</span>w)</span>
+                  <span><span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">2</span><span className="bg-yellow-200 px-1 rounded">v</span>(<span className="bg-green-200 px-1 rounded">3</span>u+<span className="bg-green-200 px-1 rounded">4</span>w)</span>
                 </div>
                 <div className="mt-3 text-sm space-y-1">
                   <div className="flex items-center gap-2">

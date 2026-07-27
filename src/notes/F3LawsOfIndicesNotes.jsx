@@ -73,7 +73,7 @@ export const LawsOfIndicesNotes = ({ activeSub }) => {
             <p className="text-slate-700 mb-2">當數字很長時，計算機會顯示科學記數法：</p>
             <p className="text-center bg-[#a3b18a] text-[#1c1c1c] font-mono py-2 rounded mb-2 border-4 border-gray-400">
               <span className="block text-right pr-4 tracking-widest text-sm">0.0000031715</span>
-              <span className="block text-right pr-4 text-xl">3.1715 <span className="text-xs -mt-1 alignment-baseline relative -top-1 ml-1">-06</span></span>
+              <span className="block text-right pr-4 text-xl">3.1715 <span className="text-xs -mt-1 alignment-baseline relative -top-1 ml-1">−06</span></span>
             </p>
             <Latex math="0.0000031715 \rightarrow 3.1715 \times 10^{−6}" block />
           </div>

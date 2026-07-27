@@ -276,7 +276,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <div>
                   <span>3 + </span>
                   <span className="border-2 border-red-500 px-1">4 × 5</span>
-                  <span> - 6</span>
+                  <span> − 6</span>
                   <span className="text-red-500 text-sm font-normal ml-2 whitespace-nowrap">← 先計乘</span>
                 </div>
                 <div></div>
@@ -431,8 +431,8 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
           <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
             <h3 className="font-bold text-red-600 mb-3">相反數：</h3>
             <ul className="space-y-2 text-slate-700 font-sans">
-              <li><span className="font-bold text-blue-700">+6</span> 的相反數是 <span className="font-bold text-blue-700">-6</span></li>
-              <li><span className="font-bold text-blue-700">-20</span> 的相反數是 <span className="font-bold text-blue-700">+20</span></li>
+              <li><span className="font-bold text-blue-700">+6</span> 的相反數是 <span className="font-bold text-blue-700">−6</span></li>
+              <li><span className="font-bold text-blue-700">−20</span> 的相反數是 <span className="font-bold text-blue-700">+20</span></li>
             </ul>
           </div>
         </div>
@@ -462,7 +462,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
             <div>
               <p className="text-slate-600 mb-1">17. 把 -6.3，+7.4，-6.9 和 +6.2 按遞增次序排列。</p>
               <div className="flex items-center justify-between gap-4 ml-6">
-                <p className="font-bold text-blue-700 text-lg">-6.9, -6.3, +6.2, +7.4</p>
+                <p className="font-bold text-blue-700 text-lg">−6.9, -6.3, +6.2, +7.4</p>
                 <div className="flex items-center gap-2 whitespace-nowrap">
                   <span className="font-bold text-green-700">但 -11 &lt; -5</span>
                   <span className="bg-yellow-200 px-2 py-1 rounded font-bold text-green-700">正負數的大小次序相反</span>
@@ -1188,7 +1188,7 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   <rect x="260" y="20" width="40" height="50" fill="rgba(251,146,60,0.5)" stroke="none" />
                   <polyline points="260,20 300,20 300,70 260,70" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
                   
-                  <text x="325" y="75" fontSize="24" fill="#334155" textAnchor="middle">-</text>
+                  <text x="325" y="75" fontSize="24" fill="#334155" textAnchor="middle">−</text>
 
                   {/* Filler Shape */}
                   <rect x="350" y="20" width="40" height="50" fill="rgba(251,146,60,0.5)" stroke="#334155" strokeWidth="2" />
@@ -1658,7 +1658,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                       <span className="absolute -bottom-3 -right-3 text-red-500 text-xs font-bold">1</span>
                     </div>
                     <span className="mx-1.5"><Latex math="\Big)" /></span>
-                    <span className="mx-3 text-xl">-</span>
+                    <span className="mx-3 text-xl">−</span>
                     <div className="relative inline-flex items-center">
                       <span className="absolute -top-3 -left-3 text-red-500 text-xs font-bold">3</span>
                       <div className="absolute top-1/2 left-[-10%] w-[120%] h-[2px] bg-red-500 -rotate-[30deg]"></div>
@@ -2614,7 +2614,7 @@ export const PercentageNotes = ({ activeSub }) => {
             <div className="space-y-5">
               <div className="bg-white p-4 rounded-lg border border-amber-100">
                 <p className="text-lg font-bold mb-3">
-                  - <span className="text-red-500">A</span> 是 <span className="text-blue-500">B</span> 的百分之幾？
+                  − <span className="text-red-500">A</span> 是 <span className="text-blue-500">B</span> 的百分之幾？
                 </p>
                 <div className="flex items-center gap-4 pl-4">
                   <span className="font-bold">答案：</span>
@@ -2630,7 +2630,7 @@ export const PercentageNotes = ({ activeSub }) => {
               <div className="bg-white p-4 rounded-lg border border-amber-100 space-y-4">
                 <div className="flex flex-col gap-2">
                   <p className="text-lg font-bold">
-                    - <span className="text-red-500">A</span> <span className="bg-yellow-200 px-1 rounded">較</span> <span className="text-blue-500">B</span> <span className="bg-yellow-200 px-1 rounded">多 10%</span>
+                    − <span className="text-red-500">A</span> <span className="bg-yellow-200 px-1 rounded">較</span> <span className="text-blue-500">B</span> <span className="bg-yellow-200 px-1 rounded">多 10%</span>
                   </p>
                   <p className="text-lg pl-4">
                     <span className="font-bold mr-2">式：</span>
@@ -2642,7 +2642,7 @@ export const PercentageNotes = ({ activeSub }) => {
                 
                 <div className="flex flex-col gap-2">
                   <p className="text-lg font-bold">
-                    - <span className="text-red-500">A</span> <span className="bg-yellow-200 px-1 rounded">較</span> <span className="text-blue-500">B</span> <span className="bg-yellow-200 px-1 rounded">少 10%</span>
+                    − <span className="text-red-500">A</span> <span className="bg-yellow-200 px-1 rounded">較</span> <span className="text-blue-500">B</span> <span className="bg-yellow-200 px-1 rounded">少 10%</span>
                   </p>
                   <p className="text-lg pl-4">
                     <span className="font-bold mr-2">式：</span>
@@ -3161,7 +3161,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
                         <span className="inline-block px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">香蕉</span>
                         <span className="inline-block px-2 py-0.5 rounded font-bold mx-0.5">=</span>
                         <span className="inline-block px-2 py-0.5 rounded font-bold bg-purple-100 text-purple-800"><Latex math="10" /></span>
-                        <span className="inline-block px-2 py-0.5 rounded font-bold mx-0.5">-</span>
+                        <span className="inline-block px-2 py-0.5 rounded font-bold mx-0.5">−</span>
                         <span className="inline-block px-2 py-0.5 rounded font-bold bg-blue-100 text-blue-800"><Latex math="x" /></span>
                       </div>
                     </td>
@@ -3250,12 +3250,12 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
                   <div className="relative pt-2 pb-6 min-w-[300px]">
                     <div className="flex text-xl font-bold text-slate-800 items-baseline">
                       {[
-                        { v: "7", c: true, a: "-3", w: "w-6" },
-                        { v: "4", c: true, a: "-3", w: "w-6" },
-                        { v: "1", c: true, a: "-3", w: "w-6" },
-                        { v: "-2", c: true, a: "-3", w: "w-8" },
-                        { v: "-5", c: true, w: "w-8", h: true },
-                        { v: "-8", c: false, w: "w-8", h: true }
+                        { v: "7", c: true, a: "−3", w: "w-6" },
+                        { v: "4", c: true, a: "−3", w: "w-6" },
+                        { v: "1", c: true, a: "−3", w: "w-6" },
+                        { v: "−2", c: true, a: "−3", w: "w-8" },
+                        { v: "−5", c: true, w: "w-8", h: true },
+                        { v: "−8", c: false, w: "w-8", h: true }
                       ].map((item, i) => (
                         <React.Fragment key={i}>
                           <span className={`inline-block ${item.w} text-center ${item.h ? 'text-purple-600 border-b-2 border-purple-600' : ''}`}>

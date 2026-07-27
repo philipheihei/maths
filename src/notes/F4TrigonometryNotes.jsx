@@ -102,7 +102,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
       <path d="M 135 100 A 15 15 0 0 1 138.8 89.4" fill="none" stroke="#2563eb" strokeWidth="2" />
 
       {/* Labels */}
-      <text x="115" y="115" fontSize="12" fill="#16a34a" fontWeight="bold">-3</text>
+      <text x="115" y="115" fontSize="12" fill="#16a34a" fontWeight="bold">−3</text>
       <text x="65" y="75" fontSize="12" fill="#16a34a" fontWeight="bold">4</text>
       <text x="125" y="60" fontSize="12" fill="#334155" fontWeight="bold">r=5</text>
     </svg>
@@ -168,7 +168,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
         <line x1="-5" y1="-30" x2="180" y2="-30" stroke="#cbd5e1" strokeDasharray="3 3" />
         <line x1="-5" y1="30" x2="180" y2="30" stroke="#cbd5e1" strokeDasharray="3 3" />
         <text x="-8" y="-27" fontSize="10" fill="#64748b" textAnchor="end">1</text>
-        <text x="-8" y="33" fontSize="10" fill="#64748b" textAnchor="end">-1</text>
+        <text x="-8" y="33" fontSize="10" fill="#64748b" textAnchor="end">−1</text>
         
         <text x="45" y="14" fontSize="10" fill="#64748b" textAnchor="middle">90°</text>
         <text x="135" y="14" fontSize="10" fill="#64748b" textAnchor="middle">270°</text>
@@ -200,7 +200,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
         <line x1="-5" y1="-30" x2="180" y2="-30" stroke="#cbd5e1" strokeDasharray="3 3" />
         <line x1="-5" y1="30" x2="180" y2="30" stroke="#cbd5e1" strokeDasharray="3 3" />
         <text x="-8" y="-27" fontSize="10" fill="#64748b" textAnchor="end">1</text>
-        <text x="-8" y="33" fontSize="10" fill="#64748b" textAnchor="end">-1</text>
+        <text x="-8" y="33" fontSize="10" fill="#64748b" textAnchor="end">−1</text>
         
         <text x="90" y="14" fontSize="10" fill="#64748b" textAnchor="middle">180°</text>
         <text x="180" y="14" fontSize="10" fill="#64748b" textAnchor="middle">360°</text>
@@ -370,8 +370,8 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
                   </tr>
                   <tr className="border-b border-slate-200">
                     <td className="p-2 font-bold bg-slate-50 border-r border-slate-200">極小值 (Min)</td>
-                    <td className="p-2 border-r border-slate-200 text-red-600 font-bold">-1</td>
-                    <td className="p-2 border-r border-slate-200 text-red-600 font-bold">-1</td>
+                    <td className="p-2 border-r border-slate-200 text-red-600 font-bold">−1</td>
+                    <td className="p-2 border-r border-slate-200 text-red-600 font-bold">−1</td>
                     <td className="p-2">/</td>
                   </tr>
                   <tr className="border-b border-slate-200">
