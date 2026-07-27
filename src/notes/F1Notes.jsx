@@ -281,7 +281,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 </div>
                 <div></div>
                 <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 + <span className="text-slate-900 border-b-2 border-red-500">20</span> - 6</div>
+                <div className="font-bold text-slate-700">3 + <span className="text-slate-900 border-b-2 border-red-500">20</span> − 6</div>
                 <div></div>
                 <div className="font-bold text-slate-700">=</div>
                 <div className="font-bold text-slate-700">17</div>
@@ -299,12 +299,12 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <div></div>
                 <div>
                   <span>3 × </span>
-                  <span className="bg-yellow-200 px-1">[24 - (6 + 2)]</span>
+                  <span className="bg-yellow-200 px-1">[24 − (6 + 2)]</span>
                   <span className="text-red-500 text-sm font-normal ml-2 whitespace-nowrap">← 先計小括號，再計中括號</span>
                 </div>
                 <div></div>
                 <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 × (24 - <span className="text-blue-600">8</span>) <span className="text-red-500 text-sm font-normal">← 中括號轉小括號</span></div>
+                <div className="font-bold text-slate-700">3 × (24 − <span className="text-blue-600">8</span>) <span className="text-red-500 text-sm font-normal">← 中括號轉小括號</span></div>
                 <div></div>
                 <div className="font-bold text-slate-700">=</div>
                 <div className="font-bold text-slate-700">3 × 16</div>
