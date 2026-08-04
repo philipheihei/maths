@@ -670,7 +670,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
 // CH4 餘式定理 & 因式定理 (F4)
 // ========================================
 export const RemainderFactorNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
 
   return (
     <>
@@ -762,6 +762,64 @@ export const RemainderFactorNotes = ({ activeSub }) => {
                 <ul className="space-y-1 text-slate-600"><li>• 整除</li><li>• ...的因式</li><li>• 可被...除盡</li></ul>
               </div>
             </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="algebraic-fractions" title="代數分式四則運算" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-3">DSE 代數分式題目 作答技巧</h3>
+            <ol className="list-decimal pl-5 space-y-2 text-slate-700 font-medium">
+              <li><span className="font-bold">分母交叉乘分子</span>（分母拍埋，記得加括號）</li>
+              <li><span className="font-bold">分子拆括號</span>（分母不用拆）</li>
+              <li><span className="font-bold">分子化簡</span></li>
+            </ol>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-700 mb-3">例題：四則混算</h3>
+            <div className="bg-amber-50 rounded-lg p-3 text-center mb-4 overflow-x-auto">
+              <Latex math="\frac{3}{2x-3} + \frac{9}{5-6x}" block />
+            </div>
+
+            <h4 className="font-bold text-green-700 mb-2">Step 1：分母交叉乘分子</h4>
+            <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm overflow-x-auto">
+              <div className="flex min-w-max items-center gap-4 text-slate-700">
+                <span className="text-xl">=</span>
+                <Latex math="\frac{3\colorbox{#bbf7d0}{$(5-6x)$}+9\colorbox{#fef08a}{$(2x-3)$}}{\colorbox{#fef08a}{$(2x-3)$}\colorbox{#bbf7d0}{$(5-6x)$}}" block />
+                <div className="text-sm text-slate-500 leading-8">
+                  <p>← 分母交叉乘分子</p>
+                  <p>← 分母拍埋加括號</p>
+                </div>
+              </div>
+            </div>
+
+            <h4 className="font-bold text-green-700 mt-4 mb-2">Step 2：分子拆括號</h4>
+            <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm overflow-x-auto">
+              <div className="flex min-w-max items-center gap-4 text-slate-700">
+                <span className="text-xl">=</span>
+                <Latex math="\frac{15-18x+18x-27}{(2x-3)(5-6x)}" block />
+                <div className="text-sm text-slate-500 leading-8">
+                  <p>← 分子拆括號</p>
+                  <p>← 分母不需拆括號</p>
+                </div>
+              </div>
+            </div>
+
+            <h4 className="font-bold text-green-700 mt-4 mb-2">Step 3：分子化簡</h4>
+            <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm overflow-x-auto">
+              <div className="flex min-w-max items-center gap-4 text-slate-700">
+                <span className="text-xl">=</span>
+                <Latex math="\frac{-12}{(2x-3)(5-6x)}" block />
+                <p className="text-sm text-slate-500 whitespace-nowrap">← 分子化簡</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+            <p className="text-red-700 font-bold">⚠️ 小心：負號和括號</p>
+            <p className="text-slate-700 mt-1">分母有代數式時，交叉相乘必須拍埋加括號，拆分子時每一項都要乘入括號內。</p>
           </div>
         </div>
       </CollapsibleSection>
@@ -900,6 +958,7 @@ export const FunctionNotes = ({ activeSub }) => {
 
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">📝 一般式：<Latex math="ax^2 + bx + c = 0" /></h3>
+            <p className="text-green-700 font-bold mb-3">a：開口方向</p>
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="bg-white rounded-lg p-4 text-center border border-green-200 flex flex-col items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-16 h-16 mb-2">
@@ -928,7 +987,7 @@ export const FunctionNotes = ({ activeSub }) => {
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">📐 c：y 截距</h3>
-            <p className="text-sm text-slate-600 mb-2">（方程抹 y 軸的值）</p>
+            <p className="text-sm text-slate-600 mb-2">（方程掂 y 軸的位置）</p>
             <div className="space-y-2 text-sm">
               <p>在 x 軸之<span className="text-red-600 font-bold">下</span> → <Latex math="c < 0" /></p>
               <p>在 x 軸之<span className="text-green-600 font-bold">上</span> → <Latex math="c > 0" /></p>
