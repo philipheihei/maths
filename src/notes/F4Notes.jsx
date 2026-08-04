@@ -2,6 +2,56 @@ import React, { useRef } from 'react';
 import { Latex, CollapsibleSection, MathDisplay } from './shared';
 export { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 
+const QuadraticGraphReference = () => (
+  <div className="bg-white rounded-lg p-3 border border-green-200 overflow-x-auto">
+    <svg viewBox="0 0 900 330" className="w-full min-w-[680px]" role="img" aria-label="二次函數圖像：a 大於零和 a 小於零">
+      <defs>
+        <marker id="quadratic-axis-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6" fill="none" stroke="#64748b" strokeWidth="1.5" />
+        </marker>
+      </defs>
+
+      <g transform="translate(0 0)">
+        <text x="190" y="24" textAnchor="middle" fontSize="20" fontWeight="700" fill="#166534">a &gt; 0</text>
+        <line x1="45" y1="190" x2="385" y2="190" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
+        <line x1="170" y1="295" x2="170" y2="42" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
+        <text x="395" y="196" fontSize="16" fill="#475569">x</text>
+        <text x="178" y="38" fontSize="16" fill="#475569">y</text>
+        <text x="154" y="208" fontSize="15" fill="#475569" fontStyle="italic">O</text>
+        <path d="M70 72 C110 150 150 250 200 250 C250 250 290 150 330 72" fill="none" stroke="#22c55e" strokeWidth="4" strokeLinecap="round" />
+        <line x1="200" y1="48" x2="200" y2="288" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
+        <circle cx="200" cy="250" r="4" fill="#334155" />
+        <line x1="200" y1="250" x2="170" y2="250" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
+        <text x="155" y="255" fontSize="15" fill="#475569">→</text>
+        <text x="80" y="255" fontSize="15" fill="#475569">y 的極小值</text>
+        <text x="208" y="277" fontSize="15" fill="#475569">頂點</text>
+        <text x="160" y="240" textAnchor="end" fontSize="15" fill="#475569">(0, c)</text>
+        <text x="200" y="315" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
+        <text x="320" y="125" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
+      </g>
+
+      <g transform="translate(450 0)">
+        <text x="225" y="24" textAnchor="middle" fontSize="20" fontWeight="700" fill="#b91c1c">a &lt; 0</text>
+        <line x1="45" y1="190" x2="385" y2="190" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
+        <line x1="170" y1="295" x2="170" y2="42" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
+        <text x="395" y="196" fontSize="16" fill="#475569">x</text>
+        <text x="178" y="38" fontSize="16" fill="#475569">y</text>
+        <text x="154" y="208" fontSize="15" fill="#475569" fontStyle="italic">O</text>
+        <path d="M65 282 C105 180 150 70 200 70 C250 70 295 180 335 282" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+        <line x1="200" y1="48" x2="200" y2="288" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
+        <circle cx="200" cy="70" r="4" fill="#334155" />
+        <line x1="200" y1="70" x2="170" y2="70" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
+        <text x="155" y="75" fontSize="15" fill="#475569">→</text>
+        <text x="80" y="75" fontSize="15" fill="#475569">y 的極大值</text>
+        <text x="208" y="58" fontSize="15" fill="#475569">頂點</text>
+        <text x="150" y="100" textAnchor="end" fontSize="15" fill="#475569">(0, c)</text>
+        <text x="200" y="315" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
+        <text x="280" y="125" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
+      </g>
+    </svg>
+  </div>
+);
+
 // ========================================
 // CH1 二次方程 (F4)
 // ========================================
@@ -334,7 +384,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                     <span>8</span><span className="calculator-lcd-fraction-symbol" aria-hidden="true">┘</span><span>9</span>
                   </p>
                 </div>
-                <span className="text-amber-700 font-bold">按 <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> → 分數</span>
+                <span className="text-amber-700 font-bold">打完重複數字後按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>，再按 <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> → 分數</span>
               </div>
             </div>
 
@@ -844,6 +894,10 @@ export const FunctionNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="quadratic-graph" title="二次函數圖像" num={3} color="green" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <QuadraticGraphReference />
+          </div>
+
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">📝 一般式：<Latex math="ax^2 + bx + c = 0" /></h3>
             <div className="grid md:grid-cols-2 gap-4 mb-4">
