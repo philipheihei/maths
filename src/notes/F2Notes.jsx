@@ -2110,11 +2110,11 @@ export const FactorizationF2Notes = ({ activeSub }) => {
               <div className="bg-white rounded-lg p-3 mb-3">
                 <p className="text-sm text-slate-600 mb-2">例子 1：找出相同代數及公因數，先抽出到前面，再加括號裝剩餘部分。</p>
                 <div className="flex items-center gap-2 flex-wrap text-lg">
-                  <span><span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">6</span>u<span className="bg-yellow-200 px-1 rounded">v</span> <span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">8</span><span className="bg-yellow-200 px-1 rounded">v</span>w</span>
+                  <span><span className="bg-yellow-200 px-1 rounded"><Latex math="-" /></span><span className="bg-green-200 px-1 rounded"><Latex math="6" /></span><Latex math="u" /><span className="bg-yellow-200 px-1 rounded"><Latex math="v" /></span> <span className="bg-yellow-200 px-1 rounded"><Latex math="-" /></span><span className="bg-green-200 px-1 rounded"><Latex math="8" /></span><span className="bg-yellow-200 px-1 rounded"><Latex math="v" /></span><Latex math="w" /></span>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap text-lg mt-1">
                   <span className="text-slate-500">=</span>
-                  <span><span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">2</span><span className="bg-yellow-200 px-1 rounded">v</span>(<span className="bg-green-200 px-1 rounded">3</span>u+<span className="bg-green-200 px-1 rounded">4</span>w)</span>
+                  <span><span className="bg-yellow-200 px-1 rounded"><Latex math="-" /></span><span className="bg-green-200 px-1 rounded"><Latex math="2" /></span><span className="bg-yellow-200 px-1 rounded"><Latex math="v" /></span><Latex math="(" /><span className="bg-green-200 px-1 rounded"><Latex math="3" /></span><Latex math="u+" /><span className="bg-green-200 px-1 rounded"><Latex math="4" /></span><Latex math="w)" /></span>
                 </div>
                 <div className="mt-3 text-sm space-y-1">
                   <div className="flex items-center gap-2">
@@ -2124,7 +2124,7 @@ export const FactorizationF2Notes = ({ activeSub }) => {
                   <div className="flex items-center gap-2">
                     <span className="bg-green-200 px-2 py-0.5 rounded">綠</span>
                     <span>= 可抽公因數（6 和 8 都是 2 的倍數）</span>
-                    <span className="text-slate-500">6÷2=3，8÷2=4</span>
+                    <span className="text-slate-500"><Latex math="6 \div 2=3，8 \div 2=4" /></span>
                   </div>
                 </div>
               </div>
@@ -2132,14 +2132,14 @@ export const FactorizationF2Notes = ({ activeSub }) => {
               <div className="bg-white rounded-lg p-3">
                 <p className="text-sm text-slate-600 mb-2">例子 2：遇上相同代數但不同次方，只抽最低次方</p>
                 <div className="flex items-center gap-2 flex-wrap text-lg">
-                  <span><span className="bg-pink-200 px-1 rounded"><Latex math="m^3" /></span><span className="bg-cyan-200 px-1 rounded">n</span> - 3<span className="bg-pink-200 px-1 rounded">m</span><span className="bg-cyan-200 px-1 rounded"><Latex math="n^2" /></span></span>
+                  <span><span className="bg-pink-200 px-1 rounded"><Latex math="m^3" /></span><span className="bg-cyan-200 px-1 rounded"><Latex math="n" /></span><Latex math="-3" /><span className="bg-pink-200 px-1 rounded"><Latex math="m" /></span><span className="bg-cyan-200 px-1 rounded"><Latex math="n^2" /></span></span>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap text-lg mt-1">
                   <span className="text-slate-500">=</span>
-                  <span>mn(<span className="bg-pink-200 px-1 rounded"><Latex math="m^2" /></span> - 3<span className="bg-cyan-200 px-1 rounded">n</span>)</span>
+                  <span><Latex math="mn(" /><span className="bg-pink-200 px-1 rounded"><Latex math="m^2" /></span><Latex math="-3" /><span className="bg-cyan-200 px-1 rounded"><Latex math="n" /></span><Latex math=")" /></span>
                 </div>
                 <div className="mt-3 text-sm text-slate-600">
-                  <span className="text-pink-600">⤷</span> 抽走一個 m 後，m^3 變為 m^2。
+                  <span className="text-pink-600">⤷</span> 抽走一個 <Latex math="m" /> 後，<Latex math="m^3" /> 變為 <span className="bg-pink-200 px-1 rounded"><Latex math="m^2" /></span>。
                 </div>
               </div>
             </div>
@@ -2534,7 +2534,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                     <span className="text-red-600 font-bold text-lg leading-none shadow-sm rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 border border-red-200">7</span>
                     <div className="space-y-2 font-bold text-slate-800 w-full">
                       <div>直立圓柱的總表面面積</div>
-                      <div className="border-b border-amber-200/50 pb-2"><Latex math="= 2 \times \text{底面積} + \text{曲面面積}" /></div>
+                      <div className="text-lg"><Latex math="= 2 \times \text{底面積} + \text{曲面面積}" /></div>
                       <div className="pt-1 text-lg truncate"><Latex math="= 2\pi r^2 + 2\pi rh" /></div>
                     </div>
                   </div>

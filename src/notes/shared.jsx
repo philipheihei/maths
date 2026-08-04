@@ -42,6 +42,20 @@ export const MathDisplay = ({ latex, inline = false, className = '' }) => {
   return <span ref={ref} className={`${inline ? 'inline-block' : 'block text-center my-1'} ${className}`} />;
 };
 
+export const CalculatorLCD = ({ original, mantissa, exponent }) => (
+  <div className="calculator-lcd" role="img" aria-label={`計算機顯示：${original}，${mantissa} x 10 ${exponent}`}>
+    <div className="calculator-lcd-glare" />
+    <div className="calculator-lcd-line1">{original}</div>
+    <div className="calculator-lcd-line2">
+      <span className="calculator-lcd-mantissa">{mantissa}</span>
+      <span className="calculator-lcd-exp">
+        <span className="calculator-lcd-x10">x10</span>
+        <span className="calculator-lcd-expnum">{exponent}</span>
+      </span>
+    </div>
+  </div>
+);
+
 // 統一章節標題卡
 export const ChapterHeader = ({ title, description, accent = 'blue' }) => {
   const accentBorder = {

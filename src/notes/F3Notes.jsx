@@ -15,7 +15,7 @@ export const FactorizationNotes = ({ activeSub }) => {
         <p className="text-slate-600">掌握三大因式分解技巧：提取公因式、併項法、二次多項式</p>
       </div>
       <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
-        <p className="text-red-700 font-bold text-center text-lg">📌 答案一定有括號！</p>
+        <p className="text-red-700 font-bold text-center text-lg">📌 因式分解題目的答案一定有括號！</p>
       </div>
 
       <CollapsibleSection id="extract-common" title="提取公因式(重溫)" num={1} color="purple" activeSub={activeSub} sectionRef={s1}>
@@ -26,11 +26,12 @@ export const FactorizationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-sm text-slate-600 mb-2">例子 1：找出相同代數 及 公因數，然後抽出來寫前面，後面加括號裝剩下的代數/因數。</p>
               <div className="flex items-center gap-2 flex-wrap text-lg">
-                <span><span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">6</span>u<span className="bg-yellow-200 px-1 rounded">v</span> <span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">8</span><span className="bg-yellow-200 px-1 rounded">v</span>w</span>
+                <span className="invisible">=</span>
+                <span><span className="bg-yellow-200 px-1 rounded"><Latex math="-" /></span><span className="bg-green-200 px-1 rounded"><Latex math="6" /></span><Latex math="u" /><span className="bg-yellow-200 px-1 rounded"><Latex math="v" /></span> <span className="bg-yellow-200 px-1 rounded"><Latex math="-" /></span><span className="bg-green-200 px-1 rounded"><Latex math="8" /></span><span className="bg-yellow-200 px-1 rounded"><Latex math="v" /></span><Latex math="w" /></span>
               </div>
               <div className="flex items-center gap-2 flex-wrap text-lg mt-1">
                 <span className="text-slate-500">=</span>
-                <span><span className="bg-yellow-200 px-1 rounded">−</span><span className="bg-green-200 px-1 rounded">2</span><span className="bg-yellow-200 px-1 rounded">v</span>(<span className="bg-green-200 px-1 rounded">3</span>u+<span className="bg-green-200 px-1 rounded">4</span>w)</span>
+                <span><span className="bg-yellow-200 px-1 rounded"><Latex math="-" /></span><span className="bg-green-200 px-1 rounded"><Latex math="2" /></span><span className="bg-yellow-200 px-1 rounded"><Latex math="v" /></span><Latex math="(" /><span className="bg-green-200 px-1 rounded"><Latex math="3" /></span><Latex math="u+" /><span className="bg-green-200 px-1 rounded"><Latex math="4" /></span><Latex math="w)" /></span>
               </div>
               <div className="mt-3 text-sm space-y-1">
                 <div className="flex items-center gap-2">
@@ -39,21 +40,22 @@ export const FactorizationNotes = ({ activeSub }) => {
                 <div className="flex items-center gap-2">
                   <span className="bg-green-200 px-2 py-0.5 rounded">綠</span>
                   <span>= 可抽公因數（6和8是什麼的倍數？）</span>
-                  <span className="text-slate-500">6÷<span className="text-red-600 font-bold">2</span>=3，8÷<span className="text-red-600 font-bold">2</span>=4</span>
+                  <span className="text-slate-500"><Latex math="6 \div" /> <span className="text-red-600 font-bold"><Latex math="2" /></span><Latex math="=3，8 \div" /> <span className="text-red-600 font-bold"><Latex math="2" /></span><Latex math="=4" /></span>
                 </div>
               </div>
             </div>
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-slate-600 mb-2">例子 2：遇上相同代數但不同次方，只抽最低次方</p>
               <div className="flex items-center gap-2 flex-wrap text-lg">
-                <span><span className="bg-pink-200 px-1 rounded"><Latex math="m^3" /></span><span className="bg-cyan-200 px-1 rounded">n</span> - 3<span className="bg-pink-200 px-1 rounded">m</span><span className="bg-cyan-200 px-1 rounded"><Latex math="n^2" /></span></span>
+                <span className="invisible">=</span>
+                <span><span className="bg-pink-200 px-1 rounded"><Latex math="m^3" /></span><span className="bg-cyan-200 px-1 rounded"><Latex math="n" /></span><Latex math="-3" /><span className="bg-pink-200 px-1 rounded"><Latex math="m" /></span><span className="bg-cyan-200 px-1 rounded"><Latex math="n^2" /></span></span>
               </div>
               <div className="flex items-center gap-2 flex-wrap text-lg mt-1">
                 <span className="text-slate-500">=</span>
-                <span>mn(<span className="bg-pink-200 px-1 rounded"><Latex math="m^2" /></span> - 3<span className="bg-cyan-200 px-1 rounded">n</span>)</span>
+                <span><Latex math="mn(" /><span className="bg-pink-200 px-1 rounded"><Latex math="m^2" /></span><Latex math="-3" /><span className="bg-cyan-200 px-1 rounded"><Latex math="n" /></span><Latex math=")" /></span>
               </div>
               <div className="mt-3 text-sm text-slate-600">
-                <span className="text-pink-600">⤷</span> 抽走了一個 m，m³ 變為 <span className="bg-pink-200 px-1 rounded">m²</span>，原本的m則會消失。
+                <span className="text-pink-600">⤷</span> 抽走了一個 <Latex math="m" />，<Latex math="m^3" /> 變為 <span className="bg-pink-200 px-1 rounded"><Latex math="m^2" /></span>，原本的 <Latex math="m" /> 則會消失。
               </div>
             </div>
           </div>
@@ -84,7 +86,7 @@ export const FactorizationNotes = ({ activeSub }) => {
           </div>
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <p className="text-sm text-slate-600 mb-2">例子 2：已有括號</p>
-            <Latex math="\begin{aligned} &(2x−5) − (2x−5)y \\ &= (2x−5)(1−y) \end{aligned}" block />
+            <Latex math="\begin{aligned} &\quad (2x−5) − (2x−5)y \\ &= (2x−5)(1−y) \end{aligned}" block />
             <p className="text-sm text-slate-500 mt-2">💡 抽相同括號放前，剩餘部分放後括號</p>
           </div>
         </div>
@@ -108,14 +110,27 @@ export const FactorizationNotes = ({ activeSub }) => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-gray-50 p-3 rounded">
                   <p className="font-bold text-center mb-2 text-base">答案 1（整數）</p>
-                  <p className="text-center text-3xl font-sans mb-2">3</p>
+                  <div className="calculator-lcd-answer">
+                    <span className="calculator-lcd-answer-label">01:QuadEquation</span>
+                    <span className="calculator-lcd-answer-prefix">x=</span>
+                    <p className="calculator-lcd-number">3</p>
+                  </div>
                   <p className="text-center text-sm text-slate-600 mt-2">→ 相反數：-3</p>
                   <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(x−3)" /></p>
+                  <p className="text-center text-sm text-slate-600">
+                    按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> 得出 x 的第二個答案。
+                  </p>
                 </div>
                 <div className="bg-gray-50 p-3 rounded">
                   <p className="font-bold text-center mb-2 text-base">答案 2（分數）</p>
-                  <p className="text-center text-3xl font-sans mb-2">−0.875</p>
-                  <p className="text-center text-sm text-slate-600 mt-2">= <Latex math="−\frac{7}{8}" /></p>
+                  <div className="calculator-lcd-answer">
+                    <span className="calculator-lcd-answer-label">01:QuadEquation</span>
+                    <span className="calculator-lcd-answer-prefix">x=</span>
+                    <p className="calculator-lcd-number">−0.875</p>
+                  </div>
+                  <p className="text-center text-sm text-slate-600 mt-2">
+                    按 <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> 轉為分數形式（<Latex math="−\frac{7}{8}" />）
+                  </p>
                   <p className="text-center text-sm text-slate-600">分母放前，分子相反數放後</p>
                   <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(8x+7)" /></p>
                 </div>
@@ -1161,53 +1176,47 @@ const GradientInclinationSVG2 = () => (
 );
 
 const ContourLinesSVG = () => (
-  <svg width="400" height="250" viewBox="0 0 400 250" className="mx-auto block">
+  <svg viewBox="0 0 777 603" className="w-full max-w-full h-auto mx-auto block" role="img" aria-label="等高線上 A、B 兩點示意圖">
     <defs>
-      <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#1d4ed8" />
-      </marker>
-      <marker id="arrow-green2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#15803d" />
-      </marker>
+      <clipPath id="contour-green-area">
+        <path d="M0 8 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304 Z" />
+      </clipPath>
+      <mask id="contour-background-area" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0" width="777" height="603">
+        <rect x="0" y="0" width="777" height="603" fill="white" />
+        <path d="M0 8 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304 Z" fill="black" />
+      </mask>
     </defs>
-    
-    {/* 地圖背景 */}
-    <rect x="200" y="10" width="180" height="230" fill="#dcfce7" rx="10" />
-    
-    {/* 等高線 */}
-    <path d="M 210,40 Q 280,60 370,30" fill="none" stroke="#333" strokeWidth="1.5" />
-    <path d="M 205,95 Q 290,120 375,85" fill="none" stroke="#333" strokeWidth="1.5" />
-    <text x="350" y="105" fill="#333" fontSize="12" fontWeight="bold">450 m</text>
-    
-    <path d="M 215,155 Q 280,180 370,145" fill="none" stroke="#333" strokeWidth="1.5" />
-    <text x="350" y="165" fill="#333" fontSize="12" fontWeight="bold">400 m</text>
-    
-    <path d="M 225,215 Q 290,200 375,225" fill="none" stroke="#333" strokeWidth="1.5" />
-    <text x="350" y="215" fill="#333" fontSize="12" fontWeight="bold">350 m</text>
-    
-    {/* 點 A (在 450m 線上) */}
-    <g transform="translate(260, 105)">
-      <line x1="-4" y1="-4" x2="4" y2="4" stroke="#1d4ed8" strokeWidth="2" />
-      <line x1="-4" y1="4" x2="4" y2="-4" stroke="#1d4ed8" strokeWidth="2" />
-      <text x="-15" y="5" fill="#1d4ed8" fontSize="14" fontWeight="bold">A</text>
+    <rect width="777" height="603" fill="#cfe8d1" />
+
+    <path d="M0 8 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304 Z" fill="#68bf81" />
+    <path d="M0 7 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304" fill="none" stroke="#050505" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M0 359 C50 369 87 381 125 374 C170 366 205 383 252 400 C294 415 332 441 386 437 C430 434 457 409 478 378 C503 342 510 307 513 260 C518 215 542 185 577 169 C620 150 682 180 777 193" fill="none" stroke="#050505" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M116 603 C136 565 170 547 212 539 C257 530 298 511 340 510 C393 509 448 518 502 500 C566 478 596 446 618 391 C635 348 651 316 690 313 C722 311 748 329 777 335" fill="none" stroke="#050505" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+
+    <g fill="#050505" fontFamily="Georgia, 'Times New Roman', serif">
+      {/* 先按地形邊界繪製 450 m 兩截底色，再疊上黑色文字 */}
+      <text x="153" y="216" fontSize="69" fill="none" stroke="#68bf81" strokeWidth="30" strokeLinecap="round" clipPath="url(#contour-green-area)" transform="rotate(-31 153 216)">450 m</text>
+      <text x="153" y="216" fontSize="69" fill="none" stroke="#cfe8d1" strokeWidth="30" strokeLinecap="round" mask="url(#contour-background-area)" transform="rotate(-31 153 216)">450 m</text>
+      <text x="153" y="216" fontSize="69" transform="rotate(-31 153 216)">450 m</text>
+      <text x="157" y="421" fontSize="67" fill="#cfe8d1" stroke="#cfe8d1" strokeWidth="30" strokeLinecap="round" transform="rotate(10 157 421)">400 m</text>
+      <text x="157" y="421" fontSize="67" transform="rotate(10 157 421)">400 m</text>
+      <text x="150" y="566" fontSize="66" fill="#cfe8d1" stroke="#cfe8d1" strokeWidth="30" strokeLinecap="round" transform="rotate(-15 150 566)">350 m</text>
+      <text x="150" y="566" fontSize="66" transform="rotate(-15 150 566)">350 m</text>
     </g>
-    
-    {/* 點 B (在 400m 線上) */}
-    <g transform="translate(300, 162)">
-      <line x1="-4" y1="-4" x2="4" y2="4" stroke="#1d4ed8" strokeWidth="2" />
-      <line x1="-4" y1="4" x2="4" y2="-4" stroke="#1d4ed8" strokeWidth="2" />
-      <text x="12" y="5" fill="#1d4ed8" fontSize="14" fontWeight="bold">B</text>
+
+    <line x1="430" y1="74" x2="387" y2="440" stroke="#ff9900" strokeWidth="7" strokeDasharray="25 17" strokeLinecap="round" />
+    <g stroke="#159be7" strokeWidth="9" strokeLinecap="square">
+      <path d="M416 61 L442 91 M442 61 L416 91" />
+      <path d="M374 425 L401 454 M401 424 L374 454" />
     </g>
-    
-    {/* 連接線 */}
-    <line x1="260" y1="105" x2="300" y2="162" stroke="#f97316" strokeWidth="2" strokeDasharray="4 4" />
-    
-    {/* 標示文字和箭頭 */}
-    <text x="170" y="80" fill="#1d4ed8" fontSize="12" fontWeight="bold" textAnchor="end">題目提供：實際水平距離 325m</text>
-    <path d="M 175,85 Q 230,105 270,125" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue)" />
-    
-    <text x="170" y="190" fill="#15803d" fontSize="12" fontWeight="bold" textAnchor="end">自己計出爬升了 450 - 400 = 50m</text>
-    <path d="M 175,185 Q 240,175 285,145" fill="none" stroke="#15803d" strokeWidth="1.5" markerEnd="url(#arrow-green2)" />
+    <g fill="#050505" fontFamily="Georgia, 'Times New Roman', serif" fontSize="68" fontStyle="italic">
+      <text x="454" y="62">A</text>
+      <text x="409" y="486">B</text>
+    </g>
+    <line x1="777" y1="130" x2="473" y2="130" stroke="#075aa8" strokeWidth="7" strokeLinecap="round" />
+    <polyline points="501,112 473,130 501,148" fill="none" stroke="#075aa8" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+    <line x1="777" y1="247" x2="466" y2="247" stroke="#009647" strokeWidth="7" strokeLinecap="round" />
+    <polyline points="494,229 466,247 494,265" fill="none" stroke="#009647" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -1450,21 +1459,20 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">🗺️ 實際應用例子</h3>
             {/* 📐 繪製：地圖等高線 */}
-            <div className="flex justify-center mb-3">
+            <div className="grid grid-cols-1 md:grid-cols-[minmax(0,4fr)_minmax(180px,1fr)] items-center gap-4 mb-3">
               <ContourLinesSVG />
-            </div>
-            <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-3">
-              <div className="flex items-start gap-2">
-                <span className="text-blue-600 font-bold mt-0.5">🔹</span>
-                <p className="text-sm text-slate-700 font-bold text-blue-800">題目提供：實際水平距離 325m</p>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-green-600 font-bold mt-0.5">🔹</span>
-                <div className="text-sm text-slate-700">
-                  <p className="font-bold text-green-700 mb-1">自己計出爬升了（鉛垂距離）：</p>
-                  <p className="font-bold">450 - 400 = 50m</p>
+              <div className="relative min-h-[263px] text-sm">
+                <div className="md:absolute md:top-[15%] md:left-0 border-l-4 border-blue-600 pl-3 text-blue-800">
+                  <p className="font-bold">題目提供：</p>
+                  <p>實際水平距離 325m</p>
+                </div>
+                <div className="mt-4 md:mt-0 md:absolute md:top-[38%] md:left-0 border-l-4 border-green-600 pl-3 text-green-700">
+                  <p className="font-bold">自己計出：</p>
+                  <p>450 − 400 = 50m</p>
                 </div>
               </div>
+            </div>
+            <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-3">
               <div className="mt-3 p-2 bg-blue-100 rounded text-center text-sm font-bold text-blue-800 border border-blue-200">
                 ✔️ 可找 斜率 / 傾角！
               </div>

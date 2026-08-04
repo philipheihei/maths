@@ -11,6 +11,135 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: "DSEG7Classic";
+  src: url("https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Regular.woff2") format("woff2"),
+       url("https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Regular.woff") format("woff");
+  font-display: swap;
+}
+
+.calculator-lcd {
+  width: min(520px, 100%);
+  aspect-ratio: 520 / 140;
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 0.5rem;
+  border-radius: 10px;
+  background: radial-gradient(120% 140% at 30% 20%, #d9e4d2 0%, #c3d1bb 55%, #b3c3ab 100%);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25), inset 0 -2px 6px rgba(255, 255, 255, 0.35), 0 3px 10px rgba(0, 0, 0, 0.25);
+  color: #2b3230;
+  font-family: "DSEG7Classic", "Courier New", monospace;
+}
+
+.calculator-lcd-number {
+  font-family: "DSEG7Classic", "Courier New", monospace;
+}
+
+.calculator-lcd-answer {
+  position: relative;
+  width: min(100%, 220px);
+  min-height: 52px;
+  aspect-ratio: 3.8 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0 auto 0.5rem;
+  padding: 0.35rem 0.6rem;
+  overflow: hidden;
+  border: 2px solid #8d9d87;
+  border-radius: 6px;
+  background: radial-gradient(120% 140% at 30% 20%, #d9e4d2 0%, #c3d1bb 55%, #b3c3ab 100%);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.24), inset 0 -2px 5px rgba(255, 255, 255, 0.35), 0 2px 5px rgba(0, 0, 0, 0.18);
+  color: #2b3230;
+}
+
+.calculator-lcd-answer-label {
+  position: absolute;
+  top: 5px;
+  left: 8px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: clamp(0.72rem, 3vw, 1rem);
+  line-height: 1;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.calculator-lcd-answer-prefix {
+  position: absolute;
+  bottom: 11px;
+  left: 8px;
+  font-family: "Courier New", monospace;
+  font-weight: 700;
+  font-size: clamp(0.65rem, 2.7vw, 0.9rem);
+  line-height: 1;
+}
+
+.calculator-lcd-answer .calculator-lcd-number {
+  align-self: flex-end;
+  margin: 0;
+  font-size: clamp(0.9rem, 4vw, 1.5rem);
+  line-height: 1;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.calculator-lcd-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 45%);
+}
+
+.calculator-lcd-line1 {
+  position: absolute;
+  top: 18%;
+  left: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(1rem, 10vw, 52px);
+  line-height: 1;
+  letter-spacing: 1px;
+}
+
+.calculator-lcd-line2 {
+  position: absolute;
+  right: 38px;
+  bottom: 4px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  line-height: 1;
+}
+
+.calculator-lcd-mantissa {
+  font-family: "DSEG7Classic", "Courier New", monospace;
+  font-size: clamp(1.5rem, 9.25vw, 48px);
+  letter-spacing: 2px;
+}
+
+.calculator-lcd-exp {
+  position: relative;
+  padding-bottom: 2px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.calculator-lcd-x10 {
+  font-size: clamp(0.65rem, 3.1vw, 16px);
+  letter-spacing: 0;
+}
+
+.calculator-lcd-expnum {
+  position: absolute;
+  left: calc(100% - 10px);
+  bottom: 28px;
+  white-space: nowrap;
+  font-family: "DSEG7Classic", Arial, sans-serif;
+  font-size: clamp(0.8rem, 3.85vw, 20px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
 @media screen {
   .print-root.print-preview {
     background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);

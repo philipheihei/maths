@@ -1,5 +1,5 @@
 ﻿import React, { useRef } from 'react';
-import { Latex, CollapsibleSection } from './shared';
+import { CalculatorLCD, Latex, CollapsibleSection } from './shared';
 
 export const LawsOfIndicesNotes = ({ activeSub }) => {
   const s1 = useRef(null);
@@ -71,11 +71,10 @@ export const LawsOfIndicesNotes = ({ activeSub }) => {
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">🖩 計算機顯示科學記數法</h3>
             <p className="text-slate-700 mb-2">當數字很長時，計算機會顯示科學記數法：</p>
-            <p className="text-center bg-[#a3b18a] text-[#1c1c1c] font-mono py-2 rounded mb-2 border-4 border-gray-400">
-              <span className="block text-right pr-4 tracking-widest text-sm">0.0000031715</span>
-              <span className="block text-right pr-4 text-xl">3.1715 <span className="text-xs -mt-1 alignment-baseline relative -top-1 ml-1">−06</span></span>
+            <CalculatorLCD original="0.000031715" mantissa="3.1715" exponent="-05" />
+            <p className="text-slate-700 mt-2">
+              在計算機輸入 <Latex math="0.000031715" />，即可得知其科學記數法形式為 <Latex math="3.1715 \times 10^{−5}" />。
             </p>
-            <Latex math="0.0000031715 \rightarrow 3.1715 \times 10^{−6}" block />
           </div>
         </div>
       </CollapsibleSection>
