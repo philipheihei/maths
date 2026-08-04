@@ -143,6 +143,7 @@ const Notes = () => {
                   {topic.subtopics.map((sub) => {
                     const sc = colorMap[sub.color] || colorMap.blue;
                     const isSubActive = activeTopic === topic.id && activeSubtopic === sub.id;
+                    const displayTitle = sub.title.replace(/^\d+[A-Za-z]?[.．、)]\s*/, '');
                     return (
                       <button
                         key={sub.id}
@@ -156,7 +157,7 @@ const Notes = () => {
                         <span className={`w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-xs leading-none font-bold ${isSubActive ? sc.numActive : sc.numInactive}`}>
                           {sub.num}
                         </span>
-                        <span className="truncate">{sub.title}</span>
+                        <span className="truncate">{displayTitle}</span>
                       </button>
                     );
                   })}

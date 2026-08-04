@@ -26,10 +26,16 @@ const Latex = ({ math, block = false }) => {
   return <span ref={containerRef} className={block ? 'block text-center my-2' : 'inline-block'} />;
 };
 
-export const PythagorasNotesBlock = () => {
+export const PythagorasNotesBlock = ({ activeSub }) => {
+  React.useEffect(() => {
+    if (!activeSub) return;
+    const target = document.getElementById(activeSub);
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [activeSub]);
+
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
-      <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+      <div id="pythagoras-core" className="bg-blue-50 rounded-xl p-4 border border-blue-200 scroll-mt-24">
         <p className="font-bold text-blue-700 mb-4">定理</p>
         <div className="flex flex-col md:flex-row items-center gap-6">
           <div className="flex-1 space-y-3">
@@ -114,7 +120,7 @@ export const PythagorasNotesBlock = () => {
         </div>
       </div>
 
-      <div className="bg-purple-50 rounded-xl p-6 border border-purple-200 mt-8">
+      <div id="pythagoras-converse" className="bg-purple-50 rounded-xl p-6 border border-purple-200 mt-8 scroll-mt-24">
         <h3 className="font-bold text-purple-800 text-xl mb-4">2. 畢氏定理的逆定理 (Converse of Pythagoras' Theorem)</h3>
         <p className="text-slate-700 mb-4 whitespace-pre-wrap">
           用處：<strong className="text-purple-700">用來證明直角</strong>。{"\n"}

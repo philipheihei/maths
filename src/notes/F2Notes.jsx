@@ -2287,14 +2287,14 @@ export const FactorizationF2Notes = ({ activeSub }) => {
   );
 };
 
-export const PythagorasF2Notes = () => {
+export const PythagorasF2Notes = ({ activeSub }) => {
   return (
     <div className="max-w-4xl mx-auto mb-12 px-4 md:px-0">
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-violet-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">CH10 畢氏定理</h1>
         <p className="text-slate-600">掌握畢氏定理與逆定理，並運用於直角三角形問題</p>
       </div>
-      <PythagorasNotesBlock />
+      <PythagorasNotesBlock activeSub={activeSub} />
     </div>
   );
 };
@@ -2378,7 +2378,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
               </h3>
 
               <div className="flex justify-center md:justify-start md:ml-10 flex-1 items-center relative py-4">
-                 <div className="relative">
+                 <div className="relative w-full max-w-[520px]">
                    <svg viewBox="0 0 160 160" className="w-40 h-40 overflow-visible">
                      <circle cx="80" cy="80" r="70" fill="none" stroke="#64748b" strokeWidth="2" strokeDasharray="6 4" />
                      <path d="M 80 80 L 67.8 11.0 A 70 70 0 0 1 150 80 Z" fill="none" stroke="#94a3b8" strokeWidth="1" strokeDasharray="6 4" />
@@ -2410,8 +2410,8 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                    
                    <div className="absolute top-[80px] left-[165px] text-sm text-blue-800 font-bold hidden md:block max-w-[220px] leading-relaxed">
                      <span className="text-red-600">360°</span> 當中只要 <span className="bg-pink-200 px-1 rounded text-red-600">100°</span> → 
-                     <span className="bg-pink-100 text-red-600 px-1 py-0.5 rounded mx-1"><Latex math="\dfrac{100^\circ}{360^\circ}" /></span>
-                     <div className="text-xs text-blue-700 text-center mt-1">按題目而變</div>
+                     <span className="inline-flex items-center bg-pink-100 text-red-600 px-1 py-0.5 rounded mx-1"><Latex math="\dfrac{100^\circ}{360^\circ}" /></span>
+                     <div className="text-xs text-blue-700 text-center mt-1">按題目圓心角而變</div>
                    </div>
                  </div>
               </div>
@@ -2464,7 +2464,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                 <span className="bg-red-500 text-white px-2 py-0.5 rounded text-sm">4.</span> 扇形 <span className="text-sm font-normal text-green-700">(圓面積的一部份)</span>：
                 <span className="bg-blue-200 px-2 py-0.5 rounded font-sans relative">
                   <div className="absolute -top-7 left-1/2 -translate-x-1/2 text-sm font-bold text-green-700 whitespace-nowrap hidden md:block">
-                    ↓ 面積公式
+                    ↓ 圓面積公式
                   </div>
                   <Latex math="\pi r^2" />
                 </span>
@@ -2473,10 +2473,10 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
               </h3>
 
               <div className="flex justify-center flex-1 items-center py-4 relative">
-                 <div className="relative">
+                 <div className="relative md:-translate-x-8">
                    <svg viewBox="0 0 160 160" className="w-40 h-40 overflow-visible">
                      <path d="M 80 80 L 10 80 A 70 70 0 0 1 115 19.4 Z" fill="#fef08a" stroke="#000" strokeWidth="2" strokeLinejoin="round" />
-                     <circle cx="80" cy="80" r="70" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="6 4" />
+                     <path d="M 115 19.4 A 70 70 0 1 1 10 80" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="6 4" />
                      <circle cx="80" cy="80" r="3" fill="#000" />
                      {/* Arc for 120° */}
                      <path d="M 65 80 A 15 15 0 0 1 87.5 67" fill="none" stroke="#0ea5e9" strokeWidth="2" />
@@ -2522,7 +2522,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
 
             <div className="bg-[#fdf6ea] rounded-lg p-5 border border-amber-200 shadow-sm relative overflow-hidden">
               <div className="flex flex-col md:flex-row gap-6 items-center">
-                <div className="flex-1 space-y-5 relative z-10 w-full p-2">
+                <div className="flex-1 md:flex-[0_0_62%] md:max-w-[62%] space-y-5 relative z-10 w-full p-2">
                   <div className="flex items-start gap-2 bg-white/70 p-3 rounded">
                     <span className="text-red-600 font-bold text-lg leading-none shadow-sm rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 border border-red-200">6</span>
                     <div className="font-bold text-slate-800 pt-0.5 leading-relaxed">
@@ -2540,15 +2540,19 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                   </div>
                 </div>
 
-                <div className="relative shrink-0 pr-10 pb-4 h-48 w-44 md:w-56 mt-4 md:mt-0 ml-10 flex items-center">
+                <div className="relative shrink-0 pr-10 pb-4 h-48 w-44 md:w-56 mt-4 md:mt-0 ml-0 flex items-center">
                    <svg viewBox="0 0 160 160" className="w-full h-full overflow-visible">
-                     {/* Lower Base */}
-                     <ellipse cx="80" cy="130" rx="50" ry="15" fill="#fca5a5" stroke="#000" strokeWidth="2" strokeDasharray="3 3"/>
-                     {/* Red Hatching Pattern via path */}
-                     <path d="M 40 130 L 60 120 M 50 135 L 75 122 M 60 140 L 90 125 M 75 142 L 110 125 M 95 140 L 120 128" stroke="#ef4444" strokeWidth="2" />
+                     {/* Lower base shading, partly covered by the curved surface */}
+                     <ellipse cx="80" cy="130" rx="50" ry="15" fill="#fca5a5" stroke="none" />
                      
                      {/* Curved Surface */}
                      <path d="M 30 50 L 30 130 A 50 15 0 0 0 130 130 L 130 50 Z" fill="#fde047" stroke="#000" strokeWidth="2" />
+
+                     {/* Hidden rear edge and visible front edge of the lower base */}
+                     <path d="M 30 130 C 30 110 130 110 130 130" fill="none" stroke="#000" strokeWidth="2" strokeDasharray="4 3" />
+                     <path d="M 30 130 C 30 150 130 150 130 130" fill="none" stroke="#000" strokeWidth="2" />
+                     {/* Red hatching shows the shaded lower base */}
+                     <path d="M 38 132 L 56 121 M 50 137 L 68 126 M 62 141 L 80 130 M 74 143 L 92 132 M 86 142 L 104 131 M 98 138 L 116 127" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
                      
                      {/* Upper Base */}
                      <ellipse cx="80" cy="50" rx="50" ry="15" fill="#fde047" stroke="#000" strokeWidth="2" />
@@ -2561,7 +2565,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                      <text x="140" y="95" textAnchor="start" fontSize="14" fill="#10b981" fontStyle="italic" fontWeight="bold">h</text>
                    </svg>
                    
-                   <div className="absolute top-2 -right-8 md:-right-16 text-red-600 font-bold whitespace-nowrap text-lg">
+                   <div className="absolute top-2 -right-8 md:-right-6 text-red-600 font-bold whitespace-nowrap text-lg">
                       <span className="relative">
                         底面積 (上)
                         <svg width="40" height="40" viewBox="0 0 40 40" className="absolute -left-12 -top-2 overflow-visible stroke-red-600">
@@ -2572,11 +2576,11 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                              </marker>
                            </defs>
                         </svg>
-                        <span className="absolute -bottom-6 left-[-1.5rem] transform -translate-x-1/2 text-[10px] text-red-800/60 font-sans tracking-widest hidden md:block">圓周</span>
+                        <span className="absolute -bottom-8 left-[-1.5rem] transform -translate-x-1/2 text-[10px] text-red-800/60 font-sans tracking-widest hidden md:block">圓周</span>
                       </span>
                    </div>
 
-                   <div className="absolute top-[85px] -right-8 md:-right-12 text-green-700 font-bold whitespace-nowrap text-lg flex items-center">
+                   <div className="absolute top-[70px] -right-8 md:-right-6 text-green-700 font-bold whitespace-nowrap text-lg flex items-center">
                       <svg width="40" height="20" viewBox="0 0 40 20" className="mr-1 mt-1 overflow-visible stroke-green-700">
                         <line x1="40" y1="10" x2="10" y2="10" strokeWidth="3" markerEnd="url(#arrow-head-green)" strokeLinecap="round" />
                         <defs>
@@ -2588,7 +2592,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                       曲面面積
                    </div>
 
-                   <div className="absolute bottom-[20px] md:-bottom-2 -right-10 md:-right-12 text-red-600 font-bold whitespace-nowrap text-lg flex items-center gap-1">
+                   <div className="absolute bottom-[20px] md:-bottom-2 -right-10 md:-right-6 text-red-600 font-bold whitespace-nowrap text-lg flex items-center gap-1">
                       <svg width="30" height="30" viewBox="0 0 30 30" className="mr-1 overflow-visible stroke-red-600">
                         <line x1="30" y1="30" x2="5" y2="5" strokeWidth="3" markerEnd="url(#arrow-head-up)" strokeLinecap="round" />
                         <defs>

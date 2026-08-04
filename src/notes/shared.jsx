@@ -87,6 +87,10 @@ export const CollapsibleSection = ({ id, title, num, color = 'blue', activeSub, 
     purple: 'text-purple-700', blue: 'text-blue-700', green: 'text-green-700',
     red: 'text-red-700', teal: 'text-teal-700', orange: 'text-orange-700', indigo: 'text-indigo-700',
   };
+  const displayTitle = title
+    .replace(/^\d+\s*&\s*\d+(?:\.\d+)?\s+/, '')
+    .replace(/^\d+[A-Za-z]?[.．、)]\s*/, '')
+    .replace(/^\d+\s+(?=[^\d&])/, '');
 
   return (
     <div id={id} ref={sectionRef} className="bg-white rounded-2xl shadow-lg mb-6 scroll-mt-24 overflow-hidden">
@@ -96,7 +100,7 @@ export const CollapsibleSection = ({ id, title, num, color = 'blue', activeSub, 
             {num}
           </span>
         )}
-        <h2 className={`text-lg font-bold ${textCol[color] || 'text-blue-700'} flex-1`}>{title}</h2>
+        <h2 className={`text-lg font-bold ${textCol[color] || 'text-blue-700'} flex-1`}>{displayTitle}</h2>
       </div>
       <div className="px-6 pb-6">{children}</div>
     </div>

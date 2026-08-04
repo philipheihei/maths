@@ -49,11 +49,11 @@ export const NOTES_DATA = {
       topic: 'CH1 基礎計算',
       color: 'blue',
       subtopics: [
-        { id: 'divisibility', num: 1, title: '1. 整除性', color: 'blue' },
-        { id: 'indices', num: 2, title: '2. 指數記數法 (次方)', color: 'blue' },
-        { id: 'prime-factorization', num: 3, title: '3. 質因數連乘式', color: 'blue' },
-        { id: 'hcf-lcm', num: 4, title: '4. H.C.F. 及 L.C.M.', color: 'blue' },
-        { id: 'arithmetic', num: 5, title: '5. 四則運算', color: 'blue' },
+        { id: 'divisibility', num: 1, title: '整除性', color: 'blue' },
+        { id: 'indices', num: 2, title: '指數記數法 (次方)', color: 'blue' },
+        { id: 'prime-factorization', num: 3, title: '質因數連乘式', color: 'blue' },
+        { id: 'hcf-lcm', num: 4, title: 'H.C.F. 及 L.C.M.', color: 'blue' },
+        { id: 'arithmetic', num: 5, title: '四則運算', color: 'blue' },
       ]
     },
     {
@@ -296,6 +296,7 @@ export const NOTES_DATA = {
       color: 'blue',
       subtopics: [
         { id: 'pythagoras-core', num: 1, title: '畢氏定理', color: 'blue' },
+        { id: 'pythagoras-converse', num: 2, title: '畢氏定理的逆定理', color: 'purple' },
       ]
     },
     {

@@ -2231,7 +2231,7 @@ export const CoordinateNotes = ({ activeSub }) => {
     return (
       <g>
         <path d={`M ${cx - 4} ${cy - 4} L ${cx + 4} ${cy + 4} M ${cx + 4} ${cy - 4} L ${cx - 4} ${cy + 4}`} stroke={color} strokeWidth="2.5" />
-        <text x={cx + 8} y={cy - 8} fontSize="14" fill="#000" fontWeight="bold">{label}</text>
+        <text x={cx + 8} y={cy - 8} fontSize="14" fill="#000" fontWeight="bold" fontStyle="italic">{label}</text>
       </g>
     );
   };
@@ -2244,14 +2244,23 @@ export const CoordinateNotes = ({ activeSub }) => {
       </div>
 
       <CollapsibleSection id="coordinate-system" title="坐標系統 (直角坐標)" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,0.8fr)_1px_minmax(0,1.2fr)] gap-4 md:gap-6 items-stretch">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">📍 坐標系統 (直角坐標)</h3>
             <ul className="text-slate-700 space-y-2">
               <li>• <span className="bg-amber-200 px-1 rounded font-bold text-red-600">原點 <Latex math="O(0,0)" /></span> 為十字的中間交點。</li>
               <li>• 例子：<Latex math="A" /> 的坐標為 <Latex math="(2,4)" />。前方的 <span className="text-green-700 font-bold"><Latex math="x" /> 坐標是左右</span>，後方的 <span className="text-red-600 font-bold"><Latex math="y" /> 坐標是上下</span>。</li>
             </ul>
+            <div className="mt-4 border-t border-blue-200 pt-3 text-slate-700">
+              <p className="font-bold mb-2">e.g. 找坐標</p>
+              <p className="ml-4"><Latex math="B" /> 的坐標為 <Latex math="(1,−2)" /></p>
+              <p className="ml-4"><Latex math="C" /> 的坐標為 <Latex math="(−3,−3)" /></p>
+              <p className="ml-4"><Latex math="D" /> 的坐標為 <Latex math="(−4,−2)" /></p>
+              <p className="ml-4">也可寫成 <Latex math="E(−1,2)" /></p>
+            </div>
           </div>
+
+          <div className="hidden md:block bg-slate-200" aria-hidden="true" />
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center">
             <svg viewBox="-180 -180 360 360" className="w-full max-w-md bg-white">
@@ -2265,10 +2274,10 @@ export const CoordinateNotes = ({ activeSub }) => {
 
               <line x1="0" y1="165" x2="0" y2="-165" stroke="#16a34a" strokeWidth="3" />
               <polyline points="-5,-160 0,-165 5,-160" fill="none" stroke="#16a34a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-              <text x="12" y="-160" fontSize="16" fill="#dc2626" fontWeight="bold">y 軸</text>
+              <text x="0" y="-172" fontSize="16" fill="#dc2626" fontWeight="bold" textAnchor="middle">y</text>
 
               {/* 刻度文字 */}
-              {[-4, -3, -2, -1, 1, 2, 3].map(i => (
+              {[-4, -3, -2, -1, 1, 2, 3, 4].map(i => (
                 <g key={`x-tick-${i}`}>
                    <text x={i * 30} y="18" fontSize="14" fill="#16a34a" textAnchor="middle">{i}</text>
                    <line x1={i * 30} y1="-3" x2={i * 30} y2="3" stroke="#16a34a" strokeWidth="2" />
@@ -2280,14 +2289,17 @@ export const CoordinateNotes = ({ activeSub }) => {
                   <line x1="-3" y1={-i * 30} x2="3" y2={-i * 30} stroke="#16a34a" strokeWidth="2" />
                 </g>
               ))}
-              {[-1, -2, -3].map(i => (
+              {[-1, -2, -3, -4].map(i => (
                 <g key={`y-tick-neg-${i}`}>
                   <text x="-12" y={-i * 30 + 5} fontSize="14" fill="#16a34a" textAnchor="end">{i}</text>
                   <line x1="-3" y1={-i * 30} x2="3" y2={-i * 30} stroke="#16a34a" strokeWidth="2" />
                 </g>
               ))}
               <text x="10" y="16" fontSize="14" fill="#16a34a" textAnchor="middle">0</text>
-              <text x="35" y="-12" fontSize="14" fill="#dc2626" fontWeight="bold">原點 O (0,0)</text>
+              <g>
+                <path d="M -4 -4 L 4 4 M 4 -4 L -4 4" stroke="#0284c7" strokeWidth="2.5" />
+                <text x="-10" y="-10" fontSize="14" fill="#dc2626" fontWeight="bold" textAnchor="end">O(原點)</text>
+              </g>
 
               {/* 標點 */}
               {drawPoint(2, 4, "A", "#0284c7")}
@@ -2296,7 +2308,6 @@ export const CoordinateNotes = ({ activeSub }) => {
               {drawPoint(-4, -2, "D", "#0284c7")}
               {drawPoint(-1, 2, "E", "#0284c7")}
             </svg>
-            <p className="text-sm text-slate-500 mt-2">找坐標例子：<Latex math="B(1,−2)" />、<Latex math="C(−3,−3)" />、<Latex math="D(−4,−2)" />、<Latex math="E(−1,2)" /></p>
           </div>
         </div>
       </CollapsibleSection>
@@ -2312,27 +2323,27 @@ export const CoordinateNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col md:flex-row items-center gap-6">
-            <svg viewBox="-100 -100 200 200" className="w-48 bg-white">
-              {/* 四個象限背景色 */}
-              <rect x="0" y="-100" width="100" height="100" fill="#f0fdf4" />
-              <rect x="-100" y="-100" width="100" height="100" fill="#f0fff4" /> {/* Different shades for quadrants? Light enough. Just use text. */}
-              
+            <svg viewBox="-110 -110 220 220" className="w-48 bg-white">
               <line x1="-90" y1="0" x2="90" y2="0" stroke="#000" strokeWidth="2" />
               <polyline points="85,-4 90,0 85,4" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="96" y="5" fontSize="18" fill="#000" fontWeight="bold" textAnchor="middle">+</text>
+              <text x="-103" y="5" fontSize="18" fill="#000" fontWeight="bold" textAnchor="middle">−</text>
               <line x1="0" y1="90" x2="0" y2="-90" stroke="#000" strokeWidth="2" />
               <polyline points="-4,-85 0,-90 4,-85" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="0" y="-96" fontSize="18" fill="#000" fontWeight="bold" textAnchor="middle">+</text>
+              <text x="0" y="104" fontSize="18" fill="#000" fontWeight="bold" textAnchor="middle">−</text>
 
               <text x="45" y="-30" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">I</text>
-              <text x="45" y="-60" fontSize="14" fill="#000" fontWeight="bold" textAnchor="middle">(+, +)</text>
+              <text x="45" y="-60" fontSize="16" fill="#000" fontWeight="bold" textAnchor="middle">(+, +)</text>
 
               <text x="-45" y="-30" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">II</text>
-              <text x="-45" y="-60" fontSize="14" fill="#000" fontWeight="bold" textAnchor="middle">(-, +)</text>
+              <text x="-45" y="-60" fontSize="16" fill="#000" fontWeight="bold" textAnchor="middle">(−, +)</text>
 
               <text x="-45" y="50" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">III</text>
-              <text x="-45" y="20" fontSize="14" fill="#000" fontWeight="bold" textAnchor="middle">(-, -)</text>
+              <text x="-45" y="20" fontSize="16" fill="#000" fontWeight="bold" textAnchor="middle">(−, −)</text>
 
               <text x="45" y="50" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">IV</text>
-              <text x="45" y="20" fontSize="14" fill="#000" fontWeight="bold" textAnchor="middle">(+, -)</text>
+              <text x="45" y="20" fontSize="16" fill="#000" fontWeight="bold" textAnchor="middle">(+, −)</text>
               
               {/* Highlight line logic */}
               <circle cx="30" cy="0" r="4" fill="#dc2626" />
@@ -3351,11 +3362,17 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
               <div>
                 <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="3a + 1" /> 的第 21 項是？</p>
                 <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4">
-                  <p>
-                    第 21 項 <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"> (21) </span><Latex math=" + 1" />
-                    <span className="ml-3 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 a = 21</span>
-                  </p>
-                  <p className="pl-[72px]"><Latex math="= 64" /></p>
+                  <div className="grid grid-cols-[72px_auto] items-baseline">
+                    <span>第 21 項</span>
+                    <div>
+                      <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"> (21) </span><Latex math=" + 1" />
+                      <span className="ml-3 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 a = 21</span>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-[72px_auto] items-baseline">
+                    <span></span>
+                    <Latex math="= 64" />
+                  </div>
                 </div>
               </div>
 
