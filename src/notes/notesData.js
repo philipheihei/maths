@@ -486,6 +486,7 @@ export const NOTES_DATA = {
         { id: 'remainder', num: 1, title: '餘式定理', color: 'teal' },
         { id: 'factor', num: 2, title: '因式定理', color: 'orange' },
         { id: 'algebraic-fractions', num: 3, title: '代數分式四則運算', color: 'purple' },
+        { id: 'division-expression', num: 4, title: '除法算式', color: 'green' },
       ]
     },
     {

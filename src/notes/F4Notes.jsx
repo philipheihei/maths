@@ -670,7 +670,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
 // CH4 餘式定理 & 因式定理 (F4)
 // ========================================
 export const RemainderFactorNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
 
   return (
     <>
@@ -820,6 +820,30 @@ export const RemainderFactorNotes = ({ activeSub }) => {
           <div className="bg-red-50 rounded-lg p-4 border border-red-200">
             <p className="text-red-700 font-bold">⚠️ 小心：負號和括號</p>
             <p className="text-slate-700 mt-1">分母有代數式時，交叉相乘必須拍埋加括號，拆分子時每一項都要乘入括號內。</p>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="division-expression" title="除法算式" num={4} color="green" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-800 mb-3">除法算式</h3>
+            <p className="text-slate-700 mb-3">若多項式 <Latex math="f(x)" /> 除以多項式 <Latex math="p(x)" />，所得的商式為 <Latex math="Q(x)" />，餘式為 <Latex math="R(x)" />：</p>
+            <div className="bg-white rounded-lg p-4 overflow-x-auto">
+              <Latex math="\begin{aligned} \text{被除式} &= \text{除式} \times \text{商式} + \text{餘式} \\ f(x) &= p(x) \cdot Q(x) + R(x) \end{aligned}" block />
+            </div>
+            <p className="text-slate-700 mt-3">其中 <Latex math="R(x)" /> 的次數必須小於 <Latex math="p(x)" /> 的次數。</p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-700 mb-3">例 3</h3>
+            <p className="text-slate-700 mb-3">設 <Latex math="f(x)" /> 為多項式。當 <Latex math="f(x)" /> 除以 <Latex math="x+2" />，商式是 <Latex math="x^2+3x-1" />，而餘式是 <Latex math="4" />。求多項式 <Latex math="f(x)" />。</p>
+            <div className="bg-emerald-50 rounded-lg p-4 overflow-x-auto">
+              <p className="text-green-700 font-bold mb-2">解</p>
+              <p className="text-slate-600 mb-2">根據除法算式，可得：</p>
+              <Latex math="\begin{aligned} f(x) &= (x+2)(x^2+3x-1)+4 \\ &= x(x^2+3x-1)+2(x^2+3x-1)+4 \\ &= x^3+3x^2-x+2x^2+6x-2+4 \\ &= x^3+5x^2+5x+2 \end{aligned}" block />
+            </div>
+            <p className="text-blue-700 font-bold mt-3">∴ <Latex math="f(x)=x^3+5x^2+5x+2" /></p>
           </div>
         </div>
       </CollapsibleSection>
