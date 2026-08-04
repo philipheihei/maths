@@ -35,6 +35,13 @@ body {
   font-family: "DSEG7Classic", "Courier New", monospace;
 }
 
+.calculator-lcd-fraction-symbol {
+  display: inline-block;
+  width: 0.5em;
+  text-align: center;
+  font-family: "DSEG7Classic", "Courier New", monospace;
+}
+
 .calculator-lcd-answer {
   position: relative;
   width: min(100%, 220px);

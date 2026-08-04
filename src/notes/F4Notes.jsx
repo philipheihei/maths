@@ -48,24 +48,47 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               <div className="space-y-2">
                 <p className="text-green-700"><span className="font-bold">Step 1:</span> 認 a, b, c &nbsp;&nbsp; <span className="text-blue-600">a=1, b=4, c=3</span></p>
                 <p className="text-green-700"><span className="font-bold">Step 2:</span> 按 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">FMLA</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">01</span></p>
-                <p className="text-slate-500 text-sm ml-4">(屏幕顯示: Formula No?)</p>
-                <p className="text-slate-500 text-sm ml-4">輸入: <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">0</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span></p>
+                <div className="ml-4">
+                  <div className="calculator-lcd-answer translate-x-16">
+                    <span className="calculator-lcd-answer-label">Formula No?</span>
+                    <p className="calculator-lcd-number">-01-</p>
+                  </div>
+                </div>
                 <p className="text-green-700"><span className="font-bold">Step 3:</span> 輸入 a, b, c 的數值</p>
                 <div className="ml-4 text-sm space-y-1">
-                  <div><span className="inline-block w-6 h-6 rounded-full border-2 border-green-600 text-center text-xs leading-5">1</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span></div>
-                  <div><span className="inline-block w-6 h-6 rounded-full border-2 border-purple-600 text-center text-xs leading-5">2</span> 輸入!</div>
+                  <div className="flex flex-wrap items-start gap-3">
+                    <div className="space-y-1">
+                      <div><span className="inline-block w-6 h-6 rounded-full border-2 border-green-600 text-center text-xs leading-5">1</span> 見到 <span className="text-green-700 font-bold">a?</span> 輸入 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span></div>
+                      <div><span className="inline-block w-6 h-6 rounded-full border-2 border-purple-600 text-center text-xs leading-5">2</span> 見到 <span className="text-purple-700 font-bold">b?</span> 輸入 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">4</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span></div>
+                      <div><span className="inline-block w-6 h-6 rounded-full border-2 border-blue-600 text-center text-xs leading-5">3</span> 見到 <span className="text-blue-700 font-bold">c?</span> 輸入 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">3</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span></div>
+                    </div>
+                    <div className="calculator-lcd-answer m-0 -ml-16">
+                      <span className="calculator-lcd-answer-label" style={{ top: '22px' }}>a?</span>
+                      <p className="calculator-lcd-number">1</p>
+                    </div>
+                  </div>
                 </div>
                 <p className="text-green-700"><span className="font-bold">Step 4:</span> 出答案 (2個!)</p>
                 <div className="ml-4 space-y-2">
-                  <div className="border border-slate-300 p-2 bg-slate-50 rounded font-sans text-sm">
-                    <p>01: QuadEquation</p>
-                    <p className="text-red-600">x₁ &nbsp;&nbsp;&nbsp;&nbsp; -1</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-gray-50 p-3 rounded">
+                      <p className="font-bold text-center mb-2 text-base">答案 1</p>
+                      <div className="calculator-lcd-answer">
+                        <span className="calculator-lcd-answer-label">01:QuadEquation</span>
+                        <span className="calculator-lcd-answer-prefix">x=</span>
+                        <p className="calculator-lcd-number">-1</p>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 p-3 rounded">
+                      <p className="font-bold text-center mb-2 text-base">答案 2</p>
+                      <div className="calculator-lcd-answer">
+                        <span className="calculator-lcd-answer-label">01:QuadEquation</span>
+                        <span className="calculator-lcd-answer-prefix">x=</span>
+                        <p className="calculator-lcd-number">-3</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="border border-slate-300 p-2 bg-slate-50 rounded font-sans text-sm">
-                    <p>01: QuadEquation</p>
-                    <p className="text-black">x₂ &nbsp;&nbsp;&nbsp;&nbsp; -3</p>
-                  </div>
-                  <p className="text-green-700 text-sm"><span className="inline-block w-6 h-6 rounded-full border-2 border-red-600 text-center text-xs leading-5">1</span> → 去答案2</p>
+                  <p className="text-green-700 text-sm">按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> 去第二個 x 的答案</p>
                 </div>
                 <p className="text-green-700 mt-2">∴ 答案是 -1 / -3</p>
                 <p className="text-red-600 font-bold">寫： x = -1 或 -3</p>
@@ -85,7 +108,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <p className="text-sm text-green-700 mb-2">題目：解 <Latex math="x^2 + 2x = 2" /> <span className="text-red-500">(開方 - 以根式表示答案)</span></p>
+            <p className="text-sm text-green-700 mb-2">題目：解 <Latex math="x^2 + 2x = 2" /> <span className="text-red-500">(以根式表示答案)</span></p>
             <div>
               <div className="flex items-start gap-2 mb-2">
                 <Latex math="x^2 + 2x − 2 = 0" />
@@ -117,7 +140,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <p className="text-sm text-green-700 mb-2">題目：</p>
             <div className="text-blue-700">
-              <Latex math="\begin{aligned} 4(5m+3)^2 − 28 &= 0 \\\\ 4(5m+3)^2 &= 28 && \textcolor{green}{\text{← 處理 + − (−28)}} \\\\ (5m+3)^2 &= 7 && \textcolor{green}{\text{← 處理 × ÷ (28÷4=7)}} \\\\ 5m+3 &= \pm\sqrt{7} && \textcolor{green}{\text{← 取平方根法}} \\\\ 5m &= −3 \pm\sqrt{7} && \textcolor{green}{\text{← 先處理 + −}} \\\\ m &= \frac{−3 \pm \sqrt{7}}{5} && \textcolor{green}{\text{← 後處理 × ÷}} \end{aligned}" block />
+              <Latex math="\begin{aligned} 4(5m+3)^2 − 28 &= 0 \\\\ 4(5m+3)^2 &= 28 && \textcolor{green}{\text{← 處理 + − }}\textcolor{purple}{\text{(−28)}} \\\\ (5m+3)^2 &= 7 && \textcolor{green}{\text{← 處理 × ÷ }}\textcolor{purple}{\text{(28÷4=7)}} \\\\ 5m+3 &= \pm\sqrt{7} && \textcolor{green}{\text{← 取平方根法}} \\\\ 5m &= −3 \pm\sqrt{7} && \textcolor{green}{\text{← 先處理 + −}} \\\\ m &= \frac{−3 \pm \sqrt{7}}{5} && \textcolor{green}{\text{← 後處理 × ÷}} \end{aligned}" block />
             </div>
           </div>
         </div>
@@ -203,28 +226,28 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 
               <div className="bg-white p-3 rounded shadow-sm">
                 <p className="font-bold text-slate-800">B. 有理數 <span className="text-red-500 font-normal">→ 整數的分數 (分子/分母)</span></p>
-                <div className="mt-2 text-slate-700 flex flex-wrap gap-4 items-center">
+                <div className="mt-2 text-slate-700 flex flex-wrap items-center gap-4">
                   <p>e.g. <Latex math="3, \frac{1}{3}, 0.8, \sqrt{4}, 0.\dot{3}" /></p>
                   <span className="text-green-600 font-bold bg-green-50 px-2 py-1 rounded">靚數字 / 有規律</span>
-                </div>
-                <div className="mt-2 border border-slate-200 rounded p-2 bg-slate-50 text-sm font-mono inline-block">
-                  <p>5 ÷ 11</p>
-                  <p className="text-right text-lg">0.454545454</p>
+                  <div className="calculator-lcd-answer m-0 shrink-0">
+                    <span className="calculator-lcd-answer-label">5÷11</span>
+                    <p className="calculator-lcd-number">0.454545454</p>
+                  </div>
                 </div>
               </div>
 
               <div className="bg-white p-3 rounded shadow-sm">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-green-600 font-bold text-sm bg-green-50 px-2 py-1 rounded">不是有理數 → </span>
+                <div className="flex items-center justify-between gap-2 mb-1">
                   <p className="font-bold text-slate-800">C. 無理數 <span className="text-red-500 font-normal">→ 有理數的相反</span></p>
+                  <span className="text-green-600 font-bold text-sm bg-green-50 px-2 py-1 rounded"> i 不是無理數</span>
                 </div>
-                <div className="mt-2 text-slate-700 flex flex-wrap gap-4 items-center">
+                <div className="mt-2 text-slate-700 flex flex-wrap items-center gap-4">
                   <p>e.g. <Latex math="\sqrt{2}, \sin 29^\circ, \pi" /></p>
                   <span className="text-red-600 font-bold bg-red-50 px-2 py-1 rounded">數字核突 / 無規律</span>
-                </div>
-                <div className="mt-2 border border-slate-200 rounded p-2 bg-slate-50 text-sm font-mono inline-block">
-                  <p>sin(1)</p>
-                  <p className="text-right text-lg">0.017452406</p>
+                  <div className="calculator-lcd-answer m-0 shrink-0">
+                    <span className="calculator-lcd-answer-label">sin(1)</span>
+                    <p className="calculator-lcd-number">0.017452406</p>
+                  </div>
                 </div>
               </div>
 
@@ -294,54 +317,88 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               </svg>
             </div>
           </div>
+
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-3">3. 循環小數轉分數（計算機方法）</h3>
+            <div className="bg-white rounded-lg p-3 mb-3">
+              <p className="text-slate-700 mb-2">
+                循環小數：小數部分有數字不斷重複。例如 <Latex math="0.\dot{8}=0.888\cdots" />。
+              </p>
+              <p className="text-red-600 font-bold mb-3">
+                ⚠️ 不斷輸入重複的數字，直到 MON 移位。
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="calculator-lcd-answer m-0">
+                  <span className="calculator-lcd-answer-label">0.888888888888</span>
+                  <p className="calculator-lcd-number">
+                    <span>8</span><span className="calculator-lcd-fraction-symbol" aria-hidden="true">┘</span><span>9</span>
+                  </p>
+                </div>
+                <span className="text-amber-700 font-bold">按 <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> → 分數</span>
+              </div>
+            </div>
+
+            <div className="space-y-3 text-slate-700">
+              <div className="bg-white rounded-lg p-3 shadow-sm">
+                <p className="mb-1">e.g. <Latex math="0.1\dot{7}=0.171717\cdots" /></p>
+                <p className="text-blue-700 font-bold"><Latex math="0.1\dot{7}=\frac{17}{99}" /></p>
+              </div>
+              <div className="bg-white rounded-lg p-3 shadow-sm">
+                <p className="mb-1">e.g. <Latex math="0.\dot{2}3\dot{4}=0.234234\cdots" /></p>
+                <p className="text-blue-700 font-bold"><Latex math="0.\dot{2}3\dot{4}=\frac{26}{111}" /></p>
+              </div>
+            </div>
+          </div>
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="recurring-decimals" title="循環小數轉分數 (計算機方法)" num={7} color="indigo" activeSub={activeSub} sectionRef={s7}>
+      <CollapsibleSection id="complex-i" title="複數 i" num={7} color="indigo" activeSub={activeSub} sectionRef={s7}>
         <div className="space-y-4">
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
-            <h3 className="font-bold text-indigo-800 mb-3">利用計算機轉換循環小數</h3>
-            
-            <div className="bg-white rounded-lg p-4 mb-4 shadow-sm">
-              <div className="flex items-center gap-4 mb-3">
-                <p className="text-xl font-bold text-slate-800">e.g. <Latex math="0.\dot{8}" /></p>
-                <span className="text-green-600 bg-green-50 px-2 py-1 rounded text-sm font-bold">← 點上面的數字不斷重複</span>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-4 items-center">
-                <div className="border border-slate-300 rounded p-3 bg-slate-100 font-mono text-xl shadow-inner w-full md:w-auto relative">
-                  0.888888888888<span className="animate-pulse">_</span>
-                  <div className="absolute -right-4 -bottom-4 translate-x-full md:translate-y-full md:translate-x-0 md:-ml-8 md:bottom-auto md:top-full md:mt-2 text-red-600 text-sm font-bold bg-white border border-red-200 px-3 py-2 rounded shadow-lg whitespace-nowrap">
-                    ← 不斷打重複的數字<br/>直至 mon 移位 (8)
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-14 md:mt-8 flex items-center gap-3">
-                <p className="text-slate-700 font-bold">然後按：</p>
-                <span className="bg-gray-500 text-white text-sm font-mono px-3 py-1.5 rounded-sm shadow">a b/c</span>
-                <span className="text-red-500 font-bold">→</span>
-                <div className="border border-slate-300 rounded px-3 py-1 bg-slate-50 font-mono font-bold text-lg">
-                  8 ˩ 9
-                </div>
-                <span className="text-slate-500">即是 <Latex math="\frac{8}{9}" /></span>
-              </div>
+            <h3 className="font-bold text-indigo-800 mb-3">i 的定義</h3>
+            <div className="bg-white rounded-lg p-4 text-center">
+              <Latex math="i = \sqrt{-1}, \qquad i^2 = -1" block />
             </div>
+            <p className="text-slate-700 mt-3">因為實數沒有平方後等於 −1 的數，所以引入新的數 <Latex math="i" />。</p>
+            <p className="text-red-600 font-bold mt-2">注意：<Latex math="\sqrt{-1}" /> 不是實數，但可以寫成 <Latex math="i" />。</p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white rounded-lg p-4 shadow-sm border-l-4 border-indigo-400">
-                <p className="font-bold text-slate-800 mb-2">例子 1：</p>
-                <p className="text-lg"><Latex math="0.\dot{1}\dot{7} = 0.171717... = \frac{17}{99}" /></p>
-                <p className="text-sm text-slate-500 mt-1">計算機輸入：0.1717171717... 直至移位，再按 a b/c</p>
-              </div>
-              
-              <div className="bg-white rounded-lg p-4 shadow-sm border-l-4 border-indigo-400">
-                <p className="font-bold text-slate-800 mb-2">例子 2：</p>
-                <p className="text-lg"><Latex math="0.\dot{2}3\dot{4} = 0.234234... = \frac{26}{111}" /></p>
-                <p className="text-sm text-slate-500 mt-1">首尾有點，代表中間也重複 (234重複)</p>
-              </div>
+          <div className="bg-white rounded-lg p-4 border border-indigo-200">
+            <h3 className="font-bold text-indigo-800 mb-3">i 的次方循環</h3>
+            <Latex math="\begin{aligned} i^1 &= i \\ i^2 &= -1 \\ i^3 &= i^2 \times i = -i \\ i^4 &= i^2 \times i^2 = 1 \end{aligned}" block />
+            <p className="text-green-700 font-bold text-center mt-2">之後每 4 個次方重複一次：<Latex math="i, -1, -i, 1" /></p>
+          </div>
+
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-3">複數的形式</h3>
+            <p className="text-slate-700 mb-2">複數通常寫成：</p>
+            <div className="bg-white rounded-lg p-3 text-center mb-3">
+              <Latex math="a + bi" block />
             </div>
-            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-700">
+              <p className="bg-white p-3 rounded"><span className="font-bold text-blue-600">實部：</span><Latex math="a" /></p>
+              <p className="bg-white p-3 rounded"><span className="font-bold text-purple-600">虛部：</span><Latex math="b" />（<Latex math="i" /> 的係數）</p>
+            </div>
+            <div className="mt-3 space-y-1 text-slate-700">
+              <p>e.g. <Latex math="5 - 3i" />：實部是 5，虛部是 −3</p>
+              <p>e.g. <Latex math="8 + 7i" />：實部是 8，虛部是 7</p>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 className="font-bold text-blue-800 mb-3">複數運算</h3>
+            <div className="text-blue-700">
+              <Latex math="\begin{aligned} -4(5-3i) &= -20 + 12i \\ (2+2i) - (i-1) &= 3 + i \\ (2+i)(3-i) &= 6 - 2i + 3i - i^2 = 7+i \end{aligned}" block />
+            </div>
+            <p className="text-red-600 font-bold mt-2">計算時分開處理實部和虛部，並記得 <Latex math="i^2=-1" />。</p>
+          </div>
+
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-3">二次方程中的複數根</h3>
+            <p className="text-slate-700 mb-2">當判別式 <Latex math="\Delta=b^2-4ac<0" /> 時，沒有實根，但可能有複數根。</p>
+            <div className="bg-white rounded-lg p-3 text-blue-700">
+              <Latex math="x^2+1=0 \quad\Rightarrow\quad x^2=-1 \quad\Rightarrow\quad x=\pm i" block />
+            </div>
           </div>
         </div>
       </CollapsibleSection>

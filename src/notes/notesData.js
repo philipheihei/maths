@@ -453,6 +453,8 @@ export const NOTES_DATA = {
         { id: 'square-root', num: 3, title: '取平方根法', color: 'blue' },
         { id: 'calculator', num: 4, title: '計算機解未知數', color: 'orange' },
         { id: 'applications', num: 5, title: '二次方程應用題', color: 'purple' },
+        { id: 'number-systems', num: 6, title: '數系', color: 'teal' },
+        { id: 'complex-i', num: 7, title: '複數 i', color: 'indigo' },
       ]
     },
     {
