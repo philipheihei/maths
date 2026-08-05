@@ -768,7 +768,7 @@ export const QuadrilateralNotes = ({ activeSub }) => {
   );
 
   const SquarePropertiesSVG = () => (
-    <svg viewBox="0 0 400 400">
+    <svg className="w-[67.5%] h-auto" viewBox="0 0 400 400">
       <style>{`text { font-family: "Times New Roman", serif; font-size: 24px; fill: black; text-anchor: middle; dominant-baseline: middle; }
         .sq-shape { stroke: black; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
         .sq-arc { stroke: #0ea5e9; stroke-width: 2; fill: none; }`}</style>
@@ -1200,7 +1200,7 @@ const GradientInclinationSVG1 = () => (
     <text x="175" y="185" fill="#3b82f6" fontSize="16" fontWeight="bold">地下</text>
     
     {/* 垂直邊：斜坡頂的高度 */}
-    <text x="395" y="100" fill="#22c55e" fontSize="16" fontWeight="bold" textAnchor="end">斜坡頂的高度</text>
+    <text x="400" y="93" fill="#22c55e" fontSize="16" fontWeight="bold" textAnchor="end">斜坡頂的高度</text>
     <path d="M 325,100 L 305,110" fill="none" stroke="#22c55e" strokeWidth="2" markerEnd="url(#arrow-green)" />
     
     {/* 斜邊：斜坡 */}
@@ -1362,7 +1362,7 @@ const BearingsCompassSVG = () => (
 );
 
 const BearingsSVG2 = () => (
-  <svg width="400" height="240" viewBox="0 -20 400 240" className="mx-auto block">
+  <svg width="100%" height="auto" viewBox="0 -20 400 240" className="mx-auto block w-full max-w-[520px] h-auto">
     <defs>
       <marker id="arrow-bearings-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
@@ -1380,25 +1380,26 @@ const BearingsSVG2 = () => (
       <text x="15" y="-5" fill="#334155" fontSize="18" fontWeight="bold" textAnchor="start">A</text>
       <text x="15" y="-80" fill="#ef4444" fontSize="14" fontWeight="bold" textAnchor="start">←從這裡開始轉</text>
       
-      {/* 直角符號 */}
-      <polyline points="-12,0 -12,12 0,12" stroke="#ef4444" strokeWidth="2" fill="none" />
+      {/* 三個象限的直角符號，使用不同長度方便分辨 */}
+      <polyline points="14,0 14,-14 0,-14" stroke="#ef4444" strokeWidth="2" fill="none" />
+      <polyline points="16,0 16,16 0,16" stroke="#ef4444" strokeWidth="2" fill="none" />
+      <polyline points="-18,0 -18,18 0,18" stroke="#ef4444" strokeWidth="2" fill="none" />
 
       {/* 線段B */}
       <line x1="0" y1="0" x2="-80" y2="-32.36" stroke="#334155" strokeWidth="2" />
       <text x="-90" y="-35" fill="#334155" fontSize="18" fontStyle="italic" textAnchor="end">B</text>
 
       {/* 22度弧 (在-x軸以上) */}
-      <path d="M -50,0 A 50 50 0 0 1 -46.35,-18.75" fill="none" stroke="#2563eb" strokeWidth="2" />
+      <path d="M -35,0 A 35 35 0 0 1 -32.45,-13.13" fill="none" stroke="#2563eb" strokeWidth="2" />
       <text x="-70" y="-5" fill="#334155" fontSize="16" fontWeight="bold">22°</text>
 
       {/* 270度弧 (3格) */}
       <path d="M 0,-40 A 40 40 0 1 1 -40,0" fill="none" stroke="#ef4444" strokeWidth="2" markerEnd="url(#arrow-bearings-red)" />
-      <text x="20" y="45" fill="#2563eb" fontSize="16" fontWeight="bold">270°(3格)</text>
-      <path d="M 20,38 Q 15,35 15,40" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+      <text x="28" y="45" fontSize="16" fontWeight="bold"><tspan fill="#ef4444">270°</tspan><tspan fill="#2563eb">(3格)</tspan></text>
 
       {/* 90-22 弧 */}
       <path d="M 0,-25 A 25 25 0 0 0 -23.18,-9.37" fill="none" stroke="#16a34a" strokeWidth="2" />
-      <text x="-40" y="-45" fill="#16a34a" fontSize="14" fontWeight="bold">90° - 22° = 68°</text>
+      <text x="-90" y="-45" fill="#16a34a" fontSize="14" fontWeight="bold">90° - 22° = 68°</text>
     </g>
   </svg>
 );
@@ -1417,10 +1418,14 @@ const ElevationSVG = () => (
     {/* 線條 */}
     <line x1="50" y1="80" x2="200" y2="80" stroke="#22c55e" strokeWidth="2.5" />
     <line x1="50" y1="80" x2="150" y2="30" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrow-red-e)" />
+    <g stroke="#050505" strokeWidth="2.5" strokeLinecap="round">
+      <path d="M 44,74 L 56,86 M 56,74 L 44,86" />
+      <path d="M 144,24 L 156,36 M 156,24 L 144,36" />
+    </g>
     
     {/* 文字 */}
-    <text x="35" y="85" fill="#334155" fontSize="20" fontWeight="bold">A</text>
-    <text x="165" y="25" fill="#334155" fontSize="20" fontWeight="bold">B</text>
+    <text x="25" y="87" fill="#334155" fontSize="20" fontWeight="bold">A</text>
+    <text x="160" y="35" fill="#334155" fontSize="20" fontWeight="bold">B</text>
   </svg>
 );
 
@@ -1438,10 +1443,14 @@ const DepressionSVG = () => (
     {/* 線條 */}
     <line x1="50" y1="80" x2="200" y2="80" stroke="#22c55e" strokeWidth="2.5" />
     <line x1="50" y1="80" x2="150" y2="130" stroke="#ef4444" strokeWidth="2.5" markerEnd="url(#arrow-red-d)" />
+    <g stroke="#050505" strokeWidth="2.5" strokeLinecap="round">
+      <path d="M 44,74 L 56,86 M 56,74 L 44,86" />
+      <path d="M 144,124 L 156,136 M 156,124 L 144,136" />
+    </g>
     
     {/* 文字 */}
-    <text x="35" y="75" fill="#334155" fontSize="20" fontWeight="bold">C</text>
-    <text x="160" y="145" fill="#334155" fontSize="20" fontWeight="bold">D</text>
+    <text x="25" y="87" fill="#334155" fontSize="20" fontWeight="bold">C</text>
+    <text x="160" y="135" fill="#334155" fontSize="20" fontWeight="bold">D</text>
   </svg>
 );
 
@@ -1611,7 +1620,7 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
                   </div>
                 </div>
 
-                <div className="text-center font-bold text-green-700 bg-green-50 rounded-lg p-3 shadow-sm border border-green-200 mx-auto md:mt-14 my-4 md:my-0">
+                <div className="text-center font-bold text-green-700 bg-green-50 rounded-lg p-3 shadow-sm border border-green-200 mx-auto md:mt-7 my-4 md:my-0">
                   <p className="text-xs mb-1">💡 技巧：</p>
                   <p>出發點</p>
                   <p className="text-sm whitespace-nowrap hidden md:block">←加水平線，找夾角→</p>
@@ -1978,9 +1987,9 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                       <Latex math="5 + 10 + 4 + 3 + 1" inline />
                     </div>
                   </div>
-                  <div className="text-green-700 font-bold text-sm lg:ml-4 flex flex-col">
-                    <span>← 上 × 下，加在一起！</span>
-                    <span>← 總次數</span>
+                  <div className="text-green-700 font-bold text-sm lg:ml-4 flex flex-col lg:relative lg:h-[58px] lg:w-[180px]">
+                    <span className="lg:absolute lg:top-0 lg:left-0">← 上 × 下，加在一起！</span>
+                    <span className="lg:absolute lg:top-8 lg:left-0">← 總次數</span>
                   </div>
                 </div>
               </div>
@@ -2067,9 +2076,9 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                       3 + 3 + 2 + 2
                     </div>
                   </div>
-                  <div className="text-green-700 font-bold text-sm space-y-2">
-                    <p>← 左 × 右 / 上 × 下 再相加</p>
-                    <p>← 權相加</p>
+                  <div className="text-green-700 font-bold text-sm space-y-2 sm:relative sm:h-[58px] sm:w-[200px]">
+                    <p className="sm:absolute sm:top-0 sm:left-0">← 左 × 右 / 上 × 下 再相加</p>
+                    <p className="sm:absolute sm:top-8 sm:left-0">← 權相加</p>
                   </div>
                 </div>
               </div>
