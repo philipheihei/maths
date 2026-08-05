@@ -25,7 +25,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
       <CollapsibleSection id="divisibility" title="1. 整除性" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-3">📝 常見整除法則</h3>
+            <h3 className="font-bold text-blue-800 mb-3">📝 檢查整除看特徵</h3>
             <div className="space-y-3">
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 2 整除</div>
@@ -424,7 +424,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
               <p className="text-green-700">上升, 增加, 賺, 盈利, 存入 ...</p>
             </div>
             <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-              <h3 className="font-bold text-red-700 mb-2">- / 負數 / 減數字眼</h3>
+              <h3 className="font-bold text-red-700 mb-2">− / 負數 / 減數字眼</h3>
               <p className="text-red-700">下降, 扣減, 蝕, 虧蝕, 提取 ...</p>
             </div>
           </div>
@@ -571,7 +571,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                   <span className="font-bold text-green-700">負負得正</span>
                   <div className="flex items-center gap-2">
                     <MathDisplay latex={String.raw`(−2) \times (−3) = +6`} inline className="text-blue-700 text-base" />
-                    <MathDisplay latex="(−x)(−x) = +x^2" inline className="text-red-700 text-base" />
+                    <MathDisplay latex="(−a)(−b) = +ab" inline className="text-red-700 text-base" />
                   </div>
                 </div>
                 <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
@@ -594,17 +594,21 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
 
           <div className="bg-red-50 p-4 rounded-lg border border-red-200 space-y-4">
             <h3 className="font-bold text-red-700 text-lg flex items-center gap-2">
-              需注意：<span className="text-sm">2個 +/- 痴在一起，需化簡</span>
+              需注意：
             </h3>
             
             <div className="grid md:grid-cols-2 gap-6 pt-2">
-              <div className="space-y-1 font-sans text-lg text-blue-800">
-                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)−(−42)" block left /></div></div>
-                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +24 + 42" block left /></div></div>
+              <div className="grid grid-rows-[4.75rem_3rem_3rem] font-sans text-lg text-blue-800">
+                <div className="relative pt-7">
+                  <p className="absolute left-8 right-0 top-0 text-center text-sm text-red-700 font-bold whitespace-nowrap">兩個+/兩個− 連在一起，需化簡</p>
+                  <span className="absolute left-[7rem] top-3.5 text-sm text-red-700 font-bold">↓</span>
+                  <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)\colorbox{#fef08a}{$−(−$}42)" block left /></div></div>
+                </div>
+                <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +24 \colorbox{#fef08a}{$+$} 42" block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +66" block left /></div></div>
               </div>
-              <div className="space-y-1 font-sans text-lg text-blue-800 relative">
-                <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(−3)(−4)−5" block left /></div><div className="absolute right-4 top-2 text-sm text-green-600 font-bold">中間是 ×</div></div>
+              <div className="grid grid-rows-[4.75rem_3rem_3rem_3rem] font-sans text-lg text-blue-800 relative">
+                <div className="flex items-start pt-7"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(−3)(−4)−5" block left /></div><p className="absolute left-[3.2rem] top-0 text-sm text-green-600 font-bold whitespace-nowrap">中間是 ×</p><span className="absolute left-[4.5rem] top-3.5 text-sm text-green-600 font-bold">↓</span></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math={`= +(3 \\times 4)−5`} block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +12−5" block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +7" block left /></div></div>
@@ -616,7 +620,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
             <div className="flex flex-col gap-4 font-sans text-lg text-blue-800">
               <div className="flex items-center gap-4">
                 <span className="w-8 text-slate-500 text-sm flex-shrink-0">e.g.</span>
-                <div className="flex-1 max-w-xs">
+                <div className="w-fit flex-shrink-0">
                   <Latex math={`\\dfrac{−6+(−12)}{−3+5}`} block left />
                 </div>
                 <span className="text-green-600 text-sm font-bold">← 分數上下分開計</span>
@@ -624,7 +628,7 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
               
               <div className="flex items-center gap-4">
                 <span className="w-8 flex justify-end flex-shrink-0"><span className="inline-block origin-right [transform:scaleX(1.35)]">=</span></span>
-                <div className="flex-1 max-w-xs ml-2">
+                <div className="w-fit flex-shrink-0 ml-2">
                   <Latex math={`\\dfrac{−18}{+2}`} block left />
                 </div>
                 <span className="text-green-600 text-sm font-bold">← 上下剩一個數，可計除數</span>

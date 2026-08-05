@@ -421,9 +421,9 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
               
               {/* 括號外 */}
               <div className="relative">
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 flex flex-col items-center">
-                  <span className="text-indigo-700 text-[15px] font-bold whitespace-nowrap mb-1 font-sans not-italic">括號外：上下變化</span>
-                  <span className="text-indigo-700 text-3xl font-black font-sans not-italic origin-center rotate-[30deg] translate-x-[-15px]">↓</span>
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex flex-col items-center">
+                  <span className="text-orange-700 text-[15px] font-bold whitespace-nowrap mb-1 font-sans not-italic">括號外：上下變化</span>
+                  <span className="text-orange-700 text-3xl font-black font-sans not-italic">↓</span>
                 </div>
                 <span className="text-green-700 not-italic font-sans">k</span>
               </div>

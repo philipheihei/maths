@@ -929,9 +929,9 @@ export const QuadrilateralNotes = ({ activeSub }) => {
         <div className="text-sm text-slate-500 mb-3">3A05 §5.6A</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
-            <p className="text-slate-700">若 M 和 N 分別是 AB 和 AC 的中點，</p>
-            <p className="text-red-600 font-bold">則 (a) MN // BC</p>
-            <p className="text-red-600 font-bold">　 (b) MN = <Latex math="\dfrac{1}{2}" /> BC</p>
+            <p className="text-slate-700">若 <i>M</i> 和 <i>N</i> 分別是 <i>AB</i> 和 <i>AC</i> 的中點，</p>
+            <p className="text-red-600 font-bold">則 (a) <i>MN</i> // <i>BC</i></p>
+            <p className="text-red-600 font-bold">　 (b) <i>MN</i> = <Latex math="\dfrac{1}{2}" /> <i>BC</i></p>
             <p className="text-slate-500 italic text-sm mt-2">(簡記：中點定理)</p>
           </div>
           <div className="flex justify-center">
@@ -946,11 +946,11 @@ export const QuadrilateralNotes = ({ activeSub }) => {
               <line x1="112.4" y1="38.4" x2="102.4" y2="45.0" stroke="#0ea5e9" strokeWidth="1.5" />
               <line x1="142.7" y1="85.0" x2="132.7" y2="91.6" stroke="#0ea5e9" strokeWidth="1.5" />
               <line x1="144.9" y1="88.4" x2="134.9" y2="95.0" stroke="#0ea5e9" strokeWidth="1.5" />
-              <text x="85" y="12" fontSize="13" fill="#333">A</text>
-              <text x="10" y="115" fontSize="13" fill="#333">B</text>
-              <text x="158" y="115" fontSize="13" fill="#333">C</text>
-              <text x="40" y="62" fontSize="13" fill="#6a1b9a">M</text>
-              <text x="125" y="62" fontSize="13" fill="#6a1b9a">N</text>
+              <text x="90" y="8" fontSize="18" style={{ fontSize: '18px' }} fontStyle="italic" fill="#333">A</text>
+              <text x="15" y="115" fontSize="18" style={{ fontSize: '18px' }} fontStyle="italic" fill="#333">B</text>
+              <text x="165" y="115" fontSize="18" style={{ fontSize: '18px' }} fontStyle="italic" fill="#333">C</text>
+              <text x="45" y="62" fontSize="18" style={{ fontSize: '18px' }} fontStyle="italic" fill="#6a1b9a">M</text>
+              <text x="135" y="62" fontSize="18" style={{ fontSize: '18px' }} fontStyle="italic" fill="#6a1b9a">N</text>
             </svg>
           </div>
         </div>
@@ -959,33 +959,83 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       <CollapsibleSection id="intercept-theorem" title="截線定理 (Intercept Theorem)" num={5} color="purple" activeSub={activeSub} sectionRef={s5}>
         <div className="text-sm text-slate-500 mb-3">3A05 §5.6B</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-3">
-            <p className="text-slate-700">若 AB // CD // EF，且 AC = CE，</p>
-            <p className="text-red-600 font-bold">則 BD = DF</p>
+          <div className="border border-slate-200 rounded-lg p-4 space-y-3">
+            <h3 className="font-bold text-purple-700">款式A：三條平行線</h3>
+            <p className="text-slate-700">若 <i>AB</i> // <i>CD</i> // <i>EF</i>，且 <i>AC</i> = <i>CE</i>，</p>
+            <p className="text-red-600 font-bold">則 <i>BD</i> = <i>DF</i></p>
             <p className="text-slate-500 italic text-sm">(三條平行線截相等線段)</p>
             <p className="text-slate-500 italic text-sm">(簡記：截線定理)</p>
-          </div>
-          <div className="flex justify-center">
-            <svg width="180" height="120" viewBox="0 0 180 120">
-              <line x1="20" y1="20" x2="160" y2="20" stroke="#333" strokeWidth="1.5" />
-              <line x1="20" y1="60" x2="160" y2="60" stroke="#333" strokeWidth="1.5" />
-              <line x1="20" y1="100" x2="160" y2="100" stroke="#333" strokeWidth="1.5" />
-              <line x1="50" y1="10" x2="75" y2="110" stroke="#1565c0" strokeWidth="2" />
-              <line x1="110" y1="10" x2="135" y2="110" stroke="#1565c0" strokeWidth="2" />
-              {/* Parallel signs (arrowheads pointing right) */}
-              <polyline points="144,16 150,20 144,24" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <polyline points="144,56 150,60 144,64" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <polyline points="144,96 150,100 144,104" fill="none" stroke="#d32f2f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              {/* AC = CE tick marks (perpendicular to transversal) */}
-              <line x1="52.5" y1="41.2" x2="62.5" y2="38.8" stroke="#0ea5e9" strokeWidth="1.5" />
-              <line x1="62.5" y1="81.2" x2="72.5" y2="78.8" stroke="#0ea5e9" strokeWidth="1.5" />
-              <text x="38" y="16" fontSize="12" fill="#333">A</text>
-              <text x="100" y="16" fontSize="12" fill="#333">B</text>
-              <text x="54" y="56" fontSize="12" fill="#333">C</text>
-              <text x="115" y="56" fontSize="12" fill="#333">D</text>
-              <text x="67" y="96" fontSize="12" fill="#333">E</text>
-              <text x="128" y="96" fontSize="12" fill="#333">F</text>
+            <div className="flex justify-center pt-2">
+            <svg width="200" height="150" viewBox="0 0 200 150" role="img" aria-labelledby="interceptSvgTitle interceptSvgDesc" xmlns="http://www.w3.org/2000/svg">
+              <title id="interceptSvgTitle">平行線與兩條截線的幾何圖</title>
+              <desc id="interceptSvgDesc">三條水平平行線被兩條斜線截取，交點依次標示 A 至 F，左方兩段有相等記號。</desc>
+
+              <g fill="none" stroke="#111827" strokeWidth="2.5" strokeLinecap="round">
+                <line x1="12" y1="25" x2="188" y2="25" />
+                <line x1="12" y1="75" x2="188" y2="75" />
+                <line x1="12" y1="125" x2="188" y2="125" />
+              </g>
+
+              <g fill="none" stroke="#111827" strokeWidth="3" strokeLinecap="round">
+                <line x1="70" y1="2" x2="45" y2="148" />
+                <line x1="130" y1="2" x2="155" y2="148" />
+              </g>
+
+              <g fill="none" stroke="#159bd3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="95,21 101,25 95,29" />
+                <polyline points="95,71 101,75 95,79" />
+                <polyline points="95,121 101,125 95,129" />
+              </g>
+
+              <g fill="none" stroke="#159bd3" strokeWidth="2" strokeLinecap="round">
+                <line x1="56" y1="48" x2="68" y2="50" />
+                <line x1="54" y1="54" x2="66" y2="56" />
+                <line x1="47" y1="98" x2="59" y2="100" />
+                <line x1="45" y1="104" x2="57" y2="106" />
+              </g>
+
+              <g fill="#111827" fontFamily="Georgia, 'Times New Roman', serif" fontSize="14" fontStyle="italic">
+                <text x="55" y="15" fontSize="18" style={{ fontSize: '18px' }}>A</text>
+                <text x="146" y="15" fontSize="18" style={{ fontSize: '18px' }}>B</text>
+                <text x="47" y="65" fontSize="18" style={{ fontSize: '18px' }}>C</text>
+                <text x="158" y="65" fontSize="18" style={{ fontSize: '18px' }}>D</text>
+                <text x="38" y="115" fontSize="18" style={{ fontSize: '18px' }}>E</text>
+                <text x="166" y="115" fontSize="18" style={{ fontSize: '18px' }}>F</text>
+              </g>
             </svg>
+            </div>
+          </div>
+
+          <div className="border border-slate-200 rounded-lg p-4 space-y-3">
+            <h3 className="font-bold text-purple-700">款式B：三角形</h3>
+            <p className="text-slate-700">若 <i>M</i> 是 <i>AB</i> 的中點，</p>
+            <p className="text-red-600 font-bold">且 <i>MN</i> // <i>BC</i>，</p>
+            <p className="text-red-600 font-bold">則 <i>AN</i> = <i>NC</i>。</p>
+            <p className="text-slate-500 italic text-sm">(簡記：截線定理)</p>
+            <div className="flex justify-center pt-2">
+              <svg width="180" height="130" viewBox="0 0 180 130" role="img" aria-labelledby="midpointInterceptSvgTitle midpointInterceptSvgDesc" xmlns="http://www.w3.org/2000/svg">
+                <title id="midpointInterceptSvgTitle">中點與平行截線的幾何圖</title>
+                <desc id="midpointInterceptSvgDesc">三角形 ABC 中，M 是 AB 的中點，MN 平行 BC，N 位於 AC 上。</desc>
+                <path d="M 90,15 L 25,115 L 155,115 Z" fill="none" stroke="#111827" strokeWidth="2.5" strokeLinejoin="round" />
+                <line x1="57" y1="65" x2="123" y2="65" stroke="#111827" strokeWidth="2.5" />
+                <line x1="25" y1="115" x2="155" y2="115" stroke="#111827" strokeWidth="2.5" />
+                <g fill="none" stroke="#159bd3" strokeWidth="2" strokeLinecap="round">
+                  <line x1="67" y1="39" x2="77" y2="45" />
+                  <line x1="35" y1="87" x2="45" y2="93" />
+                </g>
+                <g fill="none" stroke="#159bd3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="86,61 92,65 86,69" />
+                  <polyline points="86,111 92,115 86,119" />
+                </g>
+                <g fill="#111827" fontFamily="Georgia, 'Times New Roman', serif" fontSize="18" fontStyle="italic">
+                  <text x="90" y="8" fontSize="18" style={{ fontSize: '18px' }}>A</text>
+                  <text x="15" y="115" fontSize="18" style={{ fontSize: '18px' }}>B</text>
+                  <text x="165" y="115" fontSize="18" style={{ fontSize: '18px' }}>C</text>
+                  <text x="45" y="62" fontSize="18" style={{ fontSize: '18px' }}>M</text>
+                  <text x="135" y="62" fontSize="18" style={{ fontSize: '18px' }}>N</text>
+                </g>
+              </svg>
+            </div>
           </div>
         </div>
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-6">
@@ -1221,7 +1271,7 @@ const ContourLinesSVG = () => (
 );
 
 const BearingsSVG1 = () => (
-  <svg width="400" height="200" viewBox="0 0 400 200" className="mx-auto block">
+  <svg width="300" height="300" viewBox="-30 -30 260 260" className="mx-auto block">
     <defs>
       <marker id="arrow-bearings-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
@@ -1230,76 +1280,83 @@ const BearingsSVG1 = () => (
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
       </marker>
     </defs>
-    {/* ===== 左圖 (真方位角) ===== */}
-    <g transform="translate(100, 100)">
+    <g transform="translate(100, 100) scale(1.25)">
       {/* 十字軸 */}
       <line x1="0" y1="80" x2="0" y2="-80" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arrow-bearings-gray)" />
-      <line x1="-80" y1="0" x2="80" y2="0" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arrow-bearings-gray)" />
-      <text x="0" y="-90" fill="#334155" fontSize="14" fontWeight="bold" textAnchor="middle">N</text>
+      <line x1="-80" y1="0" x2="80" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
+      <text x="0" y="-90" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="middle">N</text>
       <text x="-8" y="-10" fill="#334155" fontSize="14" fontStyle="italic" textAnchor="end">O</text>
 
       {/* 虛線 */}
-      <line x1="0" y1="0" x2="50" y2="-60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <line x1="0" y1="0" x2="50" y2="-60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+      <circle cx="50" cy="-60" r="4" fill="#334155" />
       <text x="55" y="-60" fill="#334155" fontSize="14" fontStyle="italic">A</text>
       
-      <line x1="0" y1="0" x2="40" y2="60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <line x1="0" y1="0" x2="40" y2="60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+      <circle cx="40" cy="60" r="4" fill="#334155" />
       <text x="45" y="65" fill="#334155" fontSize="14" fontStyle="italic">B</text>
 
-      <line x1="0" y1="0" x2="-60" y2="40" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
-      <text x="-70" y="45" fill="#334155" fontSize="14" fontStyle="italic">C</text>
+      <line x1="0" y1="0" x2="-60" y2="40" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+      <circle cx="-60" cy="40" r="4" fill="#334155" />
+      <text x="-82" y="54" fill="#334155" fontSize="14" fontStyle="italic">C</text>
 
       {/* 弧度 */}
       {/* A: 由N至A (35度) */}
       <path d="M 0,-30 A 30 30 0 0 1 19.3,-23" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="25" y="-30" fill="#2563eb" fontSize="12" fontWeight="bold">35°</text>
+      <text x="13" y="-35" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">35°</text>
 
       {/* B: 由N至B (152度) -> 與S角為28度 */}
       <path d="M 0,-40 A 40 40 0 0 1 22.2,33.3" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="35" y="15" fill="#2563eb" fontSize="12" fontWeight="bold">28°</text>
+      <text x="39" y="-10" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">28°</text>
 
       {/* C: 由N至C (245度) -> 與S角為65度, 剩餘25度 */}
       <path d="M 0,-50 A 50 50 0 1 1 -42.4,28.3" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <path d="M 0,35 A 35 35 0 0 1 -29.6,19.7" fill="none" stroke="#16a34a" strokeWidth="2" />
-      <text x="-15" y="45" fill="#16a34a" fontSize="12" fontWeight="bold">65°</text>
-      <text x="-35" y="15" fill="#2563eb" fontSize="12" fontWeight="bold">25°</text>
+      <path d="M 0,17.5 A 17.5 17.5 0 0 1 -14.8,9.85" fill="none" stroke="#16a34a" strokeWidth="2" />
+      <text x="-14" y="29" fill="#16a34a" fontSize="12" fontWeight="bold" textAnchor="middle">65°</text>
+      <text x="-44" y="15" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">25°</text>
     </g>
+  </svg>
+);
 
-    {/* ===== 右圖 (羅盤方位角) ===== */}
-    <g transform="translate(300, 100)">
-      {/* 十字軸 */}
-      <line x1="0" y1="80" x2="0" y2="-80" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arrow-bearings-gray)" />
-      <line x1="-80" y1="0" x2="80" y2="0" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arrow-bearings-gray)" />
-      <text x="0" y="-90" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="middle">N</text>
-      <text x="0" y="95" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="middle">S</text>
-      <text x="-85" y="5" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="end">W</text>
-      <text x="85" y="5" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="start">E</text>
+const BearingsCompassSVG = () => (
+  <svg width="300" height="300" viewBox="-40 -40 280 280" className="mx-auto block">
+    <defs>
+      <marker id="arrow-compass-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+      </marker>
+      <marker id="arrow-compass-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+      </marker>
+    </defs>
+    <g transform="translate(100, 100) scale(1.25)">
+      <line x1="0" y1="80" x2="0" y2="-80" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arrow-compass-gray)" />
+      <line x1="-80" y1="0" x2="80" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
+      <text x="0" y="-84" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="middle">N</text>
+      <text x="0" y="-100" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="middle">北</text>
+      <text x="0" y="92" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="middle">S</text>
+      <text x="0" y="106" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="middle">南</text>
+      <text x="-80" y="5" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="end">W</text>
+      <text x="-98" y="5" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="end">西</text>
+      <text x="80" y="5" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="start">E</text>
+      <text x="94" y="5" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="start">東</text>
       <text x="-8" y="-10" fill="#334155" fontSize="14" fontStyle="italic" textAnchor="end">O</text>
-
-      {/* 虛線 */}
-      <line x1="0" y1="0" x2="50" y2="-60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <line x1="0" y1="0" x2="50" y2="-60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+      <circle cx="50" cy="-60" r="4" fill="#334155" />
       <text x="55" y="-60" fill="#334155" fontSize="14" fontStyle="italic">A</text>
-      
-      <line x1="0" y1="0" x2="40" y2="60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
+      <line x1="0" y1="0" x2="40" y2="60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+      <circle cx="40" cy="60" r="4" fill="#334155" />
       <text x="45" y="65" fill="#334155" fontSize="14" fontStyle="italic">B</text>
-
-      <line x1="0" y1="0" x2="-60" y2="40" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" markerEnd="url(#arrow-bearings-p)" />
-      <text x="-70" y="45" fill="#334155" fontSize="14" fontStyle="italic">C</text>
-
-      {/* 弧度 */}
-      {/* A */}
+      <line x1="0" y1="0" x2="-60" y2="40" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+      <circle cx="-60" cy="40" r="4" fill="#334155" />
+      <text x="-82" y="54" fill="#334155" fontSize="14" fontStyle="italic">C</text>
       <path d="M 0,-30 A 30 30 0 0 1 19.3,-23" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="18" y="-38" fill="#2563eb" fontSize="12" fontWeight="bold">35°</text>
-
-      {/* B */}
+      <text x="13" y="-40" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">35°</text>
       <path d="M 0,30 A 30 30 0 0 0 16.6,25" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="25" y="40" fill="#2563eb" fontSize="12" fontWeight="bold">28°</text>
-
-      {/* C */}
-      <path d="M 0,35 A 35 35 0 0 1 -29.6,19.7" fill="none" stroke="#16a34a" strokeWidth="2" />
-      <text x="-15" y="45" fill="#16a34a" fontSize="12" fontWeight="bold">65°</text>
-      
+      <text x="12" y="40" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">28°</text>
+      <path d="M 0,17.5 A 17.5 17.5 0 0 1 -14.8,9.85" fill="none" stroke="#16a34a" strokeWidth="2" />
+      <text x="-14" y="29" fill="#16a34a" fontSize="12" fontWeight="bold" textAnchor="middle">65°</text>
       <path d="M -30,0 A 30 30 0 0 0 -25,16.7" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="-48" y="20" fill="#2563eb" fontSize="12" fontWeight="bold">25°</text>
+      <text x="-44" y="15" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">25°</text>
     </g>
   </svg>
 );
@@ -1462,11 +1519,11 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
             <div className="grid grid-cols-1 md:grid-cols-[minmax(0,4fr)_minmax(180px,1fr)] items-center gap-4 mb-3">
               <ContourLinesSVG />
               <div className="relative min-h-[263px] text-sm">
-                <div className="md:absolute md:top-[15%] md:left-0 border-l-4 border-blue-600 pl-3 text-blue-800">
+                <div className="md:absolute md:top-[8%] md:left-0 md:-translate-y-14 pl-3 text-blue-800">
                   <p className="font-bold">題目提供：</p>
                   <p>實際水平距離 325m</p>
                 </div>
-                <div className="mt-4 md:mt-0 md:absolute md:top-[38%] md:left-0 border-l-4 border-green-600 pl-3 text-green-700">
+                <div className="mt-4 md:mt-0 md:absolute md:top-[30%] md:left-0 md:-translate-y-4 pl-3 text-green-700">
                   <p className="font-bold">自己計出：</p>
                   <p>450 − 400 = 50m</p>
                 </div>
@@ -1488,37 +1545,39 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4 border border-red-200">
                 <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">真方位角</p>
-                <ul className="text-sm text-slate-700 space-y-1 mb-3">
+                <ul className="text-sm text-slate-700 space-y-1 mb-3 h-[92px]">
                   <li>• 0 - 360° 表達</li>
                   <li>• 必定由 N 開始<span className="text-red-600 font-bold">量度</span> (順時針)</li>
                   <li>• 答案<span className="text-red-600 font-bold">必定出現 3 位數字</span></li>
                 </ul>
-                <div className="bg-slate-50 p-2 rounded text-sm text-slate-700">
+                <div className="min-h-[108px] bg-slate-50 p-2 rounded text-sm text-slate-700">
                   <p className="font-bold mb-1">e.g.</p>
                   <p>O 測得 A：035°</p>
                   <p>O 測得 B：152°</p>
                   <p>O 測得 C：245°</p>
                 </div>
+                <div className="flex h-[300px] items-center justify-center mt-3">
+                  <BearingsSVG1 />
+                </div>
               </div>
               <div className="bg-white rounded-lg p-4 border border-red-200">
                 <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">羅盤方位角</p>
-                <ul className="text-sm text-slate-700 space-y-1 mb-3">
+                <ul className="text-sm text-slate-700 space-y-1 mb-3 h-[92px]">
                   <li>• 以 0° - 90° 表達</li>
                   <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">①</span> 以 N/S 作開首 (論線/角度近 N/S)</li>
-                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">②</span> 配 0 - 90° (順/逆時針)</li>
-                  <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">③</span> 以 W/E 作結束 (想想角度向哪移動)</li>
+                  <li><span className="bg-pink-200 px-1 rounded text-pink-700 font-bold">②</span> 配 0 - 90° (順/逆時針)</li>
+                  <li><span className="bg-blue-200 px-1 rounded text-blue-800 font-bold">③</span> 以 W/E 作結束 (想想角度向哪移動)</li>
                 </ul>
                 <div className="bg-slate-50 p-2 rounded text-sm space-y-1">
                   <p className="font-bold mb-1">e.g.</p>
-                  <div className="flex items-center gap-2">O 測得 A：<span className="bg-yellow-200 px-1 font-bold">N</span><span className="text-red-500 font-bold">35°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
-                  <div className="flex items-center gap-2">O 測得 B：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="text-red-500 font-bold">28°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
-                  <div className="flex items-center gap-2">O 測得 C：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="text-red-500 font-bold">65°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">W</span></div>
+                  <div className="flex items-center gap-2">O 測得 A：<span className="bg-yellow-200 px-1 font-bold">N</span><span className="bg-pink-200 px-1 text-pink-700 font-bold">35°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
+                  <div className="flex items-center gap-2">O 測得 B：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="bg-pink-200 px-1 text-pink-700 font-bold">28°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
+                  <div className="flex items-center gap-2">O 測得 C：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="bg-pink-200 px-1 text-pink-700 font-bold">65°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">W</span></div>
+                </div>
+                <div className="flex h-[300px] items-center justify-center mt-3">
+                  <BearingsCompassSVG />
                 </div>
               </div>
-            </div>
-            {/* 📐 繪製：真方位角與羅盤方位角圖示 */}
-            <div className="flex justify-center mb-3 mt-3">
-              <BearingsSVG1 />
             </div>
           </div>
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
