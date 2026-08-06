@@ -67,14 +67,14 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-2">📝 2. 相似三角形的性質</h3>
             <p className="text-slate-700 font-bold mb-3">按字母前中後認對應角/邊</p>
-            <p className="text-slate-700 mb-2">若 <span className="font-bold">△ABC ~ △XYZ</span>，則</p>
+            <p className="text-slate-700 mb-2">若 <span className="font-bold">△<span className="italic">ABC</span> ~ △<span className="italic">XYZ</span></span>，則</p>
             
             <div className="space-y-4 pl-4">
               <div className="bg-white p-3 rounded shadow-sm">
                 <div className="flex items-start gap-2 mb-1">
                   <span className="font-bold text-slate-700">(a)</span>
                   <div>
-                    <span className="font-bold text-slate-800 tracking-wider">∠A=∠X , ∠B=∠Y , ∠C=∠Z</span>
+                    <span className="font-bold text-slate-800 tracking-wider italic">∠A=∠X , ∠B=∠Y , ∠C=∠Z</span>
                   </div>
                   <span className="ml-auto font-bold text-purple-700">角度相等</span>
                 </div>
@@ -96,7 +96,7 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
             </div>
             
             <div className="bg-white rounded-lg p-4 mt-4 border border-slate-200">
-              <p className="text-sm text-slate-600 mb-2">例如：已知 <span className="font-bold text-slate-800">△ABC ~ △PQR</span>。求 x 和 y。</p>
+              <p className="text-sm text-slate-600 mb-2">例如：已知 <span className="font-bold text-slate-800">△<span className="italic">ABC</span> ~ △<span className="italic">PQR</span></span>。求 x 和 y。</p>
               
               <div className="relative">
                 <div className="text-center mb-2 mx-auto text-green-700 font-bold bg-green-100 px-3 py-1 rounded inline-block">
@@ -160,7 +160,7 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                   <div className="bg-slate-50 rounded p-3 text-[15px]">
                     <div className="flex justify-between items-center bg-yellow-100 px-2 py-1 rounded mb-2">
-                       <span className="font-bold">∠A = ∠P</span>
+                       <span className="font-bold italic">∠A = ∠P</span>
                        <span className="text-slate-600 text-sm">(相似 △ 的對應角)</span>
                     </div>
                     <div className="px-2 font-bold mb-4">
@@ -323,24 +323,24 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
               
               <div className="bg-slate-50 rounded p-3 font-sans">
                 <div className="grid grid-cols-[auto_auto_1fr_auto] gap-x-2 text-[15px] mb-2 leading-loose">
-                  <div className="text-right">∠C</div>
-                  <div className="text-center">=</div>
-                  <div className="text-left font-bold text-slate-700">180° - 80° - 40°</div>
+                  <div className="text-right"><Latex math="\angle C" /></div>
+                  <div className="text-center"><Latex math="=" /></div>
+                  <div className="text-left font-bold text-slate-700"><Latex math="180^\circ - 80^\circ - 40^\circ" /></div>
                   <div className="text-right text-slate-500 text-sm">(△ 內角和)</div>
 
                   <div className="text-right"></div>
-                  <div className="text-center">=</div>
-                  <div className="text-left font-bold text-slate-700">60°</div>
+                  <div className="text-center"><Latex math="=" /></div>
+                  <div className="text-left font-bold text-slate-700"><Latex math="60^\circ" /></div>
                   <div className="text-right"></div>
 
-                  <div className="text-right">∠P</div>
-                  <div className="text-center">=</div>
-                  <div className="text-left font-bold text-slate-700">180° - 60° - 80°</div>
+                  <div className="text-right"><Latex math="\angle P" /></div>
+                  <div className="text-center"><Latex math="=" /></div>
+                  <div className="text-left font-bold text-slate-700"><Latex math="180^\circ - 60^\circ - 80^\circ" /></div>
                   <div className="text-right text-slate-500 text-sm">(△ 內角和)</div>
 
                   <div className="text-right"></div>
-                  <div className="text-center">=</div>
-                  <div className="text-left font-bold text-slate-700">40°</div>
+                  <div className="text-center"><Latex math="=" /></div>
+                  <div className="text-left font-bold text-slate-700"><Latex math="40^\circ" /></div>
                   <div className="text-right"></div>
                 </div>
 
@@ -349,20 +349,20 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                   <table className="text-[15px] mx-10 text-slate-800">
                     <tbody>
                       <tr>
-                        <td className="pr-2 pb-1 font-serif italic text-lg">∵</td>
-                        <td className="font-bold">∠A = ∠R</td>
+                        <td className="pr-2 pb-1 font-serif text-lg">∵</td>
+                        <td className="font-bold"><Latex math="\angle A = \angle R" /></td>
                       </tr>
                       <tr>
                         <td className="pr-2 pb-1"></td>
-                        <td className="font-bold">∠B = ∠P</td>
+                        <td className="font-bold"><Latex math="\angle B = \angle P" /></td>
                       </tr>
                       <tr>
                         <td className="pr-2 pb-2"></td>
-                        <td className="font-bold">∠C = ∠Q</td>
+                        <td className="font-bold"><Latex math="\angle C = \angle Q" /></td>
                       </tr>
                       <tr>
-                        <td className="pr-2 pt-2 font-serif italic text-lg border-t border-slate-300">∴</td>
-                        <td className="font-bold pt-2 border-t border-slate-300">△ABC ~ △RPQ <span className="border-b-2 border-red-500 text-red-700 mx-1 px-1">(AAA)</span></td>
+                        <td className="pr-2 pt-2 font-serif text-lg border-t border-slate-300">∴</td>
+                        <td className="font-bold pt-2 border-t border-slate-300"><Latex math="\triangle ABC \sim \triangle RPQ" /> <span className="border-b-2 border-red-500 text-red-700 mx-1 px-1">(AAA)</span></td>
                       </tr>
                     </tbody>
                   </table>
@@ -379,7 +379,7 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
             <h3 className="font-bold text-purple-800 mb-3">📝 求以下相似三角形中的未知量。</h3>
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <div className="font-bold text-lg mb-3 flex items-center gap-4">
-                <span>已知 <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△ABC</span> ~ <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△EDC</span></span>
+                <span>已知 <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△<span className="italic">ABC</span></span> ~ <span className="text-blue-800 underline decoration-green-500 underline-offset-4 decoration-2">△<span className="italic">EDC</span></span></span>
                 <span className="text-red-600 text-sm bg-red-50 px-2 py-1 rounded-full flex items-center gap-1 group relative">
                   ← 1. 先看已知對應邊
                 </span>
@@ -450,21 +450,24 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                 
                 <div>
                   <p className="text-red-700 font-bold mb-1">3. 以放大率找未知數：</p>
-                  <div className="grid grid-cols-[1rem_auto_auto_auto] gap-x-2 gap-y-3 font-bold text-lg ml-6 text-green-700 items-center">
-                    <div></div>
-                    <div className="text-right">x</div>
-                    <div className="text-center">=</div>
-                    <div className="text-left">3(2) = 6</div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 font-bold text-lg ml-6 text-green-700 items-start">
+                    <div className="grid grid-cols-[1rem_auto_auto] gap-x-2 gap-y-3 items-center">
+                      <div></div>
+                      <div className="text-right"><Latex math="x" /></div>
+                      <div className="text-left"><Latex math="= 3(2)" /></div>
+                      <div></div>
+                      <div></div>
+                      <div className="text-left"><Latex math="= 6" /></div>
+                    </div>
 
-                    <div></div>
-                    <div className="text-right">2y</div>
-                    <div className="text-center">=</div>
-                    <div className="text-left">8</div>
-
-                    <div></div>
-                    <div className="text-right">y</div>
-                    <div className="text-center">=</div>
-                    <div className="text-left">4</div>
+                    <div className="grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-3 items-center">
+                      <div className="text-right"><Latex math="2y" /></div>
+                      <div className="text-center"><Latex math="=" /></div>
+                      <div className="text-left"><Latex math="8" /></div>
+                      <div className="text-right"><Latex math="y" /></div>
+                      <div className="text-center"><Latex math="=" /></div>
+                      <div className="text-left"><Latex math="4" /></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1844,12 +1847,12 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                   <div className="pl-2 space-y-1">
                     <div className="grid grid-cols-[3rem_1.25rem_auto] items-center">
                       <span className="font-semibold text-slate-800 text-right pr-2">左方</span>
-                      <span className="font-semibold text-slate-700 text-center">=</span>
+                      <span className="font-semibold text-slate-700 text-center"><Latex math="=" /></span>
                       <Latex math="2(6x+8)" />
                     </div>
                     <div className="grid grid-cols-[3rem_1.25rem_auto] items-center">
                       <span></span>
-                      <span className="font-semibold text-slate-700 text-center">=</span>
+                      <span className="font-semibold text-slate-700 text-center"><Latex math="=" /></span>
                       <Latex math="12x+16" />
                     </div>
                   </div>
@@ -1860,12 +1863,12 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                   <div className="pl-2 space-y-1">
                     <div className="grid grid-cols-[3rem_1.25rem_auto] items-center">
                       <span className="font-semibold text-slate-800 text-right pr-2">右方</span>
-                      <span className="font-semibold text-slate-700 text-center">=</span>
+                      <span className="font-semibold text-slate-700 text-center"><Latex math="=" /></span>
                       <Latex math="4(3x+4)" />
                     </div>
                     <div className="grid grid-cols-[3rem_1.25rem_auto] items-center">
                       <span></span>
-                      <span className="font-semibold text-slate-700 text-center">=</span>
+                      <span className="font-semibold text-slate-700 text-center"><Latex math="=" /></span>
                       <Latex math="12x+16" />
                     </div>
                   </div>
@@ -1907,15 +1910,27 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                      <span className="underline decoration-green-500 decoration-2 underline-offset-4 text-green-700 font-semibold px-1">+ B</span>
                    </div>
                    <div className="flex justify-center gap-8 mt-4 text-sm font-bold">
-                      <div className="flex flex-col text-red-600">
+                      <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-0 text-red-600">
                         <span>(有 x 項)</span>
-                        <Latex math="\therefore Ax = 4x" />
-                        <Latex math="A = 4" />
+                        <span></span>
+                        <span></span>
+                        <Latex math="\therefore Ax" />
+                        <Latex math="=" />
+                        <Latex math="4x" />
+                        <span className="invisible"><Latex math="\therefore Ax" /></span>
+                        <Latex math="=" />
+                        <Latex math="4" />
                       </div>
-                      <div className="flex flex-col text-green-600">
+                      <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-0 text-green-600">
                         <span>(沒 x 項)</span>
-                        <Latex math="−5 = B" />
-                        <Latex math="B = −5" />
+                        <span></span>
+                        <span></span>
+                        <Latex math="−5" />
+                        <Latex math="=" />
+                        <Latex math="B" />
+                        <span className="invisible"><Latex math="−5" /></span>
+                        <Latex math="=" />
+                        <Latex math="−5" />
                       </div>
                    </div>
                  </div>
@@ -1936,32 +1951,44 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                 <div className="space-y-1 font-semibold text-slate-800">
                   <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                     <span>左方</span>
-                    <span>=</span>
+                    <span><Latex math="=" /></span>
                     <Latex math="(3x+1)(x+7)" />
                   </div>
                   <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                     <span className="invisible">左方</span>
-                    <span>=</span>
+                    <span><Latex math="=" /></span>
                     <Latex math="3x^2 + 21x + x + 7" />
                   </div>
                   <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                     <span className="invisible">左方</span>
-                    <span>=</span>
+                    <span><Latex math="=" /></span>
                     <Latex math="3x^2 + 22x + 7" />
                   </div>
                 </div>
               </div>
               
               <div className="mt-4 bg-slate-50 p-4 rounded-lg flex flex-col md:flex-row gap-6 justify-center">
-                 <div className="flex flex-col text-green-600 font-bold border-l-4 border-green-400 pl-3">
+                 <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-0 text-green-600 font-bold border-l-4 border-green-400 pl-3">
                    <p className="text-slate-600 text-sm mb-1">比較 x 項：</p>
-                   <Latex math="Px = 22x" />
-                   <Latex math="P = 22" />
+                   <span></span>
+                   <span></span>
+                   <Latex math="Px" />
+                   <Latex math="=" />
+                   <Latex math="22x" />
+                   <span className="invisible"><Latex math="Px" /></span>
+                   <Latex math="=" />
+                   <Latex math="22" />
                  </div>
-                 <div className="flex flex-col text-purple-600 font-bold border-l-4 border-purple-400 pl-3">
+                 <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-0 text-purple-600 font-bold border-l-4 border-purple-400 pl-3">
                    <p className="text-slate-600 text-sm mb-1">比較常數項：</p>
-                   <Latex math="−7Q = 7" />
-                   <Latex math="Q = −1" />
+                   <span></span>
+                   <span></span>
+                   <Latex math="−7Q" />
+                   <Latex math="=" />
+                   <Latex math="7" />
+                   <span className="invisible"><Latex math="−7Q" /></span>
+                   <Latex math="=" />
+                   <Latex math="−1" />
                  </div>
               </div>
             </div>
@@ -1987,12 +2014,12 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                   <div className="space-y-1 font-semibold text-slate-800">
                     <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                       <Latex math="(x+8)^2" />
-                      <span>=</span>
+                      <span><Latex math="=" /></span>
                       <Latex math="x^2 + 2(8)(x) + 8^2" />
                     </div>
                     <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                       <span className="invisible"><Latex math="(x+8)^2" /></span>
-                      <span>=</span>
+                      <span><Latex math="=" /></span>
                       <Latex math="x^2 + 16x + 64" />
                     </div>
                   </div>
@@ -2002,12 +2029,12 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                   <div className="space-y-1 font-semibold text-slate-800">
                     <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                       <Latex math="(2x−5)^2" />
-                      <span>=</span>
+                      <span><Latex math="=" /></span>
                       <Latex math="(2x)^2 − 2(2x)(5) + 5^2" />
                     </div>
                     <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                       <span className="invisible"><Latex math="(2x−5)^2" /></span>
-                      <span>=</span>
+                      <span><Latex math="=" /></span>
                       <Latex math="4x^2 − 20x + 25" />
                     </div>
                   </div>
@@ -2017,17 +2044,17 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                   <div className="space-y-1 font-semibold text-slate-800">
                     <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                       <Latex math="2(m+6n)(m−6n)" />
-                      <span>=</span>
+                      <span><Latex math="=" /></span>
                       <Latex math="2[m^2 − (6n)^2]" />
                     </div>
                     <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                       <span className="invisible"><Latex math="2(m+6n)(m−6n)" /></span>
-                      <span>=</span>
+                      <span><Latex math="=" /></span>
                       <Latex math="2(m^2 − 36n^2)" />
                     </div>
                     <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
                       <span className="invisible"><Latex math="2(m+6n)(m−6n)" /></span>
-                      <span>=</span>
+                      <span><Latex math="=" /></span>
                       <Latex math="2m^2 − 72n^2" />
                     </div>
                   </div>
@@ -2515,7 +2542,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
               <h3 className="font-bold text-red-600 mb-3 text-xl flex items-center gap-2">
                 5. 圓柱體體積： <span className="text-red-700 italic font-serif"><Latex math="\pi r^2 \cdot h" /></span>
                 <span className="text-green-700 text-sm md:text-base ml-2 md:ml-4 relative font-bold">
-                  <span className="absolute -left-4 md:-left-5 top-1 -mr-2 text-green-700 font-sans">↙</span> 高度 (height)
+                  <span className="absolute -left-4 md:-left-5 top-1 -mr-2 text-green-700 font-sans">→</span> 高度 (height)
                 </span>
               </h3>
             </div>

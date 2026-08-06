@@ -4144,19 +4144,19 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
               <div className="text-center font-sans space-y-4 text-lg">
                 <div className="flex flex-wrap justify-center gap-4 text-slate-800 font-bold">
                   <span className="mr-2">∵</span>
-                  <span className="border-b-4 border-red-500 pb-1">AB = PQ</span> 、
-                  <span className="border-b-4 border-slate-800 pb-1">BC = QR</span> 、
-                  <span className="border-b-4 border-blue-500 pb-1">CA = RP</span> 、
+                  <span className="border-b-4 border-red-500 pb-1 italic">AB = PQ</span> 、
+                  <span className="border-b-4 border-slate-800 pb-1 italic">BC = QR</span> 、
+                  <span className="border-b-4 border-blue-500 pb-1 italic">CA = RP</span> 、
                 </div>
                 <div className="flex flex-wrap justify-center gap-4 text-slate-800 font-bold ml-[2em]">
-                  <span className="border-b-4 border-slate-400 pb-1">∠C = ∠R</span> 、
-                  <span className="border-b-4 border-purple-500 pb-1">∠B = ∠Q</span> 及
-                  <span className="border-b-4 border-green-500 pb-1">∠A = ∠P</span>
+                  <span className="border-b-4 border-slate-400 pb-1 italic">∠C = ∠R</span> 、
+                  <span className="border-b-4 border-purple-500 pb-1 italic">∠B = ∠Q</span> 及
+                  <span className="border-b-4 border-green-500 pb-1 italic">∠A = ∠P</span>
                 </div>
                 
                 <div className="mt-8 text-xl font-bold flex items-center justify-center gap-2 font-sans pt-4 border-t border-green-200">
                   <span className="mr-2 font-sans">∴</span>
-                  <span>三角形 ABC 與 三角形 PQR  全等，即</span>
+                  <span>三角形 <span className="italic">ABC</span> 與 三角形 <span className="italic">PQR</span>  全等，即</span>
                   <span className="bg-yellow-200 px-2 py-1 rounded inline-flex items-center gap-1 font-sans ml-2 relative">
                     <Latex math="\triangle ABC\cong\triangle PQR" />
                     <div className="absolute -bottom-6 right-0 text-red-600 text-sm font-sans whitespace-nowrap">按順序排列</div>
