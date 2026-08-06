@@ -2876,7 +2876,7 @@ export const AnglesNotes = ({ activeSub }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-green-50 rounded-lg p-3 border border-green-200">
             <p className="text-sm font-bold text-green-800 mb-1">線段</p>
-            <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-sans font-bold bg-white px-1 rounded">線段 <Latex math="\overline{AB}" /></span>（從 <Latex math="A" /> 到 <Latex math="B" />）</p>
+            <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-sans font-bold bg-white px-1 rounded">線段 <Latex math="AB" /></span>（從 <Latex math="A" /> 到 <Latex math="B" />）</p>
             <svg viewBox="0 0 300 60" className="w-full touch-none mt-2">
               <line x1="80" y1="30" x2="220" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
               <circle cx="80" cy="30" r="3" fill="#334155" />

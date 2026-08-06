@@ -1972,19 +1972,31 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
         </CollapsibleSection>
 
         {/* 三條必記恆等式 */}
-        <CollapsibleSection id="identities-formulas" title="3.2 & 3.3 三條必記恆等式！" num={3} color="rose" activeSub={activeSub} sectionRef={s3}>
+        <CollapsibleSection id="identities-formulas" title="3. 三條必記恆等式！" num={3} color="rose" activeSub={activeSub} sectionRef={s3}>
           <div className="bg-rose-50 rounded-lg p-5 border border-rose-200">
-             <div className="space-y-4 mb-8 text-center text-lg md:text-xl font-bold font-serif text-slate-800">
-               <div>1. <Latex math="(a+b)^2 = a^2 + 2ab + b^2" /></div>
-               <div>2. <Latex math="(a−b)^2 = a^2 − 2ab + b^2" /></div>
-               <div className="relative inline-block">
-                 3. <Latex math="(a+b)(a−b) = a^2 − b^2" />
-                 <div className="absolute -bottom-5 right-0 text-xs text-purple-700 font-bold">沒 2ab 項</div>
-                 <div className="absolute -bottom-5 left-10 text-xs text-purple-700 font-bold">一加一減</div>
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+             <div className="space-y-4 text-lg md:text-xl font-bold font-sans text-slate-800">
+               <div className="grid grid-cols-[2rem_auto_auto_1fr] md:grid-cols-[3rem_auto_auto_1fr] items-baseline gap-x-2">
+                 <span className="text-right">1.</span>
+                 <div><Latex math="(a\colorbox{#fef08a}{+}b)^2" /></div>
+                 <span><Latex math="=" /></span>
+                 <div><Latex math="a^2\colorbox{#fef08a}{+}2ab+b^2" /></div>
+               </div>
+               <div className="grid grid-cols-[2rem_auto_auto_1fr] md:grid-cols-[3rem_auto_auto_1fr] items-baseline gap-x-2">
+                 <span className="text-right">2.</span>
+                 <div><Latex math="(a\colorbox{#fef08a}{$-$}b)^2" /></div>
+                 <span><Latex math="=" /></span>
+                 <div><Latex math="a^2\colorbox{#fef08a}{$-$}2ab+b^2" /></div>
+               </div>
+               <div className="grid grid-cols-[2rem_auto_auto_1fr] md:grid-cols-[3rem_auto_auto_1fr] items-baseline gap-x-2">
+                 <span className="text-right">3.</span>
+                 <div><Latex math="(a+b)(a-b)" /></div>
+                 <span><Latex math="=" /></span>
+                 <div><Latex math="a^2-b^2" /></div>
                </div>
              </div>
 
-             <div className="space-y-6 pt-6 border-t border-rose-200">
+             <div className="space-y-6 pt-6 md:pt-0 border-t md:border-t-0 md:border-l border-rose-200 md:pl-6">
                <div>
                   <h4 className="font-bold text-rose-800 mb-2">例子 1: <Latex math="(a+b)^2" /></h4>
                   <div className="space-y-1 font-semibold text-slate-800">
@@ -2035,6 +2047,7 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                     </div>
                   </div>
                </div>
+             </div>
              </div>
           </div>
         </CollapsibleSection>
