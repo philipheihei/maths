@@ -2442,7 +2442,7 @@ export const CoordinateNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="transformation" title="點的轉換" num={4} color="red" activeSub={activeSub} sectionRef={s4}>
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-4 items-start">
           <div className="bg-red-50 rounded-lg p-4 border border-red-200">
             <h3 className="font-bold text-red-800 mb-2">🔄 需分辨平移、反射、旋轉</h3>
             
@@ -2453,7 +2453,7 @@ export const CoordinateNotes = ({ activeSub }) => {
               </div>
               <div className="bg-white p-3 rounded-lg border border-red-100">
                 <h4 className="font-bold text-blue-600 mb-1 border-b-2 border-blue-200 inline-block">反射 (Reflection)</h4>
-                <p className="text-slate-700 text-sm">可沿 <span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300"><Latex math="x" /> 軸</span>、<span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300"><Latex math="y" /> 軸</span>或特定直線（例如 <Latex math="x=1" />）反射。<br/>可透過畫圖，或者記住：沿 <Latex math="y" /> 軸反射，<Latex math="x" /> 正負調轉；沿 <Latex math="x" /> 軸反射，<Latex math="y" /> 正負調轉。</p>
+                <p className="text-slate-700 text-sm">可沿 <span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300"><Latex math="x" /> 軸</span>、<span className="bg-yellow-200 px-1 rounded font-bold hover:bg-yellow-300"><Latex math="y" /> 軸</span>或特定直線（例如 <Latex math="x=1" />）反射。<br/>可透過畫圖，或者記住：<br/><span className="block pl-4">沿 <Latex math="y" /> 軸反射，<Latex math="x" /> 正負調轉；</span><span className="block pl-4">沿 <Latex math="x" /> 軸反射，<Latex math="y" /> 正負調轉。</span></p>
               </div>
               <div className="bg-white p-3 rounded-lg border border-red-100">
                 <h4 className="font-bold text-purple-700 mb-1 border-b-2 border-purple-200 inline-block">旋轉 (Rotation) 📐</h4>
@@ -2477,26 +2477,26 @@ export const CoordinateNotes = ({ activeSub }) => {
               
               <line x1="-140" y1="0" x2="140" y2="0" stroke="#000" strokeWidth="2" />
               <polyline points="135,-4 140,0 135,4" fill="none" stroke="#000" strokeWidth="2" />
-              <text x="145" y="5" fontSize="14" fill="#000" fontWeight="bold">X</text>
+              <text x="145" y="5" fontSize="14" fill="#000" fontWeight="bold" fontStyle="italic">x</text>
 
               <line x1="0" y1="140" x2="0" y2="-140" stroke="#000" strokeWidth="2" />
               <polyline points="-4,-135 0,-140 4,-135" fill="none" stroke="#000" strokeWidth="2" />
-              <text x="-15" y="-140" fontSize="14" fill="#000" fontWeight="bold">Y</text>
+              <text x="-15" y="-140" fontSize="14" fill="#000" fontWeight="bold" fontStyle="italic">y</text>
 
               {/* A 平移 */}
               {drawPoint(5, 4, "", "#16a34a", 25)}
-              <text x="135" y="-105" fontSize="12" fill="#db2777" fontWeight="bold">A(5, 4)</text>
+              <text x="135" y="-105" fontSize="12" fill="#db2777" fontWeight="bold" fontStyle="italic">A(5, 4)</text>
               {drawPoint(1, 4, "", "#16a34a", 25)}
-              <text x="5" y="-115" fontSize="12" fill="#db2777" fontWeight="bold">A'(1, 4)</text>
+              <text x="5" y="-105" fontSize="12" fill="#db2777" fontWeight="bold" fontStyle="italic">A'(1, 4)</text>
               <line x1="120" y1="-100" x2="35" y2="-100" stroke="#db2777" strokeWidth="2" strokeDasharray="4 2" />
               <polyline points="40,-104 35,-100 40,-96" fill="none" stroke="#db2777" strokeWidth="2" />
-              <text x="75" y="-115" fontSize="12" fill="#db2777" textAnchor="middle">向左平移 4單位</text>
+              <text x="85" y="-120" fontSize="12" fill="#db2777" textAnchor="middle">向左平移 4單位</text>
 
               {/* B 反射 */}
               {drawPoint(-3, 2, "", "#16a34a", 25)}
-              <text x="-85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" textAnchor="end">B(-3, 2)</text>
+              <text x="-85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" fontStyle="italic" textAnchor="end">B(-3, 2)</text>
               {drawPoint(3, 2, "", "#16a34a", 25)}
-              <text x="85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold">B'(3, 2)</text>
+              <text x="85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" fontStyle="italic">B'(3, 2)</text>
               
               <path d="M -70 -55 Q -35 -80 0 -55 Q 35 -80 70 -55" fill="none" stroke="#0284c7" strokeWidth="2" />
               <polyline points="-5,-60 0,-55 -8,-52" fill="none" stroke="#0284c7" strokeWidth="2" />
@@ -2506,9 +2506,9 @@ export const CoordinateNotes = ({ activeSub }) => {
 
               {/* C 旋轉 */}
               {drawPoint(2, -4, "", "#16a34a", 25)}
-              <text x="55" y="115" fontSize="12" fill="#7e22ce" fontWeight="bold">C(2, -4)</text>
+              <text x="55" y="115" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic">C(2, -4)</text>
               {drawPoint(-4, -2, "", "#16a34a", 25)}
-              <text x="-120" y="65" fontSize="12" fill="#7e22ce" fontWeight="bold">C'(-4, -2)</text>
+              <text x="-120" y="65" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic">C'(-4, -2)</text>
               
               <path d="M 45 105 Q 0 130 -95 65" fill="none" stroke="#7e22ce" strokeWidth="2" />
               <polyline points="-85,65 -95,65 -92,74" fill="none" stroke="#7e22ce" strokeWidth="2" />
