@@ -1910,27 +1910,15 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                      <span className="underline decoration-green-500 decoration-2 underline-offset-4 text-green-700 font-semibold px-1">+ B</span>
                    </div>
                    <div className="flex justify-center gap-8 mt-4 text-sm font-bold">
-                      <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-0 text-red-600">
+                      <div className="flex flex-col text-red-600">
                         <span>(有 x 項)</span>
-                        <span></span>
-                        <span></span>
-                        <Latex math="\therefore Ax" />
-                        <Latex math="=" />
-                        <Latex math="4x" />
-                        <span className="invisible"><Latex math="\therefore Ax" /></span>
-                        <Latex math="=" />
-                        <Latex math="4" />
+                        <Latex math="\therefore Ax = 4x" />
+                        <Latex math="A = 4" />
                       </div>
-                      <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-0 text-green-600">
+                      <div className="flex flex-col text-green-600">
                         <span>(沒 x 項)</span>
-                        <span></span>
-                        <span></span>
-                        <Latex math="−5" />
-                        <Latex math="=" />
-                        <Latex math="B" />
-                        <span className="invisible"><Latex math="−5" /></span>
-                        <Latex math="=" />
-                        <Latex math="−5" />
+                        <Latex math="−5 = B" />
+                        <Latex math="B = −5" />
                       </div>
                    </div>
                  </div>
@@ -1968,27 +1956,15 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
               </div>
               
               <div className="mt-4 bg-slate-50 p-4 rounded-lg flex flex-col md:flex-row gap-6 justify-center">
-                 <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-0 text-green-600 font-bold border-l-4 border-green-400 pl-3">
+                 <div className="flex flex-col text-green-600 font-bold border-l-4 border-green-400 pl-3">
                    <p className="text-slate-600 text-sm mb-1">比較 x 項：</p>
-                   <span></span>
-                   <span></span>
-                   <Latex math="Px" />
-                   <Latex math="=" />
-                   <Latex math="22x" />
-                   <span className="invisible"><Latex math="Px" /></span>
-                   <Latex math="=" />
-                   <Latex math="22" />
+                   <Latex math="Px = 22x" />
+                   <Latex math="P = 22" />
                  </div>
-                 <div className="grid grid-cols-[auto_auto_auto] items-center gap-x-0 text-purple-600 font-bold border-l-4 border-purple-400 pl-3">
+                 <div className="flex flex-col text-purple-600 font-bold border-l-4 border-purple-400 pl-3">
                    <p className="text-slate-600 text-sm mb-1">比較常數項：</p>
-                   <span></span>
-                   <span></span>
-                   <Latex math="−7Q" />
-                   <Latex math="=" />
-                   <Latex math="7" />
-                   <span className="invisible"><Latex math="−7Q" /></span>
-                   <Latex math="=" />
-                   <Latex math="−1" />
+                   <Latex math="−7Q = 7" />
+                   <Latex math="Q = −1" />
                  </div>
               </div>
             </div>
