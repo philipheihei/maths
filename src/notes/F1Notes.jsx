@@ -1393,7 +1393,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
             <span className="text-red-500 font-bold ml-2">→ 目標：</span>
             <span>找 <Latex math="x = ?" /></span>
             <span className="text-red-500 font-bold ml-2">→ 思路：</span>
-            <span>將跟住 x 的數字按下列規矩移走</span>
+            <span>將貼著 x 的數字按下列規矩移走</span>
           </div>
         </div>
       </div>
@@ -1469,7 +1469,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
                 <div><span className="bg-green-200 px-1 rounded inline-block"><Latex math="3" /></span><Latex math="x" /></div>
                 <div className="text-base text-purple-600 font-medium leading-relaxed whitespace-nowrap">← 大畫面為「×」數，可移另一方至「÷」</div>
 
-                <div className="flex justify-end"><span className="bg-green-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{15}{3}" /></span></div>
+                <div className="flex justify-end"><span className="inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><span className="px-1"><Latex math="15" /></span><span className="border-t border-slate-700 bg-green-200 px-1 rounded-b"><Latex math="3" /></span></span></div>
                 <div><Latex math="=" /></div>
                 <div><Latex math="x" /></div>
                 <div></div>
@@ -1484,13 +1484,13 @@ export const LinearEquationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">分數即「÷」數</div>
                 <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed mt-2">
-                  <div className="flex justify-end"><Latex math="\frac{a + 11}{6}" /></div>
+                  <div className="flex justify-end"><span className="inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><span className="px-1"><Latex math="a + 11" /></span><span className="border-t border-slate-700 bg-green-200 px-1 rounded-b"><Latex math="6" /></span></span></div>
                   <div><Latex math="=" /></div>
                   <div><Latex math="4" /></div>
 
-                  <div className="flex justify-end items-center"><Latex math="a " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="+ 11" /></span></div>
+                  <div className="flex justify-end items-center"><Latex math="a + 11" /></div>
                   <div><Latex math="=" /></div>
-                  <div><Latex math="4 \times " /><span className="bg-green-200 px-1 rounded inline-block"><Latex math="6" /></span></div>
+                  <div><Latex math="4 " /><span className="bg-green-200 px-1 rounded inline-block"><Latex math="\times 6" /></span></div>
 
                   <div className="flex justify-end items-center"><Latex math="a " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="+ 11" /></span></div>
                   <div><Latex math="=" /></div>
@@ -1509,13 +1509,13 @@ export const LinearEquationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">括號即「×」數</div>
                 <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed mt-2">
-                  <div className="flex justify-end items-center"><span className="bg-green-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="(b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="− 5" /></span><Latex math=")" /></div>
+                  <div className="flex justify-end items-center"><span className="bg-green-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="(b − 5)" /></div>
                   <div><Latex math="=" /></div>
                   <div><Latex math="20" /></div>
 
-                  <div className="flex justify-end items-center"><Latex math="b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="− 5" /></span></div>
+                  <div className="flex justify-end items-center"><Latex math="b − 5" /></div>
                   <div><Latex math="=" /></div>
-                  <div><span className="bg-green-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{20}{2}" /></span></div>
+                  <div><span className="inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><span className="px-1"><Latex math="20" /></span><span className="border-t border-slate-700 bg-green-200 px-1 rounded-b"><Latex math="2" /></span></span></div>
 
                   <div className="flex justify-end items-center"><Latex math="b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="− 5" /></span></div>
                   <div><Latex math="=" /></div>
@@ -1539,7 +1539,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
       <CollapsibleSection id="fraction-addition" title="3. 分數加減數" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-6">
           <div className="bg-white rounded-xl p-6 md:px-12 border border-slate-200 max-w-2xl mx-auto shadow-sm">
-            <h4 className="font-bold text-green-700 mb-6 text-xl">大畫面「-」數</h4>
+            <h4 className="font-bold text-green-700 mb-6 text-xl">大畫面「−」數</h4>
             
             <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-3 items-center text-2xl leading-loose tracking-wide">
               <div className="flex justify-end items-center"><Latex math="\frac{2x}{3} " /><span className="bg-yellow-200 px-2 rounded inline-block"><Latex math="− 4" /></span></div>
@@ -1554,9 +1554,9 @@ export const LinearEquationNotes = ({ activeSub }) => {
               <div><Latex math="=" /></div>
               <div><Latex math="12" /></div>
 
-              <div className="flex justify-end items-center"><span className="bg-cyan-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="x" /></div>
+              <div className="flex justify-end items-center"><Latex math="2x" /></div>
               <div><Latex math="=" /></div>
-              <div><Latex math="12 \times " /><span className="bg-green-200 px-2 rounded inline-block"><Latex math="3" /></span></div>
+              <div><Latex math="12 " /><span className="bg-green-200 px-2 rounded inline-block"><Latex math="\times 3" /></span></div>
 
               <div className="flex justify-end items-center"><span className="bg-cyan-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="x" /></div>
               <div><Latex math="=" /></div>
@@ -1564,7 +1564,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
 
               <div className="flex justify-end"><Latex math="x" /></div>
               <div><Latex math="=" /></div>
-              <div><span className="bg-cyan-200 px-2 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{36}{2}" /></span></div>
+              <div><span className="inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><span className="px-1"><Latex math="36" /></span><span className="border-t border-slate-700 bg-cyan-200 px-1 rounded-b"><Latex math="2" /></span></span></div>
 
               <div className="flex justify-end"><Latex math="x" /></div>
               <div><Latex math="=" /></div>
@@ -2876,7 +2876,7 @@ export const AnglesNotes = ({ activeSub }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-green-50 rounded-lg p-3 border border-green-200">
             <p className="text-sm font-bold text-green-800 mb-1">線段</p>
-            <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-sans font-bold bg-white px-1 rounded">線段 AB</span>（從 A 到 B）</p>
+            <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-sans font-bold bg-white px-1 rounded">線段 <Latex math="\overline{AB}" /></span>（從 <Latex math="A" /> 到 <Latex math="B" />）</p>
             <svg viewBox="0 0 300 60" className="w-full touch-none mt-2">
               <line x1="80" y1="30" x2="220" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
               <circle cx="80" cy="30" r="3" fill="#334155" />
@@ -2887,7 +2887,7 @@ export const AnglesNotes = ({ activeSub }) => {
           </div>
           <div className="bg-green-50 rounded-lg p-3 border border-green-200">
             <p className="text-sm font-bold text-green-800 mb-1">角的命名（角的特徵）</p>
-            <p className="text-sm text-slate-700 mb-2">由三個點命名，如 <span className="font-sans font-bold bg-white px-1 rounded">∠ABC</span>
+            <p className="text-sm text-slate-700 mb-2">由三個點命名，如 <span className="font-sans font-bold bg-white px-1 rounded"><Latex math="\angle ABC" /></span>
               <span className="ml-2 text-xs text-amber-700 font-bold">⚠️ 頂點（vertex）在<span className="text-red-600">中間</span>的英文字母</span>
             </p>
             <svg viewBox="0 0 300 100" className="w-full touch-none">
@@ -2912,7 +2912,7 @@ export const AnglesNotes = ({ activeSub }) => {
             </h3>
             <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 flex-1 flex flex-col justify-between">
               <div>
-                <p className="text-center text-xl font-bold text-blue-800 my-1">a + b + c = 180°</p>
+                <p className="text-center text-xl font-bold text-blue-800 my-1"><Latex math="a+b+c=180^\circ" /></p>
                 <svg viewBox="0 0 300 100" className="w-full max-w-xs mx-auto my-3 touch-none">
                   <line x1="40" y1="80" x2="260" y2="80" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                   <line x1="150" y1="80" x2="100" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -2928,11 +2928,11 @@ export const AnglesNotes = ({ activeSub }) => {
                   <text x="250" y="98" fontSize="14" fill="#dc2626" fontStyle="italic">B</text>
                 </svg>
                 <p className="text-sm text-slate-600 text-center mt-2">
-                  <span className="bg-blue-200 px-2 py-0.5 rounded font-bold text-blue-900">在直線的所有角</span>之和 = 180°
+                  <span className="bg-blue-200 px-2 py-0.5 rounded font-bold text-blue-900">在直線的所有角</span>之和 <Latex math="=180^\circ" />
                 </p>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-blue-200">
-                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(直線上的鄰角, adj. ∠s on st. line)</span>
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(直線上的鄰角, adj. <Latex math="\angle s" /> on st. line)</span>
               </p>
             </div>
           </div>
@@ -2945,7 +2945,7 @@ export const AnglesNotes = ({ activeSub }) => {
             </h3>
             <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 flex-1 flex flex-col justify-between">
               <div>
-                <p className="text-center text-xl font-bold text-blue-800 my-1">a + b + c = 360°</p>
+                <p className="text-center text-xl font-bold text-blue-800 my-1"><Latex math="a+b+c=360^\circ" /></p>
                 <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                   <g transform="translate(150, 70)">
                     <line x1="0" y1="0" x2="0" y2="-60" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -2960,11 +2960,11 @@ export const AnglesNotes = ({ activeSub }) => {
                   </g>
                 </svg>
                 <p className="text-sm text-slate-600 text-center mt-2">
-                  <span className="bg-blue-200 px-2 py-0.5 rounded font-bold text-blue-900">圓圈的所有角</span>之和 = 360°
+                  <span className="bg-blue-200 px-2 py-0.5 rounded font-bold text-blue-900">圓圈的所有角</span>之和 <Latex math="=360^\circ" />
                 </p>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-blue-200">
-                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(同頂角, ∠s at a pt.)</span>
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(同頂角, <Latex math="\angle s" /> at a pt.)</span>
               </p>
             </div>
           </div>
@@ -2977,7 +2977,7 @@ export const AnglesNotes = ({ activeSub }) => {
             </h3>
             <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 flex-1 flex flex-col justify-between">
               <div>
-                <p className="text-center text-xl font-bold text-blue-800 my-1">a = b</p>
+                <p className="text-center text-xl font-bold text-blue-800 my-1"><Latex math="a=b" /></p>
                 <svg viewBox="0 0 300 120" className="w-full max-w-xs mx-auto my-3 touch-none">
                   <line x1="70" y1="20" x2="230" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                   <line x1="70" y1="100" x2="230" y2="20" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -2993,7 +2993,7 @@ export const AnglesNotes = ({ activeSub }) => {
                 </div>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-blue-200">
-                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(對頂角, vert. opp. ∠s)</span>
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-blue-900">(對頂角, vert. opp. <Latex math="\angle s" />)</span>
               </p>
             </div>
           </div>
@@ -3006,7 +3006,7 @@ export const AnglesNotes = ({ activeSub }) => {
             </h3>
             <div className="bg-red-50 rounded-lg p-4 border border-red-200 flex-1 flex flex-col justify-between">
               <div>
-                <p className="text-center text-xl font-bold text-red-800 my-1">a = b</p>
+                <p className="text-center text-xl font-bold text-red-800 my-1"><Latex math="a=b" /></p>
                 <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                   <line x1="40" y1="50" x2="260" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                   <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -3021,12 +3021,12 @@ export const AnglesNotes = ({ activeSub }) => {
                   <path d="M 195 95 L 205 100 L 195 105" stroke="#16a34a" strokeWidth="2" fill="none" />
                   <text x="23" y="55" fontSize="16" fill="#334155" fontStyle="italic">A</text>
                   <text x="265" y="55" fontSize="16" fill="#334155" fontStyle="italic">B</text>
-                  <text x="23" y="95" fontSize="16" fill="#334155" fontStyle="italic">C</text>
-                  <text x="265" y="95" fontSize="16" fill="#334155" fontStyle="italic">D</text>
+                  <text x="23" y="105" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                  <text x="265" y="105" fontSize="16" fill="#334155" fontStyle="italic">D</text>
                 </svg>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-red-200">
-                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(同位角, AB//CD, corr. ∠s, AB//CD)</span>
+                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(同位角, <Latex math="AB\mathbin{//}CD" />, corr. <Latex math="\angle s" />)</span>
               </p>
             </div>
           </div>
@@ -3039,7 +3039,7 @@ export const AnglesNotes = ({ activeSub }) => {
             </h3>
             <div className="bg-red-50 rounded-lg p-4 border border-red-200 flex-1 flex flex-col justify-between">
               <div>
-                <p className="text-center text-xl font-bold text-red-800 my-1">a = b</p>
+                <p className="text-center text-xl font-bold text-red-800 my-1"><Latex math="a=b" /></p>
                 <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                   <line x1="100" y1="20" x2="100" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                   <line x1="200" y1="20" x2="200" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -3051,14 +3051,14 @@ export const AnglesNotes = ({ activeSub }) => {
                   <text x="176" y="76" fontSize="16" fill="#1e3a8a" fontFamily="Times New Roman, serif" fontStyle="italic">b</text>
                   <path d="M 92 90 L 100 80 L 108 90" stroke="#16a34a" strokeWidth="2" fill="none" />
                   <path d="M 192 70 L 200 60 L 208 70" stroke="#16a34a" strokeWidth="2" fill="none" />
-                  <text x="84" y="17" fontSize="16" fill="#334155" fontStyle="italic">A</text>
-                  <text x="84" y="133" fontSize="16" fill="#334155" fontStyle="italic">B</text>
-                  <text x="204" y="17" fontSize="16" fill="#334155" fontStyle="italic">C</text>
-                  <text x="204" y="133" fontSize="16" fill="#334155" fontStyle="italic">D</text>
+                  <text x="95" y="15" fontSize="16" fill="#334155" fontStyle="italic">A</text>
+                  <text x="95" y="138" fontSize="16" fill="#334155" fontStyle="italic">B</text>
+                  <text x="195" y="15" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                  <text x="195" y="138" fontSize="16" fill="#334155" fontStyle="italic">D</text>
                 </svg>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-red-200">
-                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(內錯角, AB//CD, alt. ∠s, AB//CD)</span>
+                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(內錯角, <Latex math="AB\mathbin{//}CD" />, alt. <Latex math="\angle s" />)</span>
               </p>
             </div>
           </div>
@@ -3067,11 +3067,11 @@ export const AnglesNotes = ({ activeSub }) => {
           <div className="flex flex-col">
             <h3 className="font-bold text-slate-700 mb-2 flex items-center gap-2">
               <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">4C</span>
-              同旁內角（C/U 形 → 180°）
+              同旁內角（C/U 形 → <Latex math="180^\circ" />）
             </h3>
             <div className="bg-red-50 rounded-lg p-4 border border-red-200 flex-1 flex flex-col justify-between">
               <div>
-                <p className="text-center text-xl font-bold text-red-800 my-1">a + b = 180°</p>
+                <p className="text-center text-xl font-bold text-red-800 my-1"><Latex math="a+b=180^\circ" /></p>
                 <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                   <line x1="40" y1="50" x2="260" y2="50" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
                   <line x1="40" y1="100" x2="260" y2="100" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -3085,12 +3085,12 @@ export const AnglesNotes = ({ activeSub }) => {
                   <path d="M 195 95 L 205 100 L 195 105" stroke="#16a34a" strokeWidth="2" fill="none" />
                   <text x="23" y="55" fontSize="16" fill="#334155" fontStyle="italic">A</text>
                   <text x="265" y="55" fontSize="16" fill="#334155" fontStyle="italic">B</text>
-                  <text x="40" y="90" fontSize="16" fill="#334155" fontStyle="italic">C</text>
-                  <text x="250" y="90" fontSize="16" fill="#334155" fontStyle="italic">D</text>
+                  <text x="23" y="105" fontSize="16" fill="#334155" fontStyle="italic">C</text>
+                  <text x="265" y="105" fontSize="16" fill="#334155" fontStyle="italic">D</text>
                 </svg>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-red-200">
-                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(同旁內角, AB//CD, int. ∠s, AB//CD)</span>
+                <span className="bg-white border rounded px-2 py-0.5 text-sm text-red-900 font-bold">(同旁內角, <Latex math="AB\mathbin{//}CD" />, int. <Latex math="\angle s" />)</span>
               </p>
             </div>
           </div>
@@ -3105,7 +3105,7 @@ export const AnglesNotes = ({ activeSub }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
                 <div className="flex flex-col justify-between">
                   <div>
-                    <p className="text-center text-xl font-bold text-green-800 my-1">a + b + c = 180°</p>
+                    <p className="text-center text-xl font-bold text-green-800 my-1"><Latex math="a+b+c=180^\circ" /></p>
                     <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                       <polygon points="150,20 60,110 240,110" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                       <path d="M 135.9 34.1 A 20 20 0 0 0 164.1 34.1" stroke="#16a34a" strokeWidth="2" fill="none" />
@@ -3117,7 +3117,7 @@ export const AnglesNotes = ({ activeSub }) => {
                     </svg>
                   </div>
                   <p className="text-sm text-slate-600 text-center mt-3 pt-3 border-t border-green-200">
-                    <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(△內角和, ∠ sum of △)</span>
+                    <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(<Latex math="\triangle" /> 內角和, <Latex math="\angle" /> sum of <Latex math="\triangle" />)</span>
                   </p>
                 </div>
 
@@ -3135,17 +3135,17 @@ export const AnglesNotes = ({ activeSub }) => {
                         <text x="69" y="73" fontSize="10" fill="#334155" fontStyle="italic">2x</text>
                       </svg>
                       <div className="text-sm text-slate-700 grid grid-cols-[auto_auto_1fr] gap-x-2">
-                        <div className="text-right">2x</div>
-                        <div className="text-center">=</div>
-                        <div className="text-left">180° - 50° - 70°</div>
+                        <div className="text-right"><Latex math="2x" /></div>
+                        <div className="text-center"><Latex math="=" /></div>
+                        <div className="text-left"><Latex math="180^\circ-50^\circ-70^\circ" /></div>
 
-                        <div className="text-right">2x</div>
-                        <div className="text-center">=</div>
-                        <div className="text-left">60°</div>
+                        <div className="text-right"><Latex math="2x" /></div>
+                        <div className="text-center"><Latex math="=" /></div>
+                        <div className="text-left"><Latex math="60^\circ" /></div>
 
-                        <div className="text-right">x</div>
-                        <div className="text-center">=</div>
-                        <div className="text-left">30°</div>
+                        <div className="text-right"><Latex math="x" /></div>
+                        <div className="text-center"><Latex math="=" /></div>
+                        <div className="text-left"><Latex math="30^\circ" /></div>
                       </div>
                     </div>
                   </div>
