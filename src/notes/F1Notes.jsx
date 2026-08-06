@@ -700,7 +700,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
               <span className="text-slate-600">例子：</span>
               <span className="inline-flex items-center gap-1">
                 <span className="bg-yellow-200 px-2 py-1 rounded inline-block"><Latex math="5" /></span>
-                <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-150">/</span>
+                <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-100">/</span>
                 <span className="bg-yellow-200 px-2 py-1 rounded inline-block"><Latex math="+ 2x^3" /></span>
               </span>
               <span className="font-bold ml-2">👉 項數：2</span>
@@ -724,7 +724,17 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-purple-800 mb-2">📌 常數項 (Constant Term)</h3>
             <p className="text-slate-700 mb-2">定義：沒有代數的項的數字</p>
             <div className="bg-white p-3 rounded border border-slate-200">
-              <Latex math="−5x^2y^3 + 2x^3y − 6 + x" block />
+              <div className="text-center my-2">
+                <span className="inline-flex items-center gap-1">
+                  <Latex math="−5x^2y^3" />
+                  <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-100">/</span>
+                  <Latex math="+ 2x^3y" />
+                  <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-100">/</span>
+                  <Latex math="− 6" />
+                  <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-100">/</span>
+                  <Latex math="+ x" />
+                </span>
+              </div>
               <p className="text-center font-bold mt-2 text-purple-700">常數項是 <Latex math="−6" /></p>
             </div>
           </div>
@@ -740,7 +750,15 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-green-800 mb-2">📌 次數 (Degree)</h3>
             <p className="text-slate-700 mb-2">定義：最大的次方（一個項內的代數次方相加）</p>
             <div className="bg-white p-3 rounded border border-slate-200">
-              <Latex math="x^2y^1 + 5x + 1" block />
+              <div className="text-center my-2">
+                <span className="inline-flex items-center gap-1">
+                  <span className="bg-yellow-200 px-2 py-1 rounded inline-block"><Latex math="x^2y" /></span>
+                  <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-100">/</span>
+                  <Latex math="+ 5x" />
+                  <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-100">/</span>
+                  <Latex math="+ 1" />
+                </span>
+              </div>
               <p className="text-center mt-2">次數：<Latex math="2 + 1 = 3" /></p>
             </div>
           </div>
@@ -749,7 +767,15 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-2">📌 排列多項式 (升冪 / 降冪)</h3>
             <p className="text-slate-700 mb-2">方法：按次方的大小重新排多項式（冪 = 次方）</p>
             <div className="bg-white p-4 rounded border border-slate-200 space-y-3">
-              <Latex math="5x − 3x^3 + 2x^2" block />
+              <div className="text-center my-2">
+                <span className="inline-flex items-center gap-1">
+                  <Latex math="5x" />
+                  <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-100">/</span>
+                  <Latex math="− 3x^3" />
+                  <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-100">/</span>
+                  <Latex math="+ 2x^2" />
+                </span>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="bg-slate-50 p-2 rounded">
                   <p className="font-bold text-slate-700 mb-1">降冪 <span className="text-sm font-normal">（次方大到小 ↓）</span></p>
@@ -781,13 +807,13 @@ export const PolynomialsNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-4">
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 1：</p>
-              <pre className="whitespace-pre font-sans text-lg"><span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="3x + 4x + 2x" /> <span className="text-sm text-slate-400">(3+4+2<span className="plain-equals">=</span>9)</span>{'\n'}<span className="plain-equals">=</span>{' '}<Latex math="9x" /></pre>
+              <pre className="whitespace-pre font-sans text-lg"><span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="3x + 4x + 2x" /> <span className="text-sm text-green-600 normal-equals"><Latex math="(3+4+2=9)" /></span>{'\n'}<span className="plain-equals">=</span>{' '}<Latex math="9x" /></pre>
             </div>
             <hr />
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 2：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="3y − 5y + 6y" /> <span className="text-sm text-slate-400">(3-5+6<span className="plain-equals">=</span>4)</span>{'\n'}
+                <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="3y − 5y + 6y" /> <span className="text-sm text-green-600 normal-equals"><Latex math="(3-5+6=4)" /></span>{'\n'}
 <span className="plain-equals">=</span>{' '}<Latex math="4y" />
               </pre>
             </div>
@@ -796,7 +822,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
               <p className="text-sm text-slate-600 mb-1">例子 3 (分類)：</p>
               <pre className="whitespace-pre font-sans text-lg">
                 <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="2x − 3y − 7x − y" />{'\n'}
-<span className="plain-equals">=</span>{' '}<Latex math="2x − 7x − 3y − y" /> <span className="text-sm text-slate-400">(-3-1)</span>{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="2x − 7x − 3y − y" /> <span className="text-sm text-green-600"><Latex math="(-3-1)" /></span>{'\n'}
 <span className="plain-equals">=</span>{' '}<Latex math="−5x − 4y" />
               </pre>
             </div>
@@ -1410,7 +1436,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
 
                 <div className="flex justify-end"><Latex math="y" /></div>
                 <div><Latex math="=" /></div>
-                <div className="flex flex-nowrap items-center gap-x-4 whitespace-nowrap"><span className="bg-yellow-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{63}{3}" /></span><span className="text-base text-green-700 font-bold">← <Latex math="\frac{63}{3}" /> 與 <Latex math="63 \div 3" /> 相同</span></div>
+                <div className="flex flex-nowrap items-center gap-x-4 whitespace-nowrap"><span className="inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><span className="px-1"><Latex math="63" /></span><span className="border-t border-slate-700 bg-yellow-200 px-1 rounded-b"><Latex math="3" /></span></span><span className="text-base text-green-700 font-bold">← <Latex math="\frac{63}{3}" /> 與 <Latex math="63 \div 3" /> 相同</span></div>
 
                 <div className="flex justify-end"><Latex math="y" /></div>
                 <div><Latex math="=" /></div>
@@ -1426,36 +1452,36 @@ export const LinearEquationNotes = ({ activeSub }) => {
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <div className="bg-white rounded-xl p-5 border border-slate-200">
-              <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed">
+            <div className="bg-white rounded-xl p-5 border border-slate-200 md:col-span-2">
+              <div className="grid grid-cols-[auto_auto_minmax(0,auto)_minmax(0,1fr)] gap-x-0 items-center text-xl leading-relaxed">
                 <div className="flex justify-end"><Latex math="19" /></div>
                 <div><Latex math="=" /></div>
-                <div><span className="border-2 border-purple-500 rounded-full px-3 py-1 bg-purple-50 inline-block"><Latex math="4" /> <Latex math="+ 3x" /></span></div>
-
-                <div className="col-span-3 text-base text-slate-500 my-2 font-medium">← 大畫面為「+」數，先移「+」變「-」</div>
+                <div><span className="border-2 border-purple-500 rounded-full px-3 py-1 bg-purple-50 inline-block"><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="4" /></span> <Latex math="+ 3x" /></span></div>
+                <div className="text-base text-purple-600 font-medium leading-relaxed whitespace-nowrap">← 大畫面為「+」數，先移「+」變「-」</div>
 
                 <div className="flex justify-end items-center"><Latex math="19 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="− 4" /></span></div>
                 <div><Latex math="=" /></div>
-                <div><span className="bg-green-200 px-1 rounded inline-block"><Latex math="3" /></span><Latex math="x" /></div>
+                <div><Latex math="3x" /></div>
+                <div></div>
 
                 <div className="flex justify-end"><Latex math="15" /></div>
                 <div><Latex math="=" /></div>
                 <div><span className="bg-green-200 px-1 rounded inline-block"><Latex math="3" /></span><Latex math="x" /></div>
-
-                <div className="col-span-3 text-base text-slate-500 my-2 font-medium">← 大畫面為「×」數，可移另一方至「÷」</div>
+                <div className="text-base text-purple-600 font-medium leading-relaxed whitespace-nowrap">← 大畫面為「×」數，可移另一方至「÷」</div>
 
                 <div className="flex justify-end"><span className="bg-green-200 px-1 rounded inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><Latex math="\frac{15}{3}" /></span></div>
                 <div><Latex math="=" /></div>
                 <div><Latex math="x" /></div>
+                <div></div>
 
                 <div className="flex justify-end"><Latex math="x" /></div>
                 <div><Latex math="=" /></div>
                 <div><Latex math="5" /></div>
+                <div></div>
               </div>
             </div>
             
-            <div className="space-y-6">
-              <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
+            <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">分數即「÷」數</div>
                 <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed mt-2">
                   <div className="flex justify-end"><Latex math="\frac{a + 11}{6}" /></div>
@@ -1480,7 +1506,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
+            <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">括號即「×」數</div>
                 <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed mt-2">
                   <div className="flex justify-end items-center"><span className="bg-green-200 px-1 rounded inline-block"><Latex math="2" /></span><Latex math="(b " /><span className="bg-yellow-200 px-[2px] rounded inline-block"><Latex math="− 5" /></span><Latex math=")" /></div>
@@ -1503,7 +1529,6 @@ export const LinearEquationNotes = ({ activeSub }) => {
                   <div><Latex math="=" /></div>
                   <div><Latex math="15" /></div>
                 </div>
-              </div>
             </div>
 
           </div>
@@ -1950,50 +1975,58 @@ export const StatisticsNotes = ({ activeSub }) => {
             <svg viewBox="0 0 400 270" className="w-full h-auto max-w-md mx-auto font-sans">
               <defs>
                 <marker id="arrow-y2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
-                  <path d="M 1 1 L 5 3 L 1 5 Z" fill="#64748b" />
+                  <path d="M 1 1 L 5 3 L 1 5 Z" fill="#10b981" />
                 </marker>
                 <marker id="arrow-x2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
-                  <path d="M 1 1 L 5 3 L 1 5 Z" fill="#64748b" />
+                  <path d="M 1 1 L 5 3 L 1 5 Z" fill="#10b981" />
                 </marker>
+                <pattern id="line-graph-grid" width="4.75" height="4.75" patternUnits="userSpaceOnUse">
+                  <path d="M 4.75 0 L 0 0 0 4.75" fill="none" stroke="#f1f5f9" strokeWidth="1" />
+                </pattern>
+                <pattern id="line-graph-grid-major" width="47.5" height="47.5" patternUnits="userSpaceOnUse">
+                  <rect width="47.5" height="47.5" fill="url(#line-graph-grid)" />
+                  <path d="M 47.5 0 L 0 0 0 47.5" fill="none" stroke="#e2e8f0" strokeWidth="1" />
+                </pattern>
               </defs>
               
-              {/* Y Grid lines & X Grid lines */}
-              {[30, 77.5, 125, 172.5].map((y, i) => (
-                <line key={`hy-${i}`} x1="50" y1={y} x2="380" y2={y} stroke="#f1f5f9" strokeWidth="1" />
-              ))}
-              {[90, 130, 170, 210, 250, 290, 330].map((x, i) => (
-                <line key={`vx-${i}`} x1={x} y1="30" x2={x} y2="220" stroke="#f1f5f9" strokeWidth="1" />
-              ))}
+              {/* 小方格網格 */}
+              <rect x="50" y="30" width="330" height="190" fill="url(#line-graph-grid-major)" />
 
               {/* Axes */}
-              <line x1="50" y1="220" x2="380" y2="220" stroke="#64748b" strokeWidth="2" markerEnd="url(#arrow-x2)" />
-              <line x1="50" y1="220" x2="50" y2="20" stroke="#64748b" strokeWidth="2" markerEnd="url(#arrow-y2)" />
+              <line x1="50" y1="220" x2="380" y2="220" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-x2)" />
+              <line x1="50" y1="220" x2="50" y2="20" stroke="#10b981" strokeWidth="2" markerEnd="url(#arrow-y2)" />
+              {[90, 137.5, 185, 232.5, 280, 327.5, 375].map((x, i) => (
+                <line key={`xt-${i}`} x1={x} y1="220" x2={x} y2="226" stroke="#10b981" strokeWidth="2" />
+              ))}
+              {[220, 172.5, 125, 77.5, 30].map((y, i) => (
+                <line key={`yt-${i}`} x1="44" y1={y} x2="50" y2={y} stroke="#10b981" strokeWidth="2" />
+              ))}
 
               {/* Data points and Line */}
               <polyline 
-                points="90,115.5 130,125 170,148.75 210,129.75 250,101.25 290,96.5 330,77.5"
-                fill="none" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round"
+                points="90,115.5 137.5,125 185,148.75 232.5,129.75 280,101.25 327.5,96.5 375,77.5"
+                fill="none" stroke="#000" strokeWidth="2" strokeLinejoin="round"
               />
               <g stroke="#3b82f6" strokeWidth="2">
                 <path d="M 86 111.5 L 94 119.5 M 94 111.5 L 86 119.5" />
-                <path d="M 126 121 L 134 129 M 134 121 L 126 129" />
-                <path d="M 166 144.75 L 174 152.75 M 174 144.75 L 166 152.75" />
-                <path d="M 206 125.75 L 214 133.75 M 214 125.75 L 206 133.75" />
-                <path d="M 246 97.25 L 254 105.25 M 254 97.25 L 246 105.25" />
-                <path d="M 286 92.5 L 294 100.5 M 294 92.5 L 286 100.5" />
-                <path d="M 326 73.5 L 334 81.5 M 334 73.5 L 326 81.5" />
+                <path d="M 133.5 121 L 141.5 129 M 141.5 121 L 133.5 129" />
+                <path d="M 181 144.75 L 189 152.75 M 189 144.75 L 181 152.75" />
+                <path d="M 228.5 125.75 L 236.5 133.75 M 236.5 125.75 L 228.5 133.75" />
+                <path d="M 276 97.25 L 284 105.25 M 284 97.25 L 276 105.25" />
+                <path d="M 323.5 92.5 L 331.5 100.5 M 331.5 92.5 L 323.5 100.5" />
+                <path d="M 371 73.5 L 379 81.5 M 379 73.5 L 371 81.5" />
               </g>
 
               {/* Labels (X-axis) */}
-              <g fill="#475569" fontSize="11" textAnchor="middle">
+              <g fill="#10b981" fontSize="11" textAnchor="middle">
                 {['2020', '2021', '2022', '2023', '2024', '2025', '2026'].map((year, i) => (
-                  <text key={year} x={90 + i * 40} y="235">{year}</text>
+                  <text key={year} x={90 + i * 47.5} y="235">{year}</text>
                 ))}
-                <text x="210" y="262" fontSize="11" fill="#64748b">年份</text>
+                <text x="210" y="262" fontSize="11" fill="#10b981">年份</text>
               </g>
               
               {/* Labels (Y-axis) */}
-              <g fill="#475569" fontSize="11" textAnchor="end" dominantBaseline="middle">
+              <g fill="#10b981" fontSize="11" textAnchor="end" dominantBaseline="middle">
                 <text x="42" y="220">0</text>
                 <text x="42" y="172.5">10</text>
                 <text x="42" y="125">20</text>
@@ -2001,7 +2034,7 @@ export const StatisticsNotes = ({ activeSub }) => {
                 <text x="42" y="30">40</text>
                 {/* Vertical Y-axis title */}
                 <g transform="translate(15, 125)">
-                  <text x="0" y="0" textAnchor="middle" transform="rotate(-90)" fill="#64748b">失業率 (%)</text>
+                  <text x="0" y="0" textAnchor="middle" transform="rotate(-90)" fill="#10b981">失業率 (%)</text>
                 </g>
               </g>
             </svg>
@@ -2113,7 +2146,7 @@ export const StatisticsNotes = ({ activeSub }) => {
       <CollapsibleSection id="frequency-table" title="6. 頻數分佈表 (填表格)" num={6} color="blue" activeSub={activeSub} sectionRef={s6}>
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6">
           <div className="bg-white rounded-xl p-5 border border-slate-200">
-            <p className="text-slate-800 font-bold mb-4 border-b pb-2">8. 以下是一些家庭擁有冷氣機的數目：</p>
+            <p className="text-slate-800 font-bold mb-4 border-b pb-2">以下是一些家庭擁有冷氣機的數目：</p>
             <div className="flex flex-wrap gap-[6px] mb-6 justify-center max-w-sm mx-auto p-4 bg-slate-50 rounded-lg border border-slate-100">
               <span className="bg-pink-300 px-2 py-1 rounded text-white font-bold text-sm shadow-sm">4</span>
               <span className="bg-green-400 px-2 py-1 rounded text-white font-bold text-sm shadow-sm">3</span>

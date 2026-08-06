@@ -7,6 +7,10 @@
   transform: scaleX(1.6);
 }
 
+.ch6-long-equals .normal-equals .katex .mrel {
+  transform: scaleX(1);
+}
+
 .ch6-long-equals .plain-equals {
   display: inline-block;
   transform: scaleX(1.6);
