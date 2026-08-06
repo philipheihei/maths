@@ -415,7 +415,13 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-indigo-200">
             <h3 className="font-bold text-indigo-800 mb-3">i 的次方循環</h3>
-            <Latex math="\begin{aligned} i^1 &= i \\ i^2 &= -1 \\ i^3 &= i^2 \times i = -i \\ i^4 &= i^2 \times i^2 = 1 \end{aligned}" block />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="border-2 border-indigo-500 rounded-lg bg-indigo-50 px-2">
+                <p className="text-center text-indigo-700 font-bold text-sm mt-2">基本循環（重點）</p>
+                <Latex math="\begin{aligned} i^1 &= i \\ i^2 &= -1 \\ i^3 &= i^2 \times i = -i \\ i^4 &= i^2 \times i^2 = 1 \end{aligned}" block />
+              </div>
+              <Latex math="\begin{aligned} i^5 &= i^4 \times i = i \\ i^6 &= i^4 \times i^2 = -1 \\ i^7 &= i^4 \times i^3 = -i \\ i^8 &= i^4 \times i^4 = 1 \end{aligned}" block />
+            </div>
             <p className="text-green-700 font-bold text-center mt-2">之後每 4 個次方重複一次：<Latex math="i, -1, -i, 1" /></p>
           </div>
 

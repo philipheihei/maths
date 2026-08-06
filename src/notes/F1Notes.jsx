@@ -602,13 +602,13 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                 <div className="relative pt-7">
                   <p className="absolute left-8 right-0 top-0 text-center text-sm text-red-700 font-bold whitespace-nowrap">兩個+/兩個− 連在一起，需化簡</p>
                   <span className="absolute left-[7rem] top-3.5 text-sm text-red-700 font-bold">↓</span>
-                  <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(+24)\colorbox{#fef08a}{$−(−$}42)" block left /></div></div>
+                  <div className="flex items-start"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="\begin{aligned} &\phantom{=}(+24)\colorbox{#fef08a}{$−(−$}42) \end{aligned}" block left /></div></div>
                 </div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +24 \colorbox{#fef08a}{$+$} 42" block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +66" block left /></div></div>
               </div>
               <div className="grid grid-rows-[4.75rem_3rem_3rem_3rem] font-sans text-lg text-blue-800 relative">
-                <div className="flex items-start pt-7"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="(−3)(−4)−5" block left /></div><p className="absolute left-[3.2rem] top-0 text-sm text-green-600 font-bold whitespace-nowrap">中間是 ×</p><span className="absolute left-[4.5rem] top-3.5 text-sm text-green-600 font-bold">↓</span></div>
+                <div className="flex items-start pt-7"><span className="w-8 text-slate-500 text-sm mt-1 flex-shrink-0">e.g.</span><div className="flex-1"><Latex math="\begin{aligned} &\phantom{=}(−3)(−4)−5 \end{aligned}" block left /></div><p className="absolute left-[3.2rem] top-0 text-sm text-green-600 font-bold whitespace-nowrap">中間是 ×</p><span className="absolute left-[4.5rem] top-3.5 text-sm text-green-600 font-bold">↓</span></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math={`= +(3 \\times 4)−5`} block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +12−5" block left /></div></div>
                 <div className="flex items-start"><span className="w-8 flex-shrink-0"></span><div className="flex-1"><Latex math="= +7" block left /></div></div>
@@ -653,7 +653,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
   const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
 
   return (
-    <>
+    <div className="ch6-long-equals">
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-purple-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">CH6 多項式</h1>
         <p className="text-slate-600">單項式與多項式、項數係數、次數排列與四則運算</p>
@@ -711,8 +711,8 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <div className="bg-white p-3 rounded border border-slate-200">
               <MathDisplay math="1x^2 − 4x^3 + 8" />
               <div className="flex flex-col gap-1 mt-2 mb-4">
-                <p>• <Latex math="x^2" /> 的係數 = <Latex math="1" /></p>
-                <p>• <Latex math="x^3" /> 的係數 = <Latex math="−4" /></p>
+                <p>• <Latex math="x^2" /> 的係數 <span className="plain-equals">=</span> <Latex math="1" /></p>
+                <p>• <Latex math="x^3" /> 的係數 <span className="plain-equals">=</span> <Latex math="−4" /></p>
               </div>
               <p className="text-sm text-slate-500 border-t pt-2">多項式：<Latex math="0x^2 + 2x + 3" /> （項數為 3）</p>
             </div>
@@ -779,33 +779,33 @@ export const PolynomialsNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-4">
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 1：</p>
-              <pre className="whitespace-pre font-sans text-lg"><span className="invisible">= </span><Latex math="3x + 4x + 2x" /> <span className="text-sm text-slate-400">(3+4+2=9)</span>{'\n'}{'= '}<Latex math="9x" /></pre>
+              <pre className="whitespace-pre font-sans text-lg"><span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="3x + 4x + 2x" /> <span className="text-sm text-slate-400">(3+4+2<span className="plain-equals">=</span>9)</span>{'\n'}<span className="plain-equals">=</span>{' '}<Latex math="9x" /></pre>
             </div>
             <hr />
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 2：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible">= </span><Latex math="3y − 5y + 6y" /> <span className="text-sm text-slate-400">(3-5+6=4)</span>{'\n'}
-= <Latex math="4y" />
+                <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="3y − 5y + 6y" /> <span className="text-sm text-slate-400">(3-5+6<span className="plain-equals">=</span>4)</span>{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="4y" />
               </pre>
             </div>
             <hr />
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 3 (分類)：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible">= </span><Latex math="2x − 3y − 7x − y" />{'\n'}
-= <Latex math="2x − 7x − 3y − y" /> <span className="text-sm text-slate-400">(-3-1)</span>{'\n'}
-= <Latex math="−5x − 4y" />
+                <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="2x − 3y − 7x − y" />{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="2x − 7x − 3y − y" /> <span className="text-sm text-slate-400">(-3-1)</span>{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="−5x − 4y" />
               </pre>
             </div>
             <hr />
             <div>
               <p className="text-sm text-slate-600 mb-1">例子 4 (拆括號)：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible">= </span><Latex math="5x + 3y − (4x − 3y)" />{'\n'}
-= <Latex math="5x + 3y − 4x + 3y" /> <span className="text-sm text-red-500 font-bold">← 正負調轉 (-4x +3y)</span>{'\n'}
-= <Latex math="5x − 4x + 3y + 3y" />{'\n'}
-= <Latex math="x + 6y" />
+                <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="5x + 3y − (4x − 3y)" />{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="5x + 3y − 4x + 3y" /> <span className="text-sm text-red-500 font-bold">← 正負調轉 (-4x +3y)</span>{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="5x − 4x + 3y + 3y" />{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="x + 6y" />
               </pre>
             </div>
           </div>
@@ -842,17 +842,17 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <div className="bg-white p-4 rounded border border-slate-200 space-y-4">
               <div>
                 <pre className="whitespace-pre font-sans text-lg">
-                  <span className="invisible">= </span><Latex math="5x(2x + 3)" />{'\n'}
-= <Latex math="5x(2x) + 5x(3)" />{'\n'}
-= <Latex math="10x^2 + 15x" /> <span className="text-sm text-slate-500">(同類項才能加)</span>
+                  <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="5x(2x + 3)" />{'\n'}
+  <span className="plain-equals">=</span>{' '}<Latex math="5x(2x) + 5x(3)" />{'\n'}
+  <span className="plain-equals">=</span>{' '}<Latex math="10x^2 + 15x" /> <span className="text-sm text-slate-500">(同類項才能加)</span>
                 </pre>
               </div>
               <hr />
               <div>
                 <pre className="whitespace-pre font-sans text-lg">
-                  <span className="invisible">= </span><Latex math="(x + 5)(6x^2)" />{'\n'}
-= <Latex math="x(6x^2) + 5(6x^2)" />{'\n'}
-= <Latex math="6x^3 + 30x^2" />
+                  <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="(x + 5)(6x^2)" />{'\n'}
+  <span className="plain-equals">=</span>{' '}<Latex math="x(6x^2) + 5(6x^2)" />{'\n'}
+  <span className="plain-equals">=</span>{' '}<Latex math="6x^3 + 30x^2" />
                 </pre>
               </div>
             </div>
@@ -863,23 +863,24 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <p className="text-slate-700 mb-2 text-sm">認住位置乘：<Latex math="(①+②)(③+④) = ①×③ + ①×④ + ②×③ + ②×④" /></p>
             <div className="bg-white p-4 rounded border border-slate-200">
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible">= </span><Latex math="(4 − 5x)(5 + 6x)" />{'\n'}
-= <Latex math="4(5) + 4(6x) − 5x(5) − 5x(6x)" /> <span className="text-sm text-slate-500">(按順序乘)</span>{'\n'}
-= <Latex math="20 + 24x − 25x − 30x^2" /> <span className="text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}
-= <Latex math="20 − x − 30x^2" />{'\n'}
-= <Latex math="−30x^2 − x + 20" />
+                <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="(4 − 5x)(5 + 6x)" />{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="4(5) + 4(6x) − 5x(5) − 5x(6x)" /> <span className="text-sm text-slate-500">(按順序乘)</span>{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="20 + 24x − 25x − 30x^2" /> <span className="text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="20 − x − 30x^2" />{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="−30x^2 − x + 20" />
               </pre>
             </div>
           </div>
 
         </div>
       </CollapsibleSection>
-    </>
+    </div>
   );
 };
 
+
 export const AreaVolumeNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
 
   return (
     <>
@@ -1768,62 +1769,78 @@ export const StatisticsNotes = ({ activeSub }) => {
       </div>
 
       <CollapsibleSection id="bar-chart" title="1. 棒形圖" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-6">
           <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <svg viewBox="0 0 400 250" className="w-full h-auto max-w-md mx-auto font-sans">
+            <p className="text-center text-slate-700 font-bold mb-2">某選舉中五名候選人的所得票數</p>
+            <svg viewBox="0 0 520 270" className="w-full h-auto max-w-lg mx-auto font-sans">
               <defs>
                 <marker id="arrow-y" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
-                  <path d="M 1 1 L 5 3 L 1 5 Z" fill="#64748b" />
+                  <path d="M 1 1 L 5 3 L 1 5 Z" fill="#16a34a" />
                 </marker>
                 <marker id="arrow-x" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
-                  <path d="M 1 1 L 5 3 L 1 5 Z" fill="#64748b" />
+                  <path d="M 1 1 L 5 3 L 1 5 Z" fill="#16a34a" />
                 </marker>
               </defs>
-              
-              {/* Y Grid lines */}
-              {[30, 77.5, 125, 172.5].map((y, i) => (
-                <line key={i} x1="50" y1={y} x2="380" y2={y} stroke="#e2e8f0" strokeWidth="1" strokeDasharray="4 4" />
-              ))}
+
+              {/* Grid: one cell per vote, with a stronger line every five cells */}
+              <g>
+                {Array.from({ length: 81 }, (_, cell) => {
+                  const x = 50 + cell * 5;
+                  const isMajor = cell % 5 === 0;
+                  return <line key={`vertical-${cell}`} x1={x} y1="20" x2={x} y2="220" stroke={isMajor ? "#93c5fd" : "#dbeafe"} strokeWidth={isMajor ? "1.4" : "0.6"} />;
+                })}
+                {Array.from({ length: 46 }, (_, value) => {
+                  const y = 220 - value * (200 / 45);
+                  const isMajor = value % 5 === 0;
+                  return <line key={`horizontal-${value}`} x1="50" y1={y} x2="450" y2={y} stroke={isMajor ? "#93c5fd" : "#dbeafe"} strokeWidth={isMajor ? "1.4" : "0.6"} />;
+                })}
+              </g>
               
               {/* Axes */}
-              <line x1="50" y1="220" x2="380" y2="220" stroke="#64748b" strokeWidth="2" markerEnd="url(#arrow-x)" />
-              <line x1="50" y1="220" x2="50" y2="20" stroke="#64748b" strokeWidth="2" markerEnd="url(#arrow-y)" />
+              <line x1="50" y1="220" x2="450" y2="220" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-x)" />
+              <line x1="50" y1="220" x2="50" y2="20" stroke="#16a34a" strokeWidth="2" markerEnd="url(#arrow-y)" />
+              <g stroke="#16a34a" strokeWidth="2">
+                {[0, 10, 20, 30, 40].map((value) => {
+                  const y = 220 - value * (200 / 45);
+                  return <line key={`tick-${value}`} x1="45" y1={y} x2="50" y2={y} />;
+                })}
+              </g>
               
               {/* Box plot areas */}
-              <g fill="rgba(59,130,246,0.2)" stroke="#3b82f6" strokeWidth="2">
-                <rect x="90" y="153.5" width="30" height="66.5" />
-                <rect x="145" y="87" width="30" height="133" />
-                <rect x="200" y="30" width="30" height="190" />
-                <rect x="255" y="72.75" width="30" height="147.25" />
-                <rect x="310" y="153.5" width="30" height="66.5" />
+              <g fill="rgba(244,114,182,0.18)" stroke="#111827" strokeWidth="2">
+                <rect x="75" y={220 - 14 * (200 / 45)} width="50" height={14 * (200 / 45)} />
+                <rect x="150" y={220 - 28 * (200 / 45)} width="50" height={28 * (200 / 45)} />
+                <rect x="225" y={220 - 40 * (200 / 45)} width="50" height={40 * (200 / 45)} />
+                <rect x="300" y={220 - 31 * (200 / 45)} width="50" height={31 * (200 / 45)} />
+                <rect x="375" y={220 - 14 * (200 / 45)} width="50" height={14 * (200 / 45)} />
               </g>
 
               {/* Box Heights Text */}
               <g fill="#1d4ed8" fontSize="12" fontWeight="bold" textAnchor="middle">
-                <text x="105" y="148.5">14</text>
-                <text x="160" y="82">28</text>
-                <text x="215" y="25">40</text>
-                <text x="270" y="67.75">31</text>
-                <text x="325" y="148.5">14</text>
+                <text x="100" y={220 - 14 * (200 / 45) - 5}>14</text>
+                <text x="175" y={220 - 28 * (200 / 45) - 5}>28</text>
+                <text x="250" y={220 - 40 * (200 / 45) - 5}>40</text>
+                <text x="325" y={220 - 31 * (200 / 45) - 5}>31</text>
+                <text x="400" y={220 - 14 * (200 / 45) - 5}>14</text>
               </g>
 
               {/* Labels (X-axis) */}
-              <g fill="#475569" fontSize="12" textAnchor="middle">
-                <text x="105" y="235">A</text>
-                <text x="160" y="235">B</text>
-                <text x="215" y="235">C</text>
-                <text x="270" y="235">D</text>
-                <text x="325" y="235">E</text>
-                <text x="215" y="250" fontSize="11" fill="#64748b">候選人</text>
+              <g fill="#16a34a" fontSize="12" textAnchor="middle">
+                <text x="100" y="235">A</text>
+                <text x="175" y="235">B</text>
+                <text x="250" y="235">C</text>
+                <text x="325" y="235">D</text>
+                <text x="400" y="235">E</text>
+                <text x="250" y="262" fontSize="11">候選人</text>
               </g>
               
               {/* Labels (Y-axis) */}
-              <g fill="#475569" fontSize="11" textAnchor="end" dominantBaseline="middle">
+              <g fill="#16a34a" fontSize="11" textAnchor="end" dominantBaseline="middle">
                 <text x="42" y="220">0</text>
-                <text x="42" y="172.5">10</text>
-                <text x="42" y="125">20</text>
-                <text x="42" y="77.5">30</text>
-                <text x="42" y="30">40</text>
+                <text x="42" y={220 - 10 * (200 / 45)}>10</text>
+                <text x="42" y={220 - 20 * (200 / 45)}>20</text>
+                <text x="42" y={220 - 30 * (200 / 45)}>30</text>
+                <text x="42" y={220 - 40 * (200 / 45)}>40</text>
                 <text x="42" y="15">票數</text>
               </g>
             </svg>
@@ -1839,9 +1856,9 @@ export const StatisticsNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="pie-chart" title="2. 圓形圖" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-6">
           <div className="space-y-4 bg-white rounded-lg p-4 border border-slate-200">
-            <p className="text-slate-700 font-bold text-lg mb-2 text-center text-blue-800">例：假設屋邨有 1200 名居民</p>
+            <p className="text-slate-700 font-bold text-lg mb-2 text-center text-blue-800">某屋邨居民的年紀分佈</p>
             <svg viewBox="0 0 400 300" className="w-full h-auto max-w-md mx-auto font-sans">
               <g transform="translate(200, 150)">
                 {/* 120 deg: -90 to 30 */}
@@ -1888,7 +1905,7 @@ export const StatisticsNotes = ({ activeSub }) => {
               <ul className="text-slate-700 font-bold text-base space-y-4 list-disc ml-6">
                   <li>
                     圓形圖角度總和是 <span className="text-red-600">360°</span>，因此能找 x 的角度
-                    <div className="text-slate-600 font-normal mt-2 ml-2">例：<Latex math="x = 360^\circ − 120^\circ − 30^\circ − 45^\circ − 69^\circ = 96^\circ" /></div>
+                    <div className="text-slate-600 font-normal mt-2 ml-2"><Latex math={'\\begin{aligned} x &= 360^\\circ − 120^\\circ − 30^\\circ − 45^\\circ − 69^\\circ \\\\ &= 96^\\circ \\end{aligned}'} block left /></div>
                   </li>
                   <li>
                     若知總人數，能推出每格人數
@@ -1897,7 +1914,7 @@ export const StatisticsNotes = ({ activeSub }) => {
               </ul>
             </div>
             <div className="bg-white rounded-lg p-5 border border-slate-200">
-                <p className="text-slate-800 font-bold mb-3">例：已知總人數為 <span className="text-blue-700">1200</span>，<Latex math="360^\circ" /> 中佔 <span className="text-purple-600 bg-yellow-200 px-1 rounded">30°</span></p>
+                <p className="text-slate-800 font-bold mb-3">已知屋邨居民總人數為 <span className="text-blue-700">1200</span></p>
                 <div className="whitespace-pre font-sans text-base leading-relaxed pl-4">
                   <span className="font-bold text-slate-700">能得出：</span><br/>
                   <div className="my-2 flex items-center flex-wrap gap-2">
@@ -1925,10 +1942,10 @@ export const StatisticsNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="line-graph" title="3. 折線圖" num={3} color="blue" activeSub={activeSub} sectionRef={s3}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-6">
           <div className="bg-white rounded-lg p-4 border border-slate-200 text-center">
             <h4 className="text-slate-700 font-bold mb-2">A城由2020年至2026年的失業率</h4>
-            <svg viewBox="0 0 400 250" className="w-full h-auto max-w-md mx-auto font-sans">
+            <svg viewBox="0 0 400 270" className="w-full h-auto max-w-md mx-auto font-sans">
               <defs>
                 <marker id="arrow-y2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
                   <path d="M 1 1 L 5 3 L 1 5 Z" fill="#64748b" />
@@ -1955,14 +1972,14 @@ export const StatisticsNotes = ({ activeSub }) => {
                 points="90,115.5 130,125 170,148.75 210,129.75 250,101.25 290,96.5 330,77.5"
                 fill="none" stroke="#2563eb" strokeWidth="2" strokeLinejoin="round"
               />
-              <g fill="#3b82f6" stroke="#ffffff" strokeWidth="1">
-                <circle cx="90" cy="115.5" r="4" />
-                <circle cx="130" cy="125" r="4" />
-                <circle cx="170" cy="148.75" r="4" />
-                <circle cx="210" cy="129.75" r="4" />
-                <circle cx="250" cy="101.25" r="4" />
-                <circle cx="290" cy="96.5" r="4" />
-                <circle cx="330" cy="77.5" r="4" />
+              <g stroke="#3b82f6" strokeWidth="2">
+                <path d="M 86 111.5 L 94 119.5 M 94 111.5 L 86 119.5" />
+                <path d="M 126 121 L 134 129 M 134 121 L 126 129" />
+                <path d="M 166 144.75 L 174 152.75 M 174 144.75 L 166 152.75" />
+                <path d="M 206 125.75 L 214 133.75 M 214 125.75 L 206 133.75" />
+                <path d="M 246 97.25 L 254 105.25 M 254 97.25 L 246 105.25" />
+                <path d="M 286 92.5 L 294 100.5 M 294 92.5 L 286 100.5" />
+                <path d="M 326 73.5 L 334 81.5 M 334 73.5 L 326 81.5" />
               </g>
 
               {/* Labels (X-axis) */}
@@ -1970,7 +1987,7 @@ export const StatisticsNotes = ({ activeSub }) => {
                 {['2020', '2021', '2022', '2023', '2024', '2025', '2026'].map((year, i) => (
                   <text key={year} x={90 + i * 40} y="235">{year}</text>
                 ))}
-                <text x="210" y="250" fontSize="11" fill="#64748b">年份</text>
+                <text x="210" y="262" fontSize="11" fill="#64748b">年份</text>
               </g>
               
               {/* Labels (Y-axis) */}
@@ -2000,7 +2017,7 @@ export const StatisticsNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="stem-leaf" title="4. 幹葉圖" num={4} color="blue" activeSub={activeSub} sectionRef={s4}>
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-6">
           <div className="bg-white rounded-lg p-6 border border-slate-200 h-full flex flex-col items-center justify-center">
             
             <p className="text-slate-800 font-bold mb-4 self-start">以下的幹葉圖顯示下列數據：</p>
@@ -2018,7 +2035,8 @@ export const StatisticsNotes = ({ activeSub }) => {
               <div>48</div>
             </div>
 
-            <table className="border-collapse text-xl">
+            <div className="relative">
+              <table className="border-collapse text-xl">
               <thead>
                 <tr className="border-b-[3px] border-slate-700">
                   <th className="px-5 py-2 text-slate-800 font-bold border-r-[3px] border-slate-700">幹(十位)</th>
@@ -2035,26 +2053,27 @@ export const StatisticsNotes = ({ activeSub }) => {
                   <td className="px-5 py-2 tracking-[0.5em]">0 0</td>
                 </tr>
                 <tr className="hover:bg-slate-50 transition">
-                  <td className="px-5 py-2 border-r-[3px] border-slate-700 font-bold text-center">2</td>
-                  <td className="px-5 py-2 tracking-[0.5em] font-bold">1 3 4</td>
+                  <td className="px-5 py-2 border-r-[3px] border-slate-700 text-center">2</td>
+                  <td className="px-5 py-2 tracking-[0.5em]">1 3 4</td>
                 </tr>
                 <tr className="hover:bg-slate-50 transition">
                   <td className="px-5 py-2 border-r-[3px] border-slate-700 text-center">3</td>
-                  <td className="px-5 py-2 tracking-[0.5em]"></td>
+                  <td className="px-5 py-2 tracking-[0.5em]"><span className="text-green-600 font-sans font-bold ml-8 tracking-normal whitespace-nowrap">← 沒有3字開頭的數據</span></td>
                 </tr>
                 <tr className="hover:bg-slate-50 transition">
                   <td className="px-5 py-2 border-r-[3px] border-slate-700 text-center">4</td>
                   <td className="px-5 py-2 tracking-[0.5em]">2 5 7 8</td>
                 </tr>
               </tbody>
-            </table>
+              </table>
+            </div>
 
           </div>
           <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-4 text-xl border-b border-blue-200 pb-2">幹葉圖</h3>
             <ul className="text-slate-700 font-bold text-lg space-y-3 list-disc ml-6 mb-6">
               <li>能清楚知道每一個數據</li>
-              <li>按大小<span className="px-1 text-slate-800">順序</span>排列數據</li>
+              <li>按大小<span className="bg-yellow-200 px-1 text-slate-800 rounded">順序</span>排列數據</li>
               <li>能看到<span className="text-red-500 px-1">最大 / 最小</span>的數據</li>
               <li>可以得知<span className="text-red-500 px-1">總人數</span>
                 <div className="text-slate-600 font-normal mt-1 border-l-4 border-slate-300 pl-3 ml-2 text-base">↳ 數葉（右方）的數字出現了多少次</div>
@@ -2090,7 +2109,7 @@ export const StatisticsNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="frequency-table" title="6. 頻數分佈表 (填表格)" num={6} color="blue" activeSub={activeSub} sectionRef={s6}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6">
           <div className="bg-white rounded-xl p-5 border border-slate-200">
             <p className="text-slate-800 font-bold mb-4 border-b pb-2">8. 以下是一些家庭擁有冷氣機的數目：</p>
             <div className="flex flex-wrap gap-[6px] mb-6 justify-center max-w-sm mx-auto p-4 bg-slate-50 rounded-lg border border-slate-100">
@@ -2187,7 +2206,7 @@ export const StatisticsNotes = ({ activeSub }) => {
       <CollapsibleSection id="discrete-continuous" title="5. 連續數據 / 離散數據" num={5} color="red" activeSub={activeSub} sectionRef={s5}>
         <div className="bg-white rounded-xl p-6 border-l-[6px] border-l-red-500 shadow-md max-w-3xl mx-auto">
           <p className="text-red-700 font-bold mb-4">- 需分辨數據為離散數據還是連續數據</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] gap-6">
             <div className="bg-red-50 p-6 rounded-xl border border-red-200 transition hover:shadow-md">
               <h3 className="text-red-800 font-bold text-xl mb-3 flex items-center"><span className="mr-2">📝</span>離散數據</h3>
               <p className="text-slate-700 text-lg mb-4"><span className="text-red-600 font-bold border-b-2 border-red-300 pb-1">數算</span>所得</p>
@@ -2328,13 +2347,21 @@ export const CoordinateNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col md:flex-row items-center gap-6">
             <svg viewBox="-110 -110 220 220" className="w-48 bg-white">
+              <rect x="0" y="-5" width="90" height="10" fill="#facc15" opacity="0.45" />
+              <rect x="-90" y="-5" width="90" height="10" fill="#f9a8d4" opacity="0.45" />
+              <rect x="-5" y="-90" width="10" height="90" fill="#facc15" opacity="0.45" />
+              <rect x="-5" y="0" width="10" height="90" fill="#f9a8d4" opacity="0.45" />
               <line x1="-90" y1="0" x2="90" y2="0" stroke="#000" strokeWidth="2" />
               <polyline points="85,-4 90,0 85,4" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="89" y="-7" width="14" height="14" rx="2" fill="#facc15" opacity="0.55" />
               <text x="96" y="5" fontSize="18" fill="#000" fontWeight="bold" textAnchor="middle">+</text>
+              <rect x="-110" y="-7" width="14" height="14" rx="2" fill="#f9a8d4" opacity="0.55" />
               <text x="-103" y="5" fontSize="18" fill="#000" fontWeight="bold" textAnchor="middle">−</text>
               <line x1="0" y1="90" x2="0" y2="-90" stroke="#000" strokeWidth="2" />
               <polyline points="-4,-85 0,-90 4,-85" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="-7" y="-103" width="14" height="14" rx="2" fill="#facc15" opacity="0.55" />
               <text x="0" y="-96" fontSize="18" fill="#000" fontWeight="bold" textAnchor="middle">+</text>
+              <rect x="-7" y="97" width="14" height="14" rx="2" fill="#f9a8d4" opacity="0.55" />
               <text x="0" y="104" fontSize="18" fill="#000" fontWeight="bold" textAnchor="middle">−</text>
 
               <text x="45" y="-30" fontSize="24" fill="#15803d" fontWeight="bold" textAnchor="middle">I</text>
@@ -2506,7 +2533,7 @@ export const CoordinateNotes = ({ activeSub }) => {
 };
 
 export const PercentageNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
 
   return (
     <>
@@ -2598,6 +2625,7 @@ export const PercentageNotes = ({ activeSub }) => {
 
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <p className="text-blue-800 font-bold mb-3">e.g. 題目：40 隻手錶中，有 8 隻是智能手錶</p>
+              <p className="text-slate-700 font-bold mb-2">智能手錶佔全部手錶的：</p>
               
               <div className="flex items-center text-lg mt-4 pl-4">
                 <span className="font-bold mr-4">答案：</span>
@@ -2721,6 +2749,76 @@ export const PercentageNotes = ({ activeSub }) => {
                   = <span className="bg-green-100 px-1 rounded text-green-700">+20%</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="money-percentages" title="5. 關於錢的百分數" num={5} color="emerald" activeSub={activeSub} sectionRef={s5}>
+        <div className="space-y-4">
+          <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+              <p className="text-red-600 font-bold text-left">必須了解以下幾個關鍵詞：</p>
+            </div>
+
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-emerald-100">
+                    <th className="border border-emerald-200 px-4 py-3 text-left font-bold text-emerald-800">關鍵詞</th>
+                    <th className="border border-emerald-200 px-4 py-3 text-left font-bold text-emerald-800">定義 / 解釋</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-white"><td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">標價</td><td className="border border-emerald-200 px-4 py-3"><span className="text-red-600 font-bold">未折</span>的原價</td></tr>
+                  <tr className="bg-gray-50"><td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">售價</td><td className="border border-emerald-200 px-4 py-3"><span className="text-red-600 font-bold">折後</span>真正付的錢</td></tr>
+                  <tr className="bg-white"><td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">折扣</td><td className="border border-emerald-200 px-4 py-3">標價 - 售價 <span className="text-green-600">（平了多少）</span></td></tr>
+                  <tr className="bg-gray-50"><td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">成本</td><td className="border border-emerald-200 px-4 py-3">我做生意<span className="text-red-600 font-bold">買</span>/製作這件貨品需花的金額(成本價)</td></tr>
+                  <tr className="bg-white"><td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">盈利</td><td className="border border-emerald-200 px-4 py-3">扣除成本後<span className="bg-yellow-200 text-orange-600 font-bold px-1 rounded">賺</span>的錢：<span className="text-red-600 font-bold">盈利 = 售價 - 成本</span></td></tr>
+                  <tr className="bg-gray-50"><td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">虧蝕</td><td className="border border-emerald-200 px-4 py-3">扣除成本後<span className="bg-yellow-200 text-orange-600 font-bold px-1 rounded">蝕</span>的錢，即負盈利</td></tr>
+                  <tr className="bg-white"><td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">標價<span className="text-green-600">九折</span></td><td className="border border-emerald-200 px-4 py-3">標價 <span className="text-green-600 font-bold">× 90%</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
+              <h3 className="font-bold text-emerald-700 mb-3">重要公式</h3>
+              <div className="bg-white rounded-lg p-4 border border-green-300">
+                <div className="flex flex-col md:flex-row md:items-center gap-4">
+                  <span className="text-green-600 font-bold">盈利/虧蝕百分率</span>
+                  <Latex math="\displaystyle \frac{\color{red}{\text{盈利/虧蝕}}}{\text{成本}} \times 100\%" block />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 bg-slate-50 rounded-lg p-4">
+              <h3 className="font-bold text-slate-700 mb-4 text-center">💰 價錢關係圖解</h3>
+              <svg viewBox="0 0 480 320" className="w-full max-w-lg mx-auto">
+                <defs>
+                  <marker id="money-arr-amber" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#d97706" /></marker>
+                  <marker id="money-arr-pink" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#ec4899" /></marker>
+                  <marker id="money-arr-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#10b981" /></marker>
+                  <marker id="money-arr-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#ef4444" /></marker>
+                </defs>
+                <rect x="190" y="18" width="100" height="46" rx="8" fill="#fce7f3" stroke="#ec4899" strokeWidth="2" />
+                <text x="240" y="48" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#9d174d">標價</text>
+                <rect x="18" y="200" width="100" height="46" rx="8" fill="#fef3c7" stroke="#f59e0b" strokeWidth="2" />
+                <text x="68" y="230" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#92400e">成本</text>
+                <rect x="362" y="200" width="100" height="46" rx="8" fill="#d1fae5" stroke="#10b981" strokeWidth="2" />
+                <text x="412" y="230" textAnchor="middle" fontSize="18" fontWeight="bold" fill="#065f46">售價</text>
+                <line x1="112" y1="200" x2="194" y2="64" stroke="#d97706" strokeWidth="2" markerEnd="url(#money-arr-amber)" />
+                <text x="105" y="138" textAnchor="end" fontSize="14" fontWeight="bold" fill="#92400e">(1+%)</text>
+                <line x1="286" y1="64" x2="366" y2="200" stroke="#ec4899" strokeWidth="2" markerEnd="url(#money-arr-pink)" />
+                <text x="378" y="126" textAnchor="start" fontSize="14" fontWeight="bold" fill="#9d174d">折扣率</text>
+                <text x="378" y="144" textAnchor="start" fontSize="14" fontWeight="bold" fill="#9d174d">(1-%)</text>
+                <line x1="120" y1="216" x2="358" y2="216" stroke="#10b981" strokeWidth="2" markerEnd="url(#money-arr-green)" />
+                <text x="239" y="208" textAnchor="middle" fontSize="13" fill="#065f46" fontWeight="bold">(1+%) 盈利</text>
+                <line x1="120" y1="236" x2="358" y2="236" stroke="#ef4444" strokeWidth="2" markerEnd="url(#money-arr-red)" />
+                <text x="239" y="252" textAnchor="middle" fontSize="13" fill="#dc2626" fontWeight="bold">(1-%) 虧蝕</text>
+                <rect x="60" y="268" width="360" height="46" rx="8" fill="#eff6ff" stroke="#bfdbfe" strokeWidth="1.5" />
+                <text x="240" y="287" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8">順箭嘴方向 → ×（乘）</text>
+                <text x="240" y="307" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#b91c1c">逆箭嘴方向 → ÷（除）</text>
+              </svg>
             </div>
           </div>
         </div>

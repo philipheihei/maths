@@ -139,6 +139,7 @@ export const NOTES_DATA = {
         { id: 'percentage-of-part', num: 2, title: '表達部份的百分數', color: 'green' },
         { id: 'percentage-comparison', num: 3, title: '百分數比較', color: 'amber' },
         { id: 'percentage-change', num: 4, title: '百分變化', color: 'purple' },
+        { id: 'money-percentages', num: 5, title: '關於錢的百分數', color: 'emerald' },
       ]
     },
     {

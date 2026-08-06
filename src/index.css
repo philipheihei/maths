@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.ch6-long-equals .katex .mrel {
+  display: inline-block;
+  transform: scaleX(1.6);
+}
+
+.ch6-long-equals .plain-equals {
+  display: inline-block;
+  transform: scaleX(1.6);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

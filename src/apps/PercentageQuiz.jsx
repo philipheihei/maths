@@ -81,8 +81,8 @@ const TeachingPage = ({ onStartQuiz }) => {
 
           {/* 關鍵詞提示 */}
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
-            <p className="text-red-600 font-bold text-center">
-              <Latex math="\text{必須了解幾個關鍵詞：}" />
+            <p className="text-red-600 font-bold text-left">
+              <Latex math="\text{必須了解以下幾個關鍵詞：}" />
             </p>
           </div>
 
@@ -134,7 +134,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                   </td>
                 </tr>
                 <tr className="bg-white hover:bg-emerald-50 transition-colors">
-                  <td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">標價九折</td>
+                  <td className="border border-emerald-200 px-4 py-3 font-bold text-slate-800">標價<span className="text-green-600">九折</span></td>
                   <td className="border border-emerald-200 px-4 py-3">
                     標價 <span className="text-green-600 font-bold">× 90%</span>
                   </td>

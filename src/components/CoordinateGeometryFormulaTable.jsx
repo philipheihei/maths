@@ -189,6 +189,10 @@ export const CoordinateGeometryFormulaTable = ({ onStartQuiz }) => {
             <p className="text-sm font-semibold text-slate-600 mb-2">例：若 AB ⊥ CD，求 CD 的斜率</p>
             <p className="text-sm text-slate-600 mb-2">已知 AB 的斜率 = 6</p>
             <Latex math={'\\begin{aligned}m_{AB} \\times m_{CD} &= -1 \\\\ 6 \\times m_{CD} &= -1 \\\\ m_{CD} &= -\\dfrac{1}{6}\\end{aligned}'} block />
+            <div className="mt-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-center text-rose-600">
+              <p className="font-bold">快捷技巧：見到 ⊥，斜率互為負倒數</p>
+              <Latex math={'m_1 = -\\dfrac{1}{m_2}'} block />
+            </div>
           </div>
         </div>
       </div>

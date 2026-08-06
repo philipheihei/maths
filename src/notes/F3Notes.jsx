@@ -143,12 +143,12 @@ export const FactorizationNotes = ({ activeSub }) => {
             <p className="text-sm text-slate-700 mb-2">十字相乘法 / FMLA 01 需以 <Latex math="ax^2 + bx + c" /> 形式才能計算正確</p>
             <div className="bg-white rounded-lg p-3 mb-2">
               <p className="text-sm text-slate-600 mb-1">例子 1：調動次序</p>
-              <Latex math="\begin{aligned} &50 − 15m + m^2 \\ &= m^2 − 15m + 50 \end{aligned}" block />
+              <Latex math="\begin{aligned} &\phantom{=}50 - 15m + m^2 \\ &= m^2 - 15m + 50 \end{aligned}" block />
               <p className="text-xs text-slate-500">以 2次方/1次方/0次方(沒代數) 順序作調動</p>
             </div>
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-slate-600 mb-1">例子 2：<Latex math="a^2" /> 係數需是正數</p>
-              <Latex math="\begin{aligned} &36 + 5a − a^2 \\ &= −a^2 + 5a + 36 \\ &= −(a^2 − 5a − 36) \\ &= −(a−9)(a+4) \end{aligned}" block />
+              <Latex math="\begin{aligned} &\phantom{=}36 + 5a - a^2 \\ &= -a^2 + 5a + 36 \\ &= -(a^2 - 5a - 36) \\ &= -(a-9)(a+4) \end{aligned}" block />
               <p className="text-xs text-red-500 mt-2">⚠️ 若沒有抽負，因式分解答案會錯！</p>
             </div>
           </div>
@@ -158,7 +158,7 @@ export const FactorizationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3">
               <p className="text-xs text-slate-500 mb-2">💡 方法：先當只有前面的代數 x 用FMLA01去組成括號，最後再在每個括號後補上後面的代數 y</p>
               <p className="text-sm text-slate-600 mb-1">例子：</p>
-              <Latex math="\begin{aligned} &6r^2 − 13rs − 28s^2 \\ &= (2r−7s)(3r+4s) \end{aligned}" block />
+              <Latex math="\begin{aligned} &\phantom{=}6r^2 - 13rs - 28s^2 \\ &= (2r-7s)(3r+4s) \end{aligned}" block />
             </div>
           </div>
         </div>
@@ -188,10 +188,10 @@ export const FactorizationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-orange-800 mb-3">❓ 問特定因式（MC 限定）</h3>
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-slate-600 mb-2">例：下列何者是 <Latex math="4x^2 + 2x − 12" /> 的因式？</p>
-              <div className="ml-4 text-sm space-y-1"><p>I. 2</p><p>II. 2x - 3</p><p>III. x - 2</p></div>
+              <div className="ml-4 text-sm space-y-1"><p>I. <Latex math="2" inline /></p><p>II. <Latex math="2x - 3" inline /></p><p>III. <Latex math="x - 2" inline /></p></div>
               <div className="bg-blue-50 p-2 rounded mt-3">
-                <p className="text-sm"><span className="font-bold">①</span> 先因式分解：<Latex math="2(2x^2 + x − 6) = 2(2x−3)(x+2)" /></p>
-                <p className="text-sm mt-1"><span className="font-bold">②</span> 因式即問有哪個括號 → 2 / (2x-3) → 選項 I + II</p>
+                <p className="text-sm"><span className="font-bold">①</span> 先因式分解：<Latex math="2(2x^2 + x - 6) = 2(2x-3)(x+2)" /></p>
+                <p className="text-sm mt-1"><span className="font-bold">②</span> 因式即問有哪個括號 → <Latex math="2" inline /> / <Latex math="(2x-3)" inline /> → 選項 I + II</p>
               </div>
             </div>
           </div>
@@ -447,11 +447,11 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
       <CollapsibleSection id="pythagoras" title="sin cos tan 輔以畢氏定理" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-6">
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <p className="text-green-700 font-bold text-lg mb-3">1. sin cos tan 輔以<span className="text-purple-600">畢氏定理</span>去解題</p>
-            <p className="text-slate-700">如果不知道 3 條邊的長度，就不能同時找到 sin θ、cos θ 和 tan θ 的值</p>
+            <p className="text-green-700 font-bold text-lg mb-3">1. <Latex math="\sin\theta" inline />、<Latex math="\cos\theta" inline />、<Latex math="\tan\theta" inline /> 輔以<span className="text-purple-600">畢氏定理</span>去解題</p>
+            <p className="text-slate-700">如果不知道 3 條邊的長度，就不能同時找到 <Latex math="\sin\theta" inline />、<Latex math="\cos\theta" inline /> 和 <Latex math="\tan\theta" inline /> 的值</p>
           </div>
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <p className="text-sm text-blue-700 font-bold mb-3">例 1：圖中，∠Q=90°、PQ=12 及 PR=13。試不計算 θ，求 sin θ、cos θ 和 tan θ 的值。</p>
+            <p className="text-base text-blue-700 font-bold mb-3">例 1：圖中，∠Q=90°、PQ=12 及 PR=13。試不計算 <Latex math="\theta" inline />，求 <Latex math="\sin\theta" inline />、<Latex math="\cos\theta" inline /> 和 <Latex math="\tan\theta" inline /> 的值。</p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
                 <div className="flex flex-col lg:flex-row gap-4">
@@ -460,7 +460,6 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                     <div className="text-sm [&_.katex-display]:my-0.5">
                       <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\[−3px] RQ &= 5 \end{aligned}" block left />
                     </div>
-                    <p className="text-green-600 mt-3 text-sm">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold">sin θ / cos θ / tan θ</span></p>
                   </div>
                   <div className="flex-shrink-0 flex items-center justify-center w-full lg:w-1/2">
                     <svg width="100%" height="auto" viewBox="8 28 340 200" className="max-w-[300px] mx-auto block">
@@ -479,6 +478,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                 </div>
               </div>
               <div className="bg-white rounded-lg p-4">
+                <p className="text-green-600 text-sm mb-3">已知 3 邊長度，可按定義寫出 <span className="text-purple-600 font-bold"><Latex math="\sin\theta" inline /> / <Latex math="\cos\theta" inline /> / <Latex math="\tan\theta" inline /></span></p>
                 <div className="text-blue-600 text-lg space-y-2">
                   <div><Latex math="\sin\theta = \frac{12}{13}" /></div>
                   <div><Latex math="\cos\theta = \frac{5}{13}" /></div>
@@ -488,7 +488,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
             </div>
           </div>
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <p className="text-sm text-blue-700 font-bold mb-3">例 2：已知 <Latex math="\sin\theta = \frac{3}{7}" inline />。求 <Latex math="\frac{\tan\theta}{\cos\theta}" inline /> 的值。</p>
+            <p className="text-base text-blue-700 font-bold mb-3">例 2：已知 <Latex math="\sin\theta = \frac{3}{7}" inline />。求 <Latex math="\frac{\tan\theta}{\cos\theta}" inline /> 的值。</p>
             <div className="bg-white rounded-lg p-4 mb-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                 <div>
@@ -504,7 +504,11 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                       <polyline points="238,170 238,158 250,158" fill="none" stroke="#1d4ed8" strokeWidth="2" />
                       <path d="M 80,170 A 30 30 0 0 0 77.1,157.1" fill="none" stroke="#1d4ed8" strokeWidth="2" />
                       <text x="88" y="165" fill="#1d4ed8" fontSize="18" fontWeight="bold" fontStyle="italic">θ</text>
-                      <text x="150" y="192" fill="#0ea5e9" fontSize="20" fontWeight="bold" className="font-sans">x</text>
+                      <foreignObject x="130" y="176" width="40" height="32">
+                        <div xmlns="http://www.w3.org/1999/xhtml" className="flex items-center justify-center h-full text-xl text-[#0ea5e9] font-bold">
+                          <Latex math="x" inline />
+                        </div>
+                      </foreignObject>
                       <text x="260" y="130" fill="#16a34a" fontSize="20" fontWeight="bold" className="font-sans">3</text>
                       <text x="135" y="110" fill="#16a34a" fontSize="20" fontWeight="bold" className="font-sans">7</text>
                     </svg>
@@ -513,8 +517,25 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
               </div>
             <div className="bg-white rounded-lg p-4">
               <p className="text-slate-700 mb-2">3. 已知三邊邊長，求 <span className="text-green-600 font-bold"><Latex math="\frac{\tan\theta}{\cos\theta}" inline /></span></p>
-              <div className="text-blue-600">
-                <Latex math="\begin{aligned} \tan\theta &= \frac{3}{\sqrt{40}}, \quad \cos\theta = \frac{\sqrt{40}}{7} \\\\ \therefore \frac{\tan\theta}{\cos\theta} &= \frac{3}{\sqrt{40}} \times \frac{7}{\sqrt{40}} = \frac{21}{40} \end{aligned}" block left />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                  <div className="text-blue-600">
+                    <Latex math="\begin{aligned} \tan\theta &= \frac{3}{\sqrt{40}}, \quad \cos\theta = \frac{\sqrt{40}}{7} \\ \therefore \frac{\tan\theta}{\cos\theta} &= \frac{3}{\sqrt{40}} \times \frac{7}{\sqrt{40}} = \frac{21}{40} \end{aligned}" block left />
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <svg width="100%" height="auto" viewBox="10 28 320 205" className="max-w-[280px] mx-auto block">
+                      <path d="M 50,170 L 250,170 L 250,75 Z" fill="rgba(37, 99, 235, 0.05)" stroke="#1d4ed8" strokeWidth="3" strokeLinejoin="round" />
+                      <polyline points="238,170 238,158 250,158" fill="none" stroke="#1d4ed8" strokeWidth="2" />
+                      <path d="M 80,170 A 30 30 0 0 0 77.1,157.1" fill="none" stroke="#1d4ed8" strokeWidth="2" />
+                      <text x="88" y="165" fill="#1d4ed8" fontSize="18" fontWeight="bold" fontStyle="italic">θ</text>
+                      <foreignObject x="115" y="176" width="70" height="32">
+                        <div xmlns="http://www.w3.org/1999/xhtml" className="flex items-center justify-center h-full text-[#0ea5e9] font-bold">
+                          <Latex math="\sqrt{40}" inline />
+                        </div>
+                      </foreignObject>
+                      <text x="260" y="130" fill="#16a34a" fontSize="20" fontWeight="bold" className="font-sans">3</text>
+                      <text x="135" y="110" fill="#16a34a" fontSize="20" fontWeight="bold" className="font-sans">7</text>
+                    </svg>
+                  </div>
               </div>
             </div>
           </div>
@@ -524,38 +545,38 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
       <CollapsibleSection id="special-angles" title="特殊三角比" num={2} color="blue" activeSub={activeSub} sectionRef={s2}>
         <div className="space-y-4">
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
+            <table className="w-full table-fixed border-collapse">
               <thead>
                 <tr className="bg-green-100">
-                  <th className="border border-gray-400 p-3 text-center relative overflow-hidden" style={{ minWidth: '100px', minHeight: '60px' }}>
+                  <th className="w-1/4 border border-gray-400 p-3 text-center relative overflow-hidden" style={{ minHeight: '60px' }}>
                     <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
                       <line x1="0" y1="0" x2="100%" y2="100%" stroke="#9ca3af" strokeWidth="1" />
                     </svg>
                     <div className="relative flex justify-between items-start h-full">
                       <span className="self-end text-sm font-bold mt-4">三角比</span>
-                      <span className="self-start text-sm font-bold mb-4">θ</span>
+                      <span className="self-start text-lg font-bold mb-4"><Latex math="\theta" inline /></span>
                     </div>
                   </th>
-                  <th className="border border-gray-400 p-3 text-center">30°</th>
-                  <th className="border border-gray-400 p-3 text-center">45°</th>
-                  <th className="border border-gray-400 p-3 text-center">60°</th>
+                  <th className="w-1/4 border border-gray-400 p-3 text-center">30°</th>
+                  <th className="w-1/4 border border-gray-400 p-3 text-center">45°</th>
+                  <th className="w-1/4 border border-gray-400 p-3 text-center">60°</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold">sin θ</td>
+                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold"><Latex math="\sin\theta" /></td>
                   <td className="border border-gray-400 p-3 text-center"><Latex math="\frac{1}{2}" /> <span className="text-green-600 text-xs">易</span></td>
                   <td className="border border-gray-400 p-3 text-center bg-pink-100"><Latex math="\frac{1}{\sqrt{2}}" /> 或 <Latex math="\frac{\sqrt{2}}{2}" /></td>
                   <td className="border border-gray-400 p-3 text-center bg-yellow-100"><Latex math="\frac{\sqrt{3}}{2}" /></td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold">cos θ</td>
+                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold"><Latex math="\cos\theta" /></td>
                   <td className="border border-gray-400 p-3 text-center bg-yellow-100"><Latex math="\frac{\sqrt{3}}{2}" /></td>
                   <td className="border border-gray-400 p-3 text-center bg-pink-100"><Latex math="\frac{1}{\sqrt{2}}" /> 或 <Latex math="\frac{\sqrt{2}}{2}" /></td>
                   <td className="border border-gray-400 p-3 text-center"><Latex math="\frac{1}{2}" /> <span className="text-green-600 text-xs">易</span></td>
                 </tr>
                 <tr>
-                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold">tan θ</td>
+                  <td className="border border-gray-400 p-3 text-center bg-green-50 font-bold"><Latex math="\tan\theta" /></td>
                   <td className="border border-gray-400 p-3 text-center"><Latex math="\frac{1}{\sqrt{3}}" /> 或 <Latex math="\frac{\sqrt{3}}{3}" /></td>
                   <td className="border border-gray-400 p-3 text-center">1 <span className="text-green-600 text-xs">易</span></td>
                   <td className="border border-gray-400 p-3 text-center"><Latex math="\sqrt{3}" /></td>
@@ -564,10 +585,10 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
             </table>
           </div>
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <p className="text-green-700 font-bold mb-2">易：按計算機</p>
+            <p className="text-green-700 font-bold mb-2">易：按計算機能找到，可專心記其他特殊三角比</p>
             <div className="text-blue-600 space-y-1 text-sm">
-              <p>tan 60° = 1.732050808</p>
-              <p>√3 = 1.732050808</p>
+              <p><Latex math="\tan 60^\circ = 1.732050808" /></p>
+              <p><Latex math="\sqrt{3} = 1.732050808" /></p>
             </div>
           </div>
         </div>
@@ -576,25 +597,21 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
       <CollapsibleSection id="trig-equations" title="三角方程" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <div className="text-lg mb-4">
-              <Latex math="2\sin\theta − \sqrt{3} = 0" />
-              <span className="text-green-600 text-sm ml-4">目標：找 sin θ = ? (將 sin θ 以外的項移走)</span>
+            <div className="text-lg mb-3">
+              <Latex math="2\sin\theta - \sqrt{3} = 0" />
+              <span className="text-green-600 text-sm ml-4">目標：找 <Latex math="\sin\theta = ?" inline />（將 <Latex math="\sin\theta" inline /> 以外的項移走）</span>
             </div>
-            <div className="bg-white rounded-lg p-4">
+            <div className="flex items-center gap-4 flex-wrap">
               <div className="text-blue-600 text-lg">
-                <Latex math="\begin{aligned} 2\sin\theta &= \sqrt{3} \\\\ \sin\theta &= \frac{\sqrt{3}}{2} \end{aligned}" block left />
+                <Latex math="\begin{aligned} 2\sin\theta &= \sqrt{3} \\[-3px] \sin\theta &= \frac{\sqrt{3}}{2} \\[-3px] \theta &= 60^\circ \end{aligned}" block left />
               </div>
-            </div>
-          </div>
-          <div className="bg-white rounded-lg p-4 border border-purple-200">
-            <p className="text-purple-600 font-bold mb-3">以 sin θ 找 θ：</p>
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="text-slate-700">按</span>
-              <span className="px-2 py-1 bg-gray-300 text-yellow-700 rounded text-xs font-bold">SHIFT</span>
-              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">sin</span>
-              <span className="text-slate-700"><Latex math="\left(\frac{\sqrt{3}}{2}\right)" inline /></span>
-              <span className="text-green-600 text-2xl">→</span>
-              <span className="text-blue-600 text-xl font-bold">θ = 60°</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-green-600 text-2xl">←</span>
+                <span className="text-slate-700">按</span>
+                <span className="px-2 py-1 bg-gray-300 text-yellow-700 rounded text-xs font-bold">SHIFT</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">sin</span>
+                <span className="text-slate-700"><Latex math="\left(\frac{\sqrt{3}}{2}\right)" inline /></span>
+              </div>
             </div>
           </div>
         </div>
@@ -1378,7 +1395,7 @@ const BearingsSVG2 = () => (
       <line x1="-80" y1="0" x2="80" y2="0" stroke="#334155" strokeWidth="2" markerEnd="url(#arrow-bearings2-p)" />
       <text x="0" y="-95" fill="#334155" fontSize="18" fontWeight="bold" textAnchor="middle">N</text>
       <text x="15" y="-5" fill="#334155" fontSize="18" fontWeight="bold" textAnchor="start">A</text>
-      <text x="15" y="-80" fill="#ef4444" fontSize="14" fontWeight="bold" textAnchor="start">←從這裡開始轉</text>
+      <text x="10" y="-70" fill="#ef4444" fontSize="14" fontWeight="bold" textAnchor="start">←從這裡開始轉</text>
       
       {/* 三個象限的直角符號，使用不同長度方便分辨 */}
       <polyline points="14,0 14,-14 0,-14" stroke="#ef4444" strokeWidth="2" fill="none" />
@@ -1902,7 +1919,7 @@ export const CentralTendencyNotes = ({ activeSub }) => {
       <CollapsibleSection id="basic-measures" title="平均數 中位數 眾數" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-slate-800 mb-2">例：一組數據</h3>
+            <h3 className="font-bold text-slate-800 mb-2">例：從一組數據找平均數、中位數和眾數</h3>
             <p className="text-lg font-bold text-slate-800 mb-3 tracking-widest">
               1, 3, 4, 7 <span className="text-red-500 mx-1">|</span> 7, 8, 8, 8
             </p>
@@ -1910,25 +1927,31 @@ export const CentralTendencyNotes = ({ activeSub }) => {
               <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
                 <div className="flex items-center flex-wrap gap-2 mb-1">
                   <span className="font-bold text-slate-800 w-16">平均數</span>
-                  <Latex math="= \frac{1+3+4+7+7+8+8+8}{8}" />
-                  <span className="text-red-600 font-bold ml-2">← 所有數值相加</span>
-                </div>
-                <div className="ml-[4.5rem]">
-                  <span className="text-red-600 font-bold text-sm">← 總共 8 個數字</span>
+                  <div className="text-xl md:text-2xl leading-6 flex-shrink-0">
+                    <Latex math="= \frac{1+3+4+7+7+8+8+8}{8}" />
+                  </div>
+                  <div className="text-red-600 font-bold text-sm md:text-base flex flex-col justify-center leading-6">
+                    <span>← 所有數值相加</span>
+                    <span>← 總共 8 個數字</span>
+                  </div>
                 </div>
               </div>
 
               <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-slate-800 w-16">中位數</span>
-                  <Latex math="= \frac{7+7}{2} = 7" />
+                  <div className="text-xl md:text-2xl">
+                    <Latex math="= \frac{7+7}{2} = 7" />
+                  </div>
                 </div>
               </div>
 
               <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
                 <div className="flex items-center flex-wrap gap-2">
                   <span className="font-bold text-slate-800 w-16">眾數</span>
-                  <Latex math="= 8" />
+                  <div className="text-xl md:text-2xl">
+                    <Latex math="= 8" />
+                  </div>
                   <span className="text-red-600 font-bold ml-2">← 出現得最多的數字</span>
                 </div>
               </div>
@@ -1955,9 +1978,9 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                     <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">5</td>
                   </tr>
                   <tr>
-                    <td className="border border-slate-400 p-2 bg-green-100 font-bold text-green-800 w-24">
+                    <td className="border border-slate-400 p-2 bg-green-100 font-bold text-slate-800 w-24">
                       <div className="relative">
-                        <span className="absolute -left-12 -top-4 text-green-700 font-bold text-xs" style={{ whiteSpace: 'nowrap' }}>出現數量<br/>↓</span>
+                        <span className="absolute -left-12 top-1/2 -translate-y-1/2 text-green-700 font-bold text-xs" style={{ whiteSpace: 'nowrap' }}>出現數量 ⟶</span>
                         頻數
                       </div>
                     </td>
@@ -1965,7 +1988,7 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                     <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">10</td>
                     <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">4</td>
                     <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">3</td>
-                    <td className="border border-slate-400 p-2 border-r-4 w-[53px] h-[41px] min-w-[53px]">1</td>
+                    <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">1</td>
                     <td className="border-none text-left pl-2 hidden sm:table-cell text-green-700 font-bold text-sm whitespace-nowrap">
                       ← 能加到總數：5+10+4+3+1 = 23
                     </td>
@@ -1998,13 +2021,13 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="w-24">
                     <span className="font-bold text-slate-800">中位數：</span>
-                    <span className="text-lg font-bold ml-2">2</span>
+                    <span className="text-lg font-bold ml-2"><Latex math="2" /></span>
                   </div>
                   <div className="text-green-700 font-bold text-sm space-y-1">
-                    <p>Step 1：總數 = ? (23)</p>
-                    <p>Step 2：÷ 2 找最中間的位置 (23 ÷ 2 = 11.5)</p>
-                    <p>Step 3：中間的位置是哪一格 (第11.5個在頻數10)</p>
-                    <p>Step 4：答案！ (頻數10代表的是 2)</p>
+                    <p>Step 1：總數 = ? <span className="text-purple-700">(23)</span></p>
+                    <p>Step 2：÷ 2 找最中間的位置 <span className="text-purple-700">(23 ÷ 2 = 11.5)</span></p>
+                    <p>Step 3：中間的位置是哪一格 <span className="text-purple-700">(第11.5個在頻數10)</span></p>
+                    <p>Step 4：答案！ <span className="text-purple-700">(頻數10代表的是 2)</span></p>
                   </div>
                 </div>
               </div>
@@ -2012,9 +2035,9 @@ export const CentralTendencyNotes = ({ activeSub }) => {
               <div className="bg-white p-3 rounded shadow-sm border border-slate-200">
                 <div className="flex items-center flex-wrap gap-2">
                   <span className="font-bold text-slate-800 w-16">眾數：</span>
-                  <span className="text-lg font-bold mr-2">2</span>
+                  <span className="text-lg font-bold mr-2"><Latex math="2" /></span>
                   <span className="text-green-700 font-bold text-sm">
-                    ← 直觀 (頻數10是最大頻數，背後代表兩本書)
+                    ← 直觀 <span className="text-purple-700">(頻數10是最大頻數，背後代表兩本書)</span>
                   </span>
                 </div>
               </div>
@@ -2027,20 +2050,20 @@ export const CentralTendencyNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-slate-800 mb-1">加權平均數</h3>
-            <p className="text-purple-700 font-bold text-sm mb-3">和上述計法相同</p>
+            <p className="text-purple-700 font-bold text-sm mb-3">和上述平均數計法相同</p>
             <p className="text-sm text-slate-600 mb-2">例：</p>
             
             <div className="flex flex-col lg:flex-row gap-6 items-start">
               <div className="bg-white p-2 rounded shadow-sm overflow-x-auto w-full lg:w-auto">
-                <table className="text-center border-collapse min-w-[200px]">
+                <table className="text-center border-collapse min-w-[220px]">
                   <thead>
                     <tr className="bg-orange-100">
-                      <th className="border border-slate-400 p-2 font-bold w-24"></th>
-                      <th className="border border-slate-400 p-2 font-bold w-20">分數 (分)</th>
+                      <th className="border border-slate-400 p-2 font-bold w-28"></th>
+                      <th className="border border-slate-400 p-2 font-bold w-28 whitespace-nowrap">分數 (分)</th>
                       <th className="border border-slate-400 p-2 font-bold w-16">權</th>
                     </tr>
                   </thead>
-                  <tbody className="text-sm">
+                  <tbody className="text-base">
                     <tr>
                       <td className="border border-slate-400 p-2 text-left bg-orange-50/50">普通話</td>
                       <td className="border border-slate-400 p-2">78</td>
@@ -2069,16 +2092,13 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                 <p className="font-bold text-slate-800 mb-2">加權平均數：</p>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   <div>
-                    <div className="border-b-2 border-slate-800 text-center pb-1 text-blue-700 font-bold whitespace-nowrap pt-1 px-2">
-                      78 × 3 + 72 × 3 + 56 × 2 + 90 × 2
-                    </div>
-                    <div className="text-center pt-1 text-blue-700 font-bold px-2">
-                      3 + 3 + 2 + 2
+                    <div className="text-center text-slate-800 font-bold text-2xl md:text-3xl whitespace-nowrap px-2">
+                      <Latex math="\frac{78 \times 3 + 72 \times 3 + 56 \times 2 + 90 \times 2}{3 + 3 + 2 + 2}" />
                     </div>
                   </div>
                   <div className="text-green-700 font-bold text-sm space-y-2 sm:relative sm:h-[58px] sm:w-[200px]">
-                    <p className="sm:absolute sm:top-0 sm:left-0">← 左 × 右 / 上 × 下 再相加</p>
-                    <p className="sm:absolute sm:top-8 sm:left-0">← 權相加</p>
+                    <p className="sm:absolute sm:top-2 sm:left-0">← 左 × 右 / 上 × 下 再相加</p>
+                    <p className="sm:absolute sm:top-7 sm:left-0">← 權相加</p>
                   </div>
                 </div>
               </div>
