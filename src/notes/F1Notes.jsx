@@ -698,9 +698,11 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <p className="text-slate-700 mb-2">方法：按住 <Latex math="+" /> / <Latex math="−" /> 的前面分開，再數項數</p>
             <div className="bg-white p-3 rounded border border-slate-200 flex items-center gap-4">
               <span className="text-slate-600">例子：</span>
-              <span className="bg-yellow-200 px-2 py-1 rounded">5</span>
-              <span className="text-xl">/</span>
-              <span className="bg-yellow-200 px-2 py-1 rounded">+ 2x<sup>3</sup></span>
+              <span className="inline-flex items-center gap-1">
+                <span className="bg-yellow-200 px-2 py-1 rounded inline-block"><Latex math="5" /></span>
+                <span className="text-red-600 text-3xl font-normal leading-none transform scale-y-150">/</span>
+                <span className="bg-yellow-200 px-2 py-1 rounded inline-block"><Latex math="+ 2x^3" /></span>
+              </span>
               <span className="font-bold ml-2">👉 項數：2</span>
             </div>
           </div>
