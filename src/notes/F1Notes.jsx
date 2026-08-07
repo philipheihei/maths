@@ -37,7 +37,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 4 整除</div>
-                <div className="col-span-2">將尾 2 個數 ÷ 4，看有沒有餘數（有 <span className="text-green-600 font-bold">→ 能整除</span>；沒有<span className="text-red-600 font-bold">→ 不能整除</span>）</div>
+                <div className="col-span-2">將尾 2 個數 ÷ 4，看有沒有餘數（沒有 <span className="text-green-600 font-bold">→ 能整除</span>；有<span className="text-red-600 font-bold">→ 不能整除</span>）</div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 5 整除</div>
@@ -49,7 +49,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 8 整除</div>
-                <div className="col-span-2">將尾 3 個數 ÷ 8，看有沒有餘數（有 <span className="text-green-600 font-bold">→ 能整除</span>；沒有<span className="text-red-600 font-bold">→ 不能整除</span>）</div>
+                <div className="col-span-2">將尾 3 個數 ÷ 8，看有沒有餘數（沒有 <span className="text-green-600 font-bold">→ 能整除</span>；有<span className="text-red-600 font-bold">→ 不能整除</span>）</div>
               </div>
               <div className="grid grid-cols-3 gap-2 border-b border-blue-100 pb-2">
                 <div className="font-bold text-slate-700">被 9 整除</div>
