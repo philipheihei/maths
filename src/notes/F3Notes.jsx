@@ -96,13 +96,13 @@ export const FactorizationNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">🖩 計算機 FMLA 01 方法</h3>
-            <p className="text-sm text-slate-700 mb-3">如沒相同代數/因數，出動 <span className="bg-green-200 px-2 py-0.5 rounded font-sans">FMLA 01</span>（二次方）</p>
+            <p className="text-sm text-slate-700 mb-3">如沒相同代數/因數，出動 FMLA 01（二次方）</p>
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-sm font-bold text-slate-700 mb-2">步驟：</p>
               <div className="space-y-2 text-sm">
-                <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">1</span><span>開啟 FMLA 01（按 FMLA 輸入 01）</span></div>
-                <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">2</span><span>輸入 a, b, c（如 <Latex math="8x^2 − 17x + 21" />：輸入 8, -17, 21）</span></div>
-                <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">3</span><span>按 EXE 得出兩個答案</span></div>
+                <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">1</span><span>開啟 FMLA 01（按 <span className="bg-orange-500 text-white text-xs font-mono px-2 py-0.5 rounded">FMLA</span> 輸入 01）</span></div>
+                <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">2</span><span>輸入 a, b, c（如 <Latex math="8x^2 − 17x − 21" />：輸入 8, -17, -21）</span></div>
+                <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">3</span><span>按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> 得出兩個答案</span></div>
               </div>
             </div>
             <div className="bg-white rounded-lg p-3">
