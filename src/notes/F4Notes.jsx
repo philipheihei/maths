@@ -172,7 +172,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-red-50 rounded-lg p-3 border border-red-200">
-            <p className="text-red-600 font-bold">二重根 → 兩個重複的根</p>
+            <p className="font-bold"><span className="text-red-600">二重根</span><span className="text-black"> → 兩個重複的根</span></p>
           </div>
         </div>
       </CollapsibleSection>
@@ -183,7 +183,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-3">📝 核心概念</h3>
             <p className="text-slate-700 mb-2">- 二次方程最多可以有 2 個根/解 <span className="text-blue-600">(x答案)</span></p>
             <div className="bg-red-50 p-3 rounded my-3">
-              <p className="text-red-600 font-bold">解決方程的次序：先 + - , 後 × ÷ , 最後拆括號</p>
+              <p className="text-black font-bold"><span className="text-black">解決方程的次序：</span><span className="text-red-600">先 + - , 後 × ÷ , 最後拆括號</span></p>
             </div>
           </div>
 
@@ -685,7 +685,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
         <p className="text-slate-600">掌握餘式定理與因式定理</p>
       </div>
 
-      <CollapsibleSection id="remainder" title="餘式定理" num="4.3" color="teal" activeSub={activeSub} sectionRef={s1}>
+      <CollapsibleSection id="remainder" title="餘式定理" num="1." color="teal" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-teal-50 rounded-lg p-4 border border-teal-200">
             <h3 className="font-bold text-teal-800 mb-3">📝 核心概念</h3>
@@ -725,7 +725,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="factor" title="因式定理" num="4.4" color="orange" activeSub={activeSub} sectionRef={s2}>
+      <CollapsibleSection id="factor" title="因式定理" num="2." color="orange" activeSub={activeSub} sectionRef={s2}>
         <div className="space-y-4">
           <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
             <h3 className="font-bold text-orange-800 mb-3">📝 核心概念</h3>
