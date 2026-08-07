@@ -1086,7 +1086,7 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
               <span className="text-xl font-bold text-blue-700"><Latex math="y − y_1 = m(x − x_1)" /></span>
             </div>
             <div className="flex flex-col gap-2">
-              <p className="text-slate-700"><span className="font-bold text-purple-700">需：</span>一點坐標 + 斜率</p>
+              <p className="text-slate-700"><span className="font-bold text-purple-700">需得知資訊：</span>一點坐標 + 斜率</p>
               <div className="bg-white p-2 rounded text-sm text-blue-800">
                 <span className="font-bold">例：</span>題目提供 坐標 (3, 7) → 代入 <Latex math="(x_1, y_1)" />
               </div>
@@ -1099,7 +1099,7 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
               <span className="text-xl font-bold text-green-700"><Latex math="y = mx + c" /></span>
               <p className="text-xs text-slate-500 mt-2">m = 斜率，c = y截距</p>
             </div>
-            <p className="text-slate-700"><span className="font-bold text-purple-700">需：</span>y截距 + 斜率</p>
+            <p className="text-slate-700"><span className="font-bold text-purple-700">需得知資訊：</span>y截距 + 斜率</p>
           </div>
 
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
