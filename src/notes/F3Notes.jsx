@@ -258,32 +258,33 @@ export const PercentageF3Notes = ({ activeSub }) => {
                 一間飲品店引入了一款新飲料。從該新飲料的每月售出杯數的報告可知，該店在第二個月<span className="bg-yellow-200 px-1 rounded">多售出 25%</span> (<Latex inline math="\times (1 + 25\%)" />) 及在第三個月<span className="bg-yellow-200 px-1 rounded">少售出 45%</span> (<Latex inline math="\times (1 − 45\%)" />)。若該店在第三個月售出了 <span className="underline decoration-purple-600 underline-offset-4 font-bold">2475</span> (結果) 杯新飲料，求首月所售出的新飲料杯數。
               </p>
               
-              <div className="space-y-3 bg-slate-50 p-4 rounded-lg">
-                <div className="flex gap-2">
-                  <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">1</span>
-                  <div>
-                    <span className="text-slate-600 text-sm block mb-1">設代數：</span>
-                    <span className="text-blue-700">設首月所售出的新飲料杯數為 y</span>
-                  </div>
+              <div className="space-y-1 bg-slate-50 p-4 rounded-lg">
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-x-3 gap-y-2">
+                  <span className="md:col-start-2 text-slate-700 text-sm font-semibold whitespace-nowrap">
+                    <Latex math={String.raw`\text{設首月所售出的新飲料杯數為 }y`} />
+                  </span>
+                  <span className="md:col-start-3 text-slate-500 text-sm inline-flex items-center gap-2">
+                    ← <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">1</span> 設未知數
+                  </span>
                 </div>
-                
-                <div className="flex gap-2">
-                  <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">2</span>
-                  <div>
-                    <span className="text-slate-600 text-sm block mb-1">列式 (接駁答案)：</span>
-                    <Latex math="y(1 + 25\%)(1 − 45\%) = 2475" />
+
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-center gap-x-3 gap-y-2">
+                  <span className="text-slate-500 text-sm md:text-right inline-flex md:justify-end items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">2</span>列式 →
+                  </span>
+                  <div className="text-left whitespace-nowrap row-span-2">
+                    <Latex
+                      math={String.raw`\begin{aligned} y\colorbox{#fef08a}{(1+25\%)}\colorbox{#fef08a}{(1−45\%)} &= 2475 \\ \colorbox{#fef08a}{0.6875}y &= 2475 \\ y &= 3600 \end{aligned}`}
+                      block
+                    />
                   </div>
-                </div>
-                
-                <div className="flex gap-2">
-                  <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">3</span>
-                  <div>
-                    <span className="text-slate-600 text-sm block mb-1">按計算機 (<Latex math="(1 + 25\%)(1 − 45\%)" />)：</span>
-                      <Latex
-                        math={String.raw`\begin{aligned} \colorbox{#fef08a}{0.6875}y &= 2475 \\ y &= 3600 \end{aligned}`}
-                        block
-                      />
-                  </div>
+                  <span className="text-slate-500 text-sm inline-flex items-center gap-2">
+                    ← <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">3</span> 接駁答案
+                  </span>
+                  <span className="text-slate-500 text-sm md:text-right inline-flex md:justify-end items-center gap-2 md:-translate-y-8 md:translate-x-[120px]">
+                    <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">4</span>按計算機 →
+                  </span>
+                  <span></span>
                 </div>
               </div>
             </div>

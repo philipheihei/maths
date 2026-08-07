@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Latex, MathDisplay, CollapsibleSection, ChapterHeader } from './shared';
+import { Latex, MathDisplay, CollapsibleSection } from './shared';
 
 // ========================================
 // CH11 變分 (F5)
@@ -10,11 +10,10 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <ChapterHeader
-        title="CH11 變分 (Variation)"
-        description="掌握四條變分公式及其應用"
-        accent="blue"
-      />
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH11 變分 (Variation)</h1>
+        <p className="text-slate-600">掌握四條變分公式及其應用</p>
+      </div>
 
       <CollapsibleSection id="variation-formulas" title="四條公式 & 備註" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
@@ -151,10 +150,8 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
                 <div className="border-t pt-3">
                   <p className="text-sm text-red-600 font-bold mb-2">目標：k / k 的變種做主項</p>
                   <div className="space-y-1 ml-4 text-sm">
-                    <Latex math="\begin{aligned}
-P &= \frac{kx}{\sqrt{y}} \\
-\frac{P\sqrt{y}}{x} &= k
-\end{aligned}" block />
+                    <Latex math="P = \frac{kx}{\sqrt{y}}" block />
+                    <Latex math="\frac{P\sqrt{y}}{x} = k" block />
                   </div>
                   <p className="text-sm text-slate-600 mt-2">→ 答案 A</p>
                   <p className="text-xs text-slate-500 mt-1">💡 如在選擇中找不到 k 的答案，可找 <Latex math="k^2" /> / <Latex math="\frac{1}{k}" /></p>
@@ -190,11 +187,10 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <ChapterHeader
-        title="CH14 統計 (Statistics)"
-        description="從離散數據找尋 7 個統計量、各類圖表的判讀，以及標準分與數據更動對離差的影響"
-        accent="indigo"
-      />
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-indigo-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH14 統計 (Statistics)</h1>
+        <p className="text-slate-600">從離散數據找尋 7 個統計量、各類圖表的判讀，以及標準分與數據更動對離差的影響</p>
+      </div>
 
       <CollapsibleSection id="stat-7-indicators" title="七個重要統計量" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
@@ -210,8 +206,8 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-2">2. 離差 (Dispersion) — 數據的分散程度</h3>
             <ul className="text-slate-700 space-y-2 list-disc pl-5">
-              <li><span className="font-bold text-slate-900">分佈域 (Range)</span>：最大值 <Latex math="−" inline /> 最小值</li>
-              <li><span className="font-bold text-slate-900">四分位數間距 (Interquartile Range)</span>：上四分位數 (<Latex math="Q_3" inline />) <Latex math="−" inline /> 下四分位數 (<Latex math="Q_1" inline />)</li>
+              <li><span className="font-bold text-slate-900">分佈域 (Range)</span>：最大值 <Latex math="-" inline /> 最小值</li>
+              <li><span className="font-bold text-slate-900">四分位數間距 (Interquartile Range)</span>：上四分位數 (<Latex math="Q_3" inline />) <Latex math="-" inline /> 下四分位數 (<Latex math="Q_1" inline />)</li>
               <li><span className="font-bold text-slate-900">標準差 (Standard Deviation, <Latex math="\sigma" inline />)</span>：量度數據偏離平均數的程度，數值越大代表數據越分散。計算機可直出。</li>
               <li><span className="font-bold text-slate-900">方差 (Variance, <Latex math="\sigma^2" inline />)</span>：標準差的平方（即 <Latex math="\text{方差} = (\text{標準差})^2" inline />）</li>
             </ul>
@@ -235,10 +231,10 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
               <div className="bg-green-50 p-3 rounded">
                 <p className="font-bold mb-1">手算離差</p>
                 <ul className="text-sm space-y-1">
-                  <li>分佈域 = <Latex math="15 − 2 = 13" inline /></li>
+                  <li>分佈域 = <Latex math="15 - 2 = 13" inline /></li>
                   <li>下四分位數 <Latex math="Q_1 = 5" inline /> (前半 2,5,8 的中間)</li>
                   <li>上四分位數 <Latex math="Q_3 = 12" inline /> (後半 8,12,15 的中間)</li>
-                  <li>四分位數間距 = <Latex math="12 − 5 = 7" inline /></li>
+                  <li>四分位數間距 = <Latex math="12 - 5 = 7" inline /></li>
                 </ul>
               </div>
             </div>
@@ -313,10 +309,10 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                   <p><strong>平均數：</strong> 64.75 (建議用計數機)</p>
                   <p><strong>眾數：</strong> 55 (出現最多次數)</p>
                   <p><strong>中位數：</strong> 第10與第11個數平均 <Latex inline math="= \frac{63+66}{2}=64.5" /></p>
-                  <p><strong>分佈域：</strong> <Latex inline math="84−48=36" /></p>
+                  <p><strong>分佈域：</strong> <Latex inline math="84-48=36" /></p>
                   <p><strong><Latex inline math="Q_1" />：</strong> 前 10 個數中位數 <Latex inline math="=54.5" /></p>
                   <p><strong><Latex inline math="Q_3" />：</strong> 後 10 個數中位數 <Latex inline math="=74.5" /></p>
-                  <p className="col-span-2"><strong>四分位數間距：</strong> <Latex inline math="Q_3−Q_1=74.5−54.5=20" /></p>
+                  <p className="col-span-2"><strong>四分位數間距：</strong> <Latex inline math="Q_3-Q_1=74.5-54.5=20" /></p>
                 </div>
               </div>
             </div>
@@ -404,7 +400,6 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
               <div className="bg-emerald-50 p-2 rounded font-mono">
                 10 <span className="bg-gray-300 text-yellow-700 text-xs px-2 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs px-2 py-0.5 rounded mr-1">,</span> 2 <span className="bg-gray-900 text-white text-xs px-2 py-0.5 rounded">M+</span>
               </div>
-              <p>眾數：能直接從棒型圖睇到，最高柱係 13（頻數 8），所以眾數為 <strong>13</strong></p>
               <p>中位數看法：總共 23 個數，找第 12 個。前面 10佔了2個位，11佔了5個位，12佔了3個位 (第1-10位)，13佔第11-18位，因此中位數在 13。</p>
             </div>
           </div>
@@ -439,7 +434,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             <ul className="text-sm text-slate-700 list-disc pl-5 mt-4 space-y-1">
               <li>中位數是長方框內中間的<span className="font-bold text-red-600">紅色直線</span></li>
               <li>分佈域 = 最右邊條線 - 最左邊條線 (最大 - 最小)</li>
-              <li>四分位數間距 = 框框的右邊界 - 框框的左邊界 (<Latex inline math="Q_3 − Q_1" />)</li>
+              <li>四分位數間距 = 框框的右邊界 - 框框的左邊界 (<Latex inline math="Q_3 - Q_1" />)</li>
             </ul>
             <p className="text-sm text-slate-700 mt-3">框線圖<span className="font-bold text-red-600">未能顯示</span>平均數、眾數、標準差及方差。</p>
           </div>
@@ -451,7 +446,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
           <div className="bg-sky-50 rounded-lg p-5 border border-sky-300">
             <h3 className="font-bold text-sky-800 mb-3 text-lg">📝 公式</h3>
             <div className="bg-white p-4 rounded-lg shadow-sm w-fit mx-auto border border-slate-200">
-              <MathDisplay latex="\text{標準分 } (z) = \frac{\text{某位學生分數 } (x) − \text{平均分數 } (\bar{x})}{\text{標準差 } (\sigma)}" block />
+              <MathDisplay latex="\text{標準分 } (z) = \frac{\text{某位學生分數 } (x) - \text{平均分數 } (\bar{x})}{\text{標準差 } (\sigma)}" block />
             </div>
           </div>
           
@@ -478,7 +473,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
           <div className="bg-red-50 rounded-lg p-4 border-2 border-red-300">
             <h3 className="font-bold text-red-800 text-lg mb-2">🔥 核心口訣</h3>
             <ul className="list-disc pl-5 text-slate-800 font-bold text-lg space-y-2">
-              <li>「<Latex math="+" inline /> / <Latex math="−" inline />」：只有 3M 會變，離差<span className="text-red-600 underline">不變</span></li>
+              <li>「<Latex math="+" inline /> / <Latex math="-" inline />」：只有 3M 會變，離差<span className="text-red-600 underline">不變</span></li>
               <li>「<Latex math="\times" inline /> / <Latex math="\div" inline />」：全部皆變</li>
             </ul>
             <p className="text-sm mt-3 text-red-700">*註：3M 指 平均數 (Mean)、中位數 (Median)、眾數 (Mode)<br/>離差 指 分佈域 (Range)、四分位數間距、標準差 (<Latex math="\sigma" inline />)、方差 (<Latex math="\sigma^2" inline />)</p>
@@ -549,7 +544,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             <h4 className="font-bold text-slate-800 mb-3 border-b-2 border-slate-100 pb-2">MC 例題（方差變換）</h4>
             <div className="bg-slate-50 rounded-lg p-4 border border-slate-200 space-y-3">
               <p className="text-slate-800">若五個數 <Latex math="x_1,\ x_2,\ x_3,\ x_4,\ x_5" inline /> 的方差為 12，則</p>
-              <p className="text-slate-800"><Latex math="2x_1 − 3,\ 2x_2 − 3,\ 2x_3 − 3,\ 2x_4 − 3,\ 2x_5 − 3" inline /> 這五個數的方差為：</p>
+              <p className="text-slate-800"><Latex math="2x_1 - 3,\ 2x_2 - 3,\ 2x_3 - 3,\ 2x_4 - 3,\ 2x_5 - 3" inline /> 這五個數的方差為：</p>
               <div className="grid grid-cols-1 gap-2 text-sm">
                 <div className="bg-white border border-slate-200 rounded p-2">A. 12</div>
                 <div className="bg-white border border-slate-200 rounded p-2">B. 21</div>
@@ -557,7 +552,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                 <div className="bg-white border border-slate-200 rounded p-2 font-bold text-emerald-700 border-emerald-300">D. 48</div>
               </div>
               <div className="bg-emerald-50 border border-emerald-200 rounded p-3 text-sm text-emerald-900">
-                解題重點：<Latex math="−3" inline /> 不改變方差；<Latex math="\times 2" inline /> 令方差乘 <Latex math="2^2" inline />，
+                解題重點：<Latex math="-3" inline /> 不改變方差；<Latex math="\times 2" inline /> 令方差乘 <Latex math="2^2" inline />，
                 所以新方差 <Latex math="= 12 \times 4 = 48" inline />。
               </div>
             </div>
@@ -618,19 +613,15 @@ const PropertyCard = ({ title, svg: SVGComp, condition, conclusion, directFormul
 export const CirclePropertiesNotes = ({ activeSub }) => {
   const s1 = useRef(null);
   const s2 = useRef(null);
-  const s3 = useRef(null);
 
   return (
     <>
-      <ChapterHeader
-        title="CH12-13 圓形性質 (Circle Properties)"
-        description="圖形定理、性質整理及其格式寫法"
-        accent="emerald"
-      />
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-emerald-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH12-13 圓形性質 (Circle Properties)</h1>
+        <p className="text-slate-600">圖形定理、性質整理及其格式寫法</p>
+      </div>
 
-      <div className="flex flex-col">
-      <div className="order-2">
-      <CollapsibleSection id="circle-theorems" title="常見圓形定理" num={2} color="emerald" activeSub={activeSub} sectionRef={s1}>
+      <CollapsibleSection id="circle-theorems" title="常見圓形定理" num={1} color="emerald" activeSub={activeSub} sectionRef={s1}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心角兩倍於圓周角"
@@ -765,30 +756,30 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 {/* 橙色弧 AB 和 CD */}
-                <path d="M 72.6 24.8 A 80 80 0 0 0 21.2 86.1" fill="none" stroke="#f97316" strokeWidth="2" />
-                <path d="M 127.4 175.2 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2" />
-                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 60 31 A 80 80 0 0 0 25 73" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 140 169 A 80 80 0 0 0 175 127" fill="none" stroke="#f97316" strokeWidth="2" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="72.6" y1="24.8" x2="21.2" y2="86.1" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="52.0" y1="57.2" x2="44.4" y2="50.8" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="49.5" y1="60.1" x2="41.9" y2="53.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="148.1" y1="142.8" x2="155.7" y2="149.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="150.6" y1="139.9" x2="158.2" y2="146.3" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
-                <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
-                <line x1="165.1" y1="154.6" x2="157.5" y2="148.2" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#f97316" strokeWidth="1.5" />
                 
-                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -802,30 +793,30 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 {/* 橙色弧 AB 和 CD */}
-                <path d="M 72.6 24.8 A 80 80 0 0 0 21.2 86.1" fill="none" stroke="#f97316" strokeWidth="2" />
-                <path d="M 127.4 175.2 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2" />
-                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 60 31 A 80 80 0 0 0 25 73" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 140 169 A 80 80 0 0 0 175 127" fill="none" stroke="#f97316" strokeWidth="2" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="72.6" y1="24.8" x2="21.2" y2="86.1" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="52.0" y1="57.2" x2="44.4" y2="50.8" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="49.5" y1="60.1" x2="41.9" y2="53.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="148.1" y1="142.8" x2="155.7" y2="149.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="150.6" y1="139.9" x2="158.2" y2="146.3" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
-                <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
-                <line x1="165.1" y1="154.6" x2="157.5" y2="148.2" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#f97316" strokeWidth="1.5" />
                 
-                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -839,27 +830,27 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 {/* 橙色弧 AB 和 CD */}
-                <path d="M 72.6 24.8 A 80 80 0 0 0 21.2 86.1" fill="none" stroke="#f97316" strokeWidth="2" />
-                <path d="M 127.4 175.2 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2" />
-                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 60 31 A 80 80 0 0 0 25 73" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 140 169 A 80 80 0 0 0 175 127" fill="none" stroke="#f97316" strokeWidth="2" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 91.1 75.6 A 26 26 0 0 0 74.4 95.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 107.5 120.7 A 22 22 0 0 0 121.7 103.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 108.9 124.4 A 26 26 0 0 0 125.6 104.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
-                <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
-                <line x1="165.1" y1="154.6" x2="157.5" y2="148.2" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#f97316" strokeWidth="1.5" />
                 
-                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -873,27 +864,27 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
                 {/* 橙色弧 AB 和 CD */}
-                <path d="M 72.6 24.8 A 80 80 0 0 0 21.2 86.1" fill="none" stroke="#f97316" strokeWidth="2" />
-                <path d="M 127.4 175.2 A 80 80 0 0 0 178.8 113.9" fill="none" stroke="#f97316" strokeWidth="2" />
-                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
+                <path d="M 60 31 A 80 80 0 0 0 25 73" fill="none" stroke="#f97316" strokeWidth="2" />
+                <path d="M 140 169 A 80 80 0 0 0 175 127" fill="none" stroke="#f97316" strokeWidth="2" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 91.1 75.6 A 26 26 0 0 0 74.4 95.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 107.5 120.7 A 22 22 0 0 0 121.7 103.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 108.9 124.4 A 26 26 0 0 0 125.6 104.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
                 {/* 弧 AB 和 CD 的單劃橙色相等標記 */}
-                <line x1="34.9" y1="45.4" x2="42.5" y2="51.8" stroke="#f97316" strokeWidth="1.5" />
-                <line x1="165.1" y1="154.6" x2="157.5" y2="148.2" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="34.9" y1="45.6" x2="42.5" y2="52.0" stroke="#f97316" strokeWidth="1.5" />
+                <line x1="157.5" y1="148.0" x2="165.1" y2="154.4" stroke="#f97316" strokeWidth="1.5" />
                 
-                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -906,30 +897,30 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="72.6" y1="24.8" x2="21.2" y2="86.1" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="52.0" y1="57.2" x2="44.4" y2="50.8" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="49.5" y1="60.1" x2="41.9" y2="53.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="148.1" y1="142.8" x2="155.7" y2="149.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="150.6" y1="139.9" x2="158.2" y2="146.3" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 91.1 75.6 A 26 26 0 0 0 74.4 95.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 107.5 120.7 A 22 22 0 0 0 121.7 103.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 108.9 124.4 A 26 26 0 0 0 125.6 104.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
-                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -942,30 +933,30 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             svg={() => (
               <svg viewBox="0 0 200 200" className="w-full max-w-[240px]">
                 <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                <line x1="100" y1="100" x2="72.6" y2="24.8" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="21.2" y2="86.1" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="127.4" y2="175.2" stroke="#334155" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="178.8" y2="113.9" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="60" y2="31" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="25" y2="73" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="140" y2="169" stroke="#334155" strokeWidth="1.5" />
+                <line x1="100" y1="100" x2="175" y2="127" stroke="#334155" strokeWidth="1.5" />
                 
-                <line x1="72.6" y1="24.8" x2="21.2" y2="86.1" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="127.4" y1="175.2" x2="178.8" y2="113.9" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="60" y1="31" x2="25" y2="73" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="140" y1="169" x2="175" y2="127" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* 弦 AB 和 CD 的雙綠色相等標記 */}
-                <line x1="52.0" y1="57.2" x2="44.4" y2="50.8" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="49.5" y1="60.1" x2="41.9" y2="53.7" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="148.1" y1="142.8" x2="155.7" y2="149.2" stroke="#22c55e" strokeWidth="1.5" />
-                <line x1="150.6" y1="139.9" x2="158.2" y2="146.3" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="39.2" y1="50.6" x2="44.8" y2="55.2" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="41.2" y1="48.1" x2="46.8" y2="52.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="152.4" y1="146.3" x2="160.0" y2="152.7" stroke="#22c55e" strokeWidth="1.5" />
+                <line x1="155.0" y1="143.3" x2="162.6" y2="149.7" stroke="#22c55e" strokeWidth="1.5" />
                 
                 {/* AOB 和 COD 雙角標記 */}
-                <path d="M 92.5 79.3 A 22 22 0 0 0 78.3 96.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 91.1 75.6 A 26 26 0 0 0 74.4 95.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 107.5 120.7 A 22 22 0 0 0 121.7 103.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
-                <path d="M 108.9 124.4 A 26 26 0 0 0 125.6 104.5" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 89.0 81.0 A 22 22 0 0 0 79.4 92.6" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 87.0 77.6 A 26 26 0 0 0 75.6 91.2" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 111.0 119.0 A 22 22 0 0 0 120.6 107.4" fill="none" stroke="#0ea5e9" strokeWidth="1" />
+                <path d="M 113.0 122.4 A 26 26 0 0 0 124.4 108.8" fill="none" stroke="#0ea5e9" strokeWidth="1" />
                 
-                <text x="71" y="17" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="127" y="190" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="185" y="119" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="60" y="24" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
+                <text x="135" y="185" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="182" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="110" y="100" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
               </svg>
             )}
@@ -1122,48 +1113,8 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
             )}
           />
 
-          <PropertyCard
-            title="交錯弓形的圓周角"
-            condition={<>若 <Latex math="\text{PQ}" inline /> 是圓在 <Latex math="\text{T}" inline /> 點的切線，</>}
-            conclusion="\begin{aligned} \angle ATQ &= \angle ABT \\ \angle BTP &= \angle BAT \end{aligned}"
-            svg={() => (
-              <svg viewBox="0 0 200 240" className="w-full max-w-[240px]">
-                <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
-                {/* Triangle TAB */}
-                <polygon points="100,180 151.4,38.7 24.8,72.6" fill="none" stroke="#334155" strokeWidth="1.5" />
-                {/* Tangent PQ */}
-                <line x1="20" y1="180" x2="180" y2="180" stroke="#334155" strokeWidth="1.5" />
-                
-                {/* Angle ATQ (x) */}
-                <path d="M 100 180 L 120 180 A 20 20 0 0 0 106.8 161.2 Z" fill="#f97316" opacity="0.4" />
-                <path d="M 120 180 A 20 20 0 0 0 106.8 161.2" fill="none" stroke="#f97316" strokeWidth="2" />
-                
-                {/* Angle ABT (y) */}
-                <path d="M 24.8 72.6 L 44.1 67.4 A 20 20 0 0 1 36.3 89.0 Z" fill="#f97316" opacity="0.4" />
-                <path d="M 44.1 67.4 A 20 20 0 0 1 36.3 89.0" fill="none" stroke="#f97316" strokeWidth="2" />
-                
-                {/* Angle BTP (b) */}
-                <path d="M 100 180 L 80 180 A 20 20 0 0 1 88.5 163.6 Z" fill="#22c55e" opacity="0.4" />
-                <path d="M 80 180 A 20 20 0 0 1 88.5 163.6" fill="none" stroke="#22c55e" strokeWidth="2" />
-                
-                {/* Angle BAT (a) */}
-                <path d="M 151.4 38.7 L 144.5 57.4 A 20 20 0 0 1 132.0 43.8 Z" fill="#22c55e" opacity="0.4" />
-                <path d="M 144.5 57.4 A 20 20 0 0 1 132.0 43.8" fill="none" stroke="#22c55e" strokeWidth="2" />
-                
-                {/* Labels */}
-                <text x="120" y="168" fill="#ea580c" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>x</text>
-                <text x="48" y="83" fill="#ea580c" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>y</text>
-                <text x="127" y="61" fill="#16a34a" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>a</text>
-                <text x="71" y="171" fill="#16a34a" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>b</text>
-                
-                <text x="156" y="32" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
-                <text x="12" y="75" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="100" y="196" fill="#475569" fontSize="12" textAnchor="middle" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>T</text>
-                <text x="15" y="175" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="180" y="175" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
-              </svg>
-            )}
-          />
+          {/* Spacer: keep row 8 right side empty on desktop so next two cards become row 9 */}
+          <div className="hidden md:block" aria-hidden="true"></div>
 
           <PropertyCard
             title="圓內接四邊形對角"
@@ -1207,10 +1158,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      </div>
-
-      <div className="order-3">
-      <CollapsibleSection id="other-theorems" title="其他圓形定理" num={3} color="teal" activeSub={activeSub} sectionRef={s2}>
+      <CollapsibleSection id="other-theorems" title="其他圓形定理" num={2} color="teal" activeSub={activeSub} sectionRef={s2}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心至弦的垂線平分弦"
@@ -1298,7 +1246,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <polygon points="88.1,55.6 95.8,53.5 97.9,61.2 90.2,63.3" fill="none" stroke="#334155" strokeWidth="1" />
                 <polygon points="88.1,144.3 95.8,146.4 97.9,138.7 90.2,136.6" fill="none" stroke="#334155" strokeWidth="1" />
                 
-                <text x="7" y="93" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="156" y="36" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="156" y="172" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="14" y="128" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
@@ -1329,10 +1277,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <line x1="90" y1="78.8" x2="98" y2="76.8" stroke="#0ea5e9" strokeWidth="1.5" />
                 <line x1="90" y1="121.2" x2="98" y2="123.2" stroke="#0ea5e9" strokeWidth="1.5" />
 
-                <text x="12" y="78" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="14" y="80" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="156" y="36" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="156" y="172" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="12" y="130" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="14" y="128" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="75" y="48" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>M</text>
                 <text x="75" y="160" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>N</text>
                 <text x="108" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>O</text>
@@ -1358,11 +1306,11 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 114.1 34.1 A 20 20 0 0 1 92.3 38.5" fill="none" stroke="#334155" strokeWidth="1" />
                 <path d="M 117.0 37.0 A 24 24 0 0 1 90.8 42.2" fill="none" stroke="#334155" strokeWidth="1" />
                 
-                <text x="33" y="167" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="25" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="95" y="12" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
                 <text x="188" y="105" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
                 <text x="5" y="125" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>P</text>
-                <text x="95" y="215" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
+                <text x="100" y="215" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>Q</text>
               </svg>
             )}
           />
@@ -1379,10 +1327,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 60 160 A 20 20 0 0 0 42.8 140.2" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 120.6 35.2 A 20 20 0 0 0 143.3 59.7" fill="none" stroke="#334155" strokeWidth="1.5" />
                 
-                <text x="28" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="25" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="165" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="142" y="35" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="50" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="145" y="30" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="45" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
               </svg>
             )}
           />
@@ -1398,10 +1346,10 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
                 <path d="M 57.2 39.8 A 20 20 0 0 0 79.4 24.8" fill="none" stroke="#334155" strokeWidth="1.5" />
                 <path d="M 156.7 140.3 A 20 20 0 0 1 180 160" fill="none" stroke="#334155" strokeWidth="1.5" />
                 
-                <text x="28" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
+                <text x="25" y="170" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>A</text>
                 <text x="155" y="178" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>B</text>
-                <text x="142" y="35" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
-                <text x="50" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
+                <text x="145" y="30" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>C</text>
+                <text x="45" y="15" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>D</text>
                 <text x="225" y="165" fill="#475569" fontSize="12" style={{ fontFamily: 'Times New Roman', fontStyle: 'italic' }}>E</text>
               </svg>
             )}
@@ -1409,85 +1357,6 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
 
         </div>
       </CollapsibleSection>
-
-      </div>
-
-      <div className="order-1">
-      <CollapsibleSection id="circle-parts-concepts" title="圓的基本概念" num={1} color="purple" activeSub={activeSub} sectionRef={s3}>
-        <div className="space-y-4">
-          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200 flex flex-col md:flex-row items-center gap-6">
-            
-            {/* 圖形區 */}
-            <div className="bg-white border border-slate-200 shadow-sm rounded-lg p-4 flex-shrink-0 w-full md:w-auto flex justify-center">
-              <svg viewBox="0 0 240 240" className="w-[200px] h-[200px] md:w-[240px] md:h-[240px]">
-                {/* 背景圓 */}
-                <circle cx="120" cy="120" r="80" fill="#f8fafc" stroke="#cbd5e1" strokeWidth="2" />
-                
-                {/* 圓心 Center */}
-                <circle cx="120" cy="120" r="3" fill="#ef4444" />
-                <text x="90" y="135" fill="#ef4444" fontSize="12" fontWeight="bold">圓心 (Center)</text>
-                
-                {/* 半徑 Radius */}
-                <line x1="120" y1="120" x2="189.3" y2="80" stroke="#f59e0b" strokeWidth="2" strokeDasharray="4,2" />
-                <text x="165" y="110" fill="#f59e0b" fontSize="12" fontWeight="bold">半徑 (Radius)</text>
-                
-                {/* 弦 Chord */}
-                <line x1="50.7" y1="80" x2="80" y2="189.3" stroke="#3b82f6" strokeWidth="2" />
-                <text x="0" y="140" fill="#3b82f6" fontSize="12" fontWeight="bold">弦 (Chord)</text>
-                
-                {/* 弧 Arc */}
-                <path d="M 120 200 A 80 80 0 0 0 200 120" fill="none" stroke="#10b981" strokeWidth="4" />
-                <text x="190" y="175" fill="#10b981" fontSize="12" fontWeight="bold">弧 (Arc)</text>
-                
-                {/* 切線 Tangent */}
-                <line x1="60" y1="40" x2="180" y2="40" stroke="#8b5cf6" strokeWidth="2" />
-                <circle cx="120" cy="40" r="3" fill="#8b5cf6" />
-                <text x="90" y="32" fill="#8b5cf6" fontSize="12" fontWeight="bold">切線 (Tangent)</text>
-
-                {/* 共圓 Concyclic */}
-                <g fill="#ec4899">
-                  <circle cx="63.4" cy="63.4" r="4" />
-                  <circle cx="176.6" cy="63.4" r="4" />
-                  <circle cx="176.6" cy="176.6" r="4" />
-                  <circle cx="80" cy="189.3" r="4" />
-                </g>
-                <text x="75" y="215" fill="#ec4899" fontSize="11" fontWeight="bold">點在圓上 (Concyclic)</text>
-              </svg>
-            </div>
-
-            {/* 文字解釋區 */}
-            <div className="flex-grow space-y-3">
-              <h3 className="font-bold text-purple-800 text-lg border-b border-purple-200 pb-2">名詞解釋</h3>
-              <ul className="space-y-2 text-sm text-slate-700">
-                <li className="flex items-start gap-2">
-                  <span className="text-[#8b5cf6] font-bold min-w-[50px]">切線：</span>
-                  <span>剛好接觸圓周邊緣「一點」的直線。該接觸點稱為切點。</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#ec4899] font-bold min-w-[50px]">共圓：</span>
-                  <span>兩個或以上的點，剛好位於同一個圓的圓周上，我們稱這些點為「共圓點」。</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#3b82f6] font-bold min-w-[50px]">弦：</span>
-                  <span>連接圓周上任意兩點的線段。（最長的弦就是穿過圓心的直徑）。</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#10b981] font-bold min-w-[50px]">弧：</span>
-                  <span>圓周上的其中一段連續曲線。</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-[#f59e0b] font-bold min-w-[50px]">半徑：</span>
-                  <span>從圓心連接到圓周的線段。同一個圓內所有半徑長度必定相等。</span>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </CollapsibleSection>
-
-      </div>
-      </div>
 
     </>
   );
@@ -1501,11 +1370,10 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <ChapterHeader
-        title="CH18 線性規劃 (Linear Programming)"
-        description="透過線段的不等式找尋點的範圍、最大值及最小值"
-        accent="rose"
-      />
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-pink-500">
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">CH18 線性規劃 (Linear Programming)</h1>
+        <p className="text-slate-600">透過線段的不等式找尋點的範圍、最大值及最小值</p>
+      </div>
 
       <div className="bg-amber-50 border-l-4 border-amber-400 p-4 rounded-r-lg mb-6">
         <p className="text-amber-800 font-bold">💡 考試小貼士：</p>
@@ -1554,13 +1422,13 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
 
                 {/* 刻度標籤 */}
                 <g fontSize="10" fill="#64748b" textAnchor="middle">
-                  <text x="70" y="165">−2</text>
-                  <text x="110" y="165">−1</text>
+                  <text x="70" y="165">-2</text>
+                  <text x="110" y="165">-1</text>
                   <text x="190" y="165">1</text>
                   <text x="230" y="165">2</text>
                 </g>
                 <g fontSize="10" fill="#64748b" textAnchor="end">
-                  <text x="142" y="193">−1</text>
+                  <text x="142" y="193">-1</text>
                   <text x="142" y="113">1</text>
                   <text x="142" y="73">2</text>
                   <text x="142" y="33">3</text>
@@ -1626,10 +1494,10 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
               ① <Latex math="x \ge 2" inline /><br/>
               ② <Latex math="y \ge 0" inline /><br/>
               ③ <Latex math="x + 4y \le 22" inline /><br/>
-              ④ <Latex math="4x − y \le 20" inline />
+              ④ <Latex math="4x - y \le 20" inline />
             </div>
             <p className="text-sm text-slate-700 mb-3">
-              若 <Latex math="(x, y)" inline /> 為 D 中的一點，則 <span className="bg-green-100 px-1 rounded font-bold text-green-800"><Latex math="3y − 4x + 15" inline /></span> 的最大值為？
+              若 <Latex math="(x, y)" inline /> 為 D 中的一點，則 <span className="bg-green-100 px-1 rounded font-bold text-green-800"><Latex math="3y - 4x + 15" inline /></span> 的最大值為？
             </p>
 
             <div className="border-t border-slate-200 pt-3 mt-3">
@@ -1648,7 +1516,9 @@ export const LinearProgrammingNotes = ({ activeSub, onNavigate }) => {
               <h4 className="font-bold text-green-700 mb-2">2. 逐個交點代入數式比較最大值 / 最小值</h4>
               <p className="text-sm text-slate-600 mb-2">將找到的交點 <Latex math="(2, 5)" inline /> 代入目標式子 <span className="text-red-500 font-mono bg-red-50 px-1 rounded">3y - 4x + 15</span>：</p>
               <div className="bg-green-50 p-3 rounded-lg text-sm font-sans mx-auto md:mx-0 w-fit">
-                <Latex math="\begin{aligned} &\quad 3(5) − 4(2) + 15 \\ &= 15 − 8 + 15 \\ &= 22 \end{aligned}" block />
+                <Latex math="3(5) - 4(2) + 15" block />
+                <Latex math="= 15 - 8 + 15" block />
+                <Latex math="= 22" block />
               </div>
             </div>
           </div>
@@ -1745,11 +1615,10 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <ChapterHeader
-        title="CH19 軌跡及圓的方程"
-        description="軌跡的代數方程及圓形相關運算"
-        accent="teal"
-      />
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">CH19 軌跡及圓的方程</h1>
+        <p className="text-slate-600">軌跡的代數方程及圓形相關運算</p>
+      </div>
 
       <CollapsibleSection id="locus-drawing" title="繪畫及描述軌跡" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
@@ -1879,13 +1748,11 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
                   <text x="135" y="55" fontSize="14" fill="#ef4444" fontWeight="bold">P</text>
                   
                   <line x1="130" y1="60" x2="130" y2="80" stroke="#94a3b8" strokeWidth="1.5" />
-                  <line x1="130" y1="60" x2="118.5" y2="52.3" stroke="#94a3b8" strokeWidth="1.5" />
+                  <line x1="130" y1="60" x2="114" y2="50" stroke="#94a3b8" strokeWidth="1.5" />
 
-                  {/* Right angle marks (proper squares) */}
-                  {/* Foot on horizontal line: (130,80), square toward P (up) */}
-                  <polyline points="135,80 135,75 130,75" fill="none" stroke="#64748b" strokeWidth="1.5" />
-                  {/* Foot on slanted line: (118.5,52.3), square toward P */}
-                  <polyline points="121.2,48.2 125.4,50.9 122.6,55.1" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  {/* Right angles */}
+                  <polyline points="130,75 125,75 125,80" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  <polyline points="116,46 119,42 123,45" fill="none" stroke="#64748b" strokeWidth="1.5" />
                 </svg>
               </div>
             </div>
@@ -1894,14 +1761,14 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 mt-6">
             <h3 className="font-bold text-slate-800 mb-3">📝 軌跡的代數方程例子</h3>
-            <p className="text-sm text-slate-600 mb-3">已知一動點 <Latex math="P" inline /> 與 <Latex math="A(3, 7)" inline /> 和 <Latex math="B(−4, 0)" inline /> 兩點保持相等距離。求 <Latex math="P" inline /> 的軌跡方程。</p>
+            <p className="text-sm text-slate-600 mb-3">已知一動點 <Latex math="P" inline /> 與 <Latex math="A(3, 7)" inline /> 和 <Latex math="B(-4, 0)" inline /> 兩點保持相等距離。求 <Latex math="P" inline /> 的軌跡方程。</p>
             <div className="flex flex-col md:flex-row gap-6">
               <div className="flex-1 bg-slate-50 p-3 rounded">
                 <p className="text-slate-700 mb-2">設 <Latex math="P" inline /> 的坐標為 <Latex math="(x, y)" inline />。</p>
                 <div className="flex flex-col items-center">
-                  <Latex math="\begin{aligned} AP &= BP \\ \sqrt{(x − 3)^2 + (y − 7)^2} &= \sqrt{[x − (−4)]^2 + (y − 0)^2} \\ (x − 3)^2 + (y − 7)^2 &= (x + 4)^2 + y^2 \\ −14x − 14y + 42 &= 0 \\ x + y − 3 &= 0 \end{aligned}" block />
+                  <Latex math="\begin{aligned} AP &= BP \\ \sqrt{(x - 3)^2 + (y - 7)^2} &= \sqrt{[x - (-4)]^2 + (y - 0)^2} \\ (x - 3)^2 + (y - 7)^2 &= (x + 4)^2 + y^2 \\ -14x - 14y + 42 &= 0 \\ x + y - 3 &= 0 \end{aligned}" block />
                 </div>
-                <p className="text-slate-700 mt-2">∴ <Latex math="P" inline /> 的軌跡方程是 <Latex math="x + y − 3 = 0" inline />。</p>
+                <p className="text-slate-700 mt-2">∴ <Latex math="P" inline /> 的軌跡方程是 <Latex math="x + y - 3 = 0" inline />。</p>
               </div>
               <div className="flex-1 text-sm text-blue-700 space-y-3 pt-6 border-l-2 border-blue-200 pl-4 hidden md:block">
                 <p>步驟 1： 設動點的坐標為 <Latex math="(x, y)" inline />。</p>
@@ -1922,13 +1789,13 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-900 mb-3">📝 2.1 標準式</h3>
-            <MathDisplay math="(x − \text{x坐標})^2 + (y − \text{y坐標})^2 = \text{半徑}^2" />
+            <MathDisplay math="(x - \text{x坐標})^2 + (y - \text{y坐標})^2 = \text{半徑}^2" />
             <div className="bg-white border border-slate-200 rounded p-4 mt-3">
-              <p className="text-blue-800 font-bold mb-2">e.g. 已知一圓的圓心 <Latex math="(−1, 6)" inline /> 和半徑 9，可列出：</p>
+              <p className="text-blue-800 font-bold mb-2">e.g. 已知一圓的圓心 <Latex math="(-1, 6)" inline /> 和半徑 9，可列出：</p>
               <pre className="whitespace-pre font-sans text-lg text-blue-900 flex flex-col items-center">
                 <div>
-                  <Latex math="[x − (−1)]^2 + (y − 6)^2 = 9^2" block />
-                  <Latex math="(x + 1)^2 + (y − 6)^2 = 81" block />
+                  <Latex math="[x - (-1)]^2 + (y - 6)^2 = 9^2" block />
+                  <Latex math="(x + 1)^2 + (y - 6)^2 = 81" block />
                 </div>
               </pre>
               <p className="text-purple-700 text-sm mt-3 text-right">← 不需展開有代數的 <Latex math="(\ )^2" inline />，只需化簡數字</p>
@@ -1944,8 +1811,8 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <h3 className="font-bold text-amber-900 mb-3">📝 2.2 一般式</h3>
             <MathDisplay math="x^2 + y^2 + Dx + Ey + F = 0" />
             <div className="mt-4 flex flex-col md:flex-row justify-between items-center bg-white p-3 rounded border border-slate-200">
-              <span className="text-blue-800 font-bold text-lg"><span className="text-slate-600">圓心：</span><Latex math="\left( −\frac{D}{2}, −\frac{E}{2} \right)" inline /></span>
-              <span className="text-blue-800 font-bold text-lg mt-3 md:mt-0"><span className="text-slate-600">半徑：</span><Latex math="\sqrt{\left(\frac{D}{2}\right)^2 + \left(\frac{E}{2}\right)^2 − F}" inline /></span>
+              <span className="text-blue-800 font-bold text-lg"><span className="text-slate-600">圓心：</span><Latex math="\left( -\frac{D}{2}, -\frac{E}{2} \right)" inline /></span>
+              <span className="text-blue-800 font-bold text-lg mt-3 md:mt-0"><span className="text-slate-600">半徑：</span><Latex math="\sqrt{\left(\frac{D}{2}\right)^2 + \left(\frac{E}{2}\right)^2 - F}" inline /></span>
             </div>
           </div>
 
@@ -1972,7 +1839,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <div className="mt-4">
               <div className="bg-slate-50 p-3 rounded mb-3">
                 <span className="text-red-500 font-bold mr-2">標準式：</span>
-                <Latex math="(x − \color{#16a34a}{3})^2 + (y − \color{#9333ea}{4})^2 = \color{#2563eb}{36}" block />
+                <Latex math="(x - \color{#16a34a}{3})^2 + (y - \color{#9333ea}{4})^2 = \color{#2563eb}{36}" block />
                 <div className="text-center mt-3 text-slate-800 font-bold text-lg">
                   ∴ 圓心：<Latex math="(\color{#16a34a}{3}, \color{#9333ea}{4})" inline />，半徑：<Latex math="\sqrt{\color{#2563eb}{36}} = 6" inline />
                 </div>
@@ -1981,20 +1848,20 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="bg-slate-50 p-3 rounded mt-6">
                 <span className="text-red-500 font-bold mr-2">一般式：</span>
-                <Latex math="x^2 + y^2 \color{#16a34a}{−6}x \color{#9333ea}{+8}y \color{#2563eb}{−11} = 0" block />
+                <Latex math="x^2 + y^2 \color{#16a34a}{-6}x \color{#9333ea}{+8}y \color{#2563eb}{-11} = 0" block />
                 <div className="text-center mt-3 text-slate-800 font-bold text-lg">
-                  圓心：<Latex math="\left( \frac{\color{#16a34a}{−6}}{−2}, \frac{\color{#9333ea}{+8}}{−2} \right) \rightarrow (3, −4)" inline />
+                  圓心：<Latex math="\left( \frac{\color{#16a34a}{-6}}{-2}, \frac{\color{#9333ea}{+8}}{-2} \right) \rightarrow (3, -4)" inline />
                 </div>
                 <div className="text-center mt-2 text-slate-800 font-bold text-lg">
-                  半徑：<Latex math="\sqrt{(3)^2 + (−4)^2 − (\color{#2563eb}{−11})} = \sqrt{36} = 6" inline />
+                  半徑：<Latex math="\sqrt{(3)^2 + (-4)^2 - (\color{#2563eb}{-11})} = \sqrt{36} = 6" inline />
                 </div>
                 
                 <div className="mt-5 border-t border-slate-200 pt-4 flex flex-col md:flex-row gap-4 items-center">
                   <div className="flex-1">
-                    <p className="text-blue-800 font-bold text-sm mb-1">e.g. 若 <Latex math="x^2" inline /> 和 <Latex math="y^2" inline /> 係數不為 1，需先全式除之：</p>
-                    <Latex math="\color{#0e7490}{2x^2 + 2y^2 − 12x + 16y − 22 = 0}" block />
+                    <p className="text-blue-800 font-bold text-sm mb-1">e.g. 若係數不為 1，需先全式除之：</p>
+                    <Latex math="\color{#0e7490}{2x^2 + 2y^2 - 12x + 16y - 22 = 0}" block />
                     <p className="text-green-600 font-bold text-sm text-center my-1">全式 ÷ 2 ↓</p>
-                    <Latex math="\color{#16a34a}{\underline{x^2 + y^2}} \color{#0e7490}{− 6x + 8y − 11 = 0}" block />
+                    <Latex math="\color{#16a34a}{\underline{x^2 + y^2}} \color{#0e7490}{- 6x + 8y - 11 = 0}" block />
                   </div>
                   <div className="text-green-600 font-bold text-lg bg-green-50 px-3 py-2 rounded shrink-0">
                     <Latex math="x^2" inline /> 和 <Latex math="y^2" inline /> 的係數必定為 1
@@ -2044,10 +1911,10 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
             <div className="bg-white rounded p-4 border border-slate-200 mt-4">
               <p className="text-blue-800 font-bold mb-2 text-sm md:text-base">
-                e.g. <Latex math="A(0, 1)" inline /> 在圓形 <Latex math="x^2 + y^2 − 6x + 8y − 11 = 0" inline /> 的圓內、圓外或圓上？
+                e.g. <Latex math="A(0, 1)" inline /> 在圓形 <Latex math="x^2 + y^2 - 6x + 8y - 11 = 0" inline /> 的圓內、圓外或圓上？
               </p>
               <pre className="whitespace-pre font-sans text-blue-900 mt-2">
-                <Latex math="\begin{aligned} &\quad x^2 + y^2 − 6x + 8y − 11 \\ &= (\color{#ef4444}{0})^2 + (\color{#22c55e}{1})^2 − 6(\color{#ef4444}{0}) + 8(\color{#22c55e}{1}) − 11 \\ &= −2 \\ &\quad −2 < 0 \end{aligned}" block />
+                <Latex math="\begin{aligned} &\quad x^2 + y^2 - 6x + 8y - 11 \\ &= (\color{#ef4444}{0})^2 + (\color{#22c55e}{1})^2 - 6(\color{#ef4444}{0}) + 8(\color{#22c55e}{1}) - 11 \\ &= -2 \\ &\quad -2 < 0 \end{aligned}" block />
               </pre>
               <p className="text-slate-800 font-bold mt-2">∴ <Latex math="A" inline /> 點位於圖形內</p>
             </div>
@@ -2069,7 +1936,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
               <div className="flex-1">
                 <p className="text-blue-800 font-bold text-lg mb-2">e.g.</p>
                 <div className="pl-4 border-l-2 border-slate-300 space-y-1">
-                  <p className="text-blue-900"><span className="mr-2">圓形 C :</span> <Latex math="x^2 + y^2 + 8x + 8y − 32 = 0" inline /></p>
+                  <p className="text-blue-900"><span className="mr-2">圓形 C :</span> <Latex math="x^2 + y^2 + 8x + 8y - 32 = 0" inline /></p>
                   <p className="text-blue-900"><span className="mr-2">直線 L :</span> <Latex math="x + y + 2 = 0" inline /></p>
                 </div>
               </div>
@@ -2078,7 +1945,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex justify-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\color{#dc2626}{x = −y − 2}" block />
+                  <Latex math="\color{#dc2626}{x = -y - 2}" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   1. 先將直線方程轉為 <Latex math="x = ? / y = ?" inline />
@@ -2087,7 +1954,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex justify-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\color{#dc2626}{(−y−2)}^2 + y^2 + 8\color{#dc2626}{(−y−2)} + 8y − 32 = 0" block />
+                  <Latex math="(\color{#dc2626}{-y-2})^2 + y^2 + 8(\color{#dc2626}{-y-2}) + 8y - 32 = 0" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   2. 把 x 代 y / 把 y 代 x<br/>
@@ -2101,16 +1968,19 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex flex-col items-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\begin{aligned} y^2 + 4y + 4 + y^2 − 8y − 16 + 8y − 32 &= 0 \\ \textcolor{#1d4ed8}{2y^2 + 4y − 44} &= \textcolor{#1d4ed8}{0} \\ \underline{\overset{\textcolor{#9333ea}{\large a}}{y^2} + \overset{\textcolor{#9333ea}{\large b}}{\vphantom{y^2}2}y − \overset{\textcolor{#9333ea}{\large c}}{\vphantom{y^2}22}} &= \underline{0} \end{aligned}" block />
+                  <Latex math="y^2 + 4y + 4 + y^2 - 8y - 16 + 8y - 32 = 0" block />
+                  <Latex math="\color{#1d4ed8}{2y^2 + 4y - 44 = 0}" block />
+                  <p className="text-xs text-purple-700 mt-1 mb-2">a &emsp;&emsp; b &emsp;&emsp; c</p>
+                  <Latex math="\underline{y^2 + 2y - 22 = 0}" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
-                  3. 化簡至一元二次方程的一般式
+                  3. 化簡至一般式一元二次方程
                 </div>
               </div>
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex flex-col items-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\begin{aligned} \Delta &= b^2 − 4ac \\ &= 2^2 − 4(1)(−22) \\ &= 92 > 0 \end{aligned}" block />
+                  <Latex math="\begin{aligned} \Delta &= b^2 - 4ac \\ &= 2^2 - 4(1)(-22) \\ &= 92 > 0 \end{aligned}" block />
                   <div className="mt-3 font-bold text-blue-900 border-t border-slate-300 pt-2">
                     ∴ 圓形 C 和直線 L 有 2 個交點
                   </div>
@@ -2145,11 +2015,11 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <h3 className="font-bold text-amber-900 mb-3">💡 直線和圓形方程的交點坐標：計算機 Prog 02</h3>
             <div className="bg-white p-3 rounded border border-slate-200 flex flex-col md:flex-row items-center justify-between">
               <div className="flex-1">
-                <Latex math="\begin{cases} \enspace\color{#fbbf24}{1}x \color{#fbbf24}{−5}y = \color{#fbbf24}{−3} \\ \enspace x^2 + y^2 + 2x − 6y − 3 = 0 \end{cases}" block />
+                <Latex math="\begin{cases} \enspace\color{#fbbf24}{1}x \color{#fbbf24}{-5}y = \color{#fbbf24}{-3} \\ \enspace x^2 + y^2 + 2x - 6y - 3 = 0 \end{cases}" block />
               </div>
               <div className="flex-1 text-slate-800 font-bold text-center mt-3 md:mt-0">
-                <span className="text-blue-600 mr-2 text-xl">⇒</span> <Latex math="x = −3, y = 0 \enspace ; \enspace x = 2, y = 1" inline />
-                <p className="mt-2 text-emerald-700">∴ 交點：<Latex math="(−3, 0), (2, 1)" inline /></p>
+                <span className="text-blue-600 mr-2 text-xl">⇒</span> <Latex math="x = -3, y = 0 \enspace ; \enspace x = 2, y = 1" inline />
+                <p className="mt-2 text-emerald-700">∴ 交點：<Latex math="(-3, 0), (2, 1)" inline /></p>
               </div>
             </div>
             <p className="text-xs text-slate-500 mt-2">註：順序輸入：紅1、紅2、紅3... 為計算機輸入次序及位置</p>
