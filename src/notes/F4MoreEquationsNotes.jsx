@@ -145,7 +145,7 @@ export const MoreEquationsNotes = ({ activeSub }) => {
             <p className="text-sm text-slate-600 mb-2">例子：<Latex math="x^4 − 7x^2 − 18 = 0" /></p>
             <div className="bg-white rounded p-4 font-sans space-y-1">
               <Step math="(x^2)^2 − 7x^2 − 18 = 0" explain="變成 au² + bu + c = 0 的一般式，u = x²" />
-              <Step math="x^2 = 9 \text{ 或 } x^2 = −2\ (\text{捨去})" explain="任何實數的 2 次方皆為正數" />
+              <Step math="x^2 = 9 \text{ 或 } x^2 = −2\ (\text{捨去})" explain="任何實數的 2 次方都不會是負數" />
               <Step math="x = 3 \text{ 或 } −3" explain="只處理 x² = 9" />
             </div>
           </div>
