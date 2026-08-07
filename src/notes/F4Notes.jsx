@@ -81,7 +81,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-green-700 mb-2">題目：</p>
               <div className="text-blue-700">
-                <Latex math="\begin{aligned} −x &= 5 + 2x^2 \\\\ 0 &= 5 + 2x^2 + x \\\\ 5 + 2x^2 + x &= 0 \\\\ 2x^2 + x + 5 &= 0 \end{aligned}" block />
+                <Latex math="\begin{aligned} −x &= 5 + 2x^2 \\\\[-6px] 0 &= 5 + 2x^2 + x \\\\[-6px] 5 + 2x^2 + x &= 0 \\\\[-6px] 2x^2 + x + 5 &= 0 \end{aligned}" block />
               </div>
               <div className="mt-3 p-2 bg-red-50 rounded text-sm text-red-600">
                 <p className="font-bold">← 合格的一般式：</p>
@@ -166,7 +166,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               </div>
               <p className="text-green-600 mb-2"><Latex math="a=1, \quad b=2, \quad c=−2" /></p>
               <div className="text-blue-700">
-                <Latex math="\begin{aligned} x &= \frac{−2 \pm \sqrt{2^2−4(1)(−2)}}{2(1)} \\\\ &= \frac{−2 \pm \sqrt{12}}{2} \quad \textcolor{red}{\text{← 已經接受此答案}} \\\\ &= \frac{−2}{2} \pm \frac{\sqrt{12}}{2} \\\\ &= −1 \pm \frac{\sqrt{12}}{2} \end{aligned}" block />
+                <Latex math="\begin{aligned} x &= \frac{−2 \pm \sqrt{2^2−4(1)(−2)}}{2(1)} \\\\[-6px] &= \frac{−2 \pm \sqrt{12}}{2} \quad \textcolor{red}{\text{← 已經接受此答案}} \\\\[-6px] &= \frac{−2}{2} \pm \frac{\sqrt{12}}{2} \\\\[-6px] &= −1 \pm \frac{\sqrt{12}}{2} \end{aligned}" block />
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <p className="text-sm text-green-700 mb-2">題目：</p>
             <div className="text-blue-700">
-              <Latex math="\begin{aligned} 4(5m+3)^2 − 28 &= 0 \\\\ 4(5m+3)^2 &= 28 && \textcolor{green}{\text{← 處理 + − }}\textcolor{purple}{\text{(−28)}} \\\\ (5m+3)^2 &= 7 && \textcolor{green}{\text{← 處理 × ÷ }}\textcolor{purple}{\text{(28÷4=7)}} \\\\ 5m+3 &= \pm\sqrt{7} && \textcolor{green}{\text{← 取平方根法}} \\\\ 5m &= −3 \pm\sqrt{7} && \textcolor{green}{\text{← 先處理 + −}} \\\\ m &= \frac{−3 \pm \sqrt{7}}{5} && \textcolor{green}{\text{← 後處理 × ÷}} \end{aligned}" block />
+              <Latex math="\begin{aligned} 4(5m+3)^2 − 28 &= 0 \\\\[-6px] 4(5m+3)^2 &= 28 && \textcolor{green}{\text{← 處理 + − }}\textcolor{purple}{\text{(−28)}} \\\\[-6px] (5m+3)^2 &= 7 && \textcolor{green}{\text{← 處理 × ÷ }}\textcolor{purple}{\text{(28÷4=7)}} \\\\[-6px] 5m+3 &= \pm\sqrt{7} && \textcolor{green}{\text{← 取平方根法}} \\\\[-6px] 5m &= −3 \pm\sqrt{7} && \textcolor{green}{\text{← 先處理 + −}} \\\\[-6px] m &= \frac{−3 \pm \sqrt{7}}{5} && \textcolor{green}{\text{← 後處理 × ÷}} \end{aligned}" block />
             </div>
           </div>
         </div>
@@ -213,7 +213,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-green-800 mb-3">原本的話，需二次方程計算</h3>
             <div>
               <div className="text-blue-700">
-                <Latex math="\begin{aligned} x &= \frac{−(−4) \pm \sqrt{(−4)^2−4(1)(4)}}{2(1)} && \textcolor{green}{\leftarrow \frac{−b \pm \sqrt{b^2−4ac}}{2a}} \\\\ &= \frac{4 \pm \sqrt{0}}{2} \\\\ &= \frac{4}{2} \\\\ &= 2 \end{aligned}" block />
+                <Latex math="\begin{aligned} x &= \frac{−(−4) \pm \sqrt{(−4)^2−4(1)(4)}}{2(1)} && \textcolor{green}{\leftarrow \frac{−b \pm \sqrt{b^2−4ac}}{2a}} \\\\[-6px] &= \frac{4 \pm \sqrt{0}}{2} \\\\[-6px] &= \frac{4}{2} \\\\[-6px] &= 2 \end{aligned}" block />
               </div>
               <p className="text-blue-600 font-bold mt-2">答案： x = 2 (二重根)</p>
             </div>
