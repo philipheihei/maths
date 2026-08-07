@@ -162,6 +162,14 @@ body {
 }
 
 @media screen {
+  .pdf-reader-frame {
+    display: block;
+    width: 100%;
+    height: min(78vh, 900px);
+    border: 0;
+    background: #ffffff;
+  }
+
   .print-root.print-preview {
     background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
     padding-top: 1rem;
@@ -182,7 +190,18 @@ body {
     background: #ffffff;
     box-shadow: 0 8px 28px rgba(15, 23, 42, 0.14);
     border: 1px solid #e2e8f0;
-    overflow: hidden;
+    overflow: visible;
+  }
+
+  .print-root.print-preview .print-page-footer {
+    position: absolute;
+    right: 10mm;
+    bottom: 6mm;
+    left: 10mm;
+    display: flex;
+    justify-content: space-between;
+    color: #64748b;
+    font-size: 10px;
   }
 
   @media (max-width: 900px) {
@@ -220,6 +239,10 @@ body {
     display: none !important;
   }
 
+  .pdf-reader-panel {
+    display: none !important;
+  }
+
   .print-topic-sheet {
     width: auto !important;
     min-height: auto !important;
@@ -228,6 +251,22 @@ body {
     box-shadow: none !important;
     border: 0 !important;
     overflow: visible !important;
+  }
+
+  .print-page-footer {
+    position: fixed;
+    right: 0;
+    bottom: -8mm;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    color: #64748b;
+    font-size: 9pt;
+    line-height: 1;
+  }
+
+  .print-page-number::before {
+    content: '第 ' counter(page) ' 頁';
   }
 
   .print-root * {
@@ -240,6 +279,11 @@ body {
     page-break-before: always;
     break-inside: auto;
     page-break-inside: auto;
+  }
+
+  .print-topic-page:first-child {
+    break-before: auto;
+    page-break-before: auto;
   }
 
   .print-topic-page:first-child {

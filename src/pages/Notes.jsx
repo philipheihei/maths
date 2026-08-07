@@ -46,6 +46,7 @@ const Notes = () => {
   const [expandedTopics, setExpandedTopics] = useState(initState.topic ? { [initState.topic]: true } : {});
   const [activeTopic, setActiveTopic] = useState(initState.topic);
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
+  const [pdfUrl, setPdfUrl] = useState('');
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
   const notes = getNotesForLevel(selectedLevel);
@@ -100,6 +101,15 @@ const Notes = () => {
   };
 
   const ActiveComponent = activeTopic ? NOTES_COMPONENTS[activeTopic] : null;
+
+  const handlePdfImport = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setPdfUrl((currentUrl) => {
+      if (currentUrl) URL.revokeObjectURL(currentUrl);
+      return URL.createObjectURL(file);
+    });
+  };
 
   const colorMap = {
     purple: { activeBg: 'bg-purple-100', activeText: 'text-purple-700', activeBorder: 'border-purple-500', numActive: 'bg-purple-500 text-white', numInactive: 'bg-purple-100 text-purple-600' },
@@ -176,15 +186,38 @@ const Notes = () => {
         {isPrintPreview && (
           <div className="print-preview-toolbar sticky top-0 z-30 mx-auto mb-4 max-w-5xl rounded-xl border border-slate-200 bg-white/95 px-4 py-3 backdrop-blur">
             <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-              <p className="text-slate-600">A4 Reader 預覽模式（已套用列印分頁規則）</p>
-              <button
-                onClick={() => window.print()}
-                className="rounded-lg bg-indigo-600 px-3 py-1.5 font-bold text-white hover:bg-indigo-700"
-              >
-                列印 / 另存 PDF
-              </button>
+              <p className="text-slate-600">A4 Reader 預覽模式（每個 CH 另起一張 A4）</p>
+              <div className="flex flex-wrap items-center gap-2">
+                <label className="cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-700 hover:bg-slate-50">
+                  匯入 PDF 閱讀
+                  <input type="file" accept="application/pdf,.pdf" onChange={handlePdfImport} className="sr-only" />
+                </label>
+                <button
+                  onClick={() => window.print()}
+                  className="rounded-lg bg-indigo-600 px-3 py-1.5 font-bold text-white hover:bg-indigo-700"
+                >
+                  列印 / 另存 PDF
+                </button>
+              </div>
             </div>
           </div>
+        )}
+        {isPrintPreview && pdfUrl && (
+          <section className="pdf-reader-panel mx-auto mb-6 max-w-5xl overflow-hidden rounded-xl border border-slate-300 bg-slate-800 shadow-lg">
+            <div className="flex items-center justify-between gap-3 border-b border-slate-600 px-4 py-2 text-sm text-white">
+              <span>PDF 閱讀器（實際 A4 分頁）</span>
+              <button
+                onClick={() => {
+                  URL.revokeObjectURL(pdfUrl);
+                  setPdfUrl('');
+                }}
+                className="rounded-md px-2 py-1 text-slate-300 hover:bg-slate-700 hover:text-white"
+              >
+                關閉
+              </button>
+            </div>
+            <iframe title="PDF 閱讀器" src={pdfUrl} className="pdf-reader-frame" />
+          </section>
         )}
         {printTopics.length === 0 ? (
           <div className="max-w-3xl mx-auto border border-amber-300 bg-amber-50 text-amber-800 rounded-xl p-4">
@@ -199,6 +232,10 @@ const Notes = () => {
               <section key={`${topic._level}-${topic.id}`} className="print-topic-page">
                 <div className="print-topic-sheet">
                   <TopicComponent activeSub={null} onNavigate={() => {}} />
+                  <footer className="print-page-footer">
+                    <span>{topic._level} {topic.topic}</span>
+                    <span className="print-page-number" aria-label="頁碼" />
+                  </footer>
                 </div>
               </section>
             );
