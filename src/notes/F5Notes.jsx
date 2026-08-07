@@ -101,11 +101,11 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-sm text-red-600 font-bold mb-2">按題目提供數值找 k，然後列出變分公式</p>
               <div className="bg-green-50 rounded p-3 mt-2">
-                <p className="text-sm text-green-700 mb-2">例題：x 隨 y 正變，當 x = 5，y = 25</p>
+                <p className="text-sm text-green-700 mb-2">例題：y 隨 x 正變，當 y = 5，x = 25</p>
                 <p className="font-bold text-slate-700 mb-2">a. 以 x 表 y</p>
                 <div className="space-y-1 ml-4 text-sm">
                   <div className="flex items-start gap-2">
-                    <Latex math="x = ky" />
+                    <Latex math="y = kx" />
                     <span className="text-red-500">← 先列公式</span>
                   </div>
                   <div className="flex items-start gap-2">
@@ -117,7 +117,7 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
                     <span className="text-red-500">← 成功找到變分常數 k</span>
                   </div>
                   <div className="flex items-start gap-2">
-                    <Latex math="x = \frac{1}{5}y" />
+                    <Latex math="y = \frac{1}{5}x" />
                     <span className="text-red-500">← 最尾請放 k 進公式，x / y 保留</span>
                   </div>
                 </div>
@@ -254,8 +254,8 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             <p className="text-sm text-slate-700 font-bold">找結果：</p>
             <ul className="text-sm text-slate-700 space-y-1 pl-4 list-disc mt-1">
               <li>平均數 (<Latex math="\bar{x}" inline />)： <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">1</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span></li>
-              <li>標準差 (<Latex math="\sigma x" inline />)： <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <Latex math="= 4.31 (3\text{ sig. fig.})" inline /></li>
-              <li>方差 (<Latex math="\sigma^2" inline />)： 在標準差的畫面上直接㩒 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">x²</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span></li>
+              <li>總體標準差 (<Latex math="\sigma" inline />)： <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <Latex math="= 4.27" inline />（約至 3 位有效數字）</li>
+              <li>方差 (<Latex math="\sigma^2" inline />)： 在標準差的畫面上直接㩒 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">x²</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <Latex math="= 18.22" inline /></li>
             </ul>
           </div>
         </div>

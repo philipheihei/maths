@@ -24,7 +24,16 @@ const QuadraticGraphReference = () => (
         <line x1="200" y1="250" x2="170" y2="250" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
         <text x="155" y="255" fontSize="15" fill="#475569">→</text>
         <text x="80" y="255" fontSize="15" fill="#475569">y 的極小值</text>
-        <text x="208" y="277" fontSize="15" fill="#475569">頂點</text>
+        <foreignObject x="204" y="258" width="180" height="38">
+          <div xmlns="http://www.w3.org/1999/xhtml" style={{ color: '#475569', fontSize: '13px', whiteSpace: 'nowrap' }}>
+            頂點 <math xmlns="http://www.w3.org/1998/Math/MathML" style={{ fontSize: '13px', verticalAlign: 'middle' }}>
+              <mrow>
+                <mo>(</mo><mo>−</mo><mfrac><mi>b</mi><mrow><mn>2</mn><mi>a</mi></mrow></mfrac>
+                <mo>,</mo><mo>−</mo><mfrac><mrow><msup><mi>b</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>a</mi><mi>c</mi></mrow><mrow><mn>4</mn><mi>a</mi></mrow></mfrac><mo>)</mo>
+              </mrow>
+            </math>
+          </div>
+        </foreignObject>
         <text x="160" y="240" textAnchor="end" fontSize="15" fill="#475569">(0, c)</text>
         <text x="200" y="315" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
         <text x="320" y="125" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
@@ -43,7 +52,16 @@ const QuadraticGraphReference = () => (
         <line x1="200" y1="70" x2="170" y2="70" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
         <text x="155" y="75" fontSize="15" fill="#475569">→</text>
         <text x="80" y="75" fontSize="15" fill="#475569">y 的極大值</text>
-        <text x="208" y="58" fontSize="15" fill="#475569">頂點</text>
+        <foreignObject x="204" y="48" width="180" height="38">
+          <div xmlns="http://www.w3.org/1999/xhtml" style={{ color: '#475569', fontSize: '13px', whiteSpace: 'nowrap' }}>
+            頂點 <math xmlns="http://www.w3.org/1998/Math/MathML" style={{ fontSize: '13px', verticalAlign: 'middle' }}>
+              <mrow>
+                <mo>(</mo><mo>−</mo><mfrac><mi>b</mi><mrow><mn>2</mn><mi>a</mi></mrow></mfrac>
+                <mo>,</mo><mo>−</mo><mfrac><mrow><msup><mi>b</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>a</mi><mi>c</mi></mrow><mrow><mn>4</mn><mi>a</mi></mrow></mfrac><mo>)</mo>
+              </mrow>
+            </math>
+          </div>
+        </foreignObject>
         <text x="150" y="100" textAnchor="end" fontSize="15" fill="#475569">(0, c)</text>
         <text x="200" y="315" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
         <text x="280" y="125" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
@@ -71,7 +89,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-red-800 mb-3 text-lg">一般式：<Latex math="ax^2 + bx + c = \textcolor{red}{\underline{0}}" />，<Latex math="\textcolor{red}{a > 0}" /></h3>
             <p className="text-green-600 text-sm mb-3"><Latex math="x^2" /> → x → 沒x &nbsp;&nbsp;&nbsp; ↙ 必定=0</p>
             <div className="bg-white rounded-lg p-3 mb-3">
-              <p className="text-red-600 font-bold mb-2">- 一般式是去做二次公式 / 按計算機 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">FMLA</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">01</span> 時有用</p>
+              <p className="text-red-600 font-bold mb-2">- 只有 <Latex math="a > 0" /> 才能使用計算機 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">FMLA</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">01</span></p>
               <p className="text-red-600">∴ 需要以一般式去得出 a / b / c 值去作計算</p>
             </div>
           </div>
@@ -166,7 +184,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               </div>
               <p className="text-green-600 mb-2"><Latex math="a=1, \quad b=2, \quad c=−2" /></p>
               <div className="text-blue-700">
-                <Latex math="\begin{aligned} x &= \frac{−2 \pm \sqrt{2^2−4(1)(−2)}}{2(1)} \\\\[-6px] &= \frac{−2 \pm \sqrt{12}}{2} \quad \textcolor{red}{\text{← 已經接受此答案}} \\\\[-6px] &= \frac{−2}{2} \pm \frac{\sqrt{12}}{2} \\\\[-6px] &= −1 \pm \frac{\sqrt{12}}{2} \end{aligned}" block />
+                <Latex math="\begin{aligned} x &= \frac{−2 \pm \sqrt{2^2−4(1)(−2)}}{2(1)} \\\\[-6px] &= \frac{−2 \pm \sqrt{12}}{2} \quad \textcolor{red}{\text{← 此步已有分，仍可化簡}} \\\\[-6px] &= \frac{−2}{2} \pm \frac{\sqrt{12}}{2} \\\\[-6px] &= −1 \pm \frac{2\sqrt{3}}{2} \quad \textcolor{red}{\text{（因為 }\sqrt{12}=2\sqrt{3}\text{）}} \\\\[-6px] &= −1 \pm \sqrt{3} \quad \textcolor{red}{\text{← 標準答案}} \end{aligned}" block />
               </div>
             </div>
           </div>
@@ -304,8 +322,9 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               <div className="bg-white p-3 rounded shadow-sm">
                 <p className="font-bold text-slate-800">D. 實數 / 虛數 <span className="text-purple-600 font-normal">→ 統稱為「複數 (有i的數)」</span></p>
                 <ul className="mt-2 text-slate-700 list-disc list-inside">
-                  <li><span className="font-bold">實數：</span>沒有 <Latex math="i" /> 的數</li>
-                  <li><span className="font-bold text-purple-600">複數：</span>有 <Latex math="i" /> 的數</li>
+                  <li><span className="font-bold">實數：</span>沒有 <Latex math="i" /> 的數，例如 <Latex math="3, -2, \frac{1}{2}, \sqrt{2}" /></li>
+                  <li><span className="font-bold text-purple-600">虛數：</span>含有 <Latex math="i" /> 的數，例如 <Latex math="i, 2i, 1+3i" /></li>
+                  <li><span className="font-bold text-purple-600">純虛數：</span>只有 <Latex math="i" /> 部分，沒有實數部分，例如 <Latex math="2i, -3i" /></li>
                 </ul>
               </div>
             </div>

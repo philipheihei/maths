@@ -200,7 +200,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <li><span className="font-bold text-green-700">只看打直 → H.C.F.：</span> 2 × 2 = <span className="font-bold text-blue-700">4</span></li>
                 <li className="ml-2"><span className="font-bold text-green-700">看 L 形 → L.C.M.：</span> 2 × 2 × 5 × 8 = <span className="font-bold text-blue-700">160</span></li>
               </ul>
-              <p className="text-xs text-slate-500 mt-2">提示：L.C.M. 的數 {'>'} H.C.F. 的數</p>
+              <p className="text-xs text-slate-500 mt-2">提示：L.C.M. 的數 {'≥'} H.C.F. 的數</p>
             </div>
 
             <div className="bg-white rounded-lg p-4 border border-slate-200">
@@ -1306,7 +1306,7 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   
                   <div className="text-right"><span className="bg-yellow-200 px-1 rounded text-transparent select-none"><span className="text-slate-800">總表面面積</span></span></div>
                   <div>=</div>
-                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">(12 + 16 + 20)</span> × <span className="bg-blue-200 px-1 rounded">24</span> + 2 × <span className="bg-green-200 px-1 rounded">(16 × 12 ÷ 2)</span><br className="sm:hidden" /> = 3456 cm²</div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">(12 + 16 + 20)</span> × <span className="bg-blue-200 px-1 rounded">24</span> + 2 × <span className="bg-green-200 px-1 rounded">(16 × 12 ÷ 2)</span><br className="sm:hidden" /> = 1152 + 192 = 1344 cm²</div>
                 </div>
               </div>
 

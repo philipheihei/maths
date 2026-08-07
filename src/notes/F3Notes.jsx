@@ -2044,9 +2044,10 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                   </div>
                   <div className="text-green-700 font-bold text-sm space-y-1">
                     <p>Step 1：總數 = ? <span className="text-purple-700">(23)</span></p>
-                    <p>Step 2：÷ 2 找最中間的位置 <span className="text-purple-700">(23 ÷ 2 = 11.5)</span></p>
-                    <p>Step 3：中間的位置是哪一格 <span className="text-purple-700">(第11.5個在頻數10)</span></p>
-                    <p>Step 4：答案！ <span className="text-purple-700">(頻數10代表的是 2)</span></p>
+                    <p>Step 2：23 是奇數，找中間位置 <span className="text-purple-700">(<Latex math="\frac{n+1}{2}=\frac{23+1}{2}=12" inline />)</span></p>
+                    <p>Step 3：第 12 個數在第 6 至第 15 個位置，代表數值 <span className="text-purple-700">2</span></p>
+                    <p>Step 4：答案！中位數 = <span className="text-purple-700">2</span></p>
+                    <p>補充：若數據總數為偶數，取第 <Latex math="\frac{n}{2}" inline /> 個和第 <Latex math="\frac{n}{2}+1" inline /> 個的平均。</p>
                   </div>
                 </div>
               </div>

@@ -60,7 +60,7 @@ export const LawsOfIndicesNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <p className="text-slate-700 mb-2">正指數向右移小數點：</p>
             <Latex math="1.496 \times 10^8 = 149600000" block />
-            <Latex math="\text{前面數字必需 } \ge 1 \text{ 或 } < 10" block />
+            <Latex math="\text{前面數字必需 } \ge 1 \text{ 且 } < 10" block />
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-slate-200">
