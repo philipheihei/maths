@@ -143,12 +143,30 @@ export const FactorizationNotes = ({ activeSub }) => {
             <p className="text-sm text-slate-700 mb-2">十字相乘法 / FMLA 01 需以 <Latex math="ax^2 + bx + c" /> 形式才能計算正確</p>
             <div className="bg-white rounded-lg p-3 mb-2">
               <p className="text-sm text-slate-600 mb-1">例子 1：調動次序</p>
-              <Latex math="\begin{aligned} &\phantom{=}50 - 15m + m^2 \\ &= m^2 - 15m + 50 \end{aligned}" block />
+              <div className="text-center my-2">
+                <span className="inline-flex items-center gap-1">
+                  <Latex math="50" />
+                  <span className="text-red-600 text-3xl font-normal leading-none">/</span>
+                  <Latex math="−15m" />
+                  <span className="text-red-600 text-3xl font-normal leading-none">/</span>
+                  <Latex math="+m^2" />
+                </span>
+              </div>
+              <Latex math="\begin{aligned} &= m^2 - 15m + 50 \end{aligned}" block />
               <p className="text-xs text-slate-500">以 2次方/1次方/0次方(沒代數) 順序作調動</p>
             </div>
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-slate-600 mb-1">例子 2：<Latex math="a^2" /> 係數需是正數</p>
-              <Latex math="\begin{aligned} &\phantom{=}36 + 5a - a^2 \\ &= -a^2 + 5a + 36 \\ &= -(a^2 - 5a - 36) \\ &= -(a-9)(a+4) \end{aligned}" block />
+              <div className="text-center my-2">
+                <span className="inline-flex items-center gap-1">
+                  <Latex math="36" />
+                  <span className="text-red-600 text-3xl font-normal leading-none">/</span>
+                  <Latex math="+5a" />
+                  <span className="text-red-600 text-3xl font-normal leading-none">/</span>
+                  <Latex math="−a^2" />
+                </span>
+              </div>
+              <Latex math="\begin{aligned} &= -a^2 + 5a + 36 \\ &= -(a^2 - 5a - 36) \\ &= -(a-9)(a+4) \end{aligned}" block />
               <p className="text-xs text-red-500 mt-2">⚠️ 若沒有抽負，因式分解答案會錯！</p>
             </div>
           </div>
@@ -261,10 +279,10 @@ export const PercentageF3Notes = ({ activeSub }) => {
                   <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold shrink-0">3</span>
                   <div>
                     <span className="text-slate-600 text-sm block mb-1">按計算機 (<Latex math="(1 + 25\%)(1 − 45\%)" />)：</span>
-                    <pre className="whitespace-pre font-sans text-blue-700">
-                      <span className="bg-yellow-200 px-1 rounded">0.6875</span> y = 2475{'\n'}
-                                 y = 3600
-                    </pre>
+                      <Latex
+                        math={String.raw`\begin{aligned} \colorbox{#fef08a}{0.6875}y &= 2475 \\ y &= 3600 \end{aligned}`}
+                        block
+                      />
                   </div>
                 </div>
               </div>
