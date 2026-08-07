@@ -18,25 +18,26 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
   }, [activeSub]);
 
   // Helper for step with explanation on right
-  const Step = ({ math, explain, indent, alignEq = true }) => {
+  const Step = ({ math, explain, indent, alignEq = true, explainClass = '' }) => {
     const shouldAlignEq = alignEq && math.includes('=') && !math.includes('\\therefore');
+    const hasFraction = math.includes('\\frac');
     const eqParts = shouldAlignEq ? math.match(/^(.*?)(=)(.*)$/) : null;
 
     return (
-      <div className={`grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(140px,160px)] gap-x-3 py-1 ${indent ? 'pl-8' : ''}`}>
+      <div className={`grid grid-cols-1 md:grid-cols-[max-content_max-content] md:justify-start gap-x-3 py-1 ${indent ? 'pl-8' : ''}`}>
         <div className="min-w-0 text-left pr-1">
           {eqParts ? (
-            <div className="w-full grid grid-cols-[76px_auto_minmax(0,1fr)] md:grid-cols-[96px_auto_minmax(0,1fr)] items-baseline gap-x-1.5">
+            <div className={`w-full grid grid-cols-[76px_auto_minmax(0,1fr)] md:grid-cols-[96px_auto_minmax(0,1fr)] items-baseline gap-x-1.5 ${hasFraction ? 'text-lg' : ''}`}>
               <div className="text-right pr-1"><Latex math={eqParts[1].trim()} block={false} /></div>
               <div><Latex math="=" block={false} /></div>
               <div className="min-w-0"><Latex math={eqParts[3].trim()} block={false} /></div>
             </div>
           ) : (
-            <div className="min-w-0"><Latex math={math} block={false} /></div>
+            <div className={`min-w-0 ${hasFraction ? 'text-lg' : ''}`}><Latex math={math} block={false} /></div>
           )}
         </div>
         {explain ? (
-          <div className="mt-1 md:mt-0 text-red-600 text-sm flex items-start md:items-baseline md:justify-start gap-1.5 leading-snug">
+          <div className={`mt-1 md:mt-0 text-red-600 text-sm flex items-start md:items-baseline md:justify-start gap-1.5 leading-snug ${explainClass}`}>
             <span className="opacity-60">←</span>
             <span>{explain}</span>
           </div>
@@ -205,12 +206,14 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
             <p className="mb-3 text-slate-700"><Latex math="a, b, c" inline /> 是 3 條邊的邊長</p>
             
             <div className="mt-4 flex items-center justify-center gap-4">
-              <div className="flex-1">
+              <div className="w-full max-w-xs flex-none">
                 <AreaSvg2 />
               </div>
-              <div className="text-xl font-bold text-slate-400">→</div>
-              <div className="text-xl font-bold text-blue-800">
-                <Latex math="73.5\text{ cm}^2" inline />
+              <div className="flex items-center gap-4">
+                <div className="text-xl font-bold text-slate-400">→</div>
+                <div className="text-xl font-bold text-blue-800">
+                  <Latex math="73.5\text{ cm}^2" inline />
+                </div>
               </div>
             </div>
 

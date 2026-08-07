@@ -261,8 +261,8 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3 text-lg">📝 步驟 (已知 P 點坐標或三角比，求其他三角比)</h3>
             <ol className="list-decimal pl-5 space-y-2 text-slate-700 font-medium">
-              <li>分辨角度的大小範圍（在哪個象限）</li>
-              <li>畫相應 <Latex math="\Delta" /> <span className="text-red-600 font-bold">（必定痴住 <Latex math="x" /> 軸的 <Latex math="\Delta" />，加 1 條線）</span>，<span className="text-blue-800 line-through">絕對不可貼 y 軸</span></li>
+              <li>分辨角度的大小範圍 <span className="text-blue-600">（在哪個象限）</span></li>
+              <li>畫相應 <Latex math="\Delta" /> <span className="text-red-600 font-bold">（必定選痴住 <Latex math="x" /> 軸的 <Latex math="\Delta" />）</span>，<span className="text-blue-800 line-through">絕對不可貼 y 軸</span></li>
               <li>Mark 低標示角 <Latex math="\theta" /> <span className="text-green-700">（貼原點 <Latex math="(0,0)" />）</span>、<Latex math="\Delta" /> 高度和底 <span className="text-blue-800">（負數照寫）</span></li>
               <li>找 <Latex math="r" />（黑色線斜邊）的長度 / 已知 <Latex math="r" />，找未知邊 <span className="text-blue-800">（畢氏定理）</span></li>
               <li>當寫好 <Latex math="\Delta" /> 3 條邊的長度，便可找 <Latex math="\sin\theta / \cos\theta / \tan\theta" /> <span className="text-green-700">（初中方法）</span></li>
@@ -456,7 +456,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
                  <p className="font-bold text-slate-800 mb-2">例：解方程 <Latex math="\sin\theta = \frac{1}{3}" /> <span className="font-normal text-sm">對於 <Latex math="0^\circ \le \theta < 360^\circ" /></span></p>
                  <ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm mb-3">
                    <li>按計算機找出基礎銳角：<Latex math="\theta = 19.5^\circ" /></li>
-                   <li>因為 <Latex math="\sin\theta > 0" />，答案在 <strong>I 象限 (A)</strong> 及 <strong>II 象限 (S)</strong>。</li>
+                   <li>因為 <Latex math="\sin\theta > 0" />，答案在 <strong>象限 I (A)</strong> 及 <strong>象限 II (S)</strong>。</li>
                    <li>套用公式找第 2 個答案。</li>
                  </ol>
                  <div className="space-y-1 font-bold text-indigo-800 bg-indigo-50 p-2 rounded">
