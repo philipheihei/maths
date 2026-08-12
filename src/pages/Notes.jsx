@@ -38,20 +38,35 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
         return [node];
       };
       const contentNodes = initialNodes.flatMap(expandOversizedNode);
+      const pageUnits = [];
+      for (let nodeIndex = 0; nodeIndex < contentNodes.length; nodeIndex += 1) {
+        const node = contentNodes[nodeIndex];
+        const isHeading = node.querySelector('h1, h2, h3, h4');
+        const nextNode = contentNodes[nodeIndex + 1];
+        const nextIsHeading = nextNode && nextNode.querySelector('h1, h2, h3, h4');
+        if (isHeading && nextNode && !nextIsHeading) {
+          pageUnits.push([node, nextNode]);
+          nodeIndex += 1;
+        } else {
+          pageUnits.push([node]);
+        }
+      }
       const groups = [];
       let currentGroup = [];
       let currentHeight = 0;
 
-      contentNodes.forEach((node) => {
-        const nodeStyles = window.getComputedStyle(node);
-        const nodeHeight = node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
-        if (currentGroup.length > 0 && currentHeight + nodeHeight > availableHeight) {
+      pageUnits.forEach((unit) => {
+        const unitHeight = unit.reduce((height, node) => {
+          const nodeStyles = window.getComputedStyle(node);
+          return height + node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
+        }, 0);
+        if (currentGroup.length > 0 && currentHeight + unitHeight > availableHeight) {
           groups.push({ nodes: currentGroup, height: currentHeight });
           currentGroup = [];
           currentHeight = 0;
         }
-        currentGroup.push(node.outerHTML);
-        currentHeight += nodeHeight;
+        currentGroup.push(...unit.map((node) => node.outerHTML));
+        currentHeight += unitHeight;
       });
 
       if (currentGroup.length > 0) groups.push({ nodes: currentGroup, height: currentHeight });
