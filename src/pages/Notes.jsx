@@ -16,12 +16,28 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
 
       const sheet = source.firstElementChild;
       if (!sheet || sheet.clientHeight === 0) return;
-      const contentNodes = Array.from(sheet.children).filter((node) => node.tagName !== 'FOOTER');
+      const rootNodes = Array.from(sheet.children).filter((node) => node.tagName !== 'FOOTER');
+      const initialNodes = rootNodes.length === 1 && rootNodes[0].children.length > 1
+        ? Array.from(rootNodes[0].children)
+        : rootNodes;
       const sheetStyles = window.getComputedStyle(sheet);
       const availableHeight = sheet.clientHeight
         - parseFloat(sheetStyles.paddingTop)
         - parseFloat(sheetStyles.paddingBottom)
         - 20;
+      const expandOversizedNode = (node) => {
+        const nodeStyles = window.getComputedStyle(node);
+        const nodeHeight = node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
+        const childNodes = Array.from(node.children).filter((child) => child.tagName !== 'FOOTER');
+        if (nodeHeight > availableHeight && childNodes.length > 0) {
+          const expandedNodes = childNodes.flatMap(expandOversizedNode);
+          if (expandedNodes.length > 0 && expandedNodes.some((child) => child !== node)) {
+            return expandedNodes;
+          }
+        }
+        return [node];
+      };
+      const contentNodes = initialNodes.flatMap(expandOversizedNode);
       const groups = [];
       let currentGroup = [];
       let currentHeight = 0;
@@ -83,17 +99,22 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
 const Notes = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+  const isCleanPrintPath = location.pathname === '/notes/print';
   const requestedTopic = searchParams.get('topic');
-  const isPrintMode = searchParams.get('print') === '1';
-  const isPrintPreview = isPrintMode && searchParams.get('preview') === '1';
+  const isPrintMode = isCleanPrintPath || searchParams.get('print') === '1';
+  const isPrintPreview = isCleanPrintPath || (isPrintMode && searchParams.get('preview') === '1');
   const printLevel = searchParams.get('level');
   const printGroup = searchParams.get('group');
-
   const seniorLevels = ['F4', 'F5', 'F6'];
   const printableJuniorLevels = ['F1', 'F2', 'F3'];
-  const printLevels = printGroup === 'senior'
+  const initialPrintSelection = printGroup === 'senior'
+    ? 'senior'
+    : (printLevel && printableJuniorLevels.includes(printLevel) ? printLevel : 'F1');
+
+  const [printSelection, setPrintSelection] = useState(initialPrintSelection);
+  const printLevels = printSelection === 'senior'
     ? seniorLevels
-    : (printLevel && printableJuniorLevels.includes(printLevel) ? [printLevel] : []);
+    : [printSelection];
   const printTopics = printLevels.flatMap((lvl) =>
     (NOTES_DATA[lvl] || []).map((topic) => ({ ...topic, _level: lvl }))
   );
@@ -315,8 +336,31 @@ const Notes = () => {
         {isPrintPreview && (
           <div className="print-preview-toolbar sticky top-0 z-30 mx-auto mb-4 max-w-5xl rounded-xl border border-slate-200 bg-white/95 px-4 py-3 backdrop-blur">
             <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-              <p className="text-slate-600">A4 Reader 預覽模式（每個 CH 另起一張 A4）</p>
+              <p className="text-slate-600">A4 Reader 預覽模式</p>
               <div className="flex flex-wrap items-center gap-2">
+                {[
+                  ['F1', 'F1'],
+                  ['F2', 'F2'],
+                  ['F3', 'F3'],
+                  ['senior', '高中'],
+                ].map(([value, label]) => (
+                  <button
+                    key={value}
+                    onClick={() => {
+                      if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+                      setPdfUrl('');
+                      setTopicPageCounts({});
+                      setPrintSelection(value);
+                    }}
+                    className={`rounded-lg border px-3 py-1.5 font-bold ${
+                      printSelection === value
+                        ? 'border-indigo-600 bg-indigo-600 text-white'
+                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
                 <button
                   onClick={() => setIsSpreadView((current) => !current)}
                   className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-700 hover:bg-slate-50"
@@ -360,7 +404,7 @@ const Notes = () => {
         {printTopics.length === 0 ? (
           <div className="max-w-3xl mx-auto border border-amber-300 bg-amber-50 text-amber-800 rounded-xl p-4">
             <h2 className="text-lg font-bold">列印模式參數無效</h2>
-            <p className="mt-2 text-sm">初中請使用 ?print=1&level=F1/F2/F3；高中請使用 ?print=1&group=senior。</p>
+            <p className="mt-2 text-sm">請使用 /notes/print，然後在頁面上選擇 F1、F2、F3 或高中。</p>
           </div>
         ) : (
           <div

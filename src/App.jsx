@@ -64,6 +64,7 @@ function App() {
         <Route path="/distance-slope" element={<DistanceSlopeQuiz />} />
         <Route path="/trig-applications-f4" element={<TrigApplicationsF4 />} />
         <Route path="/nature-of-roots" element={<NatureOfRootsQuiz />} />
+        <Route path="/notes/print" element={<Notes />} />
         <Route path="/notes" element={<Notes />} />
       </Routes>
       {isDev && Agentation && (
