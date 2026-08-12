@@ -170,6 +170,10 @@ body {
     background: #ffffff;
   }
 
+  .pdf-source-hidden {
+    display: none;
+  }
+
   .print-root.print-preview {
     background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
     padding-top: 1rem;
@@ -179,6 +183,21 @@ body {
   .print-root.print-preview .print-topic-page {
     margin: 0 auto 1.25rem;
     max-width: 210mm;
+  }
+
+  .print-root.print-preview .print-document {
+    max-width: 210mm;
+    margin: 0 auto;
+  }
+
+  .print-root.print-preview .overflow-x-auto {
+    overflow-x: visible;
+  }
+
+  .print-root.print-preview .overflow-x-auto > *,
+  .print-root.print-preview .min-w-\[700px\] {
+    width: 100%;
+    min-width: 0;
   }
 
   .print-root.print-preview .print-topic-sheet {

@@ -555,16 +555,16 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
       <CollapsibleSection id="operations" title="有向數的乘除變化" num={3} color="red" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
           <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg">
-            <div className="w-full overflow-x-auto">
-              <div className="space-y-2 text-lg min-w-[700px]">
-                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
+            <div className="w-full">
+              <div className="space-y-2 text-lg min-w-0">
+                <div className="grid grid-cols-[minmax(4rem,5.5rem)_minmax(1.5rem,2.75rem)_minmax(1.5rem,2.25rem)_minmax(5rem,6.5rem)_minmax(0,1fr)] items-center gap-x-3">
                   <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">+</span><span className="w-5 text-center">+</span></span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">+</span>
                   <span className="font-bold text-green-700">正正得正</span>
                   <span className="text-red-600 text-sm">小學時已學！</span>
                 </div>
-                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
+                <div className="grid grid-cols-[minmax(4rem,5.5rem)_minmax(1.5rem,2.75rem)_minmax(1.5rem,2.25rem)_minmax(5rem,6.5rem)_minmax(0,1fr)] items-center gap-x-3">
                   <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">−</span><span className="w-5 text-center">−</span></span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">+</span>
@@ -574,14 +574,14 @@ export const DirectedNumbersNotes = ({ activeSub }) => {
                     <MathDisplay latex="(−a)(−b) = +ab" inline className="text-red-700 text-base" />
                   </div>
                 </div>
-                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
+                <div className="grid grid-cols-[minmax(4rem,5.5rem)_minmax(1.5rem,2.75rem)_minmax(1.5rem,2.25rem)_minmax(5rem,6.5rem)_minmax(0,1fr)] items-center gap-x-3">
                   <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">+</span><span className="w-5 text-center">−</span></span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">−</span>
                   <span className="font-bold text-green-700">正負得負</span>
                   <MathDisplay latex={String.raw`(+2) \times (−3) = −6`} inline className="text-blue-700 text-base" />
                 </div>
-                <div className="grid grid-cols-[5.5rem_2.75rem_2.25rem_6.5rem_1fr] items-center gap-x-3">
+                <div className="grid grid-cols-[minmax(4rem,5.5rem)_minmax(1.5rem,2.75rem)_minmax(1.5rem,2.25rem)_minmax(5rem,6.5rem)_minmax(0,1fr)] items-center gap-x-3">
                   <span className="font-bold text-green-700 flex items-center justify-center gap-2 leading-none text-2xl"><span className="w-5 text-center">−</span><span className="w-5 text-center">+</span></span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">→</span>
                   <span className="font-bold text-green-700 text-center leading-none text-2xl">−</span>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
 
 // ========================================
@@ -47,6 +48,8 @@ const Notes = () => {
   const [activeTopic, setActiveTopic] = useState(initState.topic);
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
   const [pdfUrl, setPdfUrl] = useState('');
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const printDocumentRef = useRef(null);
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
   const notes = getNotesForLevel(selectedLevel);
@@ -102,14 +105,49 @@ const Notes = () => {
 
   const ActiveComponent = activeTopic ? NOTES_COMPONENTS[activeTopic] : null;
 
-  const handlePdfImport = (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    setPdfUrl((currentUrl) => {
-      if (currentUrl) URL.revokeObjectURL(currentUrl);
-      return URL.createObjectURL(file);
-    });
+  const handleGeneratePdf = async () => {
+    if (!printDocumentRef.current) return;
+    setIsGeneratingPdf(true);
+
+    try {
+      const pdf = await html2pdf()
+        .set({
+          margin: [12, 10, 12, 10],
+          filename: 'maths-notes.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 1.5, useCORS: true, backgroundColor: '#ffffff' },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          pagebreak: { mode: ['css', 'legacy'], before: '.print-topic-page' },
+        })
+        .from(printDocumentRef.current)
+        .toPdf()
+        .get('pdf');
+
+      const totalPages = pdf.internal.getNumberOfPages();
+      for (let pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
+        pdf.setPage(pageNumber);
+        pdf.setFontSize(9);
+        pdf.setTextColor(100, 116, 139);
+        pdf.text(`Page ${pageNumber}`, 200, 287, { align: 'right' });
+      }
+
+      const nextPdfUrl = URL.createObjectURL(pdf.output('blob'));
+      setPdfUrl((currentUrl) => {
+        if (currentUrl) URL.revokeObjectURL(currentUrl);
+        return nextPdfUrl;
+      });
+    } finally {
+      setIsGeneratingPdf(false);
+    }
   };
+
+  useEffect(() => {
+    if (isPrintPreview && printTopics.length > 0) {
+      const timer = window.setTimeout(handleGeneratePdf, 500);
+      return () => window.clearTimeout(timer);
+    }
+    return undefined;
+  }, [isPrintPreview, printTopics.length]);
 
   const colorMap = {
     purple: { activeBg: 'bg-purple-100', activeText: 'text-purple-700', activeBorder: 'border-purple-500', numActive: 'bg-purple-500 text-white', numInactive: 'bg-purple-100 text-purple-600' },
@@ -188,15 +226,12 @@ const Notes = () => {
             <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
               <p className="text-slate-600">A4 Reader 預覽模式（每個 CH 另起一張 A4）</p>
               <div className="flex flex-wrap items-center gap-2">
-                <label className="cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-700 hover:bg-slate-50">
-                  匯入 PDF 閱讀
-                  <input type="file" accept="application/pdf,.pdf" onChange={handlePdfImport} className="sr-only" />
-                </label>
                 <button
-                  onClick={() => window.print()}
+                  onClick={handleGeneratePdf}
+                  disabled={isGeneratingPdf}
                   className="rounded-lg bg-indigo-600 px-3 py-1.5 font-bold text-white hover:bg-indigo-700"
                 >
-                  列印 / 另存 PDF
+                  {isGeneratingPdf ? '正在製作 A4 PDF…' : '重新產生 A4 分頁'}
                 </button>
               </div>
             </div>
@@ -225,7 +260,8 @@ const Notes = () => {
             <p className="mt-2 text-sm">初中請使用 ?print=1&level=F1/F2/F3；高中請使用 ?print=1&group=senior。</p>
           </div>
         ) : (
-          printTopics.map((topic) => {
+          <div ref={printDocumentRef} className={`print-document ${pdfUrl ? 'pdf-source-hidden' : ''}`}>
+            {printTopics.map((topic) => {
             const TopicComponent = NOTES_COMPONENTS[topic.id];
             if (!TopicComponent) return null;
             return (
@@ -239,7 +275,8 @@ const Notes = () => {
                 </div>
               </section>
             );
-          })
+            })}
+          </div>
         )}
       </div>
     );
