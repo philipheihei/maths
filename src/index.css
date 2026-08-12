@@ -190,6 +190,21 @@ body {
     margin: 0 auto;
   }
 
+  .print-root.print-preview .print-document.print-spread-view {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 1.25rem;
+    row-gap: 1.25rem;
+    max-width: calc(420mm + 1.25rem);
+  }
+
+  .print-root.print-preview .print-spread-view .print-topic-page {
+    width: 210mm;
+    max-width: none;
+    margin: 0;
+  }
+
   .print-root.print-preview .overflow-x-auto {
     overflow-x: visible;
   }
@@ -202,14 +217,28 @@ body {
 
   .print-root.print-preview .print-topic-sheet {
     box-sizing: border-box;
+    position: relative;
     width: 210mm;
-    min-height: 297mm;
+    height: 297mm;
     margin: 0 auto;
     padding: 12mm 10mm;
     background: #ffffff;
     box-shadow: 0 8px 28px rgba(15, 23, 42, 0.14);
     border: 1px solid #e2e8f0;
-    overflow: visible;
+    overflow: hidden;
+  }
+
+  .print-pagination-measure {
+    position: absolute;
+    top: 0;
+    left: -100000px;
+    width: 210mm;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .print-topic-page-content {
+    transform-origin: top left;
   }
 
   .print-root.print-preview .print-page-footer {
@@ -230,8 +259,19 @@ body {
 
     .print-root.print-preview .print-topic-sheet {
       width: 100%;
-      min-height: auto;
+      height: auto;
       padding: 1rem;
+      overflow: visible;
+    }
+
+    .print-root.print-preview .print-document.print-spread-view {
+      display: block;
+      max-width: 100%;
+    }
+
+    .print-root.print-preview .print-spread-view .print-topic-page {
+      width: 100%;
+      margin-bottom: 1.25rem;
     }
   }
 }
@@ -285,7 +325,15 @@ body {
   }
 
   .print-page-number::before {
-    content: '第 ' counter(page) ' 頁';
+    content: 'p.' counter(page);
+  }
+
+  .print-page-number {
+    font-size: 0;
+  }
+
+  .print-page-number::before {
+    font-size: 9pt;
   }
 
   .print-root * {
@@ -298,6 +346,16 @@ body {
     page-break-before: always;
     break-inside: auto;
     page-break-inside: auto;
+  }
+
+  .print-document.print-spread-view {
+    display: block !important;
+    max-width: none !important;
+  }
+
+  .print-document.print-spread-view .print-topic-page {
+    width: auto !important;
+    margin: 0 !important;
   }
 
   .print-topic-page:first-child {

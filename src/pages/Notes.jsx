@@ -4,6 +4,78 @@ import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
 
+const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount }) => {
+  const measureRef = useRef(null);
+  const [pages, setPages] = useState(null);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const source = measureRef.current;
+      if (!source) return;
+
+      const sheet = source.firstElementChild;
+      if (!sheet || sheet.clientHeight === 0) return;
+      const contentNodes = Array.from(sheet.children).filter((node) => node.tagName !== 'FOOTER');
+      const sheetStyles = window.getComputedStyle(sheet);
+      const availableHeight = sheet.clientHeight
+        - parseFloat(sheetStyles.paddingTop)
+        - parseFloat(sheetStyles.paddingBottom)
+        - 20;
+      const groups = [];
+      let currentGroup = [];
+      let currentHeight = 0;
+
+      contentNodes.forEach((node) => {
+        const nodeStyles = window.getComputedStyle(node);
+        const nodeHeight = node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
+        if (currentGroup.length > 0 && currentHeight + nodeHeight > availableHeight) {
+          groups.push({ nodes: currentGroup, height: currentHeight });
+          currentGroup = [];
+          currentHeight = 0;
+        }
+        currentGroup.push(node.outerHTML);
+        currentHeight += nodeHeight;
+      });
+
+      if (currentGroup.length > 0) groups.push({ nodes: currentGroup, height: currentHeight });
+
+      const nextPages = groups.map((group) => ({
+        html: group.nodes.join(''),
+        scale: Math.min(1, availableHeight / group.height),
+      }));
+      setPages(nextPages);
+      onPageCount(nextPages.length);
+    }, 50);
+
+    return () => window.clearTimeout(timer);
+  }, [topic.id, TopicComponent, onPageCount]);
+
+  return (
+    <>
+      <div ref={measureRef} className="print-pagination-measure" aria-hidden="true">
+        <div className="print-topic-sheet">
+          <TopicComponent activeSub={null} onNavigate={() => {}} />
+        </div>
+      </div>
+      {pages && pages.map((page, pageIndex) => (
+        <section key={`${topic.id}-page-${pageIndex}`} className="print-topic-page">
+          <div className="print-topic-sheet">
+            <div
+              className="print-topic-page-content"
+              style={{ transform: `scale(${page.scale})` }}
+              dangerouslySetInnerHTML={{ __html: page.html }}
+            />
+            <footer className="print-page-footer">
+              <span>{topic._level} {topic.topic}</span>
+              <span className="print-page-number" aria-label="頁碼">p.{pageOffset + pageIndex + 1}</span>
+            </footer>
+          </div>
+        </section>
+      ))}
+    </>
+  );
+};
+
 // ========================================
 // Notes 主頁面
 // ========================================
@@ -49,6 +121,8 @@ const Notes = () => {
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
   const [pdfUrl, setPdfUrl] = useState('');
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [isSpreadView, setIsSpreadView] = useState(false);
+  const [topicPageCounts, setTopicPageCounts] = useState({});
   const printDocumentRef = useRef(null);
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
@@ -105,6 +179,14 @@ const Notes = () => {
 
   const ActiveComponent = activeTopic ? NOTES_COMPONENTS[activeTopic] : null;
 
+  const pageOffsets = {};
+  let pageOffset = 0;
+  printTopics.forEach((topic) => {
+    const topicKey = `${topic._level}-${topic.id}`;
+    pageOffsets[topicKey] = pageOffset;
+    pageOffset += topicPageCounts[topicKey] || 0;
+  });
+
   const handleGeneratePdf = async () => {
     if (!printDocumentRef.current) return;
     setIsGeneratingPdf(true);
@@ -128,7 +210,7 @@ const Notes = () => {
         pdf.setPage(pageNumber);
         pdf.setFontSize(9);
         pdf.setTextColor(100, 116, 139);
-        pdf.text(`Page ${pageNumber}`, 200, 287, { align: 'right' });
+        pdf.text(`p.${pageNumber}`, 200, 287, { align: 'right' });
       }
 
       const nextPdfUrl = URL.createObjectURL(pdf.output('blob'));
@@ -227,6 +309,12 @@ const Notes = () => {
               <p className="text-slate-600">A4 Reader 預覽模式（每個 CH 另起一張 A4）</p>
               <div className="flex flex-wrap items-center gap-2">
                 <button
+                  onClick={() => setIsSpreadView((current) => !current)}
+                  className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-700 hover:bg-slate-50"
+                >
+                  {isSpreadView ? '單頁顯示' : '雙面顯示'}
+                </button>
+                <button
                   onClick={handleGeneratePdf}
                   disabled={isGeneratingPdf}
                   className="rounded-lg bg-indigo-600 px-3 py-1.5 font-bold text-white hover:bg-indigo-700"
@@ -260,20 +348,26 @@ const Notes = () => {
             <p className="mt-2 text-sm">初中請使用 ?print=1&level=F1/F2/F3；高中請使用 ?print=1&group=senior。</p>
           </div>
         ) : (
-          <div ref={printDocumentRef} className={`print-document ${pdfUrl ? 'pdf-source-hidden' : ''}`}>
+          <div
+            ref={printDocumentRef}
+            className={`print-document ${pdfUrl ? 'pdf-source-hidden' : ''} ${isSpreadView ? 'print-spread-view' : ''}`}
+          >
             {printTopics.map((topic) => {
             const TopicComponent = NOTES_COMPONENTS[topic.id];
             if (!TopicComponent) return null;
             return (
-              <section key={`${topic._level}-${topic.id}`} className="print-topic-page">
-                <div className="print-topic-sheet">
-                  <TopicComponent activeSub={null} onNavigate={() => {}} />
-                  <footer className="print-page-footer">
-                    <span>{topic._level} {topic.topic}</span>
-                    <span className="print-page-number" aria-label="頁碼" />
-                  </footer>
-                </div>
-              </section>
+              <PrintTopicPages
+                key={`${topic._level}-${topic.id}`}
+                topic={topic}
+                TopicComponent={TopicComponent}
+                pageOffset={pageOffsets[`${topic._level}-${topic.id}`]}
+                onPageCount={(count) => {
+                  const topicKey = `${topic._level}-${topic.id}`;
+                  setTopicPageCounts((current) => (
+                    current[topicKey] === count ? current : { ...current, [topicKey]: count }
+                  ));
+                }}
+              />
             );
             })}
           </div>
