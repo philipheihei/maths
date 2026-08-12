@@ -303,19 +303,21 @@ body {
   }
 
   .print-topic-sheet {
+    position: relative;
     width: auto !important;
-    min-height: auto !important;
+    height: 273mm !important;
+    min-height: 273mm !important;
     margin: 0 !important;
     padding: 0 !important;
     box-shadow: none !important;
     border: 0 !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .print-page-footer {
-    position: fixed;
+    position: absolute;
     right: 0;
-    bottom: -8mm;
+    bottom: 0;
     left: 0;
     display: flex;
     justify-content: space-between;
@@ -325,14 +327,10 @@ body {
   }
 
   .print-page-number::before {
-    content: 'p.' counter(page);
+    content: none;
   }
 
   .print-page-number {
-    font-size: 0;
-  }
-
-  .print-page-number::before {
     font-size: 9pt;
   }
 

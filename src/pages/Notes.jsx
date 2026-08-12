@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
-import html2pdf from 'html2pdf.js';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
 
 const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount }) => {
@@ -187,49 +188,57 @@ const Notes = () => {
     pageOffset += topicPageCounts[topicKey] || 0;
   });
 
-  const handleGeneratePdf = async () => {
+  const handleGeneratePdf = async (shouldDownload = false) => {
     if (!printDocumentRef.current) return;
     setIsGeneratingPdf(true);
 
-    try {
-      const pdf = await html2pdf()
-        .set({
-          margin: [12, 10, 12, 10],
-          filename: 'maths-notes.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 1.5, useCORS: true, backgroundColor: '#ffffff' },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          pagebreak: { mode: ['css', 'legacy'], before: '.print-topic-page' },
-        })
-        .from(printDocumentRef.current)
-        .toPdf()
-        .get('pdf');
+    const sourceElement = printDocumentRef.current;
+    const wasHidden = sourceElement.classList.contains('pdf-source-hidden');
+    const wasSpread = sourceElement.classList.contains('print-spread-view');
+    sourceElement.classList.remove('pdf-source-hidden', 'print-spread-view');
+    void sourceElement.offsetHeight;
+    await new Promise((resolve) => {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(resolve);
+      });
+    });
 
-      const totalPages = pdf.internal.getNumberOfPages();
-      for (let pageNumber = 1; pageNumber <= totalPages; pageNumber += 1) {
-        pdf.setPage(pageNumber);
-        pdf.setFontSize(9);
-        pdf.setTextColor(100, 116, 139);
-        pdf.text(`p.${pageNumber}`, 200, 287, { align: 'right' });
+    try {
+      const pageElements = Array.from(sourceElement.querySelectorAll('.print-topic-page'));
+      if (pageElements.length === 0) throw new Error('No printable A4 pages found');
+
+      const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+      for (let pageIndex = 0; pageIndex < pageElements.length; pageIndex += 1) {
+        const canvas = await html2canvas(pageElements[pageIndex], {
+          scale: 1.5,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+        });
+
+        if (pageIndex > 0) pdf.addPage();
+        pdf.addImage(canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297);
       }
 
       const nextPdfUrl = URL.createObjectURL(pdf.output('blob'));
+      if (shouldDownload) {
+        const downloadLink = document.createElement('a');
+        downloadLink.href = nextPdfUrl;
+        downloadLink.download = 'maths-notes.pdf';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        downloadLink.remove();
+      }
       setPdfUrl((currentUrl) => {
         if (currentUrl) URL.revokeObjectURL(currentUrl);
         return nextPdfUrl;
       });
     } finally {
+      if (wasHidden) sourceElement.classList.add('pdf-source-hidden');
+      if (wasSpread) sourceElement.classList.add('print-spread-view');
       setIsGeneratingPdf(false);
     }
   };
-
-  useEffect(() => {
-    if (isPrintPreview && printTopics.length > 0) {
-      const timer = window.setTimeout(handleGeneratePdf, 500);
-      return () => window.clearTimeout(timer);
-    }
-    return undefined;
-  }, [isPrintPreview, printTopics.length]);
 
   const colorMap = {
     purple: { activeBg: 'bg-purple-100', activeText: 'text-purple-700', activeBorder: 'border-purple-500', numActive: 'bg-purple-500 text-white', numInactive: 'bg-purple-100 text-purple-600' },
@@ -315,11 +324,17 @@ const Notes = () => {
                   {isSpreadView ? '單頁顯示' : '雙面顯示'}
                 </button>
                 <button
-                  onClick={handleGeneratePdf}
+                  onClick={() => window.print()}
+                  className="rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 font-bold text-emerald-800 hover:bg-emerald-100"
+                >
+                  高質素列印／另存 PDF
+                </button>
+                <button
+                  onClick={() => handleGeneratePdf(true)}
                   disabled={isGeneratingPdf}
                   className="rounded-lg bg-indigo-600 px-3 py-1.5 font-bold text-white hover:bg-indigo-700"
                 >
-                  {isGeneratingPdf ? '正在製作 A4 PDF…' : '重新產生 A4 分頁'}
+                  {isGeneratingPdf ? '正在匯出 PDF…' : '匯出 PDF'}
                 </button>
               </div>
             </div>
@@ -350,7 +365,7 @@ const Notes = () => {
         ) : (
           <div
             ref={printDocumentRef}
-            className={`print-document ${pdfUrl ? 'pdf-source-hidden' : ''} ${isSpreadView ? 'print-spread-view' : ''}`}
+            className={`print-document ${pdfUrl && !isGeneratingPdf ? 'pdf-source-hidden' : ''} ${isSpreadView && !isGeneratingPdf ? 'print-spread-view' : ''}`}
           >
             {printTopics.map((topic) => {
             const TopicComponent = NOTES_COMPONENTS[topic.id];
