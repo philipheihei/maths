@@ -241,6 +241,22 @@ body {
     transform-origin: top left;
   }
 
+  /* Give F1 CH8 charts the full printable width instead of squeezing them into two columns. */
+  .print-topic-page #bar-chart [class*="md:grid-cols-"],
+  .print-topic-page #pie-chart [class*="md:grid-cols-"],
+  .print-topic-page #line-graph [class*="md:grid-cols-"],
+  .print-topic-page #stem-leaf [class*="xl:grid-cols-"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .print-topic-page #bar-chart svg,
+  .print-topic-page #pie-chart svg,
+  .print-topic-page #line-graph svg,
+  .print-topic-page #stem-leaf svg {
+    width: min(100%, 520px) !important;
+    max-width: 520px !important;
+  }
+
   .print-root.print-preview .print-page-footer {
     position: absolute;
     right: 10mm;
@@ -398,6 +414,21 @@ body {
   .print-topic-page svg {
     max-width: 100% !important;
     height: auto !important;
+  }
+
+  .print-topic-page #bar-chart [class*="md:grid-cols-"],
+  .print-topic-page #pie-chart [class*="md:grid-cols-"],
+  .print-topic-page #line-graph [class*="md:grid-cols-"],
+  .print-topic-page #stem-leaf [class*="xl:grid-cols-"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .print-topic-page #bar-chart svg,
+  .print-topic-page #pie-chart svg,
+  .print-topic-page #line-graph svg,
+  .print-topic-page #stem-leaf svg {
+    width: min(100%, 520px) !important;
+    max-width: 520px !important;
   }
 
   .print-topic-page .katex-display {
