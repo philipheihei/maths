@@ -38,12 +38,18 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
         return [node];
       };
       const contentNodes = initialNodes.flatMap(expandOversizedNode);
+      const isHeadingBlock = (node) => {
+        const directChildren = Array.from(node.children);
+        const hasDirectHeading = directChildren.some((child) => /^H[1-4]$/.test(child.tagName));
+        const hasContentBlock = directChildren.some((child) => ['DIV', 'P', 'SECTION', 'UL', 'OL'].includes(child.tagName));
+        return hasDirectHeading && !hasContentBlock;
+      };
       const pageUnits = [];
       for (let nodeIndex = 0; nodeIndex < contentNodes.length; nodeIndex += 1) {
         const node = contentNodes[nodeIndex];
-        const isHeading = node.querySelector('h1, h2, h3, h4');
+        const isHeading = isHeadingBlock(node);
         const nextNode = contentNodes[nodeIndex + 1];
-        const nextIsHeading = nextNode && nextNode.querySelector('h1, h2, h3, h4');
+        const nextIsHeading = nextNode && isHeadingBlock(nextNode);
         if (isHeading && nextNode && !nextIsHeading) {
           pageUnits.push([node, nextNode]);
           nodeIndex += 1;
