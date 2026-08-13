@@ -216,7 +216,8 @@ body {
     width: 210mm;
     height: 297mm;
     margin: 0 auto;
-    padding: 12mm 10mm;
+    /* Keep a clear 12mm safety zone above the footer. */
+    padding: 12mm 10mm 24mm;
     background: #ffffff;
     box-shadow: 0 8px 28px rgba(15, 23, 42, 0.14);
     border: 1px solid #e2e8f0;
@@ -259,7 +260,7 @@ body {
   .print-root.print-preview .print-page-footer {
     position: absolute;
     right: 10mm;
-    bottom: 6mm;
+    bottom: 12mm;
     left: 10mm;
     display: flex;
     justify-content: space-between;
@@ -318,12 +319,14 @@ body {
   }
 
   .print-topic-sheet {
+    box-sizing: border-box;
     position: relative;
     width: auto !important;
     height: 273mm !important;
     min-height: 273mm !important;
     margin: 0 !important;
-    padding: 0 !important;
+    /* The @page rule already supplies the outer 12mm bottom margin. */
+    padding: 0 0 12mm !important;
     box-shadow: none !important;
     border: 0 !important;
     overflow: hidden !important;
@@ -332,7 +335,7 @@ body {
   .print-page-footer {
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 12mm;
     left: 0;
     display: flex;
     justify-content: space-between;
@@ -444,5 +447,10 @@ body {
   .print-topic-page .shadow-md,
   .print-topic-page .shadow-sm {
     box-shadow: none !important;
+  }
+
+  /* Decorative background marks must not escape their card into the footer area. */
+  .print-topic-page .print-decorative-exclamation {
+    display: none !important;
   }
 }

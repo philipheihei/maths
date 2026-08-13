@@ -21,8 +21,7 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
       const sheetStyles = window.getComputedStyle(sheet);
       const availableHeight = sheet.clientHeight
         - parseFloat(sheetStyles.paddingTop)
-        - parseFloat(sheetStyles.paddingBottom)
-        - 20;
+        - parseFloat(sheetStyles.paddingBottom);
       const expandOversizedNode = (node) => {
         const nodeStyles = window.getComputedStyle(node);
         const nodeHeight = node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
