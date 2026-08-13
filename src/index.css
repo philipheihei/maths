@@ -162,18 +162,6 @@ body {
 }
 
 @media screen {
-  .pdf-reader-frame {
-    display: block;
-    width: 100%;
-    height: min(78vh, 900px);
-    border: 0;
-    background: #ffffff;
-  }
-
-  .pdf-source-hidden {
-    display: none;
-  }
-
   .print-root.print-preview {
     background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
     padding-top: 1rem;
@@ -242,6 +230,10 @@ body {
     width: 210mm;
     visibility: hidden;
     pointer-events: none;
+  }
+
+  .print-pagination-measure .print-topic-sheet {
+    overflow: visible;
   }
 
   .print-topic-page-content {
@@ -321,7 +313,7 @@ body {
     display: none !important;
   }
 
-  .pdf-reader-panel {
+  .print-pagination-measure {
     display: none !important;
   }
 
@@ -379,12 +371,7 @@ body {
     margin: 0 !important;
   }
 
-  .print-topic-page:first-child {
-    break-before: auto;
-    page-break-before: auto;
-  }
-
-  .print-topic-page:first-child {
+  .print-document > .print-topic-page:first-of-type {
     break-before: auto;
     page-break-before: auto;
   }

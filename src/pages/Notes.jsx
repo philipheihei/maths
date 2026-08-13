@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
-import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
 
 const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount }) => {
@@ -48,9 +46,17 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
       };
       const pageUnits = [];
       let firstContentIndex = 0;
-      if (contentNodes.length > 1 && contentNodes[0].querySelector(':scope > h1')) {
-        pageUnits.push([contentNodes[0], contentNodes[1]]);
-        firstContentIndex = 2;
+      const firstNodeIsChapterTitle = contentNodes[0]
+        && Array.from(contentNodes[0].children).some((child) => child.tagName === 'H1');
+      if (contentNodes.length > 1 && firstNodeIsChapterTitle) {
+        const firstNodeIsSplitSectionHeading = contentNodes[1]
+          && contentNodes.length > 2
+          && contentNodes[1].querySelector(':scope > h2');
+        const firstUnit = firstNodeIsSplitSectionHeading
+          ? contentNodes.slice(0, 3)
+          : contentNodes.slice(0, 2);
+        pageUnits.push(firstUnit);
+        firstContentIndex = firstUnit.length;
       }
       for (let nodeIndex = firstContentIndex; nodeIndex < contentNodes.length; nodeIndex += 1) {
         const node = contentNodes[nodeIndex];
@@ -169,8 +175,6 @@ const Notes = () => {
   const [expandedTopics, setExpandedTopics] = useState(initState.topic ? { [initState.topic]: true } : {});
   const [activeTopic, setActiveTopic] = useState(initState.topic);
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
-  const [pdfUrl, setPdfUrl] = useState('');
-  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [isSpreadView, setIsSpreadView] = useState(false);
   const [topicPageCounts, setTopicPageCounts] = useState({});
   const printDocumentRef = useRef(null);
@@ -236,58 +240,6 @@ const Notes = () => {
     pageOffsets[topicKey] = pageOffset;
     pageOffset += topicPageCounts[topicKey] || 0;
   });
-
-  const handleGeneratePdf = async (shouldDownload = false) => {
-    if (!printDocumentRef.current) return;
-    setIsGeneratingPdf(true);
-
-    const sourceElement = printDocumentRef.current;
-    const wasHidden = sourceElement.classList.contains('pdf-source-hidden');
-    const wasSpread = sourceElement.classList.contains('print-spread-view');
-    sourceElement.classList.remove('pdf-source-hidden', 'print-spread-view');
-    void sourceElement.offsetHeight;
-    await new Promise((resolve) => {
-      window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(resolve);
-      });
-    });
-
-    try {
-      const pageElements = Array.from(sourceElement.querySelectorAll('.print-topic-page'));
-      if (pageElements.length === 0) throw new Error('No printable A4 pages found');
-
-      const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-      for (let pageIndex = 0; pageIndex < pageElements.length; pageIndex += 1) {
-        const canvas = await html2canvas(pageElements[pageIndex], {
-          scale: 1.5,
-          useCORS: true,
-          backgroundColor: '#ffffff',
-          logging: false,
-        });
-
-        if (pageIndex > 0) pdf.addPage();
-        pdf.addImage(canvas.toDataURL('image/jpeg', 0.98), 'JPEG', 0, 0, 210, 297);
-      }
-
-      const nextPdfUrl = URL.createObjectURL(pdf.output('blob'));
-      if (shouldDownload) {
-        const downloadLink = document.createElement('a');
-        downloadLink.href = nextPdfUrl;
-        downloadLink.download = 'maths-notes.pdf';
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        downloadLink.remove();
-      }
-      setPdfUrl((currentUrl) => {
-        if (currentUrl) URL.revokeObjectURL(currentUrl);
-        return nextPdfUrl;
-      });
-    } finally {
-      if (wasHidden) sourceElement.classList.add('pdf-source-hidden');
-      if (wasSpread) sourceElement.classList.add('print-spread-view');
-      setIsGeneratingPdf(false);
-    }
-  };
 
   const colorMap = {
     purple: { activeBg: 'bg-purple-100', activeText: 'text-purple-700', activeBorder: 'border-purple-500', numActive: 'bg-purple-500 text-white', numInactive: 'bg-purple-100 text-purple-600' },
@@ -375,8 +327,6 @@ const Notes = () => {
                   <button
                     key={value}
                     onClick={() => {
-                      if (pdfUrl) URL.revokeObjectURL(pdfUrl);
-                      setPdfUrl('');
                       setTopicPageCounts({});
                       setPrintSelection(value);
                     }}
@@ -401,33 +351,9 @@ const Notes = () => {
                 >
                   高質素列印／另存 PDF
                 </button>
-                <button
-                  onClick={() => handleGeneratePdf(true)}
-                  disabled={isGeneratingPdf}
-                  className="rounded-lg bg-indigo-600 px-3 py-1.5 font-bold text-white hover:bg-indigo-700"
-                >
-                  {isGeneratingPdf ? '正在匯出 PDF…' : '匯出 PDF'}
-                </button>
               </div>
             </div>
           </div>
-        )}
-        {isPrintPreview && pdfUrl && (
-          <section className="pdf-reader-panel mx-auto mb-6 max-w-5xl overflow-hidden rounded-xl border border-slate-300 bg-slate-800 shadow-lg">
-            <div className="flex items-center justify-between gap-3 border-b border-slate-600 px-4 py-2 text-sm text-white">
-              <span>PDF 閱讀器（實際 A4 分頁）</span>
-              <button
-                onClick={() => {
-                  URL.revokeObjectURL(pdfUrl);
-                  setPdfUrl('');
-                }}
-                className="rounded-md px-2 py-1 text-slate-300 hover:bg-slate-700 hover:text-white"
-              >
-                關閉
-              </button>
-            </div>
-            <iframe title="PDF 閱讀器" src={pdfUrl} className="pdf-reader-frame" />
-          </section>
         )}
         {printTopics.length === 0 ? (
           <div className="max-w-3xl mx-auto border border-amber-300 bg-amber-50 text-amber-800 rounded-xl p-4">
@@ -437,7 +363,7 @@ const Notes = () => {
         ) : (
           <div
             ref={printDocumentRef}
-            className={`print-document ${pdfUrl && !isGeneratingPdf ? 'pdf-source-hidden' : ''} ${isSpreadView && !isGeneratingPdf ? 'print-spread-view' : ''}`}
+            className={`print-document ${isSpreadView ? 'print-spread-view' : ''}`}
           >
             {printTopics.map((topic) => {
             const TopicComponent = NOTES_COMPONENTS[topic.id];
