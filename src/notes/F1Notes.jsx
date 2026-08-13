@@ -819,7 +819,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
             </div>
             <hr />
             <div>
-              <p className="text-sm text-slate-600 mb-1">例子 3 (分類)：</p>
+              <p className="text-sm text-slate-600 mb-1">例子 3 (異類項尸分類)：</p>
               <pre className="whitespace-pre font-sans text-lg">
                 <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="2x − 3y − 7x − y" />{'\n'}
 <span className="plain-equals">=</span>{' '}<Latex math="2x − 7x − 3y − y" /> <span className="text-sm text-green-600"><Latex math="(-3-1)" /></span>{'\n'}
@@ -893,8 +893,8 @@ export const PolynomialsNotes = ({ activeSub }) => {
               <pre className="whitespace-pre font-sans text-lg">
                 <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="(4 − 5x)(5 + 6x)" />{'\n'}
 <span className="plain-equals">=</span>{' '}<Latex math="4(5) + 4(6x) − 5x(5) − 5x(6x)" /> <span className="text-sm text-slate-500">(按順序乘)</span>{'\n'}
-<span className="plain-equals">=</span>{' '}<Latex math="20 + 24x − 25x − 30x^2" /> <span className="text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}
-<span className="plain-equals">=</span>{' '}<Latex math="20 − x − 30x^2" />{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="20 + " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="24x − 25x" /></span><Latex math=" − 30x^2" /> <span className="bg-yellow-200 px-1 rounded text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}
+<span className="plain-equals">=</span>{' '}<Latex math="20 " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="− x" /></span><Latex math=" − 30x^2" />{'\n'}
 <span className="plain-equals">=</span>{' '}<Latex math="−30x^2 − x + 20" />
               </pre>
             </div>
@@ -3362,7 +3362,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
           <div className="grid grid-cols-1 gap-4">
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <p className="text-slate-800 font-bold mb-3">
-                e.g. <Latex math="y = 50 − x" /> ， 若 <span className="bg-yellow-200 px-1 rounded"><Latex math="x = 40" /></span> ，求 <Latex math="y" /> 的值
+                e.g. <Latex math="y = 50 − x" /> ， 若 <span className="bg-yellow-200 px-1 rounded"><Latex math="x = 40" /></span> ，求 <Latex math="y" /> 的值。
               </p>
               <div className="pl-6 font-bold text-slate-700 [&>span]:!text-left">
                 <Latex math={String.raw`\begin{aligned} y &= 50 − \textcolor{#2563eb}{(40)} \\ y &= 10 \end{aligned}`} block />
@@ -3371,7 +3371,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
 
             <div className="bg-white rounded-lg p-4 border border-slate-200 relative">
               <p className="text-slate-800 font-bold mb-3">
-                e.g. <Latex math="H = k^2 − 1" /> ， 若 <span className="bg-yellow-200 px-1 rounded"><Latex math="k = -4" /></span> ，求 <Latex math="H" /> 的值
+                e.g. <Latex math="H = k^2 − 1" /> ， 若 <span className="bg-yellow-200 px-1 rounded"><Latex math="k = -4" /></span> ，求 <Latex math="H" /> 的值。
               </p>
               <div className="pl-6 font-bold text-slate-700 [&>span]:!text-left">
                 <Latex math={String.raw`\begin{aligned} H &= \colorbox{#fef08a}{(−4)}^2 − 1 \\ &= 16 − 1 \\ &= 15 \end{aligned}`} block />
@@ -3385,7 +3385,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
 
             <div className="bg-white rounded-lg p-4 border border-slate-200">
               <p className="text-slate-800 font-bold mb-3">
-                e.g. <Latex math="T = (n − 1)d" /> ， 若 <span className="bg-yellow-200 px-1 rounded"><Latex math="n = 4" /></span> 和 <span className="bg-green-200 px-1 rounded"><Latex math="d = -2" /></span> ，求 <Latex math="T" /> 的值
+                e.g. <Latex math="T = (n − 1)d" /> ， 若 <span className="bg-yellow-200 px-1 rounded"><Latex math="n = 4" /></span> 和 <span className="bg-green-200 px-1 rounded"><Latex math="d = -2" /></span> ，求 <Latex math="T" /> 的值。
               </p>
               <div className="pl-6 font-bold text-slate-700 [&>span]:!text-left">
                 <Latex math={String.raw`\begin{aligned} T &= (\colorbox{#fef08a}{4} − 1)\colorbox{#bbf7d0}{(−2)} \\ &= −6 \end{aligned}`} block />
