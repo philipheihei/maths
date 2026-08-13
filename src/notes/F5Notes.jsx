@@ -78,7 +78,7 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
                 <span className="font-bold">變分符號：</span>
                 <Latex math="\propto" />
                 <span className="text-slate-500">←</span>
-                <span>意指 <span className="bg-yellow-200 px-2 py-0.5 rounded font-bold">"= k"</span></span>
+                <span>意指 <span className="bg-yellow-200 px-2 py-0.5 rounded font-bold"><Latex math="=k" /></span></span>
               </div>
               <div className="border-t pt-3">
                 <p className="text-sm text-slate-600 mb-2">例子：</p>
@@ -97,12 +97,12 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
       <CollapsibleSection id="variation-questions" title="題目問法" num={3} color="green" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-6">
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <h3 className="font-bold text-green-800 mb-3">A. 以 x 表示 y ／求一個聯繫 x 和 y 的方程 ／求 f(x) <span className="text-red-500 text-sm bg-red-100 px-2 py-0.5 rounded ml-2">最新</span></h3>
+            <h3 className="font-bold text-green-800 mb-3">A. 以 <Latex math="x" /> 表示 <Latex math="y" /> ／求一個聯繫 <Latex math="x" /> 和 <Latex math="y" /> 的方程 ／求 <Latex math="f(x)" /> <span className="text-red-500 text-sm bg-red-100 px-2 py-0.5 rounded ml-2">最新</span></h3>
             <div className="bg-white rounded-lg p-3 mb-3">
-              <p className="text-sm text-red-600 font-bold mb-2">按題目提供數值找 k，然後列出變分公式</p>
+              <p className="text-sm text-red-600 font-bold mb-2">按題目提供數值找 <Latex math="k" />，然後列出變分公式</p>
               <div className="bg-green-50 rounded p-3 mt-2">
-                <p className="text-sm text-green-700 mb-2">例題：y 隨 x 正變，當 y = 5，x = 25</p>
-                <p className="font-bold text-slate-700 mb-2">a. 以 x 表 y</p>
+                <p className="text-sm text-green-700 mb-2">例題：<Latex math="y" /> 隨 <Latex math="x" /> 正變，當 <Latex math="y=5" />，<Latex math="x=25" /></p>
+                <p className="font-bold text-slate-700 mb-2"><Latex math="a." /> 以 <Latex math="x" /> 表 <Latex math="y" /></p>
                 <div className="space-y-1 ml-4 text-sm">
                   <div className="flex items-start gap-2">
                     <Latex math="y = kx" />
@@ -114,11 +114,11 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
                   </div>
                   <div className="flex items-start gap-2">
                     <Latex math="k = \frac{1}{5}" />
-                    <span className="text-red-500">← 成功找到變分常數 k</span>
+                    <span className="text-red-500">← 成功找到變分常數 <Latex math="k" /></span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Latex math="y = \frac{1}{5}x" />
-                    <span className="text-red-500">← 最尾請放 k 進公式，x / y 保留</span>
+                    <span className="text-red-500">← 最尾請放 <Latex math="k" /> 進公式，<Latex math="x / y" /> 保留</span>
                   </div>
                 </div>
               </div>
@@ -126,9 +126,9 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
           </div>
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-3">B. 當 x = ?，y = ?</h3>
+            <h3 className="font-bold text-blue-800 mb-3">B. 當 <Latex math="x=?" />，<Latex math="y=?" /></h3>
             <div className="bg-white rounded-lg p-3">
-              <p className="text-sm text-blue-700 mb-2">例：當 x = 10，求 y 的值</p>
+              <p className="text-sm text-blue-700 mb-2">例：當 <Latex math="x=10" />，求 <Latex math="y" /> 的值</p>
               <div className="ml-4 text-sm">
                 <Latex math="\begin{aligned} x &= \frac{1}{5}y && \textcolor{red}{\text{← 列找到的式 (a部)}} \\\\ 10 &= \frac{1}{5}y && \textcolor{red}{\text{← 代入法}} \\\\ 10 \times 5 &= y \\\\ y &= 50 \end{aligned}" block />
               </div>
@@ -138,9 +138,9 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
           <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
             <h3 className="font-bold text-orange-800 mb-3">C. 哪個必為常數？ <span className="text-sm bg-yellow-200 border border-yellow-400 px-2 py-0.5 rounded">MC 限定</span></h3>
             <div className="bg-white rounded-lg p-3 mb-3">
-              <p className="text-sm text-red-600 font-bold mb-3">目標：要找 k = ?</p>
+              <p className="text-sm text-red-600 font-bold mb-3">目標：要找 <Latex math="k=?" /></p>
               <div className="bg-green-50 rounded p-3">
-                <p className="text-sm text-green-700 mb-2">題目：P 隨 x 正變且隨 <Latex math="\sqrt{y}" /> 反變，下列何者必為常數？</p>
+                <p className="text-sm text-green-700 mb-2">題目：<Latex math="P" /> 隨 <Latex math="x" /> 正變且隨 <Latex math="\sqrt{y}" /> 反變，下列何者必為常數？</p>
                 <div className="ml-4 space-y-1 text-sm mb-3">
                   <p className="flex items-center gap-2"><span className="border-2 border-green-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">A</span> <Latex math="\frac{P\sqrt{y}}{x}" /></p>
                   <p className="flex items-center gap-2"><span className="w-6 h-6 flex items-center justify-center text-xs">B.</span> <Latex math="\frac{x\sqrt{y}}{P}" /></p>
@@ -149,9 +149,13 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
                 </div>
                 <div className="border-t pt-3">
                   <p className="text-sm text-red-600 font-bold mb-2">目標：k / k 的變種做主項</p>
-                  <div className="space-y-1 ml-4 text-sm">
-                    <Latex math="P = \frac{kx}{\sqrt{y}}" block />
-                    <Latex math="\frac{P\sqrt{y}}{x} = k" block />
+                  <div className="inline-grid grid-cols-[max-content_auto_max-content] gap-x-2 gap-y-1 ml-4 text-sm items-baseline">
+                    <Latex math="P" />
+                    <Latex math="=" />
+                    <Latex math="\frac{kx}{\sqrt{y}}" />
+                    <Latex math="\frac{P\sqrt{y}}{x}" />
+                    <Latex math="=" />
+                    <Latex math="k" />
                   </div>
                   <p className="text-sm text-slate-600 mt-2">→ 答案 A</p>
                   <p className="text-xs text-slate-500 mt-1">💡 如在選擇中找不到 k 的答案，可找 <Latex math="k^2" /> / <Latex math="\frac{1}{k}" /></p>

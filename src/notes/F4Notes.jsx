@@ -114,7 +114,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-blue-600 mb-2">例：<Latex math="x^2 + 4x + 3 = 0" /></p>
               <div className="space-y-2">
-                <p className="text-green-700"><span className="font-bold">Step 1:</span> 認 a, b, c &nbsp;&nbsp; <span className="text-blue-600">a=1, b=4, c=3</span></p>
+                <p className="text-green-700"><span className="font-bold">Step 1:</span> 認 <Latex math="a,b,c" /> &nbsp;&nbsp; <span className="text-blue-600"><Latex math="a=1,\ b=4,\ c=3" /></span></p>
                 <p className="text-green-700"><span className="font-bold">Step 2:</span> 按 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">FMLA</span> <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">01</span></p>
                 <div className="ml-4">
                   <div className="calculator-lcd-answer translate-x-16">
@@ -158,8 +158,8 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                   </div>
                   <p className="text-green-700 text-sm">按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> 去第二個 x 的答案</p>
                 </div>
-                <p className="text-green-700 mt-2">∴ 答案是 -1 / -3</p>
-                <p className="text-red-600 font-bold">寫： x = -1 或 -3</p>
+                <p className="text-green-700 mt-2">∴ 答案是 <Latex math="-1 / -3" /></p>
+                <p className="text-red-600 font-bold">寫： <Latex math="x=-1" /> 或 <Latex math="-3" /></p>
               </div>
             </div>
           </div>
@@ -1048,8 +1048,8 @@ export const FunctionNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3 text-sm">
               <Latex math="−5x^2 + 6x + 3 = 0" block />
               <div className="flex gap-6 mt-2">
-                <span><span className="text-red-600 font-bold">a = -5</span> → 開口向下 ∩</span>
-                <span><span className="text-green-600 font-bold">c = 3</span> → y截距 = 3</span>
+                <span><span className="text-red-600 font-bold"><Latex math="a=-5" /></span> → 開口向下 ∩</span>
+                <span><span className="text-green-600 font-bold"><Latex math="c=3" /></span> → <Latex math="y" />截距 <Latex math="=3" /></span>
               </div>
             </div>
           </div>
@@ -1066,7 +1066,7 @@ export const FunctionNotes = ({ activeSub }) => {
             </div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <p className="text-sm text-green-700 mb-2">例：坐標 <Latex math="(4, 0)" /> → <span className="text-red-500">代 x = 4，y = 0</span></p>
+            <p className="text-sm text-green-700 mb-2">例：坐標 <Latex math="(4, 0)" /> → <span className="text-red-500">代 <Latex math="x=4,\ y=0" /></span></p>
             <div className="grid grid-cols-2 gap-4 mt-3 text-sm">
               <div className="bg-green-50 p-3 rounded-lg text-center">
                 <p className="font-bold text-green-700 mb-1">穿過 ✓</p>

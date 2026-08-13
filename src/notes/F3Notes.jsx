@@ -1570,7 +1570,7 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
                 </div>
                 <div className="mt-4 md:mt-0 md:absolute md:top-[30%] md:left-0 md:-translate-y-4 pl-3 text-green-700">
                   <p className="font-bold">自己計出：</p>
-                  <p>450 − 400 = 50m</p>
+                  <p><Latex math="450 - 400 = 50\text{m}" /></p>
                 </div>
               </div>
             </div>
@@ -2009,12 +2009,12 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                     <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">3</td>
                     <td className="border border-slate-400 p-2 w-[53px] h-[41px] min-w-[53px]">1</td>
                     <td className="border-none text-left pl-2 hidden sm:table-cell text-green-700 font-bold text-sm whitespace-nowrap">
-                      ← 能加到總數：5+10+4+3+1 = 23
+                      ← 能加到總數：<Latex math="5+10+4+3+1=23" />
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <p className="sm:hidden text-green-700 font-bold text-sm mt-2 text-center">能加到總數：5+10+4+3+1 = 23</p>
+              <p className="sm:hidden text-green-700 font-bold text-sm mt-2 text-center">能加到總數：<Latex math="5+10+4+3+1=23" /></p>
             </div>
 
             <div className="space-y-4">

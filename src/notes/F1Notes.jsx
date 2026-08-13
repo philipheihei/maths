@@ -1275,12 +1275,15 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                 <p className="mb-2">1. 求柱體體積</p>
                 <div className="pl-2 sm:pl-4 grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2 items-start whitespace-nowrap">
                   <div className="text-right"><span className="bg-yellow-200 px-1 rounded">體積</span></div>
-                  <div>=</div>
-                  <div className="whitespace-normal break-words"><span className="bg-green-200 px-1 rounded">底面積</span> × <span className="bg-blue-200 px-1 rounded">高</span></div>
+                  <div><Latex math="=" /></div>
+                  <div className="whitespace-normal break-words"><span className="bg-green-200 px-1 rounded">底面積</span> <Latex math="\times" /> <span className="bg-blue-200 px-1 rounded">高</span></div>
                   
                   <div className="text-right"><span className="bg-yellow-200 px-1 rounded text-transparent select-none"><span className="text-slate-800">體積</span></span></div>
-                  <div>=</div>
-                  <div className="whitespace-normal break-words"><span className="bg-green-200 px-1 rounded">16 × 12 ÷ 2</span> × <span className="bg-blue-200 px-1 rounded">24</span><br className="sm:hidden" /> = 2304 cm³</div>
+                  <div><Latex math="=" /></div>
+                  <div className="whitespace-normal break-words"><span className="bg-green-200 px-1 rounded"><Latex math="16 \times 12 \div 2" /></span> <Latex math="\times" /> <span className="bg-blue-200 px-1 rounded"><Latex math="24" /></span></div>
+                  <div></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="2304\text{ cm}^3" /></div>
                 </div>
               </div>
 
@@ -1288,12 +1291,15 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                 <p className="mb-2">2. 求柱體側面面積</p>
                 <div className="pl-2 sm:pl-4 grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2 items-start whitespace-nowrap">
                   <div className="text-right"><span className="bg-yellow-200 px-1 rounded">側面面積</span></div>
-                  <div>=</div>
-                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">底周界</span> × <span className="bg-blue-200 px-1 rounded">高</span></div>
+                  <div><Latex math="=" /></div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">底周界</span> <Latex math="\times" /> <span className="bg-blue-200 px-1 rounded">高</span></div>
                   
                   <div className="text-right"><span className="bg-yellow-200 px-1 rounded text-transparent select-none"><span className="text-slate-800">側面面積</span></span></div>
-                  <div>=</div>
-                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">(12 + 16 + 20)</span> × <span className="bg-blue-200 px-1 rounded">24</span><br className="sm:hidden" /> = 1152 cm²</div>
+                  <div><Latex math="=" /></div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded"><Latex math="(12 + 16 + 20)" /></span> <Latex math="\times" /> <span className="bg-blue-200 px-1 rounded"><Latex math="24" /></span></div>
+                  <div></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="1152\text{ cm}^2" /></div>
                 </div>
               </div>
 
@@ -1301,12 +1307,15 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                 <p className="mb-2 w-full">3. 求柱體總表面面積</p>
                 <div className="pl-2 sm:pl-4 grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2 items-start whitespace-nowrap">
                   <div className="text-right"><span className="bg-yellow-200 px-1 rounded">總表面面積</span></div>
-                  <div>=</div>
-                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">底周界</span> × <span className="bg-blue-200 px-1 rounded">高</span> + 2 × <span className="bg-green-200 px-1 rounded">底面積</span></div>
+                  <div><Latex math="=" /></div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">底周界</span> <Latex math="\times" /> <span className="bg-blue-200 px-1 rounded">高</span> <Latex math="+ 2 \times" /> <span className="bg-green-200 px-1 rounded">底面積</span></div>
                   
                   <div className="text-right"><span className="bg-yellow-200 px-1 rounded text-transparent select-none"><span className="text-slate-800">總表面面積</span></span></div>
-                  <div>=</div>
-                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded">(12 + 16 + 20)</span> × <span className="bg-blue-200 px-1 rounded">24</span> + 2 × <span className="bg-green-200 px-1 rounded">(16 × 12 ÷ 2)</span><br className="sm:hidden" /> = 1152 + 192 = 1344 cm²</div>
+                  <div><Latex math="=" /></div>
+                  <div className="whitespace-normal break-words"><span className="bg-purple-200 px-1 rounded"><Latex math="(12 + 16 + 20)" /></span> <Latex math="\times" /> <span className="bg-blue-200 px-1 rounded"><Latex math="24" /></span> <Latex math="+ 2 \times" /> <span className="bg-green-200 px-1 rounded"><Latex math="(16 \times 12 \div 2)" /></span></div>
+                  <div></div>
+                  <div><Latex math="=" /></div>
+                  <div><Latex math="1344\text{ cm}^2" /></div>
                 </div>
               </div>
 
@@ -1605,7 +1614,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="10" /></div>
-                <div className="text-sm text-slate-500 font-bold tracking-widest text-blue-600 pl-4 w-full">例：4×5=20</div>
+                <div className="text-sm text-slate-500 font-bold tracking-widest text-blue-600 pl-4 w-full">例：<Latex math="4\times 5=20" /></div>
 
                 <div className="text-right flex justify-end items-center">
                   <span className="border-b-[3px] border-green-700 font-bold text-green-700 mr-2 text-xl pb-1">20</span><Latex math="\left(\frac{x}{4} − \frac{x}{5}\right)" />
@@ -1624,8 +1633,8 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 <div className="text-right relative">
                   <Latex math="5x − 4x" />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm text-red-500 font-bold whitespace-nowrap flex items-center gap-6">
-                    <span className="relative"><span className="absolute -top-3 right-full text-xl translate-x-2">↗</span><span className="ml-[6px]">20÷4=5</span></span>
-                    <span className="relative"><span className="absolute -top-3 left-0 text-xl -translate-x-1">↖</span><span className="mr-[6px]">20÷5=4</span></span>
+                    <span className="relative"><span className="absolute -top-3 right-full text-xl translate-x-2">↗</span><span className="ml-[6px]"><Latex math="20\div 4=5" /></span></span>
+                    <span className="relative"><span className="absolute -top-3 left-0 text-xl -translate-x-1">↖</span><span className="mr-[6px]"><Latex math="20\div 5=4" /></span></span>
                   </div>
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
@@ -3503,7 +3512,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
                     <span>第 21 項</span>
                     <div>
                       <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"> (21) </span><Latex math=" + 1" />
-                      <span className="ml-3 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 a = 21</span>
+                      <span className="ml-3 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 <Latex math="a=21" /></span>
                     </div>
                   </div>
                   <div className="grid grid-cols-[72px_auto] items-baseline">

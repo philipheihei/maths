@@ -635,7 +635,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
                 <text x="80" y="125" fontSize="16" fill="#334155" fontStyle="italic">B</text>
                 <text x="210" y="125" fontSize="16" fill="#334155" fontStyle="italic">C</text>
               </svg>
-              <p className="text-center font-bold text-blue-800 my-1">則 ∠A = ∠B = ∠C = 60°</p>
+              <p className="text-center font-bold text-blue-800 my-1">則 <Latex math="\angle A = \angle B = \angle C = 60^\circ" /></p>
               <p className="text-sm text-slate-600 text-center mt-3">
                 <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(等邊△性質)</span>
               </p>
@@ -741,7 +741,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
                 <text x="85.7" y="87.6" fontSize="12" fill="#1e3a8a">77°</text>
               </svg>
               <div className="bg-white rounded p-3 mt-2 border border-slate-200">
-                <p className="text-sm text-amber-800 font-bold mb-2">例子（五邊形, n=5）：</p>
+                <p className="text-sm text-amber-800 font-bold mb-2">例子（五邊形, <Latex math="n=5" />）：</p>
                 <div className="text-sm text-slate-700 grid grid-cols-[1fr_auto_1fr] gap-x-2">
                   <div className="text-right">x + 77° + 80° + 120° + 133°</div>
                   <div className="text-center">=</div>
@@ -3222,21 +3222,21 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                 </svg>
               </div>
               <div className="p-5 flex-1 text-slate-700 text-sm leading-loose">
-                <p className="mb-2 font-semibold">例：圖中，∠A = 36° 及 ∠C = 54°。證明 AB ⊥ BC。</p>
+                <p className="mb-2 font-semibold">例：圖中，<Latex math="\angle A = 36^\circ" /> 及 <Latex math="\angle C = 54^\circ" />。證明 <Latex math="AB \perp BC" />。</p>
                 <div className="bg-slate-100 p-3 rounded-lg border border-slate-200">
                   <p>在 △ABC 中，</p>
-                  <div className="grid grid-cols-[9.5rem_auto] items-center whitespace-nowrap">
-                    <Latex math="\angle A + \angle B + \angle C" inline />
+                  <div className="grid grid-cols-[9.5rem_auto] gap-x-1 items-center whitespace-nowrap">
+                    <span className="justify-self-end"><Latex math="\angle A + \angle B + \angle C" inline /></span>
                     <div className="flex items-center gap-3">
                       <Latex math="= 180^\circ" inline />
                       <span className="text-slate-500">(△ 內角和)</span>
                     </div>
                   </div>
-                  <div className="grid grid-cols-[9.5rem_auto] items-center mt-1 whitespace-nowrap">
-                    <Latex math="\angle B" inline />
+                  <div className="grid grid-cols-[9.5rem_auto] gap-x-1 items-center mt-1 whitespace-nowrap">
+                    <span className="justify-self-end"><Latex math="\angle B" inline /></span>
                     <Latex math="= 180^\circ − 36^\circ − 54^\circ" inline />
                   </div>
-                  <div className="grid grid-cols-[9.5rem_auto] items-center mt-1 whitespace-nowrap">
+                  <div className="grid grid-cols-[9.5rem_auto] gap-x-1 items-center mt-1 whitespace-nowrap">
                     <span aria-hidden="true" />
                     <span className="bg-yellow-200 px-1 rounded font-bold inline-block w-fit"><Latex math="= 90^\circ" inline /></span>
                   </div>
