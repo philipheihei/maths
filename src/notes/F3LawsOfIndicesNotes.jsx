@@ -21,21 +21,21 @@ export const LawsOfIndicesNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-3">📝 規則名稱：有括號指數乘</h3>
+            <h3 className="font-bold text-blue-800 mb-3">📝 規則1：有括號指數乘</h3>
             <Latex math="(a^2 b^3)^3 = a^{2 \times 3} b^{3 \times 3} = a^6 b^9" block />
             <Latex math="\left(\frac{a^2}{b^3}\right)^4 = \frac{a^{2 \times 4}}{b^{3 \times 4}} = \frac{a^8}{b^{12}}" block />
           </div>
 
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <h3 className="font-bold text-green-800 mb-3">📝 規則名稱：無括號指數加 (乘法) / 減 (除法)</h3>
+            <h3 className="font-bold text-green-800 mb-3">📝 規則2：無括號指數加 (乘法) / 減 (除法)</h3>
             <Latex math="a^2 \cdot a^3 = a^{2+3} = a^5" block />
             <Latex math="\frac{a^3}{a^2} = a^{3−2} = a^1" block />
           </div>
 
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-purple-800 mb-2">🔥 技巧：處理指數約簡時</h3>
-            <p className="text-slate-700 mb-2">指數較大的位置留，然後大減細。</p>
-            <Latex math="\frac{8y^3}{y^5} = \frac{8}{y^{5−3}} = \frac{8}{y^2}" block />
+            <p className="text-slate-700 mb-2">指數較<span className="bg-yellow-200 px-1 rounded">大</span>的位置留低，然後指數<span className="bg-yellow-200 px-1 rounded">大</span>減<span className="bg-green-200 px-1 rounded">小</span>。</p>
+            <Latex math="\frac{8y^{\colorbox{#bbf7d0}{3}}}{y^{\colorbox{#fef08a}{5}}} = \frac{8}{y^{5−3}} = \frac{8}{y^2}" block />
           </div>
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">

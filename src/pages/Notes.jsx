@@ -41,11 +41,18 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
       const isHeadingBlock = (node) => {
         const directChildren = Array.from(node.children);
         const hasDirectHeading = directChildren.some((child) => /^H[1-4]$/.test(child.tagName));
-        const hasContentBlock = directChildren.some((child) => ['DIV', 'P', 'SECTION', 'UL', 'OL'].includes(child.tagName));
-        return hasDirectHeading && !hasContentBlock;
+        const hasDirectChapterTitle = directChildren.some((child) => child.tagName === 'H1');
+        const hasStructuralContent = directChildren.some((child) => ['DIV', 'SECTION', 'UL', 'OL'].includes(child.tagName));
+        const hasDirectParagraph = directChildren.some((child) => child.tagName === 'P');
+        return hasDirectChapterTitle || (hasDirectHeading && !hasStructuralContent && !hasDirectParagraph);
       };
       const pageUnits = [];
-      for (let nodeIndex = 0; nodeIndex < contentNodes.length; nodeIndex += 1) {
+      let firstContentIndex = 0;
+      if (contentNodes.length > 1 && contentNodes[0].querySelector(':scope > h1')) {
+        pageUnits.push([contentNodes[0], contentNodes[1]]);
+        firstContentIndex = 2;
+      }
+      for (let nodeIndex = firstContentIndex; nodeIndex < contentNodes.length; nodeIndex += 1) {
         const node = contentNodes[nodeIndex];
         const isHeading = isHeadingBlock(node);
         const nextNode = contentNodes[nodeIndex + 1];
