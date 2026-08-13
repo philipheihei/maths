@@ -587,7 +587,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
               <span className="text-sm text-slate-500 font-normal">（外角 = 內對角之和）</span>
             </h3>
             <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
-              <p className="text-center text-xl font-bold text-green-800 my-1">其中 d = a + b</p>
+              <p className="text-center text-xl font-bold text-green-800 my-1">其中 <Latex math="d = a + b" /></p>
               <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                 <polygon points="170,20 80,120 220,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                 <line x1="220" y1="120" x2="280" y2="120" stroke="#334155" strokeWidth="2" strokeLinecap="round" />
@@ -615,7 +615,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
               <span className="text-sm text-slate-500 font-normal">（三邊等長 ⟷ 三角均 60°）</span>
             </h3>
             <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
-              <p className="text-center text-xl font-bold text-green-800 my-1">若 AB = BC = AC</p>
+              <p className="text-center text-xl font-bold text-green-800 my-1">若 <Latex math="AB = BC = AC" /></p>
               <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                 <polygon points="150,25 95,120 205,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                 {/* Tick marks on edges */}
@@ -654,7 +654,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
                 
                 {/* case 1 */}
                 <div className="text-center">
-                  <p className="text-sm text-slate-700 mb-2">若 <b>AB = AC</b> 及 <b>BM = CM</b></p>
+                  <p className="text-sm text-slate-700 mb-2">若 <Latex math="AB = AC" /> 及 <Latex math="BM = CM" /></p>
                   <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                     <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                     <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
@@ -669,12 +669,12 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
                     <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
                     <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
                   </svg>
-                  <p className="text-sm text-blue-800 font-bold">則 AM ⊥ BC 及 x = y</p>
+                  <p className="text-sm text-blue-800 font-bold">則 <Latex math="AM \perp BC" /> 及 <Latex math="x = y" /></p>
                 </div>
 
                 {/* case 2 */}
                 <div className="text-center md:border-l md:border-green-200">
-                  <p className="text-sm text-slate-700 mb-2">若 <b>AB = AC</b> 及 <b>AM ⊥ BC</b></p>
+                  <p className="text-sm text-slate-700 mb-2">若 <Latex math="AB = AC" /> 及 <Latex math="AM \perp BC" /></p>
                   <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                     <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                     <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
@@ -686,12 +686,12 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
                     <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
                     <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
                   </svg>
-                  <p className="text-sm text-blue-800 font-bold">則 BM = CM 及 x = y</p>
+                  <p className="text-sm text-blue-800 font-bold">則 <Latex math="BM = CM" /> 及 <Latex math="x = y" /></p>
                 </div>
 
                 {/* case 3 */}
                 <div className="text-center md:border-l md:border-green-200">
-                  <p className="text-sm text-slate-700 mb-2">若 <b>AB = AC</b> 及 <b>x = y</b></p>
+                  <p className="text-sm text-slate-700 mb-2">若 <Latex math="AB = AC" /> 及 <Latex math="x = y" /></p>
                   <svg viewBox="0 0 160 140" className="w-full max-w-[120px] mx-auto my-1 touch-none">
                     <polygon points="80,20 30,120 130,120" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                     <line x1="80" y1="20" x2="80" y2="120" stroke="#334155" strokeWidth="2" strokeDasharray="4 4" />
@@ -706,7 +706,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
                     <text x="135" y="125" fontSize="14" fill="#334155" fontStyle="italic">C</text>
                     <text x="74" y="135" fontSize="14" fill="#334155" fontStyle="italic">M</text>
                   </svg>
-                  <p className="text-sm text-blue-800 font-bold">則 BM = CM 及 AM ⊥ BC</p>
+                  <p className="text-sm text-blue-800 font-bold">則 <Latex math="BM = CM" /> 及 <Latex math="AM \perp BC" /></p>
                 </div>
 
               </div>
@@ -724,7 +724,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
               <span className="text-sm text-slate-500 font-normal">（n 邊形內角和）</span>
             </h3>
             <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 flex-1">
-              <p className="text-center text-xl font-bold text-amber-800 my-1">內角和 = (n - 2) × 180°</p>
+              <p className="text-center text-xl font-bold text-amber-800 my-1"><Latex math="\text{內角和} = (n - 2) \times 180^\circ" /></p>
               <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                 <polygon points="120,30 200,20 250,70 230,120 70,90" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                 
@@ -743,17 +743,17 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
               <div className="bg-white rounded p-3 mt-2 border border-slate-200">
                 <p className="text-sm text-amber-800 font-bold mb-2">例子（五邊形, <Latex math="n=5" />）：</p>
                 <div className="text-sm text-slate-700 grid grid-cols-[1fr_auto_1fr] gap-x-2">
-                  <div className="text-right">x + 77° + 80° + 120° + 133°</div>
+                  <div className="text-right"><Latex math="x + 77^\circ + 80^\circ + 120^\circ + 133^\circ" /></div>
                   <div className="text-center">=</div>
-                  <div className="text-left">(5 - 2) × 180°</div>
+                  <div className="text-left"><Latex math="(5 - 2) \times 180^\circ" /></div>
                   
-                  <div className="text-right">x + 410°</div>
+                  <div className="text-right"><Latex math="x + 410^\circ" /></div>
                   <div className="text-center">=</div>
-                  <div className="text-left">540°</div>
+                  <div className="text-left"><Latex math="540^\circ" /></div>
                   
-                  <div className="text-right">x</div>
+                  <div className="text-right"><Latex math="x" /></div>
                   <div className="text-center">=</div>
-                  <div className="text-left">130°</div>
+                  <div className="text-left"><Latex math="130^\circ" /></div>
                 </div>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3">
@@ -770,7 +770,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
               <span className="text-sm text-slate-500 font-normal">（外角總和 = 360°）</span>
             </h3>
             <div className="bg-amber-50 rounded-lg p-3 border border-amber-200 flex-1">
-              <p className="text-center text-xl font-bold text-amber-800 my-1">外角和 = 360°</p>
+              <p className="text-center text-xl font-bold text-amber-800 my-1"><Latex math="\text{外角和} = 360^\circ" /></p>
               <svg viewBox="0 0 300 140" className="w-full max-w-xs mx-auto my-3 touch-none">
                 <polygon points="130,40 120,90 200,110 260,60" stroke="#334155" strokeWidth="2" fill="none" strokeLinejoin="round" />
                 
@@ -797,17 +797,17 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
               <div className="bg-white rounded p-3 mt-2 border border-slate-200">
                 <p className="text-sm text-amber-800 font-bold mb-2">例子（四邊形 ABCD）：</p>
                 <div className="text-sm text-slate-700 grid grid-cols-[1fr_auto_1fr] gap-x-2">
-                  <div className="text-right">x + 76° + 95° + 114°</div>
+                  <div className="text-right"><Latex math="x + 76^\circ + 95^\circ + 114^\circ" /></div>
                   <div className="text-center">=</div>
-                  <div className="text-left">360°</div>
+                  <div className="text-left"><Latex math="360^\circ" /></div>
                   
-                  <div className="text-right">x + 285°</div>
+                  <div className="text-right"><Latex math="x + 285^\circ" /></div>
                   <div className="text-center">=</div>
-                  <div className="text-left">360°</div>
+                  <div className="text-left"><Latex math="360^\circ" /></div>
                   
-                  <div className="text-right">x</div>
+                  <div className="text-right"><Latex math="x" /></div>
                   <div className="text-center">=</div>
-                  <div className="text-left">75°</div>
+                  <div className="text-left"><Latex math="75^\circ" /></div>
                 </div>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3">
