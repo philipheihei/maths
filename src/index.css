@@ -454,3 +454,232 @@ body {
     display: none !important;
   }
 }
+
+/* Paged.js booklet print view */
+.booklet-source {
+  position: absolute;
+  top: 0;
+  left: -100000px;
+  width: 190mm;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.booklet-pages {
+  min-height: 1px;
+}
+
+.booklet-status {
+  margin: 0 auto 1rem;
+  max-width: 210mm;
+  color: #64748b;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.booklet-cover,
+.booklet-toc,
+.booklet-chapter {
+  page-break-after: always;
+  break-after: page;
+}
+
+.booklet-cover {
+  page: booklet-cover;
+  min-height: 245mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.booklet-logo {
+  display: grid;
+  place-items: center;
+  width: 34mm;
+  height: 34mm;
+  margin-bottom: 12mm;
+  border: 2px solid #1d4ed8;
+  border-radius: 50%;
+  color: #1d4ed8;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.booklet-kicker {
+  margin: 0 0 0.75rem;
+  color: #475569;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+}
+
+.booklet-cover h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 2.25rem;
+}
+
+.booklet-date {
+  margin-top: 1rem;
+  color: #64748b;
+}
+
+.booklet-toc {
+  page: booklet-toc;
+  padding: 8mm 4mm;
+}
+
+.booklet-toc h1 {
+  margin: 0 0 1.5rem;
+  color: #0f172a;
+  font-size: 1.75rem;
+}
+
+.booklet-toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.booklet-toc li {
+  margin: 0.55rem 0;
+  break-inside: avoid;
+}
+
+.booklet-toc a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: #1e3a8a;
+  text-decoration: none;
+}
+
+.booklet-toc a::after {
+  flex: 1;
+  content: "";
+  color: #334155;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.booklet-toc-page-number {
+  min-width: 1.5em;
+  color: #334155;
+  text-align: right;
+}
+
+.booklet-generated-header,
+.booklet-generated-footer {
+  position: absolute;
+  right: 14mm;
+  left: 14mm;
+  color: #64748b;
+  font-size: 9pt;
+  line-height: 1;
+  pointer-events: none;
+  text-align: center;
+}
+
+.booklet-generated-header {
+  top: 6mm;
+}
+
+.booklet-generated-footer {
+  bottom: 6mm;
+}
+
+.booklet-chapter {
+  page: booklet-content;
+  page-break-before: always;
+  break-before: page;
+}
+
+.booklet-running-title {
+  string-set: chapter content(text);
+  margin: 0 0 1rem;
+  color: #0f172a;
+  font-size: 1.75rem;
+  page-break-before: always;
+  break-before: page;
+  break-after: avoid;
+}
+
+.booklet-chapter p,
+.booklet-chapter li,
+.booklet-chapter table,
+.booklet-chapter tr,
+.booklet-chapter pre,
+.booklet-chapter blockquote,
+.booklet-chapter svg,
+.booklet-chapter .katex-display,
+.booklet-chapter [class*="rounded"] {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 16mm 14mm 16mm;
+
+  @top-center {
+    content: string(chapter);
+    color: #64748b;
+    font-size: 9pt;
+  }
+
+  @bottom-center {
+    content: "頁 " counter(page) " / " counter(pages);
+    color: #64748b;
+    font-size: 9pt;
+  }
+}
+
+@page booklet-cover {
+  @top-center { content: none; }
+  @bottom-center { content: "頁 " counter(page) " / " counter(pages); }
+}
+
+@page booklet-toc {
+  @top-center { content: "目錄"; }
+}
+
+@media screen {
+  .booklet-print-root:not(.print-preview) .booklet-pages {
+    max-width: 210mm;
+    margin: 0 auto;
+  }
+
+  .booklet-print-root.print-preview .pagedjs_pages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .booklet-print-root.print-preview .pagedjs_page {
+    background: #ffffff;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.14);
+  }
+}
+
+@media print {
+  .booklet-source,
+  .booklet-status,
+  .print-preview-toolbar {
+    display: none !important;
+  }
+
+  .booklet-print-root {
+    padding: 0 !important;
+  }
+
+  .booklet-print-root .pagedjs_pages {
+    display: block;
+  }
+
+  .booklet-print-root .pagedjs_page {
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+}
