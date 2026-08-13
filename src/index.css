@@ -204,9 +204,16 @@ body {
     max-width: none;
     margin: 0;
   }
-
-  .print-root.print-preview .overflow-x-auto {
-    overflow-x: visible;
+  /* Keep chart layouts consistent while measuring and rendering print pages. */
+  .print-topic-page #bar-chart [class*="md:grid-cols-"],
+  .print-pagination-measure #bar-chart [class*="md:grid-cols-"],
+  .print-topic-page #pie-chart [class*="md:grid-cols-"],
+  .print-pagination-measure #pie-chart [class*="md:grid-cols-"],
+  .print-topic-page #line-graph [class*="md:grid-cols-"],
+  .print-pagination-measure #line-graph [class*="md:grid-cols-"],
+  .print-topic-page #stem-leaf [class*="xl:grid-cols-"],
+  .print-pagination-measure #stem-leaf [class*="xl:grid-cols-"] {
+    grid-template-columns: 1fr !important;
   }
 
   .print-root.print-preview .overflow-x-auto > *,

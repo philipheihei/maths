@@ -3718,20 +3718,20 @@ export const RateRatioNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm overflow-x-auto text-[17px]">
             <div className="mb-4 flex items-center font-sans">
-              <div className="text-blue-800">e.g. <span className="bg-yellow-300 font-bold">a</span> : <span className="bg-pink-300 font-bold px-1">b</span> : <span className="bg-green-300 font-bold px-1">c</span> = <span className="bg-yellow-300 font-bold px-1">4</span> : <span className="bg-pink-300 font-bold px-1">5</span> : <span className="bg-green-300 font-bold px-1">6</span></div>
+              <div className="text-blue-800">e.g. <span className="bg-yellow-300 font-bold"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
               <span className="mx-4 font-bold text-2xl">⇒</span>
               <div className="inline-block align-middle space-y-1 bg-slate-50 p-2 rounded">
-                <div><span className="bg-yellow-300 font-bold px-1">a</span> : <span className="bg-green-300 font-bold px-1">c</span> = <span className="bg-yellow-300 font-bold px-1">4</span> : <span className="bg-green-300 font-bold px-1">6</span></div>
-                <div><span className="bg-pink-300 font-bold px-1">b</span> : <span className="bg-green-300 font-bold px-1">c</span> = <span className="bg-pink-300 font-bold px-1">5</span> : <span className="bg-green-300 font-bold px-1">6</span></div>
+                <div><span className="bg-yellow-300 font-bold px-1"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
+                <div><span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
               </div>
             </div>
           </div>
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <p className="mb-6 font-bold text-blue-900 text-lg font-sans flex flex-wrap gap-2 items-center">
-              <span>e.g. <span className="bg-yellow-300 px-1">a</span> : <span className="bg-green-300 px-1">c</span> = <span className="bg-yellow-300 px-1">7</span> : <span className="bg-green-300 px-1">6</span> ,</span>
-              <span><span className="bg-pink-300 px-1">b</span> : <span className="bg-green-300 px-1">c</span> = <span className="bg-pink-300 px-1">3</span> : <span className="bg-green-300 px-1">4</span> ,</span>
-              <span>求 a : b : c</span>
+              <span>e.g. <span className="bg-yellow-300 px-1"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-green-300 px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-yellow-300 px-1"><Latex math="7" /></span> <Latex math=":" /> <span className="bg-green-300 px-1"><Latex math="6" /></span> ,</span>
+              <span><span className="bg-pink-300 px-1"><Latex math="b" /></span> <Latex math=":" /> <span className="bg-green-300 px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-pink-300 px-1"><Latex math="3" /></span> <Latex math=":" /> <span className="bg-green-300 px-1"><Latex math="4" /></span> ,</span>
+              <span>求 <Latex math="a:b:c" /></span>
             </p>
             
             <div className="space-y-8 pl-2 sm:pl-8">
@@ -3745,21 +3745,21 @@ export const RateRatioNotes = ({ activeSub }) => {
                 </div>
                 <div className="font-sans text-xl text-blue-900 font-bold relative pr-[100px]">
                   <div className="grid grid-cols-[2.25rem_1rem_2.25rem_1rem_2.25rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
-                    <span className="text-center">a</span><span className="text-center">:</span>
-                    <span className="text-center">b</span><span className="text-center">:</span>
-                    <span className="text-center relative">c
+                    <span className="text-center"><Latex math="a" /></span><span className="text-center"><Latex math=":" /></span>
+                    <span className="text-center"><Latex math="b" /></span><span className="text-center"><Latex math=":" /></span>
+                    <span className="text-center relative"><Latex math="c" />
                       <div className="absolute -inset-1 border-2 border-purple-500 rounded-full h-[110px] w-10 -left-1 top-0 pointer-events-none"></div>
                     </span>
                   </div>
                   <div className="grid grid-cols-[2.25rem_1rem_2.25rem_1rem_2.25rem] px-2 items-center">
-                    <span className="text-center">7</span><span></span>
+                    <span className="text-center"><Latex math="7" /></span><span><Latex math=":" /></span>
                     <span className="text-center"></span><span></span>
-                    <span className="text-center">6</span>
+                    <span className="text-center"><Latex math="6" /></span>
                   </div>
                   <div className="grid grid-cols-[2.25rem_1rem_2.25rem_1rem_2.25rem] px-2 tracking-widest items-center">
                     <span className="text-center"></span><span></span>
-                    <span className="text-center">3</span><span className="text-center">:</span>
-                    <span className="text-center">4</span>
+                    <span className="text-center"><Latex math="3" /></span><span className="text-center"><Latex math=":" /></span>
+                    <span className="text-center"><Latex math="4" /></span>
                   </div>
                   <div className="absolute right-4 -bottom-0.5 text-sm text-purple-700 font-bold whitespace-nowrap font-sans">↖ 重疊變相同</div>
                 </div>
@@ -3773,19 +3773,19 @@ export const RateRatioNotes = ({ activeSub }) => {
                 </div>
                 <div className="font-sans text-xl text-blue-900 font-bold relative pr-[140px]">
                   <div className="grid grid-cols-[3.25rem_1rem_3.25rem_1rem_3.25rem] border-b-2 border-blue-900 pb-1 mb-1 px-2 items-center">
-                    <span className="text-center">a</span><span className="text-center">:</span>
-                    <span className="text-center">b</span><span className="text-center">:</span>
-                    <span className="text-center text-green-600">c</span>
+                    <span className="text-center"><Latex math="a" /></span><span className="text-center"><Latex math=":" /></span>
+                    <span className="text-center"><Latex math="b" /></span><span className="text-center"><Latex math=":" /></span>
+                    <span className="text-center text-green-600"><Latex math="c" /></span>
                   </div>
                   <div className="grid grid-cols-[3.25rem_1rem_3.25rem_1rem_3.25rem] px-2 items-center">
-                    <span className="text-center">7<span className="text-red-600 font-bold">×4</span></span><span></span>
+                    <span className="text-center"><Latex math="7" /><span className="text-red-600 font-bold"><Latex math="\times 4" /></span></span><span><Latex math=":" /></span>
                     <span className="text-center"></span><span></span>
-                    <span className="text-center bg-green-200 rounded">6<span className="text-red-600 font-bold">×4</span></span>
+                    <span className="text-center bg-green-200 rounded"><Latex math="6" /><span className="text-red-600 font-bold"><Latex math="\times 4" /></span></span>
                   </div>
                   <div className="grid grid-cols-[3.25rem_1rem_3.25rem_1rem_3.25rem] px-2 mt-1 items-center">
                     <span className="text-center"></span><span></span>
-                    <span className="text-center">3<span className="text-red-600 font-bold">×6</span></span><span className="text-center">:</span>
-                    <span className="text-center bg-green-200 rounded">4<span className="text-red-600 font-bold">×6</span></span>
+                    <span className="text-center"><Latex math="3" /><span className="text-red-600 font-bold"><Latex math="\times 6" /></span></span><span className="text-center"><Latex math=":" /></span>
+                    <span className="text-center bg-green-200 rounded"><Latex math="4" /><span className="text-red-600 font-bold"><Latex math="\times 6" /></span></span>
                   </div>
                   <div className="absolute right-9 top-[36px] text-purple-700 font-bold text-base whitespace-nowrap font-sans flex items-center">
                     <span className="text-[56px] font-normal leading-[0.85] mr-1">{"}"}</span>← 互乘做大
@@ -3799,28 +3799,30 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <span className="text-red-500 font-bold border-2 border-red-500 rounded-full w-6 h-6 flex items-center justify-center text-sm">3</span>
                 </div>
                 <div className="font-sans text-xl text-blue-900 font-bold">
-                  <div className="inline-flex gap-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
-                    <span className="w-8 text-center">a</span><span>:</span>
-                    <span className="w-8 text-center">b</span><span>:</span>
-                    <span className="w-8 text-center">c</span>
+                  <div className="inline-grid grid-cols-[2rem_1rem_2rem_1rem_2rem] gap-x-4 border-b-2 border-blue-900 pb-1 mb-1 px-2">
+                    <span className="w-8 text-center"><Latex math="a" /></span><span><Latex math=":" /></span>
+                    <span className="w-8 text-center"><Latex math="b" /></span><span><Latex math=":" /></span>
+                    <span className="w-8 text-center"><Latex math="c" /></span>
                   </div>
-                  <div className="flex gap-4 px-2 mb-2 text-xl">
-                    <span className="w-8 text-center">28</span><span>:</span>
-                    <span className="w-8 text-center">18</span><span>:</span>
-                    <span className="w-8 text-center">24</span>
+                  <div className="grid grid-cols-[2rem_1rem_2rem_1rem_2rem] gap-x-4 px-2 mb-2 text-xl">
+                    <span className="w-8 text-center"><Latex math="28" /></span><span><Latex math=":" /></span>
+                    <span className="w-8 text-center"><Latex math="18" /></span><span><Latex math=":" /></span>
+                    <span className="w-8 text-center"><Latex math="24" /></span>
                   </div>
                   <div className="flex items-center gap-4 px-2 relative font-sans text-xl mt-2">
-                    <span className="absolute -left-6 font-sans">=</span>
-                    <span className="w-8 text-center font-sans">14</span><span className="font-sans">:</span>
-                    <span className="w-8 text-center font-sans">9</span><span className="font-sans">:</span>
-                    <span className="w-8 text-center font-sans">12</span>
-                    <span className="ml-[20%] lg:ml-8 text-purple-700 text-sm font-bold whitespace-normal lg:whitespace-nowrap leading-5">{'← '}連比需約簡 (需3個數字同時約)</span>
+                    <span className="absolute -left-6 font-sans"><Latex math="=" /></span>
+                    <div className="grid grid-cols-[2rem_1rem_2rem_1rem_2rem] gap-x-4">
+                      <span className="w-8 text-center font-sans"><Latex math="14" /></span><span className="font-sans"><Latex math=":" /></span>
+                      <span className="w-8 text-center font-sans"><Latex math="9" /></span><span className="font-sans"><Latex math=":" /></span>
+                      <span className="w-8 text-center font-sans"><Latex math="12" /></span>
+                    </div>
+                    <span className="ml-2 text-purple-700 text-sm font-bold whitespace-nowrap leading-5">{'← '}連比需約簡 (需3個數字同時約)</span>
                   </div>
                 </div>
               </div>
               
               <div className="text-blue-900 font-bold text-xl mt-4 pt-4 font-sans">
-                ∴ a : b : c = 14 : 9 : 12
+                ∴ <Latex math="a:b:c=14:9:12" />
               </div>
             </div>
           </div>
@@ -3828,8 +3830,8 @@ export const RateRatioNotes = ({ activeSub }) => {
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200 text-lg">
             <h4 className="font-bold text-green-700 mb-2 font-sans">💡 小技巧</h4>
             <div className="text-blue-900 font-sans">
-              <p>若 <span className="font-bold">3<span className="bg-yellow-300 px-1">a</span> = 7<span className="bg-pink-300 px-1">b</span></span></p>
-              <p className="mt-2"><span className="bg-yellow-300 px-1 font-bold">a</span> : <span className="bg-pink-300 px-1 font-bold">b</span> = <span className="bg-yellow-300 font-bold px-1 text-black">7</span> : <span className="bg-pink-300 font-bold px-1 text-black">3</span> <span className="text-slate-600 ml-4 text-sm font-sans">(3 × <span className="text-red-500 font-bold">7</span> = 7 × <span className="text-red-500 font-bold">3</span>)</span></p>
+              <p>若 <span className="font-bold"><Latex math="3" /><span className="bg-yellow-300 px-1"><Latex math="a" /></span> <Latex math="=" /> <Latex math="7" /><span className="bg-pink-300 px-1"><Latex math="b" /></span></span></p>
+              <p className="mt-2"><span className="bg-yellow-300 px-1 font-bold"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-pink-300 px-1 font-bold"><Latex math="b" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1 text-black"><Latex math="7" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1 text-black"><Latex math="3" /></span> <span className="text-slate-600 ml-4 text-sm font-sans">(<Latex math="3\times 7=7\times 3" />)</span></p>
             </div>
           </div>
         </div>
