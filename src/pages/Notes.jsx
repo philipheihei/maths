@@ -4,135 +4,17 @@ import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
 
 const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount }) => {
-  const measureRef = useRef(null);
-  const [pages, setPages] = useState(null);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      const source = measureRef.current;
-      if (!source) return;
-
-      const sheet = source.firstElementChild;
-      if (!sheet || sheet.clientHeight === 0) return;
-      const rootNodes = Array.from(sheet.children).filter((node) => node.tagName !== 'FOOTER');
-      const initialNodes = rootNodes.length === 1 && rootNodes[0].children.length > 1
-        ? Array.from(rootNodes[0].children)
-        : rootNodes;
-      const sheetStyles = window.getComputedStyle(sheet);
-      const availableHeight = sheet.clientHeight
-        - parseFloat(sheetStyles.paddingTop)
-        - parseFloat(sheetStyles.paddingBottom);
-      const expandOversizedNode = (node) => {
-        if (node.classList?.contains('print-keep-layout')) {
-          return [node];
-        }
-        const nodeStyles = window.getComputedStyle(node);
-        const nodeHeight = node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
-        const childNodes = Array.from(node.children).filter((child) => child.tagName !== 'FOOTER');
-        if (nodeHeight > availableHeight && childNodes.length > 0) {
-          const expandedNodes = childNodes.flatMap(expandOversizedNode);
-          if (expandedNodes.length > 0 && expandedNodes.some((child) => child !== node)) {
-            return expandedNodes;
-          }
-        }
-        return [node];
-      };
-      const contentNodes = initialNodes.flatMap(expandOversizedNode);
-      const isHeadingBlock = (node) => {
-        const directChildren = Array.from(node.children);
-        const hasDirectHeading = directChildren.some((child) => /^H[1-4]$/.test(child.tagName));
-        const hasDirectChapterTitle = directChildren.some((child) => child.tagName === 'H1');
-        const hasStructuralContent = directChildren.some((child) => ['DIV', 'SECTION', 'UL', 'OL'].includes(child.tagName));
-        const hasDirectParagraph = directChildren.some((child) => child.tagName === 'P');
-        return hasDirectChapterTitle || (hasDirectHeading && !hasStructuralContent && !hasDirectParagraph);
-      };
-      const pageUnits = [];
-      let firstContentIndex = 0;
-      const firstNodeIsChapterTitle = contentNodes[0]
-        && Array.from(contentNodes[0].children).some((child) => child.tagName === 'H1');
-      if (contentNodes.length > 1 && firstNodeIsChapterTitle) {
-        const firstNodeIsSplitSectionHeading = contentNodes[1]
-          && contentNodes.length > 2
-          && contentNodes[1].querySelector(':scope > h2');
-        const firstUnit = firstNodeIsSplitSectionHeading
-          ? contentNodes.slice(0, 3)
-          : contentNodes.slice(0, 2);
-        pageUnits.push(firstUnit);
-        firstContentIndex = firstUnit.length;
-      }
-      for (let nodeIndex = firstContentIndex; nodeIndex < contentNodes.length; nodeIndex += 1) {
-        const node = contentNodes[nodeIndex];
-        const isHeading = isHeadingBlock(node);
-        const nextNode = contentNodes[nodeIndex + 1];
-        const nextIsHeading = nextNode && isHeadingBlock(nextNode);
-        if (isHeading && nextNode && !nextIsHeading) {
-          pageUnits.push([node, nextNode]);
-          nodeIndex += 1;
-        } else {
-          pageUnits.push([node]);
-        }
-      }
-      const groups = [];
-      let currentGroup = [];
-      let currentHeight = 0;
-      const printBreakTitles = ['填補法', '多項式 × 多項式', '6. 正比/反比', '認清情況是正比 / 反比'];
-
-      pageUnits.forEach((unit) => {
-        const startsNewPrintPage = unit.some((node) => (
-          node.classList?.contains('print-break-before')
-          || node.querySelector?.('.print-break-before')
-          || Array.from(node.querySelectorAll?.('h1, h2, h3, h4') || [])
-            .some((heading) => printBreakTitles.some((title) => heading.textContent.includes(title)))
-        ));
-        const unitHeight = unit.reduce((height, node) => {
-          const nodeStyles = window.getComputedStyle(node);
-          return height + node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
-        }, 0);
-        if (currentGroup.length > 0 && (startsNewPrintPage || currentHeight + unitHeight > availableHeight)) {
-          groups.push({ nodes: currentGroup, height: currentHeight });
-          currentGroup = [];
-          currentHeight = 0;
-        }
-        currentGroup.push(...unit.map((node) => node.outerHTML));
-        currentHeight += unitHeight;
-      });
-
-      if (currentGroup.length > 0) groups.push({ nodes: currentGroup, height: currentHeight });
-
-      const nextPages = groups.map((group) => ({
-        html: group.nodes.join(''),
-        scale: Math.min(1, availableHeight / group.height),
-      }));
-      setPages(nextPages);
-      onPageCount(nextPages.length);
-    }, 50);
-
-    return () => window.clearTimeout(timer);
-  }, [topic.id, TopicComponent, onPageCount]);
-
+  useEffect(() => onPageCount(1), [onPageCount]);
   return (
-    <>
-      <div ref={measureRef} className="print-pagination-measure" aria-hidden="true">
-        <div className="print-topic-sheet">
-          <TopicComponent activeSub={null} onNavigate={() => {}} />
-        </div>
+    <section key={`${topic.id}-flow`} className="print-topic-page">
+      <div className="print-topic-sheet">
+        <TopicComponent activeSub={null} onNavigate={() => {}} />
+        <footer className="print-page-footer">
+          <span>{topic._level} {topic.topic}</span>
+          <span className="print-page-number" aria-label="頁碼">p.{pageOffset + 1}</span>
+        </footer>
       </div>
-      {pages && pages.map((page, pageIndex) => (
-        <section key={`${topic.id}-page-${pageIndex}`} className="print-topic-page">
-          <div className="print-topic-sheet">
-            <div
-              className="print-topic-page-content"
-              style={{ transform: `scale(${page.scale})` }}
-              dangerouslySetInnerHTML={{ __html: page.html }}
-            />
-            <footer className="print-page-footer">
-              <span>{topic._level} {topic.topic}</span>
-              <span className="print-page-number" aria-label="頁碼">p.{pageOffset + pageIndex + 1}</span>
-            </footer>
-          </div>
-        </section>
-      ))}
-    </>
+    </section>
   );
 };
 

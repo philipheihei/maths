@@ -214,14 +214,14 @@ body {
     box-sizing: border-box;
     position: relative;
     width: 210mm;
-    height: 297mm;
+    min-height: 297mm;
     margin: 0 auto;
     /* Keep a clear 12mm safety zone above the footer. */
     padding: 12mm 10mm 30mm;
     background: #ffffff;
     box-shadow: 0 8px 28px rgba(15, 23, 42, 0.14);
     border: 1px solid #e2e8f0;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .print-pagination-measure {
@@ -322,21 +322,19 @@ body {
     box-sizing: border-box;
     position: relative;
     width: auto !important;
-    height: 273mm !important;
+    height: auto !important;
     min-height: 273mm !important;
     margin: 0 !important;
     /* The @page rule already supplies the outer 12mm bottom margin. */
     padding: 0 0 18mm !important;
     box-shadow: none !important;
     border: 0 !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   .print-page-footer {
-    position: absolute;
-    right: 0;
-    bottom: 5mm;
-    left: 0;
+    position: static;
+    margin-top: 8mm;
     display: flex;
     justify-content: space-between;
     color: #64748b;
@@ -345,10 +343,14 @@ body {
   }
 
   .print-page-number::before {
-    content: none;
+    content: "p." counter(page);
   }
 
   .print-page-number {
+    font-size: 0;
+  }
+
+  .print-page-number::before {
     font-size: 9pt;
   }
 
@@ -395,7 +397,6 @@ body {
   .print-topic-page blockquote,
   .print-topic-page svg,
   .print-topic-page .katex-display,
-  .print-topic-page .rounded-2xl,
   .print-topic-page .rounded-xl,
   .print-topic-page .rounded-lg {
     break-inside: avoid;
@@ -452,6 +453,12 @@ body {
   /* Decorative background marks must not escape their card into the footer area. */
   .print-topic-page .print-decorative-exclamation {
     display: none !important;
+  }
+
+  .print-topic-page .print-break-before,
+  .print-topic-page .page-break {
+    break-before: page;
+    page-break-before: always;
   }
 
   .print-pagination-measure #draw-3d .grid,
