@@ -23,6 +23,9 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
         - parseFloat(sheetStyles.paddingTop)
         - parseFloat(sheetStyles.paddingBottom);
       const expandOversizedNode = (node) => {
+        if (node.classList?.contains('print-keep-layout')) {
+          return [node];
+        }
         const nodeStyles = window.getComputedStyle(node);
         const nodeHeight = node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
         const childNodes = Array.from(node.children).filter((child) => child.tagName !== 'FOOTER');
@@ -72,13 +75,20 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
       const groups = [];
       let currentGroup = [];
       let currentHeight = 0;
+      const printBreakTitles = ['填補法', '多項式 × 多項式', '6. 正比/反比', '認清情況是正比 / 反比'];
 
       pageUnits.forEach((unit) => {
+        const startsNewPrintPage = unit.some((node) => (
+          node.classList?.contains('print-break-before')
+          || node.querySelector?.('.print-break-before')
+          || Array.from(node.querySelectorAll?.('h1, h2, h3, h4') || [])
+            .some((heading) => printBreakTitles.some((title) => heading.textContent.includes(title)))
+        ));
         const unitHeight = unit.reduce((height, node) => {
           const nodeStyles = window.getComputedStyle(node);
           return height + node.getBoundingClientRect().height + parseFloat(nodeStyles.marginBottom || '0');
         }, 0);
-        if (currentGroup.length > 0 && currentHeight + unitHeight > availableHeight) {
+        if (currentGroup.length > 0 && (startsNewPrintPage || currentHeight + unitHeight > availableHeight)) {
           groups.push({ nodes: currentGroup, height: currentHeight });
           currentGroup = [];
           currentHeight = 0;

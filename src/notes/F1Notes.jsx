@@ -886,8 +886,8 @@ export const PolynomialsNotes = ({ activeSub }) => {
             </div>
           </div>
 
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-2">📌 多項式 × 多項式 (拆括號)</h3>
+           <div className="print-break-before bg-blue-50 rounded-lg p-4 border border-blue-200">
+             <h3 className="font-bold text-blue-800 mb-2">📌 多項式 × 多項式 (拆括號)</h3>
             <p className="text-slate-700 mb-2 text-sm">認住位置乘：<Latex math="(①+②)(③+④) = ①×③ + ①×④ + ②×③ + ②×④" /></p>
             <div className="bg-white p-4 rounded border border-slate-200">
               <pre className="whitespace-pre font-sans text-lg">
@@ -1245,7 +1245,7 @@ export const AreaVolumeNotes = ({ activeSub }) => {
         <div className="space-y-4">
           
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="md:w-1/3">
+            <div className="print-prism-diagram md:w-1/3">
               {/* 三角柱體標記圖 */}
               <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 flex items-center justify-center h-full">
                 <svg viewBox="0 0 200 240" className="w-full max-w-[220px] h-auto font-sans mx-auto">
@@ -1303,7 +1303,7 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg p-4 border border-slate-200 overflow-x-auto">
+              <div className="print-break-before bg-white rounded-lg p-4 border border-slate-200 overflow-x-auto">
                 <p className="mb-2 w-full">3. 求柱體總表面面積</p>
                 <div className="pl-2 sm:pl-4 grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-2 items-start whitespace-nowrap">
                   <div className="text-right"><span className="bg-yellow-200 px-1 rounded">總表面面積</span></div>
@@ -1333,7 +1333,7 @@ export const AreaVolumeNotes = ({ activeSub }) => {
             <span className="text-green-700">實線：看到的線</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="print-keep-layout grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white p-4 border border-slate-200 rounded">
               <h4 className="font-bold text-white bg-orange-500 inline-block px-2 py-1 text-sm mb-2 rounded">步驟 1</h4>
               <p className="text-sm text-slate-700 mb-4">繪畫長方體的其中一個底。</p>
@@ -2329,7 +2329,7 @@ export const CoordinateNotes = ({ activeSub }) => {
 
           <div className="hidden md:block bg-slate-200" aria-hidden="true" />
 
-          <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center">
+          <div className="print-coordinate-diagram bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center">
             <svg viewBox="-180 -180 360 360" className="w-full max-w-md bg-white">
               {/* 格線 */}
               {renderGrid(5)}
@@ -2515,7 +2515,7 @@ export const CoordinateNotes = ({ activeSub }) => {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center">
+          <div className="print-break-before print-coordinate-diagram bg-white rounded-lg p-4 border border-slate-200 flex flex-col items-center">
             <svg viewBox="-165 -160 360 330" className="w-full max-w-md bg-white">
               {renderGrid(5, 25)}
               
@@ -2882,7 +2882,7 @@ export const AnglesNotes = ({ activeSub }) => {
       </div>
 
       <CollapsibleSection id="lines-angles-naming" title="基礎知識：線和角的命名" num={0} color="slate" activeSub={activeSub} sectionRef={s0}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="print-keep-layout grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-green-50 rounded-lg p-3 border border-green-200">
             <p className="text-sm font-bold text-green-800 mb-1">線段</p>
             <p className="text-sm text-slate-700 mb-2">由兩個端點組成，如 <span className="font-sans font-bold bg-white px-1 rounded">線段 <Latex math="AB" /></span>（從 <Latex math="A" /> 到 <Latex math="B" />）</p>
@@ -2911,7 +2911,7 @@ export const AnglesNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="basic-angle-theorems" title="幾何角度定理 (1-5)" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="print-keep-layout grid grid-cols-1 md:grid-cols-2 gap-4">
           
           {/* 1. 直線上的鄰角 */}
           <div className="flex flex-col">

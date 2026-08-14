@@ -217,7 +217,7 @@ body {
     height: 297mm;
     margin: 0 auto;
     /* Keep a clear 12mm safety zone above the footer. */
-    padding: 12mm 10mm 24mm;
+    padding: 12mm 10mm 30mm;
     background: #ffffff;
     box-shadow: 0 8px 28px rgba(15, 23, 42, 0.14);
     border: 1px solid #e2e8f0;
@@ -260,7 +260,7 @@ body {
   .print-root.print-preview .print-page-footer {
     position: absolute;
     right: 10mm;
-    bottom: 12mm;
+    bottom: 5mm;
     left: 10mm;
     display: flex;
     justify-content: space-between;
@@ -326,7 +326,7 @@ body {
     min-height: 273mm !important;
     margin: 0 !important;
     /* The @page rule already supplies the outer 12mm bottom margin. */
-    padding: 0 0 12mm !important;
+    padding: 0 0 18mm !important;
     box-shadow: none !important;
     border: 0 !important;
     overflow: hidden !important;
@@ -335,7 +335,7 @@ body {
   .print-page-footer {
     position: absolute;
     right: 0;
-    bottom: 12mm;
+    bottom: 5mm;
     left: 0;
     display: flex;
     justify-content: space-between;
@@ -452,5 +452,50 @@ body {
   /* Decorative background marks must not escape their card into the footer area. */
   .print-topic-page .print-decorative-exclamation {
     display: none !important;
+  }
+
+  .print-pagination-measure #draw-3d .grid,
+  .print-topic-page #draw-3d .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.6rem !important;
+  }
+
+  .print-pagination-measure #draw-3d .grid > div,
+  .print-topic-page #draw-3d .grid > div {
+    padding: 0.65rem !important;
+  }
+
+  .print-pagination-measure #draw-3d .grid .h-32,
+  .print-topic-page #draw-3d .grid .h-32 {
+    height: 5.5rem !important;
+  }
+
+  .print-pagination-measure #draw-3d .grid svg,
+  .print-topic-page #draw-3d .grid svg {
+    max-height: 5.5rem !important;
+  }
+
+  .print-pagination-measure #basic-angle-theorems .grid,
+  .print-topic-page #basic-angle-theorems .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+
+  .print-topic-page #basic-angle-theorems svg {
+    max-width: 100% !important;
+  }
+
+  /* Keep the two large instructional diagrams inside the printable height. */
+  .print-pagination-measure #prism-formulas .print-prism-diagram svg,
+  .print-topic-page #prism-formulas .print-prism-diagram svg {
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: 92mm !important;
+  }
+
+  .print-topic-page #transformation .print-coordinate-diagram > svg {
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: 125mm !important;
   }
 }

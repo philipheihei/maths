@@ -28,12 +28,6 @@ import TrigApplicationsF4 from './apps/TrigApplicationsF4';
 import NatureOfRootsQuiz from './apps/NatureOfRootsQuiz';
 import Notes from './pages/Notes';
 
-// ==========================================
-// 🔥 Agentation（僅開發環境）
-// ==========================================
-const isDev = import.meta.env.DEV;
-const Agentation = isDev ? React.lazy(() => import('agentation').then(m => ({ default: m.Agentation }))) : null;
-
 function App() {
   return (
     <Router>
@@ -67,11 +61,6 @@ function App() {
         <Route path="/notes/print" element={<Notes />} />
         <Route path="/notes" element={<Notes />} />
       </Routes>
-      {isDev && Agentation && (
-        <React.Suspense fallback={null}>
-          <Agentation />
-        </React.Suspense>
-      )}
     </Router>
   );
 }
