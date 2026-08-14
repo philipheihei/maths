@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
-import { Previewer } from 'pagedjs';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
 
 const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount }) => {
@@ -127,104 +126,6 @@ const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount })
   );
 };
 
-const BookletPrintView = ({ topics, isPreview }) => {
-  const sourceRef = useRef(null);
-  const pagesRef = useRef(null);
-  const [status, setStatus] = useState('正在整理頁面…');
-
-  useEffect(() => {
-    let cancelled = false;
-    const renderBooklet = async () => {
-      if (!sourceRef.current || !pagesRef.current) return;
-      pagesRef.current.innerHTML = '';
-      setStatus('正在分頁…');
-      try {
-        const previewer = new Previewer();
-        await previewer.preview(sourceRef.current.innerHTML, [], pagesRef.current);
-        const renderedPages = Array.from(pagesRef.current.querySelectorAll('.pagedjs_page'));
-        let currentChapter = '';
-        renderedPages.forEach((page, pageIndex) => {
-          const chapterHeading = page.querySelector('.booklet-running-title');
-          const tocPage = page.querySelector('.booklet-toc');
-          if (chapterHeading) currentChapter = chapterHeading.textContent.trim();
-          page.querySelectorAll('[id^="chapter-"]').forEach((chapter) => {
-            const chapterId = chapter.id.replace(/^chapter-/, '');
-            const tocLink = pagesRef.current.querySelector(`.booklet-toc a[href="#chapter-${chapterId}"]`);
-            if (tocLink && !tocLink.querySelector('.booklet-toc-page-number')) {
-              const pageNumber = document.createElement('span');
-              pageNumber.className = 'booklet-toc-page-number';
-              pageNumber.textContent = String(pageIndex + 1);
-              tocLink.appendChild(pageNumber);
-            }
-          });
-          const pageBox = page.querySelector('.pagedjs_pagebox');
-          if (!pageBox) return;
-          const headerText = tocPage ? '目錄' : currentChapter;
-          if (headerText && !page.querySelector('.booklet-generated-header')) {
-            const header = document.createElement('div');
-            header.className = 'booklet-generated-header';
-            header.textContent = headerText;
-            pageBox.appendChild(header);
-          }
-          if (!page.querySelector('.booklet-generated-footer')) {
-            const footer = document.createElement('div');
-            footer.className = 'booklet-generated-footer';
-            footer.textContent = `頁 ${pageIndex + 1} / ${renderedPages.length}`;
-            pageBox.appendChild(footer);
-          }
-        });
-        if (!cancelled) setStatus('已完成分頁');
-      } catch (error) {
-        if (!cancelled) setStatus('分頁失敗，請重新整理頁面');
-        console.error('Paged.js preview failed', error);
-      }
-    };
-
-    const timer = window.setTimeout(renderBooklet, 0);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timer);
-    };
-  }, [topics]);
-
-  return (
-    <>
-      {isPreview && <p className="booklet-status" aria-live="polite">{status}</p>}
-      <div ref={sourceRef} className="booklet-source" aria-hidden="true">
-        <section className="booklet-cover">
-          <img className="booklet-logo" src="/school-logo.svg" alt="學校標誌" />
-          <p className="booklet-kicker">數學自習天地</p>
-          <h1>數學筆記小冊</h1>
-          <p className="booklet-date">{new Intl.DateTimeFormat('zh-HK', { dateStyle: 'long' }).format(new Date())}</p>
-        </section>
-
-        <nav className="booklet-toc" aria-label="目錄">
-          <h1>目錄</h1>
-          <ol>
-            {topics.map((topic) => (
-              <li key={`toc-${topic.id}`}>
-                <a href={`#chapter-${topic.id}`}>{topic.topic}</a>
-              </li>
-            ))}
-          </ol>
-        </nav>
-
-        {topics.map((topic) => {
-          const TopicComponent = NOTES_COMPONENTS[topic.id];
-          if (!TopicComponent) return null;
-          return (
-            <article key={topic.id} id={`chapter-${topic.id}`} className="booklet-chapter">
-              <h1 className="booklet-running-title">{topic.topic}</h1>
-              <TopicComponent activeSub={null} onNavigate={() => {}} />
-            </article>
-          );
-        })}
-      </div>
-      <div ref={pagesRef} className="booklet-pages" />
-    </>
-  );
-};
-
 // ========================================
 // Notes 主頁面
 // ========================================
@@ -250,21 +151,6 @@ const Notes = () => {
   const printTopics = printLevels.flatMap((lvl) =>
     (NOTES_DATA[lvl] || []).map((topic) => ({ ...topic, _level: lvl }))
   );
-  const bookletIds = (searchParams.get('ids') || '')
-    .split(',')
-    .map((value) => value.trim())
-    .filter(Boolean);
-  const allBookletTopics = Object.entries(NOTES_DATA).flatMap(([lvl, topics]) =>
-    topics.map((topic) => ({ ...topic, _level: lvl }))
-  );
-  const bookletTopics = bookletIds.length > 0
-    ? bookletIds.map((id) => {
-      const numericId = Number(id);
-      return Number.isInteger(numericId) && numericId > 0
-        ? allBookletTopics[numericId - 1]
-        : allBookletTopics.find((topic) => topic.id === id);
-    }).filter(Boolean)
-    : printTopics;
 
   const getInitialState = () => {
     if (requestedTopic) {
@@ -288,6 +174,9 @@ const Notes = () => {
   const [expandedTopics, setExpandedTopics] = useState(initState.topic ? { [initState.topic]: true } : {});
   const [activeTopic, setActiveTopic] = useState(initState.topic);
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
+  const [isSpreadView, setIsSpreadView] = useState(false);
+  const [topicPageCounts, setTopicPageCounts] = useState({});
+  const printDocumentRef = useRef(null);
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
   const notes = getNotesForLevel(selectedLevel);
@@ -342,6 +231,14 @@ const Notes = () => {
   };
 
   const ActiveComponent = activeTopic ? NOTES_COMPONENTS[activeTopic] : null;
+
+  const pageOffsets = {};
+  let pageOffset = 0;
+  printTopics.forEach((topic) => {
+    const topicKey = `${topic._level}-${topic.id}`;
+    pageOffsets[topicKey] = pageOffset;
+    pageOffset += topicPageCounts[topicKey] || 0;
+  });
 
   const colorMap = {
     purple: { activeBg: 'bg-purple-100', activeText: 'text-purple-700', activeBorder: 'border-purple-500', numActive: 'bg-purple-500 text-white', numInactive: 'bg-purple-100 text-purple-600' },
@@ -414,11 +311,11 @@ const Notes = () => {
 
   if (isPrintMode) {
     return (
-      <div className={`print-root booklet-print-root min-h-screen bg-white px-4 py-6 md:px-8 ${isPrintPreview ? 'print-preview' : ''}`}>
+      <div className={`print-root min-h-screen bg-white px-4 py-6 md:px-8 ${isPrintPreview ? 'print-preview' : ''}`}>
         {isPrintPreview && (
           <div className="print-preview-toolbar sticky top-0 z-30 mx-auto mb-4 max-w-5xl rounded-xl border border-slate-200 bg-white/95 px-4 py-3 backdrop-blur">
             <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-              <p className="text-slate-600">Paged.js booklet 預覽 · {bookletTopics.length} 章</p>
+              <p className="text-slate-600">A4 Reader 預覽模式</p>
               <div className="flex flex-wrap items-center gap-2">
                 {[
                   ['F1', 'F1'],
@@ -429,7 +326,7 @@ const Notes = () => {
                   <button
                     key={value}
                     onClick={() => {
-                      window.history.replaceState({}, '', `/notes/print?${new URLSearchParams({ print: '1', preview: '1', ...(value === 'senior' ? { group: value } : { level: value }) })}`);
+                      setTopicPageCounts({});
                       setPrintSelection(value);
                     }}
                     className={`rounded-lg border px-3 py-1.5 font-bold ${
@@ -442,6 +339,12 @@ const Notes = () => {
                   </button>
                 ))}
                 <button
+                  onClick={() => setIsSpreadView((current) => !current)}
+                  className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-700 hover:bg-slate-50"
+                >
+                  {isSpreadView ? '單頁顯示' : '雙面顯示'}
+                </button>
+                <button
                   onClick={() => window.print()}
                   className="rounded-lg border border-emerald-300 bg-emerald-50 px-3 py-1.5 font-bold text-emerald-800 hover:bg-emerald-100"
                 >
@@ -451,13 +354,35 @@ const Notes = () => {
             </div>
           </div>
         )}
-        {bookletTopics.length === 0 ? (
+        {printTopics.length === 0 ? (
           <div className="max-w-3xl mx-auto border border-amber-300 bg-amber-50 text-amber-800 rounded-xl p-4">
             <h2 className="text-lg font-bold">列印模式參數無效</h2>
-            <p className="mt-2 text-sm">請使用 /notes/print?ids=1,5,12，或在頁面上選擇級別。</p>
+            <p className="mt-2 text-sm">請使用 /notes/print，然後在頁面上選擇 F1、F2、F3 或高中。</p>
           </div>
         ) : (
-          <BookletPrintView topics={bookletTopics} isPreview={isPrintPreview} />
+          <div
+            ref={printDocumentRef}
+            className={`print-document ${isSpreadView ? 'print-spread-view' : ''}`}
+          >
+            {printTopics.map((topic) => {
+            const TopicComponent = NOTES_COMPONENTS[topic.id];
+            if (!TopicComponent) return null;
+            return (
+              <PrintTopicPages
+                key={`${topic._level}-${topic.id}`}
+                topic={topic}
+                TopicComponent={TopicComponent}
+                pageOffset={pageOffsets[`${topic._level}-${topic.id}`]}
+                onPageCount={(count) => {
+                  const topicKey = `${topic._level}-${topic.id}`;
+                  setTopicPageCounts((current) => (
+                    current[topicKey] === count ? current : { ...current, [topicKey]: count }
+                  ));
+                }}
+              />
+            );
+            })}
+          </div>
         )}
       </div>
     );
