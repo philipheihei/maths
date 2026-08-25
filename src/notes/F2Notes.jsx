@@ -2430,7 +2430,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                    </svg>
 
                    {/* Annotations */}
-                   <div className="absolute top-[35px] left-[135px] text-sm text-green-700 font-bold whitespace-nowrap hidden md:block bg-white/50 px-1 rounded">
+                   <div className="absolute top-[35px] left-[150px] text-sm text-green-700 font-bold whitespace-nowrap hidden md:block bg-white/50 px-1 rounded">
                      ← 弧 AB / <Latex math={String.raw`\overset{\frown}{AB}`} />
                    </div>
                    
@@ -2460,6 +2460,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
               </div>
             </div>
           </div>
+
         </CollapsibleSection>
 
         {/* ========================================
@@ -2537,6 +2538,14 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                 </p>
               </div>
             </div>
+          </div>
+
+          <div className="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <h4 className="font-bold text-amber-800 mb-2">常見錯誤</h4>
+            <ul className="list-disc pl-5 text-slate-700 space-y-1">
+              <li>把半徑 <Latex math="r" /> 看成直徑 <Latex math="d" />，錯用 <Latex math="2\pi d" /> 或 <Latex math="\pi d^2" />。</li>
+              <li>弧長和扇形面積公式中的 <Latex math="\theta" /> 必須是對應的圓心角，不能直接代入分數或錯誤單位。</li>
+            </ul>
           </div>
         </CollapsibleSection>
 
