@@ -150,6 +150,8 @@ When displaying **consecutive calculation steps** (2+ lines), always align the `
  x = 30°
 ```
 Use a `<pre className="whitespace-pre font-sans">` tag so leading spaces are respected while keeping sans-serif font. In plain `<p>` / `<div>` tags, use `&nbsp;` or pad with a thin `<span>` to push shorter left-hand sides into alignment.
+- For equation groups rendered with CSS Grid, use a dedicated left-expression column and an equals/result column (for example, `grid-cols-[auto_auto]`). Right-align the left expressions so they sit close to the `=` column while keeping every `=` vertically aligned across rows.
+- Keep explanatory labels outside the aligned equation columns so descriptions do not shift the `=` position or overlap the answer.
 
 ### Equal-Length Tick Mark Rule (SVG)
 - **相等長度標記（tick marks）必須與所屬線段垂直**。
@@ -161,6 +163,10 @@ Use a `<pre className="whitespace-pre font-sans">` tag so leading spaces are res
 - 坐標標籤一律使用「字母 + 空格 + 括號」格式：`A (x, y)`、`B (x₂, y₂)`、`M (x, y)`、`P (x, y)`。
 - 禁止使用無空格寫法（例如 `A(x, y)`、`P(x, y)`）。
 - 此規則適用於所有教學圖示與示例 SVG，保持與出版社排版一致。
+
+### SVG Annotation Collision Check
+- SVG 內的文字、箭頭及角弧必須分開定位；標籤不可與 arc、arrow 或其他標籤重疊。
+- 新增或調整 SVG 標籤後，至少檢查桌面及窄螢幕畫面；若標籤接近邊界，應留出安全空間，避免被 `viewBox` 或父層 `overflow-hidden` 裁切。
 
 ## Calculator Key Styling (CASIO fx-50FH II)
 
@@ -194,6 +200,7 @@ When displaying CASIO fx-50FH II keys in notes or instructions, **always** use t
 - Manual quiz playthroughs
 - Answer validation arrays in question data
 - Browser DevTools for SVG coordinate debugging
+- For repeated layout or notes changes, run the same build command at least twice and inspect the affected browser section after the final run to catch stale hot-reload or layout drift.
 
 ## Dependencies
 ```json

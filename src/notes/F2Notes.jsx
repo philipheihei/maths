@@ -529,17 +529,25 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
                     <line x1="82.5" y1="42" x2="74.5" y2="48" stroke="#9333ea" strokeWidth="2" />
                     <path d="M 21 78 A 13 13 0 0 0 15.5 67.4" stroke="#16a34a" strokeWidth="1.5" fill="none" />
                     <path d="M 89 78 A 13 13 0 0 1 94.5 67.4" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                    <path d="M 49.2 20.1 A 10 10 0 0 0 60.8 20.1" stroke="#16a34a" strokeWidth="1.5" fill="none" />
+                    <text x="55" y="32" textAnchor="middle" fontSize="12" fill="#334155" fontStyle="italic">y</text>
                     <text x="25" y="72" fontSize="10" fill="#334155">67°</text>
                     <text x="83" y="72" fontSize="12" fill="#334155" fontStyle="italic">x</text>
                   </svg>
                   <div className="text-sm text-slate-700">
-                    <p className="text-green-700 font-bold mb-1">底角 <Latex math="=67^\circ" /></p>
                     <div className="grid grid-cols-[auto_auto_1fr] gap-x-2">
                       <div className="text-right"><Latex math="x" /></div>
                       <div className="text-center"><Latex math="=" /></div>
-                      <div className="text-left"><Latex math="180^\circ - 67^\circ - 67^\circ" /></div>
+                      <div className="text-left flex items-center gap-2">
+                        <Latex math="67^\circ" />
+                        <span className="text-sm text-green-700 whitespace-nowrap">← x 為底角</span>
+                      </div>
                       
-                      <div className="text-right"><Latex math="x" /></div>
+                      <div className="text-right"><Latex math="y" /></div>
+                      <div className="text-center"><Latex math="=" /></div>
+                      <div className="text-left"><Latex math="180^\circ - 67^\circ - 67^\circ" /></div>
+
+                      <div className="text-right"><Latex math="y" /></div>
                       <div className="text-center"><Latex math="=" /></div>
                       <div className="text-left"><Latex math="46^\circ" /></div>
                     </div>
@@ -557,7 +565,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
             <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
               <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">7</span>
               等角對邊相等
-              <span className="text-sm text-slate-500 font-normal">（等底角 → 等腰）</span>
+              <span className="text-sm text-slate-500 font-normal">（相等底角 → 等腰）</span>
             </h3>
             <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
               <p className="text-center text-xl font-bold text-green-800 my-1">若 ∠B = ∠C，則 AB = AC</p>
@@ -612,7 +620,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
             <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2">
               <span className="bg-green-600 text-white text-xs px-2 py-0.5 rounded-full">9</span>
               等邊三角形性質
-              <span className="text-sm text-slate-500 font-normal">（三邊等長 ⟷ 三角均 60°）</span>
+              <span className="text-sm text-slate-500 font-normal">（三邊長度相等 ⟷ 三隻角角度均為 60°）</span>
             </h3>
             <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
               <p className="text-center text-xl font-bold text-green-800 my-1">若 <Latex math="AB = BC = AC" /></p>
@@ -1903,22 +1911,16 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
               <div className="flex flex-col md:flex-row md:items-center gap-6 justify-center">
                  <div className="text-center bg-slate-50 p-4 rounded-lg">
                    <div className="text-lg mb-2">
-                     <span className="underline decoration-red-500 decoration-2 underline-offset-4 text-red-700 font-semibold px-1">4x</span> 
-                     <span className="underline decoration-green-500 decoration-2 underline-offset-4 text-green-700 font-semibold px-1">- 5</span> 
-                     <Latex math="\equiv" /> 
-                     <span className="underline decoration-red-500 decoration-2 underline-offset-4 text-red-700 font-semibold px-1">Ax</span> 
-                     <span className="underline decoration-green-500 decoration-2 underline-offset-4 text-green-700 font-semibold px-1">+ B</span>
+                     <Latex math={String.raw`\color{#b91c1c}{\underline{4x}}\,\color{#15803d}{\underline{-5}}\;\color{#000000}{\equiv}\;\color{#b91c1c}{\underline{Ax}}\,\color{#15803d}{\underline{+B}}`} />
                    </div>
                    <div className="flex justify-center gap-8 mt-4 text-sm font-bold">
                       <div className="flex flex-col text-red-600">
                         <span>(有 x 項)</span>
-                        <Latex math="\therefore Ax = 4x" />
-                        <Latex math="A = 4" />
+                        <Latex math={String.raw`\begin{aligned} \therefore Ax &= 4x \\ A &= 4 \end{aligned}`} block />
                       </div>
                       <div className="flex flex-col text-green-600">
                         <span>(沒 x 項)</span>
-                        <Latex math="−5 = B" />
-                        <Latex math="B = −5" />
+                        <Latex math={String.raw`\begin{aligned} −5 &= B \\ B &= −5 \end{aligned}`} block />
                       </div>
                    </div>
                  </div>
@@ -1958,13 +1960,21 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
               <div className="mt-4 bg-slate-50 p-4 rounded-lg flex flex-col md:flex-row gap-6 justify-center">
                  <div className="flex flex-col text-green-600 font-bold border-l-4 border-green-400 pl-3">
                    <p className="text-slate-600 text-sm mb-1">比較 x 項：</p>
-                   <Latex math="Px = 22x" />
-                   <Latex math="P = 22" />
+                   <div className="grid grid-cols-[auto_auto] items-baseline gap-x-2">
+                     <div className="text-right"><Latex math="Px" /></div>
+                     <Latex math="= 22x" />
+                     <div className="text-right"><Latex math="P" /></div>
+                     <Latex math="= 22" />
+                   </div>
                  </div>
                  <div className="flex flex-col text-purple-600 font-bold border-l-4 border-purple-400 pl-3">
                    <p className="text-slate-600 text-sm mb-1">比較常數項：</p>
-                   <Latex math="−7Q = 7" />
-                   <Latex math="Q = −1" />
+                   <div className="grid grid-cols-[auto_auto] items-baseline gap-x-2">
+                     <div className="text-right"><Latex math="−7Q" /></div>
+                     <Latex math="= 7" />
+                     <div className="text-right"><Latex math="Q" /></div>
+                     <Latex math="= −1" />
+                   </div>
                  </div>
               </div>
             </div>
@@ -2522,27 +2532,28 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
         </CollapsibleSection>
 
         {/* ========================================
-            3. 圓柱體體積及表面面積
+            3. 圓柱的體積及表面面積
             ======================================== */}
-        <CollapsibleSection id="cylinders" title="圓柱體體積及表面面積" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
-          <div className="space-y-6">
-            
-            <div className="bg-purple-50 rounded-lg p-5 border border-purple-200 shadow-sm relative">
-              <h3 className="font-bold text-red-600 mb-3 text-xl flex items-center gap-2">
-                5. 圓柱體體積： <span className="text-red-700 italic font-serif"><Latex math="\pi r^2 \cdot h" /></span>
-                <span className="text-green-700 text-sm md:text-base ml-2 md:ml-4 relative font-bold">
-                  <span className="absolute -left-4 md:-left-5 top-1 -mr-2 text-green-700 font-sans">→</span> 高度 (height)
-                </span>
-              </h3>
-            </div>
-
-            <div className="bg-[#fdf6ea] rounded-lg p-5 border border-amber-200 shadow-sm relative overflow-hidden">
+          <CollapsibleSection id="cylinders" title="圓柱的體積及表面面積" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+          <div className="bg-[#fdf6ea] rounded-lg p-5 border border-amber-200 shadow-sm relative overflow-hidden">
+            <div className="relative">
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="flex-1 md:flex-[0_0_62%] md:max-w-[62%] space-y-5 relative z-10 w-full p-2">
                   <div className="flex items-start gap-2 bg-white/70 p-3 rounded">
+                    <span className="text-red-600 font-bold text-lg leading-none shadow-sm rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 border border-red-200">5</span>
+                    <div className="font-bold text-slate-800 pt-0.5 leading-relaxed flex items-center flex-wrap gap-x-2">
+                      <span>圓柱的體積：</span>
+                      <span className="text-slate-800 italic font-serif"><Latex math="\pi r^2 \cdot h" /></span>
+                      <span className="text-green-700 text-sm md:text-base font-bold whitespace-nowrap">
+                        → 高度 (height)
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2 bg-white/70 p-3 rounded">
                     <span className="text-red-600 font-bold text-lg leading-none shadow-sm rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 border border-red-200">6</span>
                     <div className="font-bold text-slate-800 pt-0.5 leading-relaxed">
-                      直立圓柱的曲面面積 <Latex math="= 2\pi rh" />
+                      直立圓柱的曲面面積： <Latex math="2\pi rh" />
                     </div>
                   </div>
                   
@@ -2556,69 +2567,61 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                   </div>
                 </div>
 
-                <div className="relative shrink-0 pr-10 pb-4 h-48 w-44 md:w-56 mt-4 md:mt-0 ml-0 flex items-center">
-                   <svg viewBox="0 0 160 160" className="w-full h-full overflow-visible">
-                     {/* Lower base shading, partly covered by the curved surface */}
-                     <ellipse cx="80" cy="130" rx="50" ry="15" fill="#fca5a5" stroke="none" />
-                     
-                     {/* Curved Surface */}
-                     <path d="M 30 50 L 30 130 A 50 15 0 0 0 130 130 L 130 50 Z" fill="#fde047" stroke="#000" strokeWidth="2" />
+                <div className="relative w-full md:flex-1 min-w-0 mt-4 md:mt-0 ml-0 flex items-center justify-center md:-translate-x-6">
+                  <svg viewBox="0 0 360 480" className="w-full h-auto overflow-visible">
+                    <defs>
+                      <clipPath id="cylinder-bottom-clip">
+                        <ellipse cx="180" cy="340" rx="100" ry="35" />
+                      </clipPath>
+                      <marker id="arrow-red-cylinder" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                        <path d="M1,1 L7,4 L1,7 Z" fill="#dc2626" />
+                      </marker>
+                      <marker id="arrow-green-cylinder" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                        <path d="M1,1 L7,4 L1,7 Z" fill="#15803d" />
+                      </marker>
+                    </defs>
 
-                     {/* Hidden rear edge and visible front edge of the lower base */}
-                     <path d="M 30 130 C 30 110 130 110 130 130" fill="none" stroke="#000" strokeWidth="2" strokeDasharray="4 3" />
-                     <path d="M 30 130 C 30 150 130 150 130 130" fill="none" stroke="#000" strokeWidth="2" />
-                     {/* Red hatching shows the shaded lower base */}
-                     <path d="M 38 132 L 56 121 M 50 137 L 68 126 M 62 141 L 80 130 M 74 143 L 92 132 M 86 142 L 104 131 M 98 138 L 116 127" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" />
-                     
-                     {/* Upper Base */}
-                     <ellipse cx="80" cy="50" rx="50" ry="15" fill="#fde047" stroke="#000" strokeWidth="2" />
-                     <circle cx="80" cy="50" r="3" fill="#000" />
-                     <text x="75" y="47" textAnchor="end" fontSize="14" fontStyle="italic">O</text>
-                     <line x1="80" y1="50" x2="130" y2="50" stroke="#000" strokeWidth="2" strokeDasharray="4 2" />
-                     <text x="105" y="45" textAnchor="middle" fontSize="14" fontStyle="italic">r</text>
+                    {/* Curved surface and the fully shaded lower base */}
+                    <path d="M 80 140 L 80 340 A 100 35 0 0 0 280 340 L 280 140 Z" fill="#fde047" stroke="#000" strokeWidth="2.5" />
+                    
+                    {/* Continuous solid red hatching clipped to the entire bottom ellipse */}
+                    <g clipPath="url(#cylinder-bottom-clip)">
+                      {[60, 76, 92, 108, 124, 140, 156, 172, 188, 204, 220, 236, 252, 268, 284, 300].map((x0, idx) => (
+                        <line
+                          key={idx}
+                          x1={x0 - 40}
+                          y1={390}
+                          x2={x0 + 40}
+                          y2={290}
+                          stroke="#dc2626"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                        />
+                      ))}
+                    </g>
 
-                     <line x1="130" y1="50" x2="130" y2="130" stroke="none" />
-                     <text x="140" y="95" textAnchor="start" fontSize="14" fill="#10b981" fontStyle="italic" fontWeight="bold">h</text>
-                   </svg>
-                   
-                   <div className="absolute top-2 -right-8 md:-right-6 text-red-600 font-bold whitespace-nowrap text-lg">
-                      <span className="relative">
-                        底面積 (上)
-                        <svg width="40" height="40" viewBox="0 0 40 40" className="absolute -left-12 -top-2 overflow-visible stroke-red-600">
-                           <path d="M 40 18 Q 20 20 10 32" fill="none" strokeWidth="3" markerEnd="url(#arrow-head)" strokeLinecap="round" />
-                           <defs>
-                             <marker id="arrow-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-                               <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-                             </marker>
-                           </defs>
-                        </svg>
-                        <span className="absolute -bottom-8 left-[-1.5rem] transform -translate-x-1/2 text-[10px] text-red-800/60 font-sans tracking-widest hidden md:block">圓周</span>
-                      </span>
-                   </div>
+                    {/* Lower base: hidden rear edge and visible front edge */}
+                    <path d="M 80 340 A 100 35 0 0 1 280 340" fill="none" stroke="#000" strokeWidth="2.5" strokeDasharray="6 5" />
+                    <path d="M 80 340 A 100 35 0 0 0 280 340" fill="none" stroke="#000" strokeWidth="2.5" />
 
-                   <div className="absolute top-[70px] -right-8 md:-right-6 text-green-700 font-bold whitespace-nowrap text-lg flex items-center">
-                      <svg width="40" height="20" viewBox="0 0 40 20" className="mr-1 mt-1 overflow-visible stroke-green-700">
-                        <line x1="40" y1="10" x2="10" y2="10" strokeWidth="3" markerEnd="url(#arrow-head-green)" strokeLinecap="round" />
-                        <defs>
-                          <marker id="arrow-head-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-                          </marker>
-                        </defs>
-                      </svg>
-                      曲面面積
-                   </div>
+                    {/* Upper base, centre and radius */}
+                    <ellipse cx="180" cy="140" rx="100" ry="35" fill="#facc15" stroke="#000" strokeWidth="2.5" />
+                    <circle cx="180" cy="140" r="3.5" fill="#000" />
+                    <line x1="180" y1="140" x2="280" y2="140" stroke="#000" strokeWidth="2" strokeDasharray="5 4" />
+                    <text x="160" y="132" textAnchor="end" fontSize="18" fontStyle="italic" fontWeight="bold" fill="#000">O</text>
+                    <text x="225" y="130" textAnchor="middle" fontSize="18" fontStyle="italic" fontWeight="bold" fill="#000">r</text>
 
-                   <div className="absolute bottom-[20px] md:-bottom-2 -right-10 md:-right-6 text-red-600 font-bold whitespace-nowrap text-lg flex items-center gap-1">
-                      <svg width="30" height="30" viewBox="0 0 30 30" className="mr-1 overflow-visible stroke-red-600">
-                        <line x1="30" y1="30" x2="5" y2="5" strokeWidth="3" markerEnd="url(#arrow-head-up)" strokeLinecap="round" />
-                        <defs>
-                          <marker id="arrow-head-up" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-                          </marker>
-                        </defs>
-                      </svg>
-                      底面積 (下)
-                   </div>
+                    {/* Height */}
+                    <text x="294" y="292" fontSize="20" fontStyle="italic" fontWeight="bold" fill="#15803d">h</text>
+
+                    {/* Labels and arrows */}
+                    <text x="244" y="48" fontFamily="sans-serif" fontSize="16" fontWeight="bold" fill="#dc2626">底面積 (上)</text>
+                    <path d="M 238 54 Q 218 58 208 92" fill="none" stroke="#dc2626" strokeWidth="2.5" markerEnd="url(#arrow-red-cylinder)" strokeLinecap="round" />
+                    <line x1="326" y1="250" x2="282" y2="250" stroke="#15803d" strokeWidth="3" markerEnd="url(#arrow-green-cylinder)" strokeLinecap="round" />
+                    <text x="332" y="256" fontFamily="sans-serif" fontSize="14" fontWeight="bold" fill="#15803d">曲面面積</text>
+                    <text x="244" y="452" fontFamily="sans-serif" fontSize="16" fontWeight="bold" fill="#dc2626">底面積 (下)</text>
+                    <path d="M 238 446 Q 214 458 190 410" fill="none" stroke="#dc2626" strokeWidth="2.5" markerEnd="url(#arrow-red-cylinder)" strokeLinecap="round" />
+                  </svg>
                 </div>
               </div>
             </div>

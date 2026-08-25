@@ -326,7 +326,7 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'circles-circumference-arc', num: 1, title: '圓周及弧長', color: 'teal' },
         { id: 'circles-area-sector', num: 2, title: '圓面積及扇形面積', color: 'blue' },
-        { id: 'cylinders', num: 3, title: '圓柱體體積及總表面面積', color: 'purple' },
+        { id: 'cylinders', num: 3, title: '圓柱的體積及表面面積', color: 'purple' },
       ]
     }
   ],

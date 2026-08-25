@@ -187,18 +187,52 @@ export const FactorizationNotes = ({ activeSub }) => {
           <div className="bg-red-50 rounded-lg p-4 border border-red-200">
             <h3 className="font-bold text-red-800 mb-3">📋 利用前題答案</h3>
             <div className="bg-white rounded-lg p-3">
-              <p className="text-sm text-slate-600 mb-3">DSE 常見：(a) 和 (b) 有關聯</p>
+              <p className="text-sm text-slate-600 mb-3">DSE 常見：(a) 和 (b) 有關聯；(b) 可以直接套用 (a) 結果，減少重算。</p>
               <div className="space-y-2 text-sm mb-3">
-                <div className="flex items-start gap-2"><span className="font-bold text-slate-700">(a)</span><span>因式分解 <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 − 13rs − 28s^2" /></span></span></div>
-                <div className="flex items-start gap-2"><span className="font-bold text-slate-700">(b)</span><span>因式分解 <Latex math="4r − 14s +" /> <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 − 13rs − 28s^2" /></span></span></div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-slate-700">(a)</span>
+                  <span>因式分解 <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 − 13rs − 28s^2" /></span></span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="font-bold text-slate-700">(b)</span>
+                  <span>因式分解 <Latex math="4r − 14s +" /> <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 − 13rs − 28s^2" /></span></span>
+                </div>
               </div>
               <div className="bg-green-50 border border-green-200 rounded-lg p-2 mb-3">
                 <p className="text-sm font-bold text-green-700 mb-1">📝 (a) 部答案：</p>
-                <Latex math="(2r−7s)(3r+4s)" block />
+                <Latex math="6r^2 − 13rs − 28s^2 = (2r−7s)(3r+4s)" block />
               </div>
-              <div className="bg-yellow-50 p-2 rounded">
-                <p className="text-slate-700 text-sm">➜ 找 (a) 題目部分（黃色 highlight），套用 (a) 部答案：</p>
-                <Latex math="\begin{aligned} &= 4r − 14s + (2r−7s)(3r+4s) \\ &= 2(2r−7s) + (2r−7s)(3r+4s) \\ &= (2r−7s)(2 + 3r + 4s) \end{aligned}" block />
+              <div className="bg-yellow-50 p-3 rounded">
+                <p className="text-slate-700 text-sm mb-2">係 (b) 部答案：➜ 找 (a) 題目部分（黃色 highlight），套用 (a) 部答案：</p>
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
+                    <div className="flex items-center flex-wrap gap-0.5 min-w-0">
+                      <Latex math="4r − 14s +" />
+                      <span className="bg-yellow-200 rounded px-0.5"><Latex math="(2r−7s)(3r+4s)" /></span>
+                    </div>
+                    <div className="text-xs text-slate-500 italic shrink-0">← 套用 (a) 部答案</div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
+                    <div className="flex items-center flex-wrap gap-0.5 min-w-0">
+                      <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="2" /></span>
+                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r−7s)" /></span>
+                      <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="+" /></span>
+                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r−7s)" /></span>
+                      <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(3r+4s)" /></span>
+                    </div>
+                    <div className="text-xs text-slate-500 italic shrink-0">← 抽公因式，應看到有最少兩個 <span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同括號</span></div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
+                    <div className="flex items-center flex-wrap gap-0.5 min-w-0">
+                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r−7s)" /></span>
+                      <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(2 + 3r + 4s)" /></span>
+                    </div>
+                    <div className="text-xs text-slate-500 italic shrink-0">← 抽<span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同的括號</span>放前，<span className="bg-green-100 text-green-800 px-0.5 rounded">剩餘部份</span>放後括號</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
