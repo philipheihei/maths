@@ -79,13 +79,13 @@ export const BasicCalculationNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <p className="text-sm text-slate-600 mb-2">例子：</p>
             <div className="flex flex-wrap items-center gap-2 font-sans font-bold">
-              <span className="bg-yellow-200 px-1">5 × 5 × 5</span>
-              <span>×</span>
-              <span className="bg-blue-200 px-1">7 × 7 × 7 × 7 × 7 × 7</span>
-              <span>=</span>
-              <span className="bg-yellow-200 px-1">5<sup>3</sup></span>
-              <span>×</span>
-              <span className="bg-blue-200 px-1">7<sup>6</sup></span>
+              <span className="bg-yellow-200 px-1"><Latex math="5 \times 5 \times 5" /></span>
+              <Latex math="\times" />
+              <span className="bg-blue-200 px-1"><Latex math="7 \times 7 \times 7 \times 7 \times 7 \times 7" /></span>
+              <Latex math="=" />
+              <span className="bg-yellow-200 px-1"><Latex math="5^3" /></span>
+              <Latex math="\times" />
+              <span className="bg-blue-200 px-1"><Latex math="7^6" /></span>
             </div>
           </div>
         </div>
@@ -110,7 +110,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-slate-200">
             <h3 className="font-bold text-blue-800 mb-4">3.2 質數</h3>
-            <p className="text-slate-700 mb-4">只有 1 和數字本身是因數的數字。</p>
+            <p className="text-slate-700 mb-4">如果該數的因數只有 1 和該數字本身，就為質數。</p>
             
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <div className="flex-1 w-full max-w-sm">
@@ -148,17 +148,17 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <tbody>
                   <tr>
                     <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1">8</span> × 5</td>
+                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="8" /></span> × 5</td>
                     <td className="pl-4 text-green-700 text-sm">← 若當中有合成數，需繼續拆乘式</td>
                   </tr>
                   <tr>
                     <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1">2 × 4</span> × 5</td>
+                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="2 \times 4" /></span> × 5</td>
                     <td></td>
                   </tr>
                   <tr>
                     <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1">2 × 2 × 2</span> × 5</td>
+                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="2 \times 2 \times 2" /></span> × 5</td>
                     <td className="pl-4 text-green-700 text-sm">← 直至全部數字都是質數</td>
                   </tr>
                   <tr>
@@ -2766,31 +2766,31 @@ export const PercentageNotes = ({ activeSub }) => {
                 <div className="flex items-center">
                   <div className="flex flex-col items-center">
                     <div className="relative pb-1">
-                      <span className="font-bold text-blue-700">6000 - 5000</span>
+                      <span className="font-bold text-blue-700"><Latex math="6000 - 5000" /></span>
                       <span className="absolute left-1 -top-4 text-xs text-green-600 font-bold">新</span>
                       <span className="absolute right-1 -top-4 text-xs text-green-600 font-bold">舊</span>
                     </div>
                     <div className="h-0.5 w-[110%] bg-black"></div>
                     <div className="relative pt-1">
-                      <span className="font-bold text-blue-700">5000</span>
+                      <span className="font-bold text-blue-700"><Latex math="5000" /></span>
                       <span className="absolute left-1/2 -translate-x-1/2 top-7 text-xs text-green-600 font-bold">舊</span>
                     </div>
                   </div>
-                  <span className="ml-4 font-bold">×100%</span>
+                  <span className="ml-4 font-bold"><Latex math="\times 100\%" /></span>
                 </div>
                 
                 <div className="flex items-center pt-8">
-                  <span className="mr-2">=</span>
+                  <span className="mr-2"><Latex math="=" /></span>
                   <div className="flex flex-col items-center">
-                    <div className="font-bold text-blue-700 pb-1">1000</div>
+                    <div className="font-bold text-blue-700 pb-1"><Latex math="1000" /></div>
                     <div className="h-0.5 w-[120%] bg-black"></div>
-                    <div className="font-bold text-blue-700 pt-1">5000</div>
+                    <div className="font-bold text-blue-700 pt-1"><Latex math="5000" /></div>
                   </div>
-                  <span className="ml-4 font-bold">×100%</span>
+                  <span className="ml-4 font-bold"><Latex math="\times 100\%" /></span>
                 </div>
                 
                 <div className="pt-2 font-bold text-blue-700">
-                  = <span className="bg-green-100 px-1 rounded text-green-700">+20%</span>
+                  <Latex math="=" /> <span className="bg-green-100 px-1 rounded text-green-700"><Latex math="+20\%" /></span>
                 </div>
               </div>
             </div>
@@ -3496,10 +3496,10 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
               <div>
                 <p className="font-bold text-slate-800 mb-2">例：列出數列 <Latex math="a_{\colorbox{#fef08a}{n}} = \colorbox{#fef08a}{n} + 2" /> 的首 4 項</p>
                 <div className="pl-6 font-bold text-slate-700 space-y-1">
-                  <p><Latex math="a_1 = " /><span className="bg-yellow-200 px-1 rounded">1</span><Latex math=" + 2 = 3" /></p>
-                  <p><Latex math="a_2 = " /><span className="bg-yellow-200 px-1 rounded">2</span><Latex math=" + 2 = 4" /></p>
-                  <p><Latex math="a_3 = " /><span className="bg-yellow-200 px-1 rounded">3</span><Latex math=" + 2 = 5" /></p>
-                  <p><Latex math="a_4 = " /><span className="bg-yellow-200 px-1 rounded">4</span><Latex math=" + 2 = 6" /></p>
+                  <p><Latex math="a_1 = " /><span className="bg-yellow-200 px-1 rounded"><Latex math="1" /></span><Latex math=" + 2 = 3" /></p>
+                  <p><Latex math="a_2 = " /><span className="bg-yellow-200 px-1 rounded"><Latex math="2" /></span><Latex math=" + 2 = 4" /></p>
+                  <p><Latex math="a_3 = " /><span className="bg-yellow-200 px-1 rounded"><Latex math="3" /></span><Latex math=" + 2 = 5" /></p>
+                  <p><Latex math="a_4 = " /><span className="bg-yellow-200 px-1 rounded"><Latex math="4" /></span><Latex math=" + 2 = 6" /></p>
                 </div>
               </div>
               
@@ -3511,7 +3511,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
                   <div className="grid grid-cols-[72px_auto] items-baseline">
                     <span>第 21 項</span>
                     <div>
-                      <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"> (21) </span><Latex math=" + 1" />
+                      <Latex math="= 3" /><span className="bg-yellow-200 px-1 rounded"><Latex math="(21)" /></span><Latex math=" + 1" />
                       <span className="ml-3 text-sm text-green-700 font-bold whitespace-nowrap">← 利用代入法 <Latex math="a=21" /></span>
                     </div>
                   </div>
@@ -3917,7 +3917,35 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <p className="text-red-600">A ↓ <span className="text-green-600">B ↑</span></p>
                 </div>
                 <div className="flex-1 text-xl flex items-center gap-2 font-bold justify-center font-sans">
-                  <span className="font-sans">公式：</span> <span className="text-red-600"><Latex math="xy = k" /></span>
+                  <span className="font-sans">公式：</span> <Latex math="xy = k" />
+                </div>
+              </div>
+
+              <div className="border-t border-slate-200 pt-5 space-y-4">
+                <h4 className="font-bold text-slate-800 text-lg">例子說明：</h4>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div className="bg-rose-50 border border-rose-200 rounded-lg p-4">
+                    <p className="font-bold text-rose-800 mb-2">正比例子</p>
+                    <div className="text-slate-700 border-l-4 border-rose-300 pl-3 mb-3">
+                      <p className="font-bold text-rose-800">題目</p>
+                      <p>已知 <Latex math="y" /> 與 <Latex math="x" /> 成正比。當 <Latex math="x=3" /> 時，<Latex math="y=33" />。求當 <Latex math="x=10" /> 時的 <Latex math="y" /> 值。</p>
+                    </div>
+                    <div className="border-t border-rose-200 pt-2 text-slate-700">
+                      <p className="font-bold text-rose-800">答案</p>
+                      <Latex math={String.raw`\begin{aligned} \frac{y}{x} &= \frac{33}{3} \\ \frac{y}{10} &= 11 \\ y &= 110 \end{aligned}`} block left />
+                    </div>
+                  </div>
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <p className="font-bold text-blue-800 mb-2">反比例子</p>
+                    <div className="text-slate-700 border-l-4 border-blue-300 pl-3 mb-3">
+                      <p className="font-bold text-blue-800">題目</p>
+                      <p>已知 <Latex math="y" /> 與 <Latex math="x" /> 成反比。當 <Latex math="x=4" /> 時，<Latex math="y=5" />。求當 <Latex math="x=10" /> 時的 <Latex math="y" /> 值。</p>
+                    </div>
+                    <div className="border-t border-blue-200 pt-2 text-slate-700">
+                      <p className="font-bold text-blue-800">答案</p>
+                      <Latex math={String.raw`\begin{aligned} xy &= 4 \times 5 \\ 10y &= 4 \times 5 \\ 10y &= 20 \\ y &= 2 \end{aligned}`} block left />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -4119,8 +4147,7 @@ const CongruentConditionsSVG = () => {
       <g transform="translate(0, 560)">
         <text x="20" y="40" fontSize="16" fontWeight="bold" fill="#334155">(e) [簡記 : RHS]</text>
         <text x="140" y="100" fontSize="16" fill="#334155" textAnchor="end" fontWeight="bold">
-          <tspan x="140" dy="0">不是夾角,</tspan>
-          <tspan x="140" dy="20">但是直角</tspan>
+          <tspan x="140" dy="0">直角不能是夾角</tspan>
         </text>
         
         {/* T1 */}
@@ -4204,7 +4231,7 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
                   <span className="mr-2 font-sans">∴</span>
                   <span>三角形 <span className="italic">ABC</span> 與 三角形 <span className="italic">PQR</span>  全等，即</span>
                   <span className="bg-yellow-200 px-2 py-1 rounded inline-flex items-center gap-1 font-sans ml-2 relative">
-                    <Latex math="\triangle ABC\cong\triangle PQR" />
+                    <Latex math="\triangle\,\mathit{ABC}\cong\triangle\,\mathit{PQR}" />
                     <div className="absolute -bottom-6 right-0 text-red-600 text-sm font-sans whitespace-nowrap">按順序排列</div>
                     <div className="absolute -right-4 top-1/2 translate-x-full -translate-y-1/2 flex items-center">
                       <svg width="48" height="24" viewBox="0 0 48 24" fill="none" stroke="currentColor" className="text-slate-800" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
