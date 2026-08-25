@@ -2435,7 +2435,7 @@ export const CirclesCylindersF2Notes = ({ activeSub }) => {
                    </div>
                    
                    <svg viewBox="0 0 160 160" className="w-40 h-40 overflow-visible absolute top-0 left-0 pointer-events-none hidden md:block">
-                      <path d="M 160 85 Q 140 100 115 75" fill="none" stroke="#ef4444" strokeWidth="1.5" markerEnd="url(#arrow-red-100)" />
+                      <path d="M 160 100 Q 125 120 95 85" fill="none" stroke="#ef4444" strokeWidth="1.5" markerEnd="url(#arrow-red-100)" />
                       <defs>
                         <marker id="arrow-red-100" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
                           <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
