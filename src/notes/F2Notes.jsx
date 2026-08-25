@@ -67,18 +67,18 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-2">📝 2. 相似三角形的性質</h3>
             <p className="text-slate-700 font-bold mb-3">按字母前中後認對應角/邊</p>
-            <p className="text-slate-700 mb-2">若 <span className="font-bold">△<span className="italic">ABC</span> ~ △<span className="italic">XYZ</span></span>，則</p>
+            <p className="text-slate-700 mb-2">若 <span className="font-bold"><Latex math="\triangle ABC \sim \triangle XYZ" /></span>，則</p>
             
             <div className="space-y-4 pl-4">
               <div className="bg-white p-3 rounded shadow-sm">
                 <div className="flex items-start gap-2 mb-1">
                   <span className="font-bold text-slate-700">(a)</span>
                   <div>
-                    <span className="font-bold text-slate-800 tracking-wider italic">∠A=∠X , ∠B=∠Y , ∠C=∠Z</span>
+                    <span className="font-bold text-slate-800 tracking-wider"><Latex math="\angle A = \angle X,\quad \angle B = \angle Y,\quad \angle C = \angle Z" /></span>
                   </div>
                   <span className="ml-auto font-bold text-purple-700">角度相等</span>
                 </div>
-                <p className="text-slate-600 text-sm ml-6 mb-2">〔簡記：<span className="text-red-700 font-bold">相似 △ 的對應角</span>〕</p>
+                <p className="text-slate-600 text-sm ml-6 mb-2">〔簡記：<span className="text-red-700 font-bold">相似 <Latex math="\triangle" /> 的對應角</span>〕</p>
               </div>
               
               <div className="bg-white p-3 rounded shadow-sm">
@@ -91,12 +91,12 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                   </div>
                   <span className="ml-auto font-bold text-purple-700">長度按比例</span>
                 </div>
-                <p className="text-slate-600 text-sm ml-6 mb-2">〔簡記：<span className="text-red-700 font-bold">相似 △ 的對應邊</span>〕</p>
+                    <p className="text-slate-600 text-sm ml-6 mb-2">〔簡記：<span className="text-red-700 font-bold">相似 <Latex math="\triangle" /> 的對應邊</span>〕</p>
               </div>
             </div>
             
             <div className="bg-white rounded-lg p-4 mt-4 border border-slate-200">
-              <p className="text-sm text-slate-600 mb-2">例如：已知 <span className="font-bold text-slate-800">△<span className="italic">ABC</span> ~ △<span className="italic">PQR</span></span>。求 x 和 y。</p>
+              <p className="text-sm text-slate-600 mb-2">例如：已知 <span className="font-bold text-slate-800"><Latex math="\triangle ABC \sim \triangle PQR" /></span>。求 <Latex math="x" /> 和 <Latex math="y" />。</p>
               
               <div className="relative">
                 <div className="text-center mb-2 mx-auto text-green-700 font-bold bg-green-100 px-3 py-1 rounded inline-block">
@@ -160,16 +160,16 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                   <div className="bg-slate-50 rounded p-3 text-[15px]">
                     <div className="flex justify-between items-center bg-yellow-100 px-2 py-1 rounded mb-2">
-                       <span className="font-bold italic">∠A = ∠P</span>
-                       <span className="text-slate-600 text-sm">(相似 △ 的對應角)</span>
+                       <span className="font-bold"><Latex math="\angle A = \angle P" /></span>
+                       <span className="text-slate-600 text-sm">(相似 <Latex math="\triangle" /> 的對應角)</span>
                     </div>
                     <div className="px-2 font-bold mb-4">
-                      x = 56°
+                      <Latex math="x = 56^\circ" />
                     </div>
                     
                     <div className="flex justify-between items-center bg-yellow-100 px-2 py-1 rounded mb-2">
                        <span className="font-bold"><Latex math="\dfrac{AB}{PQ} = \dfrac{AC}{PR}" /></span>
-                       <span className="text-slate-600 text-sm">(相似 △ 的對應邊)</span>
+                       <span className="text-slate-600 text-sm">(相似 <Latex math="\triangle" /> 的對應邊)</span>
                     </div>
                     <div className="px-2 space-y-2 font-bold">
                        <Latex math="\dfrac{4.5}{y} = \dfrac{3}{4}" block left/>
@@ -533,21 +533,21 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
                     <text x="83" y="72" fontSize="12" fill="#334155" fontStyle="italic">x</text>
                   </svg>
                   <div className="text-sm text-slate-700">
-                    <p className="text-green-700 font-bold mb-1">底角 = 67°</p>
+                    <p className="text-green-700 font-bold mb-1">底角 <Latex math="=67^\circ" /></p>
                     <div className="grid grid-cols-[auto_auto_1fr] gap-x-2">
-                      <div className="text-right">x</div>
-                      <div className="text-center">=</div>
-                      <div className="text-left">180° - 67° - 67°</div>
+                      <div className="text-right"><Latex math="x" /></div>
+                      <div className="text-center"><Latex math="=" /></div>
+                      <div className="text-left"><Latex math="180^\circ - 67^\circ - 67^\circ" /></div>
                       
-                      <div className="text-right">x</div>
-                      <div className="text-center">=</div>
-                      <div className="text-left">46°</div>
+                      <div className="text-right"><Latex math="x" /></div>
+                      <div className="text-center"><Latex math="=" /></div>
+                      <div className="text-left"><Latex math="46^\circ" /></div>
                     </div>
                   </div>
                 </div>
               </div>
               <p className="text-sm text-slate-600 text-center mt-3">
-                <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(等腰△底角)</span>
+                <span className="bg-white border rounded px-2 py-0.5 font-bold text-green-900">(等腰 <Latex math="\triangle" /> 底角)</span>
               </p>
             </div>
           </div>
