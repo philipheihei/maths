@@ -57,15 +57,17 @@ export const LawsOfIndicesNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="scientific-notation" title="科學記數法" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
         <div className="space-y-4">
-          <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <p className="text-slate-700 mb-2">正指數向右移小數點：</p>
-            <Latex math="1.496 \times 10^8 = 149600000" block />
-            <Latex math="\text{前面數字必需 } \ge 1 \text{ 且 } < 10" block />
-          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-slate-700 mb-2">正指數向右移小數點：</p>
+              <Latex math="1.496 \times 10^8 = 149600000" block />
+              <Latex math="\text{前面數字必需 } \ge 1 \text{ 且 } < 10" block />
+            </div>
 
-          <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <p className="text-slate-700 mb-2">負指數向左移小數點：</p>
-            <Latex math="5.62 \times 10^{−5} = 0.0000562" block />
+            <div className="bg-white rounded-lg p-4 border border-slate-200">
+              <p className="text-slate-700 mb-2">負指數向左移小數點：</p>
+              <Latex math="5.62 \times 10^{−5} = 0.0000562" block />
+            </div>
           </div>
 
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
