@@ -1937,27 +1937,35 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                 <span className="underline decoration-purple-500 decoration-2 text-purple-700">常數 (沒 x)</span>
               </div>
 
-              <div className="bg-slate-50 p-4 rounded-lg">
-                <div className="space-y-1 font-semibold text-slate-800">
-                  <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                    <span>左方</span>
-                    <span><Latex math="=" /></span>
-                    <Latex math="(3x+1)(x+7)" />
+              <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(300px,0.75fr)] gap-6 items-start">
+                <div className="bg-slate-50 p-4 rounded-lg">
+                  <div className="space-y-1 font-semibold text-slate-800">
+                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
+                      <span>左方</span>
+                      <span><Latex math="=" /></span>
+                      <Latex math="(3x+1)(x+7)" />
+                    </div>
+                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
+                      <span className="invisible">左方</span>
+                      <span><Latex math="=" /></span>
+                      <Latex math="3x^2 + 21x + x + 7" />
+                    </div>
+                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
+                      <span className="invisible">左方</span>
+                      <span><Latex math="=" /></span>
+                      <Latex math="3x^2 + 22x + 7" />
+                    </div>
                   </div>
-                  <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                    <span className="invisible">左方</span>
-                    <span><Latex math="=" /></span>
-                    <Latex math="3x^2 + 21x + x + 7" />
-                  </div>
-                  <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
-                    <span className="invisible">左方</span>
-                    <span><Latex math="=" /></span>
-                    <Latex math="3x^2 + 22x + 7" />
+                  <div className="mt-4 pt-3 border-t border-slate-200 font-semibold text-slate-800">
+                    <div className="grid grid-cols-[auto_auto_1fr] items-baseline gap-x-2">
+                      <span>右方</span>
+                      <span><Latex math="=" /></span>
+                      <Latex math="3x^2 + Px − 7Q" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="mt-4 bg-slate-50 p-4 rounded-lg flex flex-col md:flex-row gap-6 justify-center">
+
+                <div className="bg-slate-50 p-4 rounded-lg w-full flex flex-col gap-6 justify-center">
                  <div className="flex flex-col text-green-600 font-bold border-l-4 border-green-400 pl-3">
                    <p className="text-slate-600 text-sm mb-1">比較 x 項：</p>
                    <div className="grid grid-cols-[auto_auto] items-baseline gap-x-2">
@@ -1976,6 +1984,7 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                      <Latex math="= −1" />
                    </div>
                  </div>
+                </div>
               </div>
             </div>
           </div>
