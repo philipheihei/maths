@@ -593,7 +593,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-slate-800 mb-3">考試實戰例題</h3>
             <div className="bg-red-50 p-3 rounded mb-3">
               <p className="text-sm text-green-700 mb-2">題目：</p>
-              <p className="text-slate-800 mb-2">若二次方程 <Latex math="16x^2 + kx + 1 = 0" /> 有一個二重實根，求 <Latex math="k" /> 的值。</p>
+              <p className="text-slate-800 mb-2">若二次方程 <Latex math="16x^2 + kx + 1 = 0" /> 有一個<span className="bg-yellow-200 px-1 rounded">二重實根</span>，求 <Latex math="k" /> 的值。</p>
             </div>
             
             <div className="pl-4 border-l-2 border-slate-300 space-y-2 text-slate-700">
@@ -609,7 +609,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-blue-200">
             <div className="bg-blue-50 p-3 rounded mb-3">
               <p className="text-sm text-green-700 mb-2">題目：</p>
-              <p className="text-slate-800 mb-2">若 <Latex math="y = 3x^2 + 6x − (k + 2)" /> 的圖像與 <Latex math="x" /> 軸並不相交，求 <Latex math="k" /> 的取值範圍。</p>
+              <p className="text-slate-800 mb-2">若 <Latex math="y = 3x^2 + 6x − (k + 2)" /> 的圖像與 <Latex math="x" /> 軸並<span className="bg-yellow-200 px-1 rounded">不相交</span>，求 <Latex math="k" /> 的取值範圍。</p>
             </div>
             
             <div className="pl-4 border-l-2 border-slate-300 space-y-2 text-slate-700">
@@ -904,7 +904,7 @@ export const FunctionNotes = ({ activeSub }) => {
                 <span className="text-blue-600 font-bold">答案：</span>
                 <Latex math="f(2) = 5(2) − 1 = 9" />
               </div>
-              <div>
+              <div className="pl-12">
                 <Latex math="2f(3) = 2[5(3) − 1] = 2 \times 14 = 28" />
                 <span className="text-slate-500 ml-2">← 2×f(3)</span>
               </div>
@@ -928,18 +928,16 @@ export const FunctionNotes = ({ activeSub }) => {
           </div>
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <p className="text-sm text-green-700 mb-2">題目：考慮 <Latex math="H(x) = \frac{x+1}{x}" />，其中 <Latex math="x \neq 0" /></p>
-            <p className="text-xs text-slate-500 mb-2">(a) 求 H(2) 和 H(½) 的值 &nbsp; (b) 求 H(½) ÷ H(2) 的值</p>
+            <p className="text-slate-800 mb-2">(a) 求 <Latex math="H(2)" /> 和 <Latex math="H\!\left(\frac{1}{2}\right)" /> 的值 &nbsp; (b) 求 <Latex math="H\!\left(\frac{1}{2}\right) \div H(2)" /> 的值</p>
             <div className="bg-white rounded-lg p-3 text-sm space-y-2">
-              <div>
+              <div className="flex w-full flex-wrap items-center gap-x-8 gap-y-2 text-lg">
                 <span className="text-blue-600 font-bold">a. </span>
                 <Latex math="H(2) = \frac{2+1}{2} = \frac{3}{2}" />
-              </div>
-              <div>
                 <Latex math="H\!\left(\frac{1}{2}\right) = \frac{\frac{1}{2}+1}{\frac{1}{2}} = \frac{1.5}{0.5} = 3" />
               </div>
-              <div className="border-t pt-2">
-                <span className="text-blue-600 font-bold">(b) </span>
-                <Latex math="H\!\left(\frac{1}{2}\right) \div H(2) = 3 \div \frac{3}{2} = 2" />
+              <div className="border-t pt-2 flex items-center text-lg">
+                <span className="text-blue-600 font-bold">b. </span>
+                <span className="ml-8"><Latex math="H\!\left(\frac{1}{2}\right) \div H(2) = 3 \div \frac{3}{2} = 2" /></span>
               </div>
               <p className="text-green-600 text-xs mt-1">→ <span className="bg-yellow-200 px-1 rounded">分別代入之前成果</span></p>
             </div>
@@ -951,7 +949,7 @@ export const FunctionNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <p className="text-sm font-bold text-slate-700 mb-2">16. 考慮 <Latex math="g(x) = 2x^2 + ax" /> 其中 a 是一個常數，且 <Latex math="g(−1) = 1" /></p>
-            <p className="text-xs text-slate-500 mb-3">(a) 求 a 的值 &nbsp; (b) 若 g(t) = 6，求 t 的值</p>
+            <p className="text-slate-800 mb-3">(a) 求 <Latex math="a" /> 的值 &nbsp; (b) 若 <Latex math="g(t) = 6" />，求 <Latex math="t" /> 的值</p>
 
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-blue-600 font-bold text-sm mb-2">答案：</p>
@@ -1007,7 +1005,7 @@ export const FunctionNotes = ({ activeSub }) => {
 
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">📝 一般式：<Latex math="ax^2 + bx + c = 0" /></h3>
-            <p className="text-green-700 font-bold mb-3">a：開口方向</p>
+            <p className="text-green-700 font-bold mb-3"><Latex math="a" />：開口方向</p>
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="bg-white rounded-lg p-4 text-center border border-green-200 flex flex-col items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-16 h-16 mb-2">
@@ -1035,7 +1033,7 @@ export const FunctionNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-3">📐 c：y 截距</h3>
+            <h3 className="font-bold text-blue-800 mb-3"><Latex math="c" />：<Latex math="y" /> 截距</h3>
             <p className="text-sm text-slate-600 mb-2">（方程掂 y 軸的位置）</p>
             <div className="space-y-2 text-sm">
               <p>在 x 軸之<span className="text-red-600 font-bold">下</span> → <Latex math="c < 0" /></p>
