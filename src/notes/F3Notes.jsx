@@ -373,16 +373,16 @@ export const PercentageF3Notes = ({ activeSub }) => {
             <p className="text-slate-700 mb-4 font-bold">每年分開計算，不會疊加</p>
             
             <div className="bg-white rounded-lg p-4 border-2 border-cyan-300">
-              <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-red-600 font-bold mb-1">A. 本利和：</p>
-                  <p className="text-slate-800 ml-4 font-bold text-lg text-center bg-slate-50 py-2 rounded">
+                  <p className="text-slate-800 font-bold text-lg text-center bg-slate-50 py-2 rounded">
                     本金 + 本金 × 年利率 × 年期
                   </p>
                 </div>
                 <div>
                   <p className="text-red-600 font-bold mb-1">B. 利息：</p>
-                  <p className="text-slate-800 ml-4 font-bold text-lg text-center bg-slate-50 py-2 rounded">
+                  <p className="text-slate-800 font-bold text-lg text-center bg-slate-50 py-2 rounded">
                     本金 × 年利率 × 年期
                   </p>
                 </div>
@@ -401,7 +401,7 @@ export const PercentageF3Notes = ({ activeSub }) => {
                 <div className="mt-4 bg-blue-50 border border-blue-300 rounded-lg p-3">
                   <p className="text-blue-800 font-bold mb-2">題目：</p>
                   <p className="text-sm text-blue-800 mb-2">
-                    本金 <Latex math="\$10{,}000" />，年利率 <Latex math="6\%" />，半年一結，年期 <Latex math="3" /> 年。
+                    存款 <Latex math="\$10{,}000" />，年利率 <Latex math="6\%" />，年期 <Latex math="3" /> 年，複利計算，半年一結。
                   </p>
                   <div className="text-sm text-blue-800 space-y-1 mb-3">
                     <p>(a) 求本利和。</p>
@@ -424,7 +424,7 @@ export const PercentageF3Notes = ({ activeSub }) => {
                     <tr className="bg-blue-100">
                       <th className="border border-blue-200 px-3 py-2">結算週期</th>
                       <th className="border border-blue-200 px-3 py-2">n (每年次數)</th>
-                      <th className="border border-blue-200 px-3 py-2">例子：年利率 6%</th>
+                      <th className="border border-blue-200 px-3 py-2">例子：年利率 6%（<Latex math="t" /> 是一年期數）</th>
                     </tr>
                   </thead>
                   <tbody>
