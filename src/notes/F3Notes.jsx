@@ -271,13 +271,17 @@ export const PercentageF3Notes = ({ activeSub }) => {
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg p-4 border border-green-200">
             <p className="text-green-700 font-bold mb-2">增加 <Latex math="n\%" /> → <Latex math="\times (1+n\%)" /></p>
-            <p className="text-slate-600 text-sm">例：24 增加 20%</p>
-            <Latex math="\rightarrow 24 \times (1 + 20\%) = 28.8" block />
+            <div className="flex flex-wrap items-center gap-3 text-lg text-slate-600">
+              <span>例：<Latex math="24" /> 增加 <Latex math="20\%" /></span>
+              <Latex math="\rightarrow 24 \times (1 + 20\%) = 28.8" />
+            </div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-red-200">
             <p className="text-red-700 font-bold mb-2">減少 <Latex math="n\%" /> → <Latex math="\times (1−n\%)" /></p>
-            <p className="text-slate-600 text-sm">例：30 減少 20%</p>
-            <Latex math="\rightarrow 30 \times (1 − 20\%) = 24" block />
+            <div className="flex flex-wrap items-center gap-3 text-lg text-slate-600">
+              <span>例：<Latex math="30" /> 減少 <Latex math="20\%" /></span>
+              <Latex math="\rightarrow 30 \times (1 − 20\%) = 24" />
+            </div>
           </div>
         </div>
       </div>
@@ -395,11 +399,18 @@ export const PercentageF3Notes = ({ activeSub }) => {
                 </div>
 
                 <div className="mt-4 bg-blue-50 border border-blue-300 rounded-lg p-3">
+                  <p className="text-blue-800 font-bold mb-2">題目：</p>
                   <p className="text-sm text-blue-800 mb-2">
-                    <span className="font-bold">例子：</span>本金 $10,000，年利率 6%，半年一結，年期 3 年
+                    本金 <Latex math="\$10{,}000" />，年利率 <Latex math="6\%" />，半年一結，年期 <Latex math="3" /> 年。
                   </p>
-                  <div className="text-sm text-blue-900 my-2">
-                    <Latex math="\text{本金} \times \left(1 + \frac{6\%}{2}\right)^{6} = 10{,}000 \times (1.03)^{6}" />
+                  <div className="text-sm text-blue-800 space-y-1 mb-3">
+                    <p>(a) 求本利和。</p>
+                    <p>(b) 求利息。</p>
+                  </div>
+                  <p className="text-blue-800 font-bold mb-2">答案：</p>
+                  <div className="text-sm text-blue-900 my-2 space-y-2">
+                    <div><span className="font-bold">(a) 本利和：</span><Latex math="\text{本金} \times \left(1 + \frac{6\%}{2}\right)^{6} = 10{,}000 \times (1.03)^{6} = \text{\$11,941（約至最接近的整數）}" /></div>
+                    <div><span className="font-bold">(b) 利息：</span><Latex math="\text{本利和} - \text{本金} = 11{,}941 - 10{,}000 = \text{\$1,941}" /></div>
                   </div>
                   <p className="text-xs text-blue-700 mt-2">
                     💡 期數 = 年期 × 每年結算次數 = 3 × 2 = 6
@@ -873,7 +884,6 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       </div>
 
       <CollapsibleSection id="parallelogram" title="平行四邊形的定義和性質" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
-        <div className="text-sm text-slate-500 mb-3">3A05 §5.1, 5.2</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">(a) 定義</h3>
@@ -915,7 +925,6 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="parallelogram-test" title="平行四邊形的判定條件" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
-        <div className="text-sm text-slate-500 mb-3">3A05 §5.3</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
             { label: '(a) 兩對對邊相等', abbr: '(簡記：對邊相等)' },
@@ -932,7 +941,6 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="special-shapes" title="菱形 / 長方形 / 正方形的定義和性質" num={3} color="orange" activeSub={activeSub} sectionRef={s3}>
-        <div className="text-sm text-slate-500 mb-3">3A05 §5.4A–C</div>
         {/* 菱形 */}
         <div className="bg-purple-50 rounded-lg p-4 border-l-4 border-purple-500 mb-6">
           <h3 className="font-bold text-purple-800 mb-4 text-lg">③ 菱形的定義和性質</h3>
@@ -996,7 +1004,6 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="midpoint-theorem" title="中點定理 (Mid-point Theorem)" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
-        <div className="text-sm text-slate-500 mb-3">3A05 §5.6A</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
             <p className="text-slate-700">若 <i>M</i> 和 <i>N</i> 分別是 <i>AB</i> 和 <i>AC</i> 的中點，</p>
@@ -1027,7 +1034,6 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="intercept-theorem" title="截線定理 (Intercept Theorem)" num={5} color="purple" activeSub={activeSub} sectionRef={s5}>
-        <div className="text-sm text-slate-500 mb-3">3A05 §5.6B</div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="border border-slate-200 rounded-lg p-4 space-y-3">
             <h3 className="font-bold text-purple-700">款式A：三條平行線</h3>
