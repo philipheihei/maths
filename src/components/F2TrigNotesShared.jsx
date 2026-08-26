@@ -190,11 +190,11 @@ export const TrigRatiosNotesBlock = () => {
         <div className="bg-white rounded-xl mt-3 border border-green-100 overflow-hidden" style={{ background: '#ffffff' }}>
           <svg viewBox="0 0 600 260" className="w-full h-auto mx-auto" style={{ maxWidth: '600px' }}>
             <defs>
-              <marker id="arrowBlueShared" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-                <path d="M 0 2 L 10 6 L 0 10 z" fill="#3b75a6" />
+              <marker id="arrowBlueShared" markerWidth="8.64" markerHeight="8.64" refX="7.2" refY="4.32" orient="auto">
+                <path d="M 0 1.44 L 7.2 4.32 L 0 7.2 z" fill="#3b75a6" />
               </marker>
-              <marker id="arrowGreenShared" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-                <path d="M 0 2 L 10 6 L 0 10 z" fill="#5ba678" />
+              <marker id="arrowGreenShared" markerWidth="8.64" markerHeight="8.64" refX="7.2" refY="4.32" orient="auto">
+                <path d="M 0 1.44 L 7.2 4.32 L 0 7.2 z" fill="#5ba678" />
               </marker>
             </defs>
 
@@ -209,7 +209,7 @@ export const TrigRatiosNotesBlock = () => {
             <path d="M 330 180 A 50 50 0 0 1 341 149" fill="none" stroke="#475569" strokeWidth="2.5" />
             <text x="315" y="170" fill="#3b75a6" fontSize="24" fontWeight="bold" textAnchor="middle" fontStyle="italic">θ</text>
 
-            <line x1="295" y1="150" x2="190" y2="100" stroke="#3b75a6" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowBlueShared)" />
+            <line x1="295" y1="150" x2="185" y2="97.6" stroke="#3b75a6" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowBlueShared)" />
             <line x1="210" y1="155" x2="270" y2="101" stroke="#5ba678" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowGreenShared)" />
 
             <text x="165" y="90" textAnchor="end" fill="#3b75a6" fontSize="24" fontWeight="bold" fontFamily="sans-serif">
