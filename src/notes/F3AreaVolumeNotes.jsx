@@ -422,7 +422,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
 
             <div className="bg-red-50 rounded-lg p-4 border border-red-200">
               <h3 className="font-bold text-red-800 mb-3 text-lg flex items-center gap-2">
-                <span className="text-2xl">🔥</span> 已知面積比 <Latex math="\rightarrow\rightarrow" inline /> 求體積比
+                <span className="text-2xl">🔥</span> 已知面積比 <Latex math="\rightarrow" inline /> 求體積比
               </h3>
               <div className="bg-white rounded p-5 shadow-sm font-sans">
                 <p className="text-blue-900 font-bold mb-4 text-base md:text-lg">e.g. A 和 B 立體的面積比是 <Latex math="16 : 25" inline /></p>
