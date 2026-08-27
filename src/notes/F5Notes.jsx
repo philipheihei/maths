@@ -1920,7 +1920,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
                 e.g. <Latex math="A(0, 1)" inline /> 在圓形 <Latex math="x^2 + y^2 - 6x + 8y - 11 = 0" inline /> 的圓內、圓外或圓上？
               </p>
               <pre className="whitespace-pre font-sans text-blue-900 mt-2">
-                <Latex math="\begin{aligned} &\quad x^2 + y^2 - 6x + 8y - 11 \\ &= (\color{#ef4444}{0})^2 + (\color{#22c55e}{1})^2 - 6(\color{#ef4444}{0}) + 8(\color{#22c55e}{1}) - 11 \\ &= -2 \\ &\quad -2 < 0 \end{aligned}" block />
+                <Latex math="\begin{aligned} &\quad \color{#2563eb}{x^2 + y^2 - 6x + 8y - 11} \\ &= \color{#2563eb}{(}\color{#ef4444}{0}\color{#2563eb}{)^2 + (}\color{#22c55e}{1}\color{#2563eb}{)^2 - 6(}\color{#ef4444}{0}\color{#2563eb}{) + 8(}\color{#22c55e}{1}\color{#2563eb}{) - 11} \\ &= \color{#2563eb}{-2 < 0} \end{aligned}" block />
               </pre>
               <p className="text-slate-800 font-bold mt-2">∴ <Latex math="A" inline /> 點位於圖形內</p>
             </div>
@@ -1968,19 +1968,15 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
                 </div>
               </div>
 
-              <div className="w-full flex justify-center">
-                <div className="h-4 border-l-2 border-slate-300"></div>
-              </div>
-
               <div className="flex flex-col md:flex-row items-center gap-6">
-                <div className="flex-1 flex flex-col items-center bg-blue-50 py-2 px-4 rounded w-full">
+                <div className="flex-1 flex flex-col items-center gap-0 bg-blue-50 py-2 px-4 rounded w-full [&_.block]:my-0">
                   <Latex math="y^2 + 4y + 4 + y^2 - 8y - 16 + 8y - 32 = 0" block />
                   <Latex math="\color{#1d4ed8}{2y^2 + 4y - 44 = 0}" block />
                   <p className="text-xs text-purple-700 mt-1 mb-2">a &emsp;&emsp; b &emsp;&emsp; c</p>
                   <Latex math="\underline{y^2 + 2y - 22 = 0}" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
-                  3. 化簡至一般式一元二次方程
+                  3. 化簡至二次方程一般式
                 </div>
               </div>
 
@@ -2021,7 +2017,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <h3 className="font-bold text-amber-900 mb-3">💡 直線和圓形方程的交點坐標：計算機 Prog 02</h3>
             <div className="bg-white p-3 rounded border border-slate-200 flex flex-col md:flex-row items-center justify-between">
               <div className="flex-1">
-                <Latex math="\begin{cases} \enspace\color{#fbbf24}{1}x \color{#fbbf24}{-5}y = \color{#fbbf24}{-3} \\ \enspace x^2 + y^2 + 2x - 6y - 3 = 0 \end{cases}" block />
+                <Latex math="\begin{cases} \enspace 1x - 5y = -3 \\ \enspace x^2 + y^2 + 2x - 6y - 3 = 0 \end{cases}" block />
               </div>
               <div className="flex-1 text-slate-800 font-bold text-center mt-3 md:mt-0">
                 <span className="text-blue-600 mr-2 text-xl">⇒</span> <Latex math="x = -3, y = 0 \enspace ; \enspace x = 2, y = 1" inline />
