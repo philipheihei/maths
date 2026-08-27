@@ -1796,12 +1796,14 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <MathDisplay math="(x - \text{x坐標})^2 + (y - \text{y坐標})^2 = \text{半徑}^2" />
             <div className="bg-white border border-slate-200 rounded p-4 mt-3">
               <p className="text-blue-800 font-bold mb-2">e.g. 已知一圓的圓心 <Latex math="(-1, 6)" inline /> 和半徑 9，可列出：</p>
-              <pre className="whitespace-pre font-sans text-lg text-blue-900 flex flex-col items-center">
-                <div>
-                  <Latex math="[x - (-1)]^2 + (y - 6)^2 = 9^2" block />
-                  <Latex math="(x + 1)^2 + (y - 6)^2 = 81" block />
-                </div>
-              </pre>
+              <div className="grid w-fit mx-auto grid-cols-[auto_auto_auto] items-baseline gap-x-1 gap-y-0 text-lg text-blue-900 text-left">
+                <span className="justify-self-end"><Latex math="[x - (-1)]^2 + (y - 6)^2" inline /></span>
+                <Latex math="=" inline />
+                <Latex math="9^2" inline />
+                <span className="justify-self-end"><Latex math="(x + 1)^2 + (y - 6)^2" inline /></span>
+                <Latex math="=" inline />
+                <Latex math="81" inline />
+              </div>
               <p className="text-purple-700 text-sm mt-3 text-right">← 不需展開有代數的 <Latex math="(\ )^2" inline />，只需化簡數字</p>
             </div>
           </div>
