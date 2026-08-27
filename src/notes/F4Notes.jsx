@@ -1103,9 +1103,12 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
               <span className="text-xl font-bold text-blue-700"><Latex math="y − y_1 = m(x − x_1)" /></span>
             </div>
             <div className="flex flex-col gap-2">
-              <p className="text-slate-700"><span className="font-bold text-purple-700">需得知資訊：</span>一點坐標 + 斜率</p>
+              <p className="text-slate-700"><span className="font-bold text-purple-700">需得知資訊：</span>一點坐標 + 斜率 <Latex math="m" /></p>
               <div className="bg-white p-2 rounded text-sm text-blue-800">
-                <span className="font-bold">例：</span>題目提供 坐標 (3, 7) → 代入 <Latex math="(x_1, y_1)" />
+                <span className="font-bold">例：</span>題目提供一點坐標 (3, 7)，斜率為 2，直接代入：
+                <div className="mt-1 text-center text-base">
+                  <Latex math="y - 7 = 2(x - 3)" block />
+                </div>
               </div>
             </div>
           </div>
@@ -1131,17 +1134,15 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
       <CollapsibleSection id="general-form-line" title="直線一般式" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
         <div className="space-y-4">
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <h3 className="font-bold text-green-800 mb-3">直線一般式</h3>
-            <div className="bg-white border border-green-200 rounded p-3 text-center mb-3">
-              <Latex math="Ax + By + C = 0" block />
+            <div className="flex flex-wrap items-center justify-start gap-x-3 gap-y-1 bg-white border border-green-200 rounded px-3 py-2 mb-3">
+              <h3 className="font-bold text-green-800">直線一般式：</h3>
+              <Latex math="Ax + By + C = 0" />
             </div>
-            <div className="bg-yellow-100 border border-yellow-300 rounded p-3 mb-3">
-              <p className="text-slate-800 font-bold mb-1">* 可用來找：</p>
-              <div className="text-center text-lg text-red-600 font-bold">
-                斜率 <Latex math="= −\frac{A}{B}" />
-              </div>
+            <div className="flex flex-wrap items-center justify-start gap-x-2 gap-y-1 bg-yellow-100 border border-yellow-300 rounded px-3 py-2 mb-3 text-red-600 font-bold">
+              <span className="text-slate-800">* 可用來找：</span>
+              <span className="text-lg">斜率 <Latex math="= −\frac{A}{B}" /></span>
             </div>
-            <p className="text-slate-700 text-sm">亦可透過代 <Latex math="x = 0" /> / <Latex math="y = 0" /> 找 <span className="bg-pink-200 px-1 rounded text-pink-800">y截距</span> / <span className="bg-green-200 px-1 rounded text-green-800">x截距</span></p>
+            <p className="text-slate-700 text-sm">亦可透過代 <span className="bg-pink-200 px-1 rounded text-pink-800"><Latex math="x = 0" /></span> / <span className="bg-green-200 px-1 rounded text-green-800"><Latex math="y = 0" /></span> 找 <span className="bg-pink-200 px-1 rounded text-pink-800">y截距</span> / <span className="bg-green-200 px-1 rounded text-green-800">x截距</span></p>
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
@@ -1221,7 +1222,7 @@ export const LogFunctionNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">（初中只限整數次方 ／ 高中包括分數次方）</h3>
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-3 items-start">
               <div className="bg-white p-4 rounded-lg flex items-center gap-6 w-fit mx-auto md:mx-0 shadow-sm border border-slate-100">
                 <div className="flex flex-col gap-3">
                   <Latex math="\sqrt[3]{x^4}" />
@@ -1237,7 +1238,7 @@ export const LogFunctionNotes = ({ activeSub }) => {
                 </div>
               </div>
 
-              <div className="bg-white p-3 rounded-lg flex items-center justify-between">
+              <div className="bg-white p-3 rounded-lg flex items-center gap-3 flex-wrap">
                 <Latex math="\sqrt[5]{a^2 b^2}" />
                 <span className="font-bold text-blue-500">→</span>
                 <Latex math="(a^2 b^2)^{\frac{1}{5}}" />
@@ -1296,7 +1297,7 @@ export const LogFunctionNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-slate-200">
-            <p className="text-sm text-slate-600 mb-2">例子 (Q19)：化簡</p>
+            <p className="text-sm text-slate-600 mb-2">例子：化簡</p>
             <MathDisplay latex={String.raw`
 \begin{aligned}
 \frac{\log \sqrt{x^5}}{\log \sqrt{x} + \log x} &= \frac{\log(x^5)^{\frac{1}{2}}}{\log x^{\frac{1}{2}} + \log x} \\
@@ -1415,14 +1416,15 @@ x &= 0.5
         <div className="space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">常見應用題型</h3>
-            <div className="flex items-start gap-4">
-              <ul className="text-slate-700 list-none space-y-1 mt-1 font-bold">
+            <div className="flex items-center gap-3">
+              <ul className="text-slate-700 list-none space-y-1 font-bold">
                 <li>- 黎克特制地震</li>
                 <li>- 聲音的強度</li>
-                <li>- 其他</li>
               </ul>
-              <span className="text-red-600 font-bold mt-4 text-xl">{"}"} 不用記公式，題目會提供</span>
+              <span className="inline-block text-red-600 font-bold text-5xl leading-none scale-y-125">{"}"}</span>
+              <span className="text-red-600 font-bold text-xl">不用記公式，題目會提供</span>
             </div>
+            <div className="text-slate-700 font-bold mt-1">- 其他</div>
           </div>
         </div>
       </CollapsibleSection>

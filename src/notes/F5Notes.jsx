@@ -1845,21 +1845,21 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <div className="mt-4">
               <div className="bg-slate-50 p-3 rounded mb-3">
                 <span className="text-red-500 font-bold mr-2">標準式：</span>
-                <Latex math="(x - \color{#16a34a}{3})^2 + (y - \color{#9333ea}{4})^2 = \color{#2563eb}{36}" block />
+                <Latex math="(x - \textcolor{#16a34a}{3})^2 + (y - \textcolor{#9333ea}{4})^2 = \textcolor{#2563eb}{36}" block />
                 <div className="text-center mt-3 text-slate-800 font-bold text-lg">
-                  ∴ 圓心：<Latex math="(\color{#16a34a}{3}, \color{#9333ea}{4})" inline />，半徑：<Latex math="\sqrt{\color{#2563eb}{36}} = 6" inline />
+                  ∴ 圓心：<Latex math="(\textcolor{#16a34a}{3}, \textcolor{#9333ea}{4})" inline />，半徑：<Latex math="\sqrt{\textcolor{#2563eb}{36}} = 6" inline />
                 </div>
                 <p className="text-xs text-slate-500 text-center mt-2">註：加減號為固定格式，數字本身為答案資料</p>
               </div>
 
               <div className="bg-slate-50 p-3 rounded mt-6">
                 <span className="text-red-500 font-bold mr-2">一般式：</span>
-                <Latex math="x^2 + y^2 \color{#16a34a}{-6}x \color{#9333ea}{+8}y \color{#2563eb}{-11} = 0" block />
+                <Latex math="x^2 + y^2 \textcolor{#16a34a}{-6}x \textcolor{#9333ea}{+8}y \textcolor{#2563eb}{-11} = 0" block />
                 <div className="text-center mt-3 text-slate-800 font-bold text-lg">
                   圓心：<Latex math="\left( \frac{\color{#16a34a}{-6}}{-2}, \frac{\color{#9333ea}{+8}}{-2} \right) \rightarrow (3, -4)" inline />
                 </div>
                 <div className="text-center mt-2 text-slate-800 font-bold text-lg">
-                  半徑：<Latex math="\sqrt{(3)^2 + (-4)^2 - (\color{#2563eb}{-11})} = \sqrt{36} = 6" inline />
+                  半徑：<Latex math="\sqrt{(3)^2 + (-4)^2 - (\textcolor{#2563eb}{-11})} = \sqrt{36} = 6" inline />
                 </div>
                 
                 <div className="mt-5 border-t border-slate-200 pt-4 flex flex-col md:flex-row gap-4 items-center">
@@ -1951,7 +1951,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <div className="space-y-6">
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex justify-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="\color{#dc2626}{x = -y - 2}" block />
+                  <Latex math="x = \colorbox{#fef08a}{$-y-2$}" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   1. 先將直線方程轉為 <Latex math="x = ? / y = ?" inline />
@@ -1960,7 +1960,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex justify-center bg-blue-50 py-2 px-4 rounded w-full">
-                  <Latex math="(\color{#dc2626}{-y-2})^2 + y^2 + 8(\color{#dc2626}{-y-2}) + 8y - 32 = 0" block />
+                  <Latex math="(\colorbox{#fef08a}{$-y-2$})^2 + y^2 + 8(\colorbox{#fef08a}{$-y-2$}) + 8y - 32 = 0" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   2. 把 x 代 y / 把 y 代 x<br/>
@@ -1970,10 +1970,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
               <div className="flex flex-col md:flex-row items-center gap-6">
                 <div className="flex-1 flex flex-col items-center gap-0 bg-blue-50 py-2 px-4 rounded w-full [&_.block]:my-0">
-                  <Latex math="y^2 + 4y + 4 + y^2 - 8y - 16 + 8y - 32 = 0" block />
-                  <Latex math="\color{#1d4ed8}{2y^2 + 4y - 44 = 0}" block />
-                  <p className="text-xs text-purple-700 mt-1 mb-2">a &emsp;&emsp; b &emsp;&emsp; c</p>
-                  <Latex math="\underline{y^2 + 2y - 22 = 0}" block />
+                  <Latex math="\begin{aligned} y^2 + 4y + 4 + y^2 - 8y - 16 + 8y - 32 &= 0 \\ 2y^2 + 4y - 44 &= 0 \\ y^2 + 2y - 22 &= 0 \end{aligned}" block />
                 </div>
                 <div className="flex-1 text-green-700 font-bold text-sm">
                   3. 化簡至二次方程一般式
@@ -1995,16 +1992,31 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
                     <div className="border-r border-slate-300 pr-2">
                       <div className="font-bold text-blue-800">情況 I</div>
                       <div><Latex math="\Delta > 0" inline /></div>
+                      <svg viewBox="0 0 84 48" className="w-full h-12 mt-1" aria-label="直線與圓有兩個交點">
+                        <circle cx="42" cy="28" r="17" fill="white" stroke="#0f172a" strokeWidth="1.5" />
+                        <line x1="8" y1="40" x2="76" y2="16" stroke="#0f172a" strokeWidth="1.5" />
+                        <circle cx="27" cy="33" r="2" fill="#2563eb" />
+                        <circle cx="57" cy="23" r="2" fill="#2563eb" />
+                      </svg>
                       <div className="font-bold mt-1">有兩個交點</div>
                     </div>
                     <div className="border-r border-slate-300 pr-2">
                       <div className="font-bold text-slate-800">情況 II</div>
                       <div><Latex math="\Delta = 0" inline /></div>
+                      <svg viewBox="0 0 84 48" className="w-full h-12 mt-1" aria-label="直線與圓有一個交點">
+                        <circle cx="42" cy="29" r="17" fill="white" stroke="#0f172a" strokeWidth="1.5" />
+                        <line x1="8" y1="12" x2="76" y2="12" stroke="#0f172a" strokeWidth="1.5" />
+                        <circle cx="42" cy="12" r="2" fill="#2563eb" />
+                      </svg>
                       <div className="font-bold mt-1">有一個交點</div>
                     </div>
                     <div>
                       <div className="font-bold text-red-800">情況 III</div>
                       <div><Latex math="\Delta < 0" inline /></div>
+                      <svg viewBox="0 0 84 48" className="w-full h-12 mt-1" aria-label="直線與圓沒有交點">
+                        <circle cx="42" cy="31" r="17" fill="white" stroke="#0f172a" strokeWidth="1.5" />
+                        <line x1="8" y1="4" x2="76" y2="4" stroke="#0f172a" strokeWidth="1.5" />
+                      </svg>
                       <div className="font-bold mt-1">沒有交點</div>
                     </div>
                   </div>
@@ -2017,14 +2029,16 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <h3 className="font-bold text-amber-900 mb-3">💡 直線和圓形方程的交點坐標：計算機 Prog 02</h3>
             <div className="bg-white p-3 rounded border border-slate-200 flex flex-col md:flex-row items-center justify-between">
               <div className="flex-1">
-                <Latex math="\begin{cases} \enspace 1x - 5y = -3 \\ \enspace x^2 + y^2 + 2x - 6y - 3 = 0 \end{cases}" block />
+                <Latex math="\begin{cases} \enspace \overset{\textcolor{#dc2626}{\textcircled{1}}}{\colorbox{#fef08a}{$1$}}x \overset{\textcolor{#dc2626}{\textcircled{2}}}{\colorbox{#fef08a}{$-5$}}y = \overset{\textcolor{#dc2626}{\textcircled{3}}}{\colorbox{#fef08a}{$-3$}} \\ \enspace x^2 + y^2 \overset{\textcolor{#dc2626}{\textcircled{4}}}{\colorbox{#fef08a}{$+2$}}x \overset{\textcolor{#dc2626}{\textcircled{5}}}{\colorbox{#fef08a}{$-6$}}y \overset{\textcolor{#dc2626}{\textcircled{6}}}{\colorbox{#fef08a}{$-3$}} = 0 \end{cases}" block />
               </div>
               <div className="flex-1 text-slate-800 font-bold text-center mt-3 md:mt-0">
                 <span className="text-blue-600 mr-2 text-xl">⇒</span> <Latex math="x = -3, y = 0 \enspace ; \enspace x = 2, y = 1" inline />
                 <p className="mt-2 text-emerald-700">∴ 交點：<Latex math="(-3, 0), (2, 1)" inline /></p>
               </div>
             </div>
-            <p className="text-xs text-slate-500 mt-2">註：順序輸入：紅1、紅2、紅3... 為計算機輸入次序及位置</p>
+            <p className="text-xs text-slate-500 mt-2">
+              註：順序輸入：<span className="text-red-600 font-bold">①、②、③、④、⑤、⑥</span> 為計算機輸入次序及位置
+            </p>
           </div>
         </div>
       </CollapsibleSection>
