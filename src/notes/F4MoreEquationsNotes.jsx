@@ -210,7 +210,7 @@ export const MoreEquationsNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-red-600 mb-2">緊記：</h3>
-            <div className="md:flex justify-between items-center text-red-600 font-bold">
+            <div className="flex flex-wrap items-center gap-4 text-red-600 font-bold">
               <div>
                 <p><Latex math="\sin^2\theta = 1 − \cos^2\theta" /></p>
                 <p><Latex math="\cos^2\theta = 1 − \sin^2\theta" /></p>
@@ -220,23 +220,51 @@ export const MoreEquationsNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <p className="text-sm text-slate-600 mb-2">例子：<Latex math="3\cos\theta − 2\sin^2\theta = 0" /></p>
-            <div className="bg-white rounded p-4 font-sans space-y-1">
-              <Step math="3\cos\theta − 2(1 − \cos^2\theta) = 0" explain="目的是將不同的三角函數(sin/cos/tan)變為只得一款" />
-              <Step math="3\cos\theta − 2 + 2\cos^2\theta = 0" />
-              <Step math="2\cos^2\theta + 3\cos\theta − 2 = 0" explain="重整為一般式" />
-              
-              <div className="mt-4 pt-4">
-                <Step math="\cos\theta = 0.5 \text{ 或 } −2\ (\text{捨去})" explain="cosθ 範圍是 -1 至 1" />
-                <Step math="\theta = 60^\circ \text{ 或 } 300^\circ" />
+            <div className="flex flex-col md:flex-row gap-4 items-start">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-slate-600 mb-2">例子：<Latex math="3\cos\theta − 2\sin^2\theta = 0" /></p>
+                <div className="bg-white rounded p-4 font-sans space-y-1">
+                  <Step math="3\cos\theta − 2(1 − \cos^2\theta) = 0" explain="目的是將不同的三角函數(sin/cos/tan)變為只得一款" />
+                  <Step math="3\cos\theta − 2 + 2\cos^2\theta = 0" />
+                  <Step math="2\cos^2\theta + 3\cos\theta − 2 = 0" explain="重整為一般式" />
+                  
+                  <div className="mt-4 pt-4">
+                    <Step math="\cos\theta = 0.5 \text{ 或 } −2\ (\text{捨去})" explain="cosθ 範圍是 -1 至 1" />
+                    <Step math="\theta = 60^\circ \text{ 或 } 300^\circ" />
+                  </div>
               </div>
             </div>
 
-            {/* ASTC Quadrant diagram placeholder */}
-            <div className="mt-4">
-              {/* 📐 待繪製：[ASTC象限圖] — 見下方繪圖規格單 */}
-              <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm">
-                圖示待加入（@數學繪圖師）
+              <div className="w-full md:w-[400px] flex-none flex justify-end md:translate-x-6">
+                <svg viewBox="0 0 700 450" className="w-full max-w-[400px] h-auto" role="img" aria-label="ASTC 象限角度圖">
+                  <defs>
+                    <marker id="astc-arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                      <polygon points="0 0, 6 3, 0 6" fill="#111827" />
+                    </marker>
+                  </defs>
+                  <line x1="120" y1="210" x2="360" y2="210" stroke="#e02424" strokeWidth="4" strokeLinecap="round" />
+                  <line x1="240" y1="90" x2="240" y2="330" stroke="#e02424" strokeWidth="4" strokeLinecap="round" />
+
+                  <text x="300" y="150" fontSize="68" fontWeight="bold" fill="#e02424" textAnchor="middle" dominantBaseline="central">A</text>
+                  <text x="180" y="150" fontSize="68" fontWeight="bold" fill="#e02424" textAnchor="middle" dominantBaseline="central">S</text>
+                  <text x="180" y="270" fontSize="68" fontWeight="bold" fill="#e02424" textAnchor="middle" dominantBaseline="central">T</text>
+                  <text x="300" y="270" fontSize="68" fontWeight="bold" fill="#e02424" textAnchor="middle" dominantBaseline="central">C</text>
+
+                  <text x="425" y="210" fontSize="26" fontWeight="600" fill="#057a55" dominantBaseline="central">0° / 360°</text>
+                  <text x="240" y="65" fontSize="26" fontWeight="600" fill="#057a55" textAnchor="middle" dominantBaseline="central">90°</text>
+                  <text x="100" y="210" fontSize="26" fontWeight="600" fill="#057a55" textAnchor="end" dominantBaseline="central">180°</text>
+                  <text x="240" y="355" fontSize="26" fontWeight="600" fill="#057a55" textAnchor="middle" dominantBaseline="central">270°</text>
+
+                  <text x="390" y="130" fontSize="28" fontWeight="bold" fill="#111827" textAnchor="middle">θ</text>
+                  <text x="155" y="130" fontSize="28" fontWeight="bold" fill="#111827" textAnchor="end">180° − θ</text>
+                  <text x="155" y="295" fontSize="28" fontWeight="bold" fill="#111827" textAnchor="end">180° + θ</text>
+                  <text x="480" y="340" fontSize="28" fontWeight="bold" fill="#111827" textAnchor="middle">360° − θ</text>
+
+                  <path d="M 355 145 L 368 158 L 388 135" stroke="#057a55" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                  <path d="M 345 285 L 358 298 L 378 275" stroke="#057a55" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                  <path d="M 435 320 L 395 295" stroke="#111827" strokeWidth="2.5" strokeLinecap="round" fill="none" markerEnd="url(#astc-arrowhead)" />
+                  <text x="480" y="375" fontSize="25" fontWeight="bold" fill="#1a56db" textAnchor="middle">60° = 300°</text>
+                </svg>
               </div>
             </div>
           </div>
