@@ -638,6 +638,7 @@ export const NOTES_DATA = {
         { id: 'basic-questions', num: 3, title: '考核題型 (1)：分辨與找特定項', color: 'purple' },
         { id: 'advanced-questions', num: 4, title: '考核題型 (2)：求項數與不等式應用', color: 'red' },
         { id: 'other-sequence', num: 5, title: '其他數列', color: 'amber' },
+        { id: 'sequence-pattern-mc', num: 6, title: '數列圖像 MC', color: 'red' },
       ]
     },
     {

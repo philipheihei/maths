@@ -545,8 +545,13 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                 <div className="flex flex-col lg:flex-row gap-4">
                   <div className="flex-1">
                     <p className="text-green-600 mb-2">因題目是直角△，可用畢氏定理得出剩下的邊</p>
-                    <div className="text-sm [&_.katex-display]:my-0.5">
-                      <Latex math="\begin{aligned} 12^2 + RQ^2 &= 13^2 \\\\[−3px] RQ &= 5 \end{aligned}" block left />
+                    <div className="grid w-fit grid-cols-[auto_auto_auto] items-baseline gap-x-1 gap-y-0 text-sm text-left">
+                      <span className="justify-self-end"><Latex math="12^2 + RQ^2" inline /></span>
+                      <Latex math="=" inline />
+                      <Latex math="13^2" inline />
+                      <span className="justify-self-end"><Latex math="RQ" inline /></span>
+                      <Latex math="=" inline />
+                      <Latex math="5" inline />
                     </div>
                   </div>
                   <div className="flex-shrink-0 flex items-center justify-center w-full lg:w-1/2">
@@ -577,17 +582,25 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
           </div>
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <p className="text-base text-blue-700 font-bold mb-3">例 2：已知 <Latex math="\sin\theta = \frac{3}{7}" inline />。求 <Latex math="\frac{\tan\theta}{\cos\theta}" inline /> 的值。</p>
-            <div className="bg-white rounded-lg p-4 mb-3">
+            <div className="bg-white rounded-lg p-4 pb-0 mb-3">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                 <div>
                   <p className="text-slate-700 mb-2">1. 如果題目沒提供 △ 圖像，需自行繪畫</p>
                   <p className="text-slate-700 mb-3">2. 利用畢氏定理找未知邊的長度</p>
-                  <div className="text-green-600 [&_.katex-display]:my-0.5">
-                    <Latex math="\begin{aligned} x^2 + 3^2 &= 7^2 \\\\[−3px] x^2 &= 40 \\\\[−3px] x &= \sqrt{40} \end{aligned}" block left />
+                  <div className="grid w-fit grid-cols-[auto_auto_auto] items-baseline gap-x-1 gap-y-0 text-green-600 text-left">
+                    <span className="justify-self-end"><Latex math="x^2 + 3^2" inline /></span>
+                    <Latex math="=" inline />
+                    <Latex math="7^2" inline />
+                    <span className="justify-self-end"><Latex math="x^2" inline /></span>
+                    <Latex math="=" inline />
+                    <Latex math="40" inline />
+                    <span className="justify-self-end"><Latex math="x" inline /></span>
+                    <Latex math="=" inline />
+                    <Latex math="\sqrt{40}" inline />
                   </div>
                 </div>
                   <div className="flex items-center justify-center md:justify-end mt-2 md:mt-0">
-                    <svg width="100%" height="auto" viewBox="10 28 320 205" className="max-w-[280px] mx-auto block">
+                    <svg width="100%" height="auto" viewBox="10 28 320 185" className="max-w-[280px] mx-auto block">
                       <path d="M 50,170 L 250,170 L 250,75 Z" fill="rgba(37, 99, 235, 0.05)" stroke="#1d4ed8" strokeWidth="3" strokeLinejoin="round" />
                       <polyline points="238,170 238,158 250,158" fill="none" stroke="#1d4ed8" strokeWidth="2" />
                       <path d="M 80,170 A 30 30 0 0 0 77.1,157.1" fill="none" stroke="#1d4ed8" strokeWidth="2" />
@@ -713,7 +726,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
               <div className="text-center font-bold text-red-600 text-base border-b-2 border-red-300 pb-1">原式</div>
               <div className="text-center font-bold text-green-600 text-base border-b-2 border-green-300 pb-1">變種</div>
             </div>
-            <div className="space-y-4 text-lg">
+            <div className="space-y-1 text-lg">
               {[
                 {
                   label: 'A.',
@@ -741,12 +754,14 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
                   vars: [<Latex key="1" math="\tan(90° − \theta) = \frac{1}{\tan\theta}" />]
                 },
               ].map((item, i) => (
-                <div key={i} className="bg-white rounded-lg p-3">
-                  <p className="text-red-600 font-bold mb-2">{item.label}</p>
-                  <div className="grid grid-cols-2 gap-3 items-start">
+                <div key={i} className="bg-white rounded-lg px-2 py-1.5">
+                  <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-2 items-start">
+                    <p className="text-red-600 font-bold">{item.label}</p>
+                    <div className="grid grid-cols-2 gap-3 items-start">
                     <div className="text-center">{item.orig}</div>
                     <div className="text-left text-green-700 space-y-1">
                       {item.vars.map((v, j) => <div key={j}>{v}</div>)}
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -1143,13 +1158,11 @@ export const QuadrilateralNotes = ({ activeSub }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div className="bg-white rounded-lg p-3">
               <p className="font-bold text-purple-700 mb-1">中點定理</p>
-              <p className="text-slate-700">1 個三角形，2 個中點</p>
-              <p className="text-red-600 font-bold">→ 平行 且 一半長度</p>
+              <p className="text-red-600 font-bold">有兩邊分別相等 ⇒ 找到中間線兩邊 + 平行</p>
             </div>
             <div className="bg-white rounded-lg p-3">
               <p className="font-bold text-purple-700 mb-1">截線定理</p>
-              <p className="text-slate-700">3 條平行線，截線相等</p>
-              <p className="text-red-600 font-bold">→ 另一邊也相等</p>
+              <p className="text-red-600 font-bold">有一邊相等及中間線平行 ⇒ 另外一邊也長度相等</p>
             </div>
           </div>
         </div>
@@ -2178,6 +2191,9 @@ export const CentralTendencyNotes = ({ activeSub }) => {
                   <div>
                     <div className="text-center text-slate-800 font-bold text-2xl md:text-3xl whitespace-nowrap px-2">
                       <Latex math="\frac{78 \times 3 + 72 \times 3 + 56 \times 2 + 90 \times 2}{3 + 3 + 2 + 2}" />
+                    </div>
+                    <div className="text-left text-slate-800 font-bold text-xl mt-1 pl-2">
+                      <Latex math="= 74.2" />
                     </div>
                   </div>
                   <div className="text-green-700 font-bold text-sm space-y-2 sm:relative sm:h-[58px] sm:w-[200px]">

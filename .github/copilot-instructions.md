@@ -213,6 +213,7 @@ When displaying CASIO fx-50FH II keys in notes or instructions, **always** use t
 
 ## MC Question Rules
 - **每條MC必須有恰好4個選項**（1個正確 + 3個錯誤）
+- **MC選項如為數字，必須由小至大排列**
 - Wrong answer arrays must always contain exactly 3 distinct items, all different from the correct answer
 - Always use `[...new Set([w1, w2, w3].filter(w => w !== correct))]` and pad with a `while` loop if fewer than 3 remain
 - Never rely on hardcoded wrongs being distinct — verify algebraically that no two wrongs can be equal for any valid input
