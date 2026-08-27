@@ -455,8 +455,8 @@ export const PercentageF3Notes = ({ activeSub }) => {
               <div className="border-t border-amber-300 pt-5 mt-5">
                 <h3 className="font-bold text-amber-800 mb-3">3.3 單利息與複利息比較</h3>
                 <div className="bg-white rounded-lg border border-amber-200 p-4">
-                  <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 text-center">
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+                  <div className="grid grid-cols-2 items-stretch gap-3 w-fit mx-auto text-center">
+                    <div className="w-[292px] h-[134px] bg-emerald-50 border border-emerald-200 rounded-lg p-3">
                       <p className="font-bold text-emerald-700 mb-2">單利息</p>
                       <p className="text-sm text-slate-700">每年只以原本金計算利息</p>
                       <div className="mt-3 space-y-1 text-sm text-slate-800">
@@ -464,9 +464,9 @@ export const PercentageF3Notes = ({ activeSub }) => {
                         <p><span className="font-bold">Year 2：</span>本金 $10,000，利息 $200</p>
                       </div>
                     </div>
-                    <div className="bg-violet-50 border border-violet-200 rounded-lg p-3">
+                    <div className="w-[292px] h-[134px] bg-violet-50 border border-violet-200 rounded-lg p-3">
                       <p className="font-bold text-violet-700 mb-2">複利息</p>
-                      <p className="text-sm text-slate-700">利息加入本金後再計算</p>
+                      <p className="text-sm text-slate-700">上期利息加入原本金後再計算利息</p>
                       <div className="mt-3 space-y-1 text-sm text-slate-800">
                         <p><span className="font-bold">Year 1：</span>本金 $10,000，利息 $200</p>
                         <p><span className="font-bold">Year 2：</span>本金 $10,200，利息 $204</p>
