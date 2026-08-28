@@ -170,6 +170,8 @@ body {
 
   .print-root.print-preview .print-topic-page {
     margin: 0 auto 1.25rem;
+    width: 210mm;
+    height: 297mm;
     max-width: 210mm;
   }
 
@@ -214,31 +216,52 @@ body {
     box-sizing: border-box;
     position: relative;
     width: 210mm;
-    min-height: 297mm;
+    height: 297mm;
     margin: 0 auto;
-    /* Keep a clear 12mm safety zone above the footer. */
     padding: 12mm 10mm 30mm;
     background: #ffffff;
     box-shadow: 0 8px 28px rgba(15, 23, 42, 0.14);
     border: 1px solid #e2e8f0;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .print-pagination-measure {
     position: absolute;
     top: 0;
     left: -100000px;
-    width: 210mm;
+    width: 190mm;
     visibility: hidden;
     pointer-events: none;
   }
 
-  .print-pagination-measure .print-topic-sheet {
-    overflow: visible;
+  .print-source-content {
+    box-sizing: border-box;
+    width: 190mm;
+    padding-bottom: 1px;
+  }
+
+  .print-page-height-measure {
+    width: 1px;
+    height: 255mm;
+  }
+
+  .print-page-content-viewport {
+    position: relative;
+    width: 190mm;
+    height: 255mm;
+    overflow: hidden;
   }
 
   .print-topic-page-content {
+    width: 190mm;
     transform-origin: top left;
+  }
+
+  .print-topic-page-content .print-oversized-rounded {
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
   }
 
   /* Give F1 CH8 charts the full printable width instead of squeezing them into two columns. */
@@ -264,25 +287,24 @@ body {
     left: 10mm;
     display: flex;
     justify-content: space-between;
+    padding-top: 3mm;
+    border-top: 1px solid #e2e8f0;
     color: #64748b;
     font-size: 10px;
   }
 
   @media (max-width: 900px) {
-    .print-root.print-preview .print-topic-page {
-      max-width: 100%;
+    .print-root.print-preview {
+      overflow-x: auto;
     }
 
-    .print-root.print-preview .print-topic-sheet {
-      width: 100%;
-      height: auto;
-      padding: 1rem;
-      overflow: visible;
+    .print-root.print-preview .print-document {
+      padding: 0 0.5rem;
     }
 
     .print-root.print-preview .print-document.print-spread-view {
       display: block;
-      max-width: 100%;
+      max-width: none;
     }
 
     .print-root.print-preview .print-spread-view .print-topic-page {
@@ -295,7 +317,7 @@ body {
 @media print {
   @page {
     size: A4 portrait;
-    margin: 12mm 10mm 12mm 10mm;
+    margin: 0;
   }
 
   html,
@@ -321,22 +343,34 @@ body {
   .print-topic-sheet {
     box-sizing: border-box;
     position: relative;
-    width: auto !important;
-    height: auto !important;
-    min-height: 273mm !important;
+    width: 210mm !important;
+    height: 297mm !important;
     margin: 0 !important;
-    /* The @page rule already supplies the outer 12mm bottom margin. */
-    padding: 0 0 18mm !important;
+    padding: 12mm 10mm 30mm !important;
     box-shadow: none !important;
     border: 0 !important;
-    overflow: visible !important;
+    overflow: hidden !important;
+  }
+
+  .print-page-content-viewport {
+    width: 190mm !important;
+    height: 255mm !important;
+    overflow: hidden !important;
+  }
+
+  .print-topic-page-content {
+    width: 190mm !important;
   }
 
   .print-page-footer {
-    position: static;
-    margin-top: 8mm;
+    position: absolute;
+    right: 10mm;
+    bottom: 5mm;
+    left: 10mm;
     display: flex;
     justify-content: space-between;
+    padding-top: 3mm;
+    border-top: 1px solid #e2e8f0;
     color: #64748b;
     font-size: 9pt;
     line-height: 1;
@@ -360,6 +394,9 @@ body {
   }
 
   .print-topic-page {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
     break-before: page;
     page-break-before: always;
     break-inside: auto;

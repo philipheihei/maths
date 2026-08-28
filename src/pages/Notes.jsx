@@ -3,18 +3,274 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
 
+const PRINT_PAGE_CONTENT_HEIGHT_MM = 255;
+const PRINT_PAGE_CONTENT_HEIGHT_PX = Math.round((PRINT_PAGE_CONTENT_HEIGHT_MM / 25.4) * 96);
+const PRINT_ROUNDED_BLOCK_SELECTOR = '.rounded, .rounded-sm, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl';
+
+const scopeSvgReferences = (markup, scope) => {
+  if (!markup || typeof document === 'undefined') return markup;
+
+  const template = document.createElement('template');
+  template.innerHTML = markup;
+  const referencedIds = new Set();
+
+  template.content.querySelectorAll('*').forEach((element) => {
+    Array.from(element.attributes).forEach((attribute) => {
+      for (const match of attribute.value.matchAll(/url\(#([^)]+)\)/g)) {
+        referencedIds.add(match[1]);
+      }
+      if ((attribute.name === 'href' || attribute.name === 'xlink:href') && attribute.value.startsWith('#')) {
+        referencedIds.add(attribute.value.slice(1));
+      }
+    });
+  });
+
+  const idMap = new Map();
+  template.content.querySelectorAll('[id]').forEach((element) => {
+    if (referencedIds.has(element.id)) {
+      const scopedId = `print-${scope}-${element.id}`.replace(/[^A-Za-z0-9_-]/g, '-');
+      idMap.set(element.id, scopedId);
+      element.id = scopedId;
+    }
+  });
+
+  if (idMap.size > 0) {
+    template.content.querySelectorAll('*').forEach((element) => {
+      Array.from(element.attributes).forEach((attribute) => {
+        let value = attribute.value.replace(/url\(#([^)]+)\)/g, (match, id) => (
+          idMap.has(id) ? `url(#${idMap.get(id)})` : match
+        ));
+        if ((attribute.name === 'href' || attribute.name === 'xlink:href') && value.startsWith('#')) {
+          const id = value.slice(1);
+          if (idMap.has(id)) value = `#${idMap.get(id)}`;
+        }
+        if (value !== attribute.value) element.setAttribute(attribute.name, value);
+      });
+    });
+  }
+
+  return template.innerHTML;
+};
+
+const paginatePrintContent = (source, pageHeight) => {
+  const sourceRect = source.getBoundingClientRect();
+  const childBottoms = Array.from(source.children).map((element) => (
+    element.getBoundingClientRect().bottom - sourceRect.top
+  ));
+  const contentHeight = Math.max(
+    1,
+    ...childBottoms,
+    childBottoms.length ? 0 : source.scrollHeight,
+  );
+  const resolvedPageHeight = pageHeight || PRINT_PAGE_CONTENT_HEIGHT_PX;
+  const roundedBlocks = Array.from(source.querySelectorAll(PRINT_ROUNDED_BLOCK_SELECTOR))
+    .filter((element) => ['DIV', 'SECTION', 'ARTICLE', 'ASIDE', 'LI', 'TABLE', 'PRE', 'BLOCKQUOTE'].includes(element.tagName))
+    .map((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        element,
+        top: Math.round(rect.top - sourceRect.top),
+        bottom: Math.round(rect.bottom - sourceRect.top),
+        height: Math.round(rect.height),
+        allowSplit: false,
+      };
+    })
+    .filter(({ top, bottom, height }) => top >= 0 && bottom <= contentHeight + 1 && height >= 24);
+
+  const sectionLeadRanges = Array.from(source.querySelectorAll('.print-section-content'))
+    .map((content) => {
+      const header = content.previousElementSibling;
+      const firstLead = Array.from(content.querySelectorAll('h3, h4, h5, p, li, table, svg, img'))
+        .find((element) => element.getBoundingClientRect().height > 0)
+        || content.firstElementChild;
+      if (!header || !firstLead) return null;
+
+      const headerRect = header.getBoundingClientRect();
+      const firstLeadRect = firstLead.getBoundingClientRect();
+      const top = Math.round(Math.min(headerRect.top, firstLeadRect.top) - sourceRect.top);
+      const bottom = Math.round(Math.max(headerRect.bottom, firstLeadRect.bottom) - sourceRect.top);
+      const firstRoundedBlock = roundedBlocks
+        .filter(({ element }) => content.contains(element) && element.contains(firstLead))
+        .sort((a, b) => a.height - b.height)[0];
+
+      if (firstRoundedBlock && firstRoundedBlock.bottom - top > resolvedPageHeight) {
+        firstRoundedBlock.allowSplit = true;
+      }
+
+      return {
+        top,
+        bottom,
+        firstRoundedBlock,
+      };
+    })
+    .filter(({ top, bottom } = {}) => top >= 0 && bottom <= contentHeight + 1 && bottom > top);
+
+  roundedBlocks.forEach(({ element, height, allowSplit }) => {
+    element.classList.toggle('print-oversized-rounded', height > resolvedPageHeight || allowSplit);
+  });
+
+  if (contentHeight <= resolvedPageHeight) {
+    return { contentHeight, offsets: [0] };
+  }
+
+  const candidateOffsets = new Set([0, contentHeight]);
+  const sourceTop = sourceRect.top;
+  const addCandidate = (element) => {
+    const elementTop = Math.round(element.getBoundingClientRect().top - sourceTop);
+    if (elementTop > 8 && elementTop < contentHeight - 1) {
+      candidateOffsets.add(elementTop);
+    }
+  };
+
+  Array.from(source.children).forEach(addCandidate);
+  source.querySelectorAll('.print-section-content > *, [data-print-break]').forEach(addCandidate);
+  roundedBlocks.forEach(({ top }) => candidateOffsets.add(top));
+  sectionLeadRanges.forEach(({ top }) => candidateOffsets.add(top));
+
+  const sortedCandidates = Array.from(candidateOffsets).sort((a, b) => a - b);
+  const isSafeOffset = (offset) => (
+    roundedBlocks.every(({ top, bottom, height, allowSplit }) => (
+      height > resolvedPageHeight || allowSplit || offset <= top + 1 || offset >= bottom - 1
+    ))
+    && sectionLeadRanges.every(({ top, bottom }) => offset <= top + 1 || offset >= bottom - 1)
+  );
+  const offsets = [0];
+  let currentOffset = 0;
+
+  while (currentOffset < contentHeight - 1) {
+    const targetOffset = currentOffset + resolvedPageHeight;
+    if (targetOffset >= contentHeight) break;
+
+    const roundedBlocksCrossingTarget = roundedBlocks
+      .filter(({ top, bottom, height, allowSplit }) => (
+        height <= resolvedPageHeight
+        && !allowSplit
+        && top > currentOffset + 8
+        && top < targetOffset
+        && bottom > targetOffset
+      ))
+      .sort((a, b) => a.top - b.top);
+    const sectionLeadCrossingTarget = sectionLeadRanges
+      .filter(({ top, bottom, firstRoundedBlock }) => (
+        top > currentOffset + 8
+        && top < targetOffset
+        && (
+          bottom > targetOffset
+          || (firstRoundedBlock
+            && firstRoundedBlock.top < targetOffset
+            && firstRoundedBlock.bottom > targetOffset)
+        )
+      ))
+      .sort((a, b) => a.top - b.top);
+    const candidatesBeforeTarget = sortedCandidates.filter((candidate) => (
+      candidate >= currentOffset + resolvedPageHeight * 0.68
+      && candidate <= targetOffset
+      && isSafeOffset(candidate)
+    ));
+    const nextOffset = sectionLeadCrossingTarget.length
+      ? sectionLeadCrossingTarget[0].top
+      : roundedBlocksCrossingTarget.length
+      ? roundedBlocksCrossingTarget[0].top
+      : (candidatesBeforeTarget.length ? candidatesBeforeTarget[candidatesBeforeTarget.length - 1] : targetOffset);
+
+    offsets.push(nextOffset);
+    currentOffset = nextOffset;
+  }
+
+  return { contentHeight, offsets };
+};
+
+const PrintSource = React.memo(({ TopicComponent, sourceRef }) => (
+  <div ref={sourceRef} className="print-source-content">
+    <TopicComponent activeSub={null} onNavigate={() => {}} />
+  </div>
+));
+
 const PrintTopicPages = ({ topic, TopicComponent, pageOffset = 0, onPageCount }) => {
-  useEffect(() => onPageCount(1), [onPageCount]);
+  const sourceRef = useRef(null);
+  const pageSizeRef = useRef(null);
+  const onPageCountRef = useRef(onPageCount);
+  const [pagination, setPagination] = useState({ markup: '', pageMarkup: [], contentHeight: 0, offsets: [], pageHeight: 0 });
+
+  useEffect(() => {
+    onPageCountRef.current = onPageCount;
+  }, [onPageCount]);
+
+  useEffect(() => {
+    const source = sourceRef.current;
+    if (!source) return undefined;
+
+    let frameId = 0;
+    const updatePagination = () => {
+      cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(() => {
+        const pageHeight = pageSizeRef.current?.getBoundingClientRect().height || PRINT_PAGE_CONTENT_HEIGHT_PX;
+        const { contentHeight, offsets } = paginatePrintContent(source, pageHeight);
+        const markup = source.innerHTML;
+        const pageMarkup = offsets.map((_, index) => scopeSvgReferences(
+          markup,
+          `${topic._level}-${topic.id}-${index}`
+        ));
+
+        setPagination((current) => {
+          const sameOffsets = current.offsets.length === offsets.length
+            && current.offsets.every((offset, index) => offset === offsets[index]);
+          if (current.markup === markup && current.contentHeight === contentHeight && current.pageHeight === pageHeight && sameOffsets) {
+            return current;
+          }
+          return { markup, pageMarkup, contentHeight, offsets, pageHeight };
+        });
+        onPageCountRef.current(offsets.length);
+      });
+    };
+
+    const resizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updatePagination) : null;
+    resizeObserver?.observe(source);
+    if (pageSizeRef.current) resizeObserver?.observe(pageSizeRef.current);
+
+    const mutationObserver = typeof MutationObserver !== 'undefined' ? new MutationObserver(updatePagination) : null;
+    mutationObserver?.observe(source, { childList: true, subtree: true, characterData: true });
+
+    updatePagination();
+    document.fonts?.ready.then(updatePagination);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      resizeObserver?.disconnect();
+      mutationObserver?.disconnect();
+    };
+  }, [TopicComponent]);
+
+  const pageHeight = pagination.pageHeight || PRINT_PAGE_CONTENT_HEIGHT_PX;
+
   return (
-    <section key={`${topic.id}-flow`} className="print-topic-page">
-      <div className="print-topic-sheet">
-        <TopicComponent activeSub={null} onNavigate={() => {}} />
-        <footer className="print-page-footer">
-          <span>{topic._level} {topic.topic}</span>
-          <span className="print-page-number" aria-label="頁碼">p.{pageOffset + 1}</span>
-        </footer>
+    <>
+      <div className="print-pagination-measure" aria-hidden="true">
+        <PrintSource TopicComponent={TopicComponent} sourceRef={sourceRef} />
+        <div ref={pageSizeRef} className="print-page-height-measure" />
       </div>
-    </section>
+      {pagination.offsets.map((offset, index) => {
+        const nextOffset = pagination.offsets[index + 1] ?? pagination.contentHeight;
+        const visibleHeight = Math.max(1, Math.min(pageHeight, nextOffset - offset));
+        return (
+          <section key={`${topic._level}-${topic.id}-page-${index}`} className={`print-topic-page ${index === 0 ? 'print-chapter-start' : ''}`}>
+            <div className="print-topic-sheet">
+              <div className="print-page-content-viewport" style={{ height: `${visibleHeight}px` }}>
+                <div
+                  className="print-topic-page-content"
+                  style={{ transform: `translateY(-${offset}px)` }}
+                  dangerouslySetInnerHTML={{ __html: pagination.pageMarkup[index] || pagination.markup }}
+                />
+              </div>
+              <footer className="print-page-footer">
+                <span>{topic._level} {topic.topic}</span>
+                <span className="print-page-number" aria-label="頁碼">p.{pageOffset + index + 1}</span>
+              </footer>
+            </div>
+          </section>
+        );
+      })}
+    </>
   );
 };
 
@@ -32,7 +288,7 @@ const Notes = () => {
   const printGroup = searchParams.get('group');
   const seniorLevels = ['F4', 'F5', 'F6'];
   const printableJuniorLevels = ['F1', 'F2', 'F3'];
-  const initialPrintSelection = printGroup === 'senior'
+  const initialPrintSelection = printGroup === 'senior' || printGroup === 'f4-6' || ['F4', 'F5', 'F6'].includes(printLevel)
     ? 'senior'
     : (printLevel && printableJuniorLevels.includes(printLevel) ? printLevel : 'F1');
 
@@ -68,7 +324,6 @@ const Notes = () => {
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
   const [isSpreadView, setIsSpreadView] = useState(false);
   const [topicPageCounts, setTopicPageCounts] = useState({});
-  const printDocumentRef = useRef(null);
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
   const notes = getNotesForLevel(selectedLevel);
@@ -93,6 +348,13 @@ const Notes = () => {
       setExpandedTopics({});
     }
   }, [selectedLevel]);
+
+  useEffect(() => {
+    if (isPrintMode) {
+      setPrintSelection(initialPrintSelection);
+      setTopicPageCounts({});
+    }
+  }, [isPrintMode, initialPrintSelection]);
 
   const toggleTopic = (topicId) => {
     setExpandedTopics(prev => ({ ...prev, [topicId]: !prev[topicId] }));
@@ -213,7 +475,7 @@ const Notes = () => {
                   ['F1', 'F1'],
                   ['F2', 'F2'],
                   ['F3', 'F3'],
-                  ['senior', '高中'],
+                  ['senior', 'F4-6'],
                 ].map(([value, label]) => (
                   <button
                     key={value}
@@ -252,10 +514,7 @@ const Notes = () => {
             <p className="mt-2 text-sm">請使用 /notes/print，然後在頁面上選擇 F1、F2、F3 或高中。</p>
           </div>
         ) : (
-          <div
-            ref={printDocumentRef}
-            className={`print-document ${isSpreadView ? 'print-spread-view' : ''}`}
-          >
+          <div className={`print-document ${isSpreadView ? 'print-spread-view' : ''}`}>
             {printTopics.map((topic) => {
             const TopicComponent = NOTES_COMPONENTS[topic.id];
             if (!TopicComponent) return null;

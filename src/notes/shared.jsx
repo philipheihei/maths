@@ -116,7 +116,7 @@ export const CollapsibleSection = ({ id, title, num, color = 'blue', activeSub, 
         )}
         <h2 className={`text-lg font-bold ${textCol[color] || 'text-blue-700'} flex-1`}>{displayTitle}</h2>
       </div>
-      <div className="px-6 pb-6">{children}</div>
+      <div className="print-section-content px-6 pb-6">{children}</div>
     </div>
   );
 };
