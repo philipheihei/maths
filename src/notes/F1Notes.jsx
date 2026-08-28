@@ -1608,7 +1608,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
 
             <div className="mb-8 min-w-[650px]">
               <p className="font-bold text-slate-700 mb-4">例子 1：</p>
-              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-4 items-center pl-4 pr-4">
+              <div className="grid grid-cols-[auto_auto_auto_1fr] gap-x-2 gap-y-4 items-center pl-4 pr-4 translate-x-6">
                 <div className="text-right flex justify-end items-center">
                   <Latex math="\frac{x}{4} − \frac{x}{5}" />
                 </div>
@@ -1633,11 +1633,11 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                   </div>
                 </div>
 
-                <div className="text-right relative translate-x-6">
+                <div className="text-right relative">
                   <Latex math="5x − 4x" />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm text-red-500 font-bold whitespace-nowrap flex items-center gap-6">
-                    <span className="relative"><span className="absolute -top-3 right-full text-xl translate-x-2">↗</span><span className="ml-[6px]"><Latex math="20\div 4=5" /></span></span>
-                    <span className="relative"><span className="absolute -top-3 left-0 text-xl -translate-x-1">↖</span><span className="mr-[6px]"><Latex math="20\div 5=4" /></span></span>
+                    <span className="relative"><span className="absolute -top-3 right-full text-xl translate-x-[80px]">↗</span><span className="relative top-[10px] ml-[6px]"><Latex math="20\div 4=5" /></span></span>
+                    <span className="relative translate-x-[30px]"><span className="absolute -top-3 left-0 text-xl -translate-x-1">↖</span><span className="relative top-[10px] mr-[6px]"><Latex math="20\div 5=4" /></span></span>
                   </div>
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
@@ -1663,7 +1663,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
 
             <div className="min-w-[700px]">
               <p className="font-bold text-slate-700 mb-4">例子 2：</p>
-              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-3 items-center pl-4 pr-4">
+              <div className="grid grid-cols-[auto_auto_auto_1fr] gap-x-2 gap-y-3 items-center pl-4 pr-4">
                 <div className="text-right"><Latex math="\frac{4x}{3} − \frac{x}{2}" /></div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="5" /></div>
@@ -1748,7 +1748,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-4 text-xl border-b pb-2">2. 解括號 (同類項) 方程</h3>
 
             <div className="min-w-[650px]">
-              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-3 items-center pl-4 pr-4">
+              <div className="grid grid-cols-[auto_auto_auto_1fr] gap-x-2 gap-y-3 items-center pl-4 pr-4">
                 <div className="text-right"><Latex math="2(x−3) + 3x" /></div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="14" /></div>
