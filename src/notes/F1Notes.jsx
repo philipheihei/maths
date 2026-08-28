@@ -1614,23 +1614,26 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="10" /></div>
-                <div className="text-sm text-slate-500 font-bold tracking-widest text-blue-600 pl-4 w-full">例：<Latex math="4\times 5=20" /></div>
+                <div></div>
 
                 <div className="text-right flex justify-end items-center">
-                  <span className="border-b-[3px] border-green-700 font-bold text-green-700 mr-2 text-xl pb-1">20</span><Latex math="\left(\frac{x}{4} − \frac{x}{5}\right)" />
+                  <Latex math="\textcolor{#15803d}{20}\left(\frac{x}{4} − \frac{x}{5}\right)" />
                 </div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left whitespace-nowrap">
-                  <Latex math="10 \times " /><span className="border-b-[3px] border-green-700 font-bold text-green-700 ml-1 text-xl pb-1">20</span>
+                  <Latex math="10 \times \textcolor{#15803d}{20}" />
                 </div>
                 <div className="text-sm text-slate-700 flex items-center pl-4 w-full">
                   <span className="text-red-500 font-bold mr-3 text-xl">←</span>
                   <span className="border-2 border-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 shrink-0">1</span>
-                  <span className="text-red-600 border border-green-700 px-2 py-0.5 font-bold whitespace-nowrap bg-white rounded">將分母相乘的數字</span>
-                  <span className="text-red-600 font-bold ml-2 whitespace-nowrap border-b-2 border-red-600">乘兩邊</span>
+                  <div className="relative flex items-center">
+                    <div className="absolute bottom-full left-0 mb-1 text-slate-500 font-bold tracking-wide text-blue-600 whitespace-nowrap">例：<Latex math="4\times 5=20" /></div>
+                    <span className="text-red-600 border border-green-700 px-2 py-0.5 font-bold whitespace-nowrap bg-white rounded">將分母相乘的數字</span>
+                    <span className="text-red-600 font-bold ml-2 whitespace-nowrap border-b-2 border-red-600">乘兩邊</span>
+                  </div>
                 </div>
 
-                <div className="text-right relative">
+                <div className="text-right relative translate-x-6">
                   <Latex math="5x − 4x" />
                   <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-sm text-red-500 font-bold whitespace-nowrap flex items-center gap-6">
                     <span className="relative"><span className="absolute -top-3 right-full text-xl translate-x-2">↗</span><span className="ml-[6px]"><Latex math="20\div 4=5" /></span></span>
@@ -1642,7 +1645,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 <div className="text-sm text-slate-700 flex items-center pl-4 w-full">
                   <span className="text-red-500 font-bold mr-3 text-xl">←</span>
                   <span className="border-2 border-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 shrink-0">2</span>
-                  <span className="text-red-600 font-bold text-base">拆括號，有分數 →</span>
+                  <span className="text-red-600 font-bold text-base">拆括號，化簡分數</span>
                 </div>
 
                 <div className="text-right pt-8"><Latex math="x" /></div>
@@ -1660,7 +1663,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
 
             <div className="min-w-[700px]">
               <p className="font-bold text-slate-700 mb-4">例子 2：</p>
-              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-6 items-center pl-4 pr-4">
+              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-3 items-center pl-4 pr-4">
                 <div className="text-right"><Latex math="\frac{4x}{3} − \frac{x}{2}" /></div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="5" /></div>
@@ -1745,7 +1748,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-4 text-xl border-b pb-2">2. 解括號 (同類項) 方程</h3>
 
             <div className="min-w-[650px]">
-              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-5 items-center pl-4 pr-4">
+              <div className="grid grid-cols-[auto_40px_auto_1fr] gap-x-2 md:gap-x-4 gap-y-3 items-center pl-4 pr-4">
                 <div className="text-right"><Latex math="2(x−3) + 3x" /></div>
                 <div className="text-center"><Latex math="=" /></div>
                 <div className="text-left"><Latex math="14" /></div>
@@ -1757,10 +1760,16 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
                 <div className="text-sm text-slate-700 flex items-center pl-4">
                   <span className="text-green-600 font-bold mr-3 text-xl">←</span>
                   <span className="text-green-700 font-bold whitespace-nowrap text-base">先拆括號</span>
-                  <div className="text-[#5b21b6] ml-3 font-bold px-1 relative text-base flex items-center whitespace-nowrap">
-                    <span className="absolute -top-3 left-[16px] text-lg rotate-12">↷</span>
-                    <span className="absolute -top-4 left-4 text-lg">↷</span>
-                    <Latex math="2(x−3) = 2(x)−2(3) = 2x−6" />
+                  <div className="text-[#5b21b6] ml-3 font-bold px-1 text-base flex items-center whitespace-nowrap">
+                    <Latex math="2(x−3) = " />
+                    <span className="relative inline-flex items-center">
+                      <Latex math="2(x)" />
+                    </span>
+                    <Latex math="− " />
+                    <span className="ml-2 relative inline-flex items-center">
+                      <Latex math="2(3)" />
+                    </span>
+                    <Latex math=" = 2x−6" />
                   </div>
                 </div>
 
