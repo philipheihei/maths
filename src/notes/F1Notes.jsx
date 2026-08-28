@@ -1603,7 +1603,7 @@ export const AdvancedLinearEquationNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="advanced-equations" title="1. 進階解方程" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-6 text-lg">
-          <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm overflow-x-auto">
+          <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm overflow-x-hidden">
             <h3 className="font-bold text-blue-800 mb-4 text-xl border-b pb-2">1. 解分數方程</h3>
 
             <div className="mb-8 min-w-[650px]">
