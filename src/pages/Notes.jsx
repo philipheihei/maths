@@ -105,6 +105,20 @@ const paginatePrintContent = (source, pageHeight) => {
     })
     .filter(({ top, bottom } = {}) => top >= 0 && bottom <= contentHeight + 1 && bottom > top);
 
+  const tableBlocks = Array.from(source.querySelectorAll('table, tr'))
+    .map((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        element,
+        top: Math.round(rect.top - sourceRect.top),
+        bottom: Math.round(rect.bottom - sourceRect.top),
+        height: Math.round(rect.height),
+        allowSplit: false,
+      };
+    })
+    .filter(({ top, bottom, height }) => top >= 0 && bottom <= contentHeight + 1 && height >= 18);
+  const protectedBlocks = [...roundedBlocks, ...tableBlocks];
+
   roundedBlocks.forEach(({ element, height, allowSplit }) => {
     element.classList.toggle('print-oversized-rounded', height > resolvedPageHeight || allowSplit);
   });
@@ -124,12 +138,12 @@ const paginatePrintContent = (source, pageHeight) => {
 
   Array.from(source.children).forEach(addCandidate);
   source.querySelectorAll('.print-section-content > *, [data-print-break]').forEach(addCandidate);
-  roundedBlocks.forEach(({ top }) => candidateOffsets.add(top));
+  protectedBlocks.forEach(({ top }) => candidateOffsets.add(top));
   sectionLeadRanges.forEach(({ top }) => candidateOffsets.add(top));
 
   const sortedCandidates = Array.from(candidateOffsets).sort((a, b) => a - b);
   const isSafeOffset = (offset) => (
-    roundedBlocks.every(({ top, bottom, height, allowSplit }) => (
+    protectedBlocks.every(({ top, bottom, height, allowSplit }) => (
       height > resolvedPageHeight || allowSplit || offset <= top + 1 || offset >= bottom - 1
     ))
     && sectionLeadRanges.every(({ top, bottom }) => offset <= top + 1 || offset >= bottom - 1)
@@ -141,7 +155,7 @@ const paginatePrintContent = (source, pageHeight) => {
     const targetOffset = currentOffset + resolvedPageHeight;
     if (targetOffset >= contentHeight) break;
 
-    const roundedBlocksCrossingTarget = roundedBlocks
+    const protectedBlocksCrossingTarget = protectedBlocks
       .filter(({ top, bottom, height, allowSplit }) => (
         height <= resolvedPageHeight
         && !allowSplit
@@ -169,8 +183,8 @@ const paginatePrintContent = (source, pageHeight) => {
     ));
     const nextOffset = sectionLeadCrossingTarget.length
       ? sectionLeadCrossingTarget[0].top
-      : roundedBlocksCrossingTarget.length
-      ? roundedBlocksCrossingTarget[0].top
+      : protectedBlocksCrossingTarget.length
+      ? protectedBlocksCrossingTarget[0].top
       : (candidatesBeforeTarget.length ? candidatesBeforeTarget[candidatesBeforeTarget.length - 1] : targetOffset);
 
     offsets.push(nextOffset);

@@ -1493,7 +1493,7 @@ export const LinearEquationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-xl p-5 border border-slate-200 relative overflow-hidden">
                 <div className="absolute top-0 right-0 bg-green-100 text-green-700 px-3 py-1 rounded-bl-lg font-bold text-sm">分數即「÷」數</div>
                 <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-x-2 items-center text-xl leading-relaxed mt-2">
-                  <div className="flex justify-end"><span className="inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><span className="px-1"><Latex math="a + 11" /></span><span className="border-t border-slate-700 bg-green-200 px-1 rounded-b"><Latex math="6" /></span></span></div>
+                  <div className="flex justify-end"><span className="inline-flex flex-col items-center justify-center align-middle" style={{ lineHeight: '1.2' }}><span className="px-1"><Latex math="a + 11" /></span><span className="self-stretch border-t border-slate-700 px-1 rounded-b text-center"><span className="inline-block bg-green-200 px-1 rounded-b"><Latex math="6" /></span></span></span></div>
                   <div><Latex math="=" /></div>
                   <div><Latex math="4" /></div>
 
