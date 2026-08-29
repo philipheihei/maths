@@ -104,7 +104,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
       {/* Labels */}
       <text x="115" y="115" fontSize="12" fill="#16a34a" fontWeight="bold">−3</text>
       <text x="65" y="75" fontSize="12" fill="#16a34a" fontWeight="bold">4</text>
-      <text x="125" y="60" fontSize="12" fill="#334155" fontWeight="bold">r=5</text>
+      <text x="115" y="60" fontSize="12" fill="#334155" fontWeight="bold">r=5</text>
     </svg>
   );
 
@@ -295,7 +295,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
               <div className="bg-amber-50 border border-amber-200 p-3 rounded">
                 <p className="font-bold text-amber-800 mb-2">例：若 <Latex math="\cos\theta = \frac{4}{5}" /> 和 <Latex math="\theta" /> 位於象限 IV</p>
                 <div className="space-y-1 text-sm font-sans mb-2">
-                  <Step math="x^2 + y^2 = r^2" alignEq={false} />
+                  <Step math="x^2 + y^2 = r^2" />
                   <Step math="4^2 + a^2 = 5^2" />
                   <Step math="a = \pm 3" />
                   <p className="text-slate-700 mt-1 pl-4">因為在 IV 象限，<Latex math="y" /> 軸為負，<Latex math="a = −3" />（捨去正數）</p>

@@ -3638,11 +3638,11 @@ export const RateRatioNotes = ({ activeSub }) => {
             </p>
             <p className="mb-4 text-lg text-center">
               例子：<span className="text-blue-800 font-bold">m</span>{' '}
-              <span className="relative inline-flex text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">
+              <span className="relative inline-flex text-green-600 font-bold">
                 <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-green-700 text-base font-bold">↓</span>/
               </span>{' '}
               <span className="text-blue-800 font-bold">s</span> ， <span className="text-blue-800 font-bold">$</span>{' '}
-              <span className="relative inline-flex text-green-600 border border-green-600 rounded-full py-0.5 px-1 font-bold">
+              <span className="relative inline-flex text-green-600 font-bold">
                 <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-green-700 text-base font-bold">↓</span>/
               </span>{' '}
               <span className="text-blue-800 font-bold border-b-2 border-transparent">小時</span>
@@ -3652,7 +3652,7 @@ export const RateRatioNotes = ({ activeSub }) => {
               <p className="mb-4 text-slate-700 text-lg whitespace-normal leading-relaxed">
                 e.g. 工作了 <span className="bg-yellow-300 px-1 font-bold">10小時</span>，總工資是 <span className="bg-pink-300 px-1 font-bold text-blue-800">$ 500</span>。以 <span className="border-b-2 border-red-500 font-bold"><span className="text-pink-600">$</span> / <span className="bg-yellow-300 px-1">小時</span></span> 表達時薪。
                 <span className="inline-block relative">
-                    <span className="absolute -top-4 -left-12 text-xs text-purple-700 whitespace-nowrap">$ 500 ÷ 10小時</span>
+                    <span className="absolute top-[-36px] -left-12 text-xs text-purple-700 whitespace-nowrap">$ 500 ÷ 10小時</span>
                 </span>
               </p>
               
@@ -3684,7 +3684,7 @@ export const RateRatioNotes = ({ activeSub }) => {
             <p className="text-green-700 font-bold mb-4 text-lg">比會出現冒號</p>
             <div className="flex flex-col md:flex-row gap-8 items-start text-lg text-blue-800">
               <div>
-                <p className="mb-2">例子： 10 <span className="text-green-600 border border-green-600 rounded-full px-1 font-bold">:</span> 60</p>
+                <p className="mb-2">例子： 10 <span className="text-green-600 font-bold">:</span> 60</p>
                 <div className="flex items-center gap-4 ml-8">
                   <div className="text-red-600 font-bold text-sm text-right font-sans">
                     <p>以計算機</p>
@@ -3697,26 +3697,17 @@ export const RateRatioNotes = ({ activeSub }) => {
                 </div>
               </div>
               <div>
-                <p>0.6 <span className="text-green-600 border border-green-600 rounded-full px-1 font-bold">:</span> 0.8</p>
+                <p>0.6 <span className="text-green-600 font-bold">:</span> 0.8</p>
               </div>
             </div>
           </div>
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200 font-sans text-[17px]">
-            <p className="mb-4 text-slate-800 font-sans">例：一條繩長 28cm，按 2:5 比例分開兩部份，求較長的部份。</p>
+            <p className="mb-4 text-blue-900 font-sans">例：一條繩長 28cm，按 2:5 比例分開兩部份，求較長的部份。</p>
             <div className="space-y-4 text-blue-900 font-bold">
-              <div className="flex items-center gap-2 font-sans">
-                <span>答：較長的比例：</span>
-                <div className="flex flex-col items-center">
-                   <div className="border-b border-blue-900 px-1">5</div>
-                   <div className="text-xs">2+5</div>
-                </div>
-                <span>=</span>
-                <Latex math="\frac{5}{7}" />
-              </div>
-              <div className="pl-12 font-sans">
-                <p>28 × <Latex math="\frac{5}{7}" /></p>
-                <p>= 20</p>
+              <div className="font-sans">
+                <p className="mb-1">已知 <Latex math="a:b=2:5" /></p>
+                <Latex math="\begin{aligned} \text{較長的比例} &= \frac{5}{2+5} = \frac{5}{7} \\[4pt] \text{較長的部分} &= 28 \times \frac{5}{7} = 20\text{ cm} \end{aligned}" block />
               </div>
             </div>
           </div>
@@ -3739,6 +3730,7 @@ export const RateRatioNotes = ({ activeSub }) => {
               <div className="text-blue-800">e.g. <span className="bg-yellow-300 font-bold"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
               <span className="mx-4 font-bold text-2xl">⇒</span>
               <div className="inline-block align-middle space-y-1 bg-slate-50 p-2 rounded">
+                <div><span className="bg-yellow-300 font-bold px-1"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span></div>
                 <div><span className="bg-yellow-300 font-bold px-1"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
                 <div><span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
               </div>
