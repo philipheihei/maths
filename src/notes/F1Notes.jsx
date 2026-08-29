@@ -848,7 +848,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
           <div className="bg-red-50 rounded-lg p-4 border border-red-200">
             <h3 className="font-bold text-red-800 mb-2">📌 單項式 × 單項式</h3>
             <p className="text-slate-700 mb-2 text-sm">口訣：數字乘數字，英文乘英文</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="print-polynomial-multiplication-grid grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white p-3 rounded border border-slate-200 text-center">
                 <Latex math="(5x)(8x^2)" block />
                 <Latex math="= 40x^3" block />
@@ -3892,7 +3892,7 @@ export const RateRatioNotes = ({ activeSub }) => {
             <h3 className="font-bold text-slate-800 mb-6 text-lg tracking-wide">- 認清情況是正比 / 反比</h3>
             
             <div className="space-y-6">
-              <div className="flex flex-col md:flex-row gap-4 items-center bg-rose-50 p-4 rounded-lg">
+              <div className="print-proportion-row flex flex-col md:flex-row gap-4 items-center bg-rose-50 p-4 rounded-lg">
                 <div className="font-bold text-xl min-w-[80px]">正比：</div>
                 <div className="min-w-[100px] text-center md:text-left text-lg">
                   <p>兩個數字</p>
@@ -3907,7 +3907,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                 </div>
               </div>
 
-              <div className="flex flex-col md:flex-row gap-4 items-center bg-blue-50 p-4 rounded-lg">
+              <div className="print-proportion-row flex flex-col md:flex-row gap-4 items-center bg-blue-50 p-4 rounded-lg">
                 <div className="font-bold text-xl min-w-[80px]">反比：</div>
                 <div className="min-w-[100px] text-center md:text-left text-lg">
                   <p>兩個數字</p>

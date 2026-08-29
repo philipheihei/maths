@@ -138,7 +138,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                 </div>
                 <p className="text-green-700"><span className="font-bold">Step 4:</span> 出答案 (2個!)</p>
                 <div className="ml-4 space-y-2">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="print-quadratic-answer-grid grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="bg-gray-50 p-3 rounded">
                       <p className="font-bold text-center mb-2 text-base">答案 1</p>
                       <div className="calculator-lcd-answer">
@@ -334,7 +334,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-3">2. 正整數/負整數在不等式的應用</h3>
             <p className="text-red-600 font-bold mb-3 bg-red-50 inline-block px-2 py-1 rounded">⚠️ 0 不是正數，也不是負數</p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 text-slate-700">
+            <div className="print-number-system-grid grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 text-slate-700">
               <div className="bg-white p-3 rounded shadow-sm">
                 <p>e.g. <Latex math="x < 4" /> 的<span className="font-bold text-blue-600">所有正整數</span>：<br/> <Latex math="1, 2, 3" /></p>
               </div>
@@ -434,7 +434,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 
           <div className="bg-white rounded-lg p-4 border border-indigo-200">
             <h3 className="font-bold text-indigo-800 mb-3">i 的次方循環</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="print-complex-powers-grid grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="border-2 border-indigo-500 rounded-lg bg-indigo-50 px-2">
                 <p className="text-center text-indigo-700 font-bold text-sm mt-2">基本循環（重點）</p>
                 <Latex math="\begin{aligned} i^1 &= i \\ i^2 &= -1 \\ i^3 &= i^2 \times i = -i \\ i^4 &= i^2 \times i^2 = 1 \end{aligned}" block />
@@ -450,7 +450,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3 text-center mb-3">
               <Latex math="a + bi" block />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-700">
+            <div className="print-complex-forms-grid grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-700">
               <p className="bg-white p-3 rounded"><span className="font-bold text-blue-600">實部：</span><Latex math="a" /></p>
               <p className="bg-white p-3 rounded"><span className="font-bold text-purple-600">虛部：</span><Latex math="b" />（<Latex math="i" /> 的係數）</p>
             </div>
@@ -549,7 +549,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">圖像與 <Latex math="x" /> 軸的關係 (<Latex math="y = ax^2 + bx + c" />)</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
+            <div className="print-quadratic-graph-relations-grid grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
               <div className="bg-white p-3 border border-slate-200 rounded shadow-sm flex flex-col items-center">
                 <div className="font-bold text-slate-800 mb-2 bg-red-100 px-3 py-1 rounded-full"><Latex math="\Delta > 0" /></div>
                 <svg viewBox="0 0 100 100" className="w-24 h-24 mb-2">
@@ -630,7 +630,7 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             <h3 className="font-bold text-purple-800 mb-2">一般式的二次方程與根</h3>
             <p className="text-slate-700 mb-4">若 <Latex math="\alpha" /> 和 <Latex math="\beta" /> 為方程 <Latex math="ax^2 + bx + c = 0" /> 的兩個根，即使不知道實質的值，也可以利用係數求出：</p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="print-roots-sum-product-grid grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 flex flex-col items-center justify-center">
                 <span className="text-slate-600 mb-2 font-bold">兩根之和 (Sum of roots)</span>
                 <span className="text-xl text-purple-700 font-bold"><Latex math="\alpha + \beta = −\frac{b}{a}" /></span>

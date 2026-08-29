@@ -24,7 +24,7 @@ const Latex = ({ math, block = false, left = false }) => {
 };
 
 const AlignedEquation = ({ left, right }) => (
-  <div className="grid w-[290px] max-w-full shrink-0 grid-cols-[180px_auto_minmax(0,1fr)] items-baseline gap-x-2 text-left">
+  <div className="grid w-[250px] max-w-full shrink-0 grid-cols-[140px_auto_minmax(0,1fr)] items-baseline gap-x-2 text-left">
     <div className="text-right min-w-0"><Latex math={left} /></div>
     <Latex math="=" />
     <div className="min-w-0"><Latex math={right} /></div>
@@ -666,7 +666,7 @@ export const TriangleLineAnglesNotes = ({ activeSub }) => {
               <span className="text-sm text-slate-500 font-normal">（頂角平分線、底邊中線、底邊高線：三線合一）</span>
             </h3>
             <div className="bg-green-50 rounded-lg p-3 border border-green-200 flex-1">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="print-isosceles-properties-grid grid grid-cols-1 md:grid-cols-3 gap-4">
                 
                 {/* case 1 */}
                 <div className="text-center">
@@ -1066,12 +1066,12 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                 
                 <div className="pl-6 space-y-3">
                   <div className="flex items-center gap-4">
-                    <span className="font-bold"><Latex math="=" /></span>
+                    <span className="font-bold">=</span>
                     <Latex math="\dfrac{3x+6}{x+2}" />
                     <span className="text-sm text-green-700">← 分子加減，分母相同二合為一</span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="font-bold"><Latex math="=" /></span>
+                    <span className="font-bold">=</span>
                     <div className="relative">
                       <Latex math="\dfrac{3(x+2)}{x+2}" />
                       {/* strikethroughs for x+2 */}
@@ -1081,7 +1081,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                     <span className="text-sm text-green-700">← 完成前檢查能否抽公因式和化簡</span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="font-bold"><Latex math="=" /></span>
+                    <span className="font-bold">=</span>
                     <Latex math="3" />
                   </div>
                 </div>
@@ -1101,19 +1101,19 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
 
                 <div className="pl-6 space-y-3">
                   <div className="flex items-center gap-4 flex-wrap">
-                    <span className="font-bold"><Latex math="=" /></span>
+                    <span className="font-bold">=</span>
                     <Latex math="\dfrac{1 \cdot 10y}{4y \cdot 10y} + \dfrac{7 \cdot 4y}{10y \cdot 4y}" />
-                    <span className="text-sm text-green-700 flex-1 min-w-0">
+                    <span className="text-sm text-green-700 bg-green-100 px-2 py-1 rounded">
                       ← 擴分 (分母互相乘對面，分子跟分母相乘)
                     </span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="font-bold"><Latex math="=" /></span>
+                    <span className="font-bold">=</span>
                     <Latex math="\dfrac{10y + 28y}{40y^2}" />
                     <span className="text-sm text-slate-500">← <Latex math="(1 \cdot 10y) + (7 \cdot 4y)" /></span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="font-bold"><Latex math="=" /></span>
+                    <span className="font-bold">=</span>
                     <div className="relative inline-block">
                       <Latex math="\dfrac{38y}{40y^2}" />
                       {/* strikethroughs for y and power 2 */}
@@ -1123,7 +1123,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                     <span className="text-sm text-green-700">← 完成前檢查能否抽公因式和化簡</span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="font-bold"><Latex math="=" /></span>
+                    <span className="font-bold">=</span>
                     <Latex math="\dfrac{19}{20y}" />
                   </div>
                 </div>
@@ -1305,7 +1305,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                     <AlignedEquation left="nm − 5n" right="3m + 2n" />
                   </div>
                   <div className="flex flex-wrap gap-4 items-center">
-                    <AlignedEquation left={'\\colorbox{yellow}{\\textit{n}}m − 5\\colorbox{yellow}{\\textit{n}} − 2\\colorbox{yellow}{\\textit{n}}'} right="3m" />
+                    <AlignedEquation left="nm − 5n − 2n" right="3m" />
                     <span className="text-purple-700 text-xs whitespace-nowrap">← n全放左方</span>
                   </div>
                   <div className="flex flex-wrap gap-4 items-center">
@@ -1355,7 +1355,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                     <span className="text-red-500 font-bold">除</span>
                     <span className="text-green-700 text-xs whitespace-nowrap">b(主項)旁邊丟往另一邊除</span>
                   </div>
-                  <div className="flex flex-wrap gap-4 items-center mt-2 pt-2">
+                  <div className="flex flex-wrap gap-4 items-center mt-2 pt-2 border-t border-slate-100">
                     <AlignedEquation left="b" right="\dfrac{2a+5}{3}" />
                     <span className="text-purple-700 text-xs font-bold whitespace-nowrap ml-4">主項放左邊</span>
                   </div>
@@ -2218,12 +2218,12 @@ export const FactorizationF2Notes = ({ activeSub }) => {
                   <div className="text-xs text-slate-500 italic">← 前兩項找相同，後兩項找相同</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-4 shrink-0 text-right font-sans text-sm text-slate-700"><Latex math="=" /></span>
+                  <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                   <div className="text-sm w-40 shrink-0"><Latex math="b(m+n) + 5(m+n)" /></div>
                   <div className="text-xs text-slate-500 italic">← 將相同括號抽出</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-4 shrink-0 text-right font-sans text-sm text-slate-700"><Latex math="=" /></span>
+                  <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                   <div className="text-sm w-40 shrink-0"><Latex math="(m+n)(b+5)" /></div>
                   <div className="text-xs text-slate-500 italic">← 另一個括號按順序寫</div>
                 </div>
@@ -2266,16 +2266,16 @@ export const FactorizationF2Notes = ({ activeSub }) => {
                 <div className="bg-yellow-50 p-3 rounded">
                   <p className="text-sm font-bold text-green-700 mb-2">(b) 部套用：</p>
                   <div className="space-y-2 text-sm">
-                    <div className="grid grid-cols-[1rem_260px_minmax(0,1fr)] items-center gap-2">
-                      <span className="w-4 shrink-0 text-right font-sans text-sm text-slate-700"><Latex math="=" /></span>
+                    <div className="grid grid-cols-[1rem_220px_minmax(0,1fr)] items-center gap-2">
+                      <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                       <div className="flex items-center flex-wrap gap-0.5 min-w-0">
                         <Latex math="4r − 14s +" />
                         <span className="bg-yellow-200 rounded px-0.5"><Latex math="(2r−7s)(3r+4s)" /></span>
                       </div>
                       <div className="text-xs text-slate-500 italic shrink-0">← 套用 (a) 部答案</div>
                     </div>
-                    <div className="grid grid-cols-[1rem_260px_minmax(0,1fr)] items-center gap-2">
-                      <span className="w-4 shrink-0 text-right font-sans text-sm text-slate-700"><Latex math="=" /></span>
+                    <div className="grid grid-cols-[1rem_220px_minmax(0,1fr)] items-center gap-2">
+                      <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                       <div className="flex items-center flex-wrap gap-0.5 min-w-0">
                         <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="2" /></span>
                         <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r−7s)" /></span>
@@ -2285,8 +2285,8 @@ export const FactorizationF2Notes = ({ activeSub }) => {
                       </div>
                       <div className="text-xs text-slate-500 italic shrink-0">← 非 (a) 部答案 抽公因式，應看到有最少兩個 <span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同括號</span></div>
                     </div>
-                    <div className="grid grid-cols-[1rem_260px_minmax(0,1fr)] items-center gap-2">
-                      <span className="w-4 shrink-0 text-right font-sans text-sm text-slate-700"><Latex math="=" /></span>
+                    <div className="grid grid-cols-[1rem_220px_minmax(0,1fr)] items-center gap-2">
+                      <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                       <div className="flex items-center flex-wrap gap-0.5 min-w-0">
                         <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r−7s)" /></span>
                         <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(2 + 3r + 4s)" /></span>
@@ -3156,7 +3156,7 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="print-parallel-proof-grid grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* 內錯角 */}
               <div className="bg-white border rounded-xl overflow-hidden shadow-sm flex flex-col">
                 <div className="bg-slate-50 border-b p-3 font-medium text-slate-700 text-sm text-center">內錯角相等</div>

@@ -87,11 +87,32 @@ const paginatePrintContent = (source, pageHeight) => {
 
       const headerRect = header.getBoundingClientRect();
       const firstLeadRect = firstLead.getBoundingClientRect();
-      const top = Math.round(Math.min(headerRect.top, firstLeadRect.top) - sourceRect.top);
-      const bottom = Math.round(Math.max(headerRect.bottom, firstLeadRect.bottom) - sourceRect.top);
+      const firstLeadHeading = firstLead.matches('h3, h4, h5') ? firstLead : null;
+      const firstLeadSiblings = Array.from(firstLeadHeading?.parentElement?.children || []);
+      const firstLeadIndex = firstLeadSiblings.indexOf(firstLeadHeading);
+      const firstLeadContent = firstLeadHeading
+        ? firstLeadSiblings
+          .slice(firstLeadIndex + 1)
+          .find((element) => element.getBoundingClientRect().height > 0)
+        : null;
+      const firstLeadContentRect = firstLeadContent?.getBoundingClientRect();
+      const firstLeadContentIsOversized = firstLeadContentRect?.height > resolvedPageHeight;
       const firstRoundedBlock = roundedBlocks
         .filter(({ element }) => content.contains(element) && element.contains(firstLead))
         .sort((a, b) => a.height - b.height)[0];
+      const top = Math.round(Math.min(headerRect.top, firstLeadRect.top) - sourceRect.top);
+      const bottom = Math.round(Math.max(
+        headerRect.bottom,
+        firstLeadRect.bottom,
+        firstLeadContentIsOversized
+          ? firstLeadContentRect.top
+          : Math.max(
+            firstLeadContentRect?.bottom || firstLeadRect.bottom,
+            firstRoundedBlock && firstRoundedBlock.height <= resolvedPageHeight
+              ? firstRoundedBlock.bottom
+              : firstLeadRect.bottom,
+          ),
+      ) - sourceRect.top);
 
       if (firstRoundedBlock && firstRoundedBlock.bottom - top > resolvedPageHeight) {
         firstRoundedBlock.allowSplit = true;
@@ -101,9 +122,60 @@ const paginatePrintContent = (source, pageHeight) => {
         top,
         bottom,
         firstRoundedBlock,
+        allowSplit: Boolean(firstLeadContentIsOversized),
       };
     })
-    .filter(({ top, bottom } = {}) => top >= 0 && bottom <= contentHeight + 1 && bottom > top);
+    .filter((range) => range && range.top >= 0 && range.bottom <= contentHeight + 1 && range.bottom > range.top);
+
+  const headingLeadRanges = Array.from(source.querySelectorAll('h2, h3, h4, h5'))
+    .map((heading) => {
+      const isTopicHeading = heading.tagName === 'H2';
+      const siblings = Array.from(heading.parentElement?.children || []);
+      const headingIndex = siblings.indexOf(heading);
+      let firstContent = siblings
+        .slice(headingIndex + 1)
+        .find((element) => element.getBoundingClientRect().height > 0);
+
+      if (!firstContent) {
+        let container = heading.parentElement;
+        while (container && container !== source && !firstContent) {
+          const containerSiblings = Array.from(container.parentElement?.children || []);
+          const containerIndex = containerSiblings.indexOf(container);
+          firstContent = containerSiblings
+            .slice(containerIndex + 1)
+            .find((element) => element.getBoundingClientRect().height > 0);
+          container = container.parentElement;
+        }
+      }
+
+      if (isTopicHeading && firstContent?.classList.contains('print-section-content')) return null;
+      if (!firstContent) return null;
+
+      const headingRect = heading.getBoundingClientRect();
+      const isFlowWrapper = typeof firstContent.className === 'string'
+        && /\bspace-y-\d+\b/.test(firstContent.className);
+      const firstContentUnit = isFlowWrapper
+        ? Array.from(firstContent.children)
+          .find((element) => element.getBoundingClientRect().height > 0)
+        || firstContent
+        : firstContent;
+      const firstContentRect = firstContentUnit.getBoundingClientRect();
+      const headingBlock = roundedBlocks
+        .filter(({ element, height }) => height <= resolvedPageHeight && element.contains(heading))
+        .sort((a, b) => a.height - b.height)[0];
+      const firstContentBlock = roundedBlocks
+        .find(({ element }) => element === firstContentUnit);
+      const top = Math.round(Math.min(
+        headingRect.top,
+        headingBlock?.element.getBoundingClientRect().top || headingRect.top,
+      ) - sourceRect.top);
+      const bottom = Math.round(Math.max(headingRect.bottom, firstContentRect.bottom) - sourceRect.top);
+      const allowSplit = firstContentRect.height > resolvedPageHeight
+        && !(firstContentBlock && firstContentBlock.height > resolvedPageHeight);
+
+      return { top, bottom, allowSplit };
+    })
+    .filter((range) => range && range.top >= 0 && range.bottom <= contentHeight + 1 && range.bottom > range.top);
 
   const tableBlocks = Array.from(source.querySelectorAll('table, tr'))
     .map((element) => {
@@ -117,7 +189,19 @@ const paginatePrintContent = (source, pageHeight) => {
       };
     })
     .filter(({ top, bottom, height }) => top >= 0 && bottom <= contentHeight + 1 && height >= 18);
-  const protectedBlocks = [...roundedBlocks, ...tableBlocks];
+  const atomBlocks = Array.from(source.querySelectorAll('svg, img, canvas, .katex-display'))
+    .map((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        element,
+        top: Math.round(rect.top - sourceRect.top),
+        bottom: Math.round(rect.bottom - sourceRect.top),
+        height: Math.round(rect.height),
+        allowSplit: false,
+      };
+    })
+    .filter(({ top, bottom, height }) => top >= 0 && bottom <= contentHeight + 1 && height >= 18);
+  const protectedBlocks = [...roundedBlocks, ...tableBlocks, ...atomBlocks];
 
   roundedBlocks.forEach(({ element, height, allowSplit }) => {
     element.classList.toggle('print-oversized-rounded', height > resolvedPageHeight || allowSplit);
@@ -140,13 +224,19 @@ const paginatePrintContent = (source, pageHeight) => {
   source.querySelectorAll('.print-section-content > *, [data-print-break]').forEach(addCandidate);
   protectedBlocks.forEach(({ top }) => candidateOffsets.add(top));
   sectionLeadRanges.forEach(({ top }) => candidateOffsets.add(top));
+  headingLeadRanges.forEach(({ top }) => candidateOffsets.add(top));
 
   const sortedCandidates = Array.from(candidateOffsets).sort((a, b) => a - b);
   const isSafeOffset = (offset) => (
     protectedBlocks.every(({ top, bottom, height, allowSplit }) => (
       height > resolvedPageHeight || allowSplit || offset <= top + 1 || offset >= bottom - 1
     ))
-    && sectionLeadRanges.every(({ top, bottom }) => offset <= top + 1 || offset >= bottom - 1)
+    && sectionLeadRanges.every(({ top, bottom, allowSplit }) => (
+      allowSplit || offset <= top + 1 || offset >= bottom - 1
+    ))
+    && headingLeadRanges.every(({ top, bottom, allowSplit }) => (
+      allowSplit || offset <= top + 1 || offset >= bottom - 1
+    ))
   );
   const offsets = [0];
   let currentOffset = 0;
@@ -165,26 +255,34 @@ const paginatePrintContent = (source, pageHeight) => {
       ))
       .sort((a, b) => a.top - b.top);
     const sectionLeadCrossingTarget = sectionLeadRanges
-      .filter(({ top, bottom, firstRoundedBlock }) => (
-        top > currentOffset + 8
+      .filter(({ top, bottom, allowSplit }) => (
+        !allowSplit
+        && top > currentOffset + 8
         && top < targetOffset
-        && (
-          bottom > targetOffset
-          || (firstRoundedBlock
-            && firstRoundedBlock.top < targetOffset
-            && firstRoundedBlock.bottom > targetOffset)
-        )
+        && bottom > targetOffset
       ))
+      .sort((a, b) => a.top - b.top);
+    const headingLeadCrossingTarget = headingLeadRanges
+      .filter(({ top, bottom, allowSplit }) => (
+        !allowSplit
+        && top > currentOffset + 8
+        && top < targetOffset
+        && bottom > targetOffset
+      ))
+      .sort((a, b) => a.top - b.top);
+    const leadCrossingTarget = [...sectionLeadCrossingTarget, ...headingLeadCrossingTarget]
       .sort((a, b) => a.top - b.top);
     const candidatesBeforeTarget = sortedCandidates.filter((candidate) => (
       candidate >= currentOffset + resolvedPageHeight * 0.68
       && candidate <= targetOffset
       && isSafeOffset(candidate)
     ));
-    const nextOffset = sectionLeadCrossingTarget.length
-      ? sectionLeadCrossingTarget[0].top
-      : protectedBlocksCrossingTarget.length
-      ? protectedBlocksCrossingTarget[0].top
+    const forcedBreaks = [
+      protectedBlocksCrossingTarget[0]?.top,
+      leadCrossingTarget[0]?.top,
+    ].filter((offset) => offset !== undefined);
+    const nextOffset = forcedBreaks.length
+      ? Math.min(...forcedBreaks)
       : (candidatesBeforeTarget.length ? candidatesBeforeTarget[candidatesBeforeTarget.length - 1] : targetOffset);
 
     offsets.push(nextOffset);
@@ -195,7 +293,7 @@ const paginatePrintContent = (source, pageHeight) => {
 };
 
 const PrintSource = React.memo(({ TopicComponent, sourceRef }) => (
-  <div ref={sourceRef} className="print-source-content">
+  <div ref={sourceRef} className="print-source-content print-pagination-source print-topic-page">
     <TopicComponent activeSub={null} onNavigate={() => {}} />
   </div>
 ));

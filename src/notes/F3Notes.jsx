@@ -964,7 +964,7 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="parallelogram-test" title="平行四邊形的判定條件" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="print-parallelogram-test-grid grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
             { label: '(a) 兩對對邊相等', abbr: '(簡記：對邊相等)' },
             { label: '(b) 兩對對角相等', abbr: '(簡記：對角相等)' },
@@ -1194,7 +1194,7 @@ export const TriangleLinesNotes = () => {
           </h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="print-triangle-center-grid grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* 高線 */}
           <div className="bg-red-50/50 rounded-xl p-4 border border-red-100 flex flex-col items-center">
             <svg width="200" height="150" viewBox="0 0 200 150">
@@ -1868,7 +1868,7 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
                 <span className="text-sm text-slate-500">（例：兩隻小狗的性別組合）</span>
               </p>
               
-              <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
+              <div className="print-probability-table-row flex flex-col md:flex-row gap-8 items-center justify-center">
                 {/* 數表 */}
                 <div className="relative pt-6 pl-8">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 text-slate-700 font-bold whitespace-nowrap">第二隻小狗</div>
@@ -1969,7 +1969,7 @@ export const ProbabilityF3Notes = ({ activeSub }) => {
               </div>
 
               <div className="space-y-4 font-bold text-slate-800">
-                <div className="flex flex-col md:flex-row gap-4 md:items-center text-blue-900 border-l-4 border-blue-500 pl-3">
+                <div className="print-expected-value-row flex flex-col md:flex-row gap-4 md:items-center text-blue-900 border-l-4 border-blue-500 pl-3">
                   <span><Latex math="\hookrightarrow" /> 能推出：</span>
                   <span className="bg-blue-100 px-2 py-1 rounded border border-blue-200">
                     <Latex math="P(\text{抽} \$50) = \dfrac{9}{10}" />

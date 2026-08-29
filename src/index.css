@@ -200,6 +200,18 @@ body {
     margin: 0;
   }
 
+  .print-root.print-preview .print-pagination-measure .print-pagination-source {
+    width: 190mm;
+    max-width: none;
+    height: auto;
+    margin: 0;
+    padding: 0 0 1px;
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    overflow: visible;
+  }
+
   /* Measure every printable topic at the fixed A4 content width. */
   .print-topic-page [class*="sm:grid-cols-"],
   .print-pagination-measure [class*="sm:grid-cols-"],
@@ -221,6 +233,94 @@ body {
   .print-topic-page [class*="xl:flex-row"],
   .print-pagination-measure [class*="xl:flex-row"] {
     flex-direction: column !important;
+  }
+
+  .print-topic-page #proportion .print-proportion-row,
+  .print-pagination-measure #proportion .print-proportion-row {
+    flex-direction: row !important;
+  }
+
+  .print-pagination-measure #multiplication .print-polynomial-multiplication-grid,
+  .print-topic-page #multiplication .print-polynomial-multiplication-grid,
+  .print-pagination-measure #parallelogram-test .print-parallelogram-test-grid,
+  .print-topic-page #parallelogram-test .print-parallelogram-test-grid,
+  .print-pagination-measure .print-triangle-center-grid,
+  .print-topic-page .print-triangle-center-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .print-pagination-measure #multiplication .print-polynomial-multiplication-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .print-topic-page #multiplication .print-polynomial-multiplication-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .print-pagination-measure #tree-diagram-table .print-probability-table-row,
+  .print-topic-page #tree-diagram-table .print-probability-table-row,
+  .print-pagination-measure #expected-value .print-expected-value-row,
+  .print-topic-page #expected-value .print-expected-value-row {
+    flex-direction: row !important;
+  }
+
+  .print-pagination-measure #prove-parallel .print-parallel-proof-grid,
+  .print-topic-page #prove-parallel .print-parallel-proof-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .print-pagination-measure #prove-parallel .print-parallel-proof-grid svg,
+  .print-topic-page #prove-parallel .print-parallel-proof-grid svg {
+    width: 100% !important;
+    max-width: 120px !important;
+  }
+
+  .print-pagination-measure #general-form .print-quadratic-answer-grid,
+  .print-topic-page #general-form .print-quadratic-answer-grid,
+  .print-pagination-measure #number-systems .print-number-system-grid,
+  .print-topic-page #number-systems .print-number-system-grid,
+  .print-pagination-measure #complex-i .print-complex-powers-grid,
+  .print-topic-page #complex-i .print-complex-powers-grid,
+  .print-pagination-measure #complex-i .print-complex-forms-grid,
+  .print-topic-page #complex-i .print-complex-forms-grid,
+  .print-pagination-measure #roots-sum-product .print-roots-sum-product-grid,
+  .print-topic-page #roots-sum-product .print-roots-sum-product-grid,
+  .print-pagination-measure #circle-theorems .print-circle-theorems-grid,
+  .print-topic-page #circle-theorems .print-circle-theorems-grid,
+  .print-pagination-measure #other-theorems .print-other-theorems-grid,
+  .print-topic-page #other-theorems .print-other-theorems-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .print-pagination-measure #graph-relations .print-quadratic-graph-relations-grid,
+  .print-topic-page #graph-relations .print-quadratic-graph-relations-grid,
+  .print-pagination-measure #transform-rules .print-transformation-rules-grid,
+  .print-topic-page #transform-rules .print-transformation-rules-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .print-pagination-measure #circle-theorems .print-circle-theorem-diagram-row,
+  .print-topic-page #circle-theorems .print-circle-theorem-diagram-row {
+    flex-direction: row !important;
+  }
+
+  .print-pagination-measure #circle-theorems .print-circle-theorems-grid > :first-child .print-circle-theorem-diagram-row svg,
+  .print-topic-page #circle-theorems .print-circle-theorems-grid > :first-child .print-circle-theorem-diagram-row svg {
+    width: 100% !important;
+    max-width: 180px !important;
+  }
+
+  .print-pagination-measure #circle-theorems .print-circle-theorems-grid svg,
+  .print-topic-page #circle-theorems .print-circle-theorems-grid svg,
+  .print-pagination-measure #other-theorems .print-other-theorems-grid svg,
+  .print-topic-page #other-theorems .print-other-theorems-grid svg {
+    width: 100% !important;
+    max-width: 240px !important;
+  }
+
+  .print-pagination-measure #circle-theorems .print-circle-theorems-grid > :first-child,
+  .print-topic-page #circle-theorems .print-circle-theorems-grid > :first-child {
+    grid-column: 1 / -1 !important;
   }
 
   .print-topic-page [class*="lg:w-"],
@@ -307,6 +407,17 @@ body {
     grid-template-columns: auto auto 1fr !important;
     column-gap: 0.5rem !important;
     row-gap: 0 !important;
+  }
+
+  .print-topic-page #advanced-angle-theorems .print-isosceles-properties-grid,
+  .print-pagination-measure #advanced-angle-theorems .print-isosceles-properties-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .print-topic-page #advanced-angle-theorems .print-isosceles-properties-grid svg,
+  .print-pagination-measure #advanced-angle-theorems .print-isosceles-properties-grid svg {
+    width: 100% !important;
+    max-width: 120px !important;
   }
 
   .print-topic-page #identities-formulas .print-identity-formula-row,
@@ -473,7 +584,23 @@ body {
   }
 
   .print-pagination-measure {
-    display: none !important;
+    position: absolute;
+    top: 0;
+    left: -100000px;
+    width: 190mm;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .print-pagination-measure .print-source-content {
+    box-sizing: border-box;
+    width: 190mm;
+    padding-bottom: 1px;
+  }
+
+  .print-pagination-measure .print-page-height-measure {
+    width: 1px;
+    height: 255mm;
   }
 
   .print-topic-sheet {
@@ -511,18 +638,6 @@ body {
     line-height: 1;
   }
 
-  .print-page-number::before {
-    content: "p." counter(page);
-  }
-
-  .print-page-number {
-    font-size: 0;
-  }
-
-  .print-page-number::before {
-    font-size: 9pt;
-  }
-
   .print-root * {
     animation: none !important;
     transition: none !important;
@@ -538,6 +653,21 @@ body {
     page-break-inside: auto;
   }
 
+  .print-pagination-measure .print-pagination-source {
+    width: 190mm !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 0 1px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    overflow: visible !important;
+    break-before: auto !important;
+    page-break-before: auto !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
   .print-topic-page [class*="sm:grid-cols-"],
   .print-topic-page [class*="md:grid-cols-"],
   .print-topic-page [class*="lg:grid-cols-"],
@@ -550,6 +680,30 @@ body {
   .print-topic-page [class*="lg:flex-row"],
   .print-topic-page [class*="xl:flex-row"] {
     flex-direction: column !important;
+  }
+
+  .print-topic-page #proportion .print-proportion-row,
+  .print-pagination-measure #proportion .print-proportion-row {
+    flex-direction: row !important;
+  }
+
+  .print-topic-page #multiplication .print-polynomial-multiplication-grid,
+  .print-topic-page #parallelogram-test .print-parallelogram-test-grid,
+  .print-topic-page .print-triangle-center-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .print-topic-page #multiplication .print-polynomial-multiplication-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .print-topic-page #tree-diagram-table .print-probability-table-row,
+  .print-topic-page #expected-value .print-expected-value-row {
+    flex-direction: row !important;
+  }
+
+  .print-topic-page #prove-parallel .print-parallel-proof-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 
   .print-topic-page [class*="lg:w-"],
@@ -610,6 +764,40 @@ body {
   .print-topic-page svg {
     max-width: 100% !important;
     height: auto !important;
+  }
+
+  .print-topic-page #general-form .print-quadratic-answer-grid,
+  .print-topic-page #number-systems .print-number-system-grid,
+  .print-topic-page #complex-i .print-complex-powers-grid,
+  .print-topic-page #complex-i .print-complex-forms-grid,
+  .print-topic-page #roots-sum-product .print-roots-sum-product-grid,
+  .print-topic-page #circle-theorems .print-circle-theorems-grid,
+  .print-topic-page #other-theorems .print-other-theorems-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .print-topic-page #graph-relations .print-quadratic-graph-relations-grid,
+  .print-topic-page #transform-rules .print-transformation-rules-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .print-topic-page #circle-theorems .print-circle-theorem-diagram-row {
+    flex-direction: row !important;
+  }
+
+  .print-topic-page #circle-theorems .print-circle-theorems-grid > :first-child .print-circle-theorem-diagram-row svg {
+    width: 100% !important;
+    max-width: 180px !important;
+  }
+
+  .print-topic-page #circle-theorems .print-circle-theorems-grid svg,
+  .print-topic-page #other-theorems .print-other-theorems-grid svg {
+    width: 100% !important;
+    max-width: 240px !important;
+  }
+
+  .print-topic-page #circle-theorems .print-circle-theorems-grid > :first-child {
+    grid-column: 1 / -1 !important;
   }
 
   .print-topic-page #bar-chart [class*="md:grid-cols-"],
@@ -691,6 +879,22 @@ body {
     grid-template-columns: auto auto 1fr !important;
     column-gap: 0.5rem !important;
     row-gap: 0 !important;
+  }
+
+  .print-pagination-measure #advanced-angle-theorems .print-isosceles-properties-grid,
+  .print-topic-page #advanced-angle-theorems .print-isosceles-properties-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .print-pagination-measure #advanced-angle-theorems .print-isosceles-properties-grid svg,
+  .print-topic-page #advanced-angle-theorems .print-isosceles-properties-grid svg {
+    width: 100% !important;
+    max-width: 120px !important;
+  }
+
+  .print-topic-page #prove-parallel .print-parallel-proof-grid svg {
+    width: 100% !important;
+    max-width: 120px !important;
   }
 
   .print-pagination-measure #identities-formulas .print-identity-formula-row,

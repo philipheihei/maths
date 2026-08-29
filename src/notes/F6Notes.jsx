@@ -492,7 +492,7 @@ export const FunctionTransformNotes = ({ activeSub, onNavigate }) => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-sans mt-2">
+          <div className="print-transformation-rules-grid grid grid-cols-1 md:grid-cols-3 gap-4 font-sans mt-2">
             <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-200">
               <div className="text-lg font-bold text-blue-800 mb-2">1. 平移 (加減)</div>
               <ul className="text-sm text-slate-700 space-y-2">

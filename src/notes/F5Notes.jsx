@@ -626,14 +626,14 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
       </div>
 
       <CollapsibleSection id="circle-theorems" title="常見圓形定理" num={1} color="emerald" activeSub={activeSub} sectionRef={s1}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="print-circle-theorems-grid grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心角兩倍於圓周角"
             directFormula="x = 2y"
             formulaRemark="必須要由兩隻相同的點拉出來的角作比較"
             className="md:col-span-2"
             svg={() => (
-              <div className="flex flex-col md:flex-row w-full justify-around items-center gap-4 py-2">
+              <div className="print-circle-theorem-diagram-row flex flex-col md:flex-row w-full justify-around items-center gap-4 py-2">
                 {/* Image 1: Standard Arrowhead */}
                 <svg viewBox="0 0 200 200" className="w-full max-w-[180px]">
                   <circle cx="100" cy="100" r="80" fill="none" stroke="#64748b" strokeWidth="1" />
@@ -1163,7 +1163,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
       </CollapsibleSection>
 
       <CollapsibleSection id="other-theorems" title="其他圓形定理" num={2} color="teal" activeSub={activeSub} sectionRef={s2}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="print-other-theorems-grid grid grid-cols-1 md:grid-cols-2 gap-6">
           <PropertyCard
             title="圓心至弦的垂線平分弦"
             condition={<>若 <Latex math="\text{ON} \perp \text{AB}" inline />，</>}
@@ -1206,7 +1206,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div className="print-other-theorems-grid grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <PropertyCard
             title="弦的垂直平分線穿過圓心"
             condition={<>若 <Latex math="\text{AN} = \text{NB}" inline /> 及 <Latex math="\text{CD} \perp \text{AB}" inline />，</>}
@@ -1320,7 +1320,7 @@ export const CirclePropertiesNotes = ({ activeSub }) => {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div className="print-other-theorems-grid grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <PropertyCard
             title="對角互補 (圓內接逆定理)"
             condition={<>若 <Latex math="\angle DAB + \angle BCD = 180^\circ" inline />，</>}
