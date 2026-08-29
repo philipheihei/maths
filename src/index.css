@@ -25,6 +25,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.print-source-content,
+.print-topic-page-content {
+  display: flow-root;
+}
+
 @font-face {
   font-family: "DSEG7Classic";
   src: url("https://cdn.jsdelivr.net/npm/dseg@0.46.0/fonts/DSEG7-Classic/DSEG7Classic-Regular.woff2") format("woff2"),
@@ -194,6 +199,137 @@ body {
     max-width: none;
     margin: 0;
   }
+
+  /* Measure every printable topic at the fixed A4 content width. */
+  .print-topic-page [class*="sm:grid-cols-"],
+  .print-pagination-measure [class*="sm:grid-cols-"],
+  .print-topic-page [class*="md:grid-cols-"],
+  .print-pagination-measure [class*="md:grid-cols-"],
+  .print-topic-page [class*="lg:grid-cols-"],
+  .print-pagination-measure [class*="lg:grid-cols-"],
+  .print-topic-page [class*="xl:grid-cols-"],
+  .print-pagination-measure [class*="xl:grid-cols-"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .print-topic-page [class*="sm:flex-row"],
+  .print-pagination-measure [class*="sm:flex-row"],
+  .print-topic-page [class*="md:flex-row"],
+  .print-pagination-measure [class*="md:flex-row"],
+  .print-topic-page [class*="lg:flex-row"],
+  .print-pagination-measure [class*="lg:flex-row"],
+  .print-topic-page [class*="xl:flex-row"],
+  .print-pagination-measure [class*="xl:flex-row"] {
+    flex-direction: column !important;
+  }
+
+  .print-topic-page [class*="lg:w-"],
+  .print-pagination-measure [class*="lg:w-"],
+  .print-topic-page [class*="xl:w-"],
+  .print-pagination-measure [class*="xl:w-"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .print-topic-page .katex-display,
+  .print-pagination-measure .katex-display {
+    margin-top: 0.4em !important;
+    margin-bottom: 0.4em !important;
+  }
+
+  .print-topic-page svg,
+  .print-pagination-measure svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .print-topic-page .overflow-hidden,
+  .print-pagination-measure .overflow-hidden,
+  .print-topic-page .overflow-x-auto,
+  .print-pagination-measure .overflow-x-auto,
+  .print-topic-page .overflow-y-auto,
+  .print-pagination-measure .overflow-y-auto {
+    overflow: visible !important;
+  }
+
+  .print-topic-page #bar-chart [class*="md:grid-cols-"],
+  .print-pagination-measure #bar-chart [class*="md:grid-cols-"],
+  .print-topic-page #pie-chart [class*="md:grid-cols-"],
+  .print-pagination-measure #pie-chart [class*="md:grid-cols-"],
+  .print-topic-page #line-graph [class*="md:grid-cols-"],
+  .print-pagination-measure #line-graph [class*="md:grid-cols-"],
+  .print-topic-page #stem-leaf [class*="xl:grid-cols-"],
+  .print-pagination-measure #stem-leaf [class*="xl:grid-cols-"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .print-topic-page #bar-chart svg,
+  .print-pagination-measure #bar-chart svg,
+  .print-topic-page #pie-chart svg,
+  .print-pagination-measure #pie-chart svg,
+  .print-topic-page #line-graph svg,
+  .print-pagination-measure #line-graph svg,
+  .print-topic-page #stem-leaf svg,
+  .print-pagination-measure #stem-leaf svg {
+    width: min(100%, 520px) !important;
+    max-width: 520px !important;
+  }
+
+  .print-topic-page #draw-3d .grid,
+  .print-pagination-measure #draw-3d .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.6rem !important;
+  }
+
+  .print-topic-page #draw-3d .grid > div,
+  .print-pagination-measure #draw-3d .grid > div {
+    padding: 0.65rem !important;
+  }
+
+  .print-topic-page #draw-3d .grid .h-32,
+  .print-pagination-measure #draw-3d .grid .h-32 {
+    height: 5.5rem !important;
+  }
+
+  .print-topic-page #draw-3d .grid svg,
+  .print-pagination-measure #draw-3d .grid svg {
+    max-height: 5.5rem !important;
+  }
+
+  .print-topic-page #basic-angle-theorems .grid,
+  .print-pagination-measure #basic-angle-theorems .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+
+  .print-topic-page #basic-angle-theorems .print-angle-equation,
+  .print-pagination-measure #basic-angle-theorems .print-angle-equation {
+    grid-template-columns: auto auto 1fr !important;
+    column-gap: 0.5rem !important;
+    row-gap: 0 !important;
+  }
+
+  .print-topic-page #identities-formulas .print-identity-formula-row,
+  .print-pagination-measure #identities-formulas .print-identity-formula-row {
+    grid-template-columns: 3rem auto auto 1fr !important;
+    column-gap: 0.5rem !important;
+    row-gap: 0 !important;
+  }
+
+  .print-topic-page #prism-formulas .print-prism-diagram svg,
+  .print-pagination-measure #prism-formulas .print-prism-diagram svg {
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: 92mm !important;
+  }
+
+  .print-topic-page #transformation .print-coordinate-diagram > svg,
+  .print-pagination-measure #transformation .print-coordinate-diagram > svg {
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: 125mm !important;
+  }
+
   /* Keep chart layouts consistent while measuring and rendering print pages. */
   .print-topic-page #bar-chart [class*="md:grid-cols-"],
   .print-pagination-measure #bar-chart [class*="md:grid-cols-"],
@@ -354,7 +490,6 @@ body {
 
   .print-page-content-viewport {
     width: 190mm !important;
-    height: 255mm !important;
     overflow: hidden !important;
   }
 
@@ -401,6 +536,32 @@ body {
     page-break-before: always;
     break-inside: auto;
     page-break-inside: auto;
+  }
+
+  .print-topic-page [class*="sm:grid-cols-"],
+  .print-topic-page [class*="md:grid-cols-"],
+  .print-topic-page [class*="lg:grid-cols-"],
+  .print-topic-page [class*="xl:grid-cols-"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .print-topic-page [class*="sm:flex-row"],
+  .print-topic-page [class*="md:flex-row"],
+  .print-topic-page [class*="lg:flex-row"],
+  .print-topic-page [class*="xl:flex-row"] {
+    flex-direction: column !important;
+  }
+
+  .print-topic-page [class*="lg:w-"],
+  .print-topic-page [class*="xl:w-"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .print-topic-page .overflow-x-auto > *,
+  .print-topic-page .min-w-\[700px\] {
+    width: 100% !important;
+    min-width: 0 !important;
   }
 
   .print-document.print-spread-view {
@@ -523,6 +684,20 @@ body {
   .print-topic-page #basic-angle-theorems .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 0.75rem !important;
+  }
+
+  .print-pagination-measure #basic-angle-theorems .print-angle-equation,
+  .print-topic-page #basic-angle-theorems .print-angle-equation {
+    grid-template-columns: auto auto 1fr !important;
+    column-gap: 0.5rem !important;
+    row-gap: 0 !important;
+  }
+
+  .print-pagination-measure #identities-formulas .print-identity-formula-row,
+  .print-topic-page #identities-formulas .print-identity-formula-row {
+    grid-template-columns: 3rem auto auto 1fr !important;
+    column-gap: 0.5rem !important;
+    row-gap: 0 !important;
   }
 
   .print-topic-page #basic-angle-theorems svg {

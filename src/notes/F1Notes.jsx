@@ -3152,7 +3152,7 @@ export const AnglesNotes = ({ activeSub }) => {
                         <text x="27" y="73" fontSize="10" fill="#334155">50°</text>
                         <text x="69" y="73" fontSize="10" fill="#334155" fontStyle="italic">2x</text>
                       </svg>
-                      <div className="text-sm text-slate-700 grid grid-cols-[auto_auto_1fr] gap-x-2">
+                      <div className="print-angle-equation text-sm text-slate-700 grid grid-cols-[auto_auto_1fr] gap-x-2">
                         <div className="text-right"><Latex math="2x" /></div>
                         <div className="text-center"><Latex math="=" /></div>
                         <div className="text-left"><Latex math="180^\circ-50^\circ-70^\circ" /></div>
