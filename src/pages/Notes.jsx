@@ -118,16 +118,50 @@ const paginatePrintContent = (source, pageHeight) => {
         firstRoundedBlock.allowSplit = true;
       }
 
+      const firstLeadCanSplit = firstLeadContentIsOversized || firstRoundedBlock?.allowSplit;
+
       return {
         top,
         bottom,
         firstRoundedBlock,
-        allowSplit: Boolean(firstLeadContentIsOversized),
+        allowSplit: Boolean(firstLeadCanSplit),
       };
     })
     .filter((range) => range && range.top >= 0 && range.bottom <= contentHeight + 1 && range.bottom > range.top);
 
-  const headingLeadRanges = Array.from(source.querySelectorAll('h2, h3, h4, h5'))
+  const topicHeading = source.querySelector('h1');
+  const firstSectionContent = source.querySelector('.print-section-content');
+  const firstSection = firstSectionContent?.parentElement;
+  const firstSectionBlock = firstSection
+    ? roundedBlocks.find(({ element }) => element === firstSection)
+    : null;
+  if (topicHeading && firstSection) {
+    const topicHeadingRect = topicHeading.getBoundingClientRect();
+    const topicHeadingBlock = roundedBlocks
+      .filter(({ element, height }) => height <= resolvedPageHeight && element.contains(topicHeading))
+      .sort((a, b) => a.height - b.height)[0];
+    const topicTop = Math.round(Math.min(
+      topicHeadingRect.top,
+      topicHeadingBlock?.element.getBoundingClientRect().top ?? topicHeadingRect.top,
+    ) - sourceRect.top);
+    const firstSectionBottom = Math.round(firstSection.getBoundingClientRect().bottom - sourceRect.top);
+    if (firstSectionBlock && firstSectionBottom - topicTop > resolvedPageHeight) {
+      firstSectionBlock.allowSplit = true;
+    }
+  }
+
+  sectionLeadRanges.forEach((range) => {
+    if (range.firstRoundedBlock?.allowSplit) range.allowSplit = true;
+    if (firstSection
+      && range.firstRoundedBlock?.element
+      && firstSection.contains(range.firstRoundedBlock.element)
+      && firstSectionBlock?.allowSplit) {
+      range.firstRoundedBlock.allowSplit = true;
+      range.allowSplit = true;
+    }
+  });
+
+  const headingLeadRanges = Array.from(source.querySelectorAll('h1, h2, h3, h4, h5'))
     .map((heading) => {
       const isTopicHeading = heading.tagName === 'H2';
       const siblings = Array.from(heading.parentElement?.children || []);
@@ -167,11 +201,15 @@ const paginatePrintContent = (source, pageHeight) => {
         .find(({ element }) => element === firstContentUnit);
       const top = Math.round(Math.min(
         headingRect.top,
-        headingBlock?.element.getBoundingClientRect().top || headingRect.top,
+        headingBlock?.element.getBoundingClientRect().top ?? headingRect.top,
       ) - sourceRect.top);
       const bottom = Math.round(Math.max(headingRect.bottom, firstContentRect.bottom) - sourceRect.top);
-      const allowSplit = firstContentRect.height > resolvedPageHeight
-        && !(firstContentBlock && firstContentBlock.height > resolvedPageHeight);
+      if (firstContentBlock && bottom - top > resolvedPageHeight && firstContentBlock.height <= resolvedPageHeight) {
+        firstContentBlock.allowSplit = true;
+      }
+      const allowSplit = (firstContentRect.height > resolvedPageHeight
+        && !(firstContentBlock && firstContentBlock.height > resolvedPageHeight)
+        || firstContentBlock?.allowSplit);
 
       return { top, bottom, allowSplit };
     })

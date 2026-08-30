@@ -235,6 +235,39 @@ body {
     flex-direction: column !important;
   }
 
+  .print-topic-page #sequence-pattern-mc [class*="sm:flex-row"],
+  .print-pagination-measure #sequence-pattern-mc [class*="sm:flex-row"] {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .print-topic-page [class*="md:grid-cols-[max-content_minmax(220px,1fr)]"],
+  .print-pagination-measure [class*="md:grid-cols-[max-content_minmax(220px,1fr)]"] {
+    grid-template-columns: max-content minmax(220px, 1fr) !important;
+  }
+
+  .print-topic-page [class*="md:grid-cols-[190px_auto_minmax(0,1fr)]"],
+  .print-pagination-measure [class*="md:grid-cols-[190px_auto_minmax(0,1fr)]"] {
+    grid-template-columns: 190px auto minmax(0, 1fr) !important;
+  }
+
+  .print-topic-page #area [class*="md:grid-cols-[max-content_max-content]"],
+  .print-pagination-measure #area [class*="md:grid-cols-[max-content_max-content]"],
+  .print-topic-page #sides-angles [class*="md:grid-cols-[max-content_max-content]"],
+  .print-pagination-measure #sides-angles [class*="md:grid-cols-[max-content_max-content]"] {
+    grid-template-columns: max-content max-content !important;
+  }
+
+  .print-topic-page #sides-angles [class*="md:flex-row"][class*="bg-white"],
+  .print-pagination-measure #sides-angles [class*="md:flex-row"][class*="bg-white"] {
+    flex-direction: row !important;
+  }
+
+  .print-topic-page #sides-angles [class*="md:grid-cols-2"],
+  .print-pagination-measure #sides-angles [class*="md:grid-cols-2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
   .print-topic-page #proportion .print-proportion-row,
   .print-pagination-measure #proportion .print-proportion-row {
     flex-direction: row !important;
@@ -341,6 +374,13 @@ body {
   .print-pagination-measure svg {
     max-width: 100% !important;
     height: auto !important;
+  }
+
+  .print-topic-page #area svg,
+  .print-pagination-measure #area svg,
+  .print-topic-page #sides-angles svg,
+  .print-pagination-measure #sides-angles svg {
+    max-width: 320px !important;
   }
 
   .print-topic-page .overflow-hidden,
@@ -638,6 +678,10 @@ body {
     line-height: 1;
   }
 
+  .print-topic-page .katex-mathml {
+    display: none !important;
+  }
+
   .print-root * {
     animation: none !important;
     transition: none !important;
@@ -675,11 +719,42 @@ body {
     grid-template-columns: 1fr !important;
   }
 
+  .print-topic-page [class*="md:grid-cols-[max-content_minmax(220px,1fr)]"] {
+    grid-template-columns: max-content minmax(220px, 1fr) !important;
+  }
+
+  .print-topic-page [class*="md:grid-cols-[190px_auto_minmax(0,1fr)]"] {
+    grid-template-columns: 190px auto minmax(0, 1fr) !important;
+  }
+
+  .print-topic-page #area [class*="md:grid-cols-[max-content_max-content]"],
+  .print-topic-page #sides-angles [class*="md:grid-cols-[max-content_max-content]"] {
+    grid-template-columns: max-content max-content !important;
+  }
+
+  .print-topic-page #sides-angles [class*="md:flex-row"][class*="bg-white"] {
+    flex-direction: row !important;
+  }
+
+  .print-topic-page #sides-angles [class*="md:grid-cols-2"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .print-pagination-measure #big-picture > .print-section-content > .space-y-6 > .grid,
+  .print-topic-page #big-picture > .print-section-content > .space-y-6 > .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
   .print-topic-page [class*="sm:flex-row"],
   .print-topic-page [class*="md:flex-row"],
   .print-topic-page [class*="lg:flex-row"],
   .print-topic-page [class*="xl:flex-row"] {
     flex-direction: column !important;
+  }
+
+  .print-topic-page #sequence-pattern-mc [class*="sm:flex-row"] {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
   }
 
   .print-topic-page #proportion .print-proportion-row,
@@ -764,6 +839,11 @@ body {
   .print-topic-page svg {
     max-width: 100% !important;
     height: auto !important;
+  }
+
+  .print-topic-page #area svg,
+  .print-topic-page #sides-angles svg {
+    max-width: 320px !important;
   }
 
   .print-topic-page #general-form .print-quadratic-answer-grid,

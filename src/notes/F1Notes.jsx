@@ -819,10 +819,10 @@ export const PolynomialsNotes = ({ activeSub }) => {
             </div>
             <hr />
             <div>
-              <p className="text-sm text-slate-600 mb-1">例子 3 (異類項尸分類)：</p>
+              <p className="text-sm text-slate-600 mb-1">例子 3 (將同類項重組排列)：</p>
               <pre className="whitespace-pre font-sans text-lg">
-                <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="2x − 3y − 7x − y" />{'\n'}
-<span className="plain-equals">=</span>{' '}<Latex math="2x − 7x − 3y − y" /> <span className="text-sm text-green-600"><Latex math="(-3-1)" /></span>{'\n'}
+                <span className="invisible"><span className="plain-equals">=</span>{' '}</span><span className="text-blue-600"><Latex math="2x" /></span> <span className="text-red-600"><Latex math="− 3y" /></span> <span className="text-blue-600"><Latex math="− 7x" /></span> <span className="text-red-600"><Latex math="− y" /></span>{'\n'}
+<span className="plain-equals">=</span>{' '}<span className="text-blue-600"><Latex math="2x" /> <Latex math="− 7x" /></span> <span className="text-red-600"><Latex math="− 3y" /> <Latex math="− y" /></span> <span className="text-sm text-green-600"><Latex math="(-3-1)" /></span>{'\n'}
 <span className="plain-equals">=</span>{' '}<Latex math="−5x − 4y" />
               </pre>
             </div>
