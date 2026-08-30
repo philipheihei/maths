@@ -376,6 +376,12 @@ body {
     height: auto !important;
   }
 
+  .print-topic-page .katex svg,
+  .print-pagination-measure .katex svg {
+    max-width: none !important;
+    height: inherit !important;
+  }
+
   .print-topic-page #area svg,
   .print-pagination-measure #area svg,
   .print-topic-page #sides-angles svg,
@@ -565,6 +571,14 @@ body {
   .print-topic-page #stem-leaf svg {
     width: min(100%, 520px) !important;
     max-width: 520px !important;
+  }
+
+  .print-topic-page #area .katex svg,
+  .print-pagination-measure #area .katex svg,
+  .print-topic-page #sides-angles .katex svg,
+  .print-pagination-measure #sides-angles .katex svg {
+    max-width: none !important;
+    height: inherit !important;
   }
 
   .print-root.print-preview .print-page-footer {
@@ -841,6 +855,12 @@ body {
     height: auto !important;
   }
 
+  .print-topic-page .katex svg,
+  .print-pagination-measure .katex svg {
+    max-width: none !important;
+    height: inherit !important;
+  }
+
   .print-topic-page #area svg,
   .print-topic-page #sides-angles svg {
     max-width: 320px !important;
@@ -1000,5 +1020,13 @@ body {
     width: auto !important;
     max-width: 100% !important;
     max-height: 125mm !important;
+  }
+
+  .print-topic-page #area .katex svg,
+  .print-pagination-measure #area .katex svg,
+  .print-topic-page #sides-angles .katex svg,
+  .print-pagination-measure #sides-angles .katex svg {
+    max-width: none !important;
+    height: inherit !important;
   }
 }

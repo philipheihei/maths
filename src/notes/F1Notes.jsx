@@ -143,27 +143,27 @@ export const BasicCalculationNotes = ({ activeSub }) => {
             <h3 className="font-bold text-blue-800 mb-2">3.3 質因數</h3>
             <p className="text-slate-700 mb-2">同時是質數和因數。用質因數連乘式表達：</p>
             <div className="bg-slate-50 p-4 rounded-lg font-sans">
-              <p className="mb-1">e.g. 40</p>
+              <p className="mb-1">e.g. <Latex math="40" /></p>
               <table className="ml-4 border-none text-slate-700">
                 <tbody>
                   <tr>
-                    <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="8" /></span> × 5</td>
+                    <td className="text-right pr-2"><Latex math="=" /></td>
+                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="8" /></span> <Latex math="\times 5" /></td>
                     <td className="pl-4 text-green-700 text-sm">← 若當中有合成數，需繼續拆乘式</td>
                   </tr>
                   <tr>
-                    <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="2 \times 4" /></span> × 5</td>
+                    <td className="text-right pr-2"><Latex math="=" /></td>
+                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="2 \times 4" /></span> <Latex math="\times 5" /></td>
                     <td></td>
                   </tr>
                   <tr>
-                    <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="2 \times 2 \times 2" /></span> × 5</td>
+                    <td className="text-right pr-2"><Latex math="=" /></td>
+                    <td className="font-bold text-left"><span className="bg-yellow-200 px-1"><Latex math="2 \times 2 \times 2" /></span> <Latex math="\times 5" /></td>
                     <td className="pl-4 text-green-700 text-sm">← 直至全部數字都是質數</td>
                   </tr>
                   <tr>
-                    <td className="text-right pr-2">=</td>
-                    <td className="font-bold text-left text-blue-700">2<sup className="text-xs">3</sup> × 5</td>
+                    <td className="text-right pr-2"><Latex math="=" /></td>
+                    <td className="font-bold text-left text-blue-700"><Latex math="2^3 \times 5" /></td>
                     <td className="pl-4 text-green-700 text-sm">← 以次方表示</td>
                   </tr>
                 </tbody>
@@ -274,17 +274,17 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <div className="font-bold text-slate-700">e.g.</div>
                 <div></div>
                 <div>
-                  <span>3 + </span>
-                  <span className="border-2 border-red-500 px-1">4 × 5</span>
-                  <span> − 6</span>
+                  <Latex math="3 + " />
+                  <span className="border-2 border-red-500 px-1"><Latex math="4 \times 5" /></span>
+                  <Latex math=" − 6" />
                   <span className="text-red-500 text-sm font-normal ml-2 whitespace-nowrap">← 先計乘</span>
                 </div>
                 <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 + <span className="text-slate-900 border-b-2 border-red-500">20</span> − 6</div>
+                <div className="font-bold text-slate-700"><Latex math="=" /></div>
+                <div className="font-bold text-slate-700"><Latex math="3 + " /><span className="text-slate-900 border-b-2 border-red-500"><Latex math="20" /></span><Latex math=" − 6" /></div>
                 <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">17</div>
+                <div className="font-bold text-slate-700"><Latex math="=" /></div>
+                <div className="font-bold text-slate-700"><Latex math="17" /></div>
               </div>
             </div>
 
@@ -298,19 +298,19 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                 <div className="font-bold text-slate-700">e.g.</div>
                 <div></div>
                 <div>
-                  <span>3 × </span>
-                  <span className="bg-yellow-200 px-1">[24 − (6 + 2)]</span>
+                  <Latex math="3 \times " />
+                  <span className="bg-yellow-200 px-1"><Latex math="[24 − (6 + 2)]" /></span>
                   <span className="text-red-500 text-sm font-normal ml-2 whitespace-nowrap">← 先計小括號，再計中括號</span>
                 </div>
                 <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 × (24 − <span className="text-blue-600">8</span>) <span className="text-red-500 text-sm font-normal">← 中括號轉小括號</span></div>
+                <div className="font-bold text-slate-700"><Latex math="=" /></div>
+                <div className="font-bold text-slate-700"><Latex math="3 \times (24 − " /><span className="text-blue-600"><Latex math="8" /></span><Latex math=")" /> <span className="text-red-500 text-sm font-normal">← 中括號轉小括號</span></div>
                 <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">3 × 16</div>
+                <div className="font-bold text-slate-700"><Latex math="=" /></div>
+                <div className="font-bold text-slate-700"><Latex math="3 \times 16" /></div>
                 <div></div>
-                <div className="font-bold text-slate-700">=</div>
-                <div className="font-bold text-slate-700">48</div>
+                <div className="font-bold text-slate-700"><Latex math="=" /></div>
+                <div className="font-bold text-slate-700"><Latex math="48" /></div>
               </div>
             </div>
           </div>
