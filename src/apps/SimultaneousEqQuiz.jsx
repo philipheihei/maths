@@ -1039,13 +1039,12 @@ const CalculatorProgramModal = ({ isOpen, onClose }) => {
             <h4 className="text-green-700 font-bold mb-3">📌 範例：解聯立方程</h4>
             
             <div className="bg-white p-3 rounded-lg text-center mb-4 border border-green-400">
-              <div className="text-lg font-sans flex items-center justify-center gap-3">
-                <span className="text-5xl leading-none">{`{`}</span>
-                <div className="text-left">
-                  <div>x + 2y = 10</div>
-                  <div>3x − 4y = −6</div>
-                </div>
-              </div>
+              <Prog01Lv2OriginalDisplay
+                eq1="x + 2y = 10"
+                eq2="3x - 4y = -6"
+                varX="x"
+                varY="y"
+              />
             </div>
             
             <p className="font-bold text-sm mb-2">步驟一：執行程式</p>

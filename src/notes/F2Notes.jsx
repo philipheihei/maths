@@ -159,9 +159,11 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                     <path d="M 120 125 Q 180 160 250 145" />
                     <polyline points="240,135 250,145 238,155" />
                   </g>
-                  <text x="255" y="145" fontSize="16" fill="#dc2626" fontWeight="bold">
-                    4.5 × 4/3 = 6
-                  </text>
+                  <foreignObject x="250" y="120" width="150" height="40">
+                    <div xmlns="http://www.w3.org/1999/xhtml" className="text-red-600 font-bold whitespace-nowrap">
+                      <Latex math="4.5 \times \dfrac{4}{3} = 6" />
+                    </div>
+                  </foreignObject>
                   <text x="350" y="152" fontSize="14" fill="#16a34a" fontWeight="bold">放大率</text>
                 </svg>
 

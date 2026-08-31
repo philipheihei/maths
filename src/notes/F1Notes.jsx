@@ -3652,7 +3652,7 @@ export const RateRatioNotes = ({ activeSub }) => {
               <p className="mb-4 text-slate-700 text-lg whitespace-normal leading-relaxed">
                 e.g. 工作了 <span className="bg-yellow-300 px-1 font-bold">10小時</span>，總工資是 <span className="bg-pink-300 px-1 font-bold text-blue-800">$ 500</span>。以 <span className="border-b-2 border-red-500 font-bold"><span className="text-pink-600">$</span> / <span className="bg-yellow-300 px-1">小時</span></span> 表達時薪。
                 <span className="inline-block relative">
-                    <span className="absolute top-[-36px] -left-12 text-xs text-purple-700 whitespace-nowrap">$ 500 ÷ 10小時</span>
+                    <span className="absolute top-[-36px] -left-12 text-xs text-purple-700 whitespace-nowrap"><Latex math="\$500 \div 10\text{小時}" /></span>
                 </span>
               </p>
               
@@ -3668,7 +3668,7 @@ export const RateRatioNotes = ({ activeSub }) => {
                   <span className="text-red-500 border border-red-500 rounded-full w-5 h-5 flex items-center justify-center text-xs mt-1">2</span>
                   <div>
                     <p className="text-red-600 font-bold font-sans">計算：</p>
-                    <p className="text-blue-800 font-bold">答： 500 ÷ 10 = 50 ∴ $50 / 小時</p>
+                    <p className="text-blue-800 font-bold">答： <Latex math="500 \div 10 = 50 \therefore \$50 / \text{小時}" /></p>
                   </div>
                 </div>
               </div>

@@ -57,7 +57,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
                       <span>正方形的面積</span>
-                      <span>= 5 × 5 (cm²)</span>
+                        <span>= 5 × 5</span>
                       <span></span>
                       <span>= <span className="underline">25 cm²</span></span>
                     </div>
@@ -102,7 +102,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
                       <span>長方形的面積</span>
-                      <span>= 9 × 6 (cm²)</span>
+                        <span>= 9 × 6</span>
                       <span></span>
                       <span>= <span className="underline">54 cm²</span></span>
                     </div>
@@ -165,7 +165,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
                       <span>平行四邊形的面積</span>
-                      <span>= 30 × 8 (cm²)</span>
+                        <span>= 30 × 8</span>
                       <span></span>
                       <span>= <span className="underline">240 cm²</span></span>
                     </div>
@@ -204,7 +204,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
                       <span>三角形的面積</span>
-                      <span>= <Latex math="\frac{1}{2}" /> × 12 × 7 (m²)</span>
+                        <span>= <Latex math="\\frac{1}{2}" /> × 12 × 7</span>
                       <span></span>
                       <span>= <span className="underline">42 m²</span></span>
                     </div>
@@ -251,7 +251,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
                       <span>梯形面積</span>
-                      <span>= <Latex math="\frac{1}{2}" />(5 + 8) × 4 (mm²)</span>
+                        <span>= <Latex math="\frac{1}{2}" />(5 + 8) × 4</span>
                       <span></span>
                       <span>= <span className="underline">26 mm²</span></span>
                     </div>
