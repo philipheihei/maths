@@ -1175,25 +1175,173 @@ export const QuadrilateralNotes = ({ activeSub }) => {
 // CH6 三角形的心 (F3)
 // ========================================
 
-export const TriangleLinesNotes = () => {
+const TRIANGLE_PATH = 'M 100 30 L 32 135 L 168 135 Z';
+
+const TRIANGLE_CENTER_DIAGRAMS = {
+  incenter: {
+    title: '三角形內心示意圖',
+    description: '三條角平分線交於 I，I 是內切圓的圓心。',
+  },
+  circumcenter: {
+    title: '三角形外心示意圖',
+    description: '三條邊的垂直平分線交於 O，O 是外接圓的圓心。',
+  },
+  orthocenter: {
+    title: '三角形垂心示意圖',
+    description: '三條由頂點作出的高線交於 H。',
+  },
+  centroid: {
+    title: '三角形重心示意圖',
+    description: '三條中線交於 G，G 是三角形的重心。',
+  },
+};
+
+const TriangleCenterDiagram = ({ type }) => {
+  const diagram = TRIANGLE_CENTER_DIAGRAMS[type];
+  const titleId = `triangle-${type}-diagram-title`;
+  const descriptionId = `triangle-${type}-diagram-description`;
+
+  return (
+    <svg viewBox="0 0 200 195" className="w-full max-w-[220px] h-auto" role="img" aria-labelledby={`${titleId} ${descriptionId}`}>
+      <title id={titleId}>{diagram.title}</title>
+      <desc id={descriptionId}>{diagram.description}</desc>
+      <path d={TRIANGLE_PATH} fill="#fff7ed" stroke="none" />
+
+      {type === 'incenter' && (
+        <>
+          <line x1="100" y1="30" x2="100" y2="98" stroke="#16a34a" strokeWidth="1.8" strokeDasharray="5 4" />
+          <line x1="32" y1="135" x2="100" y2="98" stroke="#16a34a" strokeWidth="1.8" strokeDasharray="5 4" />
+          <line x1="168" y1="135" x2="100" y2="98" stroke="#16a34a" strokeWidth="1.8" strokeDasharray="5 4" />
+          <circle cx="100" cy="98" r="37" fill="#dcfce7" fillOpacity="0.55" stroke="#16a34a" strokeWidth="2" />
+          <circle cx="100" cy="98" r="4" fill="#15803d" />
+          <text x="113" y="80" fill="#15803d" fontSize="14" fontWeight="bold">I</text>
+          <text x="100" y="187" fill="#15803d" fontSize="12" fontWeight="bold" textAnchor="middle">內切圓</text>
+        </>
+      )}
+
+      {type === 'circumcenter' && (
+        <>
+          <circle cx="100" cy="105" r="75" fill="#dbeafe" fillOpacity="0.28" stroke="#2563eb" strokeWidth="2" />
+          <line x1="100" y1="30" x2="100" y2="180" stroke="#2563eb" strokeWidth="1.8" strokeDasharray="5 4" />
+          <line x1="8" y1="45" x2="126" y2="122" stroke="#2563eb" strokeWidth="1.8" strokeDasharray="5 4" />
+          <line x1="74" y1="122" x2="192" y2="45" stroke="#2563eb" strokeWidth="1.8" strokeDasharray="5 4" />
+          <circle cx="100" cy="105" r="4" fill="#1d4ed8" />
+          <text x="114" y="88" fill="#1d4ed8" fontSize="14" fontWeight="bold">O</text>
+          <text x="100" y="18" fill="#1d4ed8" fontSize="12" fontWeight="bold" textAnchor="middle">外接圓</text>
+        </>
+      )}
+
+      {type === 'orthocenter' && (
+        <>
+          <line x1="100" y1="30" x2="100" y2="135" stroke="#dc2626" strokeWidth="2" />
+          <line x1="32" y1="135" x2="128" y2="73" stroke="#dc2626" strokeWidth="2" />
+          <line x1="168" y1="135" x2="72" y2="73" stroke="#dc2626" strokeWidth="2" />
+          <polyline points="100,135 112,135 112,123 100,123" fill="none" stroke="#15803d" strokeWidth="1.8" />
+          <circle cx="100" cy="91" r="4" fill="#b91c1c" />
+          <text x="113" y="113" fill="#b91c1c" fontSize="14" fontWeight="bold">H</text>
+        </>
+      )}
+
+      {type === 'centroid' && (
+        <>
+          <line x1="100" y1="30" x2="100" y2="135" stroke="#ea580c" strokeWidth="2" />
+          <line x1="32" y1="135" x2="134" y2="82.5" stroke="#ea580c" strokeWidth="2" />
+          <line x1="168" y1="135" x2="66" y2="82.5" stroke="#ea580c" strokeWidth="2" />
+          <path d="M 61 130 L 61 140 M 71 130 L 71 140 M 129 130 L 129 140 M 139 130 L 139 140" stroke="#9a3412" strokeWidth="1.8" />
+          <circle cx="100" cy="100" r="4" fill="#c2410c" />
+          <text x="113" y="117" fill="#c2410c" fontSize="14" fontWeight="bold">G</text>
+        </>
+      )}
+
+      <path d={TRIANGLE_PATH} fill="none" stroke="#9f6b53" strokeWidth="2" strokeLinejoin="round" />
+    </svg>
+  );
+};
+
+const TRIANGLE_CENTER_CARDS = [
+  {
+    type: 'incenter',
+    title: '1. 內心',
+    panel: 'bg-emerald-50/60 border-emerald-100',
+    titleColor: 'text-emerald-700',
+    definition: (
+      <>
+        三條<span className="font-bold text-emerald-700">角平分線</span>的交點。
+      </>
+    ),
+    property: '內心與三邊的距離相等，可作內切圓的圓心。',
+  },
+  {
+    type: 'circumcenter',
+    title: '2. 外心',
+    panel: 'bg-blue-50/60 border-blue-100',
+    titleColor: 'text-blue-700',
+    definition: (
+      <>
+        三條邊的<span className="font-bold text-blue-700">垂直平分線</span>的交點。
+      </>
+    ),
+    property: '外心與三個頂點的距離相等，可作外接圓的圓心。',
+  },
+  {
+    type: 'orthocenter',
+    title: '3. 垂心',
+    panel: 'bg-red-50/60 border-red-100',
+    titleColor: 'text-red-700',
+    definition: (
+      <>
+        三條<span className="font-bold text-red-700">高線</span>的交點。
+      </>
+    ),
+    property: (
+      <>
+        <span className="font-bold text-red-700">高線</span>由頂點向對邊（或其延長線）作垂線。
+      </>
+    ),
+  },
+  {
+    type: 'centroid',
+    title: '4. 重心（形心）',
+    panel: 'bg-orange-50/60 border-orange-100',
+    titleColor: 'text-orange-700',
+    definition: (
+      <>
+        三條<span className="font-bold text-orange-700">中線</span>的交點。
+      </>
+    ),
+    property: (
+      <>
+        重心把每條<span className="font-bold text-orange-700">中線</span>按 2 : 1 分割，靠近頂點的一段較長。
+      </>
+    ),
+  },
+];
+
+const TriangleCenterCard = ({ center }) => (
+  <div className={`rounded-xl p-4 border ${center.panel} flex flex-col items-center`}>
+    <TriangleCenterDiagram type={center.type} />
+    <div className="w-full mt-2">
+      <h3 className={`text-lg font-bold ${center.titleColor} text-center mb-3`}>{center.title}</h3>
+      <div className="bg-white rounded-lg p-3 border border-slate-200 space-y-2 text-sm">
+        <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>定義：</span>{center.definition}</p>
+        <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>性質：</span>{center.property}</p>
+      </div>
+    </div>
+  </div>
+);
+
+export const TriangleLinesNotes = ({ activeSub }) => {
+  const s1 = useRef(null);
+  const s2 = useRef(null);
+
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-orange-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">CH6 三角形的心</h1>
-        <p className="text-slate-600">高線、中線、角平分線與垂直平分線的辨認重點</p>
+        <p className="text-slate-600">認識四條重要線，以及由它們形成的三角形四心</p>
       </div>
 
-      <div className="space-y-6">
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-5">
-        <div className="flex items-center gap-2 mb-4">
-          <span className="bg-orange-100 text-orange-800 border border-orange-300 px-2.5 py-1 rounded-full text-sm font-bold shadow-sm whitespace-nowrap">
-            重點
-          </span>
-          <h3 className="text-xl font-bold text-slate-800">
-            三角形的四條重要線(四線)特徵
-          </h3>
-        </div>
-
+      <CollapsibleSection id="four-lines" title="1. 三角形的四條重要線(四線)特徵" num={1} color="red" activeSub={activeSub} sectionRef={s1}>
         <div className="print-triangle-center-grid grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* 高線 */}
           <div className="bg-red-50/50 rounded-xl p-4 border border-red-100 flex flex-col items-center">
@@ -1278,9 +1426,22 @@ export const TriangleLinesNotes = () => {
             </div>
           </div>
         </div>
+      </CollapsibleSection>
 
+      <CollapsibleSection id="triangle-centers" title="2. 三角形四心" num={2} color="orange" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-4">
+          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+            <h3 className="font-bold text-orange-800 mb-2">四心是怎樣找出來？</h3>
+            <p className="text-sm text-slate-700">三角形的四心，分別由三條同類型的線交會而成。先認清「哪一種線」，就能判斷是哪一個心。</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {TRIANGLE_CENTER_CARDS.map((center) => (
+              <TriangleCenterCard key={center.type} center={center} />
+            ))}
+          </div>
         </div>
-      </div>
+      </CollapsibleSection>
     </>
   );
 };

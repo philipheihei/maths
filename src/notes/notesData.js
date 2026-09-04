@@ -390,6 +390,7 @@ export const NOTES_DATA = {
       color: 'orange',
       subtopics: [
         { id: 'four-lines', num: 1, title: '三角形的四條重要線(四線)特徵', color: 'red' },
+        { id: 'triangle-centers', num: 2, title: '三角形四心', color: 'orange' },
       ]
     },
     {
