@@ -1286,15 +1286,17 @@ const getArcPath = (center, radius, startAngle, endAngle) => {
   return `M ${formatSvgNumber(start.x)} ${formatSvgNumber(start.y)} A ${radius} ${radius} 0 ${largeArc} 1 ${formatSvgNumber(end.x)} ${formatSvgNumber(end.y)}`;
 };
 
+const CENTER_ANGLE_MARK_RADII = [15, 21, 27];
+
 const getAngleMarkPaths = (vertex, firstRay, secondRay, count) => {
   const firstAngle = Math.atan2(firstRay.y - vertex.y, firstRay.x - vertex.x);
   let secondAngle = Math.atan2(secondRay.y - vertex.y, secondRay.x - vertex.x);
   while (secondAngle <= firstAngle) secondAngle += Math.PI * 2;
   const middleAngle = (firstAngle + secondAngle) / 2;
   const gap = 0.08;
-  return Array.from({ length: count }, (_, index) => 10 + index * 4).flatMap((radius) => [
+  return CENTER_ANGLE_MARK_RADII.slice(0, count).flatMap((radius) => [
     getArcPath(vertex, radius, firstAngle + gap, middleAngle - gap),
-    getArcPath(vertex, radius, middleAngle + gap, secondAngle - gap),
+    getArcPath(vertex, radius + 4, middleAngle + gap, secondAngle - gap),
   ]);
 };
 
@@ -1310,9 +1312,9 @@ const EqualLengthTicks = ({ first, second, count }) => {
   const direction = normalizePoint(subtractPoints(second, first));
   const normal = { x: -direction.y, y: direction.x };
   const fractionsByCount = {
-    1: [0.42, 0.58],
-    2: [0.36, 0.44, 0.56, 0.64],
-    3: [0.31, 0.39, 0.47, 0.53, 0.61, 0.69],
+    1: [0.25, 0.75],
+    2: [0.235, 0.265, 0.735, 0.765],
+    3: [0.22, 0.25, 0.28, 0.72, 0.75, 0.78],
   };
   const fractions = fractionsByCount[count];
 
@@ -1341,6 +1343,7 @@ const CENTER_INCENTER = getIncenter(CENTER_TRIANGLE);
 const CENTER_CIRCUMCENTER = getCircumcenter(CENTER_TRIANGLE);
 const CENTER_INRADIUS = CENTER_TRIANGLE.c.y - CENTER_INCENTER.y;
 const CENTER_CIRCUMRADIUS = distanceBetween(CENTER_CIRCUMCENTER, CENTER_TRIANGLE.a);
+const CENTER_LINE_EXTENSION = 8;
 const CENTER_CONTACTS = {
   ab: projectPointToLine(CENTER_INCENTER, CENTER_TRIANGLE.a, CENTER_TRIANGLE.b),
   bc: projectPointToLine(CENTER_INCENTER, CENTER_TRIANGLE.b, CENTER_TRIANGLE.c),
@@ -1348,9 +1351,9 @@ const CENTER_CONTACTS = {
 };
 
 const CENTER_BISECTORS = [
-  { vertex: CENTER_TRIANGLE.a, color: CENTER_COLORS.orange, line: getExtendedLine(CENTER_TRIANGLE.a, CENTER_INCENTER, 0, 105) },
-  { vertex: CENTER_TRIANGLE.b, color: CENTER_COLORS.green, line: getExtendedLine(CENTER_TRIANGLE.b, CENTER_INCENTER, 0, 120) },
-  { vertex: CENTER_TRIANGLE.c, color: CENTER_COLORS.purple, line: getExtendedLine(CENTER_TRIANGLE.c, CENTER_INCENTER, 0, 120) },
+  { vertex: CENTER_TRIANGLE.a, color: CENTER_COLORS.orange, line: getExtendedLine(CENTER_TRIANGLE.a, CENTER_INCENTER, 0, CENTER_INRADIUS + CENTER_LINE_EXTENSION) },
+  { vertex: CENTER_TRIANGLE.b, color: CENTER_COLORS.green, line: getExtendedLine(CENTER_TRIANGLE.b, CENTER_INCENTER, 0, CENTER_INRADIUS + CENTER_LINE_EXTENSION) },
+  { vertex: CENTER_TRIANGLE.c, color: CENTER_COLORS.purple, line: getExtendedLine(CENTER_TRIANGLE.c, CENTER_INCENTER, 0, CENTER_INRADIUS + CENTER_LINE_EXTENSION) },
 ];
 
 const CENTER_PERPENDICULAR_BISECTORS = [
@@ -1358,19 +1361,19 @@ const CENTER_PERPENDICULAR_BISECTORS = [
     first: CENTER_TRIANGLE.a,
     second: CENTER_TRIANGLE.b,
     color: CENTER_COLORS.orange,
-    line: getLineThrough(midpointOf(CENTER_TRIANGLE.a, CENTER_TRIANGLE.b), { x: CENTER_TRIANGLE.a.y - CENTER_TRIANGLE.b.y, y: CENTER_TRIANGLE.b.x - CENTER_TRIANGLE.a.x }, 115),
+    line: getLineThrough(midpointOf(CENTER_TRIANGLE.a, CENTER_TRIANGLE.b), { x: CENTER_TRIANGLE.a.y - CENTER_TRIANGLE.b.y, y: CENTER_TRIANGLE.b.x - CENTER_TRIANGLE.a.x }, CENTER_CIRCUMRADIUS + CENTER_LINE_EXTENSION),
   },
   {
     first: CENTER_TRIANGLE.b,
     second: CENTER_TRIANGLE.c,
     color: CENTER_COLORS.green,
-    line: getLineThrough(midpointOf(CENTER_TRIANGLE.b, CENTER_TRIANGLE.c), { x: CENTER_TRIANGLE.b.y - CENTER_TRIANGLE.c.y, y: CENTER_TRIANGLE.c.x - CENTER_TRIANGLE.b.x }, 115),
+    line: getLineThrough(midpointOf(CENTER_TRIANGLE.b, CENTER_TRIANGLE.c), { x: CENTER_TRIANGLE.b.y - CENTER_TRIANGLE.c.y, y: CENTER_TRIANGLE.c.x - CENTER_TRIANGLE.b.x }, CENTER_CIRCUMRADIUS + CENTER_LINE_EXTENSION),
   },
   {
     first: CENTER_TRIANGLE.c,
     second: CENTER_TRIANGLE.a,
     color: CENTER_COLORS.purple,
-    line: getLineThrough(midpointOf(CENTER_TRIANGLE.c, CENTER_TRIANGLE.a), { x: CENTER_TRIANGLE.c.y - CENTER_TRIANGLE.a.y, y: CENTER_TRIANGLE.a.x - CENTER_TRIANGLE.c.x }, 115),
+    line: getLineThrough(midpointOf(CENTER_TRIANGLE.c, CENTER_TRIANGLE.a), { x: CENTER_TRIANGLE.c.y - CENTER_TRIANGLE.a.y, y: CENTER_TRIANGLE.a.x - CENTER_TRIANGLE.c.x }, CENTER_CIRCUMRADIUS + CENTER_LINE_EXTENSION),
   },
 ];
 
@@ -1502,9 +1505,10 @@ const TriangleCenterDiagram = ({ type }) => {
   const titleId = `triangle-${type}-diagram-title`;
   const descriptionId = `triangle-${type}-diagram-description`;
   const isReferenceDiagram = type === 'incenter' || type === 'circumcenter';
+  const diagramClassName = type === 'incenter' ? 'w-full max-w-[320px] h-auto' : 'w-full max-w-[220px] h-auto';
 
   return (
-    <svg viewBox={isReferenceDiagram ? '0 0 220 220' : '0 0 200 195'} className="w-full max-w-[220px] h-auto" role="img" aria-labelledby={`${titleId} ${descriptionId}`}>
+    <svg viewBox={isReferenceDiagram ? '0 0 220 220' : '0 0 200 195'} className={diagramClassName} role="img" aria-labelledby={`${titleId} ${descriptionId}`}>
       <title id={titleId}>{diagram.title}</title>
       <desc id={descriptionId}>{diagram.description}</desc>
 
@@ -1591,7 +1595,7 @@ const TRIANGLE_CENTER_CARDS = [
   },
   {
     type: 'centroid',
-    title: '4. 重心（形心）',
+    title: '4. 形心',
     panel: 'bg-orange-50/60 border-orange-100',
     titleColor: 'text-orange-700',
     definition: (
@@ -1601,7 +1605,7 @@ const TRIANGLE_CENTER_CARDS = [
     ),
     property: (
       <>
-        重心把每條<span className="font-bold text-orange-700">中線</span>按 2 : 1 分割，靠近頂點的一段較長。
+        形心把每條<span className="font-bold text-orange-700">中線</span>按 2 : 1 分割，靠近頂點的一段較長。
       </>
     ),
   },
