@@ -1192,6 +1192,8 @@ const CENTER_COLORS = {
   orange: '#b66b2b',
   green: '#159b68',
   purple: '#51358c',
+  centroidLine: '#f28c00',
+  centroidPoint: '#159b68',
 };
 
 const subtractPoints = (first, second) => ({ x: first.x - second.x, y: first.y - second.y });
@@ -1206,6 +1208,17 @@ const distanceBetween = (first, second) => pointLength(subtractPoints(first, sec
 const midpointOf = (first, second) => multiplyPoint(addPoints(first, second), 0.5);
 const pointOnSegment = (first, second, fraction) => addPoints(first, multiplyPoint(subtractPoints(second, first), fraction));
 const formatSvgNumber = (value) => Number(value.toFixed(2));
+
+const CENTER_SIDE_MIDPOINTS = {
+  a: midpointOf(CENTER_TRIANGLE.b, CENTER_TRIANGLE.c),
+  b: midpointOf(CENTER_TRIANGLE.a, CENTER_TRIANGLE.c),
+  c: midpointOf(CENTER_TRIANGLE.a, CENTER_TRIANGLE.b),
+};
+
+const CENTER_CENTROID = {
+  x: (CENTER_TRIANGLE.a.x + CENTER_TRIANGLE.b.x + CENTER_TRIANGLE.c.x) / 3,
+  y: (CENTER_TRIANGLE.a.y + CENTER_TRIANGLE.b.y + CENTER_TRIANGLE.c.y) / 3,
+};
 
 const getIncenter = ({ a, b, c }) => {
   const sideA = distanceBetween(b, c);
@@ -1286,7 +1299,7 @@ const getArcPath = (center, radius, startAngle, endAngle) => {
   return `M ${formatSvgNumber(start.x)} ${formatSvgNumber(start.y)} A ${radius} ${radius} 0 ${largeArc} 1 ${formatSvgNumber(end.x)} ${formatSvgNumber(end.y)}`;
 };
 
-const CENTER_ANGLE_MARK_RADII = [15, 21, 27];
+const CENTER_ANGLE_MARK_RADII = [15, 19.8, 24.6];
 
 const getAngleMarkPaths = (vertex, firstRay, secondRay, count) => {
   const firstAngle = Math.atan2(firstRay.y - vertex.y, firstRay.x - vertex.x);
@@ -1423,8 +1436,8 @@ const IncenterDiagram = () => (
     <text x="18" y="65" fill={CENTER_COLORS.triangle} fontSize="14">內心</text>
     <path d={`M 49 69 C 53 84, 77 93, ${formatSvgNumber(CENTER_INCENTER.x - 7)} ${formatSvgNumber(CENTER_INCENTER.y - 2)}`} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" />
     <polyline points={`${formatSvgNumber(CENTER_INCENTER.x - 14)},${formatSvgNumber(CENTER_INCENTER.y - 6)} ${formatSvgNumber(CENTER_INCENTER.x - 7)},${formatSvgNumber(CENTER_INCENTER.y - 2)} ${formatSvgNumber(CENTER_INCENTER.x - 13)},${formatSvgNumber(CENTER_INCENTER.y + 1)}`} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <text x="146" y="207" fill={CENTER_COLORS.triangle} fontSize="13" textAnchor="middle">內切圓</text>
-    <path d="M 150 195 C 158 178, 157 156, 146 139" fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" />
+    <text x="146" y="187" fill={CENTER_COLORS.triangle} fontSize="13" textAnchor="middle">內切圓</text>
+    <path d="M 150 177 C 158 164, 157 150, 146 139" fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" />
     <polyline points="142,145 146,139 149,146" fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
   </>
 );
@@ -1481,6 +1494,25 @@ const CircumcenterDiagram = () => (
   </>
 );
 
+const CentroidDiagram = () => (
+  <>
+    <path d={CENTER_TRIANGLE_PATH} fill="#fffef7" stroke="none" />
+    <g stroke={CENTER_COLORS.centroidLine} strokeWidth="2.2" strokeLinecap="round">
+      <line x1={CENTER_TRIANGLE.a.x} y1={CENTER_TRIANGLE.a.y} x2={CENTER_SIDE_MIDPOINTS.a.x} y2={CENTER_SIDE_MIDPOINTS.a.y} />
+      <line x1={CENTER_TRIANGLE.b.x} y1={CENTER_TRIANGLE.b.y} x2={CENTER_SIDE_MIDPOINTS.b.x} y2={CENTER_SIDE_MIDPOINTS.b.y} />
+      <line x1={CENTER_TRIANGLE.c.x} y1={CENTER_TRIANGLE.c.y} x2={CENTER_SIDE_MIDPOINTS.c.x} y2={CENTER_SIDE_MIDPOINTS.c.y} />
+    </g>
+    <EqualLengthTicks first={CENTER_TRIANGLE.a} second={CENTER_TRIANGLE.b} count={3} />
+    <EqualLengthTicks first={CENTER_TRIANGLE.b} second={CENTER_TRIANGLE.c} count={2} />
+    <EqualLengthTicks first={CENTER_TRIANGLE.c} second={CENTER_TRIANGLE.a} count={1} />
+    <path d={CENTER_TRIANGLE_PATH} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="2.2" strokeLinejoin="round" />
+    <circle cx={formatSvgNumber(CENTER_CENTROID.x)} cy={formatSvgNumber(CENTER_CENTROID.y)} r="4" fill={CENTER_COLORS.centroidPoint} />
+    <text x="169" y="69" fill={CENTER_COLORS.triangle} fontSize="14">形心</text>
+    <path d={`M 166 75 C 163 84, 149 92, ${formatSvgNumber(CENTER_CENTROID.x + 7)} ${formatSvgNumber(CENTER_CENTROID.y - 3)}`} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" />
+    <polyline points={`${formatSvgNumber(CENTER_CENTROID.x + 14)},${formatSvgNumber(CENTER_CENTROID.y - 7)} ${formatSvgNumber(CENTER_CENTROID.x + 7)},${formatSvgNumber(CENTER_CENTROID.y - 3)} ${formatSvgNumber(CENTER_CENTROID.x + 13)},${formatSvgNumber(CENTER_CENTROID.y + 1)}`} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+  </>
+);
+
 const TRIANGLE_CENTER_DIAGRAMS = {
   incenter: {
     title: '三角形內心示意圖',
@@ -1495,8 +1527,8 @@ const TRIANGLE_CENTER_DIAGRAMS = {
     description: '三條由頂點作出的高線交於 H。',
   },
   centroid: {
-    title: '三角形重心示意圖',
-    description: '三條中線交於 G，G 是三角形的重心。',
+    title: '三角形形心示意圖',
+    description: '三條中線交於形心。',
   },
 };
 
@@ -1504,7 +1536,7 @@ const TriangleCenterDiagram = ({ type }) => {
   const diagram = TRIANGLE_CENTER_DIAGRAMS[type];
   const titleId = `triangle-${type}-diagram-title`;
   const descriptionId = `triangle-${type}-diagram-description`;
-  const isReferenceDiagram = type === 'incenter' || type === 'circumcenter';
+  const isReferenceDiagram = type === 'incenter' || type === 'circumcenter' || type === 'centroid';
   const diagramClassName = type === 'incenter' ? 'w-full max-w-[320px] h-auto' : 'w-full max-w-[220px] h-auto';
 
   return (
@@ -1530,22 +1562,14 @@ const TriangleCenterDiagram = ({ type }) => {
           <RightAngleMark corner={{ x: 128, y: 73 }} alongSide={{ x: 168, y: 135 }} alongPerpendicular={{ x: 32, y: 135 }} />
           <RightAngleMark corner={{ x: 72, y: 73 }} alongSide={{ x: 32, y: 135 }} alongPerpendicular={{ x: 168, y: 135 }} />
           <circle cx="100" cy="91" r="4" fill="#b91c1c" />
-          <text x="113" y="113" fill="#b91c1c" fontSize="14" fontWeight="bold">H</text>
         </>
       )}
 
       {type === 'centroid' && (
-        <>
-          <line x1="100" y1="30" x2="100" y2="135" stroke="#ea580c" strokeWidth="2" />
-          <line x1="32" y1="135" x2="134" y2="82.5" stroke="#ea580c" strokeWidth="2" />
-          <line x1="168" y1="135" x2="66" y2="82.5" stroke="#ea580c" strokeWidth="2" />
-          <path d="M 61 130 L 61 140 M 71 130 L 71 140 M 129 130 L 129 140 M 139 130 L 139 140" stroke="#9a3412" strokeWidth="1.8" />
-          <circle cx="100" cy="100" r="4" fill="#c2410c" />
-          <text x="113" y="117" fill="#c2410c" fontSize="14" fontWeight="bold">G</text>
-        </>
+        <CentroidDiagram />
       )}
 
-      {type !== 'incenter' && type !== 'circumcenter' && (
+      {type !== 'incenter' && type !== 'circumcenter' && type !== 'centroid' && (
         <path d={TRIANGLE_PATH} fill="none" stroke="#9f6b53" strokeWidth="2" strokeLinejoin="round" />
       )}
     </svg>
@@ -1613,7 +1637,9 @@ const TRIANGLE_CENTER_CARDS = [
 
 const TriangleCenterCard = ({ center }) => (
   <div className={`rounded-xl p-4 border ${center.panel} flex flex-col items-center`}>
-    <TriangleCenterDiagram type={center.type} />
+    <div className={`w-full ${center.type === 'incenter' || center.type === 'circumcenter' ? 'h-[320px]' : 'h-[220px]'} flex items-center justify-center`}>
+      <TriangleCenterDiagram type={center.type} />
+    </div>
     <div className="w-full mt-2">
       <h3 className={`text-lg font-bold ${center.titleColor} text-center mb-3`}>{center.title}</h3>
       <div className="bg-white rounded-lg p-3 border border-slate-200 space-y-2 text-sm">
