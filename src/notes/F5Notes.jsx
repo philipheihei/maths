@@ -43,6 +43,7 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
               <MathDisplay latex="y = k_1 \textcolor{#ca8a04}{x} + k_2 \textcolor{#ca8a04}{x^2}" inline className="text-lg font-bold" />
             </div>
             <div className="text-sm text-slate-600 mt-1"><span className="font-bold">字眼：</span>"部份"、"而"</div>
+            <div className="text-sm text-red-600 mt-2"><span className="font-bold">注意：</span>若題目指出其中一部分是常數，該部分不用乘<span className="text-yellow-600 font-bold">變數</span>；例如 <Latex math="k_1x" /> 中的 <Latex math="x" /> 不用寫，直接寫成 <Latex math="k_1" />。</div>
           </div>
           <div className="mt-4 pt-4 border-t border-slate-100">
             <h4 className="font-bold text-slate-800 mb-2">註：代數 (<span className="text-yellow-600">黃色highlight </span>) 按題目不同字眼而改變：</h4>
