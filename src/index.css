@@ -370,9 +370,8 @@ body {
     margin-bottom: 0.4em !important;
   }
 
-  .print-topic-page svg,
-  .print-pagination-measure svg {
-    max-width: 100% !important;
+  :where(.print-topic-page, .print-pagination-measure) svg {
+    max-width: 100%;
     height: auto !important;
   }
 
@@ -850,8 +849,8 @@ body {
     widows: 3;
   }
 
-  .print-topic-page svg {
-    max-width: 100% !important;
+  :where(.print-topic-page) svg {
+    max-width: 100%;
     height: auto !important;
   }
 

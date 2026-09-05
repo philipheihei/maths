@@ -1177,6 +1177,307 @@ export const QuadrilateralNotes = ({ activeSub }) => {
 
 const TRIANGLE_PATH = 'M 100 30 L 32 135 L 168 135 Z';
 
+const CENTER_TRIANGLE = {
+  a: { x: 135, y: 25 },
+  b: { x: 24, y: 139 },
+  c: { x: 194, y: 139 },
+};
+
+const CENTER_TRIANGLE_PATH = `M ${CENTER_TRIANGLE.a.x} ${CENTER_TRIANGLE.a.y} L ${CENTER_TRIANGLE.b.x} ${CENTER_TRIANGLE.b.y} L ${CENTER_TRIANGLE.c.x} ${CENTER_TRIANGLE.c.y} Z`;
+
+const CENTER_COLORS = {
+  triangle: '#111111',
+  circle: '#78813d',
+  mark: '#00a1d2',
+  orange: '#b66b2b',
+  green: '#159b68',
+  purple: '#51358c',
+};
+
+const subtractPoints = (first, second) => ({ x: first.x - second.x, y: first.y - second.y });
+const addPoints = (first, second) => ({ x: first.x + second.x, y: first.y + second.y });
+const multiplyPoint = (point, factor) => ({ x: point.x * factor, y: point.y * factor });
+const pointLength = (point) => Math.sqrt(point.x ** 2 + point.y ** 2);
+const normalizePoint = (point) => {
+  const length = pointLength(point) || 1;
+  return multiplyPoint(point, 1 / length);
+};
+const distanceBetween = (first, second) => pointLength(subtractPoints(first, second));
+const midpointOf = (first, second) => multiplyPoint(addPoints(first, second), 0.5);
+const pointOnSegment = (first, second, fraction) => addPoints(first, multiplyPoint(subtractPoints(second, first), fraction));
+const formatSvgNumber = (value) => Number(value.toFixed(2));
+
+const getIncenter = ({ a, b, c }) => {
+  const sideA = distanceBetween(b, c);
+  const sideB = distanceBetween(a, c);
+  const sideC = distanceBetween(a, b);
+  const perimeter = sideA + sideB + sideC;
+  return {
+    x: (sideA * a.x + sideB * b.x + sideC * c.x) / perimeter,
+    y: (sideA * a.y + sideB * b.y + sideC * c.y) / perimeter,
+  };
+};
+
+const getCircumcenter = ({ a, b, c }) => {
+  const determinant = 2 * (a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y));
+  const aSquared = a.x ** 2 + a.y ** 2;
+  const bSquared = b.x ** 2 + b.y ** 2;
+  const cSquared = c.x ** 2 + c.y ** 2;
+  return {
+    x: (aSquared * (b.y - c.y) + bSquared * (c.y - a.y) + cSquared * (a.y - b.y)) / determinant,
+    y: (aSquared * (c.x - b.x) + bSquared * (a.x - c.x) + cSquared * (b.x - a.x)) / determinant,
+  };
+};
+
+const projectPointToLine = (point, lineStart, lineEnd) => {
+  const line = subtractPoints(lineEnd, lineStart);
+  const fraction = ((point.x - lineStart.x) * line.x + (point.y - lineStart.y) * line.y) / (line.x ** 2 + line.y ** 2);
+  return pointOnSegment(lineStart, lineEnd, fraction);
+};
+
+const getLineThrough = (point, direction, length) => {
+  const unitDirection = normalizePoint(direction);
+  return {
+    start: addPoints(point, multiplyPoint(unitDirection, -length)),
+    end: addPoints(point, multiplyPoint(unitDirection, length)),
+  };
+};
+
+const getExtendedLine = (start, through, before, after) => {
+  const direction = normalizePoint(subtractPoints(through, start));
+  return {
+    start: addPoints(start, multiplyPoint(direction, -before)),
+    end: addPoints(through, multiplyPoint(direction, after)),
+  };
+};
+
+const getRightAnglePoints = (corner, alongSide, alongPerpendicular, size = 8) => {
+  const sideDirection = normalizePoint(subtractPoints(alongSide, corner));
+  const perpendicularDirection = normalizePoint(subtractPoints(alongPerpendicular, corner));
+  const first = addPoints(corner, multiplyPoint(sideDirection, size));
+  const second = addPoints(first, multiplyPoint(perpendicularDirection, size));
+  const third = addPoints(corner, multiplyPoint(perpendicularDirection, size));
+  return [first, second, third]
+    .map((point) => `${formatSvgNumber(point.x)},${formatSvgNumber(point.y)}`)
+    .join(' ');
+};
+
+const RightAngleMark = ({ corner, alongSide, alongPerpendicular, size = 8 }) => (
+  <polyline
+    points={getRightAnglePoints(corner, alongSide, alongPerpendicular, size)}
+    fill="none"
+    stroke={CENTER_COLORS.mark}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+);
+
+const getArcPath = (center, radius, startAngle, endAngle) => {
+  const start = {
+    x: center.x + Math.cos(startAngle) * radius,
+    y: center.y + Math.sin(startAngle) * radius,
+  };
+  const end = {
+    x: center.x + Math.cos(endAngle) * radius,
+    y: center.y + Math.sin(endAngle) * radius,
+  };
+  const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
+  return `M ${formatSvgNumber(start.x)} ${formatSvgNumber(start.y)} A ${radius} ${radius} 0 ${largeArc} 1 ${formatSvgNumber(end.x)} ${formatSvgNumber(end.y)}`;
+};
+
+const getAngleMarkPaths = (vertex, firstRay, secondRay, count) => {
+  const firstAngle = Math.atan2(firstRay.y - vertex.y, firstRay.x - vertex.x);
+  let secondAngle = Math.atan2(secondRay.y - vertex.y, secondRay.x - vertex.x);
+  while (secondAngle <= firstAngle) secondAngle += Math.PI * 2;
+  const middleAngle = (firstAngle + secondAngle) / 2;
+  const gap = 0.08;
+  return Array.from({ length: count }, (_, index) => 10 + index * 4).flatMap((radius) => [
+    getArcPath(vertex, radius, firstAngle + gap, middleAngle - gap),
+    getArcPath(vertex, radius, middleAngle + gap, secondAngle - gap),
+  ]);
+};
+
+const AngleMarks = ({ vertex, firstRay, secondRay, count }) => (
+  <g fill="none" stroke={CENTER_COLORS.mark} strokeWidth="1.8" strokeLinecap="round">
+    {getAngleMarkPaths(vertex, firstRay, secondRay, count).map((path, index) => (
+      <path key={`${count}-${index}`} d={path} />
+    ))}
+  </g>
+);
+
+const EqualLengthTicks = ({ first, second, count }) => {
+  const direction = normalizePoint(subtractPoints(second, first));
+  const normal = { x: -direction.y, y: direction.x };
+  const fractionsByCount = {
+    1: [0.42, 0.58],
+    2: [0.36, 0.44, 0.56, 0.64],
+    3: [0.31, 0.39, 0.47, 0.53, 0.61, 0.69],
+  };
+  const fractions = fractionsByCount[count];
+
+  return (
+    <g stroke={CENTER_COLORS.mark} strokeWidth="2" strokeLinecap="round">
+      {fractions.map((fraction, index) => {
+        const center = pointOnSegment(first, second, fraction);
+        const offset = multiplyPoint(normal, 5);
+        const tickStart = subtractPoints(center, offset);
+        const tickEnd = addPoints(center, offset);
+        return (
+          <line
+            key={`${count}-${index}`}
+            x1={formatSvgNumber(tickStart.x)}
+            y1={formatSvgNumber(tickStart.y)}
+            x2={formatSvgNumber(tickEnd.x)}
+            y2={formatSvgNumber(tickEnd.y)}
+          />
+        );
+      })}
+    </g>
+  );
+};
+
+const CENTER_INCENTER = getIncenter(CENTER_TRIANGLE);
+const CENTER_CIRCUMCENTER = getCircumcenter(CENTER_TRIANGLE);
+const CENTER_INRADIUS = CENTER_TRIANGLE.c.y - CENTER_INCENTER.y;
+const CENTER_CIRCUMRADIUS = distanceBetween(CENTER_CIRCUMCENTER, CENTER_TRIANGLE.a);
+const CENTER_CONTACTS = {
+  ab: projectPointToLine(CENTER_INCENTER, CENTER_TRIANGLE.a, CENTER_TRIANGLE.b),
+  bc: projectPointToLine(CENTER_INCENTER, CENTER_TRIANGLE.b, CENTER_TRIANGLE.c),
+  ca: projectPointToLine(CENTER_INCENTER, CENTER_TRIANGLE.c, CENTER_TRIANGLE.a),
+};
+
+const CENTER_BISECTORS = [
+  { vertex: CENTER_TRIANGLE.a, color: CENTER_COLORS.orange, line: getExtendedLine(CENTER_TRIANGLE.a, CENTER_INCENTER, 0, 105) },
+  { vertex: CENTER_TRIANGLE.b, color: CENTER_COLORS.green, line: getExtendedLine(CENTER_TRIANGLE.b, CENTER_INCENTER, 0, 120) },
+  { vertex: CENTER_TRIANGLE.c, color: CENTER_COLORS.purple, line: getExtendedLine(CENTER_TRIANGLE.c, CENTER_INCENTER, 0, 120) },
+];
+
+const CENTER_PERPENDICULAR_BISECTORS = [
+  {
+    first: CENTER_TRIANGLE.a,
+    second: CENTER_TRIANGLE.b,
+    color: CENTER_COLORS.orange,
+    line: getLineThrough(midpointOf(CENTER_TRIANGLE.a, CENTER_TRIANGLE.b), { x: CENTER_TRIANGLE.a.y - CENTER_TRIANGLE.b.y, y: CENTER_TRIANGLE.b.x - CENTER_TRIANGLE.a.x }, 115),
+  },
+  {
+    first: CENTER_TRIANGLE.b,
+    second: CENTER_TRIANGLE.c,
+    color: CENTER_COLORS.green,
+    line: getLineThrough(midpointOf(CENTER_TRIANGLE.b, CENTER_TRIANGLE.c), { x: CENTER_TRIANGLE.b.y - CENTER_TRIANGLE.c.y, y: CENTER_TRIANGLE.c.x - CENTER_TRIANGLE.b.x }, 115),
+  },
+  {
+    first: CENTER_TRIANGLE.c,
+    second: CENTER_TRIANGLE.a,
+    color: CENTER_COLORS.purple,
+    line: getLineThrough(midpointOf(CENTER_TRIANGLE.c, CENTER_TRIANGLE.a), { x: CENTER_TRIANGLE.c.y - CENTER_TRIANGLE.a.y, y: CENTER_TRIANGLE.a.x - CENTER_TRIANGLE.c.x }, 115),
+  },
+];
+
+const IncenterDiagram = () => (
+  <>
+    <path d={CENTER_TRIANGLE_PATH} fill="#fffef7" stroke="none" />
+    <circle
+      cx={formatSvgNumber(CENTER_INCENTER.x)}
+      cy={formatSvgNumber(CENTER_INCENTER.y)}
+      r={formatSvgNumber(CENTER_INRADIUS)}
+      fill="#e8efcf"
+      fillOpacity="0.22"
+      stroke={CENTER_COLORS.circle}
+      strokeWidth="2"
+    />
+    {CENTER_BISECTORS.map(({ vertex, color, line }) => (
+      <line
+        key={`${vertex.x}-${vertex.y}`}
+        x1={formatSvgNumber(line.start.x)}
+        y1={formatSvgNumber(line.start.y)}
+        x2={formatSvgNumber(line.end.x)}
+        y2={formatSvgNumber(line.end.y)}
+        stroke={color}
+        strokeWidth="2"
+        strokeDasharray="7 5"
+      />
+    ))}
+    <g stroke={CENTER_COLORS.mark} strokeWidth="1.7" strokeLinecap="round">
+      {[CENTER_CONTACTS.ab, CENTER_CONTACTS.bc, CENTER_CONTACTS.ca].map((contact, index) => (
+        <line
+          key={index}
+          x1={formatSvgNumber(CENTER_INCENTER.x)}
+          y1={formatSvgNumber(CENTER_INCENTER.y)}
+          x2={formatSvgNumber(contact.x)}
+          y2={formatSvgNumber(contact.y)}
+        />
+      ))}
+    </g>
+    <AngleMarks vertex={CENTER_TRIANGLE.a} firstRay={CENTER_TRIANGLE.c} secondRay={CENTER_TRIANGLE.b} count={1} />
+    <AngleMarks vertex={CENTER_TRIANGLE.b} firstRay={CENTER_TRIANGLE.a} secondRay={CENTER_TRIANGLE.c} count={2} />
+    <AngleMarks vertex={CENTER_TRIANGLE.c} firstRay={CENTER_TRIANGLE.b} secondRay={CENTER_TRIANGLE.a} count={3} />
+    <RightAngleMark corner={CENTER_CONTACTS.ab} alongSide={CENTER_TRIANGLE.b} alongPerpendicular={CENTER_INCENTER} size={7} />
+    <RightAngleMark corner={CENTER_CONTACTS.bc} alongSide={CENTER_TRIANGLE.c} alongPerpendicular={CENTER_INCENTER} size={8} />
+    <RightAngleMark corner={CENTER_CONTACTS.ca} alongSide={CENTER_TRIANGLE.a} alongPerpendicular={CENTER_INCENTER} size={7} />
+    <path d={CENTER_TRIANGLE_PATH} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="2.2" strokeLinejoin="round" />
+    <circle cx={formatSvgNumber(CENTER_INCENTER.x)} cy={formatSvgNumber(CENTER_INCENTER.y)} r="4" fill={CENTER_COLORS.triangle} />
+    <text x="18" y="65" fill={CENTER_COLORS.triangle} fontSize="14">內心</text>
+    <path d={`M 49 69 C 53 84, 77 93, ${formatSvgNumber(CENTER_INCENTER.x - 7)} ${formatSvgNumber(CENTER_INCENTER.y - 2)}`} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" />
+    <polyline points={`${formatSvgNumber(CENTER_INCENTER.x - 14)},${formatSvgNumber(CENTER_INCENTER.y - 6)} ${formatSvgNumber(CENTER_INCENTER.x - 7)},${formatSvgNumber(CENTER_INCENTER.y - 2)} ${formatSvgNumber(CENTER_INCENTER.x - 13)},${formatSvgNumber(CENTER_INCENTER.y + 1)}`} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    <text x="146" y="207" fill={CENTER_COLORS.triangle} fontSize="13" textAnchor="middle">內切圓</text>
+    <path d="M 150 195 C 158 178, 157 156, 146 139" fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" />
+    <polyline points="142,145 146,139 149,146" fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+  </>
+);
+
+const CircumcenterDiagram = () => (
+  <>
+    <circle
+      cx={formatSvgNumber(CENTER_CIRCUMCENTER.x)}
+      cy={formatSvgNumber(CENTER_CIRCUMCENTER.y)}
+      r={formatSvgNumber(CENTER_CIRCUMRADIUS)}
+      fill="#e8efcf"
+      fillOpacity="0.16"
+      stroke={CENTER_COLORS.circle}
+      strokeWidth="2"
+    />
+    <path d={CENTER_TRIANGLE_PATH} fill="#fffef7" stroke="none" />
+    {CENTER_PERPENDICULAR_BISECTORS.map(({ first, second, color, line }) => (
+      <line
+        key={`${first.x}-${second.x}`}
+        x1={formatSvgNumber(line.start.x)}
+        y1={formatSvgNumber(line.start.y)}
+        x2={formatSvgNumber(line.end.x)}
+        y2={formatSvgNumber(line.end.y)}
+        stroke={color}
+        strokeWidth="2"
+        strokeDasharray="7 5"
+      />
+    ))}
+    <path d={CENTER_TRIANGLE_PATH} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="2.2" strokeLinejoin="round" />
+    {[CENTER_TRIANGLE.a, CENTER_TRIANGLE.b, CENTER_TRIANGLE.c].map((vertex, index) => (
+      <line
+        key={index}
+        x1={formatSvgNumber(CENTER_CIRCUMCENTER.x)}
+        y1={formatSvgNumber(CENTER_CIRCUMCENTER.y)}
+        x2={vertex.x}
+        y2={vertex.y}
+        stroke={CENTER_COLORS.mark}
+        strokeWidth="1.8"
+      />
+    ))}
+    <EqualLengthTicks first={CENTER_TRIANGLE.a} second={CENTER_TRIANGLE.b} count={1} />
+    <EqualLengthTicks first={CENTER_TRIANGLE.b} second={CENTER_TRIANGLE.c} count={2} />
+    <EqualLengthTicks first={CENTER_TRIANGLE.c} second={CENTER_TRIANGLE.a} count={3} />
+    <RightAngleMark corner={midpointOf(CENTER_TRIANGLE.a, CENTER_TRIANGLE.b)} alongSide={CENTER_TRIANGLE.a} alongPerpendicular={CENTER_CIRCUMCENTER} size={8} />
+    <RightAngleMark corner={midpointOf(CENTER_TRIANGLE.b, CENTER_TRIANGLE.c)} alongSide={CENTER_TRIANGLE.c} alongPerpendicular={CENTER_CIRCUMCENTER} size={8} />
+    <RightAngleMark corner={midpointOf(CENTER_TRIANGLE.c, CENTER_TRIANGLE.a)} alongSide={CENTER_TRIANGLE.a} alongPerpendicular={CENTER_CIRCUMCENTER} size={8} />
+    <circle cx={formatSvgNumber(CENTER_CIRCUMCENTER.x)} cy={formatSvgNumber(CENTER_CIRCUMCENTER.y)} r="4" fill={CENTER_COLORS.triangle} />
+    <text x="20" y="66" fill={CENTER_COLORS.triangle} fontSize="14">外心</text>
+    <path d={`M 51 70 C 56 87, 78 101, ${formatSvgNumber(CENTER_CIRCUMCENTER.x - 7)} ${formatSvgNumber(CENTER_CIRCUMCENTER.y - 2)}`} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" />
+    <polyline points={`${formatSvgNumber(CENTER_CIRCUMCENTER.x - 14)},${formatSvgNumber(CENTER_CIRCUMCENTER.y - 6)} ${formatSvgNumber(CENTER_CIRCUMCENTER.x - 7)},${formatSvgNumber(CENTER_CIRCUMCENTER.y - 2)} ${formatSvgNumber(CENTER_CIRCUMCENTER.x - 13)},${formatSvgNumber(CENTER_CIRCUMCENTER.y + 1)}`} fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    <text x="171" y="207" fill={CENTER_COLORS.triangle} fontSize="13" textAnchor="middle">外接圓</text>
+    <path d="M 176 195 C 188 184, 195 166, 194 148" fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" />
+    <polyline points="190,154 194,148 197,155" fill="none" stroke={CENTER_COLORS.triangle} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+  </>
+);
+
 const TRIANGLE_CENTER_DIAGRAMS = {
   incenter: {
     title: '三角形內心示意圖',
@@ -1200,43 +1501,30 @@ const TriangleCenterDiagram = ({ type }) => {
   const diagram = TRIANGLE_CENTER_DIAGRAMS[type];
   const titleId = `triangle-${type}-diagram-title`;
   const descriptionId = `triangle-${type}-diagram-description`;
+  const isReferenceDiagram = type === 'incenter' || type === 'circumcenter';
 
   return (
-    <svg viewBox="0 0 200 195" className="w-full max-w-[220px] h-auto" role="img" aria-labelledby={`${titleId} ${descriptionId}`}>
+    <svg viewBox={isReferenceDiagram ? '0 0 220 220' : '0 0 200 195'} className="w-full max-w-[220px] h-auto" role="img" aria-labelledby={`${titleId} ${descriptionId}`}>
       <title id={titleId}>{diagram.title}</title>
       <desc id={descriptionId}>{diagram.description}</desc>
-      <path d={TRIANGLE_PATH} fill="#fff7ed" stroke="none" />
 
       {type === 'incenter' && (
-        <>
-          <line x1="100" y1="30" x2="100" y2="98" stroke="#16a34a" strokeWidth="1.8" strokeDasharray="5 4" />
-          <line x1="32" y1="135" x2="100" y2="98" stroke="#16a34a" strokeWidth="1.8" strokeDasharray="5 4" />
-          <line x1="168" y1="135" x2="100" y2="98" stroke="#16a34a" strokeWidth="1.8" strokeDasharray="5 4" />
-          <circle cx="100" cy="98" r="37" fill="#dcfce7" fillOpacity="0.55" stroke="#16a34a" strokeWidth="2" />
-          <circle cx="100" cy="98" r="4" fill="#15803d" />
-          <text x="113" y="80" fill="#15803d" fontSize="14" fontWeight="bold">I</text>
-          <text x="100" y="187" fill="#15803d" fontSize="12" fontWeight="bold" textAnchor="middle">內切圓</text>
-        </>
+        <IncenterDiagram />
       )}
 
       {type === 'circumcenter' && (
-        <>
-          <circle cx="100" cy="105" r="75" fill="#dbeafe" fillOpacity="0.28" stroke="#2563eb" strokeWidth="2" />
-          <line x1="100" y1="30" x2="100" y2="180" stroke="#2563eb" strokeWidth="1.8" strokeDasharray="5 4" />
-          <line x1="8" y1="45" x2="126" y2="122" stroke="#2563eb" strokeWidth="1.8" strokeDasharray="5 4" />
-          <line x1="74" y1="122" x2="192" y2="45" stroke="#2563eb" strokeWidth="1.8" strokeDasharray="5 4" />
-          <circle cx="100" cy="105" r="4" fill="#1d4ed8" />
-          <text x="114" y="88" fill="#1d4ed8" fontSize="14" fontWeight="bold">O</text>
-          <text x="100" y="18" fill="#1d4ed8" fontSize="12" fontWeight="bold" textAnchor="middle">外接圓</text>
-        </>
+        <CircumcenterDiagram />
       )}
 
       {type === 'orthocenter' && (
         <>
+          <path d={TRIANGLE_PATH} fill="#fff7ed" stroke="none" />
           <line x1="100" y1="30" x2="100" y2="135" stroke="#dc2626" strokeWidth="2" />
           <line x1="32" y1="135" x2="128" y2="73" stroke="#dc2626" strokeWidth="2" />
           <line x1="168" y1="135" x2="72" y2="73" stroke="#dc2626" strokeWidth="2" />
-          <polyline points="100,135 112,135 112,123 100,123" fill="none" stroke="#15803d" strokeWidth="1.8" />
+          <RightAngleMark corner={{ x: 100, y: 135 }} alongSide={{ x: 168, y: 135 }} alongPerpendicular={{ x: 100, y: 30 }} />
+          <RightAngleMark corner={{ x: 128, y: 73 }} alongSide={{ x: 168, y: 135 }} alongPerpendicular={{ x: 32, y: 135 }} />
+          <RightAngleMark corner={{ x: 72, y: 73 }} alongSide={{ x: 32, y: 135 }} alongPerpendicular={{ x: 168, y: 135 }} />
           <circle cx="100" cy="91" r="4" fill="#b91c1c" />
           <text x="113" y="113" fill="#b91c1c" fontSize="14" fontWeight="bold">H</text>
         </>
@@ -1253,7 +1541,9 @@ const TriangleCenterDiagram = ({ type }) => {
         </>
       )}
 
-      <path d={TRIANGLE_PATH} fill="none" stroke="#9f6b53" strokeWidth="2" strokeLinejoin="round" />
+      {type !== 'incenter' && type !== 'circumcenter' && (
+        <path d={TRIANGLE_PATH} fill="none" stroke="#9f6b53" strokeWidth="2" strokeLinejoin="round" />
+      )}
     </svg>
   );
 };
