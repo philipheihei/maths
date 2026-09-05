@@ -461,12 +461,12 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
               <div className="bg-red-50 rounded-lg p-4 border border-red-200">
                 <Latex math="z < 0" block />
                 <p className="font-bold text-red-700 mt-2">標準分為<span className="text-red-600 underline">負數</span></p>
-                <p className="text-sm text-slate-600 mt-1">代表表現差過平均分 (Below Average)<br/>(屬於較一半差的人)</p>
+                <p className="text-sm text-slate-600 mt-1">代表表現差過平均分 (Below Average)</p>
               </div>
               <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                 <Latex math="z > 0" block />
                 <p className="font-bold text-green-700 mt-2">標準分為<span className="text-green-600 underline">正數</span></p>
-                <p className="text-sm text-slate-600 mt-1">代表表現好過平均分 (Above Average)<br/>(屬於較一半好的人)</p>
+                <p className="text-sm text-slate-600 mt-1">代表表現好過平均分 (Above Average)</p>
               </div>
             </div>
           </div>
@@ -1885,7 +1885,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
           <h3 className="font-bold text-slate-800">3. 問點在圖形內 / 在圓上 / 外？</h3>
           
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-bold text-blue-800 mb-2">以代數法找：</h4>
+            <h4 className="font-bold text-blue-800 mb-2">方程確定為 <Latex math="x^2+y^2+Dx+Ey+F=0" /> 形式後，以代數法找：</h4>
             
             <div className="flex flex-col md:flex-row items-center gap-4 my-4">
               <div className="flex-shrink-0 w-32 h-32 bg-white rounded-lg shadow-sm flex items-center justify-center border border-slate-200">

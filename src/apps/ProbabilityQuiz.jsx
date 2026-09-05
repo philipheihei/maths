@@ -1856,7 +1856,7 @@ const ProbabilityNotes = () => {
               </div>
 
               <div className="border-l-4 border-teal-400 pl-4 py-1">
-                <p className="font-bold text-slate-800 mb-2">(c) 選出 6 隻動物，其中<span className="border-b-2 border-purple-500">至少有 1 隻白兔</span>。 <span className="text-purple-700 text-sm font-normal">← 運用二分法, 1 - P(0兔)</span></p>
+                <p className="font-bold text-slate-800 mb-2">(c) 選出 6 隻動物，其中<span className="border-b-2 border-purple-500">至少有 1 隻白兔</span>。 <span className="text-purple-700 text-sm font-normal">← 運用二分法：全部組合數 − 沒有白兔的組合數</span></p>
                 <div className="overflow-x-auto pb-4 pt-2">
                   <div className="flex gap-2 min-w-max text-center text-sm font-serif items-start">
                     <div className="flex items-start">
