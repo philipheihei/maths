@@ -130,7 +130,7 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
             <div className="bg-white rounded-lg p-3">
               <p className="text-sm text-blue-700 mb-2">例：當 <Latex math="x=10" />，求 <Latex math="y" /> 的值</p>
               <div className="ml-4 text-sm">
-                <Latex math="\begin{aligned} x &= \frac{1}{5}y && \textcolor{red}{\text{← 列找到的式 (a部)}} \\\\ 10 &= \frac{1}{5}y && \textcolor{red}{\text{← 代入法}} \\\\ 10 \times 5 &= y \\\\ y &= 50 \end{aligned}" block />
+                <Latex math="\begin{aligned} y &= \frac{1}{5}x && \textcolor{red}{\text{← 列找到的式 (a部)}} \\\\ y &= \frac{1}{5}(10) && \textcolor{red}{\text{← 代入 }x=10} \\\\ y &= 2 \end{aligned}" block />
               </div>
             </div>
           </div>

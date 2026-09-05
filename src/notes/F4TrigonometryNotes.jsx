@@ -287,7 +287,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm flex flex-col justify-center">
               <p className="text-slate-700 font-bold mb-3">知道不同的問法：</p>
               <ul className="list-disc pl-5 space-y-2 text-slate-700 mb-4 text-sm">
-                <li><span className="font-bold">直接比角度範圍</span>：<Latex math="(180^\circ − 270^\circ)" /></li>
+                <li><span className="font-bold">直接比角度範圍</span>：<Latex math="(270^\circ − 360^\circ)" /></li>
                 <li><span className="font-bold">象限</span>：(象限 IV)</li>
                 <li><span className="font-bold">比大細</span>：<Latex math="\sin\theta / \cos\theta / \tan\theta > 0 \text{ 或 } < 0" /></li>
               </ul>

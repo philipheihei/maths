@@ -1003,7 +1003,7 @@ export const FunctionNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <h3 className="font-bold text-green-800 mb-3">📝 一般式：<Latex math="ax^2 + bx + c = 0" /></h3>
+            <h3 className="font-bold text-green-800 mb-3">📝 一般式：<Latex math="y = ax^2 + bx + c" /></h3>
             <p className="text-green-700 font-bold mb-3"><Latex math="a" />：開口方向</p>
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="bg-white rounded-lg p-4 text-center border border-green-200 flex flex-col items-center">
@@ -1043,7 +1043,7 @@ export const FunctionNotes = ({ activeSub }) => {
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">📌 例子</h3>
             <div className="bg-white rounded-lg p-3 text-sm">
-              <Latex math="−5x^2 + 6x + 3 = 0" block />
+              <Latex math="y = −5x^2 + 6x + 3" block />
               <div className="flex gap-6 mt-2">
                 <span><span className="text-red-600 font-bold"><Latex math="a=-5" /></span> → 開口向下 ∩</span>
                 <span><span className="text-green-600 font-bold"><Latex math="c=3" /></span> → <Latex math="y" />截距 <Latex math="=3" /></span>

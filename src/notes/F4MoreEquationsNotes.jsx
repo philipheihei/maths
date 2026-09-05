@@ -292,7 +292,7 @@ export const MoreEquationsNotes = ({ activeSub }) => {
                   </div>
                   <div className="md:w-1/2 md:text-right text-red-600 text-sm">
                     <span className="opacity-60 hidden md:inline">←</span>
-                    <span> 因2次方整條式後會產生一對一錯的答案，透過驗算的方法去做篩選。</span>
+                    <span> 方程兩邊平方可能引入多一個新的根，因此所得答案必須代回原方程驗算。</span>
                   </div>
                 </div>
               </div>
