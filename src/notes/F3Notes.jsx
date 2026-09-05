@@ -1461,7 +1461,7 @@ const CircumcenterDiagram = () => (
         y1={formatSvgNumber(CENTER_CIRCUMCENTER.y)}
         x2={vertex.x}
         y2={vertex.y}
-        stroke={CENTER_COLORS.mark}
+        stroke="#1d4ed8"
         strokeWidth="1.8"
       />
     ))}
