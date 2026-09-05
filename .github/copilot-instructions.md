@@ -152,6 +152,7 @@ When displaying **consecutive calculation steps** (2+ lines), always align the `
 Use a `<pre className="whitespace-pre font-sans">` tag so leading spaces are respected while keeping sans-serif font. In plain `<p>` / `<div>` tags, use `&nbsp;` or pad with a thin `<span>` to push shorter left-hand sides into alignment.
 - For equation groups rendered with CSS Grid, use a dedicated left-expression column and an equals/result column (for example, `grid-cols-[auto_auto]`). Right-align the left expressions so they sit close to the `=` column while keeping every `=` vertically aligned across rows.
 - Keep explanatory labels outside the aligned equation columns so descriptions do not shift the `=` position or overlap the answer.
+- For multi-line KaTeX calculation examples where each line is an equivalent form, put `=` at the far-left of the equation column on every displayed line after the first. Hide the first line's `=` with `\phantom{=}` while preserving its width, so the first expression and later answers remain aligned. This keeps leading negative signs aligned (for example, `−4(5−3i)` with `−20+12i`) without showing an unnecessary first-line equals sign.
 
 ### Equal-Length Tick Mark Rule (SVG)
 - **相等長度標記（tick marks）必須與所屬線段垂直**。

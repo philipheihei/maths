@@ -320,7 +320,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               </div>
 
               <div className="bg-white p-3 rounded shadow-sm">
-                <p className="font-bold text-slate-800">D. 實數 / 虛數 <span className="text-purple-600 font-normal">→ 統稱為「複數 (有i的數)」</span></p>
+                <p className="font-bold text-slate-800">D. 實數 / 虛數</p>
                 <ul className="mt-2 text-slate-700 list-disc list-inside">
                   <li><span className="font-bold">實數：</span>沒有 <Latex math="i" /> 的數，例如 <Latex math="3, -2, \frac{1}{2}, \sqrt{2}" /></li>
                   <li><span className="font-bold text-purple-600">虛數：</span>含有 <Latex math="i" /> 的數，例如 <Latex math="i, 2i, 1+3i" /></li>
@@ -446,10 +446,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-purple-800 mb-3">複數的形式</h3>
-            <p className="text-slate-700 mb-2">複數通常寫成：</p>
-            <div className="bg-white rounded-lg p-3 text-center mb-3">
-              <Latex math="a + bi" block />
-            </div>
+            <p className="text-slate-700 mb-3">複數通常寫成： <Latex math="a + bi" inline /></p>
             <div className="print-complex-forms-grid grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-700">
               <p className="bg-white p-3 rounded"><span className="font-bold text-blue-600">實部：</span><Latex math="a" /></p>
               <p className="bg-white p-3 rounded"><span className="font-bold text-purple-600">虛部：</span><Latex math="b" />（<Latex math="i" /> 的係數）</p>
@@ -462,10 +459,12 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">複數運算</h3>
-            <div className="text-blue-700">
-              <Latex math="\begin{aligned} -4(5-3i) &= -20 + 12i \\ (2+2i) - (i-1) &= 3 + i \\ (2+i)(3-i) &= 6 - 2i + 3i - i^2 = 7+i \end{aligned}" block />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-blue-700 text-center [&>span]:my-0">
+              <Latex math="\begin{aligned} &\phantom{=} -4(5-3i) \\ &= -20 + 12i \end{aligned}" block />
+              <Latex math="\begin{aligned} &\phantom{=} (2+2i) - (i-1) \\ &= 3 + i \end{aligned}" block />
+              <Latex math="\begin{aligned} &\phantom{=} (2+i)(3-i) \\ &= 6 - 2i + 3i - i^2 \\ &= 7+i \end{aligned}" block />
             </div>
-            <p className="text-red-600 font-bold mt-2">計算時分開處理實部和虛部，並記得 <Latex math="i^2=-1" />。</p>
+            <p className="text-red-600 font-bold mt-0">計算時分開處理實部和虛部，並記得 <Latex math="i^2=-1" />。</p>
           </div>
 
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">

@@ -346,7 +346,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                 <div className="font-bold text-slate-800 text-lg border-b border-slate-200 pb-2">
                   設兩立體的長度比 = <Latex math="x : y" />
                 </div>
-                <div className="pl-4 md:pl-8 space-y-3 relative border-l-4 border-slate-300 ml-2 py-1">
+                <div className="pl-4 md:pl-8 space-y-3 relative ml-2 py-1">
                   <div className="text-lg md:text-xl flex flex-wrap items-center gap-2">
                     <span className="text-red-600 font-bold w-20">面積比</span>
                     <span className="text-red-600 font-bold"><Latex math="= (x : y)^2" inline /> <span className="text-slate-500 font-normal mx-1">=</span> <Latex math="x^2 : y^2" inline /></span>
