@@ -319,8 +319,7 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
                 <div className="font-sans space-y-1">
                   <Step math="8^2 = 9^2 + 9^2 − 2(9)(9)\cos\theta" explain="9, 9為其餘邊" />
                   <Step math="64 = 162 − 162\cos\theta" explain="按紅線分隔用計算機簡化" />
-                  <Step math="64 − 162 = −162\cos\theta" explain="移項至 cosθ = ?" />
-                  <Step math="−98 = −162\cos\theta" />
+                  <Step math="−98 = −162\cos\theta" explain="移項至 cosθ = ?" />
                   <Step math="\frac{−98}{−162} = \cos\theta" explain="cos⁻¹θ" />
                   <Step math="\theta = 52.8^\circ" />
                 </div>
