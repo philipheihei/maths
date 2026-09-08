@@ -176,7 +176,7 @@ export const FactorizationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3">
               <p className="text-xs text-slate-500 mb-2">💡 方法：先當只有前面的代數 x 用FMLA01去組成括號，最後再在每個括號後補上後面的代數 y</p>
               <p className="text-sm text-slate-600 mb-1">例子：</p>
-              <Latex math="\begin{aligned} &\phantom{=}6r^2 - 13rs - 28s^2 \\ &= (2r-7s)(3r+4s) \end{aligned}" block />
+              <Latex math="\begin{aligned} &\phantom{=}6\colorbox{#fef08a}{r^2} - 13\colorbox{#fef08a}{r}\colorbox{#dcfce7}{s} - 28\colorbox{#dcfce7}{s^2} \\ &= (2\colorbox{#fef08a}{r}-7\colorbox{#dcfce7}{s})(3\colorbox{#fef08a}{r}+4\colorbox{#dcfce7}{s}) \end{aligned}" block />
             </div>
           </div>
         </div>
@@ -191,16 +191,16 @@ export const FactorizationNotes = ({ activeSub }) => {
               <div className="space-y-2 text-sm mb-3">
                 <div className="flex items-start gap-2">
                   <span className="font-bold text-slate-700">(a)</span>
-                  <span>因式分解 <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 − 13rs − 28s^2" /></span></span>
+                  <span>因式分解 <span className="bg-yellow-200 px-1 rounded"><Latex math="6\colorbox{#fef08a}{r^2} − 13\colorbox{#fef08a}{r}\colorbox{#dcfce7}{s} − 28\colorbox{#dcfce7}{s^2}" /></span></span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="font-bold text-slate-700">(b)</span>
-                  <span>因式分解 <Latex math="4r − 14s +" /> <span className="bg-yellow-200 px-1 rounded"><Latex math="6r^2 − 13rs − 28s^2" /></span></span>
+                  <span>因式分解 <Latex math="4\colorbox{#fef08a}{r} − 14\colorbox{#dcfce7}{s} +" /> <span className="bg-yellow-200 px-1 rounded"><Latex math="6\colorbox{#fef08a}{r^2} − 13\colorbox{#fef08a}{r}\colorbox{#dcfce7}{s} − 28\colorbox{#dcfce7}{s^2}" /></span></span>
                 </div>
               </div>
               <div className="bg-green-50 border border-green-200 rounded-lg p-2 mb-3">
                 <p className="text-sm font-bold text-green-700 mb-1">📝 (a) 部答案：</p>
-                <Latex math="6r^2 − 13rs − 28s^2 = (2r−7s)(3r+4s)" block />
+                <Latex math="6\colorbox{#fef08a}{r^2} − 13\colorbox{#fef08a}{r}\colorbox{#dcfce7}{s} − 28\colorbox{#dcfce7}{s^2} = (2\colorbox{#fef08a}{r}−7\colorbox{#dcfce7}{s})(3\colorbox{#fef08a}{r}+4\colorbox{#dcfce7}{s})" block />
               </div>
               <div className="bg-yellow-50 p-3 rounded">
                 <p className="text-slate-700 text-sm mb-2">係 (b) 部答案：➜ 找 (a) 題目部分（黃色 highlight），套用 (a) 部答案：</p>
@@ -208,8 +208,8 @@ export const FactorizationNotes = ({ activeSub }) => {
                   <div className="flex items-center gap-2">
                     <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                     <div className="flex items-center flex-wrap gap-0.5 min-w-0">
-                      <Latex math="4r − 14s +" />
-                      <span className="bg-yellow-200 rounded px-0.5"><Latex math="(2r−7s)(3r+4s)" /></span>
+                      <Latex math="4\colorbox{#fef08a}{r} − 14\colorbox{#dcfce7}{s} +" />
+                      <span className="bg-yellow-200 rounded px-0.5"><Latex math="(2\colorbox{#fef08a}{r}−7\colorbox{#dcfce7}{s})(3\colorbox{#fef08a}{r}+4\colorbox{#dcfce7}{s})" /></span>
                     </div>
                     <div className="text-xs text-slate-500 italic shrink-0">← 套用 (a) 部答案</div>
                   </div>
@@ -217,18 +217,18 @@ export const FactorizationNotes = ({ activeSub }) => {
                     <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                     <div className="flex items-center flex-wrap gap-0.5 min-w-0">
                       <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="2" /></span>
-                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r−7s)" /></span>
+                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2\colorbox{#fef08a}{r}−7\colorbox{#dcfce7}{s})" /></span>
                       <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="+" /></span>
-                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r−7s)" /></span>
-                      <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(3r+4s)" /></span>
+                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2\colorbox{#fef08a}{r}−7\colorbox{#dcfce7}{s})" /></span>
+                      <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(3\colorbox{#fef08a}{r}+4\colorbox{#dcfce7}{s})" /></span>
                     </div>
                     <div className="text-xs text-slate-500 italic shrink-0">← 抽公因式，應看到有最少兩個 <span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同括號</span></div>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 shrink-0 text-right font-sans text-sm text-slate-700">=</div>
                     <div className="flex items-center flex-wrap gap-0.5 min-w-0">
-                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2r−7s)" /></span>
-                      <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(2 + 3r + 4s)" /></span>
+                      <span className="bg-purple-100 text-purple-800 rounded px-0.5"><Latex math="(2\colorbox{#fef08a}{r}−7\colorbox{#dcfce7}{s})" /></span>
+                      <span className="bg-green-100 text-green-800 rounded px-0.5"><Latex math="(2 + 3\colorbox{#fef08a}{r} + 4\colorbox{#dcfce7}{s})" /></span>
                     </div>
                     <div className="text-xs text-slate-500 italic shrink-0">← 抽<span className="bg-purple-100 text-purple-800 px-0.5 rounded">相同的括號</span>放前，<span className="bg-green-100 text-green-800 px-0.5 rounded">剩餘部份</span>放後括號</div>
                   </div>

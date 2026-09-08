@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Latex, CollapsibleSection, MathDisplay } from './shared';
 import { InlineMath } from '../apps/MCLimitedF6/shared';
+import HCFLCMNotes from '../apps/MCLimitedF6/notes/HCFLCMNotes';
 export { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 
 const QuadraticGraphReference = () => (
@@ -159,8 +160,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                   </div>
                   <p className="text-green-700 text-sm">按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> 去第二個 x 的答案</p>
                 </div>
-                <p className="text-green-700 mt-2">∴ 答案是 <Latex math="-1 / -3" /></p>
-                <p className="text-red-600 font-bold">寫： <Latex math="x=-1" /> 或 <Latex math="-3" /></p>
+                <p className="text-red-600 font-bold"><Latex math="x=-1\text{ 或 }-3" /></p>
               </div>
             </div>
           </div>
@@ -613,10 +613,24 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
               </div>
               <p className="text-sm mb-3 text-slate-700">若 <InlineMath math="k" /> 為一實數，則 <InlineMath math="\dfrac{i}{k-i}+\dfrac{2}{k+i}" /> 的實部為？</p>
 
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 text-sm">
+                {[
+                  ['A', '\\dfrac{2k+1}{k^2-1}'],
+                  ['B', '\\dfrac{2k-1}{k^2+1}'],
+                  ['C', '\\dfrac{k+2}{k^2-1}'],
+                  ['D', '\\dfrac{k-2}{k^2+1}'],
+                ].map(([label, option]) => (
+                  <div key={label} className="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2 border border-slate-200">
+                    <span className="font-bold text-slate-700">{label}.</span>
+                    <InlineMath math={option} />
+                  </div>
+                ))}
+              </div>
+
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
                   <span className="shrink-0 w-6 h-6 rounded-full bg-amber-400 text-white font-bold text-xs flex items-center justify-center">1</span>
-                  <span className="text-amber-800 font-semibold">無限制 → 代 <InlineMath math="k=10" /></span>
+                  <span className="text-amber-800 font-semibold">任意選取一個實數，例如代 <InlineMath math="k=10" /></span>
                 </div>
                 <div className="flex items-center gap-2 bg-teal-50 rounded-lg px-3 py-2">
                   <span className="shrink-0 w-6 h-6 rounded-full bg-teal-500 text-white font-bold text-xs flex items-center justify-center">2</span>
@@ -631,7 +645,16 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                 </div>
                 <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
                   <span className="shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center">4</span>
-                  <span className="text-blue-800">對比選項：代 <InlineMath math="k=10" /> 後答案為 <InlineMath math="\dfrac{19}{101}" /> → 選 <strong>B. <InlineMath math="\dfrac{2k-1}{k^2+1}" /></strong></span>
+                  <div className="text-blue-800">
+                    <p>逐一代入 <InlineMath math="k=10" /> matching：</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 mt-1">
+                      <span>A：<InlineMath math="\dfrac{2(10)+1}{10^2-1}=\dfrac{21}{99}=\dfrac{7}{33}" /></span>
+                      <span>B：<InlineMath math="\dfrac{2(10)-1}{10^2+1}=\dfrac{19}{101}" /></span>
+                      <span>C：<InlineMath math="\dfrac{10+2}{10^2-1}=\dfrac{12}{99}=\dfrac{4}{33}" /></span>
+                      <span>D：<InlineMath math="\dfrac{10-2}{10^2+1}=\dfrac{8}{101}" /></span>
+                    </div>
+                    <p className="mt-1">原式實部為 <InlineMath math="\dfrac{19}{101}" />，所以選 <strong>B</strong>。</p>
+                  </div>
                 </div>
               </div>
               <div className="mt-3 bg-slate-50 rounded-lg p-3 text-xs text-slate-500 border border-slate-200">
@@ -879,12 +902,12 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
         <div className="space-y-6">
           <div className="bg-red-50 border-2 border-red-300 rounded-xl p-4">
             <p className="text-red-700 font-bold">⚠️ 程式需要在 CMPLX 模式下執行</p>
-            <p className="text-slate-700 text-sm mt-2">因此在選擇新程式位置後，按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-1 rounded font-bold">2</span> 選用 CMPLX 模式。</p>
+            <p className="text-slate-700 text-sm mt-2">因此選擇 <span className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Prog</span> <span className="bg-gray-900 text-white text-xs font-bold px-2 py-1 rounded">2</span> 後，再按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-1 rounded font-bold">2</span> 選用 CMPLX 模式。</p>
           </div>
 
           <div>
-            <h3 className="text-blue-900 font-bold mb-3 border-l-4 border-blue-500 pl-3">📝 輸入程式</h3>
-            <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg mb-3">
+            <h3 className="text-blue-900 font-bold mb-3">📝 輸入程式</h3>
+            <div className="bg-blue-50 p-3 rounded-lg mb-3">
               <div className="flex items-center gap-2 mb-2">
                 <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
                 <strong>進入程式編輯模式</strong>
@@ -899,14 +922,15 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
                 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
                 <span className="text-gray-500 text-xs">(EDIT)</span>
                 <span className="text-blue-900 font-bold">→</span>
-                <span className="text-gray-500 text-xs">選擇新程式位置</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">2</span>
+                <span className="text-gray-500 text-xs">(Prog 2)</span>
                 <span className="text-blue-900 font-bold">→</span>
                 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">2</span>
                 <span className="text-gray-500 text-xs">(CMPLX)</span>
               </div>
             </div>
 
-            <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg mb-3">
+            <div className="bg-blue-50 p-3 rounded-lg mb-3">
               <div className="flex items-center gap-2 mb-2">
                 <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
                 <strong>按以下程式逐行輸入</strong>
@@ -940,7 +964,7 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
                   { symbol: 'IfEnd', keys: ['SHIFT', '3', '◀', '◀', '2'] },
                 ].map((item) => (
                   <div key={item.symbol} className="flex items-center gap-2 p-2 bg-white rounded border border-gray-200">
-                    <span className="w-8 text-center text-lg font-bold text-blue-900">{item.symbol}</span>
+                    <span className="w-20 shrink-0 text-center text-lg font-bold text-blue-900">{item.symbol}</span>
                     <div className="flex flex-wrap gap-1">
                       {item.keys.map((key, keyIndex) => (
                         <span key={`${item.symbol}-${key}-${keyIndex}`} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${key === 'SHIFT' ? 'bg-gray-300 text-yellow-700' : 'bg-gray-900 text-white'}`}>{key}</span>
@@ -955,9 +979,8 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
           <div className="bg-green-50 border-2 border-green-300 rounded-xl p-4">
             <h3 className="text-green-800 font-bold mb-3">🎯 執行程式</h3>
             <div className="space-y-2 text-sm text-slate-700">
-              <p><span className="font-bold text-green-700">1.</span> 按 <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span> → <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span> → <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">6</span> (PRGM)。</p>
-              <p><span className="font-bold text-green-700">2.</span> 選擇執行程式，按 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">2</span> (EXE)。</p>
-              <p><span className="font-bold text-green-700">3.</span> 依照計算機顯示輸入三次方程的係數，按 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span> 確認每一項。</p>
+              <p><span className="font-bold text-green-700">1.</span> 按 <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-bold">Prog</span> → <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">2</span>，執行 Prog 2。</p>
+              <p><span className="font-bold text-green-700">2.</span> 依照計算機顯示輸入三次方程的係數，按 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span> 確認每一項。</p>
             </div>
           </div>
 
@@ -999,7 +1022,7 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
 
 export const RemainderFactorNotes = ({ activeSub }) => {
   const [showCalculator, setShowCalculator] = useState(false);
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null), s6 = useRef(null);
 
   if (showCalculator) {
     return <CubicFactorCalculatorNotes onBack={() => setShowCalculator(false)} />;
@@ -1184,30 +1207,23 @@ export const RemainderFactorNotes = ({ activeSub }) => {
       <CollapsibleSection id="cubic-factorization" title="三次方程的因式分解" num={5} color="purple" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <h3 className="font-bold text-purple-800 mb-3">方法：先找一個根，再逐步因式分解</h3>
-            <p className="text-slate-700">一元三次方程可以先找出一個根，得到一個一次因式，再把剩下的二次式因式分解。</p>
+            <h3 className="font-bold text-purple-800 mb-3">方法：利用已知因式，再逐步因式分解</h3>
+            <p className="text-slate-700">DSE 題目通常會提供一個因式（整除），先除以已知因式，再把剩下的二次式因式分解。</p>
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-purple-700 mb-3">例題：解一元三次方程</h3>
             <div className="bg-amber-50 rounded-lg p-3 text-center mb-4 overflow-x-auto">
-              <Latex math="x^3-6x^2+11x-6=0" block />
+              <Latex math="2x^3-3x^2-13x+6=0" block />
             </div>
             <div className="space-y-3 text-slate-700">
-              <div className="bg-purple-50 rounded-lg p-3">
-                <p className="font-bold text-purple-800 mb-2">Step 1：先找一個根</p>
-                <p>試 <Latex math="x=1" />：</p>
-                <Latex math="1^3-6(1)^2+11(1)-6=0" block />
-                <p className="text-green-700 font-bold">所以 <Latex math="x-1" /> 是其中一個因式。</p>
-              </div>
               <div className="bg-blue-50 rounded-lg p-3">
-                <p className="font-bold text-blue-800 mb-2">Step 2：除以 <Latex math="x-1" />，再因式分解</p>
-                <Latex math="x^3-6x^2+11x-6=(x-1)(x^2-5x+6)" block />
-                <Latex math="=(x-1)(x-2)(x-3)" block />
+                <p className="font-bold text-blue-800 mb-2">Step 1：題目已知因式 <Latex math="x+2" />，除以後再因式分解</p>
+                <Latex math="\begin{aligned} &\phantom{=} 2x^3-3x^2-13x+6 \\ &= (x+2)(2x^2-7x+3) \\ &= (x+2)(2x-1)(x-3) \end{aligned}" block />
               </div>
               <div className="bg-green-50 rounded-lg p-3 text-green-800 font-bold">
-                <p>∴ <Latex math="(x-1)(x-2)(x-3)=0" /></p>
-                <p className="mt-2">答案：<Latex math="x=1,\ 2,\ 3" /></p>
+                <p>∴ <Latex math="(x+2)(2x-1)(x-3)=0" /></p>
+                <p className="mt-2">答案：<Latex math="x=-2,\ \frac{1}{2},\ 3" /></p>
               </div>
             </div>
           </div>
@@ -1223,6 +1239,10 @@ export const RemainderFactorNotes = ({ activeSub }) => {
             </button>
           </div>
         </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="hcf-lcm" title="多項式的 H.C.F. 及 L.C.M." num={6} color="blue" activeSub={activeSub} sectionRef={s6}>
+        <HCFLCMNotes embedded />
       </CollapsibleSection>
     </>
   );

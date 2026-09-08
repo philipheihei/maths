@@ -490,6 +490,7 @@ export const NOTES_DATA = {
         { id: 'algebraic-fractions', num: 3, title: '代數分式四則運算', color: 'purple' },
         { id: 'division-expression', num: 4, title: '除法算式', color: 'green' },
         { id: 'cubic-factorization', num: 5, title: '三次方程的因式分解', color: 'purple' },
+        { id: 'hcf-lcm', num: 6, title: '多項式的 H.C.F. 及 L.C.M.', color: 'blue' },
       ]
     },
     {

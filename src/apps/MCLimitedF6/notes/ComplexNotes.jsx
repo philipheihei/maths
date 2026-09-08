@@ -132,11 +132,11 @@ const ComplexNotes = ({ onBack }) => (
             <div className="bg-white rounded-lg p-3 border border-slate-200">
               <p className="text-xs text-slate-400 font-bold mb-2">例 2</p>
               <div className="flex items-center gap-2 flex-wrap mb-2">
-                <InlineMath math="\dfrac{4i^3}{i-1}" />
+                <InlineMath math="\dfrac{4i^5}{i-1}" />
                 <span className="text-slate-400 text-xs mx-1">→ 輸入：</span>
-                <span className="font-sans bg-slate-100 px-2 py-0.5 rounded text-xs">4<span className="text-teal-700 font-bold">iii</span> ÷ ( <span className="text-teal-700 font-bold">i</span> - 1 )</span>
+                <span className="font-sans bg-slate-100 px-2 py-0.5 rounded text-xs">4<span className="text-teal-700 font-bold">iiiii</span> ÷ ( <span className="text-teal-700 font-bold">i</span> - 1 )</span>
               </div>
-              <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^3" /> 時須打 <code><em>i</em> × <em>i</em> × <em>i</em></code>（有幾次方就打幾個 <em>i</em> 相乘）</p>
+              <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^5" /> 時須打 <code><em>i</em> × <em>i</em> × <em>i</em> × <em>i</em> × <em>i</em></code>（有幾次方就打幾個 <em>i</em> 相乘）</p>
               <div className="flex gap-2 flex-wrap">
                 <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
                   <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
@@ -163,10 +163,24 @@ const ComplexNotes = ({ onBack }) => (
           </div>
           <p className="text-sm mb-3 text-slate-700">若 <InlineMath math="k" /> 為一實數，則 <InlineMath math="\dfrac{i}{k-i}+\dfrac{2}{k+i}" /> 的實部為？</p>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 text-sm">
+            {[
+              ['A', '\\dfrac{2k+1}{k^2-1}'],
+              ['B', '\\dfrac{2k-1}{k^2+1}'],
+              ['C', '\\dfrac{k+2}{k^2-1}'],
+              ['D', '\\dfrac{k-2}{k^2+1}'],
+            ].map(([label, option]) => (
+              <div key={label} className="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2 border border-slate-200">
+                <span className="font-bold text-slate-700">{label}.</span>
+                <InlineMath math={option} />
+              </div>
+            ))}
+          </div>
+
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-2 bg-amber-50 rounded-lg px-3 py-2">
               <span className="shrink-0 w-6 h-6 rounded-full bg-amber-400 text-white font-bold text-xs flex items-center justify-center">1</span>
-              <span className="text-amber-800 font-semibold">無限制 → 代 <InlineMath math="k=10" /></span>
+              <span className="text-amber-800 font-semibold">任意選取一個實數，例如代 <InlineMath math="k=10" /></span>
             </div>
             <div className="flex items-center gap-2 bg-teal-50 rounded-lg px-3 py-2">
               <span className="shrink-0 w-6 h-6 rounded-full bg-teal-500 text-white font-bold text-xs flex items-center justify-center">2</span>
@@ -181,7 +195,16 @@ const ComplexNotes = ({ onBack }) => (
             </div>
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center">4</span>
-              <span className="text-blue-800">對比選項：代 <InlineMath math="k=10" /> 後答案為 <InlineMath math="\dfrac{19}{101}" /> → 選 <strong>B. <InlineMath math="\dfrac{2k-1}{k^2+1}" /></strong></span>
+              <div className="text-blue-800">
+                <p>逐一代入 <InlineMath math="k=10" /> matching：</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 mt-1">
+                  <span>A：<InlineMath math="\dfrac{2(10)+1}{10^2-1}=\dfrac{21}{99}=\dfrac{7}{33}" /></span>
+                  <span>B：<InlineMath math="\dfrac{2(10)-1}{10^2+1}=\dfrac{19}{101}" /></span>
+                  <span>C：<InlineMath math="\dfrac{10+2}{10^2-1}=\dfrac{12}{99}=\dfrac{4}{33}" /></span>
+                  <span>D：<InlineMath math="\dfrac{10-2}{10^2+1}=\dfrac{8}{101}" /></span>
+                </div>
+                <p className="mt-1">原式實部為 <InlineMath math="\dfrac{19}{101}" />，所以選 <strong>B</strong>。</p>
+              </div>
             </div>
           </div>
           <div className="mt-3 bg-slate-50 rounded-lg p-3 text-xs text-slate-500 border border-slate-200">
