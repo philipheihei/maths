@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Latex, CollapsibleSection, MathDisplay } from './shared';
 import { InlineMath } from '../apps/MCLimitedF6/shared';
 export { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
@@ -468,14 +468,6 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             <p className="text-red-600 font-bold mt-0">計算時分開處理實部和虛部，並記得 <Latex math="i^2=-1" />。</p>
           </div>
 
-          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
-            <h3 className="font-bold text-amber-800 mb-3">二次方程中的複數根</h3>
-            <p className="text-slate-700 mb-2">當判別式 <Latex math="\Delta=b^2-4ac<0" /> 時，沒有實根，但可能有複數根。</p>
-            <div className="bg-white rounded-lg p-3 text-blue-700">
-              <Latex math="x^2+1=0 \quad\Rightarrow\quad x^2=-1 \quad\Rightarrow\quad x=\pm i" block />
-            </div>
-          </div>
-
           {/* Section 1: Calculator */}
           <section className="bg-teal-50 rounded-xl p-5 border-2 border-teal-300">
             <h2 className="text-lg font-bold text-teal-800 mb-1">🧮 計算機神技 — Complex Mode</h2>
@@ -866,14 +858,131 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
 // ========================================
 // CH4 餘式定理 & 因式定理 (F4)
 // ========================================
+const CubicFactorCalculatorNotes = ({ onBack }) => {
+  const s1 = useRef(null);
+
+  return (
+    <>
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-blue-500">
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-blue-600 hover:text-blue-800 font-semibold text-sm mb-4"
+        >
+          ← 返回 CH4 三次方程的因式分解
+        </button>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">一元三次方程因式分解</h1>
+        <p className="text-slate-600">CASIO fx-50FH II 計算機程式</p>
+      </div>
+
+      <CollapsibleSection id="cubic-calculator" title="計算機使用（Cubic Program）" num={1} color="blue" activeSub={null} sectionRef={s1}>
+        <div className="space-y-6">
+          <div className="bg-red-50 border-2 border-red-300 rounded-xl p-4">
+            <p className="text-red-700 font-bold">⚠️ 程式需要在 CMPLX 模式下執行</p>
+            <p className="text-slate-700 text-sm mt-2">因此在選擇新程式位置後，按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-1 rounded font-bold">2</span> 選用 CMPLX 模式。</p>
+          </div>
+
+          <div>
+            <h3 className="text-blue-900 font-bold mb-3 border-l-4 border-blue-500 pl-3">📝 輸入程式</h3>
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg mb-3">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <strong>進入程式編輯模式</strong>
+              </div>
+              <div className="flex flex-wrap gap-1 items-center text-sm">
+                <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span>
+                <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span>
+                <span className="text-blue-900 font-bold">→</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">6</span>
+                <span className="text-gray-500 text-xs">(PRGM)</span>
+                <span className="text-blue-900 font-bold">→</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
+                <span className="text-gray-500 text-xs">(EDIT)</span>
+                <span className="text-blue-900 font-bold">→</span>
+                <span className="text-gray-500 text-xs">選擇新程式位置</span>
+                <span className="text-blue-900 font-bold">→</span>
+                <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">2</span>
+                <span className="text-gray-500 text-xs">(CMPLX)</span>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-lg mb-3">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="bg-blue-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                <strong>按以下程式逐行輸入</strong>
+              </div>
+              <div className="bg-black rounded-lg p-3 font-mono text-green-400 text-sm overflow-x-auto whitespace-pre leading-7">
+                <div>?→A : ?→B : −B ÷ (3A) → B : ?→C : C ÷ A → C : ?→M :</div>
+                <div>B³ − BAns ÷ 2 − M ÷ (2A) → M : √((C ÷ 3 − B²)^3 + Ans²) M+ :</div>
+                <div>If Ans=Conjg(Ans) : Then ³√(M) + ³√(M − 2Ans) :</div>
+                <div>Else 2³√(Abs(M)) cos(3⁻¹arg(M) : IfEnd : Ans + B → A ◢</div>
+                <div>3B − Ans → M : M ÷ 2 + √(AM − C + M² ÷ 4) M− → B ◢ M</div>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 rounded-xl p-3 border border-gray-200">
+              <h4 className="font-bold text-blue-900 mb-3">⌨️ 特殊符號輸入方法</h4>
+              <p className="text-xs text-slate-500 mb-3">◀ 是計算機的 Replay 左鍵；輸入程式指令時，先按 <strong>SHIFT + 3</strong>，再按 Replay 左鍵切換到相應選單。</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                {[
+                  { symbol: '?', keys: ['SHIFT', '3', '1'] },
+                  { symbol: '→', keys: ['SHIFT', '3', '2'] },
+                  { symbol: ':', keys: ['SHIFT', '3', '3'] },
+                  { symbol: '◢', keys: ['SHIFT', '3', '4'] },
+                  { symbol: 'Conjg(', keys: ['SHIFT', ','] },
+                  { symbol: 'arg(', keys: ['SHIFT', '('] },
+                  { symbol: 'Abs(', keys: ['SHIFT', ')'] },
+                  { symbol: '∛(', keys: ['SHIFT', 'x³'] },
+                  { symbol: 'M−', keys: ['SHIFT', 'M+'] },
+                  { symbol: 'If', keys: ['SHIFT', '3', '◀', '1'] },
+                  { symbol: 'Then', keys: ['SHIFT', '3', '◀', '2'] },
+                  { symbol: 'Else', keys: ['SHIFT', '3', '◀', '◀', '1'] },
+                  { symbol: 'IfEnd', keys: ['SHIFT', '3', '◀', '◀', '2'] },
+                ].map((item) => (
+                  <div key={item.symbol} className="flex items-center gap-2 p-2 bg-white rounded border border-gray-200">
+                    <span className="w-8 text-center text-lg font-bold text-blue-900">{item.symbol}</span>
+                    <div className="flex flex-wrap gap-1">
+                      {item.keys.map((key, keyIndex) => (
+                        <span key={`${item.symbol}-${key}-${keyIndex}`} className={`px-2 py-1 rounded text-xs font-bold shadow-sm ${key === 'SHIFT' ? 'bg-gray-300 text-yellow-700' : 'bg-gray-900 text-white'}`}>{key}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-green-50 border-2 border-green-300 rounded-xl p-4">
+            <h3 className="text-green-800 font-bold mb-3">🎯 執行程式</h3>
+            <div className="space-y-2 text-sm text-slate-700">
+              <p><span className="font-bold text-green-700">1.</span> 按 <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span> → <span className="px-2 py-1 bg-gray-300 text-gray-800 rounded text-xs font-bold">MODE</span> → <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">6</span> (PRGM)。</p>
+              <p><span className="font-bold text-green-700">2.</span> 選擇執行程式，按 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">2</span> (EXE)。</p>
+              <p><span className="font-bold text-green-700">3.</span> 依照計算機顯示輸入三次方程的係數，按 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span> 確認每一項。</p>
+            </div>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+            <p className="text-amber-800 text-sm">💡 主頁只需要掌握因式分解步驟；計算機程式的輸入方法可在本頁按上面的步驟慢慢輸入。</p>
+          </div>
+        </div>
+      </CollapsibleSection>
+    </>
+  );
+};
+
 export const RemainderFactorNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+  const [showCalculator, setShowCalculator] = useState(false);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
+
+  if (showCalculator) {
+    return <CubicFactorCalculatorNotes onBack={() => setShowCalculator(false)} />;
+  }
 
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-teal-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">CH4 續多項式</h1>
-        <p className="text-slate-600">掌握餘式定理與因式定理</p>
+        <p className="text-slate-600">掌握餘式定理、因式定理與三次方程的因式分解</p>
       </div>
 
       <CollapsibleSection id="remainder" title="餘式定理" num="1." color="teal" activeSub={activeSub} sectionRef={s1}>
@@ -1041,6 +1150,50 @@ export const RemainderFactorNotes = ({ activeSub }) => {
               <Latex math="\begin{aligned} f(x) &= (x+2)(x^2+3x-1)+4 \\ &= x(x^2+3x-1)+2(x^2+3x-1)+4 \\ &= x^3+3x^2-x+2x^2+6x-2+4 \\ &= x^3+5x^2+5x+2 \end{aligned}" block />
             </div>
             <p className="text-blue-700 font-bold mt-3">∴ <Latex math="f(x)=x^3+5x^2+5x+2" /></p>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="cubic-factorization" title="三次方程的因式分解" num={5} color="purple" activeSub={activeSub} sectionRef={s5}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-800 mb-3">方法：先找一個根，再逐步因式分解</h3>
+            <p className="text-slate-700">一元三次方程可以先找出一個根，得到一個一次因式，再把剩下的二次式因式分解。</p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-700 mb-3">例題：解一元三次方程</h3>
+            <div className="bg-amber-50 rounded-lg p-3 text-center mb-4 overflow-x-auto">
+              <Latex math="x^3-6x^2+11x-6=0" block />
+            </div>
+            <div className="space-y-3 text-slate-700">
+              <div className="bg-purple-50 rounded-lg p-3">
+                <p className="font-bold text-purple-800 mb-2">Step 1：先找一個根</p>
+                <p>試 <Latex math="x=1" />：</p>
+                <Latex math="1^3-6(1)^2+11(1)-6=0" block />
+                <p className="text-green-700 font-bold">所以 <Latex math="x-1" /> 是其中一個因式。</p>
+              </div>
+              <div className="bg-blue-50 rounded-lg p-3">
+                <p className="font-bold text-blue-800 mb-2">Step 2：除以 <Latex math="x-1" />，再因式分解</p>
+                <Latex math="x^3-6x^2+11x-6=(x-1)(x^2-5x+6)" block />
+                <Latex math="=(x-1)(x-2)(x-3)" block />
+              </div>
+              <div className="bg-green-50 rounded-lg p-3 text-green-800 font-bold">
+                <p>∴ <Latex math="(x-1)(x-2)(x-3)=0" /></p>
+                <p className="mt-2">答案：<Latex math="x=1,\ 2,\ 3" /></p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-teal-50 rounded-lg p-4 border border-teal-200 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-slate-700">以計算機程式去計出三次方程程式的解</p>
+            <button
+              type="button"
+              onClick={() => setShowCalculator(true)}
+              className="text-blue-700 hover:text-blue-900 underline font-bold"
+            >
+              前往計算機輸入方法 →
+            </button>
           </div>
         </div>
       </CollapsibleSection>
