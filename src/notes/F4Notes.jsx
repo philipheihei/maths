@@ -961,6 +961,33 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
             </div>
           </div>
 
+          <div className="bg-indigo-50 border-2 border-indigo-300 rounded-xl p-4">
+            <h3 className="text-indigo-900 font-bold mb-3">🧪 測試例題：檢查程式是否輸入正確</h3>
+            <div className="bg-white rounded-lg p-3 border border-indigo-200 text-center mb-3">
+              <p className="text-sm text-slate-600 mb-2">解一元三次方程：</p>
+              <Latex math="x^3-6x^2+11x-6=0" block />
+            </div>
+            <p className="text-sm text-slate-700 mb-2">程式執行後，依次輸入四個係數：</p>
+            <div className="flex flex-wrap items-center gap-2 text-sm mb-3">
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">1</span>
+              <span className="text-slate-500">EXE</span>
+              <span className="text-indigo-700 font-bold">→</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">(−) 6</span>
+              <span className="text-slate-500">EXE</span>
+              <span className="text-indigo-700 font-bold">→</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">11</span>
+              <span className="text-slate-500">EXE</span>
+              <span className="text-indigo-700 font-bold">→</span>
+              <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">(−) 6</span>
+              <span className="text-slate-500">EXE</span>
+            </div>
+            <div className="bg-green-100 rounded-lg p-3 text-sm text-green-900 border border-green-200">
+              <p className="font-bold mb-1">預期結果：</p>
+              <p>之後每按一次 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span>，應逐個得到三個根 <strong>1、2、3</strong>。</p>
+              <p className="mt-1 text-xs">顯示次序可能不同；只要三個答案都是 1、2、3，即代表程式輸入正確。</p>
+            </div>
+          </div>
+
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
             <p className="text-amber-800 text-sm">💡 主頁只需要掌握因式分解步驟；計算機程式的輸入方法可在本頁按上面的步驟慢慢輸入。</p>
           </div>
