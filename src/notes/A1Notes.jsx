@@ -20,8 +20,7 @@ export const SimEqCalculatorNotes = ({ activeSub }) => {
           <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl text-center border-2 border-blue-400">
             <p className="text-sm text-gray-600 mb-2">📟 CASIO fx-50FH II — Prog 01：解聯立二元一次方程</p>
             <div className="text-lg font-bold text-blue-900 flex items-center justify-center gap-3">
-              <span className="text-5xl leading-none">{`{`}</span>
-              <div className="text-left"><div>Ax + By = C</div><div>Dx + Ey = F</div></div>
+              <Latex math="\begin{cases} Ax + By = C \\ Dx + Ey = F \end{cases}" />
             </div>
           </div>
 
