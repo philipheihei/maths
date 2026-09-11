@@ -1235,7 +1235,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
               onClick={() => setShowCalculator(true)}
               className="text-blue-700 hover:text-blue-900 underline font-bold"
             >
-              前往計算機輸入方法 →
+              前往計算機程式教學 →
             </button>
           </div>
         </div>

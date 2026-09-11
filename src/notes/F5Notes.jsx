@@ -48,22 +48,22 @@ export const VariationNotes = ({ activeSub, onNavigate }) => {
           <div className="mt-4 pt-4 border-t border-slate-100">
             <h4 className="font-bold text-slate-800 mb-2">註：代數 (<span className="text-yellow-600">黃色highlight </span>) 按題目不同字眼而改變：</h4>
             <p className="text-sm text-slate-600 mb-2">例子：</p>
-            <ul className="space-y-2 text-sm bg-yellow-50 p-3 rounded-lg text-slate-700">
-              <li className="flex items-center justify-between border-b border-yellow-100 pb-1">
+            <ul className="w-fit max-w-full space-y-2 text-sm bg-yellow-50 p-3 rounded-lg text-slate-700">
+              <li className="grid grid-cols-[minmax(120px,auto)_auto] items-center gap-x-3 border-b border-yellow-100 pb-1">
                 <span>x 的 <span className="text-red-600 font-bold">平方</span></span>
-                <div className="flex items-center"><ArrowRight className="w-3 h-3 mx-2 text-slate-400"/><MathDisplay latex="x^{\textcolor{red}{2}}" inline /></div>
+                <div className="flex items-center justify-self-start"><ArrowRight className="w-3 h-3 mr-2 text-slate-400"/><MathDisplay latex="x^{\textcolor{red}{2}}" inline /></div>
               </li>
-              <li className="flex items-center justify-between border-b border-yellow-100 pb-1">
+              <li className="grid grid-cols-[minmax(120px,auto)_auto] items-center gap-x-3 border-b border-yellow-100 pb-1">
                 <span>y 的 <span className="text-red-600 font-bold">立方</span></span>
-                <div className="flex items-center"><ArrowRight className="w-3 h-3 mx-2 text-slate-400"/><MathDisplay latex="y^{\textcolor{red}{3}}" inline /></div>
+                <div className="flex items-center justify-self-start"><ArrowRight className="w-3 h-3 mr-2 text-slate-400"/><MathDisplay latex="y^{\textcolor{red}{3}}" inline /></div>
               </li>
-              <li className="flex items-center justify-between border-b border-yellow-100 pb-1">
+              <li className="grid grid-cols-[minmax(120px,auto)_auto] items-center gap-x-3 border-b border-yellow-100 pb-1">
                 <span>x 的 <span className="text-red-600 font-bold">平方根</span></span>
-                <div className="flex items-center"><ArrowRight className="w-3 h-3 mx-2 text-slate-400"/><MathDisplay latex="\textcolor{red}{\sqrt{\textcolor{black}{x}}}" inline /></div>
+                <div className="flex items-center justify-self-start"><ArrowRight className="w-3 h-3 mr-2 text-slate-400"/><MathDisplay latex="\textcolor{red}{\sqrt{\textcolor{black}{x}}}" inline /></div>
               </li>
-              <li className="flex items-center justify-between">
+              <li className="grid grid-cols-[minmax(120px,auto)_auto] items-center gap-x-3">
                 <span>z 的 <span className="text-red-600 font-bold">立方根</span></span>
-                <div className="flex items-center"><ArrowRight className="w-3 h-3 mx-2 text-slate-400"/><MathDisplay latex="\textcolor{red}{\sqrt[3]{\textcolor{black}{z}}}" inline /></div>
+                <div className="flex items-center justify-self-start"><ArrowRight className="w-3 h-3 mr-2 text-slate-400"/><MathDisplay latex="\textcolor{red}{\sqrt[3]{\textcolor{black}{z}}}" inline /></div>
               </li>
             </ul>
           </div>
