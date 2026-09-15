@@ -95,7 +95,7 @@ export const FactorizationNotes = ({ activeSub }) => {
       <CollapsibleSection id="quadratic" title="二次多項式（十字相乘法 / FMLA 01）" num={3} color="green" activeSub={activeSub} sectionRef={s3}>
         <div className="space-y-4">
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <h3 className="font-bold text-green-800 mb-3">🖩 計算機 FMLA 01 方法</h3>
+            <h3 className="font-bold text-green-800 mb-3">計算機 FMLA 01 方法</h3>
             <p className="text-sm text-slate-700 mb-3">如沒相同代數/因數，出動 FMLA 01（二次方）</p>
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-sm font-bold text-slate-700 mb-2">步驟：</p>
@@ -129,10 +129,10 @@ export const FactorizationNotes = ({ activeSub }) => {
                     <p className="calculator-lcd-number">−0.875</p>
                   </div>
                   <p className="text-center text-sm text-slate-600 mt-2">
-                    按 <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> 轉為分數形式（<Latex math="−\frac{7}{8}" />）
+                    按 <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> 轉為假分數形式（<Latex math="\frac{\textcolor{red}{−7}}{\textcolor{blue}{8}}" />）
                   </p>
-                  <p className="text-center text-sm text-slate-600">分母放前，分子相反數放後</p>
-                  <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(8x+7)" /></p>
+                  <p className="text-center text-sm text-slate-600"><span className="text-blue-600 font-bold">分母</span>放前，<span className="text-red-600 font-bold">分子</span>相反數放後</p>
+                  <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(\textcolor{blue}{8}x\textcolor{red}{+7})" /></p>
                 </div>
               </div>
               <p className="text-center mt-4 font-bold text-green-700 text-base">∴ 答案 <Latex math="= (x−3)(8x+7)" /></p>
