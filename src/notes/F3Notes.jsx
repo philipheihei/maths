@@ -181,7 +181,7 @@ export const FactorizationNotes = ({ activeSub }) => {
             <div className="bg-white rounded-lg p-3">
               <p className="text-xs text-slate-500 mb-2">💡 方法：先當只有前面的代數 x 用FMLA01去組成括號，最後再在每個括號後補上後面的代數 y</p>
               <p className="text-sm text-slate-600 mb-1">例子：</p>
-              <Latex math="\begin{aligned} &\phantom{=}6r^2 - 13rs - 28s^2 \\ &= (2r-7s)(3r+4s) \end{aligned}" block />
+              <Latex math="\begin{aligned} &\phantom{=}6\textcolor{blue}{r}^2 - 13\textcolor{blue}{r}\textcolor{red}{s} - 28\textcolor{red}{s}^2 \\ &= (2\textcolor{blue}{r}-7\textcolor{red}{s})(3\textcolor{blue}{r}+4\textcolor{red}{s}) \end{aligned}" block />
             </div>
           </div>
         </div>
