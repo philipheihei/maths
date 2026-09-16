@@ -131,7 +131,7 @@ export const FactorizationNotes = ({ activeSub }) => {
                   <p className="text-center text-sm text-slate-600 mt-2">
                     按 <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> 轉為假分數形式（<Latex math="\frac{\textcolor{red}{−7}}{\textcolor{blue}{8}}" />）
                   </p>
-                  <p className="text-center text-sm text-slate-600"><span className="text-blue-600 font-bold">分母</span>放前，<span className="text-red-600 font-bold">分子</span>相反數放後</p>
+                  <p className="text-center text-sm text-slate-600"><span className="text-blue-600 font-bold">分母</span>放前，<span className="text-red-600 font-bold">分子</span>放後轉相反</p>
                   <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(\textcolor{blue}{8}x\textcolor{red}{+7})" /></p>
                 </div>
               </div>
@@ -155,7 +155,7 @@ export const FactorizationNotes = ({ activeSub }) => {
               <Latex math="\begin{aligned} &= m^2 - 15m + 50 \end{aligned}" block />
               <p className="text-xs text-slate-500">以 2次方/1次方/0次方(沒代數) 順序作調動</p>
             </div>
-            <div className="bg-white rounded-lg p-3">
+            <div className="bg-white rounded-lg p-3 mb-2">
               <p className="text-sm text-slate-600 mb-1">例子 2：<Latex math="a^2" /> 係數需是正數</p>
               <div className="text-center my-2">
                 <span className="inline-flex items-center gap-1">
@@ -168,6 +168,11 @@ export const FactorizationNotes = ({ activeSub }) => {
               </div>
               <Latex math="\begin{aligned} &= -a^2 + 5a + 36 \\ &= -(a^2 - 5a - 36) \\ &= -(a-9)(a+4) \end{aligned}" block />
               <p className="text-xs text-red-500 mt-2">⚠️ 若沒有抽負，因式分解答案會錯！</p>
+            </div>
+            <div className="bg-white rounded-lg p-3">
+              <p className="text-sm text-slate-600 mb-1">例子 3：先抽公因數，再用 FMLA 01</p>
+              <Latex math="\begin{aligned} 6x^3 - 15x^2 - 36x &= 3x(2x^2 - 5x - 12) \\ &= 3x(2x+3)(x-4) \end{aligned}" block />
+              <p className="text-xs text-red-500 mt-2">⚠️ 先抽出公因數 <Latex math="3x" />，再對括號內的二次式使用 FMLA 01。</p>
             </div>
           </div>
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">

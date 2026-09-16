@@ -366,73 +366,47 @@ const TeachingPage = ({ onStartQuiz }) => {
             <div className="space-y-4">
               {/* 計算機方法 */}
               <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-                <h3 className="font-bold text-green-800 mb-3">🖩 計算機 FMLA 01 方法</h3>
-                <p className="text-sm text-slate-700 mb-3">
-                  如二次多項式沒相同代數/因數，出動 <span className="bg-orange-500 text-white px-2 py-0.5 rounded font-sans">FMLA</span> 01
-                </p>
-                
+                <h3 className="font-bold text-green-800 mb-3">計算機 FMLA 01 方法</h3>
+                <p className="text-sm text-slate-700 mb-3">如沒相同代數/因數，出動 FMLA 01（二次方）</p>
                 <div className="bg-white rounded-lg p-3 mb-3">
                   <p className="text-sm font-bold text-slate-700 mb-2">步驟：</p>
-                  <div className="space-y-2.5 text-sm">
-                    <div className="flex items-start gap-2">
-                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs shrink-0 mt-0.5">1</span>
-                      <span>確保計算機在 COMP 模式：按 <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded">MODE</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span></span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs shrink-0 mt-0.5">2</span>
-                      <span>開啟 FMLA 01：按 <span className="bg-orange-500 text-white text-xs font-mono px-2 py-0.5 rounded">FMLA</span> 然後輸入 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">0</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span> <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span></span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs shrink-0 mt-0.5">3</span>
-                      <span>依次輸入 a <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>，b <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>，c <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span></span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs shrink-0 mt-0.5">4</span>
-                      <span>顯示答案 1；再按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> 顯示答案 2；<span className="text-orange-600 font-semibold">見到小數先按 <span className="bg-gray-500 text-white text-xs font-mono px-1.5 py-0.5 rounded">a b/c</span> 轉分數</span></span>
-                    </div>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">1</span><span>開啟 FMLA 01（按 <span className="bg-orange-500 text-white text-xs font-mono px-2 py-0.5 rounded">FMLA</span> 輸入 01）</span></div>
+                    <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">2</span><span>輸入 a, b, c（如 <Latex math="8x^2 − 17x − 21" />：輸入 8 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> -17 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> -21 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>）</span></div>
+                    <div className="flex items-center gap-2"><span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs">3</span><span>按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> 得出兩個答案</span></div>
                   </div>
                 </div>
-
                 <div className="bg-white rounded-lg p-3">
-                  <p className="text-base font-bold text-slate-700 mb-2">例子：<Latex math="8x^2 - 17x - 21" /></p>
-
-                  {/* 輸入按鍵 */}
-                  <div className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 mb-3">
-                    <p className="text-xs text-slate-500 mb-1.5">按鍵步驟：</p>
-                    <div className="flex items-center gap-1 flex-wrap">
-                      <span className="bg-orange-500 text-white text-xs font-mono px-2 py-0.5 rounded">FMLA</span>
-                      <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">0</span>
-                      <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">1</span>
-                      <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
-                      <span className="text-slate-400 mx-0.5">→</span>
-                      <span className="text-xs text-slate-700 font-sans">8</span>
-                      <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
-                      <span className="text-xs text-slate-700 font-sans">(−)17</span>
-                      <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
-                      <span className="text-xs text-slate-700 font-sans">(−)21</span>
-                      <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
-                    </div>
-                  </div>
-
+                  <p className="text-base font-bold text-slate-700 mb-3">例子：<Latex math="8x^2 − 17x − 21" /></p>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="bg-gray-50 p-3 rounded">
                       <p className="font-bold text-center mb-2 text-base">答案 1（整數）</p>
-                      <p className="text-center text-3xl font-sans mb-2">3</p>
+                      <div className="calculator-lcd-answer">
+                        <span className="calculator-lcd-answer-label">01:QuadEquation</span>
+                        <span className="calculator-lcd-answer-prefix">x=</span>
+                        <p className="calculator-lcd-number">3</p>
+                      </div>
                       <p className="text-center text-sm text-slate-600 mt-2">→ 相反數：-3</p>
                       <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(x-3)" /></p>
+                      <p className="text-center text-sm text-slate-600">
+                        按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> 得出 x 的第二個答案。
+                      </p>
                     </div>
                     <div className="bg-gray-50 p-3 rounded">
-                      <p className="font-bold text-center mb-2 text-base">答案 2（小數）</p>
-                      <p className="text-center text-3xl font-sans mb-1">-0.875</p>
-                      <p className="text-center text-xs text-orange-600 font-semibold mb-1">按 <span className="bg-gray-500 text-white text-xs font-mono px-1.5 py-0.5 rounded">a b/c</span> 轉分數</p>
-                      <p className="text-center text-sm text-slate-600">= <Latex math="-\frac{7}{8}" /></p>
-                      <p className="text-center text-sm text-slate-600">分母放前，分子相反數放後</p>
-                      <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(8x+7)" /></p>
+                      <p className="font-bold text-center mb-2 text-base">答案 2（分數）</p>
+                      <div className="calculator-lcd-answer">
+                        <span className="calculator-lcd-answer-label">01:QuadEquation</span>
+                        <span className="calculator-lcd-answer-prefix">x=</span>
+                        <p className="calculator-lcd-number">−0.875</p>
+                      </div>
+                      <p className="text-center text-sm text-slate-600 mt-2">
+                        按 <span className="bg-gray-500 text-white text-xs font-mono px-2 py-0.5 rounded">a b/c</span> 轉為假分數形式（<Latex math="\frac{\textcolor{red}{−7}}{\textcolor{blue}{8}}" />）
+                      </p>
+                      <p className="text-center text-sm text-slate-600"><span className="text-blue-600 font-bold">分母</span>放前，<span className="text-red-600 font-bold">分子</span>放後轉相反</p>
+                      <p className="text-center text-sm text-slate-600">→ 括號：<Latex math="(\textcolor{blue}{8}x\textcolor{red}{+7})" /></p>
                     </div>
                   </div>
-                  <p className="text-center mt-4 font-bold text-green-700 text-base">
-                    ∴ 答案 <Latex math="= (x-3)(8x+7)" />
-                  </p>
+                  <p className="text-center mt-4 font-bold text-green-700 text-base">∴ 答案 <Latex math="= (x−3)(8x+7)" /></p>
                 </div>
               </div>
 
