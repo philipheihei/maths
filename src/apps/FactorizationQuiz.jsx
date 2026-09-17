@@ -660,6 +660,19 @@ const TeachingPage = ({ onStartQuiz }) => {
                     <p>II. 2x - 3</p>
                     <p>III. x - 2</p>
                   </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 text-sm">
+                    {[
+                      ['A', 'I + II'],
+                      ['B', 'I + II'],
+                      ['C', 'II + III'],
+                      ['D', 'I + II + III'],
+                    ].map(([label, option]) => (
+                      <div key={label} className="flex items-center gap-2 bg-slate-50 rounded-lg px-3 py-2 border border-slate-200">
+                        <span className="font-bold text-slate-700">{label}.</span>
+                        <span>{option}</span>
+                      </div>
+                    ))}
+                  </div>
                   <div className="bg-blue-50 p-2 rounded mt-3">
                     <p className="text-sm">
                       <span className="font-bold">①</span> 先因式分解：<Latex math="2(2x^2 + x - 6) = 2(2x-3)(x+2)" />
