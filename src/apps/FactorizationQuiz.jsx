@@ -663,7 +663,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 text-sm">
                     {[
                       ['A', 'I + II'],
-                      ['B', 'I + II'],
+                      ['B', 'I + III'],
                       ['C', 'II + III'],
                       ['D', 'I + II + III'],
                     ].map(([label, option]) => (
@@ -678,7 +678,7 @@ const TeachingPage = ({ onStartQuiz }) => {
                       <span className="font-bold">①</span> 先因式分解：<Latex math="2(2x^2 + x - 6) = 2(2x-3)(x+2)" />
                     </p>
                     <p className="text-sm mt-1">
-                      <span className="font-bold">②</span> 因式即問有哪個括號 → 2 / (2x-3) → 選項 I + II
+                      <span className="font-bold">②</span> 因式即問有哪個括號 → 2/(2x−3) → A. 選項 I + II
                     </p>
                   </div>
                 </div>

@@ -1068,7 +1068,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
             </div>
             <div className="mt-4 bg-blue-50 rounded-lg p-3 border border-blue-200">
               <p className="text-sm text-blue-800"><span className="font-bold">💡 技巧（當 <Latex math="ax + b" /> 形式）：</span></p>
-              <div className="mt-2 flex items-center gap-2 text-sm"><span>令 <Latex math="ax + b = 0" /></span><span>→</span><span><Latex math="x = −\frac{b}{a}" /></span></div>
+              <div className="mt-2 flex items-center gap-2 text-sm"><span>令 <Latex math="\textcolor{blue}{a}x \textcolor{red}{+b} = 0" /></span><span>→</span><span><Latex math="x = \frac{\textcolor{red}{−b}}{\textcolor{blue}{a}}" /></span></div>
               <p className="text-sm text-slate-600 mt-2"><span className="bg-cyan-200 px-1 rounded">前面數字</span>放分母，<span className="bg-pink-200 px-1 rounded">後面數字相反數</span>放分子</p>
             </div>
           </div>
