@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Latex, CollapsibleSection, MathDisplay } from './shared';
+import { CalculatorMonitor, Latex, CollapsibleSection, MathDisplay } from './shared';
 import { InlineMath } from '../apps/MCLimitedF6/shared';
 import HCFLCMNotes from '../apps/MCLimitedF6/notes/HCFLCMNotes';
 export { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
@@ -564,6 +564,19 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                     <span className="text-slate-400">=</span>
                     <span className="font-sans bg-slate-100 px-2 py-0.5 rounded text-xs">-4 × (5 - 3 <span className="text-teal-700 font-bold">i</span>)</span>
                   </div>
+                  <div className="mt-3 rounded-lg bg-slate-50 border border-slate-200 p-2">
+                    <p className="text-xs text-slate-500 font-bold mb-2">MON 參照：按鍵後畫面</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <div>
+                        <CalculatorMonitor expression="-4(5-3i)" result="−20" />
+                        <p className="text-xs text-green-700 font-semibold mt-1">EXE → 實部 a</p>
+                      </div>
+                      <div>
+                        <CalculatorMonitor expression="-4(5-3i)" result="12" resultSuffix="i" />
+                        <p className="text-xs text-blue-700 font-semibold mt-1">SHIFT + EXE → 虛部 b</p>
+                      </div>
+                    </div>
+                  </div>
                   <div className="flex gap-2 flex-wrap">
                     <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
                       <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
@@ -582,11 +595,24 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                 <div className="bg-white rounded-lg p-3 border border-slate-200">
                   <p className="text-xs text-slate-400 font-bold mb-2">例 2</p>
                   <div className="flex items-center gap-2 flex-wrap mb-2">
-                    <InlineMath math="\dfrac{4i^3}{i-1}" />
+                    <InlineMath math="\dfrac{4i^7}{i-1}" />
                     <span className="text-slate-400 text-xs mx-1">→ 輸入：</span>
-                    <span className="font-sans bg-slate-100 px-2 py-0.5 rounded text-xs">4<span className="text-teal-700 font-bold">iii</span> ÷ ( <span className="text-teal-700 font-bold">i</span> - 1 )</span>
+                    <span className="font-sans bg-slate-100 px-2 py-0.5 rounded text-xs">4<span className="text-teal-700 font-bold">iiiiiii</span> ÷ ( <span className="text-teal-700 font-bold">i</span> - 1 )</span>
                   </div>
-                  <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^3" /> 時須打 <code><em>i</em> × <em>i</em> × <em>i</em></code>（有幾次方就打幾個 <em>i</em> 相乘）</p>
+                  <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-2 py-1 mb-2">⚠️ CASIO 50FH II 的 CMPLX Mode <strong>不支援 ^ 鍵</strong>！輸入 <InlineMath math="i^7" /> 時連按 <code><em>i</em><em>i</em><em>i</em><em>i</em><em>i</em><em>i</em><em>i</em></code>（有幾次方就連按幾次 <em>i</em> 鍵）</p>
+                  <div className="mt-3 rounded-lg bg-slate-50 border border-slate-200 p-2">
+                    <p className="text-xs text-slate-500 font-bold mb-2">MON 參照：按鍵後畫面</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <div>
+                        <CalculatorMonitor expression="4iiiiiii ÷ (i-1)" result="−2" />
+                        <p className="text-xs text-green-700 font-semibold mt-1">EXE → 實部 a</p>
+                      </div>
+                      <div>
+                        <CalculatorMonitor expression="4iiiiiii ÷ (i-1)" result="2" resultSuffix="i" />
+                        <p className="text-xs text-blue-700 font-semibold mt-1">SHIFT + EXE → 虛部 b</p>
+                      </div>
+                    </div>
+                  </div>
                   <div className="flex gap-2 flex-wrap">
                     <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
                       <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>

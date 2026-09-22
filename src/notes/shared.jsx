@@ -56,6 +56,20 @@ export const CalculatorLCD = ({ original, mantissa, exponent }) => (
   </div>
 );
 
+export const CalculatorMonitor = ({ expression, result, resultSuffix = '', mode = 'CMPLX' }) => (
+  <div
+    className="calculator-lcd-answer calculator-lcd-monitor m-0"
+    role="img"
+    aria-label={`計算機 MON 顯示：${expression}，結果 ${result}${resultSuffix}`}
+  >
+    <div className="calculator-lcd-glare" />
+    <span className="calculator-lcd-monitor-mode">{mode}</span>
+    <span className="calculator-lcd-monitor-expression">{expression}</span>
+    <p className="calculator-lcd-number">{result}</p>
+    {resultSuffix && <span className="calculator-lcd-monitor-suffix">{resultSuffix}</span>}
+  </div>
+);
+
 // 統一章節標題卡
 export const ChapterHeader = ({ title, description, accent = 'blue' }) => {
   const accentBorder = {

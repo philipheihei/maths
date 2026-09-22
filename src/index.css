@@ -111,6 +111,62 @@ body {
   text-align: right;
 }
 
+.calculator-lcd-monitor {
+  width: min(100%, 300px);
+  min-height: 84px;
+  aspect-ratio: 3.55 / 1;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.calculator-lcd-monitor-mode {
+  position: absolute;
+  top: 5px;
+  left: 64px;
+  font-family: "Courier New", monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.3px;
+}
+
+.calculator-lcd-monitor-expression {
+  position: absolute;
+  top: 23px;
+  left: 9px;
+  right: 9px;
+  overflow: hidden;
+  font-family: "Courier New", monospace;
+  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+  font-weight: 700;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calculator-lcd-monitor .calculator-lcd-number {
+  position: absolute;
+  left: 9px;
+  right: 27px;
+  bottom: 5px;
+  margin: 0;
+  font-size: clamp(1.3rem, 4vw, 1.75rem);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  text-align: right;
+}
+
+.calculator-lcd-monitor-suffix {
+  position: absolute;
+  right: 7px;
+  bottom: 5px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
 .calculator-lcd-glare {
   position: absolute;
   inset: 0;
