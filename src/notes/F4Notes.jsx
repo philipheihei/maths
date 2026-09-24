@@ -569,20 +569,18 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <div>
                         <CalculatorMonitor expression="-4(5-3i)" result="−20" />
-                        <p className="text-xs text-green-700 font-semibold mt-1">EXE → 實部 a</p>
                       </div>
                       <div>
                         <CalculatorMonitor expression="-4(5-3i)" result="12" resultSuffix="i" />
-                        <p className="text-xs text-blue-700 font-semibold mt-1">SHIFT + EXE → 虛部 b</p>
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-2 flex-wrap">
-                    <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
+                  <div className="mx-px grid grid-cols-1 sm:grid-cols-2 gap-2 px-2">
+                    <div className="flex w-full items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
                       <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
                       <span className="text-sm text-green-800">先出 <strong>−20</strong>（實部 a）</span>
                     </div>
-                    <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
+                    <div className="flex w-full items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
                       <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
                       <span className="text-xs text-slate-400">+</span>
                       <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
@@ -605,20 +603,18 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <div>
                         <CalculatorMonitor expression="4iiiiiii ÷ (i-1)" result="−2" />
-                        <p className="text-xs text-green-700 font-semibold mt-1">EXE → 實部 a</p>
                       </div>
                       <div>
                         <CalculatorMonitor expression="4iiiiiii ÷ (i-1)" result="2" resultSuffix="i" />
-                        <p className="text-xs text-blue-700 font-semibold mt-1">SHIFT + EXE → 虛部 b</p>
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-2 flex-wrap">
-                    <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
+                  <div className="mx-px grid grid-cols-1 sm:grid-cols-2 gap-2 px-2">
+                    <div className="flex w-full items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
                       <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
                       <span className="text-sm text-green-800">先出 <strong>-2</strong>（實部 a）</span>
                     </div>
-                    <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
+                    <div className="flex w-full items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
                       <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
                       <span className="text-xs text-slate-400">+</span>
                       <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
@@ -809,13 +805,9 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
               <p className="text-slate-800 mb-2">若二次方程 <Latex math="16x^2 + kx + 1 = 0" /> 有一個<span className="bg-yellow-200 px-1 rounded">二重實根</span>，求 <Latex math="k" /> 的值。</p>
             </div>
             
-            <div className="pl-4 border-l-2 border-slate-300 space-y-2 text-slate-700">
-              <p className="text-sm rounded bg-amber-100 text-amber-800 inline-block px-2 py-0.5">解題步驟：</p>
-              <p><Latex math="\because" /> 方程有一個二重實根</p>
-              <p><Latex math="\therefore \Delta = 0" /></p>
-              <div className="my-2 bg-slate-100 p-2 rounded">
-                <Latex math="\begin{aligned} (k)^2 − 4(16)(1) &= 0 \\ k^2 − 64 &= 0 \\ k^2 &= 64 \\ k &= 8 \text{ 或 } −8 \end{aligned}" block />
-              </div>
+            <div className="my-2 bg-slate-100 p-3 rounded-lg text-slate-700 overflow-x-auto">
+              <p className="text-sm font-semibold text-slate-600 mb-2">解題步驟：</p>
+              <Latex math="\begin{aligned} & \because\ \text{方程有一個二重實根} \\ & \therefore & \Delta &= 0 \\ && (k)^2 − 4(16)(1) &= 0 \\ && k^2 − 64 &= 0 \\ && k^2 &= 64 \\ && k &= 8 \text{ 或 } −8 \end{aligned}" block />
             </div>
           </div>
 
@@ -825,13 +817,9 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
               <p className="text-slate-800 mb-2">若 <Latex math="y = 3x^2 + 6x − (k + 2)" /> 的圖像與 <Latex math="x" /> 軸並<span className="bg-yellow-200 px-1 rounded">不相交</span>，求 <Latex math="k" /> 的取值範圍。</p>
             </div>
             
-            <div className="pl-4 border-l-2 border-slate-300 space-y-2 text-slate-700">
-              <p><Latex math="\because" /> 圖像與 <Latex math="x" /> 軸並不相交</p>
-              <p><Latex math="\therefore \Delta < 0" /></p>
-              <div className="my-2 bg-slate-100 p-2 rounded overflow-x-auto">
-                <Latex math="\begin{aligned} 6^2 − 4(3)[−(k+2)] &< 0 \\ 36 + 12(k+2) &< 0 \\ 3 + (k+2) &< 0 &\textcolor{blue}{\leftarrow \text{全式除以12}} \\ k &< −5 \end{aligned}" block />
-              </div>
-              <p className="text-slate-700 font-bold mt-2"><Latex math="\therefore k" /> 的取值範圍是 <Latex math="k < −5" />。</p>
+            <div className="my-2 bg-slate-100 p-3 rounded-lg text-slate-700 overflow-x-auto">
+              <p className="text-sm font-semibold text-slate-600 mb-2">解題步驟：</p>
+              <Latex math="\begin{aligned} & \because\ \text{圖像與 }x\text{ 軸並不相交} \\ & \therefore & \Delta &< 0 \\ && 6^2 − 4(3)[−(k+2)] &< 0 \\ && 36 + 12(k+2) &< 0 \\ && 3 + (k+2) &< 0 &\textcolor{blue}{\leftarrow \text{全式除以12}} \\ & \therefore & k &< −5 \end{aligned}" block />
             </div>
           </div>
         </div>
@@ -857,8 +845,10 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100">
               <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">常見變種</h4>
               <p className="text-slate-700 text-sm mb-2">題目有機會考 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 以外的變種，可將它們轉換為只包含 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 的形式：</p>
-              <div className="text-center bg-slate-50 p-3 rounded">
-                <span className="text-lg font-bold text-blue-800"><Latex math="\alpha^2 + \beta^2 = (\alpha + \beta)^2 − 2\alpha\beta" /></span>
+              <div className="grid gap-3">
+                <div className="bg-slate-100 p-3 rounded flex items-center justify-center shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><Latex math="\alpha^2 + \beta^2 = (\alpha + \beta)^2 − 2\alpha\beta" /></div>
+                <div className="bg-slate-100 p-3 rounded flex items-center justify-center shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><Latex math="(\alpha−1)(\beta−1) = \alpha\beta−\beta−\alpha+1 = \alpha\beta−(\alpha+\beta)+1" /></div>
+                <div className="bg-slate-100 p-3 rounded flex items-center justify-center shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><Latex math="\frac{1}{\alpha}+\frac{1}{\beta} = \frac{\alpha+\beta}{\alpha\beta}" /></div>
               </div>
             </div>
 
@@ -1160,7 +1150,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-purple-200">
-            <h3 className="font-bold text-purple-700 mb-3">例題：四則混算</h3>
+            <h3 className="font-bold text-purple-700 mb-3">例題：代數分式四則混算</h3>
             <div className="bg-amber-50 rounded-lg p-3 text-center mb-4 overflow-x-auto">
               <Latex math="\frac{3}{2x-3} + \frac{9}{5-6x}" block />
             </div>
