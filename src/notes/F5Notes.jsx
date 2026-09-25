@@ -247,7 +247,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
 
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-purple-800 mb-3">🖩 CASIO 計算機入法 (SD Mode)</h3>
-            <p className="text-sm text-slate-700 mb-2">步驟 1：進入 SD 模式 <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded mr-1">MODE</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">2</span></p>
+            <p className="text-sm text-slate-700 mb-2">步驟 1：進入 SD 模式 <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded mr-1">MODE</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">4</span></p>
             <p className="text-sm text-slate-700 mb-2">步驟 2：清除舊數據 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">9</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">1</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">EXE</span></p>
             <p className="text-sm text-slate-700 mb-2">步驟 3：入 Data (逐個㩒 <Latex math="M+" inline />)</p>
             <div className="bg-white p-2 rounded text-sm mb-3 font-mono">
@@ -259,8 +259,8 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             <p className="text-sm text-slate-700 font-bold">找結果：</p>
             <ul className="text-sm text-slate-700 space-y-1 pl-4 list-disc mt-1">
               <li>平均數 (<Latex math="\bar{x}" inline />)： <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">1</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span></li>
-              <li>總體標準差 (<Latex math="\sigma" inline />)： <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <Latex math="= 4.27" inline />（約至 3 位有效數字）</li>
-              <li>方差 (<Latex math="\sigma^2" inline />)： 在標準差的畫面上直接㩒 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">x²</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <Latex math="= 18.22" inline /></li>
+              <li>標準差 (<Latex math="\sigma" inline />)： <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <Latex math="= 4.27" inline />（約至 3 位有效數字）</li>
+              <li>方差 (<Latex math="\sigma^2" inline />)： 先計算標準差再按 <span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">x²</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span> <Latex math="= 18.22" inline /></li>
             </ul>
           </div>
         </div>
@@ -285,28 +285,28 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
                   </thead>
                   <tbody>
                     <tr className="hover:bg-slate-50">
-                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">4</td>
-                      <td className="pl-2 text-left text-lg tracking-[0.16em]">8 9</td>
+                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1 font-['Times_New_Roman']">4</td>
+                      <td className="pl-2 text-left text-lg tracking-[0.16em] font-['Times_New_Roman']">8 9</td>
                     </tr>
                     <tr className="hover:bg-slate-50">
-                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">5</td>
-                      <td className="pl-2 text-left text-lg tracking-[0.16em]">0 2 4 5 5 6</td>
+                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1 font-['Times_New_Roman']">5</td>
+                      <td className="pl-2 text-left text-lg tracking-[0.16em] font-['Times_New_Roman']">0 2 4 5 5 6</td>
                     </tr>
                     <tr className="hover:bg-slate-50">
-                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">6</td>
-                      <td className="pl-2 text-left text-lg tracking-[0.16em]">1 3 6 9</td>
+                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1 font-['Times_New_Roman']">6</td>
+                      <td className="pl-2 text-left text-lg tracking-[0.16em] font-['Times_New_Roman']">1 3 6 9</td>
                     </tr>
                     <tr className="hover:bg-slate-50">
-                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">7</td>
-                      <td className="pl-2 text-left text-lg tracking-[0.16em]">0 1 3 6</td>
+                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1 font-['Times_New_Roman']">7</td>
+                      <td className="pl-2 text-left text-lg tracking-[0.16em] font-['Times_New_Roman']">0 1 3 6</td>
                     </tr>
                     <tr className="hover:bg-slate-50">
-                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1">8</td>
-                      <td className="pl-2 text-left text-lg tracking-[0.16em]">0 1 2 4</td>
+                      <td className="pr-2 text-right border-r-2 border-slate-400 font-bold text-lg py-1 font-['Times_New_Roman']">8</td>
+                      <td className="pl-2 text-left text-lg tracking-[0.16em] font-['Times_New_Roman']">0 1 2 4</td>
                     </tr>
                   </tbody>
                 </table>
-                <div className="mt-4 text-xs text-slate-500">Key: 5 | 2 = 52</div>
+                <div className="mt-4 text-xs text-slate-500 font-['Times_New_Roman']">Key: 5 | 2 = 52</div>
               </div>
               <div className="flex-1 space-y-2 text-sm text-slate-700">
                 <p>數據共 20 個：48, 49, 50, 52, 54, 55, 55, 56, 61, 63, 66, 69, 70, 71, 73, 76, 80, 81, 82, 84。</p>
@@ -328,29 +328,28 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
             <h3 className="font-bold text-emerald-800 mb-3">B. 表格 (Table) 或 棒型圖 (Bar Chart)</h3>
             <p className="text-sm text-slate-600 mb-2">這兩者本質相同，都是 <span className="font-bold text-emerald-700">數據 (x) 對應 頻數 (f)</span>。</p>
             <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-4 mb-4">
-              <div className="w-full overflow-x-auto bg-white rounded-lg shadow-sm border border-slate-200">
-                <div className="p-2 bg-slate-50 border-b border-slate-200 font-bold text-center text-slate-700">頻數表 (Frequency Table)</div>
-                <table className="w-full text-sm text-center border-collapse">
-                  <thead className="bg-slate-100 text-slate-600">
+              <div className="w-full overflow-x-auto">
+                <table className="w-full text-sm text-center border-collapse border-2 border-black">
+                  <thead className="bg-white text-slate-800">
                     <tr>
-                      <th className="p-3 border-r border-b border-slate-300 font-bold">數值</th>
-                      <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">10</th>
-                      <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">11</th>
-                      <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">12</th>
-                      <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">13</th>
-                      <th className="p-3 border-b border-slate-300 font-medium border-r border-slate-200">14</th>
-                      <th className="p-3 border-b border-slate-300 font-medium">15</th>
+                      <th className="p-3 border-r-2 border-b-2 border-black font-bold">數值</th>
+                      <th className="p-3 border-b-2 border-r border-black font-medium font-['Times_New_Roman']">10</th>
+                      <th className="p-3 border-b-2 border-r border-black font-medium font-['Times_New_Roman']">11</th>
+                      <th className="p-3 border-b-2 border-r border-black font-medium font-['Times_New_Roman']">12</th>
+                      <th className="p-3 border-b-2 border-r border-black font-medium font-['Times_New_Roman']">13</th>
+                      <th className="p-3 border-b-2 border-r border-black font-medium font-['Times_New_Roman']">14</th>
+                      <th className="p-3 border-b-2 border-black font-medium font-['Times_New_Roman']">15</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="p-3 border-r border-slate-300 font-bold bg-slate-50">頻數</td>
-                      <td className="p-3 border-r border-slate-200">2</td>
-                      <td className="p-3 border-r border-slate-200">5</td>
-                      <td className="p-3 border-r border-slate-200">3</td>
-                      <td className="p-3 border-r border-slate-200">8</td>
-                      <td className="p-3 border-r border-slate-200">4</td>
-                      <td className="p-3">1</td>
+                      <td className="p-3 border-r-2 border-black font-bold">頻數</td>
+                      <td className="p-3 border-r border-black font-['Times_New_Roman']">2</td>
+                      <td className="p-3 border-r border-black font-['Times_New_Roman']">5</td>
+                      <td className="p-3 border-r border-black font-['Times_New_Roman']">3</td>
+                      <td className="p-3 border-r border-black font-['Times_New_Roman']">8</td>
+                      <td className="p-3 border-r border-black font-['Times_New_Roman']">4</td>
+                      <td className="p-3 font-['Times_New_Roman']">1</td>
                     </tr>
                   </tbody>
                 </table>
@@ -369,41 +368,56 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
 
                 <g>
                   <rect x="54" y="172.2" width="42" height="37.8" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="75" y="225" textAnchor="middle" className="text-xs">10</text>
-                  <text x="75" y="167.2" textAnchor="middle" className="text-xs font-bold text-slate-600">2</text>
+                  <text x="75" y="225" textAnchor="middle" className="text-xs font-['Times_New_Roman']">10</text>
+                  <text x="75" y="167.2" textAnchor="middle" className="text-xs font-bold text-slate-600 font-['Times_New_Roman']">2</text>
                 </g>
                 <g>
                   <rect x="124" y="115.6" width="42" height="94.4" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="145" y="225" textAnchor="middle" className="text-xs">11</text>
-                  <text x="145" y="110.6" textAnchor="middle" className="text-xs font-bold text-slate-600">5</text>
+                  <text x="145" y="225" textAnchor="middle" className="text-xs font-['Times_New_Roman']">11</text>
+                  <text x="145" y="110.6" textAnchor="middle" className="text-xs font-bold text-slate-600 font-['Times_New_Roman']">5</text>
                 </g>
                 <g>
                   <rect x="194" y="153.3" width="42" height="56.7" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="215" y="225" textAnchor="middle" className="text-xs">12</text>
-                  <text x="215" y="148.3" textAnchor="middle" className="text-xs font-bold text-slate-600">3</text>
+                  <text x="215" y="225" textAnchor="middle" className="text-xs font-['Times_New_Roman']">12</text>
+                  <text x="215" y="148.3" textAnchor="middle" className="text-xs font-bold text-slate-600 font-['Times_New_Roman']">3</text>
                 </g>
                 <g>
                   <rect x="264" y="58.9" width="42" height="151.1" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="285" y="225" textAnchor="middle" className="text-xs">13</text>
-                  <text x="285" y="53.9" textAnchor="middle" className="text-xs font-bold text-slate-600">8</text>
+                  <text x="285" y="225" textAnchor="middle" className="text-xs font-['Times_New_Roman']">13</text>
+                  <text x="285" y="53.9" textAnchor="middle" className="text-xs font-bold text-slate-600 font-['Times_New_Roman']">8</text>
                 </g>
                 <g>
                   <rect x="334" y="134.4" width="42" height="75.6" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="355" y="225" textAnchor="middle" className="text-xs">14</text>
-                  <text x="355" y="129.4" textAnchor="middle" className="text-xs font-bold text-slate-600">4</text>
+                  <text x="355" y="225" textAnchor="middle" className="text-xs font-['Times_New_Roman']">14</text>
+                  <text x="355" y="129.4" textAnchor="middle" className="text-xs font-bold text-slate-600 font-['Times_New_Roman']">4</text>
                 </g>
                 <g>
                   <rect x="404" y="191.1" width="42" height="18.9" fill="#60a5fa" className="transition-all duration-300 hover:opacity-80" />
-                  <text x="425" y="225" textAnchor="middle" className="text-xs">15</text>
-                  <text x="425" y="186.1" textAnchor="middle" className="text-xs font-bold text-slate-600">1</text>
+                  <text x="425" y="225" textAnchor="middle" className="text-xs font-['Times_New_Roman']">15</text>
+                  <text x="425" y="186.1" textAnchor="middle" className="text-xs font-bold text-slate-600 font-['Times_New_Roman']">1</text>
                 </g>
               </svg>
             </div>
             <div className="text-sm text-slate-700 space-y-2">
               <p>手算平均數：<Latex math="\frac{10\times 2 + 11\times 5 + 12\times 3 + 13\times 8 + 14\times 4 + 15\times 1}{23} \approx 12.4" inline /></p>
-              <p>計數機入法 (開 FREQ/加入頻數)：</p>
-              <div className="bg-emerald-50 p-2 rounded font-mono">
-                10 <span className="bg-gray-300 text-yellow-700 text-xs px-2 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs px-2 py-0.5 rounded mr-1">,</span> 2 <span className="bg-gray-900 text-white text-xs px-2 py-0.5 rounded">M+</span>
+              <div className="bg-emerald-50 p-3 rounded-lg border border-emerald-100 space-y-2">
+                <p className="font-bold text-emerald-800">計數機教學（CASIO fx-50FH II）：</p>
+                <p>1. 按 <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded mr-1">MODE</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">4</span> 進入 SD mode。</p>
+                <p>2. 清除舊記憶：按 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">9</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">1</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>。</p>
+                <p>3. 逐組輸入「數值 <span className="font-bold">SHIFT , 頻數 M+</span>」：</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 font-sans">
+                  <div className="bg-white p-2 rounded">10 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-1.5 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded mx-1">,</span> 2 <span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded">M+</span></div>
+                  <div className="bg-white p-2 rounded">11 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-1.5 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded mx-1">,</span> 5 <span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded">M+</span></div>
+                  <div className="bg-white p-2 rounded">12 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-1.5 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded mx-1">,</span> 3 <span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded">M+</span></div>
+                  <div className="bg-white p-2 rounded">13 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-1.5 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded mx-1">,</span> 8 <span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded">M+</span></div>
+                  <div className="bg-white p-2 rounded">14 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-1.5 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded mx-1">,</span> 4 <span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded">M+</span></div>
+                  <div className="bg-white p-2 rounded">15 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-1.5 py-0.5 rounded">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded mx-1">,</span> 1 <span className="bg-gray-900 text-white text-xs font-mono px-1.5 py-0.5 rounded">M+</span></div>
+                </div>
+                <p>4. 讀取結果：</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>平均數：按 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">1</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>，得 <Latex math="\bar{x} \approx 12.4" inline />。</li>
+                  <li>標準差：按 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">2</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>，得 <Latex math="\sigma \approx 1.35" inline />。</li>
+                </ul>
               </div>
               <p>中位數看法：總共 23 個數，找第 12 個。前面 10佔了2個位，11佔了5個位，12佔了3個位 (第1-10位)，13佔第11-18位，因此中位數在 13。</p>
             </div>

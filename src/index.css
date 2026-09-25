@@ -25,6 +25,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.notes-content {
+  font-family: "Segoe UI", "Microsoft JhengHei", "微軟正黑體", -apple-system, BlinkMacSystemFont, Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.notes-content .font-sans {
+  font-family: "Segoe UI", "Microsoft JhengHei", "微軟正黑體", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.notes-content svg text {
+  font-family: "Segoe UI", "Microsoft JhengHei", "微軟正黑體", sans-serif;
+}
+
 .print-source-content,
 .print-topic-page-content {
   display: flow-root;
