@@ -941,7 +941,7 @@ export const QuadrilateralNotes = ({ activeSub }) => {
       </div>
 
       <CollapsibleSection id="parallelogram" title="平行四邊形的定義和性質" num={1} color="blue" activeSub={activeSub} sectionRef={s1}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="print-parallelogram-properties-grid grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">(a) 定義</h3>
             <p className="text-slate-700 mb-3">有 <span className="bg-yellow-200 px-1 rounded font-bold text-green-700">兩對對邊平行</span> 的四邊形。</p>

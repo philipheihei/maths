@@ -4262,13 +4262,13 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
               <p className="text-red-600 font-bold text-lg mt-2 md:mt-0">* 需留意是否夾角/夾邊</p>
             </div>
 
-            <div className="space-y-8 bg-green-50 p-6 rounded-lg border border-green-200">
+            <div className="space-y-8 bg-green-50 p-6 rounded-lg border border-green-200 print-congruence-condition-content">
                {/* 全等三角形各項證明條件 */}
-               <div className="w-full max-w-xl mx-auto">
+               <div className="w-full max-w-xl mx-auto print-congruence-condition-diagram">
                  <CongruentConditionsSVG />
                </div>
                
-               <div className="mt-6 p-4 bg-white rounded-lg shadow-sm border-l-4 border-red-500 relative overflow-hidden">
+               <div className="mt-6 p-4 bg-white rounded-lg shadow-sm border-l-4 border-red-500 relative overflow-hidden print-congruence-warning">
                   <div className="print-decorative-exclamation absolute -right-4 -bottom-4 text-8xl text-red-50 opacity-50 font-black pointer-events-none">!</div>
                  <h4 className="text-red-700 font-bold text-lg mb-2 relative z-10">⚠️ 易錯提醒：不是有直角就是 RHS！</h4>
                  <p className="text-slate-700 relative z-10 text-[15px] leading-relaxed">

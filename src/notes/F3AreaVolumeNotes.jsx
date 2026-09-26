@@ -24,7 +24,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
 
             <div className="bg-white rounded-lg p-4 border border-slate-200 text-sm text-slate-500">
               {/* 圖形 1: 正方形 */}
-              <div className="flex border-b border-slate-100 pb-4 mb-4">
+              <div className="flex print-area-formula-row border-b border-slate-100 pb-4 mb-4">
                 <div className="w-1/2 flex flex-col items-center justify-center border-r border-slate-100">
                   <svg viewBox="0 0 160 160" className="w-32 h-32">
                     <rect x="30" y="30" width="100" height="100" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" />
@@ -66,7 +66,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
               </div>
 
               {/* 圖形 2: 長方形 */}
-              <div className="flex border-b border-slate-100 pb-4 mb-4">
+              <div className="flex print-area-formula-row border-b border-slate-100 pb-4 mb-4">
                 <div className="w-1/2 flex flex-col items-center justify-center border-r border-slate-100">
                   <svg viewBox="0 0 200 120" className="w-40 h-24">
                     <rect x="20" y="30" width="160" height="60" fill="rgba(245,158,11,0.2)" stroke="#334155" strokeWidth="2" />
@@ -111,7 +111,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
               </div>
 
               {/* 圖形 3: 平行四邊形 */}
-              <div className="flex border-b border-slate-100 pb-4 mb-4">
+              <div className="flex print-area-formula-row border-b border-slate-100 pb-4 mb-4">
                 <div className="w-1/2 flex flex-col items-center justify-center border-r border-slate-100">
                   <svg viewBox="0 0 240 120" className="w-48 h-24">
                     <polygon points="60,20 200,20 160,80 20,80" fill="rgba(236,72,153,0.15)" stroke="#334155" strokeWidth="2" />
@@ -174,7 +174,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
               </div>
 
               {/* 圖形 4: 三角形 */}
-              <div className="flex border-b border-slate-100 pb-4 mb-4">
+              <div className="flex print-area-formula-row border-b border-slate-100 pb-4 mb-4">
                 <div className="w-1/2 flex flex-col items-center justify-center border-r border-slate-100">
                   <svg viewBox="0 0 200 120" className="w-40 h-24">
                     <polygon points="100,20 160,80 40,80" fill="rgba(250,204,21,0.2)" stroke="#334155" strokeWidth="2" />
@@ -453,4 +453,3 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
     </>
   );
 };
-

@@ -3,8 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
 
-const PRINT_PAGE_CONTENT_HEIGHT_MM = 255;
+const PRINT_PAGE_CONTENT_HEIGHT_MM = 271;
 const PRINT_PAGE_CONTENT_HEIGHT_PX = Math.round((PRINT_PAGE_CONTENT_HEIGHT_MM / 25.4) * 96);
+const PRINT_MIN_PAGE_FILL_RATIO = 0.25;
 const PRINT_ROUNDED_BLOCK_SELECTOR = '.rounded, .rounded-sm, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl';
 
 const scopeSvgReferences = (markup, scope) => {
@@ -67,12 +68,13 @@ const paginatePrintContent = (source, pageHeight) => {
     .filter((element) => ['DIV', 'SECTION', 'ARTICLE', 'ASIDE', 'LI', 'TABLE', 'PRE', 'BLOCKQUOTE'].includes(element.tagName))
     .map((element) => {
       const rect = element.getBoundingClientRect();
+      const height = Math.round(rect.height);
       return {
         element,
         top: Math.round(rect.top - sourceRect.top),
         bottom: Math.round(rect.bottom - sourceRect.top),
-        height: Math.round(rect.height),
-        allowSplit: false,
+        height,
+        allowSplit: height > resolvedPageHeight,
       };
     })
     .filter(({ top, bottom, height }) => top >= 0 && bottom <= contentHeight + 1 && height >= 24);
@@ -114,10 +116,6 @@ const paginatePrintContent = (source, pageHeight) => {
           ),
       ) - sourceRect.top);
 
-      if (firstRoundedBlock && firstRoundedBlock.bottom - top > resolvedPageHeight) {
-        firstRoundedBlock.allowSplit = true;
-      }
-
       const firstLeadCanSplit = firstLeadContentIsOversized || firstRoundedBlock?.allowSplit;
 
       return {
@@ -129,36 +127,8 @@ const paginatePrintContent = (source, pageHeight) => {
     })
     .filter((range) => range && range.top >= 0 && range.bottom <= contentHeight + 1 && range.bottom > range.top);
 
-  const topicHeading = source.querySelector('h1');
-  const firstSectionContent = source.querySelector('.print-section-content');
-  const firstSection = firstSectionContent?.parentElement;
-  const firstSectionBlock = firstSection
-    ? roundedBlocks.find(({ element }) => element === firstSection)
-    : null;
-  if (topicHeading && firstSection) {
-    const topicHeadingRect = topicHeading.getBoundingClientRect();
-    const topicHeadingBlock = roundedBlocks
-      .filter(({ element, height }) => height <= resolvedPageHeight && element.contains(topicHeading))
-      .sort((a, b) => a.height - b.height)[0];
-    const topicTop = Math.round(Math.min(
-      topicHeadingRect.top,
-      topicHeadingBlock?.element.getBoundingClientRect().top ?? topicHeadingRect.top,
-    ) - sourceRect.top);
-    const firstSectionBottom = Math.round(firstSection.getBoundingClientRect().bottom - sourceRect.top);
-    if (firstSectionBlock && firstSectionBottom - topicTop > resolvedPageHeight) {
-      firstSectionBlock.allowSplit = true;
-    }
-  }
-
   sectionLeadRanges.forEach((range) => {
     if (range.firstRoundedBlock?.allowSplit) range.allowSplit = true;
-    if (firstSection
-      && range.firstRoundedBlock?.element
-      && firstSection.contains(range.firstRoundedBlock.element)
-      && firstSectionBlock?.allowSplit) {
-      range.firstRoundedBlock.allowSplit = true;
-      range.allowSplit = true;
-    }
   });
 
   const headingLeadRanges = Array.from(source.querySelectorAll('h1, h2, h3, h4, h5'))
@@ -204,9 +174,6 @@ const paginatePrintContent = (source, pageHeight) => {
         headingBlock?.element.getBoundingClientRect().top ?? headingRect.top,
       ) - sourceRect.top);
       const bottom = Math.round(Math.max(headingRect.bottom, firstContentRect.bottom) - sourceRect.top);
-      if (firstContentBlock && bottom - top > resolvedPageHeight && firstContentBlock.height <= resolvedPageHeight) {
-        firstContentBlock.allowSplit = true;
-      }
       const allowSplit = (firstContentRect.height > resolvedPageHeight
         && !(firstContentBlock && firstContentBlock.height > resolvedPageHeight)
         || firstContentBlock?.allowSplit);
@@ -310,21 +277,42 @@ const paginatePrintContent = (source, pageHeight) => {
       .sort((a, b) => a.top - b.top);
     const leadCrossingTarget = [...sectionLeadCrossingTarget, ...headingLeadCrossingTarget]
       .sort((a, b) => a.top - b.top);
-    const candidatesBeforeTarget = sortedCandidates.filter((candidate) => (
-      candidate >= currentOffset + resolvedPageHeight * 0.68
-      && candidate <= targetOffset
-      && isSafeOffset(candidate)
-    ));
     const forcedBreaks = [
       protectedBlocksCrossingTarget[0]?.top,
       leadCrossingTarget[0]?.top,
     ].filter((offset) => offset !== undefined);
-    const nextOffset = forcedBreaks.length
+    const breakLimit = forcedBreaks.length
       ? Math.min(...forcedBreaks)
-      : (candidatesBeforeTarget.length ? candidatesBeforeTarget[candidatesBeforeTarget.length - 1] : targetOffset);
+      : targetOffset;
+    const candidatesBeforeLimit = sortedCandidates.filter((candidate) => (
+      candidate > currentOffset + 8
+      && candidate <= breakLimit
+      && isSafeOffset(candidate)
+    ));
+    if (breakLimit > currentOffset + 8 && isSafeOffset(breakLimit)) {
+      candidatesBeforeLimit.push(breakLimit);
+    }
+    const nextOffset = candidatesBeforeLimit.length
+      ? Math.max(...candidatesBeforeLimit)
+      : breakLimit;
 
     offsets.push(nextOffset);
     currentOffset = nextOffset;
+  }
+
+  const lastPageIndex = offsets.length - 1;
+  const minimumPageFill = Math.ceil(resolvedPageHeight * PRINT_MIN_PAGE_FILL_RATIO);
+  if (lastPageIndex > 0 && contentHeight - offsets[lastPageIndex] < minimumPageFill) {
+    const previousPageStart = offsets[lastPageIndex - 1];
+    const balancedOffset = sortedCandidates
+      .filter((candidate) => (
+        candidate >= previousPageStart + minimumPageFill
+        && candidate <= contentHeight - minimumPageFill
+        && isSafeOffset(candidate)
+      ))
+      .pop();
+
+    if (balancedOffset !== undefined) offsets[lastPageIndex] = balancedOffset;
   }
 
   return { contentHeight, offsets };

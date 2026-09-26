@@ -1952,7 +1952,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
 
       <CollapsibleSection id="line-and-circle" title="直線和圓形的交點數目" num={5} color="red" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
-          <div className="bg-white rounded-lg p-5 border border-slate-200">
+          <div className="bg-white rounded-lg p-5 border border-slate-200 print-line-circle-example">
             <div className="flex flex-col md:flex-row gap-4 mb-4">
               <div className="flex-1">
                 <p className="text-blue-800 font-bold text-lg mb-2">e.g.</p>
@@ -2060,5 +2060,4 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
     </>
   );
 };
-
 
