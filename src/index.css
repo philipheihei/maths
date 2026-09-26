@@ -672,13 +672,9 @@ body {
     }
 
     .print-root.print-preview .print-document.print-spread-view {
-      display: block;
+      grid-template-columns: repeat(2, 210mm);
+      width: max-content;
       max-width: none;
-    }
-
-    .print-root.print-preview .print-spread-view .print-topic-page {
-      width: 100%;
-      margin-bottom: 1.25rem;
     }
   }
 }

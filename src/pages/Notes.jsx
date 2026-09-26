@@ -472,7 +472,7 @@ const Notes = () => {
   const [expandedTopics, setExpandedTopics] = useState(initState.topic ? { [initState.topic]: true } : {});
   const [activeTopic, setActiveTopic] = useState(initState.topic);
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
-  const [isSpreadView, setIsSpreadView] = useState(false);
+  const [isSpreadView, setIsSpreadView] = useState(true);
   const [topicPageCounts, setTopicPageCounts] = useState({});
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
