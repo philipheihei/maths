@@ -646,7 +646,7 @@ const Notes = () => {
                   onClick={() => setIsSpreadView((current) => !current)}
                   className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-700 hover:bg-slate-50"
                 >
-                  {isSpreadView ? '單頁顯示' : '雙面顯示'}
+                  {isSpreadView ? '單頁顯示' : '雙面並排'}
                 </button>
                 <button
                   onClick={() => window.print()}
