@@ -13,6 +13,10 @@ import {
 } from "lucide-react";
 import { Latex, MathDisplay, CollapsibleSection } from "./shared";
 
+const PermCombNotation = ({ symbol, total, selected }) => (
+  <Latex math={`${symbol}_{${selected}}^{${total}}`} />
+);
+
 // ========================================
 // CH15-16 排列與組合 + 概率 (F5)
 // ========================================
@@ -24,7 +28,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
 
   return (
     <>
-      <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-amber-500">
+      <div className="probability-f5-notes bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-amber-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">
           CH15-16 排列與組合 + 概率 (Permutation, Combination & Probability)
         </h1>
@@ -32,7 +36,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
           學會分辨 nPr（排列）、nCr（組合）以及高中進階概率計算
         </p>
       </div>
-      <div className="max-w-4xl mx-auto space-y-8 animate-fade-in text-left pb-16">
+      <div className="probability-f5-notes max-w-4xl mx-auto space-y-8 animate-fade-in text-left pb-16">
         <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
           <h3 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2 border-b pb-2">
             <span className="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center text-lg shrink-0">
@@ -159,13 +163,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                 <div>
                   <p className="font-bold text-slate-800 mb-2">
                     計算 10 個抽 3 個的排列 ={" "}
-                    <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                      <span className="italic">P</span>
-                      <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                        <span>10</span>
-                        <span>3</span>
-                      </span>
-                    </span>
+                    <PermCombNotation symbol="P" total={10} selected={3} />
                   </p>
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-sans text-sm sm:text-base mt-3 mb-1">
                     <span className="font-bold text-slate-800 text-lg">10</span>
@@ -201,13 +199,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                 <div>
                   <p className="font-bold text-slate-800 mb-2">
                     計算 8 個抽 3 個的組合 ={" "}
-                    <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                      <span className="italic">C</span>
-                      <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                        <span>8</span>
-                        <span>3</span>
-                      </span>
-                    </span>
+                    <PermCombNotation symbol="C" total={8} selected={3} />
                   </p>
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-sans text-sm sm:text-base mt-3 mb-1">
                     <span className="font-bold text-slate-800 text-lg">8</span>
@@ -338,55 +330,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                         <path d="m12 5 7 7-7 7"></path>
                       </svg>
                     </span>
-                    <div className="flex flex-col items-center">
-                      <div className="flex">
-                        <span className="italic mr-1 text-xl">P</span>
-                        <div className="flex flex-col text-xs leading-tight ml-0.5 gap-1">
-                          <div className="flex items-center">
-                            <span>10</span>
-                            <span className="text-[10px] text-red-600 font-bold ml-1 flex items-center">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="lucide lucide-arrow-right w-3 h-3 transform rotate-180"
-                              >
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                              </svg>{" "}
-                              總數
-                            </span>
-                          </div>
-                          <div className="flex items-center">
-                            <span>3</span>
-                            <span className="text-[10px] text-red-600 font-bold ml-1 flex items-center">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="lucide lucide-arrow-right w-3 h-3 transform rotate-180"
-                              >
-                                <path d="M5 12h14"></path>
-                                <path d="m12 5 7 7-7 7"></path>
-                              </svg>{" "}
-                              要抽
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <PermCombNotation symbol="P" total={10} selected={3} />
                     <span className="ml-2 font-bold mt-1">= 720</span>
                   </div>
                 </div>
@@ -414,13 +358,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                       <path d="M5 12h14"></path>
                       <path d="m12 5 7 7-7 7"></path>
                     </svg>{" "}
-                    <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                      <span className="italic">P</span>
-                      <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                        <span>10</span>
-                        <span>5</span>
-                      </span>
-                    </span>{" "}
+                    <PermCombNotation symbol="P" total={10} selected={5} />{" "}
                     = <span className="font-bold text-slate-800">30240</span>
                   </div>
                 </div>
@@ -495,25 +433,8 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                       <span className="text-green-700 font-bold text-lg">
                         1男1女中獎組合：
                       </span>
-                      <div className="flex items-center text-xl text-blue-900 font-serif bg-blue-50/50 px-2 rounded-lg">
-                        <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                          <span className="italic">C</span>
-                          <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                            <span>3</span>
-                            <span>1</span>
-                          </span>
-                        </span>
-                        <span className="bg-yellow-300 text-black font-bold px-2 py-0.5 rounded mx-1 leading-none shadow-sm">
-                          ×
-                        </span>
-                        <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                          <span className="italic">C</span>
-                          <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                            <span>4</span>
-                            <span>1</span>
-                          </span>
-                        </span>
-                        <span className="ml-3 font-bold">= 12</span>
+                      <div className="flex items-center text-xl text-blue-900 font-serif">
+                        <Latex math={String.raw`C_{1}^{3}\,\colorbox{#fde047}{$\times$}\,C_{1}^{4}\;=\;12`} />
                       </div>
                     </div>
                     <div className="flex text-purple-700 font-bold text-base items-center">
@@ -543,49 +464,8 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                       <span className="text-green-700 font-bold text-lg">
                         最少1男中獎組合：
                       </span>
-                      <div className="flex items-center text-xl text-blue-900 font-serif flex-wrap bg-blue-50/50 px-2 py-2 rounded-lg gap-y-3">
-                        <div className="flex items-center">
-                          <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                            <span className="italic">C</span>
-                            <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                              <span>3</span>
-                              <span>1</span>
-                            </span>
-                          </span>
-                          <span className="bg-yellow-300 text-black font-bold px-2 py-0.5 rounded mx-1 leading-none shadow-sm">
-                            ×
-                          </span>
-                          <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                            <span className="italic">C</span>
-                            <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                              <span>4</span>
-                              <span>1</span>
-                            </span>
-                          </span>
-                        </div>
-                        <span className="bg-cyan-300 text-black font-bold px-2 py-0.5 rounded mx-2 sm:mx-3 leading-none shadow-sm">
-                          +
-                        </span>
-                        <div className="flex items-center">
-                          <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                            <span className="italic">C</span>
-                            <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                              <span>3</span>
-                              <span>2</span>
-                            </span>
-                          </span>
-                          <span className="bg-yellow-300 text-black font-bold px-2 py-0.5 rounded mx-1 leading-none shadow-sm">
-                            ×
-                          </span>
-                          <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                            <span className="italic">C</span>
-                            <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                              <span>4</span>
-                              <span>0</span>
-                            </span>
-                          </span>
-                        </div>
-                        <span className="ml-3 font-bold">= 12 + 3 = 15</span>
+                      <div className="flex items-center text-xl text-blue-900 font-serif flex-wrap gap-y-3">
+                        <Latex math={String.raw`C_{1}^{3}\,\colorbox{#fde047}{$\times$}\,C_{1}^{4}\;\colorbox{#67e8f9}{$+$}\;C_{2}^{3}\,\colorbox{#fde047}{$\times$}\,C_{0}^{4}\;=\;12+3=15`} />
                       </div>
                     </div>
                     <div className="flex text-purple-700 font-bold text-base items-start">
@@ -642,7 +522,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                   </svg>{" "}
                   C
                 </div>
-                某寵物店有 8 隻蒼鼠和 6 隻白兔。求下列各情況中
+                某寵物店有 8 隻倉鼠和 6 隻白兔。求下列各情況中
                 <span className="ring-2 ring-green-400 rounded-full px-1 mx-1">
                   選
                 </span>
@@ -665,7 +545,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>{" "}
-                  0, 1, 2... 隻蒼鼠等組合
+                  0, 1, 2... 隻倉鼠等組合
                 </span>
               </div>
               <div className="space-y-6">
@@ -675,10 +555,10 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                     <span className="ring-2 ring-green-400 ring-offset-1 rounded-full px-1">
                       3
                     </span>{" "}
-                    隻蒼鼠和 3 隻白兔。
+                    隻倉鼠和 3 隻白兔。
                   </p>
-                  <div className="text-base sm:text-lg font-serif mt-4">
-                    <div className="flex items-center text-green-700 font-bold mb-2 text-sm sm:text-base">
+                  <div className="text-base sm:text-lg font-serif mt-4 flex flex-wrap items-start gap-x-2">
+                    <div className="flex items-center text-green-700 font-bold text-sm sm:text-base">
                       <span>a. 使用組合 </span>
                       <span className="font-normal text-slate-500 text-xs sm:text-sm mx-2">
                         (因不注重次序)
@@ -704,17 +584,11 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                         <div className="mb-0.5">
                           <span className="text-xl">
                             {" "}
-                            <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                              <span className="italic">C</span>
-                              <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                <span>8</span>
-                                <span>3</span>
-                              </span>
-                            </span>{" "}
+                            <PermCombNotation symbol="C" total={8} selected={3} />{" "}
                           </span>
                         </div>
-                        <div className="text-xs font-medium text-center whitespace-nowrap text-green-700">
-                          蒼鼠8簡3
+                          <div className="text-xs font-medium text-center whitespace-nowrap text-green-700">
+                          倉鼠8簡3
                         </div>
                       </div>
                       <span className="font-bold text-slate-800 self-start mt-2 mx-2">
@@ -724,13 +598,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                         <div className="mb-0.5">
                           <span className="text-xl">
                             {" "}
-                            <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                              <span className="italic">C</span>
-                              <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                <span>6</span>
-                                <span>3</span>
-                              </span>
-                            </span>{" "}
+                            <PermCombNotation symbol="C" total={6} selected={3} />{" "}
                           </span>
                         </div>
                         <div className="text-xs font-medium text-center whitespace-nowrap text-red-600">
@@ -747,7 +615,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                   <p className="font-bold text-slate-800 mb-2">
                     (b) 選出 5 隻動物，其中
                     <span className="border-b-2 border-red-500">
-                      至多有 2 隻蒼鼠
+                      至多有 2 隻倉鼠
                     </span>
                     。
                   </p>
@@ -760,29 +628,17 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                         <div className="inline-flex flex-col items-center mx-2 my-1 align-top">
                           <div className="mb-0.5">
                             <span className="text-base sm:text-lg flex items-center justify-center gap-1">
-                              <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                                <span className="italic">C</span>
-                                <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                  <span>8</span>
-                                  <span>0</span>
-                                </span>
-                              </span>{" "}
+                              <PermCombNotation symbol="C" total={8} selected={0} />{" "}
                               X{" "}
-                              <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                                <span className="italic">C</span>
-                                <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                  <span>6</span>
-                                  <span>5</span>
-                                </span>
-                              </span>
+                              <PermCombNotation symbol="C" total={6} selected={5} />
                             </span>
                           </div>
                           <div className="w-full h-2 border-b-2 border-l-2 border-r-2 rounded-b-md border-purple-600 mb-1 opacity-70"></div>
                           <div className="text-xs font-medium text-center whitespace-nowrap text-purple-700">
-                            5隻沒蒼鼠 → 即選了5兔
+                            5隻沒倉鼠 → 即選了5兔
                           </div>
                           <div className="text-[10px] text-slate-500 text-center whitespace-nowrap mt-0.5">
-                            情況1 : 0蒼鼠+5兔
+                            情況1 : 0倉鼠+5兔
                           </div>
                         </div>
                       </div>
@@ -792,21 +648,9 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                       <div className="inline-flex flex-col items-center mx-2 my-1 align-top">
                         <div className="mb-0.5">
                           <span className="text-base sm:text-lg flex items-center justify-center gap-1">
-                            <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                              <span className="italic">C</span>
-                              <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                <span>8</span>
-                                <span>1</span>
-                              </span>
-                            </span>{" "}
+                              <PermCombNotation symbol="C" total={8} selected={1} />{" "}
                             X{" "}
-                            <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                              <span className="italic">C</span>
-                              <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                <span>6</span>
-                                <span>4</span>
-                              </span>
-                            </span>
+                              <PermCombNotation symbol="C" total={6} selected={4} />
                           </span>
                         </div>
                         <div className="w-full h-2 border-b-2 border-l-2 border-r-2 rounded-b-md border-purple-600 mb-1 opacity-70"></div>
@@ -814,7 +658,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                           抽1蒼 → 剩餘抽4兔
                         </div>
                         <div className="text-[10px] text-slate-500 text-center whitespace-nowrap mt-0.5">
-                          情況2 : 1蒼鼠+4兔
+                          情況2 : 1倉鼠+4兔
                         </div>
                       </div>
                       <span className="font-bold text-slate-400 self-start mt-2">
@@ -823,21 +667,9 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                       <div className="inline-flex flex-col items-center mx-2 my-1 align-top">
                         <div className="mb-0.5">
                           <span className="text-base sm:text-lg flex items-center justify-center gap-1">
-                            <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                              <span className="italic">C</span>
-                              <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                <span>8</span>
-                                <span>2</span>
-                              </span>
-                            </span>{" "}
+                            <PermCombNotation symbol="C" total={8} selected={2} />{" "}
                             X{" "}
-                            <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                              <span className="italic">C</span>
-                              <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                <span>6</span>
-                                <span>3</span>
-                              </span>
-                            </span>
+                            <PermCombNotation symbol="C" total={6} selected={3} />
                           </span>
                         </div>
                         <div className="w-full h-2 border-b-2 border-l-2 border-r-2 rounded-b-md border-purple-600 mb-1 opacity-70"></div>
@@ -845,7 +677,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                           抽2蒼 → 剩餘抽3兔
                         </div>
                         <div className="text-[10px] text-slate-500 text-center whitespace-nowrap mt-0.5">
-                          情況3 : 2蒼鼠+3兔
+                          情況3 : 2倉鼠+3兔
                         </div>
                       </div>
                       <span className="self-start mt-2 ml-2 text-base sm:text-lg">
@@ -874,13 +706,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                         <div className="inline-flex flex-col items-center mx-2 my-1 align-top">
                           <div className="mb-0.5">
                             <span className="text-lg">
-                              <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                                <span className="italic">C</span>
-                                <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                  <span>14</span>
-                                  <span>6</span>
-                                </span>
-                              </span>
+                                <PermCombNotation symbol="C" total={14} selected={6} />
                             </span>
                           </div>
                           <div className="text-xs font-medium text-center whitespace-nowrap text-blue-700">
@@ -901,21 +727,9 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                       <div className="inline-flex flex-col items-center mx-2 my-1 align-top">
                         <div className="mb-0.5">
                           <span className="text-base sm:text-lg flex items-center justify-center gap-1">
-                            <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                              <span className="italic">C</span>
-                              <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                <span>6</span>
-                                <span>0</span>
-                              </span>
-                            </span>{" "}
+                            <PermCombNotation symbol="C" total={6} selected={0} />{" "}
                             X{" "}
-                            <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                              <span className="italic">C</span>
-                              <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                                <span>8</span>
-                                <span>6</span>
-                              </span>
-                            </span>
+                            <PermCombNotation symbol="C" total={8} selected={6} />
                           </span>
                         </div>
                         <div className="text-xs font-medium text-center whitespace-nowrap text-red-600">
@@ -966,7 +780,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                   <p className="font-bold text-slate-800 mb-2">
                     (d) 選出 6 隻動物，且
                     <span className="border-b-2 border-slate-500">
-                      蒼鼠與白兔的數目不同
+                      倉鼠與白兔的數目不同
                     </span>
                     。
                   </p>
@@ -982,13 +796,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                     <div className="inline-flex flex-col items-center mx-2 my-1 align-top">
                       <div className="mb-0.5">
                         <span className="text-lg">
-                          <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                            <span className="italic">C</span>
-                            <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                              <span>14</span>
-                              <span>6</span>
-                            </span>
-                          </span>
+                          <PermCombNotation symbol="C" total={14} selected={6} />
                         </span>
                       </div>
                       <div className="text-xs font-medium text-center whitespace-nowrap text-purple-700">
@@ -1001,21 +809,9 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                     <div className="inline-flex flex-col items-center mx-2 my-1 align-top">
                       <div className="mb-0.5">
                         <span className="text-base sm:text-lg flex items-center justify-center gap-1">
-                          <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                            <span className="italic">C</span>
-                            <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                              <span>8</span>
-                              <span>3</span>
-                            </span>
-                          </span>{" "}
+                            <PermCombNotation symbol="C" total={8} selected={3} />{" "}
                           X{" "}
-                          <span className="inline-flex items-center font-serif text-lg mx-0.5">
-                            <span className="italic">C</span>
-                            <span className="flex flex-col text-xs leading-tight ml-0.5 gap-0.5">
-                              <span>6</span>
-                              <span>3</span>
-                            </span>
-                          </span>
+                            <PermCombNotation symbol="C" total={6} selected={3} />
                         </span>
                       </div>
                       <div className="text-xs font-medium text-center whitespace-nowrap text-purple-700">
@@ -1108,13 +904,13 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                 <p className="font-bold text-slate-800 mb-6 text-base sm:text-lg">
                   (a) 求子健必須站在最右方的概率。
                 </p>
-                <div className="flex flex-col sm:flex-row items-start sm:items-center pl-2 sm:pl-4 overflow-x-auto pb-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center pl-2 sm:pl-4">
                   <span className="mr-4 text-lg sm:text-xl font-bold text-slate-800 self-start sm:self-center sm:-translate-y-2">
                     =
                   </span>
                   <div className="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-4 sm:gap-x-8 text-lg sm:text-xl">
                     <div className="flex justify-center border-b border-gray-800 px-2 pb-1">
-                      <Latex math="P^{1}_{1} \times P^{6}_{6}" />
+                      <Latex math="P_{1}^{1} \times P_{6}^{6}" />
                     </div>
                     <div className="flex items-center text-green-700 text-sm sm:text-base font-bold bg-green-50 px-2 py-1 rounded border border-green-200">
                         <svg
@@ -1135,7 +931,7 @@ export const ProbabilityF5Notes = ({ activeSub, onNavigate }) => {
                         目標：子健企最右的情況
                     </div>
                     <div className="flex justify-center px-2 pt-1">
-                      <Latex math="P^{7}_{7}" />
+                      <Latex math="P_{7}^{7}" />
                     </div>
                     <div className="flex items-center text-green-700 text-sm sm:text-base font-bold bg-green-50 px-2 py-1 rounded border border-green-200">
                         <svg

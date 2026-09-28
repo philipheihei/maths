@@ -872,13 +872,13 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 mt-4">
               <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">MC例題</h4>
               <div className="bg-slate-50 rounded p-3 mb-3 text-slate-800">
-                <p>設 <Latex math="k" /> 為常數。若二次方程 <Latex math="x^2 + kx − 3 = 0" /> 的根為 <Latex math="\alpha" /> 及 <Latex math="\beta" />，則 <Latex math="\alpha^2+\beta^2" /> = ?</p>
-              </div>
-              <div className="bg-white rounded p-3 mb-3 border border-slate-200 text-slate-700 text-sm">
+                <p className="border-b border-slate-200 pb-3 mb-3">設 <Latex math="k" /> 為常數。若二次方程 <Latex math="x^2 + kx − 3 = 0" /> 的根為 <Latex math="\alpha" /> 及 <Latex math="\beta" />，則 <Latex math="\alpha^2+\beta^2" /> = ?</p>
+                <div className="text-slate-700 text-sm">
                 <p className="mb-1">A. <Latex math="k^2 + 4" /></p>
                 <p className="mb-1">B. <Latex math="k^2 + 6" /></p>
                 <p className="mb-1">C. <Latex math="k^2 − 4" /></p>
                 <p>D. <Latex math="k^2 − 8" /></p>
+                </div>
               </div>
               <div className="bg-emerald-50 rounded p-3 overflow-x-auto">
                 <Latex math="\begin{aligned}
