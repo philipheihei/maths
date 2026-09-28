@@ -843,16 +843,6 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100">
-              <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">常見變種</h4>
-              <p className="text-slate-700 text-sm mb-2">題目有機會考 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 以外的變種，可將它們轉換為只包含 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 的形式：</p>
-              <div className="grid gap-3">
-                <div className="bg-slate-100 p-3 rounded flex items-center justify-center shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><Latex math="\alpha^2 + \beta^2 = (\alpha + \beta)^2 − 2\alpha\beta" /></div>
-                <div className="bg-slate-100 p-3 rounded flex items-center justify-center shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><Latex math="(\alpha−1)(\beta−1) = \alpha\beta−\beta−\alpha+1 = \alpha\beta−(\alpha+\beta)+1" /></div>
-                <div className="bg-slate-100 p-3 rounded flex items-center justify-center shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><Latex math="\frac{1}{\alpha}+\frac{1}{\beta} = \frac{\alpha+\beta}{\alpha\beta}" /></div>
-              </div>
-            </div>
-
-            <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 mt-4">
               <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">長答例題</h4>
               <div className="bg-slate-50 rounded p-3 mb-3 text-slate-800">
                 <p>已知二次方程 <Latex math="3x^2 − 5x + 2 = 0" /> 的根為 <Latex math="\alpha" />、<Latex math="\beta" />，求兩根之和及兩根之積。</p>
@@ -863,6 +853,19 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
 \alpha+\beta&=−\frac{b}{a}=−\frac{−5}{3}=\frac{5}{3} \\
 \alpha\beta&=\frac{c}{a}=\frac{2}{3}
 \end{aligned}" block />
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 mt-4">
+              <h4 className="font-bold text-slate-800 mb-2 text-sm border-b pb-1">常見變種</h4>
+              <p className="text-slate-700 text-sm mb-2">題目有機會考 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 以外的變種，可將它們轉換為只包含 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 的形式：</p>
+              <div className="grid gap-3">
+                <div className="bg-slate-100 p-3 rounded flex items-center justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 font-sans">1.</span><Latex math="\alpha^2 + \beta^2 = (\alpha + \beta)^2 − 2\alpha\beta" /></div>
+                <div className="bg-slate-100 px-3 py-2 rounded flex items-start justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 -mt-1 font-sans">2.</span><Latex math={String.raw`\begin{aligned}
+(\alpha−1)(\beta−1)&=\alpha\beta−\beta−\alpha+1 \\
+&=\alpha\beta−(\alpha+\beta)+1
+\end{aligned}`} block left compact /></div>
+                <div className="bg-slate-100 p-3 rounded flex items-center justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 font-sans">3.</span><Latex math="\frac{1}{\alpha}+\frac{1}{\beta} = \frac{\alpha+\beta}{\alpha\beta}" /></div>
               </div>
             </div>
 

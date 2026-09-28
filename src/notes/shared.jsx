@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { loadKatexOnce } from '../utils/katexLoader';
 
 // KaTeX 數學公式組件
-export const Latex = ({ math, block = false, left = false }) => {
+export const Latex = ({ math, block = false, left = false, compact = false }) => {
   const containerRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
@@ -24,7 +24,7 @@ export const Latex = ({ math, block = false, left = false }) => {
       } catch (e) { containerRef.current.textContent = math; }
     }
   }, [math, block, isLoaded]);
-  return <span ref={containerRef} className={block ? `block ${left ? 'text-left' : 'text-center'} my-2` : "inline-block"} />;
+  return <span ref={containerRef} className={block ? `block ${left ? 'text-left' : 'text-center'}${compact ? '' : ' my-2'}` : "inline-block"} />;
 };
 
 // MathDisplay (colored KaTeX with trust)
