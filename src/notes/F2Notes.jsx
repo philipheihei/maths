@@ -2934,7 +2934,7 @@ export const Statistics2F2Notes = ({ activeSub }) => {
               <div className="bg-emerald-50/50 p-4 rounded-xl shadow-sm border border-emerald-100">
                 <h4 className="font-bold text-emerald-800 mb-2">(b) 累積頻數多邊形及曲線</h4>
                 <p className="text-slate-700 leading-relaxed text-sm">
-                  適合用來表達連續數據的分佈。它必定由左至右向上升。
+                  適合用來表達連續數據的分佈。曲線由左至右非遞減；若某組頻數為 0，曲線可以保持水平。
                 </p>
               </div>
             </div>
@@ -2961,14 +2961,22 @@ export const Statistics2F2Notes = ({ activeSub }) => {
                     </g>
                     
                     <g fontSize="11" fill="#64748b" textAnchor="middle">
-                      <text x="65" y="220">20.5</text><text x="105" y="220">40.5</text><text x="145" y="220">60.5</text>
-                      <text x="185" y="220">80.5</text><text x="225" y="220">100.5</text><text x="265" y="220">120.5</text>
+                      <text x="65" y="220">39.5</text><text x="115" y="220">49.5</text><text x="165" y="220">59.5</text>
+                      <text x="215" y="220">69.5</text><text x="265" y="220">79.5</text><text x="315" y="220">89.5</text>
                     </g>
                     
-                    <path d="M 65 200 C 90 200, 100 180, 105 180 C 120 180, 130 140, 145 140 C 160 140, 170 80, 185 80 C 200 80, 210 50, 225 50 C 240 50, 250 30, 265 30" fill="none" stroke="#f97316" strokeWidth="2" />
+                    <path d="M 65 200 C 82 200, 98 152, 115 152 C 132 152, 148 122, 165 122 C 182 122, 198 80, 215 80 C 232 80, 248 62, 265 62 C 282 62, 298 50, 315 50" fill="none" stroke="#f97316" strokeWidth="2" />
+                    <g fill="#f97316">
+                      <circle cx="65" cy="200" r="3" />
+                      <circle cx="115" cy="152" r="3" />
+                      <circle cx="165" cy="122" r="3" />
+                      <circle cx="215" cy="80" r="3" />
+                      <circle cx="265" cy="62" r="3" />
+                      <circle cx="315" cy="50" r="3" />
+                    </g>
                     
                     <text x="15" y="110" fontSize="12" fill="#334155" style={{ writingMode: 'vertical-rl' }}>累積頻數</text>
-                    <text x="165" y="240" fontSize="12" fill="#334155">時間 (分鐘)</text>
+                    <text x="190" y="240" fontSize="12" fill="#334155">通話時間 (秒)</text>
                   </svg>
                 </div>
               </div>
