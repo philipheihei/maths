@@ -1872,7 +1872,7 @@ const ContourLinesSVG = () => (
       <path d="M374 425 L401 454 M401 424 L374 454" />
     </g>
     <g fill="#050505" fontFamily="Georgia, 'Times New Roman', serif" fontSize="68" fontStyle="italic">
-      <text x="454" y="62">A</text>
+      <text x="484" y="82">A</text>
       <text x="409" y="486">B</text>
     </g>
     <line x1="777" y1="130" x2="473" y2="130" stroke="#075aa8" strokeWidth="7" strokeLinecap="round" />

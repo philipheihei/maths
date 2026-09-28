@@ -472,7 +472,7 @@ const Notes = () => {
   const [expandedTopics, setExpandedTopics] = useState(initState.topic ? { [initState.topic]: true } : {});
   const [activeTopic, setActiveTopic] = useState(initState.topic);
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
-  const [isSpreadView, setIsSpreadView] = useState(true);
+  const [isSpreadView, setIsSpreadView] = useState(false);
   const [topicPageCounts, setTopicPageCounts] = useState({});
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
@@ -646,7 +646,7 @@ const Notes = () => {
                   onClick={() => setIsSpreadView((current) => !current)}
                   className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-bold text-slate-700 hover:bg-slate-50"
                 >
-                  {isSpreadView ? '單頁顯示' : '雙面並排'}
+                  {isSpreadView ? '單頁顯示' : '雙面顯示'}
                 </button>
                 <button
                   onClick={() => window.print()}
@@ -664,7 +664,7 @@ const Notes = () => {
             <p className="mt-2 text-sm">請使用 /notes/print，然後在頁面上選擇 F1、F2、F3 或高中。</p>
           </div>
         ) : (
-          <div className={`print-document notes-content ${isSpreadView ? 'print-spread-view' : ''}`}>
+          <div className={`print-document ${isSpreadView ? 'print-spread-view' : ''}`}>
             {printTopics.map((topic) => {
             const TopicComponent = NOTES_COMPONENTS[topic.id];
             if (!TopicComponent) return null;
@@ -737,7 +737,7 @@ const Notes = () => {
         </aside>
 
         {/* 右側內容 */}
-        <main className="notes-content flex-1 p-4 min-w-0">
+        <main className="flex-1 p-4 min-w-0">
           {/* 手機版目錄 */}
           <div className="md:hidden mb-4">
             <div className="bg-white rounded-xl shadow-sm p-3">

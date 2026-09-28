@@ -25,19 +25,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.notes-content {
-  font-family: "Segoe UI", "Microsoft JhengHei", "微軟正黑體", -apple-system, BlinkMacSystemFont, Roboto, Oxygen,
-    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-}
-
-.notes-content .font-sans {
-  font-family: "Segoe UI", "Microsoft JhengHei", "微軟正黑體", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-}
-
-.notes-content svg text {
-  font-family: "Segoe UI", "Microsoft JhengHei", "微軟正黑體", sans-serif;
-}
-
 .print-source-content,
 .print-topic-page-content {
   display: flow-root;
@@ -122,62 +109,6 @@ body {
   letter-spacing: 1px;
   white-space: nowrap;
   text-align: right;
-}
-
-.calculator-lcd-monitor {
-  width: min(100%, 300px);
-  min-height: 84px;
-  aspect-ratio: 3.55 / 1;
-  justify-content: flex-start;
-  align-items: flex-end;
-}
-
-.calculator-lcd-monitor-mode {
-  position: absolute;
-  top: 5px;
-  left: 64px;
-  font-family: "Courier New", monospace;
-  font-size: 0.62rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.3px;
-}
-
-.calculator-lcd-monitor-expression {
-  position: absolute;
-  top: 23px;
-  left: 9px;
-  right: 9px;
-  overflow: hidden;
-  font-family: "Courier New", monospace;
-  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
-  font-weight: 700;
-  line-height: 1;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.calculator-lcd-monitor .calculator-lcd-number {
-  position: absolute;
-  left: 9px;
-  right: 27px;
-  bottom: 5px;
-  margin: 0;
-  font-size: clamp(1.3rem, 4vw, 1.75rem);
-  line-height: 0.9;
-  letter-spacing: 2px;
-  text-align: right;
-}
-
-.calculator-lcd-monitor-suffix {
-  position: absolute;
-  right: 7px;
-  bottom: 5px;
-  font-family: "Courier New", monospace;
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0;
 }
 
 .calculator-lcd-glare {
@@ -672,9 +603,13 @@ body {
     }
 
     .print-root.print-preview .print-document.print-spread-view {
-      grid-template-columns: repeat(2, 210mm);
-      width: max-content;
+      display: block;
       max-width: none;
+    }
+
+    .print-root.print-preview .print-spread-view .print-topic-page {
+      width: 100%;
+      margin-bottom: 1.25rem;
     }
   }
 }
