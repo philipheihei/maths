@@ -859,7 +859,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
               </div>
               <div className="bg-white p-3 rounded border border-slate-200 text-center">
                 <Latex math="(−\frac{3}{y})(5y)" block />
-                <Latex math="= −15y^2" block />
+                <Latex math="= −15 \quad (y \ne 0)" block />
               </div>
             </div>
           </div>
