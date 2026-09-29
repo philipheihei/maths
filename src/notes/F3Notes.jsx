@@ -1839,27 +1839,23 @@ const GradientInclinationSVG2 = () => (
 
 const ContourLinesSVG = () => (
   <svg viewBox="0 0 777 603" className="w-full max-w-full h-auto mx-auto block" role="img" aria-label="等高線上 A、B 兩點示意圖">
-    <defs>
-      <clipPath id="contour-green-area">
-        <path d="M0 8 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304 Z" />
-      </clipPath>
-      <mask id="contour-background-area" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="0" y="0" width="777" height="603">
-        <rect x="0" y="0" width="777" height="603" fill="white" />
-        <path d="M0 8 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304 Z" fill="black" />
-      </mask>
-    </defs>
     <rect width="777" height="603" fill="#cfe8d1" />
 
-    <path d="M0 8 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304 Z" fill="#68bf81" />
-    <path d="M0 7 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304" fill="none" stroke="#050505" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+    {/* 450m 等高線以上深綠色區域：嚴格以 450m 等高線為分界 */}
+    <path d="M0 0 H484 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304 V0 Z" fill="#68bf81" />
+
+    {/* 450m 等高線（平滑實線，作為深淺綠色邊界） */}
+    <path d="M484 7 C487 28 482 46 463 59 C427 83 371 67 321 82 C271 97 246 126 209 143 C170 162 153 191 146 231 C141 266 133 294 103 310 C75 324 34 314 0 304" fill="none" stroke="#050505" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+
+    {/* 400m 等高線 */}
     <path d="M0 359 C50 369 87 381 125 374 C170 366 205 383 252 400 C294 415 332 441 386 437 C430 434 457 409 478 378 C503 342 510 307 513 260 C518 215 542 185 577 169 C620 150 682 180 777 193" fill="none" stroke="#050505" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+
+    {/* 350m 等高線 */}
     <path d="M116 603 C136 565 170 547 212 539 C257 530 298 511 340 510 C393 509 448 518 502 500 C566 478 596 446 618 391 C635 348 651 316 690 313 C722 311 748 329 777 335" fill="none" stroke="#050505" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
 
     <g fill="#050505" fontFamily="Georgia, 'Times New Roman', serif">
-      {/* 先按地形邊界繪製 450 m 兩截底色，再疊上黑色文字 */}
-      <text x="153" y="216" fontSize="69" fill="none" stroke="#68bf81" strokeWidth="30" strokeLinecap="round" clipPath="url(#contour-green-area)" transform="rotate(-31 153 216)">450 m</text>
-      <text x="153" y="216" fontSize="69" fill="none" stroke="#cfe8d1" strokeWidth="30" strokeLinecap="round" mask="url(#contour-background-area)" transform="rotate(-31 153 216)">450 m</text>
-      <text x="153" y="216" fontSize="69" transform="rotate(-31 153 216)">450 m</text>
+      {/* 450 m 標籤置於 450m 等高線旁（深綠區內順著等高線走向排列） */}
+      <text x="75" y="240" fontSize="66" transform="rotate(-54 75 240)">450 m</text>
       <text x="157" y="421" fontSize="67" fill="#cfe8d1" stroke="#cfe8d1" strokeWidth="30" strokeLinecap="round" transform="rotate(10 157 421)">400 m</text>
       <text x="157" y="421" fontSize="67" transform="rotate(10 157 421)">400 m</text>
       <text x="150" y="566" fontSize="66" fill="#cfe8d1" stroke="#cfe8d1" strokeWidth="30" strokeLinecap="round" transform="rotate(-15 150 566)">350 m</text>
@@ -1883,50 +1879,70 @@ const ContourLinesSVG = () => (
 );
 
 const BearingsSVG1 = () => (
-  <svg width="300" height="300" viewBox="-30 -30 260 260" className="mx-auto block">
+  <svg width="320" height="320" viewBox="0 0 340 340" className="mx-auto block w-full max-w-[320px] h-auto overflow-visible">
     <defs>
-      <marker id="arrow-bearings-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+      <marker id="arrow-bearing-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 2 L 8 5 L 0 8 z" fill="#2563eb" />
       </marker>
-      <marker id="arrow-bearings-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+      <marker id="arrow-bearing-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 2 L 8 5 L 0 8 z" fill="#7c3aed" />
+      </marker>
+      <marker id="arrow-bearing-rose" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 2 L 8 5 L 0 8 z" fill="#e11d48" />
+      </marker>
+      <marker id="arrow-axis-gray" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 2 L 8 5 L 0 8 z" fill="#64748b" />
       </marker>
     </defs>
-    <g transform="translate(100, 100) scale(1.25)">
-      {/* 十字軸 */}
-      <line x1="0" y1="80" x2="0" y2="-80" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arrow-bearings-gray)" />
-      <line x1="-80" y1="0" x2="80" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
-      <text x="0" y="-90" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="middle">N</text>
-      <text x="-8" y="-10" fill="#334155" fontSize="14" fontStyle="italic" textAnchor="end">O</text>
+    
+    {/* 主方位十字軸 */}
+    <line x1="170" y1="298" x2="170" y2="35" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arrow-axis-gray)" />
+    <line x1="42" y1="170" x2="298" y2="170" stroke="#94a3b8" strokeWidth="1.5" />
+    
+    {/* 方位軸標籤及角度參考 */}
+    <text x="170" y="24" fill="#dc2626" fontSize="13" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">N 北 (000°)</text>
+    <text x="170" y="316" fill="#64748b" fontSize="12" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">S 南 (180°)</text>
+    <text x="34" y="174" fill="#64748b" fontSize="12" fontWeight="bold" fontFamily="sans-serif" textAnchor="end">W 西 (270°)</text>
+    <text x="306" y="174" fill="#64748b" fontSize="12" fontWeight="bold" fontFamily="sans-serif" textAnchor="start">E 東 (090°)</text>
+    
+    {/* 原點 O */}
+    <text x="156" y="162" fill="#334155" fontSize="15" fontStyle="italic" fontWeight="bold" fontFamily="sans-serif">O</text>
 
-      {/* 虛線 */}
-      <line x1="0" y1="0" x2="50" y2="-60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
-      <circle cx="50" cy="-60" r="4" fill="#334155" />
-      <text x="55" y="-60" fill="#334155" fontSize="14" fontStyle="italic">A</text>
-      
-      <line x1="0" y1="0" x2="40" y2="60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
-      <circle cx="40" cy="60" r="4" fill="#334155" />
-      <text x="45" y="65" fill="#334155" fontSize="14" fontStyle="italic">B</text>
+    {/* 射線 OA, OB, OC */}
+    <line x1="170" y1="170" x2="238" y2="73" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+    <circle cx="238" cy="73" r="4" fill="#334155" />
+    <text x="248" y="72" fill="#334155" fontSize="15" fontStyle="italic" fontWeight="bold" fontFamily="sans-serif">A</text>
 
-      <line x1="0" y1="0" x2="-60" y2="40" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
-      <circle cx="-60" cy="40" r="4" fill="#334155" />
-      <text x="-82" y="54" fill="#334155" fontSize="14" fontStyle="italic">C</text>
+    <line x1="170" y1="170" x2="225" y2="273" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+    <circle cx="225" cy="273" r="4" fill="#334155" />
+    <text x="234" y="284" fill="#334155" fontSize="15" fontStyle="italic" fontWeight="bold" fontFamily="sans-serif">B</text>
 
-      {/* 弧度 */}
-      {/* A: 由N至A (35度) */}
-      <path d="M 0,-30 A 30 30 0 0 1 19.3,-23" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="13" y="-35" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">35°</text>
+    <line x1="170" y1="170" x2="65" y2="219" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
+    <circle cx="65" cy="219" r="4" fill="#334155" />
+    <text x="48" y="228" fill="#334155" fontSize="15" fontStyle="italic" fontWeight="bold" fontFamily="sans-serif">C</text>
 
-      {/* B: 由N至B (152度) -> 與S角為28度 */}
-      <path d="M 0,-40 A 40 40 0 0 1 22.2,33.3" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="39" y="-10" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">28°</text>
+    {/* ==================== A: 035° (半徑 38) ==================== */}
+    <path d="M 170,132 A 38 38 0 0 1 191.8,138.9" fill="none" stroke="#2563eb" strokeWidth="2" markerEnd="url(#arrow-bearing-blue)" />
+    <rect x="194" y="112" width="42" height="20" rx="3" fill="#eff6ff" stroke="#2563eb" strokeWidth="1" />
+    <text x="215" y="126" fill="#1d4ed8" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">035°</text>
 
-      {/* C: 由N至C (245度) -> 與S角為65度, 剩餘25度 */}
-      <path d="M 0,-50 A 50 50 0 1 1 -42.4,28.3" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <path d="M 0,17.5 A 17.5 17.5 0 0 1 -14.8,9.85" fill="none" stroke="#16a34a" strokeWidth="2" />
-      <text x="-14" y="29" fill="#16a34a" fontSize="12" fontWeight="bold" textAnchor="middle">65°</text>
-      <text x="-44" y="15" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">25°</text>
-    </g>
+    {/* ==================== B: 152° (半徑 58) ==================== */}
+    {/* 與南線 S 的夾角 28° */}
+    <path d="M 170,198 A 28 28 0 0 0 183.2,194.7" fill="none" stroke="#64748b" strokeWidth="1.5" />
+    <text x="184" y="224" fill="#475569" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">28°</text>
+    {/* 真方位角弧線：N 順時針至 OB (152°) */}
+    <path d="M 170,112 A 58 58 0 0 1 197.2,221.2" fill="none" stroke="#7c3aed" strokeWidth="2" markerEnd="url(#arrow-bearing-purple)" />
+    <rect x="242" y="218" width="42" height="20" rx="3" fill="#f5f3ff" stroke="#7c3aed" strokeWidth="1" />
+    <text x="263" y="232" fill="#6d28d9" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">152°</text>
+
+    {/* ==================== C: 245° (半徑 78) ==================== */}
+    {/* 與南線 S 的夾角 65° */}
+    <path d="M 170,204 A 34 34 0 0 1 141.5,184.4" fill="none" stroke="#16a34a" strokeWidth="1.5" />
+    <text x="144" y="215" fill="#15803d" fontSize="11" fontWeight="bold" fontFamily="sans-serif">65°</text>
+    {/* 真方位角弧線：N 順時針經過 180° 至 OC (245°) */}
+    <path d="M 170,92 A 78 78 0 1 1 99.3,203.0" fill="none" stroke="#e11d48" strokeWidth="2" markerEnd="url(#arrow-bearing-rose)" />
+    <rect x="76" y="238" width="42" height="20" rx="3" fill="#fff1f2" stroke="#e11d48" strokeWidth="1" />
+    <text x="97" y="252" fill="#be123c" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">245°</text>
   </svg>
 );
 
@@ -2220,13 +2236,27 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
                   <li>• 必定由 N 開始<span className="text-red-600 font-bold">量度</span> (順時針)</li>
                   <li>• 答案<span className="text-red-600 font-bold">必定出現 3 位數字</span></li>
                 </ul>
-                <div className="min-h-[108px] bg-slate-50 p-2 rounded text-sm text-slate-700">
-                  <p className="font-bold mb-1">e.g.</p>
-                  <p>O 測得 A：035°</p>
-                  <p>O 測得 B：152°</p>
-                  <p>O 測得 C：245°</p>
+                <div className="min-h-[108px] bg-slate-50 p-2.5 rounded text-sm text-slate-700 space-y-1.5">
+                  <p className="font-bold mb-1 text-slate-800">由 N 順時針量度 (如何找出？)：</p>
+                  <div className="space-y-1.5 text-xs">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span>O 測得 A：</span>
+                      <span className="bg-blue-100 border border-blue-300 px-1.5 py-0.5 font-bold text-blue-900 rounded">035°</span>
+                      <span className="text-slate-500">（由 N 順時針量得 35°）</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span>O 測得 B：</span>
+                      <span className="bg-purple-100 border border-purple-300 px-1.5 py-0.5 font-bold text-purple-900 rounded">180° − 28° = 152°</span>
+                      <span className="text-slate-500">（S 為 180°，倒扣 28°）</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span>O 測得 C：</span>
+                      <span className="bg-rose-100 border border-rose-300 px-1.5 py-0.5 font-bold text-rose-900 rounded">180° + 65° = 245°</span>
+                      <span className="text-slate-500">（S 為 180°，再加 65°）</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex h-[300px] items-center justify-center mt-3">
+                <div className="flex h-[320px] items-center justify-center mt-3">
                   <BearingsSVG1 />
                 </div>
               </div>
@@ -2240,7 +2270,7 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
                 </ul>
                 <div className="min-h-[108px] bg-slate-50 p-2.5 rounded text-sm text-slate-700 space-y-1.5">
                   <p className="font-bold mb-1 text-slate-800">四象限例子 (見下圖)：</p>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5 text-xs">
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-xs">
                     <div>O 測得 A：<span className="bg-orange-100 border border-orange-300 px-1.5 py-0.5 font-bold text-orange-900 rounded">N35°E</span></div>
                     <div>O 測得 D：<span className="bg-blue-100 border border-blue-300 px-1.5 py-0.5 font-bold text-blue-900 rounded">N25°W</span></div>
                     <div>O 測得 C：<span className="bg-rose-100 border border-rose-300 px-1.5 py-0.5 font-bold text-rose-900 rounded">S65°W</span></div>

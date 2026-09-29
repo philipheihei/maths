@@ -1725,8 +1725,9 @@ export const LogFunctionNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="log-graphs" title="對數函數的圖像特徵" num={3} color="teal" activeSub={activeSub} sectionRef={s3}>
-        <div className="space-y-4">
+      <CollapsibleSection id="log-graphs" title="對數函數圖像與線性關係 (DSE MC)" num={3} color="teal" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-6">
+          {/* 對數函數基礎圖像特徵表 */}
           <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-sm text-slate-800">
@@ -1873,95 +1874,298 @@ export const LogFunctionNotes = ({ activeSub }) => {
             </div>
           </div>
 
-          <div className="bg-teal-50 rounded-xl p-4 border border-teal-200">
-            <h3 className="font-bold text-teal-800 mb-3">DSE 拆題流程：先認清兩條軸，再讀斜率及截距</h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm">
-              <div className="bg-white rounded-lg p-3 border border-teal-100">
-                <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-teal-600 text-white font-bold mr-2">1</span>
-                <span className="font-bold">寫清楚軸</span>
-                <p className="mt-2 text-slate-700">橫軸是 <Latex math="X" />，縱軸是 <Latex math="Y" />，不要直接把圖上的數字當作 <Latex math="x,y" />。</p>
+          {/* DSE 核心秘技：非線性化為線性（如何建構草圖） */}
+          <div className="bg-gradient-to-r from-teal-50 to-emerald-50 rounded-2xl p-5 border border-teal-200 shadow-sm">
+            <h3 className="font-bold text-teal-900 text-lg mb-2 flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-teal-600"></span>
+              DSE 必考核心概念：非線性關係化為「直線」
+            </h3>
+            <p className="text-slate-700 text-sm leading-relaxed mb-4">
+              DSE 卷二 MC 每年必出一條「對數線性圖形題」。題目往往給出一條直線，或者要求你辨認函數關係。解題秘訣在於：<strong>「兩邊取對數，化為直線式 <Latex math="Y = mX + c" />」</strong>。
+            </p>
+
+            {/* 模型 1 與 模型 2 對比圖解 */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* 指數模型 */}
+              <div className="bg-white rounded-xl p-4 border border-teal-100 shadow-sm">
+                <span className="inline-block bg-teal-100 text-teal-800 text-xs px-2 py-0.5 rounded font-bold mb-2">模型 A：指數型</span>
+                <h4 className="font-bold text-slate-800 text-base mb-1"><Latex math="y = k a^x" /></h4>
+                <p className="text-xs text-slate-500 mb-2">未知數 <Latex math="x" /> 在次方位置（底數為常數）</p>
+                <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs space-y-1 mb-3">
+                  <p className="text-slate-600">兩邊取對數：</p>
+                  <div className="text-center font-bold text-slate-800">
+                    <Latex math="\log y = (\log a) x + \log k" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between text-xs bg-teal-50/70 p-2.5 rounded-lg border border-teal-200 text-teal-950 font-medium">
+                  <div>縱軸 <Latex math="Y = \log y" /></div>
+                  <div>橫軸 <Latex math="X = x" /></div>
+                  <div>斜率 <Latex math="m = \log a" /></div>
+                  <div>縱截距 <Latex math="c = \log k" /></div>
+                </div>
               </div>
-              <div className="bg-white rounded-lg p-3 border border-teal-100">
-                <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-teal-600 text-white font-bold mr-2">2</span>
-                <span className="font-bold">套直線式</span>
-                <p className="mt-2 text-slate-700"><Latex math="Y=mX+c" />，斜率是 <Latex math="m" />，縱截距是 <Latex math="c" />。</p>
+
+              {/* 冪函數模型 */}
+              <div className="bg-white rounded-xl p-4 border border-teal-100 shadow-sm">
+                <span className="inline-block bg-indigo-100 text-indigo-800 text-xs px-2 py-0.5 rounded font-bold mb-2">模型 B：冪函數型</span>
+                <h4 className="font-bold text-slate-800 text-base mb-1"><Latex math="y = k x^n" /></h4>
+                <p className="text-xs text-slate-500 mb-2">底數為未知數 <Latex math="x" />，次方為常數 <Latex math="n" /></p>
+                <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-200 text-xs space-y-1 mb-3">
+                  <p className="text-slate-600">兩邊取對數：</p>
+                  <div className="text-center font-bold text-slate-800">
+                    <Latex math="\log y = n \log x + \log k" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between text-xs bg-indigo-50/70 p-2.5 rounded-lg border border-indigo-200 text-indigo-950 font-medium">
+                  <div>縱軸 <Latex math="Y = \log y" /></div>
+                  <div>橫軸 <Latex math="X = \log x" /></div>
+                  <div>斜率 <Latex math="m = n" /></div>
+                  <div>縱截距 <Latex math="c = \log k" /></div>
+                </div>
               </div>
-              <div className="bg-white rounded-lg p-3 border border-teal-100">
-                <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-teal-600 text-white font-bold mr-2">3</span>
-                <span className="font-bold">代回原變數</span>
-                <p className="mt-2 text-slate-700">把 <Latex math="X,Y" /> 換回題目指定的 <Latex math="\log x,\log y" />。</p>
-              </div>
-              <div className="bg-white rounded-lg p-3 border border-teal-100">
-                <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-teal-600 text-white font-bold mr-2">4</span>
-                <span className="font-bold">最後才消除 log</span>
-                <p className="mt-2 text-slate-700">用 <Latex math="\log_a M=k \Rightarrow M=a^k" />，並檢查答案選項。</p>
+            </div>
+
+            {/* 教學生如何自建草圖的 4 大步驟 */}
+            <div className="mt-5 bg-white rounded-xl p-4 border border-teal-200">
+              <h4 className="font-bold text-slate-800 mb-3 text-sm flex items-center gap-2">
+                <span className="bg-teal-600 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs font-bold">✍️</span>
+                解題第一步：如何自己畫出對數線性草圖？（做卷無圖變有圖秘訣）
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs text-slate-700">
+                <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                  <div className="font-bold text-teal-700 mb-1">Step 1：確認兩軸名稱</div>
+                  <p>先畫十字坐標軸，標明橫軸（例如 <Latex math="\log_5 x" />）與縱軸（例如 <Latex math="\log_5 y" />），不要寫錯成普通 <Latex math="x, y" />。</p>
+                </div>
+                <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                  <div className="font-bold text-teal-700 mb-1">Step 2：點出關鍵點或截距</div>
+                  <p>橫截距代表縱坐標為 0（在橫軸上）；縱截距代表橫坐標為 0（在縱軸上）。在草圖上點出相應數值刻度。</p>
+                </div>
+                <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                  <div className="font-bold text-teal-700 mb-1">Step 3：連成直線求斜率</div>
+                  <p>連成直線。斜向上代表斜率 <Latex math="m > 0" />，斜向下代表 <Latex math="m < 0" />。用公式 <Latex math="m = \frac{Y_2 - Y_1}{X_2 - X_1}" /> 求出斜率。</p>
+                </div>
+                <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                  <div className="font-bold text-teal-700 mb-1">Step 4：寫斜截式消 log</div>
+                  <p>寫出 <Latex math="Y = mX + c" />，代入變數後利用對數加減性質移項合併，最後還原出 <Latex math="x" /> 與 <Latex math="y" /> 的關係。</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="bg-white rounded-xl p-4 border border-slate-200">
-              <h3 className="font-bold text-slate-800 mb-2">題型 1：<Latex math="y=ka^x" /> 如何變成直線？</h3>
-              <p className="text-sm text-slate-600 mb-2">若縱軸是 <Latex math="\log y" />、橫軸是 <Latex math="x" />：</p>
-              <div className="bg-slate-50 rounded-lg p-3 text-center">
-                <Latex math="y=ka^x \Rightarrow \log y=x\log a+\log k" block />
+          {/* DSE 經典真題重現與深度拆解 */}
+          <div className="bg-white rounded-2xl border-2 border-emerald-300 p-5 shadow-sm">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 mb-4 flex-wrap gap-2">
+              <span className="font-bold text-emerald-800 text-lg flex items-center gap-2">
+                <span className="bg-emerald-500 text-white text-xs px-2 py-0.5 rounded font-bold">DSE 必考 MC 真題</span>
+                經典實戰：從圖像求變數的關係
+              </span>
+              <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded">DSE 必考題型</span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_310px] gap-6 items-start">
+              {/* 題目與選項 */}
+              <div>
+                <p className="text-slate-800 text-base leading-relaxed mb-4 font-medium">
+                  圖中的圖像顯示 <Latex math="\log_5 x" /> 與 <Latex math="\log_5 y" /> 之間的線性關係。下列何者必為正確？
+                </p>
+
+                {/* 4 個選項 */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mb-4">
+                  <div className="px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 text-sm flex items-center justify-between">
+                    <span>A. <Latex math="x y^2 = 625" /></span>
+                  </div>
+                  <div className="px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 text-sm flex items-center justify-between">
+                    <span>B. <Latex math="x^2 y = 625" /></span>
+                  </div>
+                  <div className="px-3.5 py-2.5 rounded-lg bg-emerald-50 border-2 border-emerald-400 text-emerald-900 font-bold text-sm flex items-center justify-between shadow-xs">
+                    <span>C. <Latex math="\frac{y^2}{x} = 625" /></span>
+                    <span className="text-emerald-600 font-bold">✓ 正確答案</span>
+                  </div>
+                  <div className="px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 text-sm flex items-center justify-between">
+                    <span>D. <Latex math="\frac{y}{x^2} = 625" /></span>
+                  </div>
+                </div>
+
+                {/* 學生常犯錯誤提示 */}
+                <div className="bg-rose-50 border border-rose-200 text-rose-800 text-xs p-3 rounded-lg mb-2">
+                  <span className="font-bold">⚠️ 考生常見致命陷阱：</span>
+                  看見截距是 <Latex math="-4" /> 和 <Latex math="2" />，誤以為是普通 <Latex math="x" /> 和 <Latex math="y" /> 的截距。切記：這是 <strong><Latex math="\log_5 x" /></strong> 和 <strong><Latex math="\log_5 y" /></strong> 的坐標！
+                </div>
               </div>
-              <ul className="mt-3 space-y-1.5 text-sm text-slate-700 list-disc list-inside">
-                <li>直線斜率 <Latex math="m=\log a" />，所以 <Latex math="a=10^m" />（常用對數）。</li>
-                <li>縱截距 <Latex math="c=\log k" />，所以 <Latex math="k=10^c" />。</li>
-                <li>因此圖像是在「<Latex math="x" /> 對 <Latex math="\log y" />」的圖，而不是原本的 <Latex math="x-y" /> 圖。</li>
-              </ul>
-              <div className="mt-3 pt-3 border-t border-slate-200 text-sm text-slate-800">
-                <p className="font-bold text-teal-700 mb-1">例：直線斜率為 4，且通過 <Latex math="(5,22)" /></p>
-                <Latex math="\log y=4x+c" block />
-                <Latex math="22=4(5)+c\Rightarrow c=2" block />
-                <p className="mt-1">所以 <Latex math="\log y=4x+2" />，即 <Latex math="y=100(10^4)^x" />。</p>
+
+              {/* 依照題目真貌繪製的高清真實 SVG 圖像 */}
+              <div className="bg-slate-50/80 p-3 rounded-xl border border-slate-200 flex flex-col items-center justify-center">
+                <span className="text-xs text-slate-500 font-bold mb-1">題目給出之圖像：</span>
+                <svg viewBox="0 0 310 200" className="w-full max-w-[280px] h-auto overflow-visible mx-auto">
+                  {/* 水平橫軸 log5 x */}
+                  <line x1="30" y1="145" x2="275" y2="145" stroke="#1e293b" strokeWidth="1.5" />
+                  <polyline points="269,141 275,145 269,149" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <text x="278" y="160" fontSize="13" fontFamily="sans-serif" fill="#1e293b" fontWeight="600">log₅ x</text>
+
+                  {/* 垂直縱軸 log5 y (靠右側) */}
+                  <line x1="225" y1="175" x2="225" y2="28" stroke="#1e293b" strokeWidth="1.5" />
+                  <polyline points="221,34 225,28 229,34" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <text x="225" y="18" fontSize="13" fontFamily="sans-serif" fill="#1e293b" fontWeight="600" textAnchor="middle">log₅ y</text>
+
+                  {/* 原點 O */}
+                  <text x="214" y="160" fontSize="13" fontStyle="italic" fontFamily="sans-serif" fill="#1e293b">O</text>
+
+                  {/* 橫截距 -4 刻度線及標籤 */}
+                  <line x1="75" y1="140" x2="75" y2="150" stroke="#1e293b" strokeWidth="1.5" />
+                  <text x="75" y="165" fontSize="13" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle" fontWeight="bold">-4</text>
+
+                  {/* 縱截距 2 刻度線及標籤 */}
+                  <line x1="220" y1="65" x2="230" y2="65" stroke="#1e293b" strokeWidth="1.5" />
+                  <text x="216" y="62" fontSize="13" fontFamily="sans-serif" fill="#1e293b" textAnchor="end" fontWeight="bold">2</text>
+
+                  {/* 斜直線（通過 (-4, 0) 與 (0, 2)） */}
+                  <line x1="45" y1="161" x2="255" y2="49" stroke="#1e293b" strokeWidth="2" strokeLinecap="round" />
+
+                  {/* 點高亮標記 */}
+                  <circle cx="75" cy="145" r="3.5" fill="#059669" />
+                  <circle cx="225" cy="65" r="3.5" fill="#059669" />
+                </svg>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl p-4 border border-slate-200">
-              <h3 className="font-bold text-slate-800 mb-2">題型 2：圖上兩個截距，直接找關係式</h3>
-              <p className="text-sm text-slate-600 mb-2">圖像是 <Latex math="\log_5 y" /> 對 <Latex math="\log_5 x" /> 的直線，截距為：橫軸 <Latex math="-4" />、縱軸 <Latex math="2" />。</p>
-              <div className="bg-slate-50 rounded-lg p-3">
-                <Latex math="X=\log_5 x,\quad Y=\log_5 y" block />
-                <Latex math="m=\frac{2-0}{0-(-4)}=\frac{1}{2}" block />
-                <Latex math="Y=\frac{1}{2}X+2" block />
-              </div>
-              <div className="mt-3 text-sm text-slate-800">
-                <p><Latex math="\log_5 y=\frac{1}{2}\log_5 x+2" /></p>
-                <p><Latex math="\log_5 y=\log_5\sqrt{x}+\log_5 25" /></p>
-                <p className="font-bold text-teal-700"><Latex math="y=25\sqrt{x}\Rightarrow y^2=625x" /></p>
-                <p className="text-xs text-slate-500 mt-1">重點：橫截距代表 <Latex math="Y=0" />，縱截距代表 <Latex math="X=0" />，不要把它們當成原圖的 <Latex math="x,y" />。</p>
+            {/* 逐步拆解教學卡片 */}
+            <div className="mt-5 pt-4 border-t border-slate-200">
+              <h4 className="font-bold text-slate-800 text-sm mb-3">🛠️ 導師詳細拆解步驟（如何從圖形導出選項 C）：</h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                {/* 常規代數法 */}
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+                  <div>
+                    <span className="font-bold text-teal-800 text-xs px-2 py-0.5 rounded bg-teal-100 mb-2 inline-block">解法一：直線方程法（必學正統）</span>
+                    <ol className="space-y-2 text-slate-700 mt-1">
+                      <li>
+                        <strong>1. 讀出直線上的兩點坐標：</strong>
+                        <div className="pl-3 text-xs text-slate-600 mt-0.5">
+                          橫截距為 <Latex math="-4 \Rightarrow (-4, 0)" />；縱截距為 <Latex math="2 \Rightarrow (0, 2)" />
+                        </div>
+                      </li>
+                      <li>
+                        <strong>2. 求直線斜率 <Latex math="m" />：</strong>
+                        <div className="text-center my-1 bg-white p-1.5 rounded border border-slate-200">
+                          <Latex math="m = \frac{2 - 0}{0 - (-4)} = \frac{2}{4} = \frac{1}{2}" />
+                        </div>
+                      </li>
+                      <li>
+                        <strong>3. 寫出直線方程：</strong>
+                        <div className="text-center my-1 bg-white p-1.5 rounded border border-slate-200">
+                          <Latex math="\log_5 y = \frac{1}{2} \log_5 x + 2" />
+                        </div>
+                      </li>
+                      <li>
+                        <strong>4. 移項並運用對數法則化簡：</strong>
+                        <div className="bg-white p-2.5 rounded border border-slate-200 text-xs space-y-1">
+                          <p>兩邊同乘 2：<Latex math="2\log_5 y = \log_5 x + 4" /></p>
+                          <p>移項同底相減：<Latex math="\log_5 (y^2) - \log_5 x = 4" /></p>
+                          <p>對數相減變真數相除：<Latex math="\log_5 \left(\frac{y^2}{x}\right) = 4" /></p>
+                          <p className="font-bold text-emerald-700">化為指數形式：<Latex math="\frac{y^2}{x} = 5^4 = 625" /></p>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                  <div className="mt-2 text-center text-xs font-bold text-emerald-800 bg-emerald-100/70 py-1 rounded">
+                    ∴ 答案為 C
+                  </div>
+                </div>
+
+                {/* 考場秒殺代點法 */}
+                <div className="bg-amber-50/70 p-4 rounded-xl border border-amber-200 flex flex-col justify-between">
+                  <div>
+                    <span className="font-bold text-amber-900 text-xs px-2 py-0.5 rounded bg-amber-200/80 mb-2 inline-block">解法二：考場 10 秒代點秒殺法（MC 絕技）</span>
+                    <p className="text-xs text-slate-700 leading-relaxed mb-3">
+                      如果考試時間不夠或對 log 移項不熟練，直接從圖形中找一個最簡單的整數點代入選項驗算：
+                    </p>
+                    
+                    <div className="bg-white p-3 rounded-lg border border-amber-200 text-xs space-y-2 mb-3">
+                      <p className="font-bold text-slate-800">選取橫截距點 <Latex math="(-4, 0)" />：</p>
+                      <ul className="list-disc list-inside space-y-1 text-slate-700">
+                        <li>橫軸坐標為 <Latex math="-4 \implies \log_5 x = -4 \implies x = 5^{-4} = \frac{1}{625}" /></li>
+                        <li>縱軸坐標為 <Latex math="0 \implies \log_5 y = 0 \implies y = 5^0 = 1" /></li>
+                      </ul>
+                      <div className="pt-2 border-t border-slate-100">
+                        <p className="text-slate-800 font-bold mb-1">將 <Latex math="x = \frac{1}{625}, y = 1" /> 代入選項驗證：</p>
+                        <div className="space-y-0.5 text-slate-600">
+                          <div>A. <Latex math="xy^2 = \frac{1}{625} \times 1^2 \neq 625" /> ❌</div>
+                          <div>B. <Latex math="x^2 y = \left(\frac{1}{625}\right)^2 \times 1 \neq 625" /> ❌</div>
+                          <div className="text-emerald-700 font-bold">C. <Latex math="\frac{y^2}{x} = \frac{1^2}{1/625} = 625" /> ✅ 成立！</div>
+                          <div>D. <Latex math="\frac{y}{x^2} = \frac{1}{(1/625)^2} \neq 625" /> ❌</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-center text-xs font-bold text-amber-900 bg-amber-200/70 py-1 rounded">
+                    ⚡ 毋須複雜移項，代點 10 秒即出答案！
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-4 border border-slate-200">
-            <h3 className="font-bold text-slate-800 mb-2">題型 3：兩邊底數不同，先換成同一底數</h3>
-            <p className="text-sm text-slate-600 mb-2">已知 <Latex math="\log_5 y" /> 對 <Latex math="\log_{25}x" /> 的圖像是直線，縱截距為 <Latex math="12" />，橫截距為 <Latex math="2" />。若 <Latex math="y=mx^n" />，求 <Latex math="n" />。</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-              <div className="bg-slate-50 rounded-lg p-3 text-sm">
-                <p className="font-bold text-teal-700 mb-2">拆解：</p>
-                <Latex math="X=\log_{25}x=\frac{1}{2}\log_5x,\quad Y=\log_5y" block />
-                <Latex math="m=\frac{0-12}{2-0}=-6" block />
-                <Latex math="Y=-6X+12" block />
-              </div>
-              <div className="bg-slate-50 rounded-lg p-3 text-sm">
-                <p className="font-bold text-teal-700 mb-2">換回 <Latex math="\log_5x" />：</p>
-                <Latex math="\log_5y=-6\left(\frac{1}{2}\log_5x\right)+12" block />
-                <Latex math="\log_5y=-3\log_5x+12" block />
-                <Latex math="y=5^{12}x^{-3}" block />
-                <p className="font-bold text-teal-700 mt-1"><Latex math="\therefore n=-3" /></p>
-              </div>
-            </div>
-          </div>
+          {/* 變形題型：底數不同型 */}
+          <div className="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
+            <h3 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+              進階題型：兩軸對數底數不同（換底公式型）
+            </h3>
+            <p className="text-sm text-slate-600 mb-3">
+              若題目兩軸底數不同（如橫軸為 <Latex math="\log_{25} x" />，縱軸為 <Latex math="\log_5 y" />），必須先用換底公式統一底數：
+            </p>
 
-          <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
-            <h3 className="font-bold text-amber-800 mb-2">DSE 選擇題快速檢查</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-slate-700">
-              <div className="bg-white rounded-lg p-3 border border-amber-100">① 先圈出兩條軸的名稱：<Latex math="x,y" /> 還是 <Latex math="\log x,\log y" />？</div>
-              <div className="bg-white rounded-lg p-3 border border-amber-100">② 截距要代入 <Latex math="X=0" /> 或 <Latex math="Y=0" />，再求斜率。</div>
-              <div className="bg-white rounded-lg p-3 border border-amber-100">③ 最後檢查定義域：對數內的數必須大於 <Latex math="0" />。</div>
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-4 items-center">
+              <div className="space-y-2 text-sm text-slate-700">
+                <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                  <span className="font-bold text-blue-700">題目例題：</span>
+                  已知直線的橫截距為 <Latex math="2" />，縱截距為 <Latex math="12" />。若關係式為 <Latex math="y = m x^n" />，求 <Latex math="n" /> 的值。
+                </div>
+
+                <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1.5 text-xs">
+                  <p><strong>① 統一橫軸與縱軸底數：</strong></p>
+                  <p className="text-center font-bold">
+                    <Latex math="\log_{25} x = \frac{\log_5 x}{\log_5 25} = \frac{\log_5 x}{2} = \frac{1}{2} \log_5 x" />
+                  </p>
+                  <p><strong>② 求圖中直線的斜率與方程：</strong></p>
+                  <p>斜率 <Latex math="M = \frac{0 - 12}{2 - 0} = -6" />，縱截距 <Latex math="C = 12" /></p>
+                  <p>因此直線為：<Latex math="\log_5 y = -6(\log_{25} x) + 12" /></p>
+                  <p><strong>③ 代入換底結果：</strong></p>
+                  <p><Latex math="\log_5 y = -6 \left( \frac{1}{2} \log_5 x \right) + 12 = -3 \log_5 x + 12" /></p>
+                  <p>消除對數：<Latex math="y = 5^{12} \cdot x^{-3}" /></p>
+                  <p className="font-bold text-blue-700">對比 <Latex math="y = m x^n \implies n = -3" /></p>
+                </div>
+              </div>
+
+              {/* 換底示意草圖 */}
+              <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex flex-col items-center">
+                <span className="text-xs text-slate-500 font-bold mb-1">對應草圖：</span>
+                <svg viewBox="0 0 240 160" className="w-full max-w-[240px] h-auto overflow-visible mx-auto">
+                  {/* 坐標軸 */}
+                  <line x1="25" y1="130" x2="220" y2="130" stroke="#1e293b" strokeWidth="1.5" />
+                  <polyline points="214,126 220,130 214,134" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <text x="220" y="145" fontSize="11" fontFamily="sans-serif" fill="#1e293b">log₂₅ x</text>
+
+                  <line x1="50" y1="150" x2="50" y2="20" stroke="#1e293b" strokeWidth="1.5" />
+                  <polyline points="46,26 50,20 54,26" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <text x="50" y="12" fontSize="11" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">log₅ y</text>
+
+                  <text x="40" y="142" fontSize="11" fontStyle="italic" fontFamily="sans-serif" fill="#1e293b">O</text>
+
+                  {/* 縱截距 12 */}
+                  <line x1="46" y1="40" x2="54" y2="40" stroke="#1e293b" strokeWidth="1.5" />
+                  <text x="42" y="44" fontSize="11" fontFamily="sans-serif" fill="#1e293b" textAnchor="end" fontWeight="bold">12</text>
+
+                  {/* 橫截距 2 */}
+                  <line x1="160" y1="126" x2="160" y2="134" stroke="#1e293b" strokeWidth="1.5" />
+                  <text x="160" y="146" fontSize="11" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle" fontWeight="bold">2</text>
+
+                  {/* 直線（斜向下） */}
+                  <line x1="30" y1="25" x2="185" y2="149" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" />
+                  <circle cx="50" cy="40" r="3" fill="#2563eb" />
+                  <circle cx="160" cy="130" r="3" fill="#2563eb" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>

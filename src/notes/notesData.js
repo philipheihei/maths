@@ -510,7 +510,7 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'simplify-indices', num: 1, title: '簡化指數算式', color: 'blue' },
         { id: 'log-definition', num: 2, title: 'log 的定義與運算性質', color: 'green' },
-        { id: 'log-graphs', num: 3, title: '對數函數的圖像特徵', color: 'teal' },
+        { id: 'log-graphs', num: 3, title: '對數函數圖像與線性關係 (DSE MC)', color: 'teal' },
         { id: 'log-equations', num: 4, title: '指數方程與對數方程', color: 'purple' },
         { id: 'log-applications', num: 5, title: '應用題', color: 'amber' },
       ]
