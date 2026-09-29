@@ -510,8 +510,9 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'simplify-indices', num: 1, title: '簡化指數算式', color: 'blue' },
         { id: 'log-definition', num: 2, title: 'log 的定義與運算性質', color: 'green' },
-        { id: 'log-equations', num: 3, title: '指數方程與對數方程', color: 'purple' },
-        { id: 'log-applications', num: 4, title: '應用題', color: 'amber' },
+        { id: 'log-graphs', num: 3, title: '對數函數的圖像特徵', color: 'teal' },
+        { id: 'log-equations', num: 4, title: '指數方程與對數方程', color: 'purple' },
+        { id: 'log-applications', num: 5, title: '應用題', color: 'amber' },
       ]
     },
     {
@@ -667,7 +668,7 @@ export const NOTES_DATA = {
     },
     {
       id: 'mc-topics',
-      topic: '圖形比例 (MC)',
+      topic: 'MC限定課題',
       color: 'green',
       subtopics: [
         { id: 'shape-proportion', num: 1, title: '圖形比例', color: 'green' },

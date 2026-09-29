@@ -1725,7 +1725,235 @@ export const LogFunctionNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="log-equations" title="指數方程與對數方程" num={3} color="purple" activeSub={activeSub} sectionRef={s3}>
+      <CollapsibleSection id="log-graphs" title="對數函數的圖像特徵" num={3} color="teal" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-sm text-slate-800">
+                <thead>
+                  <tr className="border-b border-slate-300">
+                    <th className="p-3 bg-cyan-50/70 text-slate-800 font-bold border-r border-slate-300 w-28 text-center">
+                      <Latex math="a" /> 的範圍
+                    </th>
+                    <th className="p-3 bg-cyan-50/70 text-slate-800 font-bold border-r border-slate-300 text-center">
+                      <Latex math="a > 1" />
+                    </th>
+                    <th className="p-3 bg-cyan-50/70 text-slate-800 font-bold text-center">
+                      <Latex math="0 < a < 1" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {/* 圖像行 */}
+                  <tr className="border-b border-slate-300">
+                    <td className="p-3 bg-cyan-50/70 font-bold border-r border-slate-300 text-center align-middle">
+                      <div><Latex math="y = \log_a x" /></div>
+                      <div className="mt-1">的圖像</div>
+                    </td>
+                    <td className="p-3 border-r border-slate-300 bg-white align-middle">
+                      <div className="flex justify-center py-2">
+                        <svg viewBox="0 0 220 150" className="w-56 h-auto overflow-visible">
+                          <defs>
+                            <marker id="arrow-axis-teal1" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                              <path d="M 0 2 L 8 5 L 0 8 z" fill="#1e293b" />
+                            </marker>
+                          </defs>
+                          {/* x 軸 */}
+                          <line x1="30" y1="105" x2="195" y2="105" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-axis-teal1)" />
+                          <text x="202" y="109" fontSize="13" fontStyle="italic" fontFamily="sans-serif" fill="#1e293b">x</text>
+
+                          {/* y 軸 */}
+                          <line x1="55" y1="135" x2="55" y2="20" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-axis-teal1)" />
+                          <text x="55" y="13" fontSize="13" fontStyle="italic" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">y</text>
+
+                          {/* 原點 0 */}
+                          <text x="45" y="117" fontSize="12" fontFamily="sans-serif" fill="#1e293b" textAnchor="end">0</text>
+
+                          {/* 對數曲線 a > 1 (嚴格遞增，凹向下) */}
+                          <path d="M 58,145 C 58,126 68,106 85,105 C 112,103 150,62 190,50" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" />
+
+                          {/* 截距點 (1, 0) */}
+                          <circle cx="85" cy="105" r="3" fill="#10b981" />
+                          <text x="88" y="122" fontSize="11" fontFamily="sans-serif" fill="#1e293b">(1, 0)</text>
+                        </svg>
+                      </div>
+                    </td>
+                    <td className="p-3 bg-white align-middle">
+                      <div className="flex justify-center py-2">
+                        <svg viewBox="0 0 220 150" className="w-56 h-auto overflow-visible">
+                          <defs>
+                            <marker id="arrow-axis-teal2" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                              <path d="M 0 2 L 8 5 L 0 8 z" fill="#1e293b" />
+                            </marker>
+                          </defs>
+                          {/* x 軸 */}
+                          <line x1="30" y1="105" x2="195" y2="105" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-axis-teal2)" />
+                          <text x="202" y="109" fontSize="13" fontStyle="italic" fontFamily="sans-serif" fill="#1e293b">x</text>
+
+                          {/* y 軸 */}
+                          <line x1="55" y1="135" x2="55" y2="20" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-axis-teal2)" />
+                          <text x="55" y="13" fontSize="13" fontStyle="italic" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">y</text>
+
+                          {/* 原點 0 */}
+                          <text x="45" y="117" fontSize="12" fontFamily="sans-serif" fill="#1e293b" textAnchor="end">0</text>
+
+                          {/* 對數曲線 0 < a < 1 (嚴格遞減，凹向上) */}
+                          <path d="M 58,22 C 58,65 68,97.5 85,105 C 114,118 153,137 190,140" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" />
+
+                          {/* 截距點 (1, 0) */}
+                          <circle cx="85" cy="105" r="3" fill="#10b981" />
+                          <text x="88" y="98" fontSize="11" fontFamily="sans-serif" fill="#1e293b">(1, 0)</text>
+                        </svg>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {/* 共同特徵 */}
+                  <tr className="border-b border-slate-300">
+                    <td className="p-3 bg-cyan-50/70 font-bold border-r border-slate-300 text-center align-middle">
+                      共同特徵
+                    </td>
+                    <td colSpan={2} className="p-4 bg-white">
+                      <ol className="space-y-1.5 list-decimal list-inside leading-relaxed text-slate-700">
+                        <li>圖像與 <Latex math="x" /> 軸相交於 <span className="font-bold text-slate-800">(1, 0)</span>。</li>
+                        <li>圖像與 <Latex math="y" /> 軸不會相交。它位於 <Latex math="y" /> 軸的右方（定義域：<Latex math="x > 0" />）。</li>
+                        <li>圖像沒有極大點、極小點或對稱軸。</li>
+                      </ol>
+                    </td>
+                  </tr>
+
+                  {/* 相異之處 */}
+                  <tr>
+                    <td className="p-3 bg-cyan-50/70 font-bold border-r border-slate-300 text-center align-middle">
+                      相異之處
+                    </td>
+                    <td className="p-4 border-r border-slate-300 bg-white align-top">
+                      <ol className="space-y-2 list-decimal list-inside leading-relaxed text-slate-700">
+                        <li className="space-y-0.5">
+                          <span>符號範圍：</span>
+                          <div className="pl-5 space-y-0.5">
+                            <div>(a) 對於 <Latex math="0 < x < 1" />，<Latex math="y < 0" /></div>
+                            <div>(b) 對於 <Latex math="x > 1" />，<Latex math="y > 0" /></div>
+                          </div>
+                        </li>
+                        <li>當 <Latex math="x" /> 值增加時，<Latex math="y" /> 的值會<span className="font-bold text-emerald-700">相應增加</span>（嚴格遞增函數）。</li>
+                        <li>當 <Latex math="x" /> 值增加時，<Latex math="y" /> 值的增加率會<span className="font-bold text-emerald-700">遞減</span>（曲線越來越平緩）。</li>
+                      </ol>
+                    </td>
+                    <td className="p-4 bg-white align-top">
+                      <ol className="space-y-2 list-decimal list-inside leading-relaxed text-slate-700">
+                        <li className="space-y-0.5">
+                          <span>符號範圍：</span>
+                          <div className="pl-5 space-y-0.5">
+                            <div>(a) 對於 <Latex math="0 < x < 1" />，<Latex math="y > 0" /></div>
+                            <div>(b) 對於 <Latex math="x > 1" />，<Latex math="y < 0" /></div>
+                          </div>
+                        </li>
+                        <li>當 <Latex math="x" /> 值增加時，<Latex math="y" /> 的值會<span className="font-bold text-emerald-700">相應減少</span>（嚴格遞減函數）。</li>
+                        <li>當 <Latex math="x" /> 值增加時，<Latex math="y" /> 值的減少率會<span className="font-bold text-emerald-700">遞減</span>（下降速度逐漸減緩）。</li>
+                      </ol>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="bg-teal-50 rounded-xl p-4 border border-teal-200">
+            <h3 className="font-bold text-teal-800 mb-3">DSE 拆題流程：先認清兩條軸，再讀斜率及截距</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm">
+              <div className="bg-white rounded-lg p-3 border border-teal-100">
+                <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-teal-600 text-white font-bold mr-2">1</span>
+                <span className="font-bold">寫清楚軸</span>
+                <p className="mt-2 text-slate-700">橫軸是 <Latex math="X" />，縱軸是 <Latex math="Y" />，不要直接把圖上的數字當作 <Latex math="x,y" />。</p>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-teal-100">
+                <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-teal-600 text-white font-bold mr-2">2</span>
+                <span className="font-bold">套直線式</span>
+                <p className="mt-2 text-slate-700"><Latex math="Y=mX+c" />，斜率是 <Latex math="m" />，縱截距是 <Latex math="c" />。</p>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-teal-100">
+                <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-teal-600 text-white font-bold mr-2">3</span>
+                <span className="font-bold">代回原變數</span>
+                <p className="mt-2 text-slate-700">把 <Latex math="X,Y" /> 換回題目指定的 <Latex math="\log x,\log y" />。</p>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-teal-100">
+                <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-teal-600 text-white font-bold mr-2">4</span>
+                <span className="font-bold">最後才消除 log</span>
+                <p className="mt-2 text-slate-700">用 <Latex math="\log_a M=k \Rightarrow M=a^k" />，並檢查答案選項。</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="bg-white rounded-xl p-4 border border-slate-200">
+              <h3 className="font-bold text-slate-800 mb-2">題型 1：<Latex math="y=ka^x" /> 如何變成直線？</h3>
+              <p className="text-sm text-slate-600 mb-2">若縱軸是 <Latex math="\log y" />、橫軸是 <Latex math="x" />：</p>
+              <div className="bg-slate-50 rounded-lg p-3 text-center">
+                <Latex math="y=ka^x \Rightarrow \log y=x\log a+\log k" block />
+              </div>
+              <ul className="mt-3 space-y-1.5 text-sm text-slate-700 list-disc list-inside">
+                <li>直線斜率 <Latex math="m=\log a" />，所以 <Latex math="a=10^m" />（常用對數）。</li>
+                <li>縱截距 <Latex math="c=\log k" />，所以 <Latex math="k=10^c" />。</li>
+                <li>因此圖像是在「<Latex math="x" /> 對 <Latex math="\log y" />」的圖，而不是原本的 <Latex math="x-y" /> 圖。</li>
+              </ul>
+              <div className="mt-3 pt-3 border-t border-slate-200 text-sm text-slate-800">
+                <p className="font-bold text-teal-700 mb-1">例：直線斜率為 4，且通過 <Latex math="(5,22)" /></p>
+                <Latex math="\log y=4x+c" block />
+                <Latex math="22=4(5)+c\Rightarrow c=2" block />
+                <p className="mt-1">所以 <Latex math="\log y=4x+2" />，即 <Latex math="y=100(10^4)^x" />。</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-4 border border-slate-200">
+              <h3 className="font-bold text-slate-800 mb-2">題型 2：圖上兩個截距，直接找關係式</h3>
+              <p className="text-sm text-slate-600 mb-2">圖像是 <Latex math="\log_5 y" /> 對 <Latex math="\log_5 x" /> 的直線，截距為：橫軸 <Latex math="-4" />、縱軸 <Latex math="2" />。</p>
+              <div className="bg-slate-50 rounded-lg p-3">
+                <Latex math="X=\log_5 x,\quad Y=\log_5 y" block />
+                <Latex math="m=\frac{2-0}{0-(-4)}=\frac{1}{2}" block />
+                <Latex math="Y=\frac{1}{2}X+2" block />
+              </div>
+              <div className="mt-3 text-sm text-slate-800">
+                <p><Latex math="\log_5 y=\frac{1}{2}\log_5 x+2" /></p>
+                <p><Latex math="\log_5 y=\log_5\sqrt{x}+\log_5 25" /></p>
+                <p className="font-bold text-teal-700"><Latex math="y=25\sqrt{x}\Rightarrow y^2=625x" /></p>
+                <p className="text-xs text-slate-500 mt-1">重點：橫截距代表 <Latex math="Y=0" />，縱截距代表 <Latex math="X=0" />，不要把它們當成原圖的 <Latex math="x,y" />。</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-4 border border-slate-200">
+            <h3 className="font-bold text-slate-800 mb-2">題型 3：兩邊底數不同，先換成同一底數</h3>
+            <p className="text-sm text-slate-600 mb-2">已知 <Latex math="\log_5 y" /> 對 <Latex math="\log_{25}x" /> 的圖像是直線，縱截距為 <Latex math="12" />，橫截距為 <Latex math="2" />。若 <Latex math="y=mx^n" />，求 <Latex math="n" />。</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+              <div className="bg-slate-50 rounded-lg p-3 text-sm">
+                <p className="font-bold text-teal-700 mb-2">拆解：</p>
+                <Latex math="X=\log_{25}x=\frac{1}{2}\log_5x,\quad Y=\log_5y" block />
+                <Latex math="m=\frac{0-12}{2-0}=-6" block />
+                <Latex math="Y=-6X+12" block />
+              </div>
+              <div className="bg-slate-50 rounded-lg p-3 text-sm">
+                <p className="font-bold text-teal-700 mb-2">換回 <Latex math="\log_5x" />：</p>
+                <Latex math="\log_5y=-6\left(\frac{1}{2}\log_5x\right)+12" block />
+                <Latex math="\log_5y=-3\log_5x+12" block />
+                <Latex math="y=5^{12}x^{-3}" block />
+                <p className="font-bold text-teal-700 mt-1"><Latex math="\therefore n=-3" /></p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">DSE 選擇題快速檢查</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm text-slate-700">
+              <div className="bg-white rounded-lg p-3 border border-amber-100">① 先圈出兩條軸的名稱：<Latex math="x,y" /> 還是 <Latex math="\log x,\log y" />？</div>
+              <div className="bg-white rounded-lg p-3 border border-amber-100">② 截距要代入 <Latex math="X=0" /> 或 <Latex math="Y=0" />，再求斜率。</div>
+              <div className="bg-white rounded-lg p-3 border border-amber-100">③ 最後檢查定義域：對數內的數必須大於 <Latex math="0" />。</div>
+            </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="log-equations" title="指數方程與對數方程" num={4} color="purple" activeSub={activeSub} sectionRef={s4}>
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-red-50 rounded-lg p-4 border border-red-200">
@@ -1806,7 +2034,7 @@ x &= 0.5
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="log-applications" title="應用題" num={4} color="amber" activeSub={activeSub} sectionRef={s4}>
+      <CollapsibleSection id="log-applications" title="應用題" num={5} color="amber" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">常見應用題型</h3>

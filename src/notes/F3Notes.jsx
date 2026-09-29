@@ -1931,45 +1931,94 @@ const BearingsSVG1 = () => (
 );
 
 const BearingsCompassSVG = () => (
-  <svg width="300" height="300" viewBox="-40 -40 280 280" className="mx-auto block">
+  <svg width="320" height="320" viewBox="0 0 340 340" className="mx-auto block w-full max-w-[320px] h-auto overflow-visible">
     <defs>
-      <marker id="arrow-compass-p" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
-      </marker>
-      <marker id="arrow-compass-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+      <marker id="arrow-head-compass" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 1 2 L 8 5 L 1 8 z" fill="#1e293b" />
       </marker>
     </defs>
-    <g transform="translate(100, 100) scale(1.25)">
-      <line x1="0" y1="80" x2="0" y2="-80" stroke="#94a3b8" strokeWidth="1.5" markerEnd="url(#arrow-compass-gray)" />
-      <line x1="-80" y1="0" x2="80" y2="0" stroke="#94a3b8" strokeWidth="1.5" />
-      <text x="0" y="-84" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="middle">N</text>
-      <text x="0" y="-100" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="middle">北</text>
-      <text x="0" y="92" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="middle">S</text>
-      <text x="0" y="106" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="middle">南</text>
-      <text x="-80" y="5" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="end">W</text>
-      <text x="-98" y="5" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="end">西</text>
-      <text x="80" y="5" fill="#dc2626" fontSize="14" fontWeight="bold" textAnchor="start">E</text>
-      <text x="94" y="5" fill="#16a34a" fontSize="14" fontWeight="bold" textAnchor="start">東</text>
-      <text x="-8" y="-10" fill="#334155" fontSize="14" fontStyle="italic" textAnchor="end">O</text>
-      <line x1="0" y1="0" x2="50" y2="-60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
-      <circle cx="50" cy="-60" r="4" fill="#334155" />
-      <text x="55" y="-60" fill="#334155" fontSize="14" fontStyle="italic">A</text>
-      <line x1="0" y1="0" x2="40" y2="60" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
-      <circle cx="40" cy="60" r="4" fill="#334155" />
-      <text x="45" y="65" fill="#334155" fontSize="14" fontStyle="italic">B</text>
-      <line x1="0" y1="0" x2="-60" y2="40" stroke="#334155" strokeWidth="2" strokeDasharray="5,5" />
-      <circle cx="-60" cy="40" r="4" fill="#334155" />
-      <text x="-82" y="54" fill="#334155" fontSize="14" fontStyle="italic">C</text>
-      <path d="M 0,-30 A 30 30 0 0 1 19.3,-23" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="13" y="-40" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">35°</text>
-      <path d="M 0,30 A 30 30 0 0 0 16.6,25" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="12" y="40" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">28°</text>
-      <path d="M 0,17.5 A 17.5 17.5 0 0 1 -14.8,9.85" fill="none" stroke="#16a34a" strokeWidth="2" />
-      <text x="-14" y="29" fill="#16a34a" fontSize="12" fontWeight="bold" textAnchor="middle">65°</text>
-      <path d="M -30,0 A 30 30 0 0 0 -25,16.7" fill="none" stroke="#2563eb" strokeWidth="2" />
-      <text x="-44" y="15" fill="#2563eb" fontSize="12" fontWeight="bold" textAnchor="middle">25°</text>
-    </g>
+
+    {/* 彩色夾角扇形 (Sectors) */}
+    {/* 東北象限 (35°): 橙色 */}
+    <path d="M 170,170 L 170,132 A 38 38 0 0 1 198.2,144.6 Z" fill="#fb923c" stroke="#ea580c" strokeWidth="1" />
+    
+    {/* 西北象限 (25°): 藍色 */}
+    <path d="M 170,170 L 170,126 A 44 44 0 0 0 153.5,129.2 Z" fill="#3b82f6" stroke="#1d4ed8" strokeWidth="1" />
+    
+    {/* 西南象限 (65°): 紅色 */}
+    <path d="M 170,170 L 170,208 A 38 38 0 0 1 143.1,196.9 Z" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" />
+    
+    {/* 東南象限 (28°): 青藍色 */}
+    <path d="M 170,170 L 170,208 A 38 38 0 0 0 198.2,195.4 Z" fill="#06b6d4" stroke="#0891b2" strokeWidth="1" />
+
+    {/* 主方位十字軸 (N-S, W-E) */}
+    <line x1="170" y1="48" x2="170" y2="292" stroke="#1e293b" strokeWidth="2.5" />
+    <line x1="52" y1="170" x2="288" y2="170" stroke="#1e293b" strokeWidth="2.5" />
+
+    {/* 4 條射線 (Rays) */}
+    {/* OA 射線 */}
+    <line x1="170" y1="170" x2="248" y2="100" stroke="#1e293b" strokeWidth="2.5" />
+    <text x="258" y="96" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">A</text>
+
+    {/* OD 射線 */}
+    <line x1="170" y1="170" x2="131" y2="73" stroke="#1e293b" strokeWidth="2.5" />
+    <text x="122" y="65" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">D</text>
+
+    {/* OC 射線 */}
+    <line x1="170" y1="170" x2="96" y2="244" stroke="#1e293b" strokeWidth="2.5" />
+    <text x="85" y="258" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">C</text>
+
+    {/* OB 射線 */}
+    <line x1="170" y1="170" x2="248" y2="240" stroke="#1e293b" strokeWidth="2.5" />
+    <text x="258" y="252" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">B</text>
+
+    {/* 角度旋轉弧度與箭頭 (Rotation Arcs with Arrows) */}
+    {/* x 弧 (N 向 OA 順時針) */}
+    <path d="M 170,122 A 48 48 0 0 1 204,136" fill="none" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-head-compass)" />
+    <text x="186" y="125" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">35°</text>
+
+    {/* y 弧 (N 向 OD 逆時針) */}
+    <path d="M 170,116 A 54 54 0 0 0 151,119" fill="none" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-head-compass)" />
+    <text x="159" y="106" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">25°</text>
+
+    {/* a 弧 (S 向 OC 順時針) */}
+    <path d="M 170,218 A 48 48 0 0 1 138,205" fill="none" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-head-compass)" />
+    <text x="151" y="218" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">65°</text>
+
+    {/* b 弧 (S 向 OB 逆時針) */}
+    <path d="M 170,218 A 48 48 0 0 0 204,204" fill="none" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-head-compass)" />
+    <text x="189" y="218" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">28°</text>
+
+    {/* 中心原點 O */}
+    <text x="186" y="162" fontSize="17" fontStyle="italic" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">O</text>
+
+    {/* 東西方位標記 */}
+    <text x="44" y="175" fontSize="15" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b" textAnchor="end">西 W</text>
+    <text x="296" y="175" fontSize="15" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b" textAnchor="start">E 東</text>
+
+    {/* 南北黃色方框標記 (N 北 / S 南) */}
+    <rect x="136" y="16" width="68" height="30" rx="3" fill="#fef08a" stroke="#1e293b" strokeWidth="2" />
+    <text x="170" y="37" fontSize="15" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">N 北</text>
+
+    <rect x="136" y="294" width="68" height="30" rx="3" fill="#fef08a" stroke="#1e293b" strokeWidth="2" />
+    <text x="170" y="315" fontSize="15" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">S 南</text>
+
+    {/* 四象限方位角結果框 (Result Badges) */}
+    {/* 東北: N35°E */}
+    <rect x="214" y="110" width="58" height="26" rx="3" fill="#ffedd5" stroke="#1e293b" strokeWidth="1.8" />
+    <text x="243" y="128" fontSize="12" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">N35°E</text>
+
+    {/* 西北: N25°W */}
+    <rect x="68" y="110" width="58" height="26" rx="3" fill="#dbeafe" stroke="#1e293b" strokeWidth="1.8" />
+    <text x="97" y="128" fontSize="12" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">N25°W</text>
+
+    {/* 西南: S65°W */}
+    <rect x="52" y="196" width="58" height="26" rx="3" fill="#fee2e2" stroke="#1e293b" strokeWidth="1.8" />
+    <text x="81" y="214" fontSize="12" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">S65°W</text>
+
+    {/* 東南: S28°E */}
+    <rect x="216" y="186" width="58" height="26" rx="3" fill="#f3e8ff" stroke="#1e293b" strokeWidth="1.8" />
+    <text x="245" y="204" fontSize="12" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b" textAnchor="middle">S28°E</text>
   </svg>
 );
 
@@ -2183,19 +2232,22 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
               </div>
               <div className="bg-white rounded-lg p-4 border border-red-200">
                 <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">羅盤方位角</p>
-                <ul className="text-sm text-slate-700 space-y-1 mb-3 h-[92px]">
+                <ul className="text-sm text-slate-700 space-y-1 mb-3 min-h-[92px]">
                   <li>• 以 0° - 90° 表達</li>
                   <li><span className="bg-yellow-200 px-1 rounded text-red-600 font-bold">①</span> 以 N/S 作開首 (論線/角度近 N/S)</li>
                   <li><span className="bg-pink-200 px-1 rounded text-pink-700 font-bold">②</span> 配 0 - 90° (順/逆時針)</li>
                   <li><span className="bg-blue-200 px-1 rounded text-blue-800 font-bold">③</span> 以 W/E 作結束 (想想角度向哪移動)</li>
                 </ul>
-                <div className="bg-slate-50 p-2 rounded text-sm space-y-1">
-                  <p className="font-bold mb-1">e.g.</p>
-                  <div className="flex items-center gap-2">O 測得 A：<span className="bg-yellow-200 px-1 font-bold">N</span><span className="bg-pink-200 px-1 text-pink-700 font-bold">35°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
-                  <div className="flex items-center gap-2">O 測得 B：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="bg-pink-200 px-1 text-pink-700 font-bold">28°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">E</span></div>
-                  <div className="flex items-center gap-2">O 測得 C：<span className="bg-yellow-200 px-1 font-bold">S</span><span className="bg-pink-200 px-1 text-pink-700 font-bold">65°</span><span className="bg-blue-200 px-1 font-bold text-blue-800">W</span></div>
+                <div className="min-h-[108px] bg-slate-50 p-2.5 rounded text-sm text-slate-700 space-y-1.5">
+                  <p className="font-bold mb-1 text-slate-800">四象限例子 (見下圖)：</p>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1.5 text-xs">
+                    <div>O 測得 A：<span className="bg-orange-100 border border-orange-300 px-1.5 py-0.5 font-bold text-orange-900 rounded">N35°E</span></div>
+                    <div>O 測得 D：<span className="bg-blue-100 border border-blue-300 px-1.5 py-0.5 font-bold text-blue-900 rounded">N25°W</span></div>
+                    <div>O 測得 C：<span className="bg-rose-100 border border-rose-300 px-1.5 py-0.5 font-bold text-rose-900 rounded">S65°W</span></div>
+                    <div>O 測得 B：<span className="bg-purple-100 border border-purple-300 px-1.5 py-0.5 font-bold text-purple-900 rounded">S28°E</span></div>
+                  </div>
                 </div>
-                <div className="flex h-[300px] items-center justify-center mt-3">
+                <div className="flex h-[320px] items-center justify-center mt-3">
                   <BearingsCompassSVG />
                 </div>
               </div>

@@ -194,7 +194,7 @@ export const MCTopicsNotes = ({ activeSub }) => {
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-green-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">圖形比例 (MC)</h1>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">圖形比例 (MC限定課題)</h1>
         <p className="text-slate-600">利用相似三角形與同高三角形解梯形面積比例</p>
       </div>
 
@@ -216,7 +216,7 @@ export const MCTopicsNotes = ({ activeSub }) => {
                 </div>
               </div>
               <div className="w-full max-w-[320px] flex-shrink-0 mx-auto">
-                <svg viewBox="0 0 280 160" className="block w-full overflow-visible mx-auto">
+                <svg viewBox="0 0 280 172" className="block w-full overflow-visible mx-auto">
                   {/* 梯形邊線 */}
                   <polygon points="65,30 185,30 215,125 35,125" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinejoin="round" />
                   {/* 對角線 */}
@@ -228,23 +228,25 @@ export const MCTopicsNotes = ({ activeSub }) => {
                   <text x="192" y="27" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">D</text>
                   <text x="20" y="132" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">B</text>
                   <text x="222" y="132" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">C</text>
-                  <text x="121" y="145" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">E</text>
-                  <text x="158" y="86" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">F</text>
+                  <text x="125" y="139" textAnchor="middle" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">E</text>
+                  <text x="157" y="86" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">F</text>
 
-                  {/* 比例標記 (藍色) */}
-                  <line x1="65" y1="20" x2="185" y2="20" stroke="#1d4ed8" strokeWidth="1.5" />
-                  <polygon points="125,20 120,16 120,24" fill="#1d4ed8" />
-                  <text x="125" y="13" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
-                  <text x="75" y="115" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                  <text x="165" y="115" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                  <path d="M 40 134 C 85 152 165 152 210 134" fill="none" stroke="#3b82f6" strokeWidth="1" />
-                  <text x="125" y="156" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">3</text>
+                  {/* 比例標記 (藍色) - 上底 2（無底線） */}
+                  <text x="125" y="18" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
+                  
+                  {/* BE 與 EC 長度比例 1.5 */}
+                  <text x="80" y="112" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                  <text x="170" y="112" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                  
+                  {/* 下底 BC 總比例大括號與「3」 */}
+                  <path d="M 35 142 Q 35 150 75 150 L 115 150 Q 125 150 125 156 Q 125 150 135 150 L 175 150 Q 215 150 215 142" fill="none" stroke="#2563eb" strokeWidth="1.2" />
+                  <text x="125" y="169" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">3</text>
 
-                  {/* 平行箭頭 (紅色) */}
-                  <polyline points="120,26 128,30 120,34" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  <polyline points="120,121 128,125 120,129" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  {/* 平行箭頭 (紅色) - 分別置於 AD 及 BC 上 */}
+                  <polyline points="121,26 129,30 121,34" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <polyline points="106,121 114,125 106,129" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 
-                  {/* 等長刻痕 (青藍色雙線) */}
+                  {/* 等長刻痕 (青藍色雙線，位於 BE 與 EC 中點垂直線段) */}
                   <line x1="77" y1="120" x2="77" y2="130" stroke="#0ea5e9" strokeWidth="1.5" />
                   <line x1="83" y1="120" x2="83" y2="130" stroke="#0ea5e9" strokeWidth="1.5" />
                   <line x1="167" y1="120" x2="167" y2="130" stroke="#0ea5e9" strokeWidth="1.5" />
@@ -285,24 +287,23 @@ export const MCTopicsNotes = ({ activeSub }) => {
                     <text x="192" y="27" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">D</text>
                     <text x="20" y="132" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">B</text>
                     <text x="222" y="132" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">C</text>
-                    <text x="121" y="145" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">E</text>
-                    <text x="158" y="86" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">F</text>
+                    <text x="125" y="139" textAnchor="middle" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">E</text>
+                    <text x="156" y="86" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">F</text>
+
+                    {/* 平行箭頭 (紅色) */}
+                    <polyline points="121,26 129,30 121,34" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 
                     {/* 數據標籤 */}
-                    <line x1="65" y1="20" x2="185" y2="20" stroke="#1d4ed8" strokeWidth="1.5" />
-                    <polygon points="125,20 120,16 120,24" fill="#1d4ed8" />
-                    <text x="125" y="13" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
+                    <text x="125" y="18" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
                     
-                    <line x1="125" y1="133" x2="215" y2="133" stroke="#1d4ed8" strokeWidth="1.5" />
-                    <polygon points="175,133 170,129 170,137" fill="#1d4ed8" />
-                    <text x="175" y="147" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                    <text x="170" y="142" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
                     
-                    <text x="160" y="112" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0369a1" fontFamily="sans-serif">36 cm²</text>
+                    <text x="163" y="112" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0369a1" fontFamily="sans-serif">36 cm²</text>
                     
-                    {/* 漏斗組合指示 */}
-                    <line x1="225" y1="55" x2="195" y2="55" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrow-fn)" />
-                    <text x="230" y="52" fontSize="11" fontFamily="sans-serif" fill="#334155" fontWeight="bold">漏斗組合：</text>
-                    <text x="230" y="68" fontSize="11" fontFamily="sans-serif" fill="#334155" fontWeight="bold">上下Δ相似</text>
+                    {/* 漏斗組合指示箭頭與文字 */}
+                    <path d="M 230 46 C 205 46 195 56 186 68" fill="none" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrow-fn)" />
+                    <text x="234" y="42" fontSize="11" fontFamily="sans-serif" fill="#334155" fontWeight="bold">漏斗組合：</text>
+                    <text x="234" y="58" fontSize="11" fontFamily="sans-serif" fill="#334155" fontWeight="bold">上下Δ相似</text>
                   </svg>
                 </div>
                 
@@ -339,26 +340,31 @@ export const MCTopicsNotes = ({ activeSub }) => {
                     <line x1="65" y1="30" x2="215" y2="125" stroke="#cbd5e1" strokeWidth="1" />
                     <line x1="185" y1="30" x2="125" y2="125" stroke="#cbd5e1" strokeWidth="1" />
                     
-                    {/* 高亮同高三角形：ADF (紫) 與 CDF (紅) */}
+                    {/* 高亮同高三角形：ADF (紫線)、CDF (紅線) 與 CEF (淺藍線) */}
                     <polygon points="65,30 185,30 150.7,84.3" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinejoin="round" />
                     <polygon points="185,30 215,125 150.7,84.3" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinejoin="round" />
-                    <polygon points="125,125 215,125 150.7,84.3" fill="none" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3 3" />
+                    <polygon points="125,125 215,125 150.7,84.3" fill="none" stroke="#0ea5e9" strokeWidth="2" strokeLinejoin="round" />
                     
                     {/* 頂點文字 */}
                     <text x="50" y="27" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">A</text>
                     <text x="192" y="27" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">D</text>
                     <text x="20" y="132" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">B</text>
                     <text x="222" y="132" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">C</text>
-                    <text x="121" y="145" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">E</text>
-                    <text x="158" y="86" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">F</text>
+                    <text x="125" y="139" textAnchor="middle" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">E</text>
+                    <text x="156" y="86" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">F</text>
                     
-                    {/* 對角線上的比重箭頭 */}
-                    <path d="M 85,15 Q 110,25 105,52" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue-diag)" />
-                    <text x="110" y="38" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
+                    {/* 上底 AD 標籤 2 */}
+                    <text x="125" y="18" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
 
-                    <path d="M 195,142 Q 185,115 180,110" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue-diag)" />
-                    <text x="198" y="148" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                    <text x="172" y="100" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                    {/* 對角線 AC 上的線段比：AF 對應 2，FC 對應 1.5 */}
+                    <path d="M 85,18 Q 110,26 102,48" fill="none" stroke="#1d4ed8" strokeWidth="1.3" markerEnd="url(#arrow-blue-diag)" />
+                    <text x="108" y="38" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
+
+                    <path d="M 198,136 Q 192,118 186,110" fill="none" stroke="#1d4ed8" strokeWidth="1.3" markerEnd="url(#arrow-blue-diag)" />
+                    <text x="204" y="142" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                    
+                    {/* 底邊 EC 的 1.5 標記 */}
+                    <text x="170" y="142" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
                   </svg>
                 </div>
                 
