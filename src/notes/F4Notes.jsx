@@ -238,8 +238,11 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
             </div>
           </div>
 
-          <div className="bg-red-50 border-2 border-red-400 p-4 rounded-lg">
-            <p className="text-red-600 font-bold text-xl">Maths Error → 沒有實根</p>
+          <div className="bg-amber-50 border border-amber-300 p-4 rounded-lg">
+            <p className="font-bold text-amber-800">計算機提示</p>
+            <p className="text-slate-700 mt-1">
+              二次方程求根時，如計算機顯示 <span className="text-red-600 font-bold">Maths Error</span>，即表示方程沒有實根。
+            </p>
           </div>
         </div>
       </CollapsibleSection>
@@ -410,8 +413,8 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
 
             <div className="space-y-3 text-slate-700">
               <div className="bg-white rounded-lg p-3 shadow-sm">
-                <p className="mb-1">e.g. <Latex math="0.1\dot{7}=0.171717\cdots" /></p>
-                <p className="text-blue-700 font-bold"><Latex math="0.1\dot{7}=\frac{17}{99}" /></p>
+                <p className="mb-1">e.g. <Latex math="0.1\dot{7}=0.177777\cdots" /></p>
+                <p className="text-blue-700 font-bold"><Latex math="0.1\dot{7}=\frac{8}{45}" /></p>
               </div>
               <div className="bg-white rounded-lg p-3 shadow-sm">
                 <p className="mb-1">e.g. <Latex math="0.\dot{2}3\dot{4}=0.234234\cdots" /></p>
@@ -1233,12 +1236,12 @@ export const RemainderFactorNotes = ({ activeSub }) => {
           <div className="bg-white rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-purple-700 mb-3">例題：解一元三次方程</h3>
             <div className="bg-amber-50 rounded-lg p-3 text-center mb-4 overflow-x-auto">
-              <Latex math="2x^3-3x^2-13x+6=0" block />
+              <Latex math="2x^3-3x^2-11x+6=0" block />
             </div>
             <div className="space-y-3 text-slate-700">
               <div className="bg-blue-50 rounded-lg p-3">
                 <p className="font-bold text-blue-800 mb-2">Step 1：題目已知因式 <Latex math="x+2" />，除以後再因式分解</p>
-                <Latex math="\begin{aligned} &\phantom{=} 2x^3-3x^2-13x+6 \\ &= (x+2)(2x^2-7x+3) \\ &= (x+2)(2x-1)(x-3) \end{aligned}" block />
+                <Latex math="\begin{aligned} &\phantom{=} 2x^3-3x^2-11x+6 \\ &= (x+2)(2x^2-7x+3) \\ &= (x+2)(2x-1)(x-3) \end{aligned}" block />
               </div>
               <div className="bg-green-50 rounded-lg p-3 text-green-800 font-bold">
                 <p>∴ <Latex math="(x+2)(2x-1)(x-3)=0" /></p>

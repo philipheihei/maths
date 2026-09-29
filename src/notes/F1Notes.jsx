@@ -858,8 +858,8 @@ export const PolynomialsNotes = ({ activeSub }) => {
                 <Latex math="= 6x^2" block />
               </div>
               <div className="bg-white p-3 rounded border border-slate-200 text-center">
-                <Latex math="(−\frac{3}{y})(5y)" block />
-                <Latex math="= −15 \quad (y \ne 0)" block />
+                <Latex math="(−3y)(y^2)" block />
+                <Latex math="= −3y^3" block />
               </div>
             </div>
           </div>
@@ -869,7 +869,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
             <p className="text-slate-700 mb-2 text-sm">方法：只會乘其他括號的項，順序相乘</p>
             <div className="bg-white p-4 rounded border border-slate-200 space-y-4">
               <div>
-                <pre className="whitespace-pre font-sans text-lg">
+                <pre className="whitespace-pre font-sans text-lg polynomial-expansion-equals">
                   <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="5x(2x + 3)" />{'\n'}
   <span className="plain-equals">=</span>{' '}<Latex math="5x(2x) + 5x(3)" />{'\n'}
   <span className="plain-equals">=</span>{' '}<Latex math="10x^2 + 15x" /> <span className="text-sm text-slate-500">(同類項才能加)</span>
@@ -877,7 +877,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
               </div>
               <hr />
               <div>
-                <pre className="whitespace-pre font-sans text-lg">
+                <pre className="whitespace-pre font-sans text-lg polynomial-expansion-equals">
                   <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="(x + 5)(6x^2)" />{'\n'}
   <span className="plain-equals">=</span>{' '}<Latex math="x(6x^2) + 5(6x^2)" />{'\n'}
   <span className="plain-equals">=</span>{' '}<Latex math="6x^3 + 30x^2" />
@@ -890,7 +890,7 @@ export const PolynomialsNotes = ({ activeSub }) => {
              <h3 className="font-bold text-blue-800 mb-2">📌 多項式 × 多項式 (拆括號)</h3>
             <p className="text-slate-700 mb-2 text-sm">認住位置乘：<Latex math="(①+②)(③+④) = ①×③ + ①×④ + ②×③ + ②×④" /></p>
             <div className="bg-white p-4 rounded border border-slate-200">
-              <pre className="whitespace-pre font-sans text-lg">
+              <pre className="whitespace-pre font-sans text-lg polynomial-expansion-equals">
                 <span className="invisible"><span className="plain-equals">=</span>{' '}</span><Latex math="(4 − 5x)(5 + 6x)" />{'\n'}
 <span className="plain-equals">=</span>{' '}<Latex math="4(5) + 4(6x) − 5x(5) − 5x(6x)" /> <span className="text-sm text-slate-500">(按順序乘)</span>{'\n'}
 <span className="plain-equals">=</span>{' '}<Latex math="20 + " /><span className="bg-yellow-200 px-1 rounded inline-block"><Latex math="24x − 25x" /></span><Latex math=" − 30x^2" /> <span className="bg-yellow-200 px-1 rounded text-sm text-red-500 font-bold">← 找同類項簡化</span>{'\n'}

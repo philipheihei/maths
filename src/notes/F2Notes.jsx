@@ -3243,22 +3243,17 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
             </div>
 
             <div className="bg-white border rounded-xl shadow-sm flex flex-col md:flex-row overflow-hidden">
-              <div className="p-4 flex items-center justify-center bg-slate-50 md:border-r border-b md:border-b-0 min-w-[250px]">
-                <svg viewBox="0 0 200 150" className="w-full max-w-[200px]">
-                  <polygon points="50,130 150,50 170,120" fill="none" stroke="#334155" strokeWidth="2" />
-                  <path d="M 69.52 114.38 A 25 25 0 0 1 74.91 127.92" fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                  {/* Reduce 36 deg arc radius from 35 to 25. 
-                      A = (150,50), B = (50,130), C = (170,120)
-                      Vector AB = (-100, 80). Length = sqrt(10000+6400) = sqrt(16400) ≈ 128.06. Unit = (-0.7809, 0.6247). Point on AB at r=25: A + 25*Unit = (130.48, 65.62)
-                      Vector AC = (20, 70). Length = sqrt(400+4900) = sqrt(5300) ≈ 72.80. Unit = (0.2747, 0.9615). Point on AC at r=25: A + 25*Unit = (156.87, 74.04)
-                  */}
-                  <path d="M 156.87 74.04 A 25 25 0 0 1 130.48 65.62" fill="none" stroke="#ea580c" strokeWidth="1.5" />
-                  <text x="35" y="140" fontSize="14" fill="#334155" fontWeight="bold">B</text>
-                  <text x="145" y="40" fontSize="14" fill="#334155" fontWeight="bold">A</text>
-                  <text x="180" y="130" fontSize="14" fill="#334155" fontWeight="bold">C</text>
-                  <text x="80" y="118" fontSize="12" fill="#2563eb">54°</text>
-                  <text x="135" y="85" fontSize="12" fill="#ea580c">36°</text>
-                </svg>
+              <div className="p-4 flex items-center justify-center bg-slate-50 md:border-r border-b md:border-b-0 min-w-[250px] md:min-w-[280px]">
+                <svg viewBox="0 0 200 150" className="w-full max-w-[240px]">
+                    <polygon points="37.23,72.29 100,125 138.29,79.41" fill="none" stroke="#334155" strokeWidth="2" />
+                    <path d="M 52.55 85.15 A 20 20 0 0 0 57.17 73.69" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d="M 122.33 78.27 A 16 16 0 0 0 128 91.65" fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <text x="24" y="68" fontSize="14" fill="#334155" fontWeight="bold">A</text>
+                    <text x="96" y="145" fontSize="14" fill="#334155" fontWeight="bold">B</text>
+                    <text x="145" y="77" fontSize="14" fill="#334155" fontWeight="bold">C</text>
+                    <text x="48" y="65" fontSize="12" fill="#2563eb">36°</text>
+                    <text x="103" y="92.7" fontSize="12" fill="#ea5800">54°</text>
+                  </svg>
               </div>
               <div className="p-5 flex-1 text-slate-700 text-sm leading-loose">
                 <p className="mb-2 font-semibold">例：圖中，<Latex math="\angle A = 36^\circ" /> 及 <Latex math="\angle C = 54^\circ" />。證明 <Latex math="AB \perp BC" />。</p>
