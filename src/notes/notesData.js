@@ -40,7 +40,7 @@ import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgram
 import { ProbabilityF5Notes } from './ProbabilityF5Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { SequenceNotes, FunctionTransformNotes } from './F6Notes';
-import { SimEqCalculatorNotes } from './A1Notes';
+import { SimEqCalculatorNotes, MCTopicsNotes } from './A1Notes';
 
 export const NOTES_DATA = {
   F1: [
@@ -664,6 +664,14 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'calculator', num: 1, title: '計算機使用', color: 'blue' },
       ]
+    },
+    {
+      id: 'mc-topics',
+      topic: '圖形比例 (MC)',
+      color: 'green',
+      subtopics: [
+        { id: 'shape-proportion', num: 1, title: '圖形比例', color: 'green' },
+      ]
     }
   ],
 };
@@ -725,6 +733,7 @@ export const NOTES_COMPONENTS = {
   'sequence': SequenceNotes,
   'function-transform': FunctionTransformNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
+  'mc-topics': MCTopicsNotes,
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
   'angles': AnglesNotes,

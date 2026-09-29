@@ -390,7 +390,7 @@ const Home = () => {
     {
       id: 'nature-of-roots',
       title: '方程的根的性質',
-      description: '掌握判別式 Δ 的計算，判定實根數目與圖像幾何特徵',
+      description: '練習判別式、兩根之和與兩根之積，理解二次方程的根與係數關係',
       icon: Layers,
       color: 'bg-indigo-600',
       hoverColor: 'hover:bg-indigo-700',
@@ -398,8 +398,8 @@ const Home = () => {
       level: 'F4',
       badges: [{ level: 'F4', chapter: 'CH02', subject: '一元二次方程' }],
       category: '高中',
-      topics: ['二次方程', '判別式', '根的性質', '二次函數圖像'],
-      inDevelopment: true
+      topics: ['二次方程', '判別式', '兩根之和', '兩根之積'],
+      inDevelopment: false
     }
   ];
 

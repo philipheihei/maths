@@ -189,7 +189,7 @@ export const SimEqCalculatorNotes = ({ activeSub }) => {
 // MC 課題 - 圖形比例 (高中甲一)
 // ========================================
 export const MCTopicsNotes = ({ activeSub }) => {
-  const s4 = useRef(null);
+  const s1 = useRef(null);
 
   return (
     <>
@@ -198,57 +198,57 @@ export const MCTopicsNotes = ({ activeSub }) => {
         <p className="text-slate-600">圖形比例進階技巧</p>
       </div>
 
-      <CollapsibleSection id="shape-proportion" title="4. 圖形比例 (較深)" num={4} color="green" activeSub={activeSub} sectionRef={s4}>
+      <CollapsibleSection id="shape-proportion" title="圖形比例" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
         <div className="pb-4">
           {/* 問題內容 */}
           <div className="bg-white p-5 rounded-lg border border-slate-200 mb-6 shadow-sm">
             <div className="flex flex-col md:flex-row gap-6 mb-4">
               <div className="flex-1 text-slate-800 leading-relaxed">
                 <p className="mb-4">
-                  圖中，ABCD 為一梯形且 AD // BC 及 AD:BC = 2:3。設 E 為 BC 的中點。AC 與 DE 相交於 F。
-                  若 <Latex math="\Delta CEF" inline /> 的面積為 36 cm<sup className="text-xs">2</sup>，則梯形 ABCD 的面積為
+                  圖中，<Latex math="ABCD" inline /> 為一梯形且 <Latex math={'AD \parallel BC'} inline /> 及 <Latex math={'AD:BC = 2:3'} inline />。設 <Latex math="E" inline /> 為 <Latex math="BC" inline /> 的中點。<Latex math="AC" inline /> 與 <Latex math="DE" inline /> 相交於 <Latex math="F" inline />。
+                  若 <Latex math={'\Delta CEF'} inline /> 的面積為 <Latex math={'36\text{ cm}^2'} inline />，則梯形 <Latex math="ABCD" inline /> 的面積為
                 </p>
-                <div className="pl-6 space-y-2 font-serif mb-4">
-                  <div>A. 216 cm<sup className="text-xs">2</sup></div>
-                  <div>B. 264 cm<sup className="text-xs">2</sup></div>
-                  <div className="font-bold text-green-700 bg-green-50 inline-block px-2 py-1 rounded">C. 280 cm<sup className="text-xs">2</sup></div>
-                  <div>D. 320 cm<sup className="text-xs">2</sup></div>
+                <div className="pl-6 space-y-2 mb-4">
+                  <div>A. <Latex math={'216\text{ cm}^2'} inline /></div>
+                  <div>B. <Latex math={'264\text{ cm}^2'} inline /></div>
+                  <div className="font-bold text-green-700 bg-green-50 inline-block px-2 py-1 rounded">C. <Latex math={'280\text{ cm}^2'} inline /></div>
+                  <div>D. <Latex math={'320\text{ cm}^2'} inline /></div>
                 </div>
               </div>
-              <div className="w-[240px] flex-shrink-0 mx-auto">
-                <svg viewBox="0 0 200 150" className="w-[240px] overflow-visible mx-auto">
+              <div className="w-full max-w-[300px] flex-shrink-0 mx-auto">
+                <svg viewBox="0 0 260 160" className="block w-full overflow-visible mx-auto">
                   {/* 梯形邊線 */}
-                  <polygon points="60,20 140,20 160,120 40,120" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinejoin="round" />
+                  <polygon points="55,30 205,30 230,125 30,125" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinejoin="round" />
                   {/* 中間輔助線 */}
-                  <line x1="60" y1="20" x2="160" y2="120" stroke="#1e293b" strokeWidth="1.5" />
-                  <line x1="140" y1="20" x2="100" y2="120" stroke="#1e293b" strokeWidth="1.5" />
+                  <line x1="55" y1="30" x2="230" y2="125" stroke="#1e293b" strokeWidth="1.5" />
+                  <line x1="205" y1="30" x2="130" y2="125" stroke="#1e293b" strokeWidth="1.5" />
                   
                   {/* 標籤 */}
-                  <text x="50" y="18" fontSize="12" fontFamily="serif" fill="#1e293b">A</text>
-                  <text x="146" y="18" fontSize="12" fontFamily="serif" fill="#1e293b">D</text>
-                  <text x="30" y="135" fontSize="12" fontFamily="serif" fill="#1e293b">B</text>
-                  <text x="166" y="135" fontSize="12" fontFamily="serif" fill="#1e293b">C</text>
-                  <text x="96" y="135" fontSize="12" fontFamily="serif" fill="#1e293b">E</text>
-                  <text x="108" y="68" fontSize="12" fontFamily="serif" fill="#1e293b">F</text>
+                  <text x="43" y="27" fontSize="12" fontFamily="sans-serif" fill="#1e293b">A</text>
+                  <text x="209" y="27" fontSize="12" fontFamily="sans-serif" fill="#1e293b">D</text>
+                  <text x="20" y="142" fontSize="12" fontFamily="sans-serif" fill="#1e293b">B</text>
+                  <text x="234" y="142" fontSize="12" fontFamily="sans-serif" fill="#1e293b">C</text>
+                  <text x="126" y="142" fontSize="12" fontFamily="sans-serif" fill="#1e293b">E</text>
+                  <text x="164" y="84" fontSize="12" fontFamily="sans-serif" fill="#1e293b">F</text>
 
                   {/* 比例標記 (藍色) */}
-                  <line x1="60" y1="12" x2="140" y2="12" stroke="#1d4ed8" strokeWidth="1.5" />
-                  <polygon points="100,12 95,8 95,16" fill="#1d4ed8" />
-                  <text x="100" y="8" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
-                  <text x="68" y="112" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                  <text x="132" y="112" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                  <path d="M 45 130 C 70 145 155 145 155 130" fill="none" stroke="#3b82f6" strokeWidth="1" />
-                  <text x="98" y="145" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">3</text>
+                  <line x1="55" y1="25" x2="205" y2="25" stroke="#1d4ed8" strokeWidth="1.5" />
+                  <polygon points="130,25 125,21 125,29" fill="#1d4ed8" />
+                  <text x="130" y="17" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
+                  <text x="74" y="118" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                  <text x="174" y="118" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                  <path d="M 35 134 C 80 147 180 147 225 134" fill="none" stroke="#3b82f6" strokeWidth="1" />
+                  <text x="130" y="153" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">3</text>
 
                   {/* 平行箭頭 (紅色) */}
-                  <polyline points="95,16 105,20 95,24" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  <polyline points="95,116 105,120 95,124" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <polyline points="125,26 135,30 125,34" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <polyline points="125,121 135,125 125,129" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 
                   {/* 等長標記 (藍色雙線) */}
-                  <line x1="68" y1="117" x2="72" y2="123" stroke="#1d4ed8" strokeWidth="1.5" />
-                  <line x1="72" y1="117" x2="76" y2="123" stroke="#1d4ed8" strokeWidth="1.5" />
-                  <line x1="128" y1="117" x2="132" y2="123" stroke="#1d4ed8" strokeWidth="1.5" />
-                  <line x1="132" y1="117" x2="136" y2="123" stroke="#1d4ed8" strokeWidth="1.5" />
+                  <line x1="76" y1="119" x2="76" y2="131" stroke="#0ea5e9" strokeWidth="1.5" />
+                  <line x1="84" y1="119" x2="84" y2="131" stroke="#0ea5e9" strokeWidth="1.5" />
+                  <line x1="176" y1="119" x2="176" y2="131" stroke="#0ea5e9" strokeWidth="1.5" />
+                  <line x1="184" y1="119" x2="184" y2="131" stroke="#0ea5e9" strokeWidth="1.5" />
                 </svg>
               </div>
             </div>
@@ -272,12 +272,12 @@ export const MCTopicsNotes = ({ activeSub }) => {
                     <polygon points="100,120 160,120 117.1,77.1" fill="#bae6fd" stroke="#0ea5e9" strokeWidth="2" strokeLinejoin="round" />
                     
                     {/* 頂點文字 */}
-                    <text x="50" y="18" fontSize="11" fontFamily="serif" fill="#64748b">A</text>
-                    <text x="146" y="18" fontSize="11" fontFamily="serif" fill="#64748b">D</text>
-                    <text x="30" y="135" fontSize="11" fontFamily="serif" fill="#64748b">B</text>
-                    <text x="166" y="135" fontSize="11" fontFamily="serif" fill="#64748b">C</text>
-                    <text x="96" y="135" fontSize="11" fontFamily="serif" fill="#64748b">E</text>
-                    <text x="108" y="68" fontSize="11" fontFamily="serif" fill="#64748b">F</text>
+                    <text x="50" y="18" fontSize="11" fontFamily="sans-serif" fill="#64748b">A</text>
+                    <text x="146" y="18" fontSize="11" fontFamily="sans-serif" fill="#64748b">D</text>
+                    <text x="30" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">B</text>
+                    <text x="166" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">C</text>
+                    <text x="96" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">E</text>
+                    <text x="108" y="68" fontSize="11" fontFamily="sans-serif" fill="#64748b">F</text>
 
                     {/* 數據 */}
                     <line x1="60" y1="12" x2="140" y2="12" stroke="#1d4ed8" strokeWidth="1.5" />
@@ -309,7 +309,7 @@ export const MCTopicsNotes = ({ activeSub }) => {
                   </svg>
                 </div>
                 
-                <div className="bg-purple-50 p-4 rounded-xl border border-purple-200 text-purple-900">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-slate-800">
                   <p className="font-bold mb-2">可透過長度比例得出面積比例：</p>
                   <div className="flex items-center justify-center py-2 text-xl">
                     <Latex math="\left(\frac{1.5}{2}\right)^2 = \frac{36}{x}" />
@@ -319,14 +319,14 @@ export const MCTopicsNotes = ({ activeSub }) => {
                     <br />
                     <div className="mt-1"><Latex math="x = 64" /></div>
                   </div>
-                  <p className="mt-2 pt-2 border-t border-purple-200 text-sm text-center font-bold">
-                    所以 <Latex math="\Delta ADF" inline /> 面積 = 64
+                  <p className="mt-2 pt-2 border-t border-slate-200 text-sm text-center font-bold text-blue-700">
+                    所以 <Latex math={'[\Delta ADF] = 64'} inline />
                   </p>
                 </div>
               </div>
 
               {/* 技巧2 */}
-              <div className="border-l border-slate-200 pl-6">
+              <div className="md:border-l md:border-slate-200 md:pl-6">
                 <h3 className="font-bold text-green-700 mb-4 text-lg">技巧 2：同高 <Latex math="\Delta" inline /></h3>
                 
                 <div className="w-[240px] mx-auto mb-4">
@@ -344,12 +344,12 @@ export const MCTopicsNotes = ({ activeSub }) => {
                     <polygon points="100,120 160,120 117.1,77.1" fill="none" stroke="#0ea5e9" strokeWidth="1.5" strokeLinejoin="round" />
                     
                     {/* 頂點文字 */}
-                    <text x="50" y="18" fontSize="11" fontFamily="serif" fill="#64748b">A</text>
-                    <text x="146" y="18" fontSize="11" fontFamily="serif" fill="#64748b">D</text>
-                    <text x="30" y="135" fontSize="11" fontFamily="serif" fill="#64748b">B</text>
-                    <text x="166" y="135" fontSize="11" fontFamily="serif" fill="#64748b">C</text>
-                    <text x="96" y="135" fontSize="11" fontFamily="serif" fill="#64748b">E</text>
-                    <text x="108" y="68" fontSize="11" fontFamily="serif" fill="#64748b">F</text>
+                    <text x="50" y="18" fontSize="11" fontFamily="sans-serif" fill="#64748b">A</text>
+                    <text x="146" y="18" fontSize="11" fontFamily="sans-serif" fill="#64748b">D</text>
+                    <text x="30" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">B</text>
+                    <text x="166" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">C</text>
+                    <text x="96" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">E</text>
+                    <text x="108" y="68" fontSize="11" fontFamily="sans-serif" fill="#64748b">F</text>
                     
                     {/* 比例標記 - 對角線上的比重 */}
                     <path d="M 80,10 Q 100,20 95,45" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue)" />
@@ -369,21 +369,15 @@ export const MCTopicsNotes = ({ activeSub }) => {
                   </svg>
                 </div>
                 
-                <div className="bg-red-50 p-4 rounded-xl border border-red-200 text-red-900">
-                  <p className="font-bold mb-2 font-sans text-lg text-slate-800">
-                    AF : FC = 2 : 1.5 <span className="text-sm font-normal text-slate-500 ml-1">，DF 為兩 <Latex math="\Delta" inline /> 同高</span>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-slate-800">
+                  <p className="font-bold mb-3 text-lg">
+                    <Latex math="AF:FC = 2:1.5" inline /> <span className="text-sm font-normal text-slate-500 ml-1">，<Latex math="DF" inline /> 為兩個三角形的同高</span>
                   </p>
-                  <div className="flex flex-wrap items-center gap-2 mb-2 font-bold mt-3">
-                    <span className="text-xl">∴</span> 
-                    <span className="text-purple-700 bg-purple-100 px-2 py-0.5 rounded"><Latex math="\Delta ADF" inline /> 面積</span> : 
-                    <span className="text-red-700 bg-red-100 px-2 py-0.5 rounded"><Latex math="\Delta CDF" inline /> 面積</span> 
+                  <div className="rounded-lg border border-blue-100 bg-white px-3 py-3 text-center text-lg text-slate-800">
+                    <Latex math={'\begin{aligned} [\Delta ADF] : [\Delta CDF] &= 2 : 1.5 \\ &= 64 : 48 \end{aligned}'} block compact />
                   </div>
-                  <div className="text-right font-bold text-slate-800 text-xl border-l-[3px] border-slate-300 ml-6 pl-4 my-2">
-                    = 2 : 1.5
-                    <div className="text-blue-700">= 64 : 48</div>
-                  </div>
-                  <p className="mt-4 pt-2 border-t border-red-200 text-sm text-center font-bold">
-                    所以 <Latex math="\Delta CDF" inline /> 面積 = 48
+                  <p className="mt-3 pt-3 border-t border-slate-200 text-sm text-center font-bold text-blue-700">
+                    所以 <Latex math={'[\Delta CDF] = 48'} inline />
                   </p>
                 </div>
               </div>
@@ -397,23 +391,22 @@ export const MCTopicsNotes = ({ activeSub }) => {
               </h4>
               <ol className="list-decimal list-inside space-y-3 text-[15px] text-slate-700 font-sans pl-2">
                 <li>
-                  得出 <Latex math="\Delta ADF" inline /> (64) 及 <Latex math="\Delta CDF" inline /> (48) 後，
-                  <span className="font-bold bg-yellow-100 px-2 rounded">
-                    <Latex math="\Delta ACD" inline /> 面積 = 64 + 48 = 112
+                  得出 <Latex math={'[\Delta ADF] = 64'} inline /> 及 <Latex math={'[\Delta CDF] = 48'} inline /> 後，
+                  <span className="font-bold bg-blue-50 px-2 py-1 rounded text-blue-800">
+                    <Latex math={'[\Delta ACD] = 64 + 48 = 112'} inline />
                   </span>。
                 </li>
-                <li>因為 AD // BC 且它們為梯形的兩底邊，底邊長度比 AD : BC = 2 : 3。</li>
+                <li>因為 <Latex math={'AD \parallel BC'} inline /> 且它們為梯形的兩底邊，底邊長度比為 <Latex math="AD:BC = 2:3" inline />。</li>
                 <li>
-                  <Latex math="\Delta ABC" inline /> 與 <Latex math="\Delta ACD" inline /> 共用相同的高（梯形高），所以面積比也是 3 : 2。
+                  <Latex math={'\Delta ABC'} inline /> 與 <Latex math={'\Delta ACD'} inline /> 共用相同的高（梯形高），所以面積比也是 <Latex math="3:2" inline />。
                   <div className="pl-6 text-blue-700 font-bold mt-1">
                     <div className="inline-block border-l-2 border-blue-400 pl-3">
-                      112 ÷ 2 × 3 = 168
+                      <Latex math={'112 \div 2 \times 3 = 168'} inline />
                     </div>
                   </div>
                 </li>
                 <li className="pt-2">
-                  <strong className="text-slate-800">總面積</strong> = <Latex math="\Delta ACD" inline /> + <Latex math="\Delta ABC" inline /> = 112 + 168 = 
-                  <span className="text-xl text-green-700 font-bold ml-2">280</span>。 
+                  <strong className="text-slate-800">總面積：</strong><span className="text-xl text-green-700 font-bold ml-1"><Latex math={'[\Delta ACD] + [\Delta ABC] = 112 + 168 = 280'} inline /></span>。
                   <span className="text-green-600 font-bold ml-2 inline-flex items-center bg-green-100 px-2 py-1 rounded">
                     <span className="mr-1">✓</span> C 選項
                   </span>
