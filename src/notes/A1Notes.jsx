@@ -194,224 +194,229 @@ export const MCTopicsNotes = ({ activeSub }) => {
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-green-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">MC 課題</h1>
-        <p className="text-slate-600">圖形比例進階技巧</p>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">圖形比例 (MC)</h1>
+        <p className="text-slate-600">利用相似三角形與同高三角形解梯形面積比例</p>
       </div>
 
-      <CollapsibleSection id="shape-proportion" title="圖形比例" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
+      <CollapsibleSection id="shape-proportion" title="圖形比例 (較深)" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
         <div className="pb-4">
           {/* 問題內容 */}
-          <div className="bg-white p-5 rounded-lg border border-slate-200 mb-6 shadow-sm">
-            <div className="flex flex-col md:flex-row gap-6 mb-4">
+          <div className="bg-white p-5 rounded-xl border border-slate-200 mb-6 shadow-sm">
+            <div className="flex flex-col lg:flex-row gap-6 mb-4 items-center">
               <div className="flex-1 text-slate-800 leading-relaxed">
-                <p className="mb-4">
-                  圖中，<Latex math="ABCD" inline /> 為一梯形且 <Latex math={'AD \parallel BC'} inline /> 及 <Latex math={'AD:BC = 2:3'} inline />。設 <Latex math="E" inline /> 為 <Latex math="BC" inline /> 的中點。<Latex math="AC" inline /> 與 <Latex math="DE" inline /> 相交於 <Latex math="F" inline />。
-                  若 <Latex math={'\Delta CEF'} inline /> 的面積為 <Latex math={'36\text{ cm}^2'} inline />，則梯形 <Latex math="ABCD" inline /> 的面積為
+                <p className="mb-4 text-base">
+                  圖中，ABCD 為一梯形且 AD // BC 及 AD : BC = 2 : 3。設 E 為 BC 的中點。AC 與 DE 相交於 F。
+                  若 <Latex math="\Delta CEF" /> 的面積為 36 cm²，則梯形 ABCD 的面積為
                 </p>
-                <div className="pl-6 space-y-2 mb-4">
-                  <div>A. <Latex math={'216\text{ cm}^2'} inline /></div>
-                  <div>B. <Latex math={'264\text{ cm}^2'} inline /></div>
-                  <div className="font-bold text-green-700 bg-green-50 inline-block px-2 py-1 rounded">C. <Latex math={'280\text{ cm}^2'} inline /></div>
-                  <div>D. <Latex math={'320\text{ cm}^2'} inline /></div>
+                <div className="grid grid-cols-2 gap-3 max-w-md mb-2">
+                  <div className="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">A. 216 cm²</div>
+                  <div className="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">B. 264 cm²</div>
+                  <div className="px-3 py-2 rounded-lg bg-green-50 border border-green-300 text-green-800 font-bold">C. 280 cm² ✓</div>
+                  <div className="px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">D. 320 cm²</div>
                 </div>
               </div>
-              <div className="w-full max-w-[300px] flex-shrink-0 mx-auto">
-                <svg viewBox="0 0 260 160" className="block w-full overflow-visible mx-auto">
+              <div className="w-full max-w-[320px] flex-shrink-0 mx-auto">
+                <svg viewBox="0 0 280 160" className="block w-full overflow-visible mx-auto">
                   {/* 梯形邊線 */}
-                  <polygon points="55,30 205,30 230,125 30,125" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinejoin="round" />
-                  {/* 中間輔助線 */}
-                  <line x1="55" y1="30" x2="230" y2="125" stroke="#1e293b" strokeWidth="1.5" />
-                  <line x1="205" y1="30" x2="130" y2="125" stroke="#1e293b" strokeWidth="1.5" />
+                  <polygon points="65,30 185,30 215,125 35,125" fill="none" stroke="#1e293b" strokeWidth="1.5" strokeLinejoin="round" />
+                  {/* 對角線 */}
+                  <line x1="65" y1="30" x2="215" y2="125" stroke="#1e293b" strokeWidth="1.5" />
+                  <line x1="185" y1="30" x2="125" y2="125" stroke="#1e293b" strokeWidth="1.5" />
                   
-                  {/* 標籤 */}
-                  <text x="43" y="27" fontSize="12" fontFamily="sans-serif" fill="#1e293b">A</text>
-                  <text x="209" y="27" fontSize="12" fontFamily="sans-serif" fill="#1e293b">D</text>
-                  <text x="20" y="142" fontSize="12" fontFamily="sans-serif" fill="#1e293b">B</text>
-                  <text x="234" y="142" fontSize="12" fontFamily="sans-serif" fill="#1e293b">C</text>
-                  <text x="126" y="142" fontSize="12" fontFamily="sans-serif" fill="#1e293b">E</text>
-                  <text x="164" y="84" fontSize="12" fontFamily="sans-serif" fill="#1e293b">F</text>
+                  {/* 頂點標籤 */}
+                  <text x="50" y="27" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">A</text>
+                  <text x="192" y="27" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">D</text>
+                  <text x="20" y="132" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">B</text>
+                  <text x="222" y="132" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">C</text>
+                  <text x="121" y="145" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">E</text>
+                  <text x="158" y="86" fontSize="12" fontWeight="600" fontFamily="sans-serif" fill="#1e293b">F</text>
 
                   {/* 比例標記 (藍色) */}
-                  <line x1="55" y1="25" x2="205" y2="25" stroke="#1d4ed8" strokeWidth="1.5" />
-                  <polygon points="130,25 125,21 125,29" fill="#1d4ed8" />
-                  <text x="130" y="17" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
-                  <text x="74" y="118" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                  <text x="174" y="118" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                  <path d="M 35 134 C 80 147 180 147 225 134" fill="none" stroke="#3b82f6" strokeWidth="1" />
-                  <text x="130" y="153" textAnchor="middle" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">3</text>
+                  <line x1="65" y1="20" x2="185" y2="20" stroke="#1d4ed8" strokeWidth="1.5" />
+                  <polygon points="125,20 120,16 120,24" fill="#1d4ed8" />
+                  <text x="125" y="13" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
+                  <text x="75" y="115" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                  <text x="165" y="115" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                  <path d="M 40 134 C 85 152 165 152 210 134" fill="none" stroke="#3b82f6" strokeWidth="1" />
+                  <text x="125" y="156" textAnchor="middle" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">3</text>
 
                   {/* 平行箭頭 (紅色) */}
-                  <polyline points="125,26 135,30 125,34" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  <polyline points="125,121 135,125 125,129" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <polyline points="120,26 128,30 120,34" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <polyline points="120,121 128,125 120,129" fill="none" stroke="#dc2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 
-                  {/* 等長標記 (藍色雙線) */}
-                  <line x1="76" y1="119" x2="76" y2="131" stroke="#0ea5e9" strokeWidth="1.5" />
-                  <line x1="84" y1="119" x2="84" y2="131" stroke="#0ea5e9" strokeWidth="1.5" />
-                  <line x1="176" y1="119" x2="176" y2="131" stroke="#0ea5e9" strokeWidth="1.5" />
-                  <line x1="184" y1="119" x2="184" y2="131" stroke="#0ea5e9" strokeWidth="1.5" />
+                  {/* 等長刻痕 (青藍色雙線) */}
+                  <line x1="77" y1="120" x2="77" y2="130" stroke="#0ea5e9" strokeWidth="1.5" />
+                  <line x1="83" y1="120" x2="83" y2="130" stroke="#0ea5e9" strokeWidth="1.5" />
+                  <line x1="167" y1="120" x2="167" y2="130" stroke="#0ea5e9" strokeWidth="1.5" />
+                  <line x1="173" y1="120" x2="173" y2="130" stroke="#0ea5e9" strokeWidth="1.5" />
                 </svg>
               </div>
             </div>
 
-            {/* 解題技巧分隔線 */}
+            {/* 技巧詳解卡片 */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-200 mt-2">
               
-              {/* 技巧1 */}
-              <div>
-                <h3 className="font-bold text-green-700 mb-4 text-lg">技巧 1：找相似 <Latex math="\Delta" inline /> 比例</h3>
+              {/* 技巧 1 */}
+              <div className="flex flex-col">
+                <h3 className="font-bold text-emerald-800 mb-3 text-lg flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  技巧 1：找相似 <Latex math="\Delta" /> 比例
+                </h3>
                 
-                <div className="w-[240px] mx-auto mb-4 relative">
-                  <svg viewBox="0 0 200 150" className="w-[240px] overflow-visible mx-auto">
-                    {/* 淡色底圖梯形 */}
-                    <polygon points="60,20 140,20 160,120 40,120" fill="none" stroke="#cbd5e1" strokeWidth="1" />
-                    <line x1="60" y1="20" x2="160" y2="120" stroke="#cbd5e1" strokeWidth="1" />
-                    <line x1="140" y1="20" x2="100" y2="120" stroke="#cbd5e1" strokeWidth="1" />
-                    
-                    {/* 重點高亮: ADF 與 CEF */}
-                    <polygon points="60,20 140,20 117.1,77.1" fill="none" stroke="#7e22ce" strokeWidth="2" strokeLinejoin="round" />
-                    <polygon points="100,120 160,120 117.1,77.1" fill="#bae6fd" stroke="#0ea5e9" strokeWidth="2" strokeLinejoin="round" />
-                    
-                    {/* 頂點文字 */}
-                    <text x="50" y="18" fontSize="11" fontFamily="sans-serif" fill="#64748b">A</text>
-                    <text x="146" y="18" fontSize="11" fontFamily="sans-serif" fill="#64748b">D</text>
-                    <text x="30" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">B</text>
-                    <text x="166" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">C</text>
-                    <text x="96" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">E</text>
-                    <text x="108" y="68" fontSize="11" fontFamily="sans-serif" fill="#64748b">F</text>
-
-                    {/* 數據 */}
-                    <line x1="60" y1="12" x2="140" y2="12" stroke="#1d4ed8" strokeWidth="1.5" />
-                    <polygon points="100,12 95,8 95,16" fill="#1d4ed8" />
-                    <text x="100" y="8" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
-                    
-                    <line x1="100" y1="128" x2="160" y2="128" stroke="#1d4ed8" strokeWidth="1.5" />
-                    <polygon points="135,128 130,124 130,132" fill="#1d4ed8" />
-                    <text x="135" y="142" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                    
-                    <text x="115" y="110" fontSize="11" fontWeight="bold" fill="#1e3a8a" fontFamily="sans-serif">36 cm²</text>
-                    
-                    {/* 漏斗組合指示 */}
-                    <line x1="140" y1="48" x2="160" y2="48" stroke="#0f172a" strokeWidth="1.5" markerEnd="url(#arrow)" />
-                    <text x="165" y="52" fontSize="12" fontFamily="sans-serif" fill="#0f172a" fontWeight="bold">漏斗組合：</text>
-                    <text x="165" y="70" fontSize="12" fontFamily="sans-serif" fill="#0f172a" fontWeight="bold">上下Δ相似</text>
-                    
-                    {/* 直式箭頭指引列式 */}
-                    <path d="M 80,60 Q 60,60 60,90 Q 60,120 70,120 Q 80,120 80,135" fill="none" stroke="#7e22ce" strokeWidth="1.5" markerEnd="url(#arrow-purple)" />
-                    
+                <div className="w-full max-w-[280px] mx-auto mb-4">
+                  <svg viewBox="0 0 280 160" className="block w-full overflow-visible mx-auto">
                     <defs>
-                      <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a" />
-                      </marker>
-                      <marker id="arrow-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
-                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#7e22ce" />
+                      <marker id="arrow-fn" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
                       </marker>
                     </defs>
+
+                    {/* 底圖梯形 */}
+                    <polygon points="65,30 185,30 215,125 35,125" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+                    <line x1="65" y1="30" x2="215" y2="125" stroke="#cbd5e1" strokeWidth="1" />
+                    <line x1="185" y1="30" x2="125" y2="125" stroke="#cbd5e1" strokeWidth="1" />
+                    
+                    {/* 高亮相似三角形：ADF (紫) 與 CEF (藍) */}
+                    <polygon points="65,30 185,30 150.7,84.3" fill="#f5f3ff" stroke="#7c3aed" strokeWidth="2" strokeLinejoin="round" />
+                    <polygon points="125,125 215,125 150.7,84.3" fill="#e0f2fe" stroke="#0284c7" strokeWidth="2" strokeLinejoin="round" />
+                    
+                    {/* 頂點文字 */}
+                    <text x="50" y="27" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">A</text>
+                    <text x="192" y="27" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">D</text>
+                    <text x="20" y="132" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">B</text>
+                    <text x="222" y="132" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">C</text>
+                    <text x="121" y="145" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">E</text>
+                    <text x="158" y="86" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">F</text>
+
+                    {/* 數據標籤 */}
+                    <line x1="65" y1="20" x2="185" y2="20" stroke="#1d4ed8" strokeWidth="1.5" />
+                    <polygon points="125,20 120,16 120,24" fill="#1d4ed8" />
+                    <text x="125" y="13" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
+                    
+                    <line x1="125" y1="133" x2="215" y2="133" stroke="#1d4ed8" strokeWidth="1.5" />
+                    <polygon points="175,133 170,129 170,137" fill="#1d4ed8" />
+                    <text x="175" y="147" textAnchor="middle" fontSize="12" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                    
+                    <text x="160" y="112" textAnchor="middle" fontSize="11" fontWeight="bold" fill="#0369a1" fontFamily="sans-serif">36 cm²</text>
+                    
+                    {/* 漏斗組合指示 */}
+                    <line x1="225" y1="55" x2="195" y2="55" stroke="#334155" strokeWidth="1.5" markerEnd="url(#arrow-fn)" />
+                    <text x="230" y="52" fontSize="11" fontFamily="sans-serif" fill="#334155" fontWeight="bold">漏斗組合：</text>
+                    <text x="230" y="68" fontSize="11" fontFamily="sans-serif" fill="#334155" fontWeight="bold">上下Δ相似</text>
                   </svg>
                 </div>
                 
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-slate-800">
-                  <p className="font-bold mb-2">可透過長度比例得出面積比例：</p>
-                  <div className="flex items-center justify-center py-2 text-xl">
-                    <Latex math="\left(\frac{1.5}{2}\right)^2 = \frac{36}{x}" />
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-slate-800 flex-1 flex flex-col justify-between">
+                  <div>
+                    <p className="font-bold text-slate-700 mb-2">透過長度比例得出面積比例：</p>
+                    <div className="bg-white rounded-lg border border-slate-200 p-3 my-2 text-center">
+                      <Latex math="\begin{aligned} \left(\frac{1.5}{2}\right)^2 &= \frac{36}{x} \\ x &= \frac{36 \times 4}{1.5^2} \\ &= 64 \end{aligned}" block />
+                    </div>
                   </div>
-                  <div className="mt-2 text-slate-800 text-center text-lg">
-                    <Latex math="x = \frac{36 \times 4}{1.5^2}" />
-                    <br />
-                    <div className="mt-1"><Latex math="x = 64" /></div>
-                  </div>
-                  <p className="mt-2 pt-2 border-t border-slate-200 text-sm text-center font-bold text-blue-700">
-                    所以 <Latex math={'[\Delta ADF] = 64'} inline />
+                  <p className="mt-3 pt-2 border-t border-slate-200 text-sm text-center font-bold text-emerald-700">
+                    ∴ <Latex math="\Delta ADF" /> 面積 = 64
                   </p>
                 </div>
               </div>
 
-              {/* 技巧2 */}
-              <div className="md:border-l md:border-slate-200 md:pl-6">
-                <h3 className="font-bold text-green-700 mb-4 text-lg">技巧 2：同高 <Latex math="\Delta" inline /></h3>
+              {/* 技巧 2 */}
+              <div className="flex flex-col md:border-l md:border-slate-200 md:pl-6">
+                <h3 className="font-bold text-emerald-800 mb-3 text-lg flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  技巧 2：同高 <Latex math="\Delta" />
+                </h3>
                 
-                <div className="w-[240px] mx-auto mb-4">
-                  <svg viewBox="0 0 200 150" className="w-[240px] overflow-visible mx-auto">
-                    {/* 淡色底圖梯形 */}
-                    <polygon points="60,20 140,20 160,120 40,120" fill="none" stroke="#cbd5e1" strokeWidth="1" />
-                    <line x1="60" y1="20" x2="160" y2="120" stroke="#cbd5e1" strokeWidth="1" />
-                    <line x1="140" y1="20" x2="100" y2="120" stroke="#cbd5e1" strokeWidth="1" />
-                    
-                    {/* 高亮同高三角形 (用紫色和紅色) */}
-                    <polygon points="60,20 140,20 117.1,77.1" fill="none" stroke="#7e22ce" strokeWidth="2" strokeLinejoin="round" />
-                    <polygon points="140,20 160,120 117.1,77.1" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinejoin="round" />
-                    
-                     {/* F是交點，CEF 稍微維持淡藍代表已知的起始點 */}
-                    <polygon points="100,120 160,120 117.1,77.1" fill="none" stroke="#0ea5e9" strokeWidth="1.5" strokeLinejoin="round" />
-                    
-                    {/* 頂點文字 */}
-                    <text x="50" y="18" fontSize="11" fontFamily="sans-serif" fill="#64748b">A</text>
-                    <text x="146" y="18" fontSize="11" fontFamily="sans-serif" fill="#64748b">D</text>
-                    <text x="30" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">B</text>
-                    <text x="166" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">C</text>
-                    <text x="96" y="135" fontSize="11" fontFamily="sans-serif" fill="#64748b">E</text>
-                    <text x="108" y="68" fontSize="11" fontFamily="sans-serif" fill="#64748b">F</text>
-                    
-                    {/* 比例標記 - 對角線上的比重 */}
-                    <path d="M 80,10 Q 100,20 95,45" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue)" />
-                    <text x="100" y="32" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
-
-                    <path d="M 145,135 Q 140,110 135,110" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue)" />
-                    <text x="135" y="145" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-                    <text x="120" y="105" fontSize="14" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
-
-                    <text x="120" y="90" fontSize="16" fill="#1d4ed8" fontWeight="bold">↑</text>
-
+                <div className="w-full max-w-[280px] mx-auto mb-4">
+                  <svg viewBox="0 0 280 160" className="block w-full overflow-visible mx-auto">
                     <defs>
-                      <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                      <marker id="arrow-blue-diag" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
                         <path d="M 0 0 L 10 5 L 0 10 z" fill="#1d4ed8" />
                       </marker>
                     </defs>
+
+                    {/* 底圖梯形 */}
+                    <polygon points="65,30 185,30 215,125 35,125" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+                    <line x1="65" y1="30" x2="215" y2="125" stroke="#cbd5e1" strokeWidth="1" />
+                    <line x1="185" y1="30" x2="125" y2="125" stroke="#cbd5e1" strokeWidth="1" />
+                    
+                    {/* 高亮同高三角形：ADF (紫) 與 CDF (紅) */}
+                    <polygon points="65,30 185,30 150.7,84.3" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinejoin="round" />
+                    <polygon points="185,30 215,125 150.7,84.3" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinejoin="round" />
+                    <polygon points="125,125 215,125 150.7,84.3" fill="none" stroke="#94a3b8" strokeWidth="1" strokeDasharray="3 3" />
+                    
+                    {/* 頂點文字 */}
+                    <text x="50" y="27" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">A</text>
+                    <text x="192" y="27" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">D</text>
+                    <text x="20" y="132" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">B</text>
+                    <text x="222" y="132" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">C</text>
+                    <text x="121" y="145" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">E</text>
+                    <text x="158" y="86" fontSize="11" fontWeight="600" fontFamily="sans-serif" fill="#64748b">F</text>
+                    
+                    {/* 對角線上的比重箭頭 */}
+                    <path d="M 85,15 Q 110,25 105,52" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue-diag)" />
+                    <text x="110" y="38" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">2</text>
+
+                    <path d="M 195,142 Q 185,115 180,110" fill="none" stroke="#1d4ed8" strokeWidth="1.5" markerEnd="url(#arrow-blue-diag)" />
+                    <text x="198" y="148" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
+                    <text x="172" y="100" fontSize="13" fontWeight="bold" fill="#1d4ed8" fontFamily="sans-serif">1.5</text>
                   </svg>
                 </div>
                 
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-slate-800">
-                  <p className="font-bold mb-3 text-lg">
-                    <Latex math="AF:FC = 2:1.5" inline /> <span className="text-sm font-normal text-slate-500 ml-1">，<Latex math="DF" inline /> 為兩個三角形的同高</span>
-                  </p>
-                  <div className="rounded-lg border border-blue-100 bg-white px-3 py-3 text-center text-lg text-slate-800">
-                    <Latex math={'\begin{aligned} [\Delta ADF] : [\Delta CDF] &= 2 : 1.5 \\ &= 64 : 48 \end{aligned}'} block compact />
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-slate-800 flex-1 flex flex-col justify-between">
+                  <div>
+                    <p className="font-bold text-slate-700 mb-2">
+                      AF : FC = 2 : 1.5 <span className="text-xs font-normal text-slate-500">（DF 為公共高）</span>
+                    </p>
+                    <div className="bg-white rounded-lg border border-slate-200 p-3 my-2 text-center">
+                      <Latex math="\begin{aligned} \Delta ADF \text{ 面積} : \Delta CDF \text{ 面積} &= 2 : 1.5 \\ &= 64 : 48 \end{aligned}" block />
+                    </div>
                   </div>
-                  <p className="mt-3 pt-3 border-t border-slate-200 text-sm text-center font-bold text-blue-700">
-                    所以 <Latex math={'[\Delta CDF] = 48'} inline />
+                  <p className="mt-3 pt-2 border-t border-slate-200 text-sm text-center font-bold text-emerald-700">
+                    ∴ <Latex math="\Delta CDF" /> 面積 = 48
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Hint / Final Computation  */}
-            <div className="mt-8 p-5 bg-slate-50 border border-slate-300 rounded-lg shadow-inner">
-              <h4 className="font-bold text-slate-800 mb-3 text-lg border-b border-slate-200 pb-2 flex items-center">
-                <span className="bg-slate-700 text-white rounded-full w-6 h-6 inline-flex items-center justify-center mr-2 text-sm">3</span>
+            {/* 解題思路整合 */}
+            <div className="mt-6 p-5 bg-slate-50 border border-slate-200 rounded-xl">
+              <h4 className="font-bold text-slate-800 mb-3 text-base flex items-center gap-2">
+                <span className="bg-emerald-600 text-white rounded-full w-5 h-5 inline-flex items-center justify-center text-xs font-bold">3</span>
                 解題思路整合
               </h4>
-              <ol className="list-decimal list-inside space-y-3 text-[15px] text-slate-700 font-sans pl-2">
-                <li>
-                  得出 <Latex math={'[\Delta ADF] = 64'} inline /> 及 <Latex math={'[\Delta CDF] = 48'} inline /> 後，
-                  <span className="font-bold bg-blue-50 px-2 py-1 rounded text-blue-800">
-                    <Latex math={'[\Delta ACD] = 64 + 48 = 112'} inline />
-                  </span>。
-                </li>
-                <li>因為 <Latex math={'AD \parallel BC'} inline /> 且它們為梯形的兩底邊，底邊長度比為 <Latex math="AD:BC = 2:3" inline />。</li>
-                <li>
-                  <Latex math={'\Delta ABC'} inline /> 與 <Latex math={'\Delta ACD'} inline /> 共用相同的高（梯形高），所以面積比也是 <Latex math="3:2" inline />。
-                  <div className="pl-6 text-blue-700 font-bold mt-1">
-                    <div className="inline-block border-l-2 border-blue-400 pl-3">
-                      <Latex math={'112 \div 2 \times 3 = 168'} inline />
+              <div className="space-y-3 text-sm text-slate-700">
+                <div className="flex items-start gap-2 bg-white p-3 rounded-lg border border-slate-200">
+                  <span className="font-bold text-emerald-600 shrink-0">Step 1</span>
+                  <div>
+                    得出 <Latex math="\Delta ADF" /> 面積 = 64 及 <Latex math="\Delta CDF" /> 面積 = 48：
+                    <div className="font-bold text-slate-800 mt-1">
+                      <Latex math="\Delta ACD \text{ 面積} = 64 + 48 = 112" />
                     </div>
                   </div>
-                </li>
-                <li className="pt-2">
-                  <strong className="text-slate-800">總面積：</strong><span className="text-xl text-green-700 font-bold ml-1"><Latex math={'[\Delta ACD] + [\Delta ABC] = 112 + 168 = 280'} inline /></span>。
-                  <span className="text-green-600 font-bold ml-2 inline-flex items-center bg-green-100 px-2 py-1 rounded">
-                    <span className="mr-1">✓</span> C 選項
-                  </span>
-                </li>
-              </ol>
+                </div>
+                <div className="flex items-start gap-2 bg-white p-3 rounded-lg border border-slate-200">
+                  <span className="font-bold text-emerald-600 shrink-0">Step 2</span>
+                  <div>
+                    已知 AD // BC 且底邊之比 AD : BC = 2 : 3。
+                  </div>
+                </div>
+                <div className="flex items-start gap-2 bg-white p-3 rounded-lg border border-slate-200">
+                  <span className="font-bold text-emerald-600 shrink-0">Step 3</span>
+                  <div>
+                    <Latex math="\Delta ABC" /> 與 <Latex math="\Delta ACD" /> 共用相同的高（即梯形的高），因此面積比亦為 3 : 2：
+                    <div className="font-bold text-slate-800 mt-1">
+                      <Latex math="\Delta ABC \text{ 面積} = 112 \div 2 \times 3 = 168" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2 bg-emerald-50 p-3 rounded-lg border border-emerald-200">
+                  <span className="font-bold text-emerald-700 shrink-0">結論</span>
+                  <div className="text-emerald-900 font-medium">
+                    梯形 ABCD 總面積 = <Latex math="112 + 168 =" /> <strong className="text-lg text-emerald-800 font-bold ml-1">280 cm²</strong>
+                    <span className="ml-3 font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-300">✓ 選項 C</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
