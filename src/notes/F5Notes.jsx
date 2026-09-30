@@ -1860,9 +1860,9 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <div className="mt-4">
               <div className="bg-slate-50 p-3 rounded mb-3">
                 <span className="text-red-500 font-bold mr-2">標準式：</span>
-                <Latex math="(x - \textcolor{#16a34a}{3})^2 + (y - \textcolor{#9333ea}{4})^2 = \textcolor{#2563eb}{36}" block />
+                <Latex math="(x - \textcolor{#16a34a}{3})^2 + (y + \textcolor{#9333ea}{4})^2 = \textcolor{#2563eb}{36}" block />
                 <div className="text-center mt-3 text-slate-800 font-bold text-lg">
-                  ∴ 圓心：<Latex math="(\textcolor{#16a34a}{3}, \textcolor{#9333ea}{4})" inline />，半徑：<Latex math="\sqrt{\textcolor{#2563eb}{36}} = 6" inline />
+                  ∴ 圓心：<Latex math="(\textcolor{#16a34a}{3}, \textcolor{#9333ea}{-4})" inline />，半徑：<Latex math="\sqrt{\textcolor{#2563eb}{36}} = 6" inline />
                 </div>
                 <p className="text-xs text-slate-500 text-center mt-2">註：加減號為固定格式，數字本身為答案資料</p>
               </div>

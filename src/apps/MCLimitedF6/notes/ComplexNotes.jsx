@@ -140,16 +140,16 @@ const ComplexNotes = ({ onBack }) => (
               <div className="flex gap-2 flex-wrap">
                 <div className="flex items-center gap-1.5 bg-green-50 border border-green-200 rounded-lg px-3 py-1.5">
                   <span className="font-mono bg-gray-900 text-white text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
-                  <span className="text-sm text-green-800">先出 <strong>-2</strong>（實部 a）</span>
+                  <span className="text-sm text-green-800">先出 <strong>2</strong>（實部 a）</span>
                 </div>
                 <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-200 rounded-lg px-3 py-1.5">
                   <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-1.5 py-0.5 rounded font-bold">SHIFT</span>
                   <span className="text-xs text-slate-400">+</span>
                   <span className="font-mono bg-gray-300 text-yellow-700 text-xs px-1.5 py-0.5 rounded font-bold">EXE</span>
-                  <span className="text-sm text-blue-800">後出 <strong>2</strong>（虛部 b）</span>
+                  <span className="text-sm text-blue-800">後出 <strong>−2</strong>（虛部 b）</span>
                 </div>
               </div>
-              <p className="text-xs text-slate-400 mt-2">∴ 答案為 <InlineMath math="-2+2i" /></p>
+              <p className="text-xs text-slate-400 mt-2">∴ 答案為 <InlineMath math="2-2i" /></p>
             </div>
           </div>
           <p className="text-xs text-teal-700 mt-3 bg-teal-50 rounded-lg px-3 py-2 border border-teal-100">💡 記住：<strong>EXE 先出實部（a）</strong>，<strong>SHIFT+EXE 後出虛部（b）</strong>，合起來就是 a+bi 的答案。</p>

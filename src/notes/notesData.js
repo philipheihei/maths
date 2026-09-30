@@ -548,6 +548,11 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'area', num: 1, title: '1. 三角形面積', color: 'rose' },
         { id: 'sides-angles', num: 2, title: '2. 求邊長 / 角度', color: 'emerald' },
+        { id: 'projection', num: 3, title: '3. 正射影', color: 'cyan' },
+        { id: 'line-plane-angle', num: 4, title: '4. 直線與平面角', color: 'blue' },
+        { id: 'dihedral-angle', num: 5, title: '5. 二面角', color: 'purple' },
+        { id: 'three-perpendicular', num: 6, title: '6. 三垂線定理', color: 'rose' },
+        { id: 'three-dimensional-problems', num: 7, title: '7. 三維立體綜合題', color: 'indigo' },
       ]
     }
   ],

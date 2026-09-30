@@ -263,7 +263,7 @@ export const MoreEquationsNotes = ({ activeSub }) => {
                   <path d="M 355 145 L 368 158 L 388 135" stroke="#057a55" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                   <path d="M 345 285 L 358 298 L 378 275" stroke="#057a55" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                   <path d="M 435 320 L 395 295" stroke="#111827" strokeWidth="2.5" strokeLinecap="round" fill="none" markerEnd="url(#astc-arrowhead)" />
-                  <text x="480" y="375" fontSize="25" fontWeight="bold" fill="#1a56db" textAnchor="middle">60° = 300°</text>
+                  <text x="480" y="375" fontSize="25" fontWeight="bold" fill="#1a56db" textAnchor="middle">cos 60° = cos 300°</text>
                 </svg>
               </div>
             </div>

@@ -4,11 +4,21 @@ import { Latex, MathDisplay, CollapsibleSection } from './shared';
 export const TrigApplicationsF4Notes = ({ activeSub }) => {
   const s1 = useRef(null);
   const s2 = useRef(null);
+  const s3 = useRef(null);
+  const s4 = useRef(null);
+  const s5 = useRef(null);
+  const s6 = useRef(null);
+  const s7 = useRef(null);
 
   useEffect(() => {
     const refs = {
       'area': s1,
-      'sides-angles': s2
+      'sides-angles': s2,
+      'projection': s3,
+      'line-plane-angle': s4,
+      'dihedral-angle': s5,
+      'three-perpendicular': s6,
+      'three-dimensional-problems': s7
     };
     if (activeSub && refs[activeSub]?.current) {
       setTimeout(() => {
@@ -50,11 +60,11 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
 
   const AreaSvg1 = () => (
     <svg viewBox="0 0 400 200" className="w-full max-w-xs mx-auto">
-      {/* 5, 7, included angle 60°, arbitrary acute triangle */}
-      <polygon points="120,160 280,160 170,40" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+      {/* Side lengths 5 and 7 with included angle 60° */}
+      <polygon points="120,160 280,160 177.1,61" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
       {/* Angle arc at (120,160) */}
-      <path d="M 152 160 A 32 32 0 0 0 132.2 130.6" fill="none" stroke="#334155" strokeWidth="2" />
-      <text x="160" y="152" fontSize="13" fill="#334155" fontWeight="bold">60°</text>
+      <path d="M 145 160 A 25 25 0 0 0 132.5 138.3" fill="none" stroke="#334155" strokeWidth="2" />
+      <text x="154" y="145" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">60°</text>
       <text x="200" y="180" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">7</text>
       <text x="135" y="100" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">5</text>
     </svg>
@@ -63,10 +73,10 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
   const AreaSvg2 = () => (
     <svg viewBox="0 0 400 200" className="w-full max-w-xs mx-auto">
       {/* Heron's formula: 11, 14, 15 */}
-      <polygon points="100,160 300,160 170,30" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+      <polygon points="100,160 300,160 166.7,29.4" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
       <text x="200" y="180" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">15</text>
-      <text x="120" y="90" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">11</text>
-      <text x="250" y="90" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">14</text>
+      <text x="122" y="95" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">11</text>
+      <text x="244" y="95" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">14</text>
     </svg>
   );
 
@@ -105,25 +115,30 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
 
   const SineLawSvg2 = () => (
     <svg viewBox="0 0 400 200" className="w-full max-w-xs mx-auto">
+      <defs>
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
+        </marker>
+      </defs>
       {/* Sine law example: 39°, 62°, 8, x */}
-      {/* B: bottom-left 62°, C: bottom-right 39° (just an example config) */}
-      <polygon points="60,160 340,160 160,40" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+      {/* B: bottom-left 62°, C: bottom-right 39° */}
+      <polygon points="95,160 305,160 158,41" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
       
-      {/* Left angle (e.g. 62°) */}
-      <path d="M 90 160 A 30 30 0 0 0 79.2 136.9" fill="none" stroke="#334155" strokeWidth="2" />
-      <text x="105" y="152" fontSize="13" fill="#334155" fontWeight="bold">62°</text>
+      {/* Left angle (62°) */}
+      <path d="M 119 160 A 24 24 0 0 0 106.3 138.8" fill="none" stroke="#334155" strokeWidth="2" />
+      <text x="122" y="150" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">62°</text>
 
-      {/* Right angle (e.g. 39°) */}
-      <path d="M 300 160 A 40 40 0 0 1 306.7 137.8" fill="none" stroke="#334155" strokeWidth="2" />
-      <text x="285" y="150" fontSize="13" fill="#334155" fontWeight="bold">39°</text>
+      {/* Right angle (39°) */}
+      <path d="M 279 160 A 26 26 0 0 1 284.7 143.6" fill="none" stroke="#334155" strokeWidth="2" />
+      <text x="268" y="152" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">39°</text>
 
       {/* Opposite to 62° is x, Opposite to 39° is 8 */}
-      <text x="260" y="90" fontSize="15" fill="#334155" textAnchor="middle" fontWeight="bold">x</text>
-      <text x="100" y="95" fontSize="15" fill="#334155" textAnchor="middle" fontWeight="bold">8</text>
+      <text x="248" y="98" fontSize="15" fill="#334155" textAnchor="start" fontWeight="bold">x</text>
+      <text x="106" y="98" fontSize="15" fill="#334155" textAnchor="end" fontWeight="bold">8</text>
 
       {/* Blue dashed arrows */}
-      <path d="M 95 145 Q 160 120 240 100" fill="none" stroke="#2563eb" strokeWidth="1.5" strokeDasharray="4 4" markerEnd="url(#arrow-blue)" />
-      <path d="M 290 145 Q 220 120 120 100" fill="none" stroke="#2563eb" strokeWidth="1.5" strokeDasharray="4 4" markerEnd="url(#arrow-blue)" />
+      <path d="M 132 136 Q 180 122 215 102" fill="none" stroke="#2563eb" strokeWidth="1.5" strokeDasharray="4 4" markerEnd="url(#arrow-blue)" />
+      <path d="M 258 141 Q 190 122 142 102" fill="none" stroke="#2563eb" strokeWidth="1.5" strokeDasharray="4 4" markerEnd="url(#arrow-blue)" />
     </svg>
   );
 
@@ -145,15 +160,15 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
   const CosineLawSvg2 = () => (
     <svg viewBox="0 0 400 200" className="w-full max-w-xs mx-auto">
       {/* Cosine law example 1 (find side) */}
-      <polygon points="120,160 340,160 80,60" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
+      <polygon points="120,160 280,160 75.3,59.5" fill="rgba(59,130,246,0.15)" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
       {/* angle 114 at B (120,160) */}
-      {/* A(80,60), B(120,160), C(340,160) */}
-      <path d="M 145 160 A 25 25 0 0 0 110.7 136.8" fill="none" stroke="#334155" strokeWidth="2" />
-      <text x="145" y="145" fontSize="13" fill="#334155" fontWeight="bold">114°</text>
+      {/* A(75.3,59.5), B(120,160), C(280,160) */}
+      <path d="M 145 160 A 25 25 0 0 0 109.8 137.2" fill="none" stroke="#334155" strokeWidth="2" />
+      <text x="145" y="137" fontSize="13" fill="#334155" fontWeight="bold">114°</text>
       
-      <text x="90" y="120" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">11</text>
-      <text x="230" y="180" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">16</text>
-      <text x="220" y="100" fontSize="15" fill="#e11d48" textAnchor="middle" fontWeight="bold">x</text>
+      <text x="84" y="118" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">11</text>
+      <text x="200" y="180" fontSize="14" fill="#334155" textAnchor="middle" fontWeight="bold">16</text>
+      <text x="186" y="101" fontSize="15" fill="#e11d48" textAnchor="middle" fontWeight="bold">x</text>
     </svg>
   );
 
@@ -173,6 +188,314 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
 
       {/* Dashed arrow from theta to 8 */}
       <path d="M 200 90 L 200 155" fill="none" stroke="#334155" strokeWidth="1.5" strokeDasharray="4 4" markerEnd="url(#arrow-blue)" />
+    </svg>
+  );
+
+  const ProjectionSvg = () => (
+    <svg viewBox="0 0 380 180" className="w-full max-w-xs mx-auto">
+      {/* Plane pi */}
+      <polygon points="50,150 260,150 330,75 120,75" fill="rgba(6,182,212,0.12)" stroke="#0891b2" strokeWidth="1.5" />
+      <text x="315" y="92" fontSize="14" fill="#0891b2" fontStyle="italic" fontWeight="bold">π</text>
+
+      {/* Perpendicular AH (dashed vertical) */}
+      <line x1="200" y1="35" x2="200" y2="115" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 4" />
+      {/* Right angle mark at H in perspective */}
+      <polyline points="200,103 188,105 188,117" fill="none" stroke="#ef4444" strokeWidth="1.5" />
+
+      {/* Projection line HB on plane */}
+      <line x1="200" y1="115" x2="100" y2="130" stroke="#0891b2" strokeWidth="3" />
+
+      {/* Slanted line AB in space */}
+      <line x1="200" y1="35" x2="100" y2="130" stroke="#2563eb" strokeWidth="2.5" />
+
+      {/* Points */}
+      <circle cx="200" cy="35" r="4" fill="#ef4444" />
+      <circle cx="200" cy="115" r="3.5" fill="#ef4444" />
+      <circle cx="100" cy="130" r="4" fill="#2563eb" />
+
+      {/* Labels */}
+      <text x="200" y="25" fontSize="13" fill="#ef4444" textAnchor="middle" fontWeight="bold">A</text>
+      <text x="210" y="125" fontSize="13" fill="#ef4444" fontWeight="bold">H (垂足)</text>
+      <text x="85" y="135" fontSize="13" fill="#2563eb" fontWeight="bold">B</text>
+      
+      <text x="135" y="70" fontSize="12" fill="#2563eb" textAnchor="middle" fontWeight="bold">斜線 AB</text>
+      <text x="235" y="75" fontSize="12" fill="#ef4444" fontWeight="bold">垂直線 AH</text>
+      <text x="145" y="145" fontSize="12" fill="#0891b2" textAnchor="middle" fontWeight="bold">正射影 HB</text>
+    </svg>
+  );
+
+  const LinePlaneAngleSvg = () => (
+    <svg viewBox="0 0 380 180" className="w-full max-w-xs mx-auto">
+      {/* Plane pi */}
+      <polygon points="50,150 260,150 330,75 120,75" fill="rgba(59,130,246,0.1)" stroke="#2563eb" strokeWidth="1.5" />
+      <text x="315" y="92" fontSize="14" fill="#2563eb" fontStyle="italic" fontWeight="bold">π</text>
+
+      {/* Perpendicular AH */}
+      <line x1="210" y1="35" x2="210" y2="115" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 4" />
+      <polyline points="210,103 198,105 198,117" fill="none" stroke="#ef4444" strokeWidth="1.5" />
+
+      {/* Projection BH on plane */}
+      <line x1="210" y1="115" x2="90" y2="130" stroke="#0ea5e9" strokeWidth="3" />
+
+      {/* Slanted line AB in space */}
+      <line x1="210" y1="35" x2="90" y2="130" stroke="#1e293b" strokeWidth="2.5" />
+
+      {/* Angle theta arc at B: angle from BH to BA */}
+      <path d="M 125 125.6 A 35 35 0 0 0 117.4 108.3" fill="none" stroke="#dc2626" strokeWidth="2" />
+      <text x="134" y="116" fontSize="13" fill="#dc2626" fontWeight="bold">θ</text>
+
+      {/* Points */}
+      <circle cx="210" cy="35" r="4" fill="#ef4444" />
+      <circle cx="210" cy="115" r="3.5" fill="#ef4444" />
+      <circle cx="90" cy="130" r="4" fill="#1e293b" />
+
+      {/* Labels */}
+      <text x="210" y="25" fontSize="13" fill="#ef4444" textAnchor="middle" fontWeight="bold">A</text>
+      <text x="222" y="120" fontSize="13" fill="#ef4444" fontWeight="bold">H</text>
+      <text x="75" y="135" fontSize="13" fill="#1e293b" fontWeight="bold">B</text>
+      <text x="140" y="70" fontSize="12" fill="#1e293b" textAnchor="middle" fontWeight="bold">斜線 AB</text>
+      <text x="235" y="75" fontSize="12" fill="#ef4444" fontWeight="bold">高 AH</text>
+      <text x="150" y="145" fontSize="12" fill="#0ea5e9" textAnchor="middle" fontWeight="bold">投影 BH</text>
+    </svg>
+  );
+
+  const DihedralAngleSvg = () => (
+    <svg viewBox="0 0 380 190" className="w-full max-w-xs mx-auto">
+      {/* Bottom plane beta */}
+      <polygon points="60,110 320,110 260,175 20,175" fill="rgba(168,85,247,0.12)" stroke="#9333ea" strokeWidth="1.5" />
+      <text x="35" y="165" fontSize="14" fill="#9333ea" fontStyle="italic" fontWeight="bold">β</text>
+
+      {/* Slanted plane alpha */}
+      <polygon points="60,110 320,110 350,30 110,30" fill="rgba(59,130,246,0.12)" stroke="#2563eb" strokeWidth="1.5" />
+      <text x="330" y="48" fontSize="14" fill="#2563eb" fontStyle="italic" fontWeight="bold">α</text>
+
+      {/* Intersection line l */}
+      <line x1="50" y1="110" x2="330" y2="110" stroke="#334155" strokeWidth="2.5" />
+      <text x="335" y="114" fontSize="12" fill="#334155" fontWeight="bold">交線 ℓ</text>
+
+      {/* Ray OA on plane alpha (OA perpendicular to l) */}
+      <line x1="190" y1="110" x2="225" y2="40" stroke="#2563eb" strokeWidth="2" />
+      {/* Ray OB on plane beta (OB perpendicular to l) */}
+      <line x1="190" y1="110" x2="145" y2="165" stroke="#9333ea" strokeWidth="2" />
+
+      {/* Right angle at O on plane alpha */}
+      <polyline points="202,110 208,98 196,98" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+      {/* Right angle at O on plane beta */}
+      <polyline points="202,110 193,122 181,122" fill="none" stroke="#9333ea" strokeWidth="1.5" />
+
+      {/* Angle theta arc between OA and OB at O(190, 110) */}
+      <path d="M 200.5 89 A 23 23 0 0 1 171.2 123.5" fill="none" stroke="#dc2626" strokeWidth="2" />
+      <text x="175" y="98" fontSize="13" fill="#dc2626" fontWeight="bold">θ</text>
+
+      {/* Points */}
+      <circle cx="190" cy="110" r="3.5" fill="#334155" />
+      <circle cx="225" cy="40" r="3.5" fill="#2563eb" />
+      <circle cx="145" cy="165" r="3.5" fill="#9333ea" />
+
+      {/* Labels */}
+      <text x="195" y="125" fontSize="13" fill="#334155" fontWeight="bold">O</text>
+      <text x="235" y="42" fontSize="13" fill="#2563eb" fontWeight="bold">A</text>
+      <text x="135" y="172" fontSize="13" fill="#9333ea" fontWeight="bold">B</text>
+      <text x="235" y="80" fontSize="11" fill="#2563eb" fontWeight="bold">OA ⊥ ℓ</text>
+      <text x="130" y="140" fontSize="11" fill="#9333ea" fontWeight="bold">OB ⊥ ℓ</text>
+    </svg>
+  );
+
+  const ThreePerpendicularSvg = () => (
+    <svg viewBox="0 0 380 190" className="w-full max-w-xs mx-auto">
+      {/* Plane pi */}
+      <polygon points="40,165 270,165 340,75 125,75" fill="rgba(244,63,94,0.08)" stroke="#f43f5e" strokeWidth="1.5" />
+      <text x="325" y="92" fontSize="14" fill="#f43f5e" fontStyle="italic" fontWeight="bold">π</text>
+
+      {/* Line l on plane through B(100, 130) */}
+      <line x1="55" y1="95" x2="160" y2="165" stroke="#334155" strokeWidth="2" />
+      <text x="50" y="90" fontSize="12" fill="#334155" fontWeight="bold">直線 ℓ</text>
+
+      {/* Perpendicular 1: AH perpendicular to pi */}
+      <line x1="210" y1="35" x2="210" y2="115" stroke="#ef4444" strokeWidth="2" strokeDasharray="4 4" />
+      <polyline points="210,103 198,105 198,117" fill="none" stroke="#ef4444" strokeWidth="1.5" />
+
+      {/* Projection HB on plane */}
+      <line x1="210" y1="115" x2="100" y2="130" stroke="#0ea5e9" strokeWidth="2.5" />
+
+      {/* Perpendicular 2: l perpendicular to HB at B */}
+      <polyline points="107,135 117,133.5 110,128.5" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+
+      {/* Slanted line AB in space */}
+      <line x1="210" y1="35" x2="100" y2="130" stroke="#dc2626" strokeWidth="2.5" />
+
+      {/* Perpendicular 3: l perpendicular to AB at B (highlighted conclusion) */}
+      <polyline points="108,122 118,120.5 110,113" fill="none" stroke="#dc2626" strokeWidth="1.5" />
+
+      {/* Points */}
+      <circle cx="210" cy="35" r="4" fill="#ef4444" />
+      <circle cx="210" cy="115" r="3.5" fill="#ef4444" />
+      <circle cx="100" cy="130" r="4" fill="#334155" />
+
+      {/* Labels */}
+      <text x="210" y="25" fontSize="13" fill="#ef4444" textAnchor="middle" fontWeight="bold">A</text>
+      <text x="222" y="120" fontSize="13" fill="#ef4444" fontWeight="bold">H</text>
+      <text x="85" y="135" fontSize="13" fill="#334155" fontWeight="bold">B</text>
+      <text x="235" y="75" fontSize="11" fill="#ef4444" fontWeight="bold">① AH ⊥ π</text>
+      <text x="160" y="135" fontSize="11" fill="#0ea5e9" fontWeight="bold">② ℓ ⊥ HB</text>
+      <text x="125" y="75" fontSize="11" fill="#dc2626" fontWeight="bold">③ 得出 ℓ ⊥ AB</text>
+    </svg>
+  );
+
+  const CuboidSvg = () => (
+    <svg viewBox="0 0 380 200" className="w-full max-w-xs mx-auto">
+      {/* Hidden edges (dashed) */}
+      <line x1="80" y1="145" x2="140" y2="105" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" />
+      <line x1="140" y1="105" x2="280" y2="105" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" />
+      <line x1="140" y1="105" x2="140" y2="35" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" />
+
+      {/* Bottom diagonal AC (projection) - blue dashed */}
+      <line x1="80" y1="145" x2="280" y2="105" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+      <text x="175" y="132" fontSize="12" fill="#2563eb" fontWeight="bold">10 cm</text>
+
+      {/* Body diagonal AG - red solid */}
+      <line x1="80" y1="145" x2="280" y2="35" stroke="#dc2626" strokeWidth="2.5" />
+      <text x="175" y="80" fontSize="12" fill="#dc2626" fontWeight="bold">AG</text>
+
+      {/* Angle theta arc at A(80, 145) between AC and AG */}
+      <path d="M 115 138 A 36 36 0 0 0 111.5 127.7" fill="none" stroke="#dc2626" strokeWidth="2" />
+      <text x="123" y="132" fontSize="12" fill="#dc2626" fontWeight="bold">θ</text>
+
+      {/* Right angle at C between AC and CG */}
+      <polyline points="280,95 270,97 270,107" fill="none" stroke="#2563eb" strokeWidth="1.5" />
+
+      {/* Solid edges */}
+      {/* Front rectangle ABFE */}
+      <polygon points="80,145 220,145 220,75 80,75" fill="rgba(59,130,246,0.06)" stroke="#334155" strokeWidth="2" />
+      {/* Right side BCGF */}
+      <polygon points="220,145 280,105 280,35 220,75" fill="rgba(59,130,246,0.12)" stroke="#334155" strokeWidth="2" />
+      {/* Top side EFGH */}
+      <polygon points="80,75 220,75 280,35 140,35" fill="rgba(59,130,246,0.18)" stroke="#334155" strokeWidth="2" />
+
+      {/* Vertex Labels */}
+      <text x="70" y="155" fontSize="13" fill="#334155" fontWeight="bold">A</text>
+      <text x="225" y="155" fontSize="13" fill="#334155" fontWeight="bold">B</text>
+      <text x="290" y="112" fontSize="13" fill="#334155" fontWeight="bold">C</text>
+      <text x="135" y="118" fontSize="13" fill="#94a3b8" fontWeight="bold">D</text>
+      <text x="70" y="70" fontSize="13" fill="#334155" fontWeight="bold">E</text>
+      <text x="225" y="70" fontSize="13" fill="#334155" fontWeight="bold">F</text>
+      <text x="288" y="32" fontSize="13" fill="#334155" fontWeight="bold">G</text>
+      <text x="135" y="28" fontSize="13" fill="#334155" fontWeight="bold">H</text>
+
+      {/* Dimension Labels */}
+      <text x="150" y="162" fontSize="12" fill="#475569" textAnchor="middle">8 cm</text>
+      <text x="258" y="135" fontSize="12" fill="#475569">6 cm</text>
+      <text x="288" y="75" fontSize="12" fill="#475569">5 cm</text>
+    </svg>
+  );
+
+  const PyramidSvg = () => (
+    <svg viewBox="0 0 380 200" className="w-full max-w-xs mx-auto">
+      {/* Hidden base edges (dashed) */}
+      <line x1="80" y1="145" x2="135" y2="95" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" />
+      <line x1="135" y1="95" x2="255" y2="95" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" />
+      {/* Hidden edge SD */}
+      <line x1="167" y1="30" x2="135" y2="95" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" />
+
+      {/* Base Center O (167, 120) */}
+      {/* Height SO (dashed) */}
+      <line x1="167" y1="30" x2="167" y2="120" stroke="#0ea5e9" strokeWidth="2" strokeDasharray="4 4" />
+      {/* Segment OM (from center to midpoint M of AB) */}
+      <line x1="167" y1="120" x2="140" y2="145" stroke="#0ea5e9" strokeWidth="2" strokeDasharray="4 4" />
+      {/* Slant height SM (solid red) */}
+      <line x1="167" y1="30" x2="140" y2="145" stroke="#dc2626" strokeWidth="2.5" />
+
+      {/* Right angle at O in triangle SOM */}
+      <polyline points="167,112 161,114 161,122" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+
+      {/* Right angle at M on base between OM and AB */}
+      <polyline points="144,141 149,145 145,145" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+
+      {/* Angle theta arc at M(140, 145) between MO and MS */}
+      <path d="M 152 134 A 20 20 0 0 0 146.5 117.5" fill="none" stroke="#dc2626" strokeWidth="2" />
+      <text x="156" y="125" fontSize="12" fill="#dc2626" fontWeight="bold">θ</text>
+
+      {/* Visible base edges */}
+      <line x1="80" y1="145" x2="200" y2="145" stroke="#334155" strokeWidth="2" />
+      <line x1="200" y1="145" x2="255" y2="95" stroke="#334155" strokeWidth="2" />
+
+      {/* Slant faces / edges */}
+      <line x1="167" y1="30" x2="80" y2="145" stroke="#334155" strokeWidth="2" />
+      <line x1="167" y1="30" x2="200" y2="145" stroke="#334155" strokeWidth="2" />
+      <line x1="167" y1="30" x2="255" y2="95" stroke="#334155" strokeWidth="2" />
+
+      {/* Points */}
+      <circle cx="167" cy="30" r="3.5" fill="#334155" />
+      <circle cx="167" cy="120" r="3" fill="#0ea5e9" />
+      <circle cx="140" cy="145" r="3.5" fill="#dc2626" />
+
+      {/* Vertex Labels */}
+      <text x="167" y="22" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">S</text>
+      <text x="68" y="152" fontSize="13" fill="#334155" fontWeight="bold">A</text>
+      <text x="205" y="155" fontSize="13" fill="#334155" fontWeight="bold">B</text>
+      <text x="262" y="98" fontSize="13" fill="#334155" fontWeight="bold">C</text>
+      <text x="122" y="94" fontSize="13" fill="#94a3b8" fontWeight="bold">D</text>
+      <text x="175" y="122" fontSize="12" fill="#0ea5e9" fontWeight="bold">O</text>
+      <text x="135" y="160" fontSize="13" fill="#dc2626" fontWeight="bold">M</text>
+
+      {/* Dimension labels */}
+      <text x="178" y="80" fontSize="12" fill="#0ea5e9">8 cm</text>
+      <text x="145" y="137" fontSize="11" fill="#0ea5e9">6 cm</text>
+      <text x="130" y="172" fontSize="12" fill="#475569">12 cm</text>
+    </svg>
+  );
+
+  const TetrahedronSvg = () => (
+    <svg viewBox="0 0 380 190" className="w-full max-w-xs mx-auto">
+      {/* Hidden base edge AC (dashed) */}
+      <line x1="110" y1="120" x2="280" y2="105" stroke="#94a3b8" strokeWidth="1.5" strokeDasharray="4 4" />
+
+      {/* SA vertical (perpendicular to plane ABC) */}
+      <line x1="110" y1="30" x2="110" y2="120" stroke="#ef4444" strokeWidth="2.5" />
+      {/* Right angle at A between SA and AB */}
+      <polyline points="110,108 120,110 120,122" fill="none" stroke="#ef4444" strokeWidth="1.5" />
+
+      {/* Base edge AB */}
+      <line x1="110" y1="120" x2="190" y2="145" stroke="#334155" strokeWidth="2" />
+      {/* Base edge BC */}
+      <line x1="190" y1="145" x2="280" y2="105" stroke="#334155" strokeWidth="2" />
+
+      {/* Right angle at B on base between AB and BC (AB perp BC) */}
+      <polyline points="181,142 188,135 197,138" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
+
+      {/* Slanted edge SB (hypotenuse of SAB) - red */}
+      <line x1="110" y1="30" x2="190" y2="145" stroke="#dc2626" strokeWidth="2.5" />
+      {/* Slanted edge SC */}
+      <line x1="110" y1="30" x2="280" y2="105" stroke="#334155" strokeWidth="2" />
+
+      {/* Right angle at B in space between SB and BC (3-perpendicular conclusion!) */}
+      <polyline points="183,135 190,128 197,136" fill="none" stroke="#dc2626" strokeWidth="1.5" />
+
+      {/* Angle theta arc at B between BA and BS */}
+      <path d="M 166 137.5 A 25 25 0 0 1 172.5 120" fill="none" stroke="#dc2626" strokeWidth="2" />
+      <text x="156" y="125" fontSize="12" fill="#dc2626" fontWeight="bold">θ</text>
+
+      {/* Points */}
+      <circle cx="110" cy="30" r="3.5" fill="#334155" />
+      <circle cx="110" cy="120" r="3.5" fill="#ef4444" />
+      <circle cx="190" cy="145" r="3.5" fill="#dc2626" />
+      <circle cx="280" cy="105" r="3.5" fill="#334155" />
+
+      {/* Labels */}
+      <text x="110" y="20" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">S</text>
+      <text x="95" y="125" fontSize="13" fill="#ef4444" fontWeight="bold">A</text>
+      <text x="195" y="160" fontSize="13" fill="#dc2626" fontWeight="bold">B</text>
+      <text x="290" y="110" fontSize="13" fill="#334155" fontWeight="bold">C</text>
+
+      {/* Dimension labels */}
+      <text x="80" y="75" fontSize="12" fill="#ef4444">12 cm</text>
+      <text x="145" y="142" fontSize="12" fill="#475569">5 cm</text>
+      <text x="160" y="85" fontSize="12" fill="#dc2626" fontWeight="bold">13 cm</text>
+      <text x="245" y="135" fontSize="12" fill="#475569">8 cm</text>
+
+      {/* Tag */}
+      <text x="235" y="55" fontSize="11" fill="#dc2626" fontWeight="bold">由三垂線定理：</text>
+      <text x="235" y="70" fontSize="11" fill="#dc2626" fontWeight="bold">BC ⊥ SB</text>
     </svg>
   );
 
@@ -328,6 +651,179 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
 
           </div>
 
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="projection" title="3. 正射影" num={3} color="cyan" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-4">
+          <div className="bg-cyan-50 rounded-lg p-4 border border-cyan-200">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div>
+                <h3 className="font-bold text-cyan-900 mb-2 text-lg">點與線段的正射影</h3>
+                <p className="text-slate-700">點 A 在平面 π 上的正射影，是由 A 向 π 作垂線所得的垂足 H，即 <Latex math="AH\perp\pi" inline />。若 B 在 π 上，斜線段 AB 在 π 上的正射影就是 HB。</p>
+                <p className="text-slate-700 mt-2">因此 <Latex math="\triangle AHB" inline /> 是直角三角形，斜線 AB、垂直高度 AH 和投影 HB 滿足：</p>
+                <div className="bg-white rounded-lg p-3 mt-2 border border-cyan-100">
+                  <Latex math="AB^2=AH^2+HB^2" block />
+                  <Latex math="\text{投影長 }HB=AB\cos\theta,\quad \text{離平面高度 }AH=AB\sin\theta" block />
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-cyan-100 flex items-center justify-center">
+                <ProjectionSvg />
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <h3 className="font-bold text-slate-800 mb-2">快速判斷</h3>
+            <ul className="list-disc pl-5 space-y-1 text-slate-700">
+              <li><Latex math="AB\perp\pi" inline />：AB 的正射影縮成一點。</li>
+              <li><Latex math="AB\parallel\pi" inline />：AB 的正射影與 AB 平行且等長。</li>
+              <li>求立體圖形中的投影時，先找垂足；位於平面上的端點投影仍是它本身。</li>
+            </ul>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="line-plane-angle" title="4. 直線與平面角" num={4} color="blue" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div>
+                <h3 className="font-bold text-blue-900 mb-2 text-lg">定義與公式</h3>
+                <p className="text-slate-700">若斜線 AB 與平面 π 相交於 B，而 A 向 π 的垂足是 H，則 AB 在 π 上的正射影是 BH。AB 與 π 的夾角 θ，就是斜線 AB 與其正射影 BH 的較小夾角 <Latex math="\angle ABH" inline />。</p>
+                <p className="text-sm text-slate-600 mt-2">若 <Latex math="AB\perp\pi" inline />，正射影縮成一點，線面角直接是 <Latex math="90^\circ" inline />；此時不能使用分母含投影長 BH 的 tan 公式。</p>
+                <div className="bg-white rounded-lg p-3 mt-3 border border-blue-100 space-y-1">
+                  <Latex math="\sin\theta=\frac{AH}{AB},\qquad \cos\theta=\frac{BH}{AB},\qquad \tan\theta=\frac{AH}{BH}" block />
+                  <p className="text-sm text-slate-600">θ 是線面角；<Latex math="AH" inline /> 是垂直高度，<Latex math="BH" inline /> 是投影長，<Latex math="AB" inline /> 是斜線長。</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-blue-100 flex items-center justify-center">
+                <LinePlaneAngleSvg />
+              </div>
+            </div>
+          </div>
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-900 mb-2">解題次序</h3>
+            <ol className="list-decimal pl-5 space-y-1 text-slate-700">
+              <li>確認所求斜線，以及它所在的平面。</li>
+              <li>從斜線的平面外端點作垂線，標出垂足。</li>
+              <li>找出斜線在平面上的正射影；線面角就是斜線與投影的夾角。</li>
+              <li>在由斜線、高度和投影組成的直角三角形中選用 sin、cos 或 tan。</li>
+            </ol>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="dihedral-angle" title="5. 兩平面角（二面角）" num={5} color="purple" activeSub={activeSub} sectionRef={s5}>
+        <div className="space-y-4">
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div>
+                <h3 className="font-bold text-purple-900 mb-2 text-lg">怎樣量度兩個平面之間的角？</h3>
+                <p className="text-slate-700">兩平面 α、β 相交於直線 ℓ。選 ℓ 上一點 O，在 α、β 內分別作射線 OA、OB，並令 <Latex math="OA\perp\ell" inline />、<Latex math="OB\perp\ell" inline />。在同一側所取的 <Latex math="\angle AOB" inline />，就是該二面角的平面角。</p>
+                <div className="bg-white rounded-lg p-3 mt-3 border border-purple-100">
+                  <p className="font-bold text-slate-800 mb-1">作平面角的步驟</p>
+                  <ol className="list-decimal pl-5 space-y-1 text-slate-700">
+                    <li>找出兩平面的交線 ℓ。</li>
+                    <li>在 ℓ 上選同一個頂點 O。</li>
+                    <li>在兩平面內各找一條過 O 且垂直 ℓ 的線。</li>
+                    <li>求這兩條線的夾角；不要直接取兩平面上任意兩條線的夾角。</li>
+                  </ol>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-purple-100 flex items-center justify-center">
+                <DihedralAngleSvg />
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-slate-600">立體題若問「側面與底面的夾角」，交線是側面和底面的公共邊；在兩個平面內分別找垂直這條公共邊的線，便能把二面角轉成平面三角形中的角。</p>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="three-perpendicular" title="6. 三垂線定理" num={6} color="rose" activeSub={activeSub} sectionRef={s6}>
+        <div className="space-y-4">
+          <div className="bg-rose-50 rounded-lg p-4 border border-rose-200">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div>
+                <h3 className="font-bold text-rose-900 mb-2 text-lg">定理</h3>
+                <p className="text-slate-700">設 <Latex math="AH\perp\pi" inline />，H 是 A 在平面 π 上的垂足；B 在 π 上，所以斜線 AB 在 π 上的正射影是 HB。若平面 π 內的直線 ℓ 通過 B，並且 <Latex math="\ell\perp HB" inline />，則 <Latex math="\ell\perp AB" inline />。</p>
+                <div className="bg-white rounded-lg p-3 mt-3 border border-rose-100">
+                  <Latex math="\ell\subset\pi,\quad \ell\cap HB=B,\quad \ell\perp HB\quad\Longrightarrow\quad \ell\perp AB" block />
+                  <p className="text-sm text-slate-600">反過來，若 ℓ 在 π 內、通過 B，且 <Latex math="\ell\perp AB" inline />，也可推出 <Latex math="\ell\perp HB" inline />。</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-3 border border-rose-100 flex items-center justify-center">
+                <ThreePerpendicularSvg />
+              </div>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-4 border border-slate-200">
+            <h3 className="font-bold text-slate-800 mb-2">套用前檢查</h3>
+            <ul className="list-disc pl-5 space-y-1 text-slate-700">
+              <li>ℓ 必須在指定平面 π 內，並在斜線與平面的交點 B 通過。</li>
+              <li>先找出斜線的正射影 HB，再證明 <Latex math="\ell\perp HB" inline />；不能只憑立體圖看起來垂直。</li>
+              <li>結論是 <Latex math="\ell\perp AB" inline />，可用來建立直角三角形或證明空間兩線垂直。</li>
+            </ul>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="three-dimensional-problems" title="7. 三維立體綜合題" num={7} color="indigo" activeSub={activeSub} sectionRef={s7}>
+        <div className="space-y-4">
+          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+            <h3 className="font-bold text-indigo-900 mb-2 text-lg">例 1：長方體內的線面角</h3>
+            <p className="text-slate-700">長方體 ABCD-EFGH 中，AB = 8 cm、BC = 6 cm、AE = 5 cm，且 AE 垂直底面 ABCD。求體對角線 AG 與底面 ABCD 的夾角 θ，以及 AG 的長度。</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mt-3">
+              <div className="bg-white rounded-lg p-3 border border-indigo-100 flex items-center justify-center">
+                <CuboidSvg />
+              </div>
+              <div className="bg-white rounded-lg p-4 space-y-1 border border-indigo-100">
+                <Step math="\text{投影：}\ AG\text{ 在底面上的正射影是 }AC" alignEq={false} />
+                <Step math="AC=\sqrt{8^2+6^2}=10\text{ cm}" />
+                <Step math="AG=\sqrt{AC^2+CG^2}=\sqrt{10^2+5^2}=5\sqrt{5}\approx11.2\text{ cm}" />
+                <Step math="\tan\theta=\frac{CG}{AC}=\frac{5}{10}" />
+                <Step math="\theta=\tan^{-1}(0.5)\approx26.6^\circ" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
+            <h3 className="font-bold text-purple-900 mb-2 text-lg">例 2：正四角錐的二面角</h3>
+            <p className="text-slate-700">正四角錐 S-ABCD 的底面邊長為 12 cm，O 是正方形底面的中心，SO = 8 cm 且 <Latex math="SO\perp ABCD" inline />。求側面 SAB 與底面 ABCD 的夾角 θ。</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mt-3">
+              <div className="bg-white rounded-lg p-3 border border-purple-100 flex items-center justify-center">
+                <PyramidSvg />
+              </div>
+              <div className="bg-white rounded-lg p-4 space-y-1 border border-purple-100">
+                <Step math="\text{令 }M\text{ 為 }AB\text{ 的中點；交線是 }AB" alignEq={false} />
+                <Step math="OM\perp AB,\quad SM\perp AB\quad\Longrightarrow\quad\theta=\angle SMO" alignEq={false} />
+                <Step math="OM=\frac{12}{2}=6\text{ cm}" />
+                <Step math="\tan\theta=\frac{SO}{OM}=\frac{8}{6}=\frac{4}{3}" />
+                <Step math="\theta=\tan^{-1}\!\left(\frac{4}{3}\right)\approx53.1^\circ" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-rose-50 rounded-lg p-4 border border-rose-200">
+            <h3 className="font-bold text-rose-900 mb-2 text-lg">例 3：用三垂線定理證明並求線面角</h3>
+            <p className="text-slate-700">在三角錐 S-ABC 中，<Latex math="SA\perp\text{平面 }ABC" inline />、SA = 12 cm、AB = 5 cm、BC = 8 cm，且 <Latex math="AB\perp BC" inline />。求 SB，證明 <Latex math="BC\perp SB" inline />，並求 SB 與平面 ABC 的夾角 θ。</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mt-3">
+              <div className="bg-white rounded-lg p-3 border border-rose-100 flex items-center justify-center">
+                <TetrahedronSvg />
+              </div>
+              <div className="bg-white rounded-lg p-4 space-y-1 border border-rose-100">
+                <Step math="\text{SB 在底面上的正射影是 }AB" alignEq={false} />
+                <Step math="AB\perp BC\quad\Longrightarrow\quad SB\perp BC\quad(\text{三垂線定理})" alignEq={false} />
+                <Step math="SB=\sqrt{SA^2+AB^2}=\sqrt{12^2+5^2}=13\text{ cm}" />
+                <Step math="\theta=\angle SBA,\quad\tan\theta=\frac{SA}{AB}=\frac{12}{5}" />
+                <Step math="\theta=\tan^{-1}\!\left(\frac{12}{5}\right)\approx67.4^\circ" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-900 mb-2">三維題通用流程</h3>
+            <p className="text-slate-700">先辨認所求角的種類，再找投影或兩平面的交線；把空間關係轉成直角三角形後，標清楚對邊、鄰邊和斜邊，最後才選用三角比。題目要求證明垂直時，檢查能否使用三垂線定理。</p>
+          </div>
         </div>
       </CollapsibleSection>
     </div>

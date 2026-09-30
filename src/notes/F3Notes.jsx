@@ -1645,11 +1645,10 @@ const TRIANGLE_CENTER_CARDS = [
         三條<span className="font-bold text-orange-700">中線</span>的交點。
       </>
     ),
-    property: (
-      <>
-        形心把每條<span className="font-bold text-orange-700">中線</span>按 2 : 1 分割，靠近頂點的一段較長。
-      </>
-    ),
+    property: [
+      <>形心把每條<span className="font-bold text-orange-700">中線</span>按 2 : 1 分割，靠近頂點的一段較長。</>,
+      <>三條<span className="font-bold text-orange-700">中線</span>把三角形分成六個面積相同的小三角形。</>,
+    ],
   },
 ];
 
@@ -1662,7 +1661,24 @@ const TriangleCenterCard = ({ center }) => (
       <h3 className={`text-lg font-bold ${center.titleColor} text-center mb-3`}>{center.title}</h3>
       <div className="bg-white rounded-lg p-3 border border-slate-200 space-y-2 text-sm">
         <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>定義：</span>{center.definition}</p>
-        <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>性質：</span>{center.property}</p>
+        {Array.isArray(center.property) ? (
+          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1 text-slate-700">
+            <span className={`font-bold ${center.titleColor}`}>性質：</span>
+            <div className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-x-1">
+              {center.property.map((property, index) => (
+                <React.Fragment key={`property-${index + 1}`}>
+                  <span>{index + 1}.</span>
+                  <span>{property}</span>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>性質：</span>{center.property}</p>
+        )}
+        {center.type === 'centroid' && (
+          <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>位置：</span>形心必定在三角形內。</p>
+        )}
       </div>
     </div>
   </div>
@@ -1921,28 +1937,28 @@ const BearingsSVG1 = () => (
     <circle cx="65" cy="219" r="4" fill="#334155" />
     <text x="48" y="228" fill="#334155" fontSize="15" fontStyle="italic" fontWeight="bold" fontFamily="sans-serif">C</text>
 
-    {/* ==================== A: 035° (半徑 38) ==================== */}
-    <path d="M 170,132 A 38 38 0 0 1 191.8,138.9" fill="none" stroke="#2563eb" strokeWidth="2" markerEnd="url(#arrow-bearing-blue)" />
-    <rect x="194" y="112" width="42" height="20" rx="3" fill="#eff6ff" stroke="#2563eb" strokeWidth="1" />
-    <text x="215" y="126" fill="#1d4ed8" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">035°</text>
+    {/* ==================== A: 035° (最外線 半徑 78) ==================== */}
+    <path d="M 170,92 A 78 78 0 0 1 214.7,106.1" fill="none" stroke="#2563eb" strokeWidth="2" markerEnd="url(#arrow-bearing-blue)" />
+    <rect x="226" y="98" width="42" height="20" rx="3" fill="#eff6ff" stroke="#2563eb" strokeWidth="1" />
+    <text x="247" y="112" fill="#1d4ed8" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">035°</text>
 
-    {/* ==================== B: 152° (半徑 58) ==================== */}
+    {/* ==================== B: 152° (中線 半徑 58) ==================== */}
     {/* 與南線 S 的夾角 28° */}
-    <path d="M 170,198 A 28 28 0 0 0 183.2,194.7" fill="none" stroke="#64748b" strokeWidth="1.5" />
-    <text x="184" y="224" fill="#475569" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">28°</text>
+    <path d="M 170,194 A 24 24 0 0 0 181.3,191.2" fill="none" stroke="#64748b" strokeWidth="1.5" />
+    <text x="179" y="210" fill="#475569" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">28°</text>
     {/* 真方位角弧線：N 順時針至 OB (152°) */}
     <path d="M 170,112 A 58 58 0 0 1 197.2,221.2" fill="none" stroke="#7c3aed" strokeWidth="2" markerEnd="url(#arrow-bearing-purple)" />
-    <rect x="242" y="218" width="42" height="20" rx="3" fill="#f5f3ff" stroke="#7c3aed" strokeWidth="1" />
-    <text x="263" y="232" fill="#6d28d9" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">152°</text>
+    <rect x="236" y="218" width="42" height="20" rx="3" fill="#f5f3ff" stroke="#7c3aed" strokeWidth="1" />
+    <text x="257" y="232" fill="#6d28d9" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">152°</text>
 
-    {/* ==================== C: 245° (半徑 78) ==================== */}
+    {/* ==================== C: 245° (最內線 半徑 38) ==================== */}
     {/* 與南線 S 的夾角 65° */}
-    <path d="M 170,204 A 34 34 0 0 1 141.5,184.4" fill="none" stroke="#16a34a" strokeWidth="1.5" />
-    <text x="144" y="215" fill="#15803d" fontSize="11" fontWeight="bold" fontFamily="sans-serif">65°</text>
+    <path d="M 170,187 A 17 17 0 0 1 154.6,177.2" fill="none" stroke="#16a34a" strokeWidth="1.5" />
+    <text x="147" y="199" fill="#15803d" fontSize="11" fontWeight="bold" fontFamily="sans-serif">65°</text>
     {/* 真方位角弧線：N 順時針經過 180° 至 OC (245°) */}
-    <path d="M 170,92 A 78 78 0 1 1 99.3,203.0" fill="none" stroke="#e11d48" strokeWidth="2" markerEnd="url(#arrow-bearing-rose)" />
-    <rect x="76" y="238" width="42" height="20" rx="3" fill="#fff1f2" stroke="#e11d48" strokeWidth="1" />
-    <text x="97" y="252" fill="#be123c" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">245°</text>
+    <path d="M 170,128 A 42 42 0 1 1 132,187.8" fill="none" stroke="#e11d48" strokeWidth="2" markerEnd="url(#arrow-bearing-rose)" />
+    <rect x="76" y="236" width="42" height="20" rx="3" fill="#fff1f2" stroke="#e11d48" strokeWidth="1" />
+    <text x="97" y="250" fill="#be123c" fontSize="11" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">245°</text>
   </svg>
 );
 
@@ -1965,7 +1981,7 @@ const BearingsCompassSVG = () => (
     <path d="M 170,170 L 170,208 A 38 38 0 0 1 143.1,196.9 Z" fill="#ef4444" stroke="#b91c1c" strokeWidth="1" />
     
     {/* 東南象限 (28°): 青藍色 */}
-    <path d="M 170,170 L 170,208 A 38 38 0 0 0 198.2,195.4 Z" fill="#06b6d4" stroke="#0891b2" strokeWidth="1" />
+    <path d="M 170,170 L 170,192 A 22 22 0 0 0 186.4,184.7 Z" fill="#06b6d4" stroke="#0891b2" strokeWidth="1" />
 
     {/* 主方位十字軸 (N-S, W-E) */}
     <line x1="170" y1="48" x2="170" y2="292" stroke="#1e293b" strokeWidth="2.5" />
@@ -1995,15 +2011,15 @@ const BearingsCompassSVG = () => (
 
     {/* y 弧 (N 向 OD 逆時針) */}
     <path d="M 170,116 A 54 54 0 0 0 151,119" fill="none" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-head-compass)" />
-    <text x="159" y="106" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">25°</text>
+    <text x="147" y="106" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">25°</text>
 
     {/* a 弧 (S 向 OC 順時針) */}
     <path d="M 170,218 A 48 48 0 0 1 138,205" fill="none" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-head-compass)" />
     <text x="151" y="218" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">65°</text>
 
     {/* b 弧 (S 向 OB 逆時針) */}
-    <path d="M 170,218 A 48 48 0 0 0 204,204" fill="none" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-head-compass)" />
-    <text x="189" y="218" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">28°</text>
+    <path d="M 170,202 A 32 32 0 0 0 193.8,191.4" fill="none" stroke="#1e293b" strokeWidth="1.5" markerEnd="url(#arrow-head-compass)" />
+    <text x="185" y="215" fontSize="13" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">28°</text>
 
     {/* 中心原點 O */}
     <text x="186" y="162" fontSize="17" fontStyle="italic" fontWeight="bold" fontFamily="sans-serif" fill="#1e293b">O</text>
@@ -2233,7 +2249,7 @@ export const TrigonometryApplicationsNotes = ({ activeSub }) => {
                 <p className="font-bold text-red-600 mb-2 border-b border-red-100 pb-1">真方位角</p>
                 <ul className="text-sm text-slate-700 space-y-1 mb-3 h-[92px]">
                   <li>• 0 - 360° 表達</li>
-                  <li>• 必定由 N 開始<span className="text-red-600 font-bold">量度</span> (順時針)</li>
+                  <li>• 必定由 N 開始<span className="text-red-600 font-bold">順時針量度</span></li>
                   <li>• 答案<span className="text-red-600 font-bold">必定出現 3 位數字</span></li>
                 </ul>
                 <div className="min-h-[108px] bg-slate-50 p-2.5 rounded text-sm text-slate-700 space-y-1.5">

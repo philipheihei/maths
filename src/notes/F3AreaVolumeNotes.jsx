@@ -147,20 +147,20 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                 <div className="w-1/2 flex flex-col items-center justify-center">
                   <span className="text-sm text-slate-500 mb-2">例如：</span>
                   <svg viewBox="0 0 240 120" className="w-48 h-24">
-                    <polygon points="90,30 200,30 150,80 40,80" fill="rgba(236,72,153,0.15)" stroke="#334155" strokeWidth="2" />
+                    <polygon points="80,48 200,48 160,80 40,80" fill="rgba(236,72,153,0.15)" stroke="#334155" strokeWidth="2" />
                     
                     {/* Extension line for height */}
-                    <line x1="200" y1="30" x2="200" y2="80" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
-                    <line x1="150" y1="80" x2="200" y2="80" stroke="#334155" strokeWidth="1" />
+                    <line x1="200" y1="48" x2="200" y2="80" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
+                    <line x1="160" y1="80" x2="200" y2="80" stroke="#334155" strokeWidth="1" />
                     <polyline points="188,80 188,68 200,68" fill="none" stroke="#334155" strokeWidth="1.5" />
 
                     {/* Dimension lines */}
-                    <line x1="40" y1="95" x2="150" y2="95" stroke="#475569" strokeWidth="1" />
+                    <line x1="40" y1="95" x2="160" y2="95" stroke="#475569" strokeWidth="1" />
                     <line x1="40" y1="90" x2="40" y2="100" stroke="#475569" strokeWidth="1" />
-                    <line x1="150" y1="90" x2="150" y2="100" stroke="#475569" strokeWidth="1" />
+                    <line x1="160" y1="90" x2="160" y2="100" stroke="#475569" strokeWidth="1" />
 
-                    <text x="95" y="110" fontSize="13" fill="#475569" textAnchor="middle">30 cm</text>
-                    <text x="206" y="55" fontSize="13" fill="#db2777" textAnchor="start">8 cm</text>
+                    <text x="100" y="110" fontSize="13" fill="#475569" textAnchor="middle">30 cm</text>
+                    <text x="206" y="65" fontSize="13" fill="#db2777" textAnchor="start">8 cm</text>
                   </svg>
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
@@ -195,11 +195,11 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                 <div className="w-1/2 flex flex-col items-center justify-center">
                   <span className="text-sm text-slate-500 mb-2">例如：</span>
                   <svg viewBox="0 0 200 120" className="w-40 h-24">
-                    <polygon points="50,20 150,80 50,80" fill="rgba(250,204,21,0.2)" stroke="#334155" strokeWidth="2" />
-                    <polyline points="50,68 62,68 62,80" fill="none" stroke="#334155" strokeWidth="1.5" />
+                    <polygon points="40,10 160,80 40,80" fill="rgba(250,204,21,0.2)" stroke="#334155" strokeWidth="2" />
+                    <polyline points="40,68 52,68 52,80" fill="none" stroke="#334155" strokeWidth="1.5" />
                     
                     <text x="100" y="95" fontSize="13" fill="#475569" textAnchor="middle">12 m</text>
-                    <text x="45" y="55" fontSize="13" fill="#475569" textAnchor="end">7 m</text>
+                    <text x="35" y="50" fontSize="13" fill="#475569" textAnchor="end">7 m</text>
                   </svg>
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
@@ -239,14 +239,14 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                 <div className="w-1/2 flex flex-col items-center justify-center">
                   <span className="text-sm text-slate-500 mb-2">例如：</span>
                   <svg viewBox="0 0 200 120" className="w-40 h-24">
-                    <polygon points="70,30 150,30 160,80 40,80" fill="rgba(56,189,248,0.2)" stroke="#334155" strokeWidth="2" />
+                    <polygon points="75,40 125,40 140,80 60,80" fill="rgba(56,189,248,0.2)" stroke="#334155" strokeWidth="2" />
                     
-                    <line x1="70" y1="30" x2="70" y2="80" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
-                    <polyline points="70,68 82,68 82,80" fill="none" stroke="#334155" strokeWidth="1.5" />
+                    <line x1="75" y1="40" x2="75" y2="80" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
+                    <polyline points="75,68 87,68 87,80" fill="none" stroke="#334155" strokeWidth="1.5" />
 
                     <text x="100" y="95" fontSize="13" fill="#475569" textAnchor="middle">8 mm</text>
-                    <text x="110" y="22" fontSize="13" fill="#475569" textAnchor="middle">5 mm</text>
-                    <text x="75" y="60" fontSize="13" fill="#0284c7" textAnchor="start">4 mm</text>
+                    <text x="100" y="30" fontSize="13" fill="#475569" textAnchor="middle">5 mm</text>
+                    <text x="70" y="62" fontSize="13" fill="#0284c7" textAnchor="end">4 mm</text>
                   </svg>
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
@@ -363,7 +363,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
               <h3 className="font-bold text-blue-800 mb-3 text-lg">例子：假設球體 A、B 為相似立體</h3>
               <div className="flex flex-col md:flex-row gap-6 mb-2">
                 <div className="flex-1 flex justify-center items-center">
-                  <svg viewBox="0 0 320 160" className="w-full max-w-[320px] h-auto">
+                  <svg viewBox="0 0 320 180" className="w-full max-w-[320px] h-auto">
                     {/* Sphere A */}
                     <circle cx="80" cy="90" r="40" fill="rgba(253,230,138,0.6)" stroke="#334155" strokeWidth="2" />
                     <path d="M 40 90 A 40 12 0 0 1 120 90" fill="none" stroke="#334155" strokeWidth="1.5" strokeDasharray="4,4" />
@@ -374,13 +374,13 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                     <text x="80" y="115" fontSize="16" fill="#334155" textAnchor="middle" fontStyle="italic">A</text>
 
                     {/* Sphere B */}
-                    <circle cx="230" cy="80" r="70" fill="rgba(216,184,227,0.6)" stroke="#334155" strokeWidth="2" />
-                    <path d="M 160 80 A 70 20 0 0 1 300 80" fill="none" stroke="#334155" strokeWidth="1.5" strokeDasharray="5,5" />
-                    <path d="M 160 80 A 70 20 0 0 0 300 80" fill="none" stroke="#334155" strokeWidth="1.5" />
-                    <line x1="160" y1="80" x2="230" y2="80" stroke="#0ea5e9" strokeWidth="2" strokeDasharray="5,5" />
-                    <circle cx="230" cy="80" r="3" fill="#334155" />
-                    <text x="195" y="70" fontSize="16" fill="#334155" textAnchor="middle">6 cm</text>
-                    <text x="230" y="135" fontSize="20" fill="#334155" textAnchor="middle" fontStyle="italic">B</text>
+                    <circle cx="230" cy="90" r="80" fill="rgba(216,184,227,0.6)" stroke="#334155" strokeWidth="2" />
+                    <path d="M 150 90 A 80 24 0 0 1 310 90" fill="none" stroke="#334155" strokeWidth="1.5" strokeDasharray="5,5" />
+                    <path d="M 150 90 A 80 24 0 0 0 310 90" fill="none" stroke="#334155" strokeWidth="1.5" />
+                    <line x1="150" y1="90" x2="230" y2="90" stroke="#0ea5e9" strokeWidth="2" strokeDasharray="5,5" />
+                    <circle cx="230" cy="90" r="3" fill="#334155" />
+                    <text x="190" y="80" fontSize="16" fill="#334155" textAnchor="middle">6 cm</text>
+                    <text x="230" y="142" fontSize="20" fill="#334155" textAnchor="middle" fontStyle="italic">B</text>
                   </svg>
                 </div>
                 

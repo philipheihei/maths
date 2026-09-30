@@ -2078,6 +2078,50 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                </div>
              </div>
              </div>
+             <div className="mt-8 border-t border-rose-200 pt-6">
+               <h3 className="mb-4 text-center text-lg font-bold text-slate-800">常犯錯誤</h3>
+               <div className="space-y-4">
+                 <div className="grid grid-cols-1 gap-3 border-l-4 border-violet-500 bg-violet-50 p-4 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-center">
+                   <div className="text-lg font-semibold text-slate-800 sm:text-xl">
+                     <Latex math="(a+b)^2 \ne a^2+b^2" />
+                   </div>
+                   <div>
+                     <h4 className="font-bold text-violet-800">容易混淆的寫法</h4>
+                     <p className="text-sm text-slate-700">平方作用於整個括號，不能分別平方加數後直接相加。</p>
+                   </div>
+                 </div>
+
+                 <div className="border-l-4 border-sky-500 bg-sky-50 p-4">
+                   <h4 className="mb-2 font-bold text-sky-800">先理解平方代表甚麼</h4>
+                   <p className="mb-2 text-sm text-slate-700">即自己同自己相乘：</p>
+                   <div className="text-lg font-semibold text-slate-800 md:text-xl">
+                     <Latex math="(a+b)^2 = (a+b)(a+b)" />
+                   </div>
+                 </div>
+
+                 <div className="border-l-4 border-amber-500 bg-amber-50 p-4">
+                   <h4 className="mb-3 font-bold text-amber-800">逐步展開</h4>
+                   <div className="mx-auto max-w-md text-lg md:text-xl">
+                     <Latex math="\begin{aligned}&\phantom{=} (a+b)^2 \\[3pt] &= (a+b)(a+b) \\[3pt] &= a(a+b)+b(a+b) \\[3pt] &= a^2+ab+ab+b^2 \\[3pt] &= a^2+2ab+b^2\end{aligned}" block left />
+                   </div>
+                 </div>
+
+                 <div className="border-l-4 border-emerald-500 bg-emerald-50 p-4">
+                   <h4 className="mb-1 font-bold text-emerald-800">代入數字檢查</h4>
+                   <p className="mb-3 text-sm text-slate-700">令 <Latex math="a=1,\quad b=3" />，比較兩種算法：</p>
+                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                     <div className="border-l-2 border-sky-400 pl-3">
+                       <p className="mb-1 font-semibold text-sky-800">正確：平方整個和</p>
+                       <Latex math="\begin{aligned}(a+b)^2 &= (1+3)^2 \\ &= 4^2 = 16\end{aligned}" block left />
+                     </div>
+                     <div className="border-l-2 border-violet-400 pl-3">
+                       <p className="mb-1 font-semibold text-violet-800">錯誤：平方後相加</p>
+                       <Latex math="\begin{aligned}a^2+b^2 &= 1^2+3^2 \\ &= 1+9 = 10\end{aligned}" block left />
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
           </div>
         </CollapsibleSection>
 
@@ -3176,9 +3220,9 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                     <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
                     <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
                     <path d={arcPath(upperCrossX, upperCrossY, 15, 0, transversalAngle)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                    <path d={arcPath(lowerCrossX, lowerCrossY, 15, oppositeAngle, 360)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
-                    <text x="50" y="65" fontSize="14" fill="#2563eb">a</text>
-                    <text x="95" y="90" fontSize="14" fill="#ea580c">b</text>
+                    <path d={arcPath(lowerCrossX, lowerCrossY, 15, 180, oppositeAngle)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <text x="84" y="70" fontSize="14" fill="#2563eb">a</text>
+                    <text x="58" y="95" fontSize="14" fill="#ea580c">b</text>
                   </svg>
                 </div>
                 <div className="p-3 text-sm text-center border-t bg-slate-50">
@@ -3215,9 +3259,9 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                     <line x1="20" y1="50" x2="130" y2="50" stroke="#334155" strokeWidth="2" />
                     <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
                     <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
-                    <path d={arcPath(upperCrossX, upperCrossY, 15, transversalAngle, 180)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d={arcPath(upperCrossX, upperCrossY, 15, 0, transversalAngle)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
                     <path d={arcPath(lowerCrossX, lowerCrossY, 15, oppositeAngle, 360)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
-                    <text x="95" y="65" fontSize="14" fill="#2563eb">d</text>
+                    <text x="84" y="70" fontSize="14" fill="#2563eb">d</text>
                     <text x="95" y="90" fontSize="14" fill="#ea580c">b</text>
                   </svg>
                 </div>
