@@ -1645,11 +1645,10 @@ const TRIANGLE_CENTER_CARDS = [
         三條<span className="font-bold text-orange-700">中線</span>的交點。
       </>
     ),
-    property: (
-      <>
-        形心把每條<span className="font-bold text-orange-700">中線</span>按 2 : 1 分割，靠近頂點的一段較長。
-      </>
-    ),
+    property: [
+      <>形心把每條<span className="font-bold text-orange-700">中線</span>按 2 : 1 分割，靠近頂點的一段較長。</>,
+      <>三條<span className="font-bold text-orange-700">中線</span>把三角形分成六個面積相同的小三角形。</>,
+    ],
   },
 ];
 
@@ -1662,7 +1661,24 @@ const TriangleCenterCard = ({ center }) => (
       <h3 className={`text-lg font-bold ${center.titleColor} text-center mb-3`}>{center.title}</h3>
       <div className="bg-white rounded-lg p-3 border border-slate-200 space-y-2 text-sm">
         <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>定義：</span>{center.definition}</p>
-        <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>性質：</span>{center.property}</p>
+        {Array.isArray(center.property) ? (
+          <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-x-1 text-slate-700">
+            <span className={`font-bold ${center.titleColor}`}>性質：</span>
+            <div className="grid grid-cols-[1.5rem_minmax(0,1fr)] gap-x-1">
+              {center.property.map((property, index) => (
+                <React.Fragment key={`property-${index + 1}`}>
+                  <span>{index + 1}.</span>
+                  <span>{property}</span>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>性質：</span>{center.property}</p>
+        )}
+        {center.type === 'centroid' && (
+          <p className="text-slate-700"><span className={`font-bold ${center.titleColor}`}>位置：</span>形心必定在三角形內。</p>
+        )}
       </div>
     </div>
   </div>

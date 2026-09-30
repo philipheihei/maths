@@ -262,17 +262,17 @@ const SubstitutionNotes = ({ onBack }) => {
                 <div><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 1</span> 試 <InlineMath math="x=-5" />（介乎 -6 與 -4 之間）</div>
                 <div className="pl-4">第一條：<InlineMath math="-5-1 > \dfrac{2(-5)-9}{3}" />，即 <InlineMath math="-6 > -\dfrac{19}{3}" /> ✅</div>
                 <div className="pl-4">第二條：<InlineMath math="3(-5)+12 \geq 0" />，即 <InlineMath math="-3 \geq 0" /> ❌</div>
-                <div className="pl-4">因為是「或」，一條成立已經夠，所以 <InlineMath math="x=-5" /> 屬於答案範圍。</div>
+                <div className="pl-4">因為是「或」，一條成立已經夠，所以 <InlineMath math="x=-5" /> 屬於答案範圍；但 <InlineMath math="x=-5" /> 不符合 <InlineMath math="x \geq -4" />，可排除選項 B。</div>
                 <div className="mt-1"><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 2</span> 試 <InlineMath math="x=-7" />（小於 -6）</div>
                 <div className="pl-4">第一條：<InlineMath math="-8 > -\dfrac{23}{3}" /> ❌；第二條：<InlineMath math="-9 \geq 0" /> ❌，兩條都不成立。</div>
-                <div className="pl-4"><InlineMath math="x=-7" /> 唔喺答案範圍，可排除 <InlineMath math="x < -6" />（選項 C）。</div>
+                <div className="pl-4"><InlineMath math="x=-7" /> 唔喺答案範圍，可排除 <InlineMath math="x \leq -4" />（選項 A）及 <InlineMath math="x < -6" />（選項 C）。</div>
                 <div className="mt-1"><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 3</span> 試 <InlineMath math="x=0" />（大於 -4）</div>
-                <div className="pl-4">第二條：<InlineMath math="3(0)+12 \geq 0" /> ✅，所以所有 <InlineMath math="x \geq -4" /> 都會在「或」題中保留。</div>
+                <div className="pl-4">第二條：<InlineMath math="3(0)+12 \geq 0" /> ✅。所有 <InlineMath math="x \geq -4" /> 都在聯集內，但 <InlineMath math="x=-5" /> 也在聯集內，所以答案範圍比 <InlineMath math="x \geq -4" /> 更大。</div>
               </div>
               <div className="bg-white border border-emerald-200 rounded-lg p-2 mt-2">
-                由測試可知：小於 -6 不行，而 -5、0 都可行，答案是 <strong>B</strong>（<InlineMath math="x \geq -4" />）。
+                兩條不等式的解分別是 <InlineMath math="x > -6" /> 和 <InlineMath math="x \geq -4" />。因為 <InlineMath math="x \geq -4" /> 已包含在 <InlineMath math="x > -6" /> 之內，聯集是 <InlineMath math="x > -6" />。
               </div>
-              <div className="text-emerald-700 font-bold mt-2">答案：B（<InlineMath math="x \geq -4" />）</div>
+              <div className="text-emerald-700 font-bold mt-2">答案：D（<InlineMath math="x > -6" />）</div>
             </div>
           </div>
 
