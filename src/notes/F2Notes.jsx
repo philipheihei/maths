@@ -3220,9 +3220,9 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                     <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
                     <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
                     <path d={arcPath(upperCrossX, upperCrossY, 15, 0, transversalAngle)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
-                    <path d={arcPath(lowerCrossX, lowerCrossY, 15, oppositeAngle, 360)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
-                    <text x="50" y="65" fontSize="14" fill="#2563eb">a</text>
-                    <text x="95" y="90" fontSize="14" fill="#ea580c">b</text>
+                    <path d={arcPath(lowerCrossX, lowerCrossY, 15, 180, oppositeAngle)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
+                    <text x="84" y="70" fontSize="14" fill="#2563eb">a</text>
+                    <text x="58" y="95" fontSize="14" fill="#ea580c">b</text>
                   </svg>
                 </div>
                 <div className="p-3 text-sm text-center border-t bg-slate-50">
@@ -3259,9 +3259,9 @@ export const GeometryProofF2Notes = ({ activeSub }) => {
                     <line x1="20" y1="50" x2="130" y2="50" stroke="#334155" strokeWidth="2" />
                     <line x1="20" y1="100" x2="130" y2="100" stroke="#334155" strokeWidth="2" />
                     <line x1="60" y1="20" x2="90" y2="130" stroke="#334155" strokeWidth="2" />
-                    <path d={arcPath(upperCrossX, upperCrossY, 15, transversalAngle, 180)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
+                    <path d={arcPath(upperCrossX, upperCrossY, 15, 0, transversalAngle)} fill="none" stroke="#2563eb" strokeWidth="1.5" />
                     <path d={arcPath(lowerCrossX, lowerCrossY, 15, oppositeAngle, 360)} fill="none" stroke="#ea580c" strokeWidth="1.5" />
-                    <text x="95" y="65" fontSize="14" fill="#2563eb">d</text>
+                    <text x="84" y="70" fontSize="14" fill="#2563eb">d</text>
                     <text x="95" y="90" fontSize="14" fill="#ea580c">b</text>
                   </svg>
                 </div>

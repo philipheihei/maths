@@ -2324,7 +2324,7 @@ export const CoordinateNotes = ({ activeSub }) => {
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">📍 坐標系統 (直角坐標)</h3>
             <ul className="text-slate-700 space-y-2">
-              <li>• <span className="bg-amber-200 px-1 rounded font-bold text-red-600">原點 <Latex math="O(0,0)" /></span> 為十字的中間交點。</li>
+              <li>• <span className="bg-amber-200 px-1 rounded font-bold text-red-600">原點 <Latex math="O\,(0,\,0)" /></span> 為十字的中間交點。</li>
               <li>• 例子：<Latex math="A" /> 的坐標為 <Latex math="(2,4)" />。前方的 <span className="text-green-700 font-bold"><Latex math="x" /> 坐標是左右</span>，後方的 <span className="text-red-600 font-bold"><Latex math="y" /> 坐標是上下</span>。</li>
             </ul>
             <div className="mt-4 border-t border-blue-200 pt-3 text-slate-700">
@@ -2538,18 +2538,18 @@ export const CoordinateNotes = ({ activeSub }) => {
 
               {/* A 平移 */}
               {drawPoint(5, 4, "", "#16a34a", 25)}
-              <text x="135" y="-105" fontSize="12" fill="#db2777" fontWeight="bold" fontStyle="italic">A(5, 4)</text>
+              <text x="135" y="-105" fontSize="12" fill="#db2777" fontWeight="bold" fontStyle="italic">A (5, 4)</text>
               {drawPoint(1, 4, "", "#16a34a", 25)}
-              <text x="5" y="-105" fontSize="12" fill="#db2777" fontWeight="bold" fontStyle="italic">A'(1, 4)</text>
+              <text x="5" y="-105" fontSize="12" fill="#db2777" fontWeight="bold" fontStyle="italic">A' (1, 4)</text>
               <line x1="120" y1="-100" x2="35" y2="-100" stroke="#db2777" strokeWidth="2" strokeDasharray="4 2" />
               <polyline points="40,-104 35,-100 40,-96" fill="none" stroke="#db2777" strokeWidth="2" />
               <text x="85" y="-120" fontSize="12" fill="#db2777" textAnchor="middle">向左平移 4單位</text>
 
               {/* B 反射 */}
               {drawPoint(-3, 2, "", "#16a34a", 25)}
-              <text x="-85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" fontStyle="italic" textAnchor="end">B(-3, 2)</text>
+              <text x="-85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" fontStyle="italic" textAnchor="end">B (-3, 2)</text>
               {drawPoint(3, 2, "", "#16a34a", 25)}
-              <text x="85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" fontStyle="italic">B'(3, 2)</text>
+              <text x="85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" fontStyle="italic">B' (3, 2)</text>
               
               <path d="M -70 -55 Q -35 -80 0 -55 Q 35 -80 70 -55" fill="none" stroke="#0284c7" strokeWidth="2" />
               <polyline points="-5,-60 0,-55 -8,-52" fill="none" stroke="#0284c7" strokeWidth="2" />
@@ -2559,9 +2559,9 @@ export const CoordinateNotes = ({ activeSub }) => {
 
               {/* C 旋轉 */}
               {drawPoint(2, -4, "", "#16a34a", 25)}
-              <text x="55" y="115" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic">C(2, -4)</text>
+              <text x="55" y="115" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic">C (2, -4)</text>
               {drawPoint(-4, -2, "", "#16a34a", 25)}
-              <text x="-120" y="65" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic">C'(-4, -2)</text>
+              <text x="-120" y="65" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic">C' (-4, -2)</text>
               
               <path d="M 45 105 Q 0 130 -95 65" fill="none" stroke="#7e22ce" strokeWidth="2" />
               <polyline points="-85,65 -95,65 -92,74" fill="none" stroke="#7e22ce" strokeWidth="2" />

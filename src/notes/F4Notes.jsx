@@ -1033,6 +1033,42 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
             </div>
           </div>
 
+          <div className="bg-violet-50 border-2 border-violet-200 rounded-xl p-4">
+            <h3 className="text-violet-900 font-bold mb-2">🔎 複數根怎樣看、怎樣寫</h3>
+            <p className="text-sm text-slate-700 mb-2">每按一次 EXE，螢幕顯示一個根；例如 <Latex math="1+2i" inline /> 就直接寫成根 <Latex math="x=1+2i" inline />。實係數三次方程的非實根會成共軛一對，實部相同、虛部正負相反；顯示次序可以不同。</p>
+            <p className="text-sm text-slate-700 mb-2">根 <Latex math="r" inline /> 對應因式 <Latex math="x-r" inline />，減去整個根時要保留括號。共軛根可合併為：</p>
+            <div className="bg-white rounded-lg p-2 mb-4 border border-violet-200">
+              <Latex math="\left[x-(a+bi)\right]\left[x-(a-bi)\right]=(x-a)^2+b^2\quad (i^2=-1)" block />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="border-t-2 border-violet-300 pt-3">
+                <h4 className="text-violet-900 font-bold mb-2">例 1：正實部</h4>
+                <p className="text-slate-700">方程：<Latex math="x^3-5x^2+11x-15=0" inline /></p>
+                <p className="text-slate-700">螢幕根：<Latex math="3,\ 1+2i,\ 1-2i" inline /></p>
+                <p className="text-slate-700">寫根：<Latex math="x=3,\ 1\pm2i" inline /></p>
+                <p className="text-slate-700 mt-1">因式形式：</p>
+                <Latex math="(x-3)\left((x-1)^2+4\right)=0" block />
+              </div>
+              <div className="border-t-2 border-violet-300 pt-3">
+                <h4 className="text-violet-900 font-bold mb-2">例 2：負實部</h4>
+                <p className="text-slate-700">方程：<Latex math="x^3+3x^2+9x-13=0" inline /></p>
+                <p className="text-slate-700">螢幕根：<Latex math="-2+3i,\ 1,\ -2-3i" inline /></p>
+                <p className="text-slate-700">寫根：<Latex math="x=1,\ -2\pm3i" inline /></p>
+                <p className="text-slate-700 mt-1">因式形式：</p>
+                <Latex math="(x-1)\left((x+2)^2+9\right)=0" block />
+              </div>
+              <div className="border-t-2 border-violet-300 pt-3">
+                <h4 className="text-violet-900 font-bold mb-2">例 3：純虛根</h4>
+                <p className="text-slate-700">方程：<Latex math="x^3+4x^2+4x+16=0" inline /></p>
+                <p className="text-slate-700">螢幕根：<Latex math="-4,\ 2i,\ -2i" inline /></p>
+                <p className="text-slate-700">寫根：<Latex math="x=-4,\ \pm2i" inline /></p>
+                <p className="text-slate-700 mt-1">因式形式：</p>
+                <Latex math="(x+4)(x^2+4)=0" block />
+              </div>
+            </div>
+          </div>
+
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
             <p className="text-amber-800 text-sm">💡 主頁只需要掌握因式分解步驟；計算機程式的輸入方法可在本頁按上面的步驟慢慢輸入。</p>
           </div>
