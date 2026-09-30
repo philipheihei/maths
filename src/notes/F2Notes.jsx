@@ -1074,12 +1074,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="font-bold">=</span>
-                    <div className="relative">
-                      <Latex math="\dfrac{3(x+2)}{x+2}" />
-                      {/* strikethroughs for x+2 */}
-                      <div className="absolute top-[18%] right-0 w-8 sm:w-10 h-[2px] bg-red-500 -rotate-[20deg]"></div>
-                      <div className="absolute bottom-[18%] left-1/2 -translate-x-1/2 w-8 sm:w-10 h-[2px] bg-red-500 -rotate-[20deg]"></div>
-                    </div>
+                    <Latex math="\dfrac{3\textcolor{red}{\cancel{\textcolor{black}{(x+2)}}}}{\textcolor{red}{\cancel{\textcolor{black}{x+2}}}}" />
                     <span className="text-sm text-green-700">← 完成前檢查能否抽公因式和化簡</span>
                   </div>
                   <div className="flex items-center gap-4">
@@ -1116,12 +1111,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="font-bold">=</span>
-                    <div className="relative inline-block">
-                      <Latex math="\dfrac{38y}{40y^2}" />
-                      {/* strikethroughs for y and power 2 */}
-                      <div className="absolute top-[20%] right-0 w-[0.8rem] h-[2px] bg-red-500 -rotate-[30deg]"></div>
-                      <div className="absolute bottom-[40%] right-[-0.1rem] w-[0.6rem] h-[2px] bg-red-500 -rotate-[30deg]"></div>
-                    </div>
+                    <Latex math="\dfrac{\overset{\color{red}{19}}{\textcolor{red}{\cancel{\textcolor{black}{38}}}} \textcolor{red}{\cancel{\textcolor{black}{y}}}}{\underset{\color{red}{20}}{\textcolor{red}{\cancel{\textcolor{black}{40}}}} y^{\textcolor{red}{\cancel{\textcolor{black}{2}}}}}" />
                     <span className="text-sm text-green-700">← 完成前檢查能否抽公因式和化簡</span>
                   </div>
                   <div className="flex items-center gap-4">
@@ -1149,11 +1139,7 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                 <span className="font-bold">=</span>
                 <div className="flex flex-col gap-1 items-start">
                   <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <Latex math="\dfrac{6c}{14cy}" />
-                      <div className="absolute top-2 right-1.5 w-3 h-0.5 bg-red-500 -rotate-45"></div>
-                      <div className="absolute bottom-2 right-4 w-3 h-0.5 bg-red-500 -rotate-45"></div>
-                    </div>
+                    <Latex math="\dfrac{6\textcolor{red}{\cancel{\textcolor{black}{c}}}}{14\textcolor{red}{\cancel{\textcolor{black}{c}}}y}" />
                     <div className="flex flex-col text-sm text-green-700">
                       <span>← 上乘上</span>
                       <span>← 下乘下</span>
@@ -1178,20 +1164,12 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                 <div className="bg-white p-4 rounded-lg border border-green-300 relative">
                   <div className="absolute -top-3 -right-3 bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-xl shadow">✓</div>
                   <div className="flex justify-center mb-6">
-                    <div className="relative text-xl">
-                      <Latex math="\dfrac{4pq}{14p^2q}" />
-                      <div className="absolute top-1 left-0 text-red-600 text-xs font-bold line-through">4</div>
-                      <div className="absolute bottom-1 left-0 text-red-600 text-xs font-bold line-through">14</div>
-                      <div className="absolute -top-2 left-0 text-xs font-bold text-slate-700">2</div>
-                      <div className="absolute -bottom-3 left-0 text-xs font-bold text-slate-700">7</div>
-                      <div className="absolute top-2 right-1.5 w-3 h-0.5 bg-red-500 -rotate-45"></div>
-                      <div className="absolute bottom-2 right-1.5 w-3 h-0.5 bg-red-500 -rotate-45"></div>
-                      <div className="absolute top-2 right-4 w-3 h-0.5 bg-red-500 -rotate-45"></div>
-                      <div className="absolute bottom-2 right-5 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                    <div className="text-xl">
+                      <Latex math="\dfrac{\overset{\color{red}{2}}{\textcolor{red}{\cancel{\textcolor{black}{4}}}} \textcolor{red}{\cancel{\textcolor{black}{p}}} \textcolor{red}{\cancel{\textcolor{black}{q}}}}{\underset{\color{red}{7}}{\textcolor{red}{\cancel{\textcolor{black}{14}}}} p^{\textcolor{red}{\cancel{\textcolor{black}{2}}}} \textcolor{red}{\cancel{\textcolor{black}{q}}}}" />
                     </div>
                   </div>
                   <div className="text-center font-bold text-green-700">
-                    是乘數，可以約簡
+                    ↑ 是乘數，可以約簡
                   </div>
                 </div>
 
@@ -1199,11 +1177,9 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                 <div className="bg-white p-4 rounded-lg border border-red-300 relative">
                   <div className="absolute -top-3 -right-3 bg-red-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-xl shadow">✗</div>
                   <div className="flex justify-center mb-4">
-                    <div className="relative text-xl flex items-center gap-4">
+                    <div className="text-xl flex items-center gap-4">
                       <div>
-                        <Latex math="\dfrac{4x + 2y}{2x}" />
-                        <div className="absolute top-1 left-0 w-4 h-0.5 bg-red-500 -rotate-45"></div>
-                        <div className="absolute bottom-2 left-1 w-4 h-0.5 bg-red-500 -rotate-45"></div>
+                        <Latex math="\dfrac{\textcolor{red}{\cancel{\textcolor{black}{4}}}x \mathbin{\colorbox{#fef08a}{$+$}} 2y}{\textcolor{red}{\cancel{\textcolor{black}{2}}}x}" />
                       </div>
                       <span className="text-3xl text-red-500 font-bold">X</span>
                     </div>
@@ -1214,13 +1190,18 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                     
                     <div className="flex flex-col items-center gap-2">
                       <div className="flex items-center gap-3">
-                        <div className="relative text-lg">
-                          <Latex math="\dfrac{2(2x+y)}{2x}" />
-                          <div className="absolute top-1 left-0 w-3 h-0.5 bg-red-500 -rotate-45"></div>
-                          <div className="absolute bottom-1 left-0 w-3 h-0.5 bg-red-500 -rotate-45"></div>
+                        <div className="text-lg">
+                          <Latex math="\dfrac{\underline{\textcolor{red}{\cancel{\textcolor{black}{2}}}(2x+y)}}{\textcolor{red}{\cancel{\textcolor{black}{2}}}x}" />
                         </div>
                         <span className="text-green-700 font-bold text-xs">← 大畫面 <Latex math="2 \cdot (2x+y)" /> 為乘數</span>
                       </div>
+                      <div>
+                        <span className="font-bold">=</span>
+                        <Latex math="\dfrac{2x+y}{x}" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
                       <div>
                         <span className="font-bold">=</span>
                         <Latex math="\dfrac{2x+y}{x}" />

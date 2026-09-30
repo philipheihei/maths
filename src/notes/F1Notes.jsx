@@ -4272,7 +4272,7 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
                   <div className="print-decorative-exclamation absolute -right-4 -bottom-4 text-8xl text-red-50 opacity-50 font-black pointer-events-none">!</div>
                  <h4 className="text-red-700 font-bold text-lg mb-2 relative z-10">⚠️ 易錯提醒：不是有直角就是 RHS！</h4>
                  <p className="text-slate-700 relative z-10 text-[15px] leading-relaxed">
-                   如果兩條 <strong>直角邊 (兩股)</strong> 分別相等，且夾著直角，這屬於 <span className="font-bold text-red-600 bg-red-100 px-1 rounded">SAS</span>（兩邊及其夾角）。
+                   如果兩條 <strong>直角邊</strong> 分別相等，且夾著直角，這屬於 <span className="font-bold text-red-600 bg-red-100 px-1 rounded">SAS</span>（兩邊及其夾角）。
                  </p>
                  <p className="text-slate-700 mt-2 relative z-10 text-[15px] leading-relaxed">
                    必須是 <strong>直角</strong> (R) + <strong>斜邊</strong> (H) 相等 + <strong>另一條邊</strong> (S) 相等，才算是 <span className="font-bold text-blue-700 bg-blue-100 px-1 rounded">RHS</span>。
