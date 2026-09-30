@@ -1219,7 +1219,7 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   {/* Filled Polygon */}
                   <rect x="200" y="20" width="100" height="100" fill="rgba(167,243,208,0.5)" stroke="#334155" strokeWidth="2" />
                   <rect x="260" y="20" width="40" height="50" fill="rgba(251,146,60,0.5)" stroke="none" />
-                  <polyline points="260,20 300,20 300,70 260,70" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
+                  <polyline points="260,20 300,20 300,70" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
                   
                   <text x="325" y="75" fontSize="24" fill="#334155" textAnchor="middle">−</text>
 
