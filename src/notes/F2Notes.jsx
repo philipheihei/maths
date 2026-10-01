@@ -1188,15 +1188,16 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                     <p className="font-bold text-green-700 mb-2">不能約簡，因為上面大畫面是 "+"</p>
                     <p className="text-purple-700 font-bold mb-3">↓ 要先找相同的因數/代數 因式分解</p>
                     
-                    <div className="flex flex-col items-center gap-2">
+                    <div className="grid w-max grid-cols-[1.5rem_auto] items-center gap-y-2 mx-auto">
+                      <span aria-hidden="true" />
                       <div className="flex items-center gap-3">
                         <div className="text-lg">
                           <Latex math="\dfrac{\textcolor{red}{\cancel{\textcolor{black}{2}}}(2x+y)}{\textcolor{red}{\cancel{\textcolor{black}{2}}}x}" />
                         </div>
                         <span className="text-green-700 font-bold text-xs">← 大畫面 <Latex math="2 \cdot (2x+y)" /> 為乘數</span>
                       </div>
-                      <div>
-                        <span className="font-bold">=</span>
+                      <span className="font-bold text-right pr-2">=</span>
+                      <div className="text-left">
                         <Latex math="\dfrac{2x+y}{x}" />
                       </div>
                     </div>
