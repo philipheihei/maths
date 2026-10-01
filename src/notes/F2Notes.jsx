@@ -1191,17 +1191,10 @@ export const AlgebraicFractionsNotes = ({ activeSub }) => {
                     <div className="flex flex-col items-center gap-2">
                       <div className="flex items-center gap-3">
                         <div className="text-lg">
-                          <Latex math="\dfrac{\underline{\textcolor{red}{\cancel{\textcolor{black}{2}}}(2x+y)}}{\textcolor{red}{\cancel{\textcolor{black}{2}}}x}" />
+                          <Latex math="\dfrac{\textcolor{red}{\cancel{\textcolor{black}{2}}}(2x+y)}{\textcolor{red}{\cancel{\textcolor{black}{2}}}x}" />
                         </div>
                         <span className="text-green-700 font-bold text-xs">← 大畫面 <Latex math="2 \cdot (2x+y)" /> 為乘數</span>
                       </div>
-                      <div>
-                        <span className="font-bold">=</span>
-                        <Latex math="\dfrac{2x+y}{x}" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
                       <div>
                         <span className="font-bold">=</span>
                         <Latex math="\dfrac{2x+y}{x}" />

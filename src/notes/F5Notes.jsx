@@ -1754,24 +1754,38 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
               {/* 📐 軌跡例5：兩相交線相等距離 */}
               <div className="flex justify-center my-4">
                 <svg viewBox="0 0 200 160" className="w-56 h-auto" overflow="visible">
-                  <line x1="20" y1="80" x2="180" y2="80" stroke="#0f172a" strokeWidth="2" />
-                  <line x1="60" y1="140" x2="140" y2="20" stroke="#0f172a" strokeWidth="2" />
-                  
-                  {/* Angle bisectors */}
-                  {/* Bisector 1: angle ~ 31.7 deg */}
-                  <line x1="40" y1="120" x2="160" y2="40" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
-                  {/* Bisector 2: perpendicular */}
-                  <line x1="60" y1="20" x2="140" y2="140" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+                  {/* 兩條相交直線 L1, L2 */}
+                  <line x1="25" y1="80" x2="175" y2="80" stroke="#0f172a" strokeWidth="2" />
+                  <text x="180" y="84" fontSize="13" fill="#0f172a" fontWeight="bold">L₁</text>
 
-                  <circle cx="130" cy="60" r="3" fill="#ef4444" />
-                  <text x="135" y="55" fontSize="14" fill="#ef4444" fontWeight="bold">P</text>
-                  
-                  <line x1="130" y1="60" x2="130" y2="80" stroke="#94a3b8" strokeWidth="1.5" />
-                  <line x1="130" y1="60" x2="114" y2="50" stroke="#94a3b8" strokeWidth="1.5" />
+                  <line x1="65" y1="140.6" x2="135" y2="19.4" stroke="#0f172a" strokeWidth="2" />
+                  <text x="138" y="18" fontSize="13" fill="#0f172a" fontWeight="bold">L₂</text>
 
-                  {/* Right angles */}
-                  <polyline points="130,75 125,75 125,80" fill="none" stroke="#64748b" strokeWidth="1.5" />
-                  <polyline points="116,46 119,42 123,45" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  {/* 兩條角平分線（軌跡，藍色虛線，互相垂直） */}
+                  <line x1="35" y1="117.5" x2="165" y2="42.5" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+                  <line x1="67.5" y1="23.7" x2="132.5" y2="136.3" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+
+                  {/* 角平分線等角標記（弧線與圓點） */}
+                  <path d="M 122 80 A 22 22 0 0 0 119.1 69" fill="none" stroke="#2563eb" strokeWidth="1.2" />
+                  <path d="M 119.1 69 A 22 22 0 0 0 111 61" fill="none" stroke="#2563eb" strokeWidth="1.2" />
+                  <circle cx="115.5" cy="76" r="1.5" fill="#2563eb" />
+                  <circle cx="111" cy="69" r="1.5" fill="#2563eb" />
+
+                  {/* P 到兩直線的垂直線段（長度均為 24） */}
+                  <line x1="141.6" y1="56" x2="141.6" y2="80" stroke="#94a3b8" strokeWidth="1.5" />
+                  <line x1="141.6" y1="56" x2="120.8" y2="44" stroke="#94a3b8" strokeWidth="1.5" />
+
+                  {/* 垂直符號 */}
+                  <polyline points="141.6,73.5 135.1,73.5 135.1,80" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  <polyline points="126.4,47.3 123.2,52.9 117.5,49.6" fill="none" stroke="#64748b" strokeWidth="1.5" />
+
+                  {/* 等長刻痕（相等距離） */}
+                  <line x1="137.6" y1="68" x2="145.6" y2="68" stroke="#64748b" strokeWidth="1.5" />
+                  <line x1="128.8" y1="53.8" x2="133.6" y2="46.2" stroke="#64748b" strokeWidth="1.5" />
+
+                  {/* 動點 P */}
+                  <circle cx="141.6" cy="56" r="3" fill="#ef4444" />
+                  <text x="146" y="52" fontSize="14" fill="#ef4444" fontWeight="bold">P</text>
                 </svg>
               </div>
             </div>
