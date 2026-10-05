@@ -1219,7 +1219,7 @@ export const AreaVolumeNotes = ({ activeSub }) => {
                   {/* Filled Polygon */}
                   <rect x="200" y="20" width="100" height="100" fill="rgba(167,243,208,0.5)" stroke="#334155" strokeWidth="2" />
                   <rect x="260" y="20" width="40" height="50" fill="rgba(251,146,60,0.5)" stroke="none" />
-                  <polyline points="260,20 300,20 300,70 260,70" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
+                  <polyline points="260,20 300,20 300,70" fill="none" stroke="#94a3b8" strokeWidth="2" strokeDasharray="5,5" />
                   
                   <text x="325" y="75" fontSize="24" fill="#334155" textAnchor="middle">−</text>
 
@@ -2552,8 +2552,8 @@ export const CoordinateNotes = ({ activeSub }) => {
               <text x="85" y="-55" fontSize="12" fill="#0284c7" fontWeight="bold" fontStyle="italic">B' (3, 2)</text>
               
               <path d="M -70 -55 Q -35 -80 0 -55 Q 35 -80 70 -55" fill="none" stroke="#0284c7" strokeWidth="2" />
-              <polyline points="-5,-60 0,-55 -8,-52" fill="none" stroke="#0284c7" strokeWidth="2" />
-              <polyline points="65,-60 70,-55 62,-52" fill="none" stroke="#0284c7" strokeWidth="2" />
+              <polyline points="-4,-64 0,-55 -10,-56" fill="none" stroke="#0284c7" strokeWidth="2" />
+              <polyline points="66,-64 70,-55 60,-56" fill="none" stroke="#0284c7" strokeWidth="2" />
               <text x="-35" y="-75" fontSize="12" fill="#0284c7" textAnchor="middle">3格</text>
               <text x="35" y="-75" fontSize="12" fill="#0284c7" textAnchor="middle">再 3格</text>
 
@@ -2561,7 +2561,7 @@ export const CoordinateNotes = ({ activeSub }) => {
               {drawPoint(2, -4, "", "#16a34a", 25)}
               <text x="55" y="115" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic">C (2, -4)</text>
               {drawPoint(-4, -2, "", "#16a34a", 25)}
-              <text x="-120" y="65" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic">C' (-4, -2)</text>
+              <text x="-100" y="38" fontSize="12" fill="#7e22ce" fontWeight="bold" fontStyle="italic" textAnchor="middle">C' (-4, -2)</text>
               
               <path d="M 45 105 Q 0 130 -95 65" fill="none" stroke="#7e22ce" strokeWidth="2" />
               <polyline points="-85,65 -95,65 -92,74" fill="none" stroke="#7e22ce" strokeWidth="2" />
@@ -4272,7 +4272,7 @@ export const CongruentTrianglesNotes = ({ activeSub }) => {
                   <div className="print-decorative-exclamation absolute -right-4 -bottom-4 text-8xl text-red-50 opacity-50 font-black pointer-events-none">!</div>
                  <h4 className="text-red-700 font-bold text-lg mb-2 relative z-10">⚠️ 易錯提醒：不是有直角就是 RHS！</h4>
                  <p className="text-slate-700 relative z-10 text-[15px] leading-relaxed">
-                   如果兩條 <strong>直角邊 (兩股)</strong> 分別相等，且夾著直角，這屬於 <span className="font-bold text-red-600 bg-red-100 px-1 rounded">SAS</span>（兩邊及其夾角）。
+                   如果兩條 <strong>直角邊</strong> 分別相等，且夾著直角，這屬於 <span className="font-bold text-red-600 bg-red-100 px-1 rounded">SAS</span>（兩邊及其夾角）。
                  </p>
                  <p className="text-slate-700 mt-2 relative z-10 text-[15px] leading-relaxed">
                    必須是 <strong>直角</strong> (R) + <strong>斜邊</strong> (H) 相等 + <strong>另一條邊</strong> (S) 相等，才算是 <span className="font-bold text-blue-700 bg-blue-100 px-1 rounded">RHS</span>。

@@ -59,9 +59,42 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="text-emerald-600 font-bold mb-1">條件：<span className="text-slate-700 font-normal">一動點 <Latex math="P" inline /> 與兩條相交線保持相等距離。</span></div>
               <div className="text-emerald-600 font-bold mb-3">軌跡：<span className="text-slate-700 font-normal">兩條相交線所形成的角的兩條角平分線。</span></div>
-              {/* 📐 待繪製：軌跡例5：兩相交線相等距離 — 見下方繪圖規格單 */}
-              <div className="bg-slate-50 border-2 border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-400 text-sm">
-                圖示待加入（@數學繪圖師）
+              {/* 📐 軌跡例5：兩相交線相等距離 */}
+              <div className="flex justify-center my-4">
+                <svg viewBox="0 0 200 160" className="w-56 h-auto" overflow="visible">
+                  {/* 兩條相交直線 L1, L2 */}
+                  <line x1="25" y1="80" x2="175" y2="80" stroke="#0f172a" strokeWidth="2" />
+                  <text x="180" y="84" fontSize="13" fill="#0f172a" fontWeight="bold">L₁</text>
+
+                  <line x1="65" y1="140.6" x2="135" y2="19.4" stroke="#0f172a" strokeWidth="2" />
+                  <text x="138" y="18" fontSize="13" fill="#0f172a" fontWeight="bold">L₂</text>
+
+                  {/* 兩條角平分線（軌跡，藍色虛線，互相垂直） */}
+                  <line x1="35" y1="117.5" x2="165" y2="42.5" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+                  <line x1="67.5" y1="23.7" x2="132.5" y2="136.3" stroke="#2563eb" strokeWidth="2" strokeDasharray="4 4" />
+
+                  {/* 角平分線等角標記（弧線與圓點） */}
+                  <path d="M 122 80 A 22 22 0 0 0 119.1 69" fill="none" stroke="#2563eb" strokeWidth="1.2" />
+                  <path d="M 119.1 69 A 22 22 0 0 0 111 61" fill="none" stroke="#2563eb" strokeWidth="1.2" />
+                  <circle cx="115.5" cy="76" r="1.5" fill="#2563eb" />
+                  <circle cx="111" cy="69" r="1.5" fill="#2563eb" />
+
+                  {/* P 到兩直線的垂直線段（長度均為 24） */}
+                  <line x1="141.6" y1="56" x2="141.6" y2="80" stroke="#94a3b8" strokeWidth="1.5" />
+                  <line x1="141.6" y1="56" x2="120.8" y2="44" stroke="#94a3b8" strokeWidth="1.5" />
+
+                  {/* 垂直符號 */}
+                  <polyline points="141.6,73.5 135.1,73.5 135.1,80" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  <polyline points="126.4,47.3 123.2,52.9 117.5,49.6" fill="none" stroke="#64748b" strokeWidth="1.5" />
+
+                  {/* 等長刻痕（相等距離） */}
+                  <line x1="137.6" y1="68" x2="145.6" y2="68" stroke="#64748b" strokeWidth="1.5" />
+                  <line x1="128.8" y1="53.8" x2="133.6" y2="46.2" stroke="#64748b" strokeWidth="1.5" />
+
+                  {/* 動點 P */}
+                  <circle cx="141.6" cy="56" r="3" fill="#ef4444" />
+                  <text x="146" y="52" fontSize="14" fill="#ef4444" fontWeight="bold">P</text>
+                </svg>
               </div>
             </div>
 
