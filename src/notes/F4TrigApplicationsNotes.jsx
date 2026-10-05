@@ -9,16 +9,18 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
   const s5 = useRef(null);
   const s6 = useRef(null);
   const s7 = useRef(null);
+  const s8 = useRef(null);
 
   useEffect(() => {
     const refs = {
       'area': s1,
       'sides-angles': s2,
-      'projection': s3,
-      'line-plane-angle': s4,
-      'dihedral-angle': s5,
-      'three-perpendicular': s6,
-      'three-dimensional-problems': s7
+      'three-dimensional': s3,
+      'projection': s4,
+      'line-plane-angle': s5,
+      'dihedral-angle': s6,
+      'three-perpendicular': s7,
+      'three-dimensional-problems': s8
     };
     if (activeSub && refs[activeSub]?.current) {
       setTimeout(() => {
@@ -654,8 +656,10 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="projection" title="3. 正射影" num={3} color="cyan" activeSub={activeSub} sectionRef={s3}>
-        <div className="space-y-4">
+      <CollapsibleSection id="three-dimensional" title="3. 三維立體" num={3} color="cyan" activeSub={activeSub} sectionRef={s3}>
+        <div className="space-y-8">
+          <section id="projection" ref={s4} className="space-y-4 scroll-mt-24">
+            <h3 className="text-lg font-bold text-cyan-700 border-b border-cyan-100 pb-2">3.1 正射影</h3>
           <div className="bg-cyan-50 rounded-lg p-4 border border-cyan-200">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
               <div>
@@ -680,10 +684,10 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
               <li>求立體圖形中的投影時，先找垂足；位於平面上的端點投影仍是它本身。</li>
             </ul>
           </div>
-        </div>
-      </CollapsibleSection>
+          </section>
 
-      <CollapsibleSection id="line-plane-angle" title="4. 直線與平面角" num={4} color="blue" activeSub={activeSub} sectionRef={s4}>
+          <section id="line-plane-angle" ref={s5} className="space-y-4 scroll-mt-24">
+            <h3 className="text-lg font-bold text-blue-700 border-b border-blue-100 pb-2">3.2 直線與平面角</h3>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
@@ -711,9 +715,10 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
             </ol>
           </div>
         </div>
-      </CollapsibleSection>
+          </section>
 
-      <CollapsibleSection id="dihedral-angle" title="5. 兩平面角（二面角）" num={5} color="purple" activeSub={activeSub} sectionRef={s5}>
+          <section id="dihedral-angle" ref={s6} className="space-y-4 scroll-mt-24">
+            <h3 className="text-lg font-bold text-purple-700 border-b border-purple-100 pb-2">3.3 兩平面角（二面角）</h3>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
@@ -737,9 +742,10 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
           </div>
           <p className="text-sm text-slate-600">立體題若問「側面與底面的夾角」，交線是側面和底面的公共邊；在兩個平面內分別找垂直這條公共邊的線，便能把二面角轉成平面三角形中的角。</p>
         </div>
-      </CollapsibleSection>
+          </section>
 
-      <CollapsibleSection id="three-perpendicular" title="6. 三垂線定理" num={6} color="rose" activeSub={activeSub} sectionRef={s6}>
+          <section id="three-perpendicular" ref={s7} className="space-y-4 scroll-mt-24">
+            <h3 className="text-lg font-bold text-rose-700 border-b border-rose-100 pb-2">3.4 三垂線定理</h3>
         <div className="space-y-4">
           <div className="bg-rose-50 rounded-lg p-4 border border-rose-200">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
@@ -765,13 +771,14 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
             </ul>
           </div>
         </div>
-      </CollapsibleSection>
+          </section>
 
-      <CollapsibleSection id="three-dimensional-problems" title="7. 三維立體綜合題" num={7} color="indigo" activeSub={activeSub} sectionRef={s7}>
+          <section id="three-dimensional-problems" ref={s8} className="space-y-4 scroll-mt-24">
+            <h3 className="text-lg font-bold text-indigo-700 border-b border-indigo-100 pb-2">3.5 三維立體綜合題</h3>
         <div className="space-y-4">
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
             <h3 className="font-bold text-indigo-900 mb-2 text-lg">例 1：長方體內的線面角</h3>
-            <p className="text-slate-700">長方體 ABCD-EFGH 中，AB = 8 cm、BC = 6 cm、AE = 5 cm，且 AE 垂直底面 ABCD。求體對角線 AG 與底面 ABCD 的夾角 θ，以及 AG 的長度。</p>
+            <p className="text-slate-700">長方體的底面為 ABCD，頂面為 EFGH。AB = 8 cm、BC = 6 cm、AE = 5 cm，且 AE 垂直底面 ABCD。求體對角線 AG 與底面 ABCD 的夾角 θ，以及 AG 的長度。</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mt-3">
               <div className="bg-white rounded-lg p-3 border border-indigo-100 flex items-center justify-center">
                 <CuboidSvg />
@@ -788,7 +795,7 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
 
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
             <h3 className="font-bold text-purple-900 mb-2 text-lg">例 2：正四角錐的二面角</h3>
-            <p className="text-slate-700">正四角錐 S-ABCD 的底面邊長為 12 cm，O 是正方形底面的中心，SO = 8 cm 且 <Latex math="SO\perp ABCD" inline />。求側面 SAB 與底面 ABCD 的夾角 θ。</p>
+            <p className="text-slate-700">正四角錐的頂點為 S，底面為正方形 ABCD，底面邊長為 12 cm。O 是正方形底面的中心，SO = 8 cm 且 <Latex math="SO\perp ABCD" inline />。求側面 SAB 與底面 ABCD 的夾角 θ。</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mt-3">
               <div className="bg-white rounded-lg p-3 border border-purple-100 flex items-center justify-center">
                 <PyramidSvg />
@@ -805,7 +812,7 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
 
           <div className="bg-rose-50 rounded-lg p-4 border border-rose-200">
             <h3 className="font-bold text-rose-900 mb-2 text-lg">例 3：用三垂線定理證明並求線面角</h3>
-            <p className="text-slate-700">在三角錐 S-ABC 中，<Latex math="SA\perp\text{平面 }ABC" inline />、SA = 12 cm、AB = 5 cm、BC = 8 cm，且 <Latex math="AB\perp BC" inline />。求 SB，證明 <Latex math="BC\perp SB" inline />，並求 SB 與平面 ABC 的夾角 θ。</p>
+            <p className="text-slate-700">在三角錐中，頂點為 S，底面為三角形 ABC。<Latex math="SA\perp\text{平面 }ABC" inline />、SA = 12 cm、AB = 5 cm、BC = 8 cm，且 <Latex math="AB\perp BC" inline />。求 SB，證明 <Latex math="BC\perp SB" inline />，並求 SB 與平面 ABC 的夾角 θ。</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mt-3">
               <div className="bg-white rounded-lg p-3 border border-rose-100 flex items-center justify-center">
                 <TetrahedronSvg />
@@ -824,6 +831,8 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
             <h3 className="font-bold text-amber-900 mb-2">三維題通用流程</h3>
             <p className="text-slate-700">先辨認所求角的種類，再找投影或兩平面的交線；把空間關係轉成直角三角形後，標清楚對邊、鄰邊和斜邊，最後才選用三角比。題目要求證明垂直時，檢查能否使用三垂線定理。</p>
           </div>
+        </div>
+          </section>
         </div>
       </CollapsibleSection>
     </div>
