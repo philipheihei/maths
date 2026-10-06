@@ -207,7 +207,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
               <h3 className="font-bold text-blue-800 mb-4">3 個數字的 L.C.M. 和 H.C.F.</h3>
               <div className="inline-grid grid-cols-[auto_auto_1fr] font-sans text-lg mb-4 items-end gap-y-1">
                 <div className="pr-2 pb-1 text-right">
-                  <span className="bg-green-200 px-1">2</span>
+                  <span className="bg-green-200 px-1 ring-4 ring-yellow-200">2</span>
                 </div>
                 <div className="pl-2 pr-4 border-l-2 border-b-2 border-black pb-1 flex gap-4 w-max">
                   <span className="w-6 text-center">18</span><span className="w-6 text-center">20</span><span className="w-6 text-center">24</span>
@@ -218,7 +218,7 @@ export const BasicCalculationNotes = ({ activeSub }) => {
                   <span className="bg-yellow-200 px-1">3</span>
                 </div>
                 <div className="pl-2 pr-4 border-l-2 border-b-2 border-black pb-1 flex gap-4 w-max">
-                  <span className="bg-yellow-200 px-1 w-6 text-center">9</span><span className="w-6 text-center">10</span><span className="bg-yellow-200 px-1 w-6 text-center">12</span>
+                  <span className="bg-pink-200 px-1 w-6 text-center">9</span><span className="w-6 text-center">10</span><span className="bg-pink-200 px-1 w-6 text-center">12</span>
                 </div>
                 <div className="pl-2 pb-1 flex flex-col justify-center">
                   <span className="text-green-700 text-sm font-sans">← 如果三個數沒公因數，</span>

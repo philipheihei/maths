@@ -40,7 +40,7 @@ import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgram
 import { ProbabilityF5Notes } from './ProbabilityF5Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { SequenceNotes, FunctionTransformNotes } from './F6Notes';
-import { SimEqCalculatorNotes } from './A1Notes';
+import { SimEqCalculatorNotes, MCTopicsNotes } from './A1Notes';
 
 export const NOTES_DATA = {
   F1: [
@@ -510,8 +510,9 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'simplify-indices', num: 1, title: '簡化指數算式', color: 'blue' },
         { id: 'log-definition', num: 2, title: 'log 的定義與運算性質', color: 'green' },
-        { id: 'log-equations', num: 3, title: '指數方程與對數方程', color: 'purple' },
-        { id: 'log-applications', num: 4, title: '應用題', color: 'amber' },
+        { id: 'log-graphs', num: 3, title: '對數函數圖像與線性關係 (DSE MC)', color: 'teal' },
+        { id: 'log-equations', num: 4, title: '指數方程與對數方程', color: 'purple' },
+        { id: 'log-applications', num: 5, title: '應用題', color: 'amber' },
       ]
     },
     {
@@ -547,6 +548,7 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'area', num: 1, title: '1. 三角形面積', color: 'rose' },
         { id: 'sides-angles', num: 2, title: '2. 求邊長 / 角度', color: 'emerald' },
+        { id: 'three-dimensional', num: 3, title: '3. 三維立體', color: 'cyan' },
       ]
     }
   ],
@@ -664,6 +666,14 @@ export const NOTES_DATA = {
       subtopics: [
         { id: 'calculator', num: 1, title: '計算機使用', color: 'blue' },
       ]
+    },
+    {
+      id: 'mc-topics',
+      topic: 'MC限定課題',
+      color: 'green',
+      subtopics: [
+        { id: 'shape-proportion', num: 1, title: '圖形比例', color: 'green' },
+      ]
     }
   ],
 };
@@ -725,6 +735,7 @@ export const NOTES_COMPONENTS = {
   'sequence': SequenceNotes,
   'function-transform': FunctionTransformNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
+  'mc-topics': MCTopicsNotes,
   'approximation': ApproximationNotes,
   'percentage': PercentageNotes,
   'angles': AnglesNotes,

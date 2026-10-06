@@ -415,7 +415,7 @@ export const TrigonometryF4Notes = ({ activeSub }) => {
             
             <div className="bg-white rounded p-4 border border-slate-200 shadow-sm mb-4">
               <ul className="list-disc pl-5 space-y-2 text-slate-700">
-                <li><span className="font-bold text-blue-700">決定是否要轉換</span>：若用 <Latex math="90^\circ, 270^\circ" />（直軸）轉換，<Latex math="\tan \leftrightarrow \frac{1}{\tan}, \sin \leftrightarrow \cos" />；用 <Latex math="180^\circ, 360^\circ" />（橫軸）不變。</li>
+                <li><span className="font-bold text-blue-700">決定是否要轉換</span>：若用 <Latex math="90^\circ, 270^\circ" />（直軸）轉換，<Latex math="\tan \leftrightarrow \frac{1}{\tan}, \sin \leftrightarrow \cos" />；用 <Latex math="180^\circ, 360^\circ" />（x軸）不變。</li>
                 <li><span className="font-bold text-green-700">畫 ASTC 圖看符號</span>：原角落在不在原本那個函數為正的象限。</li>
               </ul>
               
