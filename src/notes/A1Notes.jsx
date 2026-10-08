@@ -195,7 +195,7 @@ export const MCTopicsNotes = ({ activeSub }) => {
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-green-500">
-        <h1 className="text-2xl font-bold text-slate-800 mb-2">圖形比例 (MC限定課題)</h1>
+        <h1 className="text-2xl font-bold text-slate-800 mb-2">MC限定課題</h1>
         <p className="text-slate-600">學習圖形比例，以及利用設 k 求代數比例</p>
       </div>
 
