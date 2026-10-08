@@ -677,6 +677,7 @@ export const NOTES_DATA = {
       color: 'green',
       subtopics: [
         { id: 'shape-proportion', num: 1, title: '圖形比例', color: 'green' },
+        { id: 'algebraic-proportion', num: 2, title: '代數比例：設 k 求比值', color: 'green' },
       ]
     }
   ],

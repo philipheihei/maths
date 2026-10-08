@@ -190,12 +190,13 @@ export const SimEqCalculatorNotes = ({ activeSub }) => {
 // ========================================
 export const MCTopicsNotes = ({ activeSub }) => {
   const s1 = useRef(null);
+  const s2 = useRef(null);
 
   return (
     <>
       <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border-l-4 border-green-500">
         <h1 className="text-2xl font-bold text-slate-800 mb-2">圖形比例 (MC限定課題)</h1>
-        <p className="text-slate-600">利用相似三角形與同高三角形解梯形面積比例</p>
+        <p className="text-slate-600">學習圖形比例，以及利用設 k 求代數比例</p>
       </div>
 
       <CollapsibleSection id="shape-proportion" title="圖形比例 (較深)" num={1} color="green" activeSub={activeSub} sectionRef={s1}>
@@ -424,6 +425,64 @@ export const MCTopicsNotes = ({ activeSub }) => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="algebraic-proportion" title="代數比例：設 k 求比值" num={2} color="green" activeSub={activeSub} sectionRef={s2}>
+        <div className="space-y-5">
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <p className="font-bold text-blue-900 mb-2">題目</p>
+            <p className="text-slate-800 leading-relaxed">
+              設 <Latex math="a" />、<Latex math="b" /> 及 <Latex math="c" /> 均為非零的數，使得
+              <Latex math="5a=6c" /> 及 <Latex math="\frac{2b+7c}{b+c}=4" />。求
+              <Latex math="\frac{5a+8b}{2b+3c}" />。
+            </p>
+          </div>
+
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <p className="font-bold text-amber-900 mb-2">解題方法：先找出 a : b : c</p>
+            <p className="text-slate-700">
+              目標式中的分子和分母都是 <Latex math="a,b,c" /> 的一次式，因此只要找出三個數的比例，不必求出它們的實際值。
+            </p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-xl p-4">
+            <h3 className="font-bold text-emerald-800 mb-3">步驟 1：由第一個條件用 k 表示 a、c</h3>
+            <div className="text-blue-900 font-bold overflow-x-auto">
+              <Latex math="\begin{aligned} 5a &= 6c \\ a &= 6k,\quad c = 5k \end{aligned}" block />
+            </div>
+            <p className="text-sm text-slate-600 mt-2">因為 <Latex math="a:c=6:5" />，所以用同一個非零常數 <Latex math="k" /> 表示兩者。</p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-xl p-4">
+            <h3 className="font-bold text-violet-800 mb-3">步驟 2：交叉相乘，找出 b 與 c 的關係</h3>
+            <div className="text-blue-900 font-bold overflow-x-auto">
+              <Latex math="\begin{aligned} \frac{2b+7c}{b+c} &= 4 \\ 2b+7c &= 4(b+c) \\ 2b+7c &= 4b+4c \\ 3c &= 2b \\ b &= \frac{3}{2}c = \frac{15}{2}k \end{aligned}" block />
+            </div>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-xl p-4">
+            <h3 className="font-bold text-indigo-800 mb-3">步驟 3：寫出整數連比</h3>
+            <div className="text-blue-900 font-bold overflow-x-auto">
+              <Latex math="\begin{aligned} a:b:c &= 6k:\frac{15}{2}k:5k \\ &= 6:\frac{15}{2}:5 \\ &= 12:15:10 \end{aligned}" block />
+            </div>
+            <p className="text-sm text-slate-600 mt-2">比例中有分數時，把每一項同乘 2，化成整數比；共同因數 <Latex math="k" /> 可以約去。</p>
+          </div>
+
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+            <h3 className="font-bold text-green-900 mb-3">步驟 4：用比例代回目標式</h3>
+            <div className="text-green-900 font-bold overflow-x-auto">
+              <Latex math="\begin{aligned} a:b:c &= 12:15:10 \quad\Rightarrow\quad a=12k,\ b=15k,\ c=10k \\ \frac{5a+8b}{2b+3c} &= \frac{5(12k)+8(15k)}{2(15k)+3(10k)} \\ &= \frac{60k+120k}{30k+30k} = \frac{180k}{60k} = 3 \end{aligned}" block />
+            </div>
+            <p className="mt-3 font-bold text-green-800">答案：3</p>
+          </div>
+
+          <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+            <p className="font-bold text-red-800">記住</p>
+            <p className="text-red-800 mt-1">
+              先逐條利用已知條件找比例；遇到分式方程先交叉相乘。最後若要求的是同次齊次式（分子、分母的次數相同），代入連比時共同的 <Latex math="k" /> 會約去。
+            </p>
           </div>
         </div>
       </CollapsibleSection>
