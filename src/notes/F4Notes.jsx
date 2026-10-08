@@ -864,12 +864,32 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
               <p className="text-slate-700 text-sm mb-2">題目有機會考 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 以外的變種，可將它們轉換為只包含 <Latex math="(\alpha + \beta)" /> 和 <Latex math="\alpha\beta" /> 的形式：</p>
               <div className="grid gap-3">
                 <div className="bg-slate-100 p-3 rounded flex items-center justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 font-sans">1.</span><Latex math="\alpha^2 + \beta^2 = (\alpha + \beta)^2 − 2\alpha\beta" /></div>
-                <div className="bg-slate-100 px-3 py-2 rounded flex items-start justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 -mt-1 font-sans">2.</span><Latex math={String.raw`\begin{aligned}
+                <div className="bg-slate-100 p-3 rounded flex items-center justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 font-sans">2.</span><Latex math="(\alpha − \beta)^2 = (\alpha + \beta)^2 − 4\alpha\beta" /></div>
+                <div className="bg-slate-100 px-3 py-2 rounded flex items-start justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 -mt-1 font-sans">3.</span><Latex math={String.raw`\begin{aligned}
 (\alpha−1)(\beta−1)&=\alpha\beta−\beta−\alpha+1 \\
 &=\alpha\beta−(\alpha+\beta)+1
 \end{aligned}`} block left compact /></div>
-                <div className="bg-slate-100 p-3 rounded flex items-center justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 font-sans">3.</span><Latex math="\frac{1}{\alpha}+\frac{1}{\beta} = \frac{\alpha+\beta}{\alpha\beta}" /></div>
+                <div className="bg-slate-100 p-3 rounded flex items-center justify-start gap-2 shadow-sm text-lg font-bold text-blue-800 overflow-x-auto"><span className="shrink-0 font-sans">4.</span><Latex math="\frac{1}{\alpha}+\frac{1}{\beta} = \frac{\alpha+\beta}{\alpha\beta}" /></div>
               </div>
+            </div>
+
+            <div className="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-100 mt-4">
+              <h4 className="font-bold text-blue-800 mb-2 text-sm border-b border-blue-200 pb-1">求 <Latex math="(\alpha-\beta)^2" /> 的算法</h4>
+              <ol className="list-decimal list-inside space-y-1 text-sm text-slate-700 mb-3">
+                <li>先找兩根之和：<Latex math="\alpha+\beta=-\frac{b}{a}" inline /></li>
+                <li>再找兩根之積：<Latex math="\alpha\beta=\frac{c}{a}" inline /></li>
+                <li>代入 <Latex math="(\alpha-\beta)^2=(\alpha+\beta)^2-4\alpha\beta" inline /></li>
+              </ol>
+              <div className="bg-white rounded p-3 overflow-x-auto">
+                <Latex math="\begin{aligned}
+(\alpha-\beta)^2
+&=(\alpha+\beta)^2-4\alpha\beta \\
+&=\left(-\frac{b}{a}\right)^2-4\left(\frac{c}{a}\right) \\
+&=\frac{b^2-4ac}{a^2} \\
+&=\frac{\Delta}{a^2}
+\end{aligned}" block />
+              </div>
+              <p className="text-xs text-blue-700 mt-2">所以只要求 <Latex math="(\alpha-\beta)^2" inline />，不用先解出 <Latex math="\alpha" inline /> 和 <Latex math="\beta" inline />；其中 <Latex math="a\ne0" inline />。</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow-sm border border-purple-100 mt-4">
