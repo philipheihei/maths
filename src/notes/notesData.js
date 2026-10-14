@@ -478,6 +478,7 @@ export const NOTES_DATA = {
         { id: 'find-unknown', num: 2, title: '用 f(x) 找未知數', color: 'purple' },
         { id: 'quadratic-graph', num: 3, title: '二次函數圖像', color: 'green' },
         { id: 'coordinates', num: 4, title: '提供坐標', color: 'blue' },
+        { id: 'completing-square', num: 5, title: '配方法', color: 'indigo' },
       ]
     },
     {

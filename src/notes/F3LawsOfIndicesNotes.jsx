@@ -60,14 +60,15 @@ export const LawsOfIndicesNotes = ({ activeSub }) => {
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-2">定義</h3>
             <p className="text-slate-700">科學記數法是把一個數寫成 <Latex math="a \times 10^n" /> 的形式，其中 <Latex math="1 \leq a < 10" />，而 <Latex math="n" /> 是整數。</p>
+            <p className="text-slate-700 mt-2">須掌握以下兩種轉換：</p>
             <div className="grid gap-3 mt-3 sm:grid-cols-2">
               <div className="bg-white rounded-lg p-3 border border-green-200">
-                <p className="text-slate-700 mb-1">正指數（小數點向右移）：</p>
+                <p className="text-slate-700 mb-1">數字或小數 → 科學記數法</p>
                 <Latex math="149600000 = 1.496 \times 10^8" block />
               </div>
               <div className="bg-white rounded-lg p-3 border border-green-200">
-                <p className="text-slate-700 mb-1">負指數（小數點向左移）：</p>
-                <Latex math="0.0000562 = 5.62 \times 10^{−5}" block />
+                <p className="text-slate-700 mb-1">科學記數法 → 數字或小數</p>
+                <Latex math="5.62 \times 10^{−5} = 0.0000562" block />
               </div>
             </div>
           </div>

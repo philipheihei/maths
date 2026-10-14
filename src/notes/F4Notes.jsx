@@ -1330,7 +1330,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
 // CH3 函數 f(x) (F4)
 // ========================================
 export const FunctionNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
 
   return (
     <>
@@ -1526,6 +1526,120 @@ export const FunctionNotes = ({ activeSub }) => {
               </div>
             </div>
           </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="completing-square" title="配方法" num={5} color="indigo" activeSub={activeSub} sectionRef={s5}>
+        <div className="space-y-4">
+          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+            <h3 className="font-bold text-indigo-800 mb-2">完全平方公式</h3>
+            <p className="text-slate-700 mb-2">將 <Latex math="x^2+bx" /> 配成完全平方式：</p>
+            <Latex math="x^2+bx+\left(\frac{b}{2}\right)^2=\left(x+\frac{b}{2}\right)^2" block />
+            <p className="mt-3 inline-block rounded-full bg-yellow-100 px-3 py-1 font-semibold text-amber-800">
+              口訣：一半，再平方
+            </p>
+          </div>
+
+          <div className="rounded-lg border border-indigo-200 bg-white p-4">
+            <h3 className="mb-2 font-bold text-indigo-800">配方法的重要用途：求二次函數圖像的頂點</h3>
+            <p className="text-sm text-slate-700">
+              若題目要求用配方法求頂點，先把二次函數配成頂點形式，再由括號內的式子和括號外的常數項找出頂點坐標。
+            </p>
+          </div>
+
+          <div className="grid min-w-0 gap-4 lg:grid-cols-2">
+            <div className="min-w-0 rounded-lg border border-blue-200 bg-blue-50 p-4">
+              <div className="mb-3">
+                <span className="mr-2 rounded-full bg-blue-600 px-2.5 py-1 text-xs font-bold text-white">例 1</span>
+                <span className="font-semibold text-blue-900">當 <Latex math="x^2" /> 項的係數是 1</span>
+              </div>
+              <p className="mb-3 text-sm text-slate-700">用配方法將 <Latex math="y=x^2+6x+5" /> 配成完全平方式：</p>
+              <ol className="mb-3 list-decimal space-y-2 pl-5 text-sm text-slate-700">
+                <li>取 <Latex math="x" /> 項係數的一半：<Latex math="6 \div 2=3" /></li>
+                <li>將這個一半平方，並同時加上和減去平方值：<Latex math="3^2=9" /></li>
+                <li>將前三項配成完全平方式，再合併常數項。</li>
+              </ol>
+              <div className="mt-3 overflow-x-auto rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-6 sm:text-xl">
+                <p className="mb-4 text-base font-bold sm:text-lg">用配方法完成</p>
+                <div className="w-max space-y-1">
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span className="text-right"><Latex math="y" /></span>
+                    <Latex math="=" />
+                    <span><Latex math="x^2+6x+5" /></span>
+                  </div>
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span />
+                    <Latex math="=" />
+                    <span><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="+6x" /></span><Latex math="+" /><span className="rounded-sm bg-green-300 px-1"><Latex math="3^2" /></span><Latex math="-" /><span className="rounded-sm bg-cyan-300 px-1"><Latex math="3^2" /></span><Latex math="+5" /></span>
+                  </div>
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span />
+                    <Latex math="=" />
+                    <Latex math="(x+3)^2-4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="min-w-0 rounded-lg border border-purple-200 bg-purple-50 p-4">
+              <div className="mb-3">
+                <span className="mr-2 rounded-full bg-purple-600 px-2.5 py-1 text-xs font-bold text-white">例 2</span>
+                <span className="font-semibold text-purple-900">當 <Latex math="x^2" /> 項的係數不是 1</span>
+              </div>
+              <p className="mb-3 text-sm text-slate-700">用配方法將 <Latex math="y=2x^2-8x+3" /> 配成完全平方式：</p>
+              <ol className="mb-3 list-decimal space-y-2 pl-5 text-sm text-slate-700">
+                <li>從 <Latex math="x^2" /> 項和 <Latex math="x" /> 項提出公因數 2。</li>
+                <li>取括號內 <Latex math="x" /> 項係數的一半再平方：<Latex math="(-4 \div 2)^2=4" />；在括號內加 4，再減 4。</li>
+                <li>將前三項配成完全平方式，再把 2 乘以括號內的 <Latex math="-4" />，並合併常數項。</li>
+              </ol>
+              <div className="mt-3 overflow-x-auto rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-6 sm:text-xl">
+                <p className="mb-4 text-base font-bold sm:text-lg">用配方法求頂點</p>
+                <div className="w-max space-y-1">
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span className="text-right"><Latex math="y" /></span>
+                    <Latex math="=" />
+                    <span><Latex math="2" /><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="-8x" /></span><Latex math="+3" /></span>
+                  </div>
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span />
+                    <Latex math="=" />
+                    <span><Latex math="2(" /><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="-4x" /></span><Latex math=")+3" /></span>
+                  </div>
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span />
+                    <Latex math="=" />
+                    <span><Latex math="2(" /><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="-4x" /></span><Latex math="+" /><span className="rounded-sm bg-green-300 px-1"><Latex math="2^2" /></span><Latex math="-" /><span className="rounded-sm bg-cyan-300 px-1"><Latex math="2^2" /></span><Latex math=")+3" /></span>
+                  </div>
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span />
+                    <Latex math="=" />
+                    <span><Latex math="2[(x-2)^2-" /><span className="rounded-sm bg-cyan-300 px-1"><Latex math="2^2" /></span><Latex math="]+3" /></span>
+                  </div>
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span />
+                    <Latex math="=" />
+                    <Latex math="2(x-2)^2-8+3" />
+                  </div>
+                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                    <span />
+                    <Latex math="=" />
+                    <Latex math="2(x-2)^2-5" />
+                  </div>
+                </div>
+                <p className="mt-4 text-xl font-extrabold sm:text-2xl">
+                  頂點 <Latex math="(2,-5)" />
+                </p>
+              </div>
+              <div className="mt-3 space-y-2 text-sm text-slate-700">
+                <p>頂點的 <Latex math="x" /> 坐標：令括號內的式子等於 0，即 <Latex math="x-2=0" />，得 <Latex math="x=2" />。</p>
+                <p>頂點的 <Latex math="y" /> 坐標：括號外的常數項是 <Latex math="-5" />，所以 <Latex math="y=-5" />。</p>
+              </div>
+            </div>
+          </div>
+
+          <p className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+            溫習提示：配方法的步驟容易忘記。求頂點時，記緊先完成配方，再令括號內的式子等於 0 求 <Latex math="x" /> 坐標，並從括號外的常數項讀出 <Latex math="y" /> 坐標。
+          </p>
         </div>
       </CollapsibleSection>
     </>
