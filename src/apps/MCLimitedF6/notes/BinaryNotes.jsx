@@ -39,7 +39,7 @@ const BinaryNotes = ({ onBack }) => (
               <table className="text-sm text-center border-collapse w-full">
                 <thead>
                   <tr className="bg-teal-200">
-                    <th className="border border-teal-300 px-3 py-1">二進制數</th>
+                    <th className="border border-teal-300 px-3 py-1">二進數</th>
                     {[11,10,9,8,7,6,5,4,3,2,1,0].map(p => (
                       <th key={p} className="border border-teal-300 px-2 py-1 text-xs">位 {p}</th>
                     ))}
@@ -96,7 +96,7 @@ const BinaryNotes = ({ onBack }) => (
                   </span>
                   切換到 <strong><span className="text-green-600">BIN</span> 二進制輸入</strong>
                 </li>
-                <li>輸入二進制數字（只能輸入 0 和 1）</li>
+                <li>輸入二進數（只能輸入 0 和 1）</li>
                 <li>按
                   <span className="mx-1 bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">EXE</span>
                   確認
@@ -155,7 +155,7 @@ const BinaryNotes = ({ onBack }) => (
           <p className="font-bold text-purple-700 mb-2">⚠️ 注意事項</p>
           <ul className="list-disc pl-5 space-y-2 text-sm">
             <li><span className="text-green-600 font-bold">BIN</span> 模式只能輸入 0 和 1</li>
-            <li>若二進制數太長（超過計算機顯示位數）會顯示不了，需要拆開不同組件計算去推斷答案。</li>
+            <li>若二進數太長（超過計算機顯示位數）會顯示不了，需要拆開不同組件計算去推斷答案。</li>
             <li>計其他數要離開 BASE 模式：<span className="bg-gray-300 text-gray-800 text-xs font-mono px-1 py-0.5 rounded">MODE</span> → <span className="bg-gray-900 text-white text-xs font-mono px-1 py-0.5 rounded">1</span>（回 COMP）</li>
           </ul>
         </div>

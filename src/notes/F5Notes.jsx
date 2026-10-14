@@ -246,7 +246,7 @@ export const StatisticsF5Notes = ({ activeSub, onNavigate }) => {
           </div>
 
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <h3 className="font-bold text-purple-800 mb-3">🖩 CASIO 計算機入法 (SD Mode)</h3>
+            <h3 className="font-bold text-purple-800 mb-3">CASIO 計算機入法 (SD Mode)</h3>
             <p className="text-sm text-slate-700 mb-2">步驟 1：進入 SD 模式 <span className="bg-gray-300 text-gray-800 text-xs font-mono px-2 py-0.5 rounded mr-1">MODE</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded">4</span></p>
             <p className="text-sm text-slate-700 mb-2">步驟 2：清除舊數據 <span className="bg-gray-300 text-yellow-700 text-xs font-mono px-2 py-0.5 rounded mr-1">SHIFT</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">9</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">1</span><span className="bg-gray-900 text-white text-xs font-mono px-2 py-0.5 rounded mr-1">EXE</span></p>
             <p className="text-sm text-slate-700 mb-2">步驟 3：入 Data (逐個㩒 <Latex math="M+" inline />)</p>
@@ -2074,5 +2074,4 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
     </>
   );
 };
-
 
