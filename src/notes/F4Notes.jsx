@@ -21,6 +21,8 @@ const QuadraticGraphReference = () => (
         <text x="178" y="38" fontSize="16" fill="#475569">y</text>
         <text x="154" y="208" fontSize="15" fill="#475569" fontStyle="italic">O</text>
         <path d="M70 72 C110 150 150 250 200 250 C250 250 290 150 330 72" fill="none" stroke="#22c55e" strokeWidth="4" strokeLinecap="round" />
+        <circle cx="170" cy="239" r="4" fill="#16a34a" stroke="white" strokeWidth="1.5" />
+        <line x1="146" y1="278" x2="167" y2="244" stroke="#475569" strokeWidth="1.5" markerEnd="url(#quadratic-axis-arrow)" />
         <line x1="200" y1="48" x2="200" y2="288" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
         <circle cx="200" cy="250" r="4" fill="#334155" />
         <line x1="200" y1="250" x2="170" y2="250" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
@@ -36,7 +38,7 @@ const QuadraticGraphReference = () => (
             </math>
           </div>
         </foreignObject>
-        <text x="160" y="240" textAnchor="end" fontSize="15" fill="#475569">(0, c)</text>
+        <text x="80" y="286" fontSize="15" fill="#475569">(0, c)</text>
         <text x="200" y="322" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
         <text x="320" y="125" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
       </g>
@@ -49,6 +51,8 @@ const QuadraticGraphReference = () => (
         <text x="178" y="38" fontSize="16" fill="#475569">y</text>
         <text x="154" y="208" fontSize="15" fill="#475569" fontStyle="italic">O</text>
         <path d="M65 282 C105 180 150 70 200 70 C250 70 295 180 335 282" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+        <circle cx="170" cy="82" r="4" fill="#dc2626" stroke="white" strokeWidth="1.5" />
+        <line x1="146" y1="116" x2="167" y2="87" stroke="#475569" strokeWidth="1.5" markerEnd="url(#quadratic-axis-arrow)" />
         <line x1="200" y1="48" x2="200" y2="288" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
         <circle cx="200" cy="70" r="4" fill="#334155" />
         <line x1="200" y1="70" x2="170" y2="70" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
@@ -64,7 +68,7 @@ const QuadraticGraphReference = () => (
             </math>
           </div>
         </foreignObject>
-        <text x="150" y="100" textAnchor="end" fontSize="15" fill="#475569">(0, c)</text>
+        <text x="80" y="122" fontSize="15" fill="#475569">(0, c)</text>
         <text x="200" y="315" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
         <text x="280" y="125" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
       </g>
@@ -1494,10 +1498,26 @@ export const FunctionNotes = ({ activeSub }) => {
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
             <h3 className="font-bold text-amber-800 mb-2">📌 例子</h3>
             <div className="bg-white rounded-lg p-3 text-sm">
-              <Latex math="y = −5x^2 + 6x + 3" block />
-              <div className="flex gap-6 mt-2">
-                <span><span className="text-red-600 font-bold"><Latex math="a=-5" /></span> → 開口向下 ∩</span>
-                <span><span className="text-green-600 font-bold"><Latex math="c=3" /></span> → <Latex math="y" />截距 <Latex math="=3" /></span>
+              <div className="mb-3 text-center">
+                <p className="mb-2">考慮以下二次函數：</p>
+                <Latex math="y = −5x^2 + 2x + 3" block />
+                <p className="mt-2">從一般式 y = ax² + bx + c 可知，a = −5、b = 2、c = 3。</p>
+              </div>
+              <div className="grid gap-2 sm:grid-cols-[auto_1fr] sm:gap-x-4">
+                <p className="font-bold text-red-700">開口方向</p>
+                <p><Latex math="a=-5<0" />，開口向下（∩）</p>
+
+                <p className="font-bold text-indigo-700">對稱軸</p>
+                <Latex math="\begin{aligned} x &= -\frac{b}{2a} \\ &= -\frac{2}{2(-5)} \\ &= \frac{1}{5} \end{aligned}" block left />
+
+                <p className="font-bold text-green-700"><Latex math="x" /> 截距</p>
+                <p><Latex math="-\frac{3}{5}" /> 和 <Latex math="1" /></p>
+
+                <p className="font-bold text-blue-700"><Latex math="y" /> 截距</p>
+                <p><Latex math="3" /></p>
+
+                <p className="font-bold text-amber-700">頂點坐標</p>
+                <p><Latex math="\left(\frac{1}{5},\frac{16}{5}\right)" /></p>
               </div>
             </div>
           </div>
@@ -1555,8 +1575,8 @@ export const FunctionNotes = ({ activeSub }) => {
               </div>
               <p className="mb-3 text-sm text-slate-700">用配方法將 <Latex math="y=x^2+6x+5" /> 配成完全平方式：</p>
               <ol className="mb-3 list-decimal space-y-2 pl-5 text-sm text-slate-700">
-                <li>取 <Latex math="x" /> 項係數的一半：<Latex math="6 \div 2=3" /></li>
-                <li>將這個一半平方，並同時加上和減去平方值：<Latex math="3^2=9" /></li>
+                <li>取 <Latex math="x" /> 項係數的一半：<Latex math="\frac{6}{2}=3" /></li>
+                <li>將這個一半平方，並同時加上和減去平方值：<Latex math="\left(\frac{6}{2}\right)^2=9" /></li>
                 <li>將前三項配成完全平方式，再合併常數項。</li>
               </ol>
               <div className="mt-3 overflow-x-auto rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-6 sm:text-xl">
@@ -1570,7 +1590,7 @@ export const FunctionNotes = ({ activeSub }) => {
                   <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
                     <span />
                     <Latex math="=" />
-                    <span><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="+6x" /></span><Latex math="+" /><span className="rounded-sm bg-green-300 px-1"><Latex math="3^2" /></span><Latex math="-" /><span className="rounded-sm bg-cyan-300 px-1"><Latex math="3^2" /></span><Latex math="+5" /></span>
+                    <span><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="+6x" /></span><Latex math="+" /><span className="inline-flex align-middle items-center rounded-sm bg-green-300 px-1"><Latex math="\left(\frac{6}{2}\right)^2" /></span><Latex math="-" /><span className="inline-flex align-middle items-center rounded-sm bg-cyan-300 px-1"><Latex math="\left(\frac{6}{2}\right)^2" /></span><Latex math="+5" /></span>
                   </div>
                   <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
                     <span />
@@ -1589,7 +1609,7 @@ export const FunctionNotes = ({ activeSub }) => {
               <p className="mb-3 text-sm text-slate-700">用配方法將 <Latex math="y=2x^2-8x+3" /> 配成完全平方式：</p>
               <ol className="mb-3 list-decimal space-y-2 pl-5 text-sm text-slate-700">
                 <li>從 <Latex math="x^2" /> 項和 <Latex math="x" /> 項提出公因數 2。</li>
-                <li>取括號內 <Latex math="x" /> 項係數的一半再平方：<Latex math="(-4 \div 2)^2=4" />；在括號內加 4，再減 4。</li>
+                <li>取括號內 <Latex math="x" /> 項係數的一半再平方：<Latex math="\left(\frac{-4}{2}\right)^2=4" />；在括號內加 4，再減 4。</li>
                 <li>將前三項配成完全平方式，再把 2 乘以括號內的 <Latex math="-4" />，並合併常數項。</li>
               </ol>
               <div className="mt-3 overflow-x-auto rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-6 sm:text-xl">
@@ -1608,12 +1628,12 @@ export const FunctionNotes = ({ activeSub }) => {
                   <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
                     <span />
                     <Latex math="=" />
-                    <span><Latex math="2(" /><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="-4x" /></span><Latex math="+" /><span className="rounded-sm bg-green-300 px-1"><Latex math="2^2" /></span><Latex math="-" /><span className="rounded-sm bg-cyan-300 px-1"><Latex math="2^2" /></span><Latex math=")+3" /></span>
+                    <span><Latex math="2(" /><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="-4x" /></span><Latex math="+" /><span className="inline-flex align-middle items-center rounded-sm bg-green-300 px-1"><Latex math="\left(\frac{-4}{2}\right)^2" /></span><Latex math="-" /><span className="inline-flex align-middle items-center rounded-sm bg-cyan-300 px-1"><Latex math="\left(\frac{-4}{2}\right)^2" /></span><Latex math=")+3" /></span>
                   </div>
                   <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
                     <span />
                     <Latex math="=" />
-                    <span><Latex math="2[(x-2)^2-" /><span className="rounded-sm bg-cyan-300 px-1"><Latex math="2^2" /></span><Latex math="]+3" /></span>
+                    <span><Latex math="2[(x-2)^2-" /><span className="inline-flex align-middle items-center rounded-sm bg-cyan-300 px-1"><Latex math="(-2)^2" /></span><Latex math="]+3" /></span>
                   </div>
                   <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
                     <span />
