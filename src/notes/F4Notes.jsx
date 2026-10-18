@@ -1334,7 +1334,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
 // CH3 函數 f(x) (F4)
 // ========================================
 export const FunctionNotes = ({ activeSub }) => {
-  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
+  const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null), s6 = useRef(null);
 
   return (
     <>
@@ -1524,7 +1524,47 @@ export const FunctionNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="coordinates" title="提供坐標" num={4} color="blue" activeSub={activeSub} sectionRef={s4}>
+      <CollapsibleSection id="quadratic-extrema" title="頂點式" num={4} color="violet" activeSub={activeSub} sectionRef={s4}>
+        <div className="space-y-4">
+          <div className="rounded-lg border border-violet-200 bg-violet-50 p-4">
+            <h3 className="mb-2 font-bold text-violet-800">頂點式有什麼用？</h3>
+            <p className="mb-3 text-sm text-slate-700">
+              二次函數寫成頂點式 <Latex math="y=a(x-\textcolor{#2563eb}{h})^2+\textcolor{#dc2626}{k}" />（<Latex math="a\ne0" />）後，可以直接看出以下三項：
+            </p>
+            <ol className="list-decimal space-y-2 pl-5 text-sm text-slate-700">
+              <li><span className="font-bold">極小/極大值：</span><Latex math="\textcolor{#dc2626}{k}" /> 就是極值；<Latex math="a>0" /> 時是極小值，<Latex math="a<0" /> 時是極大值。</li>
+              <li><span className="font-bold">對稱軸：</span>藍色部分給出對稱軸 <Latex math="x=\textcolor{#2563eb}{h}" />。</li>
+              <li>
+                <span className="font-bold">頂點坐標：</span>
+                <Latex math="(\textcolor{#2563eb}{h},\textcolor{#dc2626}{k})" />
+              </li>
+            </ol>
+          </div>
+
+          <div className="rounded-lg border border-violet-200 bg-white p-4">
+            <h3 className="mb-2 font-bold text-violet-800">例一：先整理成頂點式，再找出三項</h3>
+            <Latex math="\begin{aligned} y &= \textcolor{#dc2626}{3}-4(x-\textcolor{#2563eb}{1})^2 \\ &= -4(x-\textcolor{#2563eb}{1})^2+\textcolor{#dc2626}{3} \end{aligned}" block left />
+            <ol className="list-decimal space-y-2 pl-5 text-sm text-slate-700">
+              <li><span className="font-bold">極小/極大值：</span><Latex math="a<0" />，所以有極大值；極大值是 <Latex math="\textcolor{#dc2626}{3}" />。</li>
+              <li><span className="font-bold">對稱軸：</span><Latex math="x=\textcolor{#2563eb}{1}" />。</li>
+              <li><span className="font-bold">頂點坐標：</span><Latex math="(\textcolor{#2563eb}{1},\textcolor{#dc2626}{3})" />。</li>
+            </ol>
+          </div>
+
+          <div className="rounded-lg border border-violet-200 bg-white p-4">
+            <h3 className="mb-2 font-bold text-violet-800">例二：括號內是加數時，留意 <Latex math="h" /> 的正負</h3>
+            <Latex math="\begin{aligned} y &= 2(x+\textcolor{#2563eb}{1})^2\textcolor{#dc2626}{-4} \\ &= 2(x-\textcolor{#2563eb}{(-1)})^2\textcolor{#dc2626}{-4} \end{aligned}" block left />
+            <p className="mb-2 text-sm text-slate-700">因為 <Latex math="x+1=x-(-1)" />，括號內要寫成減去 <Latex math="-1" /> 才能看出對稱軸的位置。</p>
+            <ol className="list-decimal space-y-2 pl-5 text-sm text-slate-700">
+              <li><span className="font-bold">極小/極大值：</span><Latex math="a>0" />，所以有極小值；極小值是 <Latex math="\textcolor{#dc2626}{-4}" />。</li>
+              <li><span className="font-bold">對稱軸：</span><Latex math="x=\textcolor{#2563eb}{-1}" />。</li>
+              <li><span className="font-bold">頂點坐標：</span><Latex math="(\textcolor{#2563eb}{-1},\textcolor{#dc2626}{-4})" />。</li>
+            </ol>
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="coordinates" title="提供坐標" num={5} color="blue" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
             <h3 className="font-bold text-blue-800 mb-3">📝 核心概念</h3>
@@ -1549,7 +1589,7 @@ export const FunctionNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="completing-square" title="配方法" num={5} color="indigo" activeSub={activeSub} sectionRef={s5}>
+      <CollapsibleSection id="completing-square" title="配方法" num={6} color="indigo" activeSub={activeSub} sectionRef={s6}>
         <div className="space-y-4">
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
             <h3 className="font-bold text-indigo-800 mb-2">完全平方公式</h3>
@@ -1567,7 +1607,7 @@ export const FunctionNotes = ({ activeSub }) => {
             </p>
           </div>
 
-          <div className="grid min-w-0 gap-4 lg:grid-cols-2">
+          <div className="grid min-w-0 gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
             <div className="min-w-0 rounded-lg border border-blue-200 bg-blue-50 p-4">
               <div className="mb-3">
                 <span className="mr-2 rounded-full bg-blue-600 px-2.5 py-1 text-xs font-bold text-white">例 1</span>
@@ -1579,20 +1619,20 @@ export const FunctionNotes = ({ activeSub }) => {
                 <li>將這個一半平方，並同時加上和減去平方值：<Latex math="\left(\frac{6}{2}\right)^2=9" /></li>
                 <li>將前三項配成完全平方式，再合併常數項。</li>
               </ol>
-              <div className="mt-3 overflow-x-auto rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-6 sm:text-xl">
+              <div className="mt-3 rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-5 sm:text-xl">
                 <p className="mb-4 text-base font-bold sm:text-lg">用配方法完成</p>
-                <div className="w-max space-y-1">
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                <div className="w-full space-y-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span className="text-right"><Latex math="y" /></span>
                     <Latex math="=" />
                     <span><Latex math="x^2+6x+5" /></span>
                   </div>
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span />
                     <Latex math="=" />
                     <span><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="+6x" /></span><Latex math="+" /><span className="inline-flex align-middle items-center rounded-sm bg-green-300 px-1"><Latex math="\left(\frac{6}{2}\right)^2" /></span><Latex math="-" /><span className="inline-flex align-middle items-center rounded-sm bg-cyan-300 px-1"><Latex math="\left(\frac{6}{2}\right)^2" /></span><Latex math="+5" /></span>
                   </div>
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span />
                     <Latex math="=" />
                     <Latex math="(x+3)^2-4" />
@@ -1612,35 +1652,35 @@ export const FunctionNotes = ({ activeSub }) => {
                 <li>取括號內 <Latex math="x" /> 項係數的一半再平方：<Latex math="\left(\frac{-4}{2}\right)^2=4" />；在括號內加 4，再減 4。</li>
                 <li>將前三項配成完全平方式，再把 2 乘以括號內的 <Latex math="-4" />，並合併常數項。</li>
               </ol>
-              <div className="mt-3 overflow-x-auto rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-6 sm:text-xl">
+              <div className="mt-3 rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-5 sm:text-xl">
                 <p className="mb-4 text-base font-bold sm:text-lg">用配方法求頂點</p>
-                <div className="w-max space-y-1">
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                <div className="w-full space-y-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span className="text-right"><Latex math="y" /></span>
                     <Latex math="=" />
                     <span><Latex math="2" /><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="-8x" /></span><Latex math="+3" /></span>
                   </div>
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span />
                     <Latex math="=" />
                     <span><Latex math="2(" /><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="-4x" /></span><Latex math=")+3" /></span>
                   </div>
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span />
                     <Latex math="=" />
                     <span><Latex math="2(" /><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="-4x" /></span><Latex math="+" /><span className="inline-flex align-middle items-center rounded-sm bg-green-300 px-1"><Latex math="\left(\frac{-4}{2}\right)^2" /></span><Latex math="-" /><span className="inline-flex align-middle items-center rounded-sm bg-cyan-300 px-1"><Latex math="\left(\frac{-4}{2}\right)^2" /></span><Latex math=")+3" /></span>
                   </div>
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span />
                     <Latex math="=" />
                     <span><Latex math="2[(x-2)^2-" /><span className="inline-flex align-middle items-center rounded-sm bg-cyan-300 px-1"><Latex math="(-2)^2" /></span><Latex math="]+3" /></span>
                   </div>
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span />
                     <Latex math="=" />
                     <Latex math="2(x-2)^2-8+3" />
                   </div>
-                  <div className="grid grid-cols-[1.25rem_1rem_auto] items-center gap-x-1 whitespace-nowrap">
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span />
                     <Latex math="=" />
                     <Latex math="2(x-2)^2-5" />
