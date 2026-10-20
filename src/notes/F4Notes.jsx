@@ -19,16 +19,15 @@ const QuadraticGraphReference = () => (
         <line x1="170" y1="295" x2="170" y2="42" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
         <text x="395" y="196" fontSize="16" fill="#475569">x</text>
         <text x="178" y="38" fontSize="16" fill="#475569">y</text>
-        <text x="154" y="208" fontSize="15" fill="#475569" fontStyle="italic">O</text>
-        <path d="M70 72 C110 150 150 250 200 250 C250 250 290 150 330 72" fill="none" stroke="#22c55e" strokeWidth="4" strokeLinecap="round" />
-        <circle cx="170" cy="239" r="4" fill="#16a34a" stroke="white" strokeWidth="1.5" />
-        <line x1="146" y1="278" x2="167" y2="244" stroke="#475569" strokeWidth="1.5" markerEnd="url(#quadratic-axis-arrow)" />
-        <line x1="200" y1="48" x2="200" y2="288" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
-        <circle cx="200" cy="250" r="4" fill="#334155" />
-        <line x1="200" y1="250" x2="170" y2="250" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
-        <text x="155" y="255" fontSize="15" fill="#475569">→</text>
-        <text x="80" y="255" fontSize="15" fill="#475569">y 的極小值</text>
-        <foreignObject x="210" y="250" width="234" height="52">
+        <text x="176" y="184" fontSize="15" fill="#475569" fontStyle="italic">O</text>
+        <path d="M70 72 Q245 428 420 72" fill="none" stroke="#22c55e" strokeWidth="4" strokeLinecap="round" />
+        <circle cx="170" cy="217" r="4" fill="#16a34a" stroke="white" strokeWidth="1.5" />
+        <line x1="122" y1="217" x2="166" y2="217" stroke="#475569" strokeWidth="1.5" markerEnd="url(#quadratic-axis-arrow)" />
+        <line x1="245" y1="48" x2="245" y2="288" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
+        <circle cx="245" cy="250" r="4" fill="#334155" />
+        <line x1="122" y1="250" x2="240" y2="250" stroke="#475569" strokeWidth="1.5" markerEnd="url(#quadratic-axis-arrow)" />
+        <text x="45" y="255" fontSize="15" fill="#475569">y 的極小值</text>
+        <foreignObject x="260" y="250" width="185" height="52">
           <div xmlns="http://www.w3.org/1999/xhtml" style={{ color: '#475569', fontSize: '17px', whiteSpace: 'nowrap' }}>
             頂點 <math xmlns="http://www.w3.org/1998/Math/MathML" style={{ fontSize: '17px', verticalAlign: 'middle' }}>
               <mrow>
@@ -38,9 +37,9 @@ const QuadraticGraphReference = () => (
             </math>
           </div>
         </foreignObject>
-        <text x="80" y="286" fontSize="15" fill="#475569">(0, c)</text>
-        <text x="200" y="322" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
-        <text x="320" y="125" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
+        <text x="80" y="222" fontSize="15" fill="#475569">(0, c)</text>
+        <text x="245" y="322" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
+        <text x="45" y="55" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
       </g>
 
       <g transform="translate(450 0)">
@@ -50,15 +49,14 @@ const QuadraticGraphReference = () => (
         <text x="395" y="196" fontSize="16" fill="#475569">x</text>
         <text x="178" y="38" fontSize="16" fill="#475569">y</text>
         <text x="154" y="208" fontSize="15" fill="#475569" fontStyle="italic">O</text>
-        <path d="M65 282 C105 180 150 70 200 70 C250 70 295 180 335 282" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
-        <circle cx="170" cy="82" r="4" fill="#dc2626" stroke="white" strokeWidth="1.5" />
-        <line x1="146" y1="116" x2="167" y2="87" stroke="#475569" strokeWidth="1.5" markerEnd="url(#quadratic-axis-arrow)" />
-        <line x1="200" y1="48" x2="200" y2="288" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
-        <circle cx="200" cy="70" r="4" fill="#334155" />
-        <line x1="200" y1="70" x2="170" y2="70" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
-        <text x="155" y="75" fontSize="15" fill="#475569">→</text>
-        <text x="80" y="75" fontSize="15" fill="#475569">y 的極大值</text>
-        <foreignObject x="210" y="32" width="234" height="52">
+        <path d="M65 282 Q245 -142 425 282" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+        <circle cx="170" cy="109" r="4" fill="#dc2626" stroke="white" strokeWidth="1.5" />
+        <line x1="122" y1="109" x2="166" y2="109" stroke="#475569" strokeWidth="1.5" markerEnd="url(#quadratic-axis-arrow)" />
+        <line x1="245" y1="48" x2="245" y2="288" stroke="#94a3b8" strokeWidth="2" strokeDasharray="7 7" />
+        <circle cx="245" cy="70" r="4" fill="#334155" />
+        <line x1="122" y1="70" x2="240" y2="70" stroke="#475569" strokeWidth="1.5" markerEnd="url(#quadratic-axis-arrow)" />
+        <text x="45" y="75" fontSize="15" fill="#475569">y 的極大值</text>
+        <foreignObject x="260" y="32" width="185" height="52">
           <div xmlns="http://www.w3.org/1999/xhtml" style={{ color: '#475569', fontSize: '17px', whiteSpace: 'nowrap' }}>
             頂點 <math xmlns="http://www.w3.org/1998/Math/MathML" style={{ fontSize: '17px', verticalAlign: 'middle' }}>
               <mrow>
@@ -68,9 +66,9 @@ const QuadraticGraphReference = () => (
             </math>
           </div>
         </foreignObject>
-        <text x="80" y="122" fontSize="15" fill="#475569">(0, c)</text>
-        <text x="200" y="315" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
-        <text x="280" y="125" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
+        <text x="80" y="114" fontSize="15" fill="#475569">(0, c)</text>
+        <text x="245" y="315" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
+        <text x="330" y="105" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
       </g>
     </svg>
   </div>
@@ -1402,12 +1400,17 @@ export const FunctionNotes = ({ activeSub }) => {
       <CollapsibleSection id="find-unknown" title="用 f(x) 找未知數" num={2} color="purple" activeSub={activeSub} sectionRef={s2}>
         <div className="space-y-4">
           <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <p className="text-sm font-bold text-slate-700 mb-2">16. 考慮 <Latex math="g(x) = 2x^2 + ax" /> 其中 a 是一個常數，且 <Latex math="g(−1) = 1" /></p>
-            <p className="text-slate-800 mb-3">(a) 求 <Latex math="a" /> 的值 &nbsp; (b) 若 <Latex math="g(t) = 6" />，求 <Latex math="t" /> 的值</p>
+            <div className="text-slate-800 mb-3 space-y-1">
+              <p>16. 考慮 <Latex math="g(x) = 2x^2 + ax" />，其中 <Latex math="a" /> 是一個常數，且 <Latex math="g(−1) = 1" />，</p>
+              <div className="ml-4">
+                <p>(a) 求 <Latex math="a" /> 的值。</p>
+                <p>(b) 若 <Latex math="g(t)" /> <Latex math="= 6" />，求 <Latex math="t" /> 的值。</p>
+              </div>
+            </div>
 
             <div className="bg-white rounded-lg p-3 mb-3">
               <p className="text-blue-600 font-bold text-sm mb-2">答案：</p>
-              <p className="text-blue-600 font-bold text-sm mb-2">a. 代 x = -1：</p>
+              <p className="text-sm font-bold text-black mb-2">a. 代 <Latex math="x=-1" />：</p>
               <div className="text-sm space-y-1 ml-4">
                 <div className="grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2">
                   <span className="justify-self-end"><Latex math="2(−1)^2 + a(−1)" /></span>
@@ -1430,21 +1433,36 @@ export const FunctionNotes = ({ activeSub }) => {
 
             <div className="bg-white rounded-lg p-3">
               <p className="text-blue-600 font-bold text-sm mb-2">答案：</p>
-              <p className="text-blue-600 font-bold text-sm mb-2">b. <Latex math="g(x) = 2x^2 + (1)x" /></p>
+              <div className="relative ml-4 mb-2 grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2 text-sm text-black">
+                <span className="absolute -left-4 font-bold">b.</span>
+                <span className="justify-self-end"><Latex math="g(x)" /></span>
+                <Latex math="=" />
+                <Latex math="2x^2 + (1)x" />
+              </div>
               <div className="text-sm space-y-1 ml-4">
-                <div className="flex items-start gap-2">
-                  <Latex math="g(t) = 2t^2 + t" />
+                <div className="grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2">
+                  <span className="justify-self-end"><Latex math="g(t)" /></span>
+                  <Latex math="=" />
+                  <Latex math="2t^2 + t" />
                   <span className="text-red-500">← 按 x 位置代 t</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Latex math="\therefore g(t) = 6 \rightarrow 6 = 2t^2 + t" />
+                  <span className="justify-self-end"><Latex math="g(t)" /></span>
+                  <Latex math="=" />
+                  <Latex math="6" />
+                  <span />
+                  <span className="justify-self-end"><Latex math="2t^2 + t" /></span>
+                  <Latex math="=" />
+                  <Latex math="6" />
                   <span className="text-red-500">← 2次方程需用 FMLA 01</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Latex math="0 = 2t^2 + t − 6" />
+                  <span className="justify-self-end"><Latex math="0" /></span>
+                  <Latex math="=" />
+                  <Latex math="2t^2 + t − 6" />
                   <span className="text-red-500">← 先轉一般式，才 FMLA 01</span>
                 </div>
-                <p className="mt-2 text-slate-700"><span className="font-bold">∴ t = 1.5 或 -2</span></p>
+                <div className="grid grid-cols-[8rem_auto_auto_1fr] items-center gap-x-2 mt-2">
+                  <span className="justify-self-end"><Latex math="t" /></span>
+                  <Latex math="=" />
+                  <Latex math="1.5\text{ 或 }-2" />
+                </div>
               </div>
             </div>
           </div>
@@ -1591,19 +1609,17 @@ export const FunctionNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="completing-square" title="配方法" num={6} color="indigo" activeSub={activeSub} sectionRef={s6}>
         <div className="space-y-4">
-          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
-            <h3 className="font-bold text-indigo-800 mb-2">完全平方公式</h3>
-            <p className="text-slate-700 mb-2">將 <Latex math="x^2+bx" /> 配成完全平方式：</p>
-            <Latex math="x^2+bx+\left(\frac{b}{2}\right)^2=\left(x+\frac{b}{2}\right)^2" block />
-            <p className="mt-3 inline-block rounded-full bg-yellow-100 px-3 py-1 font-semibold text-amber-800">
-              口訣：一半，再平方
-            </p>
-          </div>
+          <p className="text-sm text-slate-700">
+            <span className="block text-base font-bold text-indigo-800">配方法的重要用途：求二次函數圖像的頂點。</span>
+            若題目要求用配方法求頂點，先把二次函數配成頂點形式，再由括號內的式子和括號外的常數項找出頂點坐標。
+          </p>
 
-          <div className="rounded-lg border border-indigo-200 bg-white p-4">
-            <h3 className="mb-2 font-bold text-indigo-800">配方法的重要用途：求二次函數圖像的頂點</h3>
-            <p className="text-sm text-slate-700">
-              若題目要求用配方法求頂點，先把二次函數配成頂點形式，再由括號內的式子和括號外的常數項找出頂點坐標。
+          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+            <h3 className="font-bold text-indigo-800 mb-2">配方法公式</h3>
+            <p className="text-slate-700 mb-2">將 <Latex math="x^2+bx" /> 改寫成完全平方式：</p>
+            <Latex math="x^2+bx=\left(x+\frac{b}{2}\right)^2-\left(\frac{b}{2}\right)^2" block />
+            <p className="mt-3 inline-block rounded-full bg-yellow-100 px-3 py-1 font-semibold text-amber-800">
+              口訣：除 2，再平方
             </p>
           </div>
 
@@ -1619,7 +1635,7 @@ export const FunctionNotes = ({ activeSub }) => {
                 <li>將這個一半平方，並同時加上和減去平方值：<Latex math="\left(\frac{6}{2}\right)^2=9" /></li>
                 <li>將前三項配成完全平方式，再合併常數項。</li>
               </ol>
-              <div className="mt-3 rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-5 sm:text-xl">
+              <div className="mt-3 rounded-2xl border border-slate-300 bg-white px-4 py-5 text-lg font-bold text-slate-950 sm:px-5 sm:text-xl lg:mt-8">
                 <p className="mb-4 text-base font-bold sm:text-lg">用配方法完成</p>
                 <div className="w-full space-y-1 whitespace-nowrap">
                   <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
@@ -1631,6 +1647,11 @@ export const FunctionNotes = ({ activeSub }) => {
                     <span />
                     <Latex math="=" />
                     <span><span className="rounded-sm bg-red-300 px-1"><Latex math="x^2" /></span><span className="rounded-sm bg-yellow-300 px-1"><Latex math="+6x" /></span><Latex math="+" /><span className="inline-flex align-middle items-center rounded-sm bg-green-300 px-1"><Latex math="\left(\frac{6}{2}\right)^2" /></span><Latex math="-" /><span className="inline-flex align-middle items-center rounded-sm bg-cyan-300 px-1"><Latex math="\left(\frac{6}{2}\right)^2" /></span><Latex math="+5" /></span>
+                  </div>
+                  <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
+                    <span />
+                    <Latex math="=" />
+                    <Latex math="(x^2+6x+9)-9+5" />
                   </div>
                   <div className="grid min-w-0 grid-cols-[1.25rem_1rem_minmax(0,1fr)] items-start gap-x-1">
                     <span />
@@ -1686,7 +1707,7 @@ export const FunctionNotes = ({ activeSub }) => {
                     <Latex math="2(x-2)^2-5" />
                   </div>
                 </div>
-                <p className="mt-4 text-xl font-extrabold sm:text-2xl">
+                <p className="mt-4 text-lg font-extrabold sm:text-xl">
                   頂點 <Latex math="(2,-5)" />
                 </p>
               </div>
