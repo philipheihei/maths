@@ -1526,16 +1526,27 @@ export const FunctionNotes = ({ activeSub }) => {
                 <p><Latex math="a=-5<0" />，開口向下（∩）</p>
 
                 <p className="font-bold text-indigo-700">對稱軸</p>
-                <Latex math="\begin{aligned} x &= -\frac{b}{2a} \\ &= -\frac{2}{2(-5)} \\ &= \frac{1}{5} \end{aligned}" block left />
-
-                <p className="font-bold text-green-700"><Latex math="x" /> 截距</p>
-                <p><Latex math="-\frac{3}{5}" /> 和 <Latex math="1" /></p>
-
-                <p className="font-bold text-blue-700"><Latex math="y" /> 截距</p>
-                <p><Latex math="3" /></p>
+                <div className="grid gap-4 sm:grid-cols-[0.8fr_1.2fr]">
+                  <Latex math="\begin{aligned} x &= -\frac{b}{2a} \\ &= -\frac{2}{2(-5)} \\ &= \frac{1}{5} \end{aligned}" block left />
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <p className="font-bold text-green-700"><Latex math="x" /> 截距</p>
+                      <p>令 <Latex math="y=0" />，解方程：</p>
+                      <Latex math="\begin{aligned} -5x^2+2x+3 &= 0 \\ (5x+3)(x-1) &= 0 \\ x &= -\frac{3}{5}\text{ 或 }1 \end{aligned}" block left />
+                    </div>
+                    <div>
+                      <p className="font-bold text-blue-700"><Latex math="y" /> 截距</p>
+                      <p>一般式 <Latex math="y=ax^2+bx+c" /> 中，常數項 <Latex math="c=3" />，所以 <Latex math="y" /> 截距是 <Latex math="3" />。</p>
+                    </div>
+                  </div>
+                </div>
 
                 <p className="font-bold text-amber-700">頂點坐標</p>
-                <p><Latex math="\left(\frac{1}{5},\frac{16}{5}\right)" /></p>
+                <div>
+                  <p>由對稱軸得 <Latex math="x=\frac{1}{5}" />，代入原式求 <Latex math="y" />：</p>
+                  <Latex math="\begin{aligned} y &= -5\left(\frac{1}{5}\right)^2+2\left(\frac{1}{5}\right)+3 \\ &= -\frac{1}{5}+\frac{2}{5}+3 \\ &= \frac{16}{5} \end{aligned}" block left />
+                  <p>所以頂點坐標是 <Latex math="\left(\frac{1}{5},\frac{16}{5}\right)" />。</p>
+                </div>
               </div>
             </div>
           </div>
