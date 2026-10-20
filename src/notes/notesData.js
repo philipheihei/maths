@@ -40,7 +40,7 @@ import { VariationNotes, StatisticsF5Notes, CirclePropertiesNotes, LinearProgram
 import { ProbabilityF5Notes } from './ProbabilityF5Notes';
 import { CompoundInequalitiesNotes } from './F4CompoundInequalitiesNotes';
 import { SequenceNotes, FunctionTransformNotes } from './F6Notes';
-import { SimEqCalculatorNotes, MCTopicsNotes } from './A1Notes';
+import { CalculatorKeysNotes, SimEqCalculatorNotes, MCTopicsNotes } from './A1Notes';
 
 export const NOTES_DATA = {
   F1: [
@@ -737,6 +737,7 @@ export const NOTES_COMPONENTS = {
   'locus-and-circle': LocusAndCircleNotes,
   'sequence': SequenceNotes,
   'function-transform': FunctionTransformNotes,
+  'calculator-keys': CalculatorKeysNotes,
   'simultaneous-eq': SimEqCalculatorNotes,
   'mc-topics': MCTopicsNotes,
   'approximation': ApproximationNotes,

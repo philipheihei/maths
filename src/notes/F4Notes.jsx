@@ -1622,13 +1622,13 @@ export const FunctionNotes = ({ activeSub }) => {
         <div className="space-y-4">
           <p className="text-sm text-slate-700">
             <span className="block text-base font-bold text-indigo-800">配方法的重要用途：求二次函數圖像的頂點。</span>
-            若題目要求用配方法求頂點，先把二次函數配成頂點形式，再由括號內的式子和括號外的常數項找出頂點坐標。
+            若題目要求用配方法求頂點，先把二次函數配成頂點形式，再由括號內的式和括號外的常數項找出頂點坐標。
           </p>
 
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
             <h3 className="font-bold text-indigo-800 mb-2">配方法公式</h3>
-            <p className="text-slate-700 mb-2">將 <Latex math="x^2+bx" /> 改寫成完全平方式：</p>
-            <Latex math="x^2+bx=\left(x+\frac{b}{2}\right)^2-\left(\frac{b}{2}\right)^2" block />
+            <p className="text-slate-700 mb-2">加上再減去 <Latex math="\left(\frac{b}{2}\right)^2" />，將前三項配成完全平方式：</p>
+            <Latex math="\begin{aligned} x^2+bx &= x^2+bx+\left(\frac{b}{2}\right)^2-\left(\frac{b}{2}\right)^2 \\ &= \left(x+\frac{b}{2}\right)^2-\left(\frac{b}{2}\right)^2 \end{aligned}" block left />
             <p className="mt-3 inline-block rounded-full bg-yellow-100 px-3 py-1 font-semibold text-amber-800">
               口訣：除 2，再平方
             </p>
@@ -1723,14 +1723,14 @@ export const FunctionNotes = ({ activeSub }) => {
                 </p>
               </div>
               <div className="mt-3 space-y-2 text-sm text-slate-700">
-                <p>頂點的 <Latex math="x" /> 坐標：令括號內的式子等於 0，即 <Latex math="x-2=0" />，得 <Latex math="x=2" />。</p>
+                <p>頂點的 <Latex math="x" /> 坐標：令括號內的式等於 0，即 <Latex math="x-2=0" />，得 <Latex math="x=2" />。</p>
                 <p>頂點的 <Latex math="y" /> 坐標：括號外的常數項是 <Latex math="-5" />，所以 <Latex math="y=-5" />。</p>
               </div>
             </div>
           </div>
 
           <p className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
-            溫習提示：配方法的步驟容易忘記。求頂點時，記緊先完成配方，再令括號內的式子等於 0 求 <Latex math="x" /> 坐標，並從括號外的常數項讀出 <Latex math="y" /> 坐標。
+            溫習提示：配方法的步驟容易忘記。求頂點時，記緊先完成配方，再令括號內的式等於 0 求 <Latex math="x" /> 坐標，並從括號外的常數項讀出 <Latex math="y" /> 坐標。
           </p>
         </div>
       </CollapsibleSection>

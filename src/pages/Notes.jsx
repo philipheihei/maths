@@ -472,6 +472,7 @@ const Notes = () => {
   const [expandedTopics, setExpandedTopics] = useState(initState.topic ? { [initState.topic]: true } : {});
   const [activeTopic, setActiveTopic] = useState(initState.topic);
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
+  const [isCalculatorTeaching, setIsCalculatorTeaching] = useState(false);
   const [isSpreadView, setIsSpreadView] = useState(false);
   const [topicPageCounts, setTopicPageCounts] = useState({});
 
@@ -511,6 +512,7 @@ const Notes = () => {
   };
 
   const selectTopic = (topicId) => {
+    setIsCalculatorTeaching(false);
     setActiveTopic(topicId);
     const topic = notes.find(t => t.id === topicId);
     setActiveSubtopic(topic && topic.subtopics.length > 0 ? topic.subtopics[0].id : null);
@@ -525,6 +527,7 @@ const Notes = () => {
   };
 
   const navigateTo = (level, topicId, subId) => {
+    setIsCalculatorTeaching(false);
     setSelectedLevel(level);
     setTimeout(() => {
       setActiveTopic(topicId);
@@ -534,7 +537,9 @@ const Notes = () => {
     }, 50);
   };
 
-  const ActiveComponent = activeTopic ? NOTES_COMPONENTS[activeTopic] : null;
+  const ActiveComponent = isCalculatorTeaching
+    ? NOTES_COMPONENTS['calculator-keys']
+    : (activeTopic ? NOTES_COMPONENTS[activeTopic] : null);
 
   const pageOffsets = {};
   let pageOffset = 0;
@@ -705,14 +710,17 @@ const Notes = () => {
         </div>
       </div>
 
-      {/* 級別選擇 */}
+      {/* 課題選擇 */}
       <div className="max-w-7xl mx-auto px-4 pt-4 pb-2">
         <div className="bg-white rounded-xl shadow-sm p-3 flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-slate-500 font-medium mr-2">級別：</span>
+          <span className="text-sm text-slate-500 font-medium mr-2">課題：</span>
           {levels.map(level => (
             <button
               key={level}
-              onClick={() => setSelectedLevel(level)}
+              onClick={() => {
+                setIsCalculatorTeaching(false);
+                setSelectedLevel(level);
+              }}
               className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
                 selectedLevel === level
                   ? 'bg-indigo-600 text-white shadow-md'
@@ -722,29 +730,46 @@ const Notes = () => {
               {level}
             </button>
           ))}
+          <button
+            type="button"
+            onClick={() => {
+              setIsCalculatorTeaching(true);
+              setActiveTopic(null);
+              setActiveSubtopic(null);
+              setExpandedTopics({});
+            }}
+            aria-pressed={isCalculatorTeaching}
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+              isCalculatorTeaching
+                ? 'bg-orange-500 text-white shadow-md'
+                : 'bg-orange-50 text-orange-700 hover:bg-orange-100'
+            }`}
+          >
+            計算機教學
+          </button>
         </div>
       </div>
 
       <div className="flex max-w-7xl mx-auto">
         {/* 左側目錄 */}
-        <aside className="hidden md:block w-72 flex-shrink-0">
+        {!isCalculatorTeaching && <aside className="hidden md:block w-72 flex-shrink-0">
           <div className="sticky top-20 p-4">
             <div className="bg-white rounded-2xl shadow-lg p-4 max-h-[calc(100vh-6rem)] overflow-y-auto">
               <h3 className="font-bold text-slate-700 mb-4">目錄</h3>
               {renderTOC(false)}
             </div>
           </div>
-        </aside>
+        </aside>}
 
         {/* 右側內容 */}
         <main className="flex-1 p-4 min-w-0">
           {/* 手機版目錄 */}
-          <div className="md:hidden mb-4">
+          {!isCalculatorTeaching && <div className="md:hidden mb-4">
             <div className="bg-white rounded-xl shadow-sm p-3">
               <h3 className="font-bold text-slate-700 mb-2 text-sm">目錄</h3>
               {renderTOC(true)}
             </div>
-          </div>
+          </div>}
 
           {/* Notes 內容 */}
           {ActiveComponent ? (
