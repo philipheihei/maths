@@ -201,7 +201,7 @@ const calculatorKeyLessons = [
     title: '排列（nPr）',
     keys: ['n', 'SHIFT', '×', 'r', 'EXE'],
     example: '5P3 = 60',
-    exampleMath: '{}^5P_3 = 60',
+    exampleMath: 'P^{5}_{3} = 60',
     sequence: ['5', 'shift', 'multiply', '3', 'exe'],
   },
   {
@@ -210,7 +210,7 @@ const calculatorKeyLessons = [
     title: '組合（nCr）',
     keys: ['n', 'SHIFT', '÷', 'r', 'EXE'],
     example: '5C3 = 10',
-    exampleMath: '{}^5C_3 = 10',
+    exampleMath: 'C^{5}_{3} = 10',
     sequence: ['5', 'shift', 'divide', '3', 'exe'],
   },
 ];
