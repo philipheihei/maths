@@ -11,6 +11,14 @@ const calculatorKeyLessons = [
     sequence: ['shift', 'ac'],
   },
   {
+    id: 'clear-for-next',
+    group: '功能鍵',
+    title: '全清',
+    keys: ['AC'],
+    example: '清除目前算式，準備輸入下一題',
+    sequence: ['ac'],
+  },
+  {
     id: 'delete',
     group: '功能鍵',
     title: '刪除',
@@ -38,7 +46,7 @@ const calculatorKeyLessons = [
   {
     id: 'fractions',
     group: '小學內容',
-    title: '輸入分數',
+    title: '輸入分數/分數化簡',
     keys: ['分子', 'a b/c', '分母', 'EXE'],
     example: '4/6 = 2/3',
     exampleMath: '\\frac{4}{6} = \\frac{2}{3}',
@@ -48,7 +56,7 @@ const calculatorKeyLessons = [
     id: 'fraction-decimal',
     group: '小學內容',
     title: '分數 ↔ 小數',
-    keys: ['算式', 'EXE', 'a b/c'],
+    keys: ['分子', 'a b/c', '分母'],
     example: '5/8 = 0.625',
     exampleMath: '\\frac{5}{8} = 0.625',
     sequence: ['5', 'fraction', '8', 'exe', 'fraction'],
@@ -92,7 +100,7 @@ const calculatorKeyLessons = [
   {
     id: 'square',
     group: 'F1',
-    title: '平方',
+    title: '2次方',
     keys: ['x²'],
     example: '2.5² = 6.25',
     exampleMath: '2.5^2 = 6.25',
@@ -101,7 +109,7 @@ const calculatorKeyLessons = [
   {
     id: 'cube',
     group: 'F1',
-    title: '立方',
+    title: '3次方',
     keys: ['x³'],
     example: '2.5³ = 15.625',
     exampleMath: '2.5^3 = 15.625',
@@ -111,7 +119,7 @@ const calculatorKeyLessons = [
     id: 'nth-power',
     group: 'F1',
     title: 'n 次方',
-    keys: ['底數', 'x□', '指數', 'EXE'],
+    keys: ['底數', '^', '指數', 'EXE'],
     example: '2⁷ = 128',
     exampleMath: '2^7 = 128',
     sequence: ['2', 'power', '7', 'exe'],
@@ -155,7 +163,7 @@ const calculatorKeyLessons = [
     id: 'cube-root',
     group: 'F4',
     title: '開立方根',
-    keys: ['SHIFT', 'x³（∛）', '被開方數', 'EXE'],
+    keys: ['SHIFT', 'x³', '被開方數', 'EXE'],
     example: '∛512 = 8',
     exampleMath: '\\sqrt[3]{512} = 8',
     sequence: ['shift', 'cube-power', '5', '1', '2', 'exe'],
@@ -182,10 +190,28 @@ const calculatorKeyLessons = [
     id: 'log-base',
     group: 'F4',
     title: '以 a 為底的對數',
-    keys: ['logₐ', '底數', '右方向鍵', '真數', 'EXE'],
+    keys: ['log', '底數', '，', '真數', 'EXE'],
     example: 'log₅ 25 = 2',
     exampleMath: '\\log_5 25 = 2',
-    sequence: ['log-base', '5', 'right', '2', '5', 'exe'],
+    sequence: ['log-base', '5', 'comma', '2', '5', 'exe'],
+  },
+  {
+    id: 'permutation',
+    group: 'F5',
+    title: '排列（nPr）',
+    keys: ['n', 'SHIFT', '×', 'r', 'EXE'],
+    example: '5P3 = 60',
+    exampleMath: '{}^5P_3 = 60',
+    sequence: ['5', 'shift', 'multiply', '3', 'exe'],
+  },
+  {
+    id: 'combination',
+    group: 'F5',
+    title: '組合（nCr）',
+    keys: ['n', 'SHIFT', '÷', 'r', 'EXE'],
+    example: '5C3 = 10',
+    exampleMath: '{}^5C_3 = 10',
+    sequence: ['5', 'shift', 'divide', '3', 'exe'],
   },
 ];
 
@@ -201,16 +227,16 @@ const calculatorKeys = [
   { id: 'replay', label: 'REPLAY', style: 'mode' },
   { id: 'prog', label: 'Prog', secondary: 'EXIT', secondaryColor: 'text-yellow-500', style: 'orange' },
   { id: 'fmla', label: 'FMLA', style: 'orange' },
-  { id: 'x-inverse', label: 'x⁻¹', secondary: 'x!', secondaryMath: 'x!', secondaryColor: 'text-yellow-500' },
-  { id: 'cube-power', label: 'x³', secondary: '∛', secondaryColor: 'text-yellow-500' },
+  { id: 'x-inverse', label: 'x⁻¹', labelMath: 'x^{-1}', secondary: 'x!', secondaryMath: 'x!', secondaryColor: 'text-yellow-500' },
+  { id: 'cube-power', label: 'x³', labelMath: 'x^3', secondary: '∛', secondaryMath: '\\sqrt[3]{\\phantom{12}}', secondaryColor: 'text-yellow-500' },
   { id: 'rcl', label: 'RCL' },
-  { id: 'eng', label: 'ENG', secondary: 'i', secondaryColor: 'text-purple-500' },
+  { id: 'eng', label: 'ENG', secondary: 'i', secondaryMath: 'i', secondaryColor: 'text-purple-500' },
   { id: 'fraction', label: 'a b/c', style: 'fraction', secondary: 'd/c', secondaryColor: 'text-yellow-500' },
   { id: 'sqrt', label: '√' },
-  { id: 'square', label: 'x²' },
-  { id: 'power', label: '^', secondary: 'x√', secondaryColor: 'text-yellow-500' },
-  { id: 'log-base', label: 'log', secondary: '10ˣ', secondaryColor: 'text-yellow-500' },
-  { id: 'ln', label: 'ln', secondary: 'eˣ', secondaryColor: 'text-yellow-500', alpha: 'e', alphaColor: 'text-red-500' },
+  { id: 'square', label: 'x²', labelMath: 'x^2' },
+  { id: 'power', label: '^', secondary: 'x√', secondaryMath: '\\sqrt{\\phantom{12}}', secondaryColor: 'text-yellow-500' },
+  { id: 'log-base', label: 'log', secondary: '10ˣ', secondaryMath: '10^x', secondaryColor: 'text-yellow-500' },
+  { id: 'ln', label: 'ln', secondary: 'eˣ', secondaryMath: 'e^x', secondaryColor: 'text-yellow-500', alpha: 'e', alphaColor: 'text-red-500' },
   { id: 'hyp', label: 'hyp', alpha: 'C', alphaColor: 'text-red-500' },
   { id: 'sin', label: 'sin', secondary: 'sin⁻¹', secondaryColor: 'text-yellow-500', alpha: 'D', alphaColor: 'text-red-500' },
   { id: 'cos', label: 'cos', secondary: 'cos⁻¹', secondaryColor: 'text-yellow-500' },
@@ -218,8 +244,8 @@ const calculatorKeys = [
   { id: 'negative', label: '(−)', secondary: 'A', secondaryColor: 'text-red-500' },
   { id: 'angle', label: '° ′ ″', secondary: 'B', secondaryColor: 'text-red-500' },
   { id: 'open', label: '(', secondary: '%', secondaryColor: 'text-yellow-500' },
-  { id: 'close', label: ')', alpha: 'X', alphaColor: 'text-red-500' },
-  { id: 'comma', label: ',', secondary: ';', secondaryColor: 'text-yellow-700', alpha: 'Y', alphaColor: 'text-red-500' },
+  { id: 'close', label: ')', alpha: 'X', alphaMath: 'X', alphaColor: 'text-red-500' },
+  { id: 'comma', label: '，', secondary: ';', secondaryColor: 'text-yellow-700', alpha: 'Y', alphaColor: 'text-red-500' },
   { id: 'mplus', label: 'M+', secondary: 'M−', secondaryColor: 'text-yellow-500', alpha: 'M', alphaColor: 'text-red-500' },
   { id: '7', label: '7', secondary: 'CONST', secondaryColor: 'text-yellow-500' },
   { id: '8', label: '8' },
@@ -234,8 +260,8 @@ const calculatorKeys = [
   { id: '1', label: '1', secondary: 'S-SUM', secondaryColor: 'text-yellow-500' },
   { id: '2', label: '2', secondary: 'S-VAR', secondaryColor: 'text-yellow-500' },
   { id: '3', label: '3', secondary: 'P-CMD', secondaryColor: 'text-yellow-500' },
-  { id: 'plus', label: '+', secondary: 'Rec(', secondaryColor: 'text-yellow-500' },
-  { id: 'minus', label: '−', secondary: 'Pol(', secondaryColor: 'text-yellow-500' },
+  { id: 'plus', label: '+', secondary: 'Pol(', secondaryColor: 'text-yellow-500' },
+  { id: 'minus', label: '−', secondary: 'Rec(', secondaryColor: 'text-yellow-500' },
   { id: '0', label: '0', secondary: 'Rnd', secondaryColor: 'text-yellow-500' },
   { id: 'decimal', label: '.', secondary: 'Ran#', secondaryColor: 'text-yellow-500' },
   { id: 'exp', label: 'EXP', secondary: 'π', secondaryColor: 'text-yellow-500' },
@@ -268,6 +294,54 @@ export const CalculatorKeysNotes = () => {
   const [keyFeedback, setKeyFeedback] = useState('');
   const nextKey = selectedLesson?.sequence[pressedKeys.length];
   const isComplete = Boolean(selectedLesson) && pressedKeys.length === selectedLesson.sequence.length;
+  const calculatorScreenContent = (() => {
+    if (isComplete) {
+      return selectedLesson.exampleMath
+        ? <Latex math={selectedLesson.exampleMath} />
+        : selectedLesson.example;
+    }
+    const enteredKeys = [];
+    let shiftPending = false;
+    pressedKeys.forEach((keyId) => {
+      if (keyId === 'shift') {
+        enteredKeys.push('SHIFT');
+        shiftPending = true;
+        return;
+      }
+      if (keyId === 'del') {
+        enteredKeys.pop();
+        shiftPending = false;
+        return;
+      }
+      if (keyId === 'ac') {
+        enteredKeys.length = 0;
+        shiftPending = false;
+        return;
+      }
+      if (keyId === 'exe') return;
+
+      const key = calculatorKeys.find((item) => item.id === keyId);
+      if (!key) return;
+      if (shiftPending && enteredKeys[enteredKeys.length - 1] === 'SHIFT') enteredKeys.pop();
+      const shiftedLabel = keyId === 'sqrt' ? 'ⁿ√' : key.secondary;
+      enteredKeys.push({
+        keyId,
+        label: shiftPending ? shiftedLabel || key.label : key.label,
+      });
+      shiftPending = false;
+    });
+
+    if (!enteredKeys.length) return selectedLesson ? '按鍵示範中' : '計算機按鍵';
+
+    return enteredKeys.map((key) => {
+      if (key.keyId === 'fraction') return '」';
+      if (key.label === calculatorKeys.find((item) => item.id === key.keyId)?.label) {
+        if (key.keyId === 'square') return '²';
+        if (key.keyId === 'cube-power') return '³';
+      }
+      return key.label;
+    }).join('');
+  })();
 
   const selectLesson = (lesson) => {
     setSelectedLesson(lesson);
@@ -321,12 +395,12 @@ export const CalculatorKeysNotes = () => {
           )}
           {key.alpha && (
             <span className={`max-w-full truncate ${isCompact ? 'text-[8px]' : 'text-[10px]'} font-bold leading-none ${key.alphaColor || 'text-red-500'}`}>
-              {key.alpha}
+              {key.alphaMath ? <Latex math={key.alphaMath} /> : key.alpha}
             </span>
           )}
         </span>
-        <span className={`whitespace-nowrap ${isNumericKey ? 'font-sans' : 'font-mono'} ${isCompact ? 'inline-flex h-4 w-7 items-center justify-center overflow-hidden rounded px-0 py-0 text-[8px] leading-none' : isLarge && !isGrayOrOrangeKey ? 'inline-flex h-7 w-14 items-center justify-center rounded-md px-0 py-0 text-lg' : isGrayOrOrangeKey ? 'inline-flex h-5 w-9 items-center justify-center overflow-hidden rounded px-0 py-0 text-[13px] leading-none' : 'rounded px-1.5 py-0.5 text-[10px] sm:text-xs'} ${keyColor}`}>
-          {key.label}
+        <span className={`whitespace-nowrap ${isNumericKey ? 'font-sans' : 'font-mono'} ${isCompact ? 'inline-flex h-4 w-7 items-center justify-center overflow-hidden rounded px-0 py-0 text-[8px] leading-none' : isLarge && !isGrayOrOrangeKey ? `inline-flex h-7 w-14 items-center justify-center rounded-md px-0 py-0 ${['plus', 'minus', 'multiply', 'divide', 'decimal'].includes(key.id) ? 'text-[23px]' : 'text-lg'}` : isGrayOrOrangeKey ? 'inline-flex h-5 w-9 items-center justify-center overflow-hidden rounded px-0 py-0 text-[13px] leading-none' : 'rounded px-1.5 py-0.5 text-[10px] sm:text-xs'} ${keyColor}`}>
+          {key.labelMath ? <Latex math={key.labelMath} /> : key.label}
         </span>
       </button>
     );
@@ -347,7 +421,7 @@ export const CalculatorKeysNotes = () => {
         <section className="rounded-2xl bg-slate-800 p-3 shadow-lg print:break-inside-avoid sm:p-4" aria-label="計算機按鍵模擬圖">
           <div className="mb-4 rounded-lg border-2 border-slate-500 bg-slate-200 px-3 py-3 text-right text-slate-700 shadow-inner">
             <div className="mt-1 min-h-7 text-xl font-semibold print:hidden">
-              {isComplete ? selectedLesson.example : selectedLesson ? '按鍵示範中' : '計算機按鍵'}
+              {calculatorScreenContent}
             </div>
             <div className="mt-1 hidden min-h-7 text-base font-semibold print:block">按鍵位置示意</div>
           </div>
@@ -425,7 +499,7 @@ export const CalculatorKeysNotes = () => {
                               {lesson.keys.map((key, index) => (
                                 <React.Fragment key={`${lesson.id}-${index}`}>
                                   {index > 0 && <span className="text-slate-400">→</span>}
-                                  <span className={`rounded px-1.5 py-0.5 text-xs font-mono ${key === 'SHIFT' ? calculatorKeyStyle.shift : key === 'a b/c' ? calculatorKeyStyle.fraction : 'bg-gray-900 text-white'}`}>{key}</span>
+                                  <span className={`rounded px-1.5 py-0.5 text-xs font-mono ${key === 'SHIFT' ? calculatorKeyStyle.shift : key === 'a b/c' ? calculatorKeyStyle.fraction : key === 'AC' || key === 'DEL' ? 'bg-gray-900 text-red-400' : 'bg-gray-900 text-white'}`}>{key}</span>
                                 </React.Fragment>
                               ))}
                             </div>
