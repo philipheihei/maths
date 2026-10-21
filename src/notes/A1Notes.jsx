@@ -368,7 +368,7 @@ export const CalculatorKeysNotes = () => {
               : <span key={`replay-space-${index}`} />)}
           </div>
 
-          <div className="-translate-y-20 -mb-20 space-y-1.5">
+          <div className="-translate-y-20 -mb-20 space-y-1">
             {calculatorKeyRows.slice(0, 4).map((row, index) => (
               <div key={`function-row-${index}`} className="grid grid-cols-6 gap-1.5">
                 {row.map((keyId, keyIndex) => keyId
