@@ -722,7 +722,7 @@ const Notes = () => {
                 setSelectedLevel(level);
               }}
               className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
-                selectedLevel === level
+                selectedLevel === level && !isCalculatorTeaching
                   ? 'bg-indigo-600 text-white shadow-md'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}

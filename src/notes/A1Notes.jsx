@@ -30,7 +30,7 @@ const calculatorKeyLessons = [
   {
     id: 'equals',
     group: '小學內容',
-    title: '顯示答案',
+    title: '=',
     keys: ['EXE'],
     example: '按 EXE 顯示算式答案',
     sequence: ['exe'],
@@ -59,14 +59,14 @@ const calculatorKeyLessons = [
     title: '帶分數 ↔ 假分數',
     keys: ['算式', 'SHIFT', 'a b/c'],
     example: '1 3/4 = 7/4',
-    exampleMath: '1\\frac{3}{4} = \\frac{7}{4}',
+    exampleMath: '1\\,\\frac{3}{4} = \\frac{7}{4}',
     sequence: ['1', 'fraction', '3', 'fraction', '4', 'exe', 'shift', 'fraction'],
   },
   {
     id: 'percentage',
     group: '小學內容',
     title: '百分率',
-    keys: ['SHIFT', '(', '數值'],
+    keys: ['數值', 'SHIFT', '(', 'EXE'],
     example: '90% = 0.9',
     exampleMath: '90\\% = 0.9',
     sequence: ['9', '0', 'shift', 'open', 'exe'],
@@ -75,7 +75,7 @@ const calculatorKeyLessons = [
     id: 'pi',
     group: '小學內容',
     title: 'π',
-    keys: ['SHIFT', 'EXP'],
+    keys: ['數值', 'SHIFT', 'EXP', 'EXE'],
     example: '2π ≈ 6.283185307',
     exampleMath: '2\\pi \\approx 6.283185307',
     sequence: ['2', 'shift', 'exp', 'exe'],
@@ -201,12 +201,12 @@ const calculatorKeys = [
   { id: 'replay', label: 'REPLAY', style: 'mode' },
   { id: 'prog', label: 'Prog', secondary: 'EXIT', secondaryColor: 'text-yellow-500', style: 'orange' },
   { id: 'fmla', label: 'FMLA', style: 'orange' },
-  { id: 'x-inverse', label: 'x⁻¹', secondary: 'x!', secondaryColor: 'text-yellow-500' },
+  { id: 'x-inverse', label: 'x⁻¹', secondary: 'x!', secondaryMath: 'x!', secondaryColor: 'text-yellow-500' },
   { id: 'cube-power', label: 'x³', secondary: '∛', secondaryColor: 'text-yellow-500' },
   { id: 'rcl', label: 'RCL' },
   { id: 'eng', label: 'ENG', secondary: 'i', secondaryColor: 'text-purple-500' },
   { id: 'fraction', label: 'a b/c', style: 'fraction', secondary: 'd/c', secondaryColor: 'text-yellow-500' },
-  { id: 'sqrt', label: '√', secondary: 'n√', secondaryColor: 'text-yellow-500' },
+  { id: 'sqrt', label: '√' },
   { id: 'square', label: 'x²' },
   { id: 'power', label: '^', secondary: 'x√', secondaryColor: 'text-yellow-500' },
   { id: 'log-base', label: 'log', secondary: '10ˣ', secondaryColor: 'text-yellow-500' },
@@ -217,14 +217,14 @@ const calculatorKeys = [
   { id: 'tan', label: 'tan', secondary: 'tan⁻¹', secondaryColor: 'text-yellow-500' },
   { id: 'negative', label: '(−)', secondary: 'A', secondaryColor: 'text-red-500' },
   { id: 'angle', label: '° ′ ″', secondary: 'B', secondaryColor: 'text-red-500' },
-  { id: 'open', label: '(', secondary: '%', secondaryColor: 'text-yellow-500', alpha: 'X', alphaColor: 'text-red-500' },
-  { id: 'close', label: ')', alpha: 'Y', alphaColor: 'text-red-500' },
-  { id: 'comma', label: ',' },
+  { id: 'open', label: '(', secondary: '%', secondaryColor: 'text-yellow-500' },
+  { id: 'close', label: ')', alpha: 'X', alphaColor: 'text-red-500' },
+  { id: 'comma', label: ',', secondary: ';', secondaryColor: 'text-yellow-700', alpha: 'Y', alphaColor: 'text-red-500' },
   { id: 'mplus', label: 'M+', secondary: 'M−', secondaryColor: 'text-yellow-500', alpha: 'M', alphaColor: 'text-red-500' },
   { id: '7', label: '7', secondary: 'CONST', secondaryColor: 'text-yellow-500' },
   { id: '8', label: '8' },
   { id: '9', label: '9', secondary: 'CLR', secondaryColor: 'text-yellow-500' },
-  { id: 'del', label: 'DEL' },
+  { id: 'del', label: 'DEL', secondary: 'INS', secondaryColor: 'text-yellow-700' },
   { id: 'ac', label: 'AC', secondary: 'OFF', secondaryColor: 'text-yellow-500' },
   { id: '4', label: '4' },
   { id: '5', label: '5' },
@@ -291,7 +291,7 @@ export const CalculatorKeysNotes = () => {
     setKeyFeedback('');
   };
   const keyIndex = (keyId) => selectedLesson?.sequence.slice(pressedKeys.length).includes(keyId);
-  const renderCalculatorKey = (keyId, isLarge = false, isGray = false, isCompact = false) => {
+  const renderCalculatorKey = (keyId, isLarge = false, isGray = false, isCompact = false, isTight = false) => {
     const key = calculatorKeys.find((item) => item.id === keyId);
     if (!key) return null;
     const isNext = key.id === nextKey;
@@ -309,14 +309,14 @@ export const CalculatorKeysNotes = () => {
         onClick={() => pressKey(key.id)}
         aria-label={key.secondary ? `${key.label}, SHIFT 功能 ${key.secondary}` : key.label}
         aria-current={isNext ? 'step' : undefined}
-        className={`relative flex ${isCompact ? 'h-[22px] min-h-0' : 'min-h-14'} min-w-0 flex-col items-center justify-center rounded-md px-1 py-1 transition-all print:shadow-none print:animate-none ${
+        className={`relative flex ${isCompact ? 'h-[22px] min-h-0' : isTight ? 'min-h-12 py-0' : 'min-h-14'} min-w-0 flex-col items-center justify-center rounded-md px-1 ${isCompact ? 'py-1' : ''} transition-all print:shadow-none print:animate-none ${
           isNext ? 'z-10 scale-105 shadow-[0_0_18px_5px_rgba(250,204,21,0.85)] ring-2 ring-yellow-200 animate-pulse print:scale-100 print:ring-0' : ''
         } ${isSequenceKey && !isNext ? 'opacity-90' : ''}`}
       >
         <span className={`flex ${isCompact ? 'h-0' : 'h-3'} max-w-full items-start justify-center gap-0.5`}>
           {key.secondary && (
             <span className={`max-w-full truncate ${isCompact ? 'text-[8px]' : 'text-[10px]'} font-bold leading-none ${key.secondaryColor === 'text-yellow-500' ? 'text-yellow-700' : key.secondaryColor || 'text-green-400'}`}>
-              {key.secondary}
+              {key.secondaryMath ? <Latex math={key.secondaryMath} /> : key.secondary}
             </span>
           )}
           {key.alpha && (
@@ -368,18 +368,18 @@ export const CalculatorKeysNotes = () => {
               : <span key={`replay-space-${index}`} />)}
           </div>
 
-          <div className="-translate-y-20 -mb-20 space-y-1">
+          <div className="-translate-y-20 -mb-20 space-y-0.5">
             {calculatorKeyRows.slice(0, 4).map((row, index) => (
-              <div key={`function-row-${index}`} className="grid grid-cols-6 gap-1.5">
+              <div key={`function-row-${index}`} className="grid grid-cols-6 gap-x-1.5 gap-y-1">
                 {row.map((keyId, keyIndex) => keyId
-                  ? <React.Fragment key={keyId}>{renderCalculatorKey(keyId, false, true)}</React.Fragment>
+                  ? <React.Fragment key={keyId}>{renderCalculatorKey(keyId, false, true, false, true)}</React.Fragment>
                   : <span key={`function-space-${index}-${keyIndex}`} />)}
               </div>
             ))}
             <div className="my-2 border-t border-slate-600" />
             {calculatorKeyRows.slice(4).map((row, index) => (
-              <div key={`number-row-${index}`} className="grid grid-cols-5 gap-1.5">
-                {row.map((keyId) => renderCalculatorKey(keyId, true))}
+              <div key={`number-row-${index}`} className="grid grid-cols-5 gap-x-1.5 gap-y-1">
+                {row.map((keyId) => renderCalculatorKey(keyId, true, false, false, true))}
               </div>
             ))}
           </div>
