@@ -30,10 +30,10 @@ const calculatorKeyLessons = [
     id: 'basic-operations',
     group: '小學內容',
     title: '四則運算',
-    keys: ['數字', '+、−、×、÷', 'EXE'],
-    example: '8 + 3 × 4 = 20',
-    exampleMath: '8 + 3 \\times 4 = 20',
-    sequence: ['8', 'plus', '3', 'multiply', '4', 'exe'],
+    keys: ['數字', '+、−、×、÷、( )', 'EXE'],
+    example: '3 × [24 − (6 + 2)] = 48',
+    exampleMath: '3 \\times [24 − (6 + 2)] = 48',
+    sequence: ['3', 'multiply', 'open', '2', '4', 'minus', 'open', '6', 'plus', '2', 'close', 'close', 'exe'],
   },
   {
     id: 'equals',
@@ -56,7 +56,7 @@ const calculatorKeyLessons = [
     id: 'fraction-decimal',
     group: '小學內容',
     title: '分數 ↔ 小數',
-    keys: ['分子', 'a b/c', '分母'],
+    keys: ['分子', 'a b/c', '分母', 'EXE', 'a b/c'],
     example: '5/8 = 0.625',
     exampleMath: '\\frac{5}{8} = 0.625',
     sequence: ['5', 'fraction', '8', 'exe', 'fraction'],
@@ -92,10 +92,11 @@ const calculatorKeyLessons = [
     id: 'negative',
     group: 'F1',
     title: '負數',
-    keys: ['(−)'],
-    example: '(−) 5 = −5',
-    exampleMath: '(-)5 = -5',
-    sequence: ['negative', '5', 'exe'],
+    keys: ['(−)', '−'],
+    keySeparator: '或',
+    example: '−5 − 3 × 2 = −11',
+    exampleMath: '-5 - 3 \\times 2 = -11',
+    sequence: ['negative', '5', 'minus', '3', 'multiply', '2', 'exe'],
   },
   {
     id: 'square',
@@ -496,12 +497,33 @@ export const CalculatorKeysNotes = () => {
                           <th scope="row" className="border border-slate-200 px-2 py-2 font-semibold text-slate-800">{lesson.title}</th>
                           <td className="border border-slate-200 px-2 py-2">
                             <div className="flex flex-wrap items-center gap-1">
-                              {lesson.keys.map((key, index) => (
-                                <React.Fragment key={`${lesson.id}-${index}`}>
-                                  {index > 0 && <span className="text-slate-400">→</span>}
-                                  <span className={`rounded px-1.5 py-0.5 text-xs font-mono ${key === 'SHIFT' ? calculatorKeyStyle.shift : key === 'a b/c' ? calculatorKeyStyle.fraction : key === 'AC' || key === 'DEL' ? 'bg-gray-900 text-red-400' : 'bg-gray-900 text-white'}`}>{key}</span>
-                                </React.Fragment>
-                              ))}
+                              {lesson.keys.map((key, index) => {
+                                const isShiftFunction = lesson.keys[index - 1] === 'SHIFT';
+                                const shiftedKey = isShiftFunction
+                                  ? calculatorKeys.find((calculatorKey) => calculatorKey.label === key)
+                                  : null;
+                                return (
+                                  <React.Fragment key={`${lesson.id}-${index}`}>
+                                    {index > 0 && (
+                                      <span className="inline-flex h-5 self-end items-center text-slate-400">
+                                        {lesson.keySeparator || '→'}
+                                      </span>
+                                    )}
+                                    <span className="inline-flex h-[34px] flex-col items-center justify-end gap-0.5">
+                                      <span className="flex h-3 items-center justify-center text-[10px] font-bold leading-none text-yellow-700">
+                                        {shiftedKey?.secondary
+                                          ? shiftedKey.secondaryMath
+                                            ? <Latex math={shiftedKey.secondaryMath} />
+                                            : shiftedKey.secondary
+                                          : null}
+                                      </span>
+                                      <span className={`inline-flex h-5 items-center justify-center rounded text-xs font-mono ${key === '−' ? 'w-8' : 'px-1.5'} ${key === 'SHIFT' ? calculatorKeyStyle.shift : key === 'a b/c' ? calculatorKeyStyle.fraction : key === 'AC' || key === 'DEL' ? 'bg-gray-900 text-red-400' : 'bg-gray-900 text-white'}`}>
+                                        {key === '−' ? <span className="inline-block scale-x-150">{key}</span> : key}
+                                      </span>
+                                    </span>
+                                  </React.Fragment>
+                                );
+                              })}
                             </div>
                           </td>
                           <td className="border border-slate-200 px-2 py-2 text-slate-700">
