@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home as HomeIcon, ChevronDown, ChevronRight } from 'lucide-react';
 import { NOTES_DATA, NOTES_COMPONENTS, getNotesForLevel } from '../notes/notesData';
@@ -463,13 +463,21 @@ const Notes = () => {
         }
       }
     }
-    return { level: 'F1', topic: null, subtopic: null };
+    return { level: 'F1', topic: NOTES_DATA.F1?.[0]?.id ?? null, subtopic: null };
   };
 
   const initState = getInitialState();
 
+  useLayoutEffect(() => {
+    if (!requestedTopic && !isPrintMode) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   const [selectedLevel, setSelectedLevel] = useState(initState.level);
-  const [expandedTopics, setExpandedTopics] = useState(initState.topic ? { [initState.topic]: true } : {});
+  const [expandedTopics, setExpandedTopics] = useState(
+    requestedTopic && initState.topic ? { [initState.topic]: true } : {}
+  );
   const [activeTopic, setActiveTopic] = useState(initState.topic);
   const [activeSubtopic, setActiveSubtopic] = useState(initState.subtopic);
   const [isCalculatorTeaching, setIsCalculatorTeaching] = useState(false);
@@ -478,18 +486,17 @@ const Notes = () => {
 
   const levels = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', '高中甲(一)'];
   const notes = getNotesForLevel(selectedLevel);
-  const isFirstMount = useRef(true);
+  const lastSelectedLevel = useRef(selectedLevel);
 
   useEffect(() => {
-    if (isFirstMount.current) {
-      isFirstMount.current = false;
-      if (initState.topic) return;
-    }
+    if (lastSelectedLevel.current === selectedLevel) return;
+    lastSelectedLevel.current = selectedLevel;
+
     const levelNotes = getNotesForLevel(selectedLevel);
     if (levelNotes.length > 0) {
       const firstTopic = levelNotes[0];
       setActiveTopic(firstTopic.id);
-      setActiveSubtopic(firstTopic.subtopics.length > 0 ? firstTopic.subtopics[0].id : null);
+      setActiveSubtopic(null);
       const expanded = {};
       levelNotes.forEach(t => { expanded[t.id] = false; });
       setExpandedTopics(expanded);
@@ -719,6 +726,7 @@ const Notes = () => {
               key={level}
               onClick={() => {
                 setIsCalculatorTeaching(false);
+                setActiveSubtopic(null);
                 setSelectedLevel(level);
               }}
               className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${

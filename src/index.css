@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.substitution-method .katex .stretchy.colorbox {
+  height: 1.15em !important;
+}
+
 .ch6-long-equals .plain-equals {
   display: inline-block;
 }

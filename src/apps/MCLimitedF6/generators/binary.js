@@ -94,7 +94,7 @@ const genBinaryCoeffRemainderQ = () => {
     options: opts,
     correctIndex: opts.indexOf(correctLatex),
     explanationLines: [
-      `\\text{高位部分：} ${toBin(k)}_2 \\text{ 在位 } ${highN} = ${k} \\times 2^{${highN}}`,
+      `\\text{高位部分：} ${toBin(k)}_2 \\text{ 左移 } ${highN} \\text{ 位，即 } ${toBin(k)}_2 \\times 2^{${highN}} = ${k} \\times 2^{${highN}}`,
       `\\text{低位部分：} ${toBin(r)}_2 = ${r}`,
       `\\therefore ${binDisplay} = ${correctLatex}`,
     ],

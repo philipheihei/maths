@@ -147,7 +147,7 @@ export const SubstitutionSteps = ({ question }) => {
   };
 
   return (
-    <div className="py-2 pl-2 text-left space-y-2">
+    <div className="substitution-method py-2 pl-2 text-left space-y-2">
       <div className="leading-7">
         <InlineMath math={`\\text{題目：} ${normalizeQuestionLatex(view.questionHighlightLatex || view.questionLatex || question.questionLatex || '')}`} />
       </div>
