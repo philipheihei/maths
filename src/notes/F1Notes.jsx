@@ -3537,7 +3537,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
                 <p className="font-bold text-slate-800 mb-2">例：數列 <Latex math="\frac{a^2 + 2}{2a − 3}" /> 的第 5 項是？</p>
                 <div className="pl-6 font-bold text-slate-700 space-y-2 mt-4 relative">
                   <div className="absolute left-[100px] -top-5 text-sm text-green-700 font-bold whitespace-nowrap">a 代 5 ↓</div>
-                  <p>第 5 項 <Latex math="= \frac{\color{red}(\color{red}5\color{red})^2 + 2}{2\color{red}(\color{red}5\color{red}) − 3}" /> <Latex math="= \frac{27}{7}" /></p>
+                  <p>第 5 項 <span className="text-xl"><Latex math="= \frac{(\textcolor{red}{5})^2 + 2}{2(\textcolor{red}{5}) − 3}" /> <Latex math="= \frac{27}{7}" /></span></p>
                 </div>
               </div>
             </div>
