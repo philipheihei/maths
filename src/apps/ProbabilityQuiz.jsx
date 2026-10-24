@@ -9,6 +9,12 @@ const gcd = (a, b) => {
   return b === 0 ? a : gcd(b, a % b);
 };
 
+const parseIntegerInput = (value) => {
+  if (value.trim() === '') return null;
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) ? parsed : null;
+};
+
 // 排列 (nPr)
 const nPr = (n, r) => {
   if (r < 0 || r > n) return 0;
@@ -124,6 +130,7 @@ const Task1 = ({ onComplete, score = 0 }) => {
       },
       {
         type: 'permutation',
+        fixedR: 3,
         template: (n, r) => `有 ${n} 位參賽者參加短跑比賽，設有冠、亞、季軍各一名。請問從中選出前 ${r} 名共有多少種結果？`,
         reason: '冠亞季軍有區別，次序很重要 (A冠B亞 ≠ B冠A亞)。',
         hint: '思考：冠軍是 A，亞軍是 B；跟冠軍是 B，亞軍是 A，結果一樣嗎？'
@@ -136,6 +143,7 @@ const Task1 = ({ onComplete, score = 0 }) => {
       },
       {
         type: 'permutation',
+        fixedR: 3,
         template: (n, r) => `某公司有 ${n} 名員工，需選出 ${r} 人分別擔任經理、秘書和會計。請問這是排列還是組合？`,
         reason: '職位不同 (經理/秘書/會計)，人選的分配順序會影響結果。',
         hint: '思考：職位是有區別的，如果兩人互換職位，算是不同的結果嗎？'
@@ -184,7 +192,7 @@ const Task1 = ({ onComplete, score = 0 }) => {
     const typePool = Math.random() > 0.5 ? permScenarios : combScenarios;
     const scenario = typePool[Math.floor(Math.random() * typePool.length)];
     const n = Math.floor(Math.random() * 6) + 6; 
-    const r = scenario.type === 'permutation' && scenario.template.toString().includes('冠') ? 3 : Math.floor(Math.random() * 3) + 2; 
+    const r = scenario.fixedR ?? Math.floor(Math.random() * 3) + 2;
 
     setQuestion({
       type: scenario.type,
@@ -292,6 +300,7 @@ const TASK2_SCENARIOS = [
 const Task2 = ({ onComplete, score = 0 }) => {
   const [question, setQuestion] = useState(null);
   const [inputValue, setInputValue] = useState('');
+  const [inputError, setInputError] = useState('');
   const [feedback, setFeedback] = useState(null);
 
   const generateQuestion = useCallback(() => {
@@ -313,13 +322,19 @@ const Task2 = ({ onComplete, score = 0 }) => {
     });
     setFeedback(null);
     setInputValue('');
+    setInputError('');
   }, []);
 
   useEffect(() => { generateQuestion(); }, [generateQuestion]);
 
   const checkAnswer = () => {
     if (feedback) return;
-    const userAns = parseInt(inputValue);
+    const userAns = parseIntegerInput(inputValue);
+    if (userAns === null) {
+      setInputError('請輸入整數數量；答案不能留空或包含小數。');
+      return;
+    }
+    setInputError('');
     if (userAns === question.unknown) {
       setFeedback({ correct: true, text: `正確！${question.total}（總數）- ${question.known}（${question.knownLabel}）= ${question.unknown} ${question.unit}（${question.unknownLabel}）` });
       onComplete(true);
@@ -345,12 +360,14 @@ const Task2 = ({ onComplete, score = 0 }) => {
             <input
               type="number"
               value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              step="1"
+              onChange={(e) => { setInputValue(e.target.value); setInputError(''); }}
               className="w-28 text-center border-2 border-gray-300 rounded-lg p-2 text-xl focus:border-blue-500 outline-none no-spinners"
               placeholder="?"
             />
             <button onClick={checkAnswer} className="px-6 py-2.5 rounded-lg text-white font-bold bg-blue-600 hover:bg-blue-700 shadow-sm">提交</button>
           </div>
+          {inputError && <p className="text-sm font-medium text-red-700" role="alert">{inputError}</p>}
         </div>
       )}
       {feedback && <FeedbackDisplay {...feedback} onNext={generateQuestion} />}
@@ -382,6 +399,7 @@ const Task3 = ({ onComplete, score = 0 }) => {
   const [question, setQuestion] = useState(null);
   const [selectedGreens, setSelectedGreens] = useState([]); 
   const [blueInputs, setBlueInputs] = useState({}); 
+  const [inputError, setInputError] = useState('');
   const [step, setStep] = useState(1); 
   const [step1Feedback, setStep1Feedback] = useState(null);
   const [feedback, setFeedback] = useState(null);
@@ -419,6 +437,7 @@ const Task3 = ({ onComplete, score = 0 }) => {
     });
     setSelectedGreens([]);
     setBlueInputs({});
+    setInputError('');
     setStep(1);
     setFeedback(null);
     setStep1Feedback(null);
@@ -436,6 +455,7 @@ const Task3 = ({ onComplete, score = 0 }) => {
 
   const handleBlueInput = (greenNum, value) => {
     setBlueInputs(prev => ({...prev, [greenNum]: value}));
+    setInputError('');
   };
 
   const checkStep1 = () => {
@@ -462,14 +482,19 @@ const Task3 = ({ onComplete, score = 0 }) => {
 
     let allCorrect = true;
     for (let g of selectedGreens) {
-      const userBlue = parseInt(blueInputs[g]);
+      const userBlue = parseIntegerInput(blueInputs[g] || '');
+      if (userBlue === null) {
+        setInputError('請為每種情況輸入整數數量；答案不能留空或包含小數。');
+        return;
+      }
       const correctBlue = question.draw_total - g;
-      if (userBlue !== correctBlue || isNaN(userBlue)) {
+      if (userBlue !== correctBlue) {
         allCorrect = false;
         break;
       }
     }
 
+    setInputError('');
     if (allCorrect) {
       setFeedback({ correct: true, text: '完全正確！您已成功計算所有組合情況。' });
       onComplete(true);
@@ -536,6 +561,7 @@ const Task3 = ({ onComplete, score = 0 }) => {
                     <div className="flex items-center">
                       <input 
                         type="number" 
+                        step="1"
                         value={blueInputs[g] || ''}
                         onChange={(e) => handleBlueInput(g, e.target.value)}
                         className="w-16 text-center border-2 border-blue-200 rounded p-1 focus:border-blue-500 outline-none no-spinners"
@@ -545,6 +571,7 @@ const Task3 = ({ onComplete, score = 0 }) => {
                   </div>
                 ))}
               </div>
+              {inputError && <p className="mt-3 text-sm font-medium text-red-700" role="alert">{inputError}</p>}
               {!feedback?.correct && (
                 <button onClick={checkStep2} className="mt-4 px-8 py-3 rounded-xl text-white font-bold bg-blue-600 hover:bg-blue-700 shadow-md">
                   提交答案
@@ -1001,6 +1028,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
   const [currentPart, setCurrentPart] = useState('a'); 
   const [userNum, setUserNum] = useState('');
   const [userDenom, setUserDenom] = useState('');
+  const [inputError, setInputError] = useState('');
   const [partAFeedback, setPartAFeedback] = useState(null); 
   const [partBFeedback, setPartBFeedback] = useState(null);
   const [isHintAOpen, setIsHintAOpen] = useState(false);
@@ -1312,6 +1340,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
     setCurrentPart('a');
     setUserNum('');
     setUserDenom('');
+    setInputError('');
     setPartAFeedback(null);
     setPartBFeedback(null);
     setIsHintAOpen(false);
@@ -1325,8 +1354,12 @@ const Task5 = ({ onComplete, score = 0 }) => {
     const currentQ = problem.questions[currentPart];
 
     if (currentQ.type === 'count') {
-      const uNum = parseInt(userNum);
-      if (isNaN(uNum)) return;
+      const uNum = parseIntegerInput(userNum);
+      if (uNum === null) {
+        setInputError('請輸入整數答案；答案不能留空或包含小數。');
+        return;
+      }
+      setInputError('');
       const isCorrect = uNum === currentQ.num;
       const feedbackObj = { correct: isCorrect, simpleNum: currentQ.num, simpleDen: 1, formula: currentQ.formula, type: 'count', reason: currentQ.reason };
       if (currentPart === 'a') { setPartAFeedback(feedbackObj); }
@@ -1334,10 +1367,17 @@ const Task5 = ({ onComplete, score = 0 }) => {
       return;
     }
 
-    const uNum = parseInt(userNum);
-    const uDen = parseInt(userDenom);
-    
-    if (isNaN(uNum) || isNaN(uDen) || uDen === 0) return;
+    const uNum = parseIntegerInput(userNum);
+    const uDen = parseIntegerInput(userDenom);
+    if (uNum === null || uDen === null) {
+      setInputError('請在分子和分母填上整數；答案不能留空或包含小數。');
+      return;
+    }
+    if (uDen === 0) {
+      setInputError('分母不可為 0，請輸入非零整數。');
+      return;
+    }
+    setInputError('');
 
     const common = gcd(currentQ.num, currentQ.den);
     const simpleNum = currentQ.num / common;
@@ -1365,6 +1405,7 @@ const Task5 = ({ onComplete, score = 0 }) => {
     setCurrentPart('b');
     setUserNum('');
     setUserDenom('');
+    setInputError('');
     setIsHintBOpen(false);
   };
 
@@ -1394,20 +1435,21 @@ const Task5 = ({ onComplete, score = 0 }) => {
                   {problem.questions.a.type === 'count' ? (
                     <>
                       <span className="font-serif italic text-lg">答 = </span>
-                      <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-32 text-center border rounded p-1 no-spinners" placeholder="排列總數"/>
+                      <input type="number" step="1" value={userNum} onChange={e=>{setUserNum(e.target.value); setInputError('');}} className="w-32 text-center border rounded p-1 no-spinners" placeholder="排列總數"/>
                     </>
                   ) : (
                     <>
                       <span className="font-serif italic text-lg">P = </span>
                       <div className="flex flex-col items-center gap-1">
-                        <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分子"/>
+                        <input type="number" step="1" value={userNum} onChange={e=>{setUserNum(e.target.value); setInputError('');}} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分子"/>
                         <div className="w-full h-px bg-black"></div>
-                        <input type="number" value={userDenom} onChange={e=>setUserDenom(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分母"/>
+                        <input type="number" step="1" value={userDenom} onChange={e=>{setUserDenom(e.target.value); setInputError('');}} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分母"/>
                       </div>
                     </>
                   )}
                   <button onClick={checkAnswer} className="ml-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">提交 (a)</button>
                 </div>
+                {inputError && <p className="mt-2 text-sm font-medium text-red-700" role="alert">{inputError}</p>}
                 <HintSection text={problem.questions.a.hint} isOpen={isHintAOpen} setIsOpen={setIsHintAOpen} />
               </>
             ) : (
@@ -1460,20 +1502,21 @@ const Task5 = ({ onComplete, score = 0 }) => {
                     {problem.questions.b.type === 'count' ? (
                       <>
                         <span className="font-serif italic text-lg">答 = </span>
-                        <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-32 text-center border rounded p-1 no-spinners" placeholder="排列總數"/>
+                        <input type="number" step="1" value={userNum} onChange={e=>{setUserNum(e.target.value); setInputError('');}} className="w-32 text-center border rounded p-1 no-spinners" placeholder="排列總數"/>
                       </>
                     ) : (
                       <>
                         <span className="font-serif italic text-lg">P = </span>
                         <div className="flex flex-col items-center gap-1">
-                          <input type="number" value={userNum} onChange={e=>setUserNum(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分子"/>
+                          <input type="number" step="1" value={userNum} onChange={e=>{setUserNum(e.target.value); setInputError('');}} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分子"/>
                           <div className="w-full h-px bg-black"></div>
-                          <input type="number" value={userDenom} onChange={e=>setUserDenom(e.target.value)} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分母"/>
+                          <input type="number" step="1" value={userDenom} onChange={e=>{setUserDenom(e.target.value); setInputError('');}} className="w-20 text-center border rounded p-1 no-spinners" placeholder="分母"/>
                         </div>
                       </>
                     )}
                     <button onClick={checkAnswer} className="ml-2 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">提交 (b)</button>
                   </div>
+                  {inputError && <p className="mt-2 text-sm font-medium text-red-700" role="alert">{inputError}</p>}
                   <HintSection text={problem.questions.b.hint} isOpen={isHintBOpen} setIsOpen={setIsHintBOpen} />
                 </>
               ) : (

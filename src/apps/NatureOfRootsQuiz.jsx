@@ -470,7 +470,7 @@ export default function NatureOfRootsQuiz() {
                 {isDiscriminantGame ? (
                   <div className="mb-6 flex justify-center items-center gap-3">
                     <span className="text-2xl font-bold bg-slate-100 px-4 py-2 rounded-lg">
-                      <Latex math="\\Delta =" />
+                      <Latex math="\Delta =" />
                     </span>
                     <input
                       ref={inputRef}

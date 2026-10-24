@@ -72,8 +72,7 @@ const Home = () => {
         { level: 'F2', chapter: 'CH4', subject: '因式分解' }
       ],
       category: '初中',
-      topics: ['完全平方', '展開', '因式分解'],
-      inRepair: true
+      topics: ['完全平方', '展開', '因式分解']
     },
     {
       id: 'index-laws',

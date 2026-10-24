@@ -527,41 +527,38 @@ export default function App() {
     return cleaned;
   };
   
-  const normalizeTerm = (term) => {
-    const match = term.match(/^([+-]?)(\d*)(.*)$/);
-    if (!match) return term;
-    
-    let [, sign, coeff, rest] = match;
-
-    // 修復隱式係數 1 問題：當使用者輸入 '1xy' 時，自動轉化為 'xy'
-    if (coeff === "1" && rest !== "") {
-      coeff = "";
-    }
-
-    const chars = [];
-    let i = 0;
-    while (i < rest.length) {
-      if (i + 1 < rest.length && rest[i + 1] === '^') {
-        const expEnd = i + 2 < rest.length && /\d/.test(rest[i + 2]) ? i + 3 : i + 2;
-        chars.push(rest.slice(i, expEnd));
-        i = expEnd;
-      } else if (rest[i] !== '^' && /[a-z]/i.test(rest[i])) {
-        chars.push(rest[i]);
-        i++;
-      } else {
-        i++;
-      }
-    }
-    
-    const sortedVars = chars.sort().join('');
-    return `${sign}${coeff}${sortedVars}`;
-  };
-  
   const getTerms = (polynomial) => {
     const normalized = polynomial.replace(/\s+/g, '').toLowerCase();
-    const polyWithSign = normalized.startsWith('-') ? normalized : '+' + normalized;
-    const terms = polyWithSign.match(/[+-][\dA-Za-z\^]+/g) || [];
-    return terms.map(normalizeTerm).sort();
+    const terms = normalized.match(/[+-]?[^+-]+/g);
+    if (!terms || terms.join('') !== normalized) return null;
+
+    const normalizedTerms = [];
+    for (const term of terms) {
+      const match = term.match(/^([+-]?)(\d*)(.*)$/);
+      if (!match) return null;
+
+      const [, sign, coefficient, variables] = match;
+      if (!coefficient && !variables) return null;
+      if (!/^(?:[a-z](?:\^\d+)?)*$/.test(variables)) return null;
+
+      const variableFactors = [];
+      for (const variableMatch of variables.matchAll(/([a-z])(?:\^(\d+))?/g)) {
+        const [, variable, rawExponent] = variableMatch;
+        const exponent = rawExponent === undefined ? 1 : Number(rawExponent);
+        if (!Number.isSafeInteger(exponent)) return null;
+        if (exponent > 0) {
+          variableFactors.push(exponent === 1 ? variable : `${variable}^${exponent}`);
+        }
+      }
+
+      const normalizedCoefficient = (coefficient || '1').replace(/^0+(?=\d)/, '');
+      const coefficientText = normalizedCoefficient === '1' && variableFactors.length > 0
+        ? ''
+        : normalizedCoefficient;
+      normalizedTerms.push(`${sign || '+'}${coefficientText}${variableFactors.sort().join('')}`);
+    }
+
+    return normalizedTerms.sort();
   };
 
   const checkAnswer = (e) => {
@@ -583,16 +580,11 @@ export default function App() {
 
     if (!isDirectMatch && currentQuestion.mode.startsWith('展開')) {
       const canonicalAnswer = currentQuestion.answers[0];
-      try {
-        const correctTerms = getTerms(canonicalAnswer);
-        const userTerms = getTerms(userAnswer);
-        
-        if (correctTerms.length === userTerms.length) {
-          isPermutationMatch = correctTerms.every((term, index) => term === userTerms[index]);
-        }
-      } catch (error) {
-        console.error("排列檢查出錯:", error);
-        isPermutationMatch = false;
+      const correctTerms = getTerms(canonicalAnswer);
+      const userTerms = getTerms(userAnswer);
+
+      if (correctTerms && userTerms && correctTerms.length === userTerms.length) {
+        isPermutationMatch = correctTerms.every((term, index) => term === userTerms[index]);
       }
     }
 
@@ -609,6 +601,13 @@ export default function App() {
   };
 
   const handleLevelChange = (newLevel) => {
+    if (newLevel === level) {
+      setScore(0);
+      setStreak(0);
+      nextQuestion();
+      return;
+    }
+
     setLevel(newLevel);
     setScore(0);
     setStreak(0);
