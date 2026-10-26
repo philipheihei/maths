@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { CollapsibleSection, Latex, MathDisplay } from './shared';
+import { SequencePatternMC } from './SequencePatternMC';
 
 export const BasicCalculationNotes = ({ activeSub }) => {
   const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null);
@@ -3543,6 +3544,7 @@ export const AlgebraBasicNotes = ({ activeSub }) => {
             </div>
             
           </div>
+          <SequencePatternMC />
         </div>
       </CollapsibleSection>
     </>

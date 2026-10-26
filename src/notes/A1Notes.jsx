@@ -340,7 +340,7 @@ export const CalculatorKeysNotes = () => {
     return enteredKeys.map((key, index) => {
       if (key.keyId === 'fraction') return '」';
       if (key.keyId === 'negative') return '-';
-      if (key.keyId === 'power') return key.label === calculatorKeys.find((item) => item.id === key.keyId)?.secondary ? key.label : '^(';
+      if (key.keyId === 'power') return key.label === 'ⁿ√' ? key.label : '^(';
       if (key.keyId === 'sqrt') return <Latex key={`screen-key-${index}`} math="\\sqrt{\\phantom{12}}" />;
       if (key.label === calculatorKeys.find((item) => item.id === key.keyId)?.label) {
         if (key.keyId === 'square') return '²';
