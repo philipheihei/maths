@@ -96,6 +96,7 @@ const calculatorKeyLessons = [
     keySeparator: '或',
     example: '−5 − 3 × 2 = −11',
     exampleMath: '-5 - 3 \\times 2 = -11',
+    screenExample: '-5 − 3 × 2 = -11',
     sequence: ['negative', '5', 'minus', '3', 'multiply', '2', 'exe'],
   },
   {
@@ -173,10 +174,10 @@ const calculatorKeyLessons = [
     id: 'nth-root',
     group: 'F4',
     title: 'n 次方根',
-    keys: ['根指數', 'SHIFT', '√（ⁿ√）', '被開方數', 'EXE'],
+    keys: ['根指數', 'SHIFT', '^', '被開方數', 'EXE'],
     example: '⁴√256 = 4',
     exampleMath: '\\sqrt[4]{256} = 4',
-    sequence: ['4', 'shift', 'sqrt', '2', '5', '6', 'exe'],
+    sequence: ['4', 'shift', 'power', '2', '5', '6', 'exe'],
   },
   {
     id: 'log',
@@ -233,9 +234,9 @@ const calculatorKeys = [
   { id: 'rcl', label: 'RCL', secondary: 'STO', secondaryColor: 'text-yellow-500' },
   { id: 'eng', label: 'ENG', secondary: 'i', secondaryMath: 'i', secondaryColor: 'text-purple-500' },
   { id: 'fraction', label: 'a b/c', style: 'fraction', secondary: 'd/c', secondaryColor: 'text-yellow-500' },
-  { id: 'sqrt', label: '√' },
+  { id: 'sqrt', label: '√', labelMath: '\\sqrt{\\phantom{12}}' },
   { id: 'square', label: 'x²', labelMath: 'x^2' },
-  { id: 'power', label: '^', secondary: 'x√', secondaryMath: '\\sqrt{\\phantom{12}}', secondaryColor: 'text-yellow-500' },
+  { id: 'power', label: '^', secondary: 'ⁿ√', secondaryMath: '\\sqrt[n]{\\phantom{12}}', secondaryColor: 'text-yellow-500' },
   { id: 'log-base', label: 'log', secondary: '10ˣ', secondaryMath: '10^x', secondaryColor: 'text-yellow-500' },
   { id: 'ln', label: 'ln', secondary: 'eˣ', secondaryMath: 'e^x', secondaryColor: 'text-yellow-500', alpha: 'e', alphaColor: 'text-red-500' },
   { id: 'hyp', label: 'hyp', alpha: 'C', alphaColor: 'text-red-500' },
@@ -297,7 +298,9 @@ export const CalculatorKeysNotes = () => {
   const isComplete = Boolean(selectedLesson) && pressedKeys.length === selectedLesson.sequence.length;
   const calculatorScreenContent = (() => {
     if (isComplete) {
-      return selectedLesson.exampleMath
+      return selectedLesson.screenExample
+        ? selectedLesson.screenExample
+        : selectedLesson.exampleMath
         ? <Latex math={selectedLesson.exampleMath} />
         : selectedLesson.example;
     }
@@ -334,8 +337,11 @@ export const CalculatorKeysNotes = () => {
 
     if (!enteredKeys.length) return selectedLesson ? '按鍵示範中' : '計算機按鍵';
 
-    return enteredKeys.map((key) => {
+    return enteredKeys.map((key, index) => {
       if (key.keyId === 'fraction') return '」';
+      if (key.keyId === 'negative') return '-';
+      if (key.keyId === 'power') return key.label === calculatorKeys.find((item) => item.id === key.keyId)?.secondary ? key.label : '^(';
+      if (key.keyId === 'sqrt') return <Latex key={`screen-key-${index}`} math="\\sqrt{\\phantom{12}}" />;
       if (key.label === calculatorKeys.find((item) => item.id === key.keyId)?.label) {
         if (key.keyId === 'square') return '²';
         if (key.keyId === 'cube-power') return '³';
@@ -400,7 +406,7 @@ export const CalculatorKeysNotes = () => {
             </span>
           )}
         </span>
-        <span className={`whitespace-nowrap ${isNumericKey ? 'font-sans' : 'font-mono'} ${isCompact ? 'inline-flex h-4 w-7 items-center justify-center overflow-hidden rounded px-0 py-0 text-[8px] leading-none' : isLarge && !isGrayOrOrangeKey ? `inline-flex h-7 w-14 items-center justify-center rounded-md px-0 py-0 ${['plus', 'minus', 'multiply', 'divide', 'decimal'].includes(key.id) ? 'text-[23px]' : 'text-lg'}` : isGrayOrOrangeKey ? 'inline-flex h-5 w-9 items-center justify-center overflow-hidden rounded px-0 py-0 text-[13px] leading-none' : 'rounded px-1.5 py-0.5 text-[10px] sm:text-xs'} ${keyColor}`}>
+        <span className={`whitespace-nowrap ${isNumericKey ? 'font-sans' : 'font-mono'} ${isCompact ? 'inline-flex h-4 w-7 items-center justify-center overflow-hidden rounded px-0 py-0 text-[8px] leading-none' : isLarge && !isGrayOrOrangeKey ? `inline-flex h-7 w-14 items-center justify-center rounded-md px-0 py-0 ${['plus', 'minus', 'multiply', 'divide', 'decimal', 'comma'].includes(key.id) ? 'text-[23px]' : 'text-lg'} ${key.id === 'comma' ? 'scale-125' : ''}` : isGrayOrOrangeKey ? `inline-flex h-5 w-9 items-center justify-center overflow-hidden rounded px-0 py-0 ${key.id === 'comma' ? 'text-[23px]' : 'text-[13px]'} leading-none` : 'rounded px-1.5 py-0.5 text-[10px] sm:text-xs'} ${keyColor}`}>
           {key.labelMath ? <Latex math={key.labelMath} /> : key.label}
         </span>
       </button>
@@ -482,13 +488,19 @@ export const CalculatorKeysNotes = () => {
               <section key={group} className="break-inside-avoid">
                 <h3 className="mb-2 border-l-4 border-green-600 pl-2 font-bold text-green-800">{group}</h3>
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[560px] border-collapse text-left text-sm">
+                  <table className="w-full min-w-[560px] table-fixed border-collapse text-left text-sm">
+                    <colgroup>
+                      <col style={{ width: '20%' }} />
+                      <col style={{ width: '43.333%' }} />
+                      <col style={{ width: 'calc(36.667% - 100px)' }} />
+                      <col style={{ width: '100px' }} />
+                    </colgroup>
                     <thead>
                       <tr className="bg-slate-100 text-slate-700">
-                        <th className="w-1/5 border border-slate-200 px-2 py-2">功能</th>
-                        <th className="w-1/3 border border-slate-200 px-2 py-2">按鍵</th>
+                        <th className="border border-slate-200 px-2 py-2">功能</th>
+                        <th className="border border-slate-200 px-2 py-2">按鍵</th>
                         <th className="border border-slate-200 px-2 py-2">{group === '功能鍵' ? '作用' : '例子'}</th>
-                        <th className="w-20 border border-slate-200 px-2 py-2 text-center print:hidden">輸入</th>
+                        <th className="border border-slate-200 px-2 py-2 text-center print:hidden">輸入</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -499,9 +511,8 @@ export const CalculatorKeysNotes = () => {
                             <div className="flex flex-wrap items-center gap-1">
                               {lesson.keys.map((key, index) => {
                                 const isShiftFunction = lesson.keys[index - 1] === 'SHIFT';
-                                const shiftedKey = isShiftFunction
-                                  ? calculatorKeys.find((calculatorKey) => calculatorKey.label === key)
-                                  : null;
+                                const keyDefinition = calculatorKeys.find((calculatorKey) => calculatorKey.label === key);
+                                const shiftedKey = isShiftFunction ? keyDefinition : null;
                                 return (
                                   <React.Fragment key={`${lesson.id}-${index}`}>
                                     {index > 0 && (
@@ -517,8 +528,12 @@ export const CalculatorKeysNotes = () => {
                                             : shiftedKey.secondary
                                           : null}
                                       </span>
-                                      <span className={`inline-flex h-5 items-center justify-center rounded text-xs font-mono ${key === '−' ? 'w-8' : 'px-1.5'} ${key === 'SHIFT' ? calculatorKeyStyle.shift : key === 'a b/c' ? calculatorKeyStyle.fraction : key === 'AC' || key === 'DEL' ? 'bg-gray-900 text-red-400' : 'bg-gray-900 text-white'}`}>
-                                        {key === '−' ? <span className="inline-block scale-x-150">{key}</span> : key}
+                                      <span className={`inline-flex h-5 items-center justify-center rounded font-mono ${key === '，' ? 'px-2 text-base' : 'text-xs'} ${key === '−' ? 'w-8' : key === '，' ? '' : 'px-1.5'} ${key === 'SHIFT' ? calculatorKeyStyle.shift : key === 'a b/c' ? calculatorKeyStyle.fraction : key === 'AC' || key === 'DEL' ? 'bg-gray-900 text-red-400' : 'bg-gray-900 text-white'}`}>
+                                        {key === '−'
+                                          ? <span className="inline-block scale-x-150">{key}</span>
+                                          : keyDefinition?.labelMath
+                                            ? <Latex math={keyDefinition.labelMath} />
+                                            : key}
                                       </span>
                                     </span>
                                   </React.Fragment>

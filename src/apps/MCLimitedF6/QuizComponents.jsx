@@ -269,7 +269,7 @@ export const TopicQuiz = ({ onBack, generateFn, topicLabel }) => {
 
   const substitutionTypeOptions = [
     { id: 'alg', label: '代數式化簡', match: '代數式化簡（適用）' },
-    { id: 'exp2', label: '指數化簡（代兩值）', match: '指數化簡（需代兩個值）' },
+    { id: 'exp2', label: '指數化簡', match: '指數化簡' },
     { id: 'frac', label: '分式化簡', match: '分式化簡（適用）' },
     { id: 'bivar', label: '雙變數展開', match: '雙變數展開（適用）' },
     { id: 'law', label: '指數律', match: '指數律（適用）' },
