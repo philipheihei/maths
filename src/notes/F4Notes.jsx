@@ -14,7 +14,7 @@ const QuadraticGraphReference = () => (
       </defs>
 
       <g transform="translate(0 0)">
-        <text x="190" y="24" textAnchor="middle" fontSize="20" fontWeight="700" fill="#166534">a &gt; 0</text>
+        <text x="245" y="24" textAnchor="middle" fontSize="20" fontWeight="700" fill="#166534">a &gt; 0</text>
         <line x1="45" y1="190" x2="385" y2="190" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
         <line x1="170" y1="295" x2="170" y2="42" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
         <text x="395" y="196" fontSize="16" fill="#475569">x</text>
@@ -38,12 +38,18 @@ const QuadraticGraphReference = () => (
           </div>
         </foreignObject>
         <text x="80" y="222" fontSize="15" fill="#475569">(0, c)</text>
-        <text x="245" y="322" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
+        <foreignObject x="145" y="300" width="200" height="28">
+          <div xmlns="http://www.w3.org/1999/xhtml" style={{ color: '#475569', fontSize: '15px', whiteSpace: 'nowrap', textAlign: 'center' }}>
+            對稱軸 <math xmlns="http://www.w3.org/1998/Math/MathML" style={{ fontSize: '15px', verticalAlign: 'middle' }}>
+              <mrow><mi>x</mi><mo>=</mo><mo>−</mo><mfrac><mi>b</mi><mrow><mn>2</mn><mi>a</mi></mrow></mfrac></mrow>
+            </math>
+          </div>
+        </foreignObject>
         <text x="45" y="55" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
       </g>
 
       <g transform="translate(450 0)">
-        <text x="225" y="24" textAnchor="middle" fontSize="20" fontWeight="700" fill="#b91c1c">a &lt; 0</text>
+        <text x="245" y="24" textAnchor="middle" fontSize="20" fontWeight="700" fill="#b91c1c">a &lt; 0</text>
         <line x1="45" y1="190" x2="385" y2="190" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
         <line x1="170" y1="295" x2="170" y2="42" stroke="#64748b" strokeWidth="2" markerEnd="url(#quadratic-axis-arrow)" />
         <text x="395" y="196" fontSize="16" fill="#475569">x</text>
@@ -67,7 +73,13 @@ const QuadraticGraphReference = () => (
           </div>
         </foreignObject>
         <text x="80" y="114" fontSize="15" fill="#475569">(0, c)</text>
-        <text x="245" y="315" textAnchor="middle" fontSize="15" fill="#475569">對稱軸</text>
+        <foreignObject x="145" y="300" width="200" height="28">
+          <div xmlns="http://www.w3.org/1999/xhtml" style={{ color: '#475569', fontSize: '15px', whiteSpace: 'nowrap', textAlign: 'center' }}>
+            對稱軸 <math xmlns="http://www.w3.org/1998/Math/MathML" style={{ fontSize: '15px', verticalAlign: 'middle' }}>
+              <mrow><mi>x</mi><mo>=</mo><mo>−</mo><mfrac><mi>b</mi><mrow><mn>2</mn><mi>a</mi></mrow></mfrac></mrow>
+            </math>
+          </div>
+        </foreignObject>
         <text x="330" y="105" fontSize="15" fill="#475569" fontStyle="italic">y = ax² + bx + c</text>
       </g>
     </svg>
@@ -1347,7 +1359,7 @@ export const FunctionNotes = ({ activeSub }) => {
         <p className="text-sm text-slate-600">e.g. <Latex math="f(x)" />、<Latex math="g(x)" />、<Latex math="h(x)" />... 不同的英文字代表不同的算式</p>
       </div>
 
-      <CollapsibleSection id="basic-sub" title="簡單代數字" num={1} color="indigo" activeSub={activeSub} sectionRef={s1}>
+      <CollapsibleSection id="basic-sub" title="計算函數" num={1} color="indigo" activeSub={activeSub} sectionRef={s1}>
         <div className="space-y-4">
           <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
             <p className="text-sm text-green-700 mb-2">題目：<Latex math="f(x) = 5x − 1" />，求 <Latex math="f(2)" /> 和 <Latex math="2f(3)" /></p>
@@ -1372,10 +1384,10 @@ export const FunctionNotes = ({ activeSub }) => {
             </div>
           </div>
           <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <p className="text-sm text-green-700 mb-2">題目：<Latex math="f(x) = \frac{2}{x+3}" />，<Latex math="g(x) = x^2 + 3" /></p>
+            <p className="text-sm text-green-700 mb-2">題目：<Latex math="f(x) = \frac{2}{x+3}" />，<Latex math="g(x) = x^2 + 3" />，求 <Latex math="f(2) \cdot g(−2)" /></p>
             <div className="bg-white rounded-lg p-3 text-sm">
               <span className="text-blue-600 font-bold">答案：</span>
-              <Latex math="f(2) \cdot g(−2) = \left(\frac{2}{2+3}\right) \cdot \left((−2)^2 + 3\right) = \frac{2}{5} \times 7 = \frac{14}{5}" />
+              <Latex math="f(2) \cdot g(−2) = \left[\frac{2}{2+3}\right] \cdot \left[(−2)^2 + 3\right] = \frac{2}{5} \times 7 = \frac{14}{5}" />
             </div>
           </div>
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
@@ -1477,39 +1489,87 @@ export const FunctionNotes = ({ activeSub }) => {
 
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">📝 一般式：<Latex math="y = ax^2 + bx + c" /></h3>
-            <p className="text-green-700 font-bold mb-3"><Latex math="a" />：開口方向</p>
-            <div className="grid md:grid-cols-2 gap-4 mb-4">
-              <div className="bg-white rounded-lg p-4 text-center border border-green-200 flex flex-col items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-16 h-16 mb-2">
-                  <line x1="10" y1="50" x2="90" y2="50" stroke="#94a3b8" strokeWidth="2" />
-                  <polyline points="86,46 90,50 86,54" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <line x1="50" y1="10" x2="50" y2="90" stroke="#94a3b8" strokeWidth="2" />
-                  <polyline points="46,14 50,10 54,14" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 20 20 Q 50 100 80 20" fill="none" stroke="#22c55e" strokeWidth="4" strokeLinecap="round" />
-                </svg>
-                <p className="font-bold text-green-700"><Latex math="a > 0" /></p>
-                <p className="text-sm text-slate-600">開口<span className="text-green-600 font-bold">向上</span>（+ve）</p>
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="rounded-lg border border-green-200 bg-white p-4">
+                <p className="mb-3 font-bold text-green-700"><Latex math="a" />：開口方向</p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="flex flex-col items-center rounded-lg border border-green-200 p-4 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="mb-2 h-16 w-16">
+                      <line x1="10" y1="50" x2="90" y2="50" stroke="#94a3b8" strokeWidth="2" />
+                      <polyline points="86,46 90,50 86,54" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <line x1="50" y1="10" x2="50" y2="90" stroke="#94a3b8" strokeWidth="2" />
+                      <polyline points="46,14 50,10 54,14" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M 20 20 Q 50 100 80 20" fill="none" stroke="#22c55e" strokeWidth="4" strokeLinecap="round" />
+                    </svg>
+                    <p className="font-bold text-green-700"><Latex math="a > 0" /></p>
+                    <p className="text-sm text-slate-600">開口<span className="font-bold text-green-600">向上</span>（+ve）</p>
+                  </div>
+                  <div className="flex flex-col items-center rounded-lg border border-red-200 p-4 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="mb-2 h-16 w-16">
+                      <line x1="10" y1="50" x2="90" y2="50" stroke="#94a3b8" strokeWidth="2" />
+                      <polyline points="86,46 90,50 86,54" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <line x1="50" y1="10" x2="50" y2="90" stroke="#94a3b8" strokeWidth="2" />
+                      <polyline points="46,14 50,10 54,14" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M 20 80 Q 50 0 80 80" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
+                    </svg>
+                    <p className="font-bold text-red-700"><Latex math="a < 0" /></p>
+                    <p className="text-sm text-slate-600">開口<span className="font-bold text-red-600">向下</span>（-ve）</p>
+                  </div>
+                </div>
               </div>
-              <div className="bg-white rounded-lg p-4 text-center border border-red-200 flex flex-col items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="w-16 h-16 mb-2">
-                  <line x1="10" y1="50" x2="90" y2="50" stroke="#94a3b8" strokeWidth="2" />
-                  <polyline points="86,46 90,50 86,54" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <line x1="50" y1="10" x2="50" y2="90" stroke="#94a3b8" strokeWidth="2" />
-                  <polyline points="46,14 50,10 54,14" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M 20 80 Q 50 0 80 80" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" />
-                </svg>
-                <p className="font-bold text-red-700"><Latex math="a < 0" /></p>
-                <p className="text-sm text-slate-600">開口<span className="text-red-600 font-bold">向下</span>（-ve）</p>
+              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+                <h4 className="mb-3 font-bold text-blue-700"><Latex math="c" />：<Latex math="y" /> 截距</h4>
+                <p className="mb-2 text-sm text-slate-600">（圖像與 <Latex math="y" /> 軸相交的位置）</p>
+                <div className="space-y-2 text-sm">
+                  <p>在 <Latex math="x" /> 軸之<span className="font-bold text-red-600">下</span> → <Latex math="c < 0" /></p>
+                  <p>在 <Latex math="x" /> 軸之<span className="font-bold text-green-600">上</span> → <Latex math="c > 0" /></p>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-3"><Latex math="c" />：<Latex math="y" /> 截距</h3>
-            <p className="text-sm text-slate-600 mb-2">（方程掂 y 軸的位置）</p>
-            <div className="space-y-2 text-sm">
-              <p>在 x 軸之<span className="text-red-600 font-bold">下</span> → <Latex math="c < 0" /></p>
-              <p>在 x 軸之<span className="text-green-600 font-bold">上</span> → <Latex math="c > 0" /></p>
+            <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+              <p className="mb-3 font-bold text-amber-800"><Latex math="b" />：利用對稱軸判斷正負</p>
+              <p className="mb-3 text-sm leading-relaxed text-slate-700">
+                對稱軸為 <Latex math="x=-\frac{b}{2a}" />。先看 <Latex math="a" /> 的正負，再看對稱軸在 <Latex math="y" /> 軸哪一側：
+              </p>
+              <div className="grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
+                <p className="rounded-md bg-white p-2"><Latex math="a>0" />：對稱軸在右方 → <Latex math="b<0" />；在左方 → <Latex math="b>0" />。</p>
+                <p className="rounded-md bg-white p-2"><Latex math="a<0" />：對稱軸在右方 → <Latex math="b>0" />；在左方 → <Latex math="b<0" />。</p>
+              </div>
+            </div>
+            <div className="rounded-lg border border-violet-200 bg-violet-50 p-4">
+              <p className="mb-3 font-bold text-violet-700">例：從圖像判斷 <Latex math="a" />、<Latex math="b" />、<Latex math="c" /> 的正負</p>
+              <p className="mb-3 text-sm text-slate-700">
+                二次函數 <Latex math="y=ax^2+bx+c" /> 的圖像如下，判斷 <Latex math="a" />、<Latex math="b" />、<Latex math="c" /> 的正負。
+              </p>
+              <div className="grid items-center gap-4 rounded-lg border border-violet-100 bg-white p-3 sm:grid-cols-[minmax(220px,0.7fr)_minmax(0,1.3fr)]">
+                <svg viewBox="0 0 250 180" className="mx-auto w-full max-w-[280px]" role="img" aria-label="開口向上、對稱軸在 y 軸右方、y 截距在 x 軸上方的二次函數圖像">
+                  <line x1="20" y1="105" x2="230" y2="105" stroke="#64748b" strokeWidth="1.5" />
+                  <polyline points="225,101 230,105 225,109" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  <line x1="55" y1="165" x2="55" y2="18" stroke="#64748b" strokeWidth="1.5" />
+                  <polyline points="51,23 55,18 59,23" fill="none" stroke="#64748b" strokeWidth="1.5" />
+                  <line x1="132" y1="40" x2="132" y2="160" stroke="#a78bfa" strokeWidth="1.5" strokeDasharray="5 4" />
+                  <path d="M 30 20 Q 132 270 234 20" fill="none" stroke="#7c3aed" strokeWidth="3" strokeLinecap="round" />
+                  <circle cx="55" cy="74" r="3.5" fill="#2563eb" />
+                  <text x="235" y="110" fontSize="13" fill="#475569">x</text>
+                  <text x="60" y="20" fontSize="13" fill="#475569">y</text>
+                  <text x="43" y="101" fontSize="12" fill="#475569">O</text>
+                </svg>
+                <div className="space-y-3 text-sm text-slate-700">
+                  <div>
+                    <p className="font-bold text-violet-800">判斷 <Latex math="a" /></p>
+                    <p>圖像開口向上，所以 <Latex math="a>0" />。</p>
+                  </div>
+                  <div>
+                    <p className="font-bold text-violet-800">判斷 <Latex math="b" /></p>
+                    <p>對稱軸在 <Latex math="y" /> 軸右方，所以 <Latex math="-\frac{b}{2a}>0" />。由於 <Latex math="a>0" />，可得 <Latex math="b<0" />。</p>
+                  </div>
+                  <div>
+                    <p className="font-bold text-violet-800">判斷 <Latex math="c" /></p>
+                    <p><Latex math="c" /> 是圖像與 <Latex math="y" /> 軸交點的 <Latex math="y" /> 坐標。交點在 <Latex math="x" /> 軸上方，所以 <Latex math="c>0" />。</p>
+                  </div>
+                  <p className="rounded-md bg-green-50 p-2 font-bold text-green-800">因此 <Latex math="a>0,\ b<0,\ c>0" />。</p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1571,7 +1631,7 @@ export const FunctionNotes = ({ activeSub }) => {
           </div>
 
           <div className="rounded-lg border border-violet-200 bg-white p-4">
-            <h3 className="mb-2 font-bold text-violet-800">例一：先整理成頂點式，再找出三項</h3>
+            <h3 className="mb-2 font-bold text-violet-800">例一：先整理成頂點式，再找出 h, k</h3>
             <Latex math="\begin{aligned} y &= \textcolor{#dc2626}{3}-4(x-\textcolor{#2563eb}{1})^2 \\ &= -4(x-\textcolor{#2563eb}{1})^2+\textcolor{#dc2626}{3} \end{aligned}" block left />
             <ol className="list-decimal space-y-2 pl-5 text-sm text-slate-700">
               <li><span className="font-bold">極小/極大值：</span><Latex math="a<0" />，所以有極大值；極大值是 <Latex math="\textcolor{#dc2626}{3}" />。</li>
@@ -1593,17 +1653,14 @@ export const FunctionNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="coordinates" title="提供坐標" num={5} color="blue" activeSub={activeSub} sectionRef={s5}>
+      <CollapsibleSection id="coordinates" title="通過一點測試" num={5} color="blue" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
-            <h3 className="font-bold text-blue-800 mb-3">📝 核心概念</h3>
-            <div className="space-y-2 text-sm text-slate-700">
-              <p>提供坐標 ⇒ 代 <Latex math="(x, y)" /> 進方程找未知數</p>
-              <p>⇒ check 哪一條方程對應相交坐標</p>
-            </div>
-          </div>
           <div className="bg-white rounded-lg p-4 border border-blue-200">
-            <p className="text-sm text-green-700 mb-2">例：坐標 <Latex math="(4, 0)" /> → <span className="text-red-500">代 <Latex math="x=4,\ y=0" /></span></p>
+            <p className="text-sm text-green-700 mb-2">例：檢查 <Latex math="y=x^2-4x" /> 的圖像是否通過點 <Latex math="(1, -3)" /> → <span className="text-red-500">代 <Latex math="x=1,\ y=-3" /></span></p>
+            <div className="rounded-lg bg-blue-50 p-3 text-sm text-slate-700">
+              <p><Latex math="\text{左方}=y=-3" />，<Latex math="\text{右方}=x^2-4x=1^2-4(1)=-3" /></p>
+              <p className="mt-1 font-bold text-green-700">左方 = 右方，因此 <Latex math="(1, -3)" /> 在二次函數圖像上 ✓</p>
+            </div>
             <div className="grid grid-cols-2 gap-4 mt-3 text-sm">
               <div className="bg-green-50 p-3 rounded-lg text-center">
                 <p className="font-bold text-green-700 mb-1">穿過 ✓</p>
