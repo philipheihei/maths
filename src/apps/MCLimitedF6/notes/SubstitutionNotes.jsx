@@ -22,66 +22,51 @@ const SubstitutionNotes = ({ onBack }) => {
         <p className="text-indigo-300 text-sm mt-1">DSE 數學 · 應試技巧筆記</p>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-8 space-y-10">
-        {/* 方法分類 */}
+      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+        {/* 先辨認題目特徵，再選代入方式 */}
         <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="text-xl font-bold mb-4 pl-3 border-l-4 border-indigo-500">💡 先看題目，再選代入方法</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
-            代入法不是每題都用同一個做法。先看題目在問甚麼，再照以下方法做。代入前先檢查數值是否符合題目限制，例如分母不可等於 0。
-          </p>
-          <div className="space-y-3 text-sm text-gray-700">
-            <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
-              <div className="font-bold text-indigo-800 mb-1">方法① 代數值，比較結果（題型一至四）</div>
-              <div>題目問化簡、展開或計算代數式，選項也是代數式：選一組符合限制、容易計算的數值，代入題目原式並計出結果；再把同一組數值代入每個選項。結果不同的選項可以剔除。若有多個選項結果相同，換另一組數值再比較。只試一組數值相同，不能證明兩個代數式必定相同。</div>
-            </div>
-            <div className="bg-purple-50 rounded-xl p-4 border border-purple-100">
-              <div className="font-bold text-purple-800 mb-1">方法② 代選項，檢查條件（題型五及七）</div>
-              <div>題目給出方程或條件，選項提供候選解或代數式：把選項所給的值或式子代回原題，檢查等式或條件是否成立；不成立的選項剔除。不要任意替題目中的所有字母選值，令原有條件不成立。</div>
-            </div>
-            <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
-              <div className="font-bold text-emerald-800 mb-1">方法③ 試數值，比較解的範圍（題型六）</div>
-              <div>不等式選項表示不同的解範圍：選一些測試值，代入原不等式，看看哪些值符合；再檢查各選項所表示的範圍是否包括這些值。要測試不同分界區間；分界點要另外檢查是否包括在解內。</div>
-            </div>
-          </div>
-          <div className="mt-4 rounded-lg bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">
-            <strong>記住：</strong>代入數值可以幫你檢查或剔除選項；一個數值符合，不代表已證明答案一定正確。
-          </div>
-        </section>
+          <h2 className="text-xl font-bold mb-2 pl-3 border-l-4 border-indigo-500">🔍 睇題目，揀方法</h2>
+          <p className="text-gray-600 mb-5">先睇題目長甚麼樣，再跟住做：</p>
 
-        {/* 判斷能否使用 */}
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="text-xl font-bold mb-4 pl-3 border-l-4 border-indigo-500">🔍 辨認題型，選擇代入方法</h2>
-          <p className="text-gray-600 mb-4 text-sm">先看題目和選項的形式，再選擇相應做法：</p>
-          <div className="space-y-3">
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-300">
-              <span className="text-xl">✅</span>
-              <div>
-                <div className="font-bold">方法①：代數值，比較結果</div>
-                  <div className="text-sm mt-1 text-emerald-900">題目問化簡、展開或計算代數式，選項提供不同代數式。代同一組合法數值，比較題目和選項的結果。</div>
+          <div className="space-y-4">
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="rounded-full bg-emerald-700 px-3 py-1 text-sm font-bold text-white">方法①</span>
+                <h3 className="text-lg font-bold text-emerald-900">原式 = ? → 自己選數字代入</h3>
               </div>
+              <p className="rounded-lg bg-white p-3 text-gray-800">例如：<InlineMath math="x+2x=?" />，問化簡或展開成甚麼。</p>
+              <p className="mt-3 font-bold text-emerald-900">自己選數字 → 代入原式和每個選項 → 比較答案</p>
+              <p className="mt-2 text-sm text-emerald-800">題型一：分式化簡　｜　題型二：指數運算化簡<br />題型三：展開代數式　｜　題型四：指數律化簡</p>
             </div>
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-amber-50 text-amber-800 border border-amber-300">
-              <span className="text-xl">⚠️</span>
-              <div>
-                <div className="font-bold">方法③：不等式要試不同範圍</div>
-                <div className="text-sm mt-1 text-amber-900">用不同區間的測試值檢查解範圍；分界點要另外代入，檢查是否包括在答案內。</div>
+
+            <div className="rounded-xl border border-purple-200 bg-purple-50 p-4 sm:p-5">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="rounded-full bg-purple-700 px-3 py-1 text-sm font-bold text-white">方法②</span>
+                <h3 className="text-lg font-bold text-purple-900">已經有等式 → 代選項回原題</h3>
               </div>
+              <p className="rounded-lg bg-white p-3 text-gray-800">例如：<InlineMath math="x+2=5" />，問 <InlineMath math="x" /> 是多少。</p>
+              <p className="mt-3 font-bold text-purple-900">代選項回原題 → 檢查等式是否成立</p>
+              <p className="mt-2 text-sm text-purple-800">題型五：解方程　｜　題型六：由一個字母求另一個字母</p>
+              <p className="mt-2 text-sm text-purple-900">題目有兩個字母？不要把兩個字母都亂代，先看清楚題目條件。</p>
             </div>
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-purple-50 text-purple-800 border border-purple-300">
-              <span className="text-xl">②</span>
-              <div>
-                <div className="font-bold">方法②：代選項，檢查原題條件</div>
-                <div className="text-sm mt-1 text-purple-900">例如 <InlineMath math="(3c+1)(d-4)=2d(5c-1)" /> 要求由 <InlineMath math="d" /> 求 <InlineMath math="c" />：把選項提供的 <InlineMath math="c" /> 表達式代回原等式檢查。不可任意同時指定 <InlineMath math="c" /> 和 <InlineMath math="d" />，否則未必符合題目條件。</div>
+
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className="rounded-full bg-amber-700 px-3 py-1 text-sm font-bold text-white">方法③</span>
+                <h3 className="text-lg font-bold text-amber-900">答案是範圍 → 試不同範圍的數字</h3>
               </div>
+              <p className="rounded-lg bg-white p-3 text-gray-800">例如：選項是 <InlineMath math="x<2" />、<InlineMath math="x\geq2" />。</p>
+              <p className="mt-3 font-bold text-amber-900">每個範圍試數字 → 分界的數字也要試</p>
+              <p className="mt-2 text-sm text-amber-800">題型七：不等式</p>
             </div>
           </div>
 
-          <div className="mt-5 bg-yellow-50 border border-yellow-200 rounded-xl p-4">
-            <div className="font-bold text-yellow-800 mb-2">🎯 選值技巧</div>
-            <ul className="text-sm text-yellow-900 space-y-1.5 list-disc list-inside">
-              <li>方法①先試容易計算的數值，例如 <InlineMath math="2" /> 或 <InlineMath math="3" />；先檢查分母是否為 0，或有沒有其他限制。若不符合限制，換一個值。</li>
-              <li>有兩個未知數時，兩個都要代值，例如 <InlineMath math="a=2, b=3" />；代入題目和每個選項時要用同一組數值。</li>
-              <li>若多個選項代出相同結果，不能只憑這次結果作答；換另一組合法數值再比較。</li>
+          <div className="mt-5 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm leading-relaxed text-gray-700">
+            <div className="font-bold text-gray-900 mb-1">📌 代入前後要留意</div>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>選的數字要符合題目條件；分母不能是 0。</li>
+              <li>幾個選項的答案一樣？換另一組數字再試。</li>
+              <li>試數字可用來剔除選項；結果相同不等於證明答案一定正確。</li>
             </ul>
           </div>
         </section>
@@ -244,11 +229,41 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
           </div>
 
+          <div className="mb-2">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="bg-purple-100 text-purple-800 border border-purple-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">方法②</span>
+              <span className="font-bold text-lg text-gray-800">題型六：參數式求變數（由 <InlineMath math="d" /> 求 <InlineMath math="c" />）</span>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 [&>div]:pl-0 [&_.katex-display>.katex]:!ml-0 [&_.katex-display>.katex]:!text-left">
+              <LeftBlockMath math="\text{若 }(3c+1)(d-4)=2d(5c-1)\text{，則 }c=" />
+              <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
+                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="\dfrac{3d-4}{7d+12}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="\dfrac{3d+4}{7d-12}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="C" /><InlineMath math="\dfrac{7d-12}{3d+4}" /></div>
+                <div className="whitespace-nowrap"><ChoiceDot label="D" /><InlineMath math="\dfrac{7d+12}{3d-4}" /></div>
+              </div>
+            </div>
+            <div className="border-l-4 border-purple-400 bg-purple-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700 leading-relaxed">
+            <div className="font-bold text-purple-800">📝 做法：把選項代回題目檢查</div>
+            <div>不要任意同時指定 <InlineMath math="c" /> 和 <InlineMath math="d" />。這題要找出 <InlineMath math="c" /> 的式；把選項代回題目，檢查等式是否成立。</div>
+            <div className="pl-2 space-y-1.5">
+              <div>先選一個簡單的 <InlineMath math="d" /> 值，例如 <InlineMath math="d=1" />，代入題目後得到：</div>
+              <div className="pl-4"><InlineMath math="(3c+1)(1-4)=2(1)(5c-1)" />，即 <InlineMath math="-9c-3=10c-2" />，所以 <InlineMath math="c=-\dfrac{1}{19}" />。</div>
+              <div>再把 <InlineMath math="d=1" /> 代入各選項：A 得 <InlineMath math="-\dfrac{1}{19}" />；B、C、D 得到不同數值。只有 A 符合這次檢查。</div>
+              <div>如有多個選項仍符合，或要確認唯一答案，換另一個符合限制的 <InlineMath math="d" /> 再檢查。代一個值吻合只可作檢查，不能單獨證明兩個式恆等。</div>
+            </div>
+            <div className="bg-white border border-purple-200 rounded-lg p-2 mt-2">
+              <strong>注意：</strong>若要正式求出答案，可整理題目：<InlineMath math="(3c+1)(d-4)=2d(5c-1)" />，得 <InlineMath math="c=\dfrac{3d-4}{7d+12}" />（<InlineMath math="d\neq-\dfrac{12}{7}" />），即選項 A。
+            </div>
+            <div className="text-purple-700 font-bold mt-2">這題屬於方法②：代選項回原題，檢查條件是否成立。</div>
+            </div>
+          </div>
+
           {/* 題型6 */}
           <div className="mb-2">
             <div className="flex items-center gap-2 mb-3">
               <span className="bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">方法③</span>
-              <span className="font-bold text-lg text-gray-800">題型六：不等式（取「或」）</span>
+              <span className="font-bold text-lg text-gray-800">題型七：不等式（取「或」）</span>
             </div>
             <div className="bg-gray-50 rounded-xl p-4 mb-3 text-lg border border-gray-200 overflow-x-auto">
               <InlineMath math="x - 1 > \dfrac{2x-9}{3}" /> 或 <InlineMath math="3x + 12 \geq 0" /> 的解為？
@@ -259,8 +274,8 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
             <div className="border-l-4 border-emerald-400 bg-emerald-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700 leading-relaxed">
               <div className="font-bold text-emerald-800">📝 做法：試不同範圍的數值，檢查哪些值符合不等式</div>
-              <div>先找出不等式左右相等的分界值，再把數線分成不同區間。每個區間選一個數值，代入原不等式檢查是否成立。</div>
-              <div>本題的分界值是 <InlineMath math="x=-6" /> 和 <InlineMath math="x=-4" />；先試各區間內的數值，再把分界值代回原不等式，檢查等號是否成立。</div>
+              <div>先找出不等式左右相等的分界值，再把數線分成不同範圍。每個範圍選一個數值，代入原不等式檢查是否成立。</div>
+              <div>本題的分界值是 <InlineMath math="x=-6" /> 和 <InlineMath math="x=-4" />；先試各範圍內的數值，再把分界值代回原不等式，檢查是否成立。</div>
               <div className="pl-2 space-y-1.5">
                 <div><span className="bg-emerald-200 text-emerald-800 rounded px-1.5 font-sans text-xs shadow-sm">Step 1</span> 試 <InlineMath math="x=-5" />（介乎 -6 與 -4 之間）</div>
                 <div className="pl-4">第一條：<InlineMath math="-5-1 > \dfrac{2(-5)-9}{3}" />，即 <InlineMath math="-6 > -\dfrac{19}{3}" /> ✅</div>
@@ -277,58 +292,6 @@ const SubstitutionNotes = ({ onBack }) => {
               </div>
               <div className="text-emerald-700 font-bold mt-2">答案：D（<InlineMath math="x > -6" />）</div>
             </div>
-          </div>
-
-          {/* 題型7 */}
-          <div className="mb-2">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="bg-purple-100 text-purple-800 border border-purple-300 px-2 py-0.5 rounded-full text-xs font-bold shadow-sm">方法②</span>
-              <span className="font-bold text-lg text-gray-800">題型七：參數式求變數（由 <InlineMath math="d" /> 求 <InlineMath math="c" />）</span>
-            </div>
-            <div className="bg-gray-50 rounded-xl p-4 mb-3 text-left text-lg border border-gray-200 [&>div]:pl-0 [&_.katex-display>.katex]:!ml-0 [&_.katex-display>.katex]:!text-left">
-              <LeftBlockMath math="\text{若 }(3c+1)(d-4)=2d(5c-1)\text{，則 }c=" />
-              <div className="grid grid-cols-2 gap-3 mt-3 text-base text-left w-full">
-                <div className="whitespace-nowrap"><ChoiceDot label="A" /><InlineMath math="\dfrac{3d-4}{7d+12}" /></div>
-                <div className="whitespace-nowrap"><ChoiceDot label="B" /><InlineMath math="\dfrac{3d+4}{7d-12}" /></div>
-                <div className="whitespace-nowrap"><ChoiceDot label="C" /><InlineMath math="\dfrac{7d-12}{3d+4}" /></div>
-                <div className="whitespace-nowrap"><ChoiceDot label="D" /><InlineMath math="\dfrac{7d+12}{3d-4}" /></div>
-              </div>
-            </div>
-            <div className="border-l-4 border-purple-400 bg-purple-50 rounded-r-xl p-4 text-sm space-y-2 text-gray-700 leading-relaxed">
-            <div className="font-bold text-purple-800">📝 做法：把選項代回原等式檢查</div>
-            <div>不要任意同時指定 <InlineMath math="c" /> 和 <InlineMath math="d" />。這題要找出 <InlineMath math="c" /> 的式子；把選項代回原等式，檢查等式是否成立。</div>
-            <div className="pl-2 space-y-1.5">
-              <div>先選一個簡單的 <InlineMath math="d" /> 值，例如 <InlineMath math="d=1" />，代入原等式後得到：</div>
-              <div className="pl-4"><InlineMath math="(3c+1)(1-4)=2(1)(5c-1)" />，即 <InlineMath math="-9c-3=10c-2" />，所以 <InlineMath math="c=-\dfrac{1}{19}" />。</div>
-              <div>再把 <InlineMath math="d=1" /> 代入各選項：A 得 <InlineMath math="-\dfrac{1}{19}" />；B、C、D 得到不同數值。只有 A 符合這次檢查。</div>
-              <div>如有多個選項仍符合，或要確認唯一答案，換另一個符合限制的 <InlineMath math="d" /> 再檢查。代一個值吻合只可作檢查，不能單獨證明兩個式子恆等。</div>
-            </div>
-            <div className="bg-white border border-purple-200 rounded-lg p-2 mt-2">
-              <strong>注意：</strong>若要正式求出答案，可整理原等式：<InlineMath math="(3c+1)(d-4)=2d(5c-1)" />，得 <InlineMath math="c=\dfrac{3d-4}{7d+12}" />（<InlineMath math="d\neq-\dfrac{12}{7}" />），即選項 A。
-            </div>
-            <div className="text-purple-700 font-bold mt-2">這題屬於方法②：代選項回原題，檢查條件是否成立。</div>
-            </div>
-          </div>
-        </section>
-
-        {/* 總結表 */}
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="text-xl font-bold mb-4 pl-3 border-l-4 border-indigo-500">📊 快速判斷總結表</h2>
-          <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr className="bg-indigo-50 text-indigo-900 border-b border-indigo-100">
-                  <th className="p-3.5 text-left">題目特徵</th>
-                  <th className="p-3.5 text-center">方法</th>
-                  <th className="p-3.5 text-left">備註</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                <tr className="hover:bg-gray-50"><td className="p-3">化簡、展開或計算代數式（題型一至四）</td><td className="p-3 text-center text-indigo-600 font-bold whitespace-nowrap">方法①</td><td className="p-3 text-gray-600">同一組合法數值代入題目和所有選項，比較結果；未能分辨就換值再試</td></tr>
-                <tr className="hover:bg-gray-50"><td className="p-3">方程／條件，選項提供候選答案（題型五及七）</td><td className="p-3 text-center text-purple-600 font-bold whitespace-nowrap">方法②</td><td className="p-3 text-gray-600">把選項代回原題，檢查等式或條件是否成立</td></tr>
-                <tr className="hover:bg-gray-50"><td className="p-3">不等式解範圍（題型六）</td><td className="p-3 text-center text-amber-600 font-bold whitespace-nowrap">方法③</td><td className="p-3 text-gray-600">不同區間試數值；分界點另行檢查是否包括在解內</td></tr>
-              </tbody>
-            </table>
           </div>
         </section>
 

@@ -56,6 +56,7 @@ const calculateArcPath = (v, p1, p2, radius = 35) => {
 
 ### 3. Traditional Chinese Language Requirements
 - **All UI text must be in Traditional Chinese (繁體中文)**
+- 教學筆記用語一律使用「式」，不要使用「式子」；將「原等式」稱為「題目」（例如「代回題目檢查」）。
 - Comments can be in Chinese or English
 - Variable names in English (`x`, `y`, `level`, `score`)
 - Example UI patterns from Home.jsx:
