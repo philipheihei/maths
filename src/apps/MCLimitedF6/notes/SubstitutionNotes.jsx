@@ -32,28 +32,29 @@ const SubstitutionNotes = ({ onBack }) => {
             <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5">
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 <span className="rounded-full bg-emerald-700 px-3 py-1 text-sm font-bold text-white">方法①</span>
-                <h3 className="text-lg font-bold text-emerald-900">原式 = ? → 自己選數字代入</h3>
+                <h3 className="text-lg font-bold text-emerald-900">問「化簡成甚麼？」→ 可自己選數字試</h3>
               </div>
               <p className="rounded-lg bg-white p-3 text-gray-800">例如：<InlineMath math="x+2x=?" />，問化簡或展開成甚麼。</p>
-              <p className="mt-3 font-bold text-emerald-900">自己選數字 → 代入原式和每個選項 → 比較答案</p>
+              <p className="mt-3 font-bold text-emerald-900">自己選數字 → 代入題目和每個選項 → 比較答案</p>
               <p className="mt-2 text-sm text-emerald-800">題型一：分式化簡　｜　題型二：指數運算化簡<br />題型三：展開代數式　｜　題型四：指數律化簡</p>
+              <p className="mt-2 text-sm font-semibold text-emerald-950">不同答案可以刪走；答案相同就換數字再試。</p>
             </div>
 
             <div className="rounded-xl border border-purple-200 bg-purple-50 p-4 sm:p-5">
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 <span className="rounded-full bg-purple-700 px-3 py-1 text-sm font-bold text-white">方法②</span>
-                <h3 className="text-lg font-bold text-purple-900">已經有等式 → 代選項回原題</h3>
+                <h3 className="text-lg font-bold text-purple-900">要找答案 → 不要亂選數字</h3>
               </div>
               <p className="rounded-lg bg-white p-3 text-gray-800">例如：<InlineMath math="x+2=5" />，問 <InlineMath math="x" /> 是多少。</p>
               <p className="mt-3 font-bold text-purple-900">代選項回原題 → 檢查等式是否成立</p>
               <p className="mt-2 text-sm text-purple-800">題型五：解方程　｜　題型六：由一個字母求另一個字母</p>
-              <p className="mt-2 text-sm text-purple-900">題目有兩個字母？不要把兩個字母都亂代，先看清楚題目條件。</p>
+              <p className="mt-2 text-sm text-purple-900">有兩個字母？不要各自亂選；先代一個，再按題目條件求另一個。</p>
             </div>
 
             <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 <span className="rounded-full bg-amber-700 px-3 py-1 text-sm font-bold text-white">方法③</span>
-                <h3 className="text-lg font-bold text-amber-900">答案是範圍 → 試不同範圍的數字</h3>
+                <h3 className="text-lg font-bold text-amber-900">答案是範圍 → 不能只試一個數字</h3>
               </div>
               <p className="rounded-lg bg-white p-3 text-gray-800">例如：選項是 <InlineMath math="x<2" />、<InlineMath math="x\geq2" />。</p>
               <p className="mt-3 font-bold text-amber-900">每個範圍試數字 → 分界的數字也要試</p>
@@ -61,13 +62,15 @@ const SubstitutionNotes = ({ onBack }) => {
             </div>
           </div>
 
-          <div className="mt-5 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm leading-relaxed text-gray-700">
-            <div className="font-bold text-gray-900 mb-1">📌 代入前後要留意</div>
+          <div className="mt-5 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm leading-relaxed text-rose-950">
+            <div className="font-bold text-rose-900 mb-2">🚫 以下題目不要靠「自己亂選數字」</div>
             <ul className="list-disc space-y-1 pl-5">
-              <li>選的數字要符合題目條件；分母不能是 0。</li>
-              <li>幾個選項的答案一樣？換另一組數字再試。</li>
-              <li>試數字可用來剔除選項；結果相同不等於證明答案一定正確。</li>
+              <li><strong>問方程的答案：</strong>不要任選未知數；把選項代回題目檢查。</li>
+              <li><strong>字母之間有關係：</strong>不能每個字母各自亂選，代入後要符合題目條件。</li>
+              <li><strong>問不等式的答案範圍：</strong>一個數字不能代表整個範圍；不同範圍和分界都要檢查。</li>
+              <li><strong>要證明對所有數字都成立：</strong>試數字不能代替證明；選擇題中只用來刪走錯誤答案。</li>
             </ul>
+            <p className="mt-3 rounded-lg bg-white p-3"><strong>記住：</strong>「自己選數字」和「把選項代回題目」是兩種不同做法。</p>
           </div>
         </section>
 
