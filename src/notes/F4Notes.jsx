@@ -1411,7 +1411,7 @@ export const RemainderFactorNotes = ({ activeSub }) => {
                 <div className="rounded bg-orange-100 p-2 text-orange-900"><strong>餘式：</strong><Latex math="5" />，除完後剩下的式，寫在最下方。</div>
               </div>
             </div>
-            <p className="mt-3 rounded-lg bg-white p-3 text-slate-700">核對：<Latex math="6x^2+7x+7=(2x+1)(3x+2)+5" />。所以 <strong>被除式 = 除式 × 商式 + 餘式</strong>。</p>
+            <p className="mt-3 rounded-lg bg-white p-3 text-slate-700">核對：<Latex math="\colorbox{#dbeafe}{$6x^2+7x+7$}=\colorbox{#ccfbf1}{$(2x+1)$}\colorbox{#f3e8ff}{$(3x+2)$}+\colorbox{#ffedd5}{$5$}" />。所以 <strong>被除式 = 除式 × 商式 + 餘式</strong>。</p>
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-green-200">
@@ -1445,30 +1445,54 @@ export const RemainderFactorNotes = ({ activeSub }) => {
           </div>
 
           <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
-            <h3 className="font-bold text-amber-800 mb-2">容易出錯的地方</h3>
-            <ul className="list-disc pl-5 space-y-1 text-slate-700">
-              <li>每次相除只用兩個首項；乘回時則要乘除式的每一項。</li>
-              <li>相減時把整個下方的式放在括號內，再逐項變號，例如 <Latex math="-(6x^2+3x)=-6x^2-3x" />。</li>
-              <li>如被除式缺少某個次方，先以係數 0 補上，方便同次項對齊。</li>
-              <li>當餘式的次數小於除式的次數，長除法便完成。</li>
-            </ul>
-          </div>
-
-          <details className="bg-blue-50 rounded-lg border border-blue-200 p-4">
-            <summary className="font-bold text-blue-800 cursor-pointer">試一試：計算 <Latex math="(2x^2+7x+3)\div(2x+1)" />（按此查看答案）</summary>
-            <div className="mt-3 pt-3 border-t border-blue-200">
-              <p className="text-slate-700 mb-2">首項相除得 <Latex math="x" />，相減後剩下 <Latex math="6x+3" />；再相除得 <Latex math="3" />，乘回並相減後餘式是 0。</p>
-              <p className="text-blue-800 font-bold">商式：<Latex math="x+3" />；餘式：<Latex math="0" /></p>
+            <h3 className="font-bold text-amber-800 mb-2">缺少某次方時，記得補 0</h3>
+            <p className="text-slate-700">如被除式缺少某個次方，先以係數 0 補上，方便同次項對齊。例：<Latex math="2x^3+5x+4" /> 沒有 <Latex math="x^2" /> 項，排位時補寫 <Latex math="0x^2" />。</p>
+            <div className="relative mx-auto mt-3 w-full max-w-[520px]" style={{ aspectRatio: '520 / 112' }} role="group" aria-label="多項式長除式位置示意：括號左邊是除式，括號內是被除式，橙框標示補上的零次項">
+              <svg className="absolute inset-0 h-full w-full" viewBox="0 0 520 112" aria-hidden="true">
+                <path d="M 500 42 H 158 Q 174 58 158 75" fill="none" stroke="#334155" strokeWidth="1.5" />
+                <rect x="10" y="52" width="139" height="31" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+                <rect x="174" y="52" width="328" height="31" rx="3" fill="#dbeafe" stroke="#2563eb" />
+                <rect x="274" y="54" width="57" height="27" rx="2" fill="#ffedd5" stroke="#ea580c" />
+              </svg>
+              <div className="absolute left-[15.2%] top-[60%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[clamp(10px,4vw,21px)] text-teal-900">
+                <Latex math="x^2-2x+3" />
+              </div>
+              <div className="absolute left-[45.2%] top-[60%] -translate-x-full -translate-y-1/2 whitespace-nowrap text-[clamp(10px,4vw,21px)] text-blue-900">
+                <Latex math="2x^3" />
+              </div>
+              <div className="absolute left-[50%] top-[60%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[clamp(10px,4vw,21px)] text-blue-900">
+                <Latex math="+" />
+              </div>
+              <div className="absolute left-[61.5%] top-[60%] -translate-x-full -translate-y-1/2 whitespace-nowrap text-[clamp(10px,4vw,21px)] text-blue-900">
+                <Latex math="0x^2" />
+              </div>
+              <div className="absolute left-[66.3%] top-[60%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[clamp(10px,4vw,21px)] text-blue-900">
+                <Latex math="+" />
+              </div>
+              <div className="absolute left-[77.9%] top-[60%] -translate-x-full -translate-y-1/2 whitespace-nowrap text-[clamp(10px,4vw,21px)] text-blue-900">
+                <Latex math="5x" />
+              </div>
+              <div className="absolute left-[82.7%] top-[60%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[clamp(10px,4vw,21px)] text-blue-900">
+                <Latex math="+" />
+              </div>
+              <div className="absolute left-[94.2%] top-[60%] -translate-x-full -translate-y-1/2 whitespace-nowrap text-[clamp(10px,4vw,21px)] text-blue-900">
+                <Latex math="4" />
+              </div>
             </div>
-          </details>
+            <div className="mt-2 flex flex-wrap justify-center gap-3 text-sm">
+              <span className="rounded border border-teal-700 bg-teal-100 px-2 py-1 text-teal-900">除式：<Latex math="x^2-2x+3" /></span>
+              <span className="rounded border border-blue-600 bg-blue-100 px-2 py-1 text-blue-900">被除式：<Latex math="2x^3+5x+4" /></span>
+              <span className="rounded border border-orange-600 bg-orange-100 px-2 py-1 text-orange-900">橙框：補上的 <Latex math="0x^2" /></span>
+            </div>
+          </div>
 
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
             <h3 className="font-bold text-green-800 mb-3">2. 除法算式</h3>
             <p className="text-slate-700 mb-3">長除法完成後，可以把結果寫成以下關係：</p>
             <div className="bg-white rounded-lg p-4 overflow-x-auto">
-              <Latex math="\begin{aligned} \text{被除式} &= \text{除式} \times \text{商式} + \text{餘式} \\ f(x) &= p(x) \cdot Q(x) + R(x) \end{aligned}" block />
+              <Latex math="\begin{aligned} \colorbox{#dbeafe}{$\text{被除式}$} &= \colorbox{#ccfbf1}{$\text{除式}$} \times \colorbox{#f3e8ff}{$\text{商式}$} + \colorbox{#ffedd5}{$\text{餘式}$} \\ \colorbox{#dbeafe}{$f(x)$} &= \colorbox{#ccfbf1}{$p(x)$} \cdot \colorbox{#f3e8ff}{$Q(x)$} + \colorbox{#ffedd5}{$R(x)$} \end{aligned}" block />
             </div>
-            <p className="text-slate-700 mt-3">其中餘式 <Latex math="R(x)" /> 的次數必須小於除式 <Latex math="p(x)" /> 的次數。以上例子可寫成 <Latex math="6x^2+7x+7=(2x+1)(3x+2)+5" />。</p>
+            <p className="text-slate-700 mt-3">其中餘式 <Latex math="R(x)" /> 的次數必須小於除式 <Latex math="p(x)" /> 的次數。以上例子可寫成 <Latex math="\colorbox{#dbeafe}{$6x^2+7x+7$}=\colorbox{#ccfbf1}{$(2x+1)$}\colorbox{#f3e8ff}{$(3x+2)$}+\colorbox{#ffedd5}{$5$}" />。</p>
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-green-200">
