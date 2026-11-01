@@ -1115,6 +1115,114 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
 export const RemainderFactorNotes = ({ activeSub }) => {
   const [showCalculator, setShowCalculator] = useState(false);
   const s1 = useRef(null), s2 = useRef(null), s3 = useRef(null), s4 = useRef(null), s5 = useRef(null), s6 = useRef(null);
+  const longDivisionSteps = [
+    {
+      instruction: <>把 <Latex math="6x^2" /> 除以 <Latex math="2x" />，得到商式第一項。</>,
+      note: { math: '6x^2\\div 2x=3x', color: 'blue' },
+    },
+    {
+      instruction: <>用 <Latex math="3x" /> 乘整個除式 <Latex math="2x+1" />，把乘積寫在下方。</>,
+      note: { math: '3x(2x+1)=6x^2+3x', color: 'green' },
+    },
+    {
+      instruction: <>把 <Latex math="6x^2+7x+7" /> 減去 <Latex math="6x^2+3x" />，同次項對齊後相減。</>,
+      note: { math: '(6x^2+7x+7)-(6x^2+3x)=4x+7', color: 'red' },
+    },
+    {
+      instruction: <>把新首項 <Latex math="4x" /> 除以 <Latex math="2x" />，得到商式下一項。</>,
+      note: { math: '4x\\div 2x=2', color: 'blue' },
+    },
+    {
+      instruction: <>用 <Latex math="2" /> 乘整個除式 <Latex math="2x+1" />，包括括號內兩項。</>,
+      note: { math: '2(2x+1)=4x+2', color: 'green' },
+    },
+    {
+      instruction: <>從 <Latex math="4x+7" /> 減去 <Latex math="4x+2" />，得到餘式。</>,
+      note: { math: '(4x+7)-(4x+2)=5\\ (餘式)', color: 'red' },
+    },
+  ];
+
+  const PolynomialLongDivisionStep = ({ stage }) => {
+    const columnX = [159, 239, 319];
+    const colors = {
+      blue: { fill: '#e4f5ff', stroke: '#299dcc' },
+      green: { fill: '#e3f7eb', stroke: '#18a66a' },
+      red: { fill: '#ffe7ec', stroke: '#d5677b' },
+      teal: { fill: '#ccfbf1', stroke: '#0f766e' },
+    };
+    const highlight = (x, y, width, color) => (
+      <rect
+        x={x}
+        y={y - 22}
+        width={width}
+        height="29"
+        rx="2"
+        fill={colors[color].fill}
+        stroke={colors[color].stroke}
+        strokeWidth="1"
+      />
+    );
+    const term = (column, y, coefficient, sign = '', power = 1, color = '') => {
+      const x = columnX[column];
+      const left = sign ? x - 43 : x - 15;
+      const right = sign ? x + 12 : power === 2 ? x + 21 : x + 12;
+      return (
+        <g key={`${column}-${y}-${coefficient}-${sign}`}>
+          {color && highlight(left, y, right - left, color)}
+          {sign && <text x={x - 35} y={y} textAnchor="middle">{sign}</text>}
+          {coefficient !== 1 && <text x={x - 2} y={y} textAnchor="end">{coefficient}</text>}
+          <text x={x} y={y} fontStyle="italic">x</text>
+          {power === 2 && <text x={x + 12} y={y - 9} fontSize="14">2</text>}
+        </g>
+      );
+    };
+    const constant = (y, value, sign = '', color = '') => (
+      <g key={`constant-${y}-${value}-${sign}`}>
+        {color && highlight(
+          sign ? columnX[2] - 43 : columnX[2] - String(value).length * 11.01 - 2,
+          y,
+          sign ? 45 : String(value).length * 11.01 + 4,
+          color
+        )}
+        {sign && <text x={columnX[2] - 35} y={y} textAnchor="middle">{sign}</text>}
+        <text x={columnX[2]} y={y} textAnchor="end">{value}</text>
+      </g>
+    );
+    const line = (y, start = 117) => (
+      <path d={`M ${start} ${y} H 330`} fill="none" stroke="#171717" strokeWidth="1.2" />
+    );
+    return (
+      <svg
+        className="mx-auto my-1 block w-full max-w-[390px]"
+        viewBox="0 0 370 238"
+        role="img"
+        aria-label={`多項式長除式，步驟 ${stage}`}
+      >
+        <title>{`長除法步驟 ${stage}`}</title>
+        <g fontFamily='"Times New Roman", serif' fontSize="22" fill="#171717">
+          <path d="M 330 46 H 100 Q 115 62 100 79" fill="none" stroke="#171717" strokeWidth="1.2" />
+          {highlight(23, 72, 59, 'teal')}
+          <text x="25" y="72">2<tspan fontStyle="italic">x</tspan></text>
+          <text x="51" y="72">+</text>
+          <text x="69" y="72">1</text>
+          {term(1, 35, 3, '', 1, stage === 1 ? 'blue' : stage === 2 ? 'green' : '')}
+          {stage >= 4 && constant(35, 2, '+', stage === 4 ? 'blue' : stage === 5 ? 'green' : '')}
+          {term(0, 72, 6, '', 2, stage === 1 ? 'blue' : '')}
+          {term(1, 72, 7, '+')}
+          {constant(72, 7, '+')}
+          {stage >= 1 && term(0, 105, 6, '', 2)}
+          {stage >= 2 && term(1, 105, 3, '+', 1, stage === 2 ? 'green' : '')}
+          {stage >= 2 && line(115)}
+          {stage >= 3 && term(1, 143, 4, '+', 1, stage === 3 ? 'red' : stage === 4 ? 'blue' : '')}
+          {stage >= 3 && constant(143, 7, '+', stage === 3 ? 'red' : '')}
+          {stage >= 4 && term(1, 176, 4, '+')}
+          {stage >= 5 && constant(176, 2, '+', stage === 5 ? 'green' : '')}
+          {stage === 6 && line(186, 200)}
+          {stage === 6 && constant(214, 5, '', 'red')}
+        </g>
+      </svg>
+    );
+  };
 
   if (showCalculator) {
     return <CubicFactorCalculatorNotes onBack={() => setShowCalculator(false)} />;
@@ -1272,15 +1380,95 @@ export const RemainderFactorNotes = ({ activeSub }) => {
         </div>
       </CollapsibleSection>
 
-      <CollapsibleSection id="division-expression" title="除法算式" num={4} color="green" activeSub={activeSub} sectionRef={s4}>
+      <CollapsibleSection id="division-expression" title="多項式的除法" num={4} color="green" activeSub={activeSub} sectionRef={s4}>
         <div className="space-y-4">
+          <div className="bg-indigo-50 rounded-lg p-4 border border-indigo-200">
+            <h3 className="font-bold text-indigo-900 mb-2">開始之前：先認清長除式的四個位置</h3>
+            <p className="text-slate-700 mb-3">先看這個多項式長除式。記住：「除式」是用來除的式；「被除式」是被除的式。</p>
+            <p className="mb-3 rounded-lg border border-amber-200 bg-amber-50 p-3 text-amber-900">
+              <strong>分辨小技巧：</strong>DSE 常見題目中，被除式通常是次數較高的式。本例中 <Latex math="6x^2+7x+7" /> 是二次式，<Latex math="2x+1" /> 是一次式，所以二次式是被除式。不過這只是幫助辨認的提示，最終仍要按題目的除法次序判斷。
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div className="rounded-lg bg-white p-3">
+                <svg className="mx-auto block w-full max-w-[390px]" viewBox="0 0 440 190" role="img" aria-label="多項式長除式位置示意：除式2x加1在左，被除式6x平方加7x加7在括號內，商式3x加2在上方，餘式5在下方">
+                  <title>多項式長除式的四個位置</title>
+                  <path d="M 405 55 H 143 Q 159 72 143 89" fill="none" stroke="#334155" strokeWidth="1.5" />
+                  <rect x="289" y="18" width="98" height="31" rx="3" fill="#f3e8ff" stroke="#9333ea" />
+                  <text x="338" y="41" textAnchor="middle" fontSize="22" fill="#581c87">3x + 2</text>
+                  <rect x="16" y="68" width="111" height="31" rx="3" fill="#ccfbf1" stroke="#0f766e" />
+                  <text x="71" y="91" textAnchor="middle" fontSize="21" fill="#115e59">2x + 1</text>
+                  <rect x="158" y="68" width="230" height="31" rx="3" fill="#dbeafe" stroke="#2563eb" />
+                  <text x="273" y="91" textAnchor="middle" fontSize="21" fill="#1e3a8a">6x² + 7x + 7</text>
+                  <path d="M 158 116 H 388" fill="none" stroke="#334155" strokeWidth="1.2" />
+                  <rect x="345" y="127" width="43" height="31" rx="3" fill="#ffedd5" stroke="#ea580c" />
+                  <text x="366" y="150" textAnchor="middle" fontSize="22" fill="#9a3412">5</text>
+                </svg>
+              </div>
+              <div className="grid grid-cols-1 gap-2 text-sm">
+                <div className="rounded bg-teal-100 p-2 text-teal-900"><strong>除式：</strong><Latex math="2x+1" />，用來除的式，在括號左邊。</div>
+                <div className="rounded bg-blue-100 p-2 text-blue-900"><strong>被除式：</strong><Latex math="6x^2+7x+7" />，被除的式，在括號裏面。</div>
+                <div className="rounded bg-purple-100 p-2 text-purple-900"><strong>商式：</strong><Latex math="3x+2" />，除出來的結果，寫在上方。</div>
+                <div className="rounded bg-orange-100 p-2 text-orange-900"><strong>餘式：</strong><Latex math="5" />，除完後剩下的式，寫在最下方。</div>
+              </div>
+            </div>
+            <p className="mt-3 rounded-lg bg-white p-3 text-slate-700">核對：<Latex math="6x^2+7x+7=(2x+1)(3x+2)+5" />。所以 <strong>被除式 = 除式 × 商式 + 餘式</strong>。</p>
+          </div>
+
+          <div className="bg-white rounded-lg p-4 border border-green-200">
+            <h3 className="font-bold text-green-700 mb-2">1. 先用長除式計算 <Latex math="(6x^2+7x+7)\div(2x+1)" /></h3>
+            <p className="text-slate-700 mb-4">每一步都保留完整長除式。先看步驟說明，再對照藍、綠、紅色長方框標示的部分。</p>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              {longDivisionSteps.map((step, index) => (
+                <section key={index} className="rounded-lg border border-slate-300 bg-white p-4">
+                  <h4 className="font-bold text-green-700 mb-2">步驟 {index + 1}</h4>
+                  <p className="text-slate-700 text-sm leading-6 mb-3">{step.instruction}</p>
+                  <PolynomialLongDivisionStep stage={index + 1} />
+                  <p className={`rounded text-center text-sm leading-6 mt-3 p-2 ${
+                    step.note.color === 'blue' ? 'bg-sky-50' :
+                    step.note.color === 'green' ? 'bg-green-50' : 'bg-rose-50'
+                  }`}>
+                    <span className={{
+                      blue: 'text-sky-700',
+                      green: 'text-green-700',
+                      red: 'text-rose-700',
+                    }[step.note.color]}>
+                      <Latex math={step.note.math} />
+                    </span>
+                  </p>
+                </section>
+              ))}
+            </div>
+            <div className="mt-4 rounded-lg bg-emerald-50 border border-emerald-200 p-4">
+              <p className="text-emerald-800 font-bold mb-1">答案</p>
+              <p className="text-slate-700">商式是 <Latex math="3x+2" />，餘式是 <Latex math="5" />。</p>
+            </div>
+          </div>
+
+          <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 className="font-bold text-amber-800 mb-2">容易出錯的地方</h3>
+            <ul className="list-disc pl-5 space-y-1 text-slate-700">
+              <li>每次相除只用兩個首項；乘回時則要乘除式的每一項。</li>
+              <li>相減時把整個下方的式放在括號內，再逐項變號，例如 <Latex math="-(6x^2+3x)=-6x^2-3x" />。</li>
+              <li>如被除式缺少某個次方，先以係數 0 補上，方便同次項對齊。</li>
+              <li>當餘式的次數小於除式的次數，長除法便完成。</li>
+            </ul>
+          </div>
+
+          <details className="bg-blue-50 rounded-lg border border-blue-200 p-4">
+            <summary className="font-bold text-blue-800 cursor-pointer">試一試：計算 <Latex math="(2x^2+7x+3)\div(2x+1)" />（按此查看答案）</summary>
+            <div className="mt-3 pt-3 border-t border-blue-200">
+              <p className="text-slate-700 mb-2">首項相除得 <Latex math="x" />，相減後剩下 <Latex math="6x+3" />；再相除得 <Latex math="3" />，乘回並相減後餘式是 0。</p>
+              <p className="text-blue-800 font-bold">商式：<Latex math="x+3" />；餘式：<Latex math="0" /></p>
+            </div>
+          </details>
+
           <div className="bg-green-50 rounded-lg p-4 border border-green-200">
-            <h3 className="font-bold text-green-800 mb-3">除法算式</h3>
-            <p className="text-slate-700 mb-3">若多項式 <Latex math="f(x)" /> 除以多項式 <Latex math="p(x)" />，所得的商式為 <Latex math="Q(x)" />，餘式為 <Latex math="R(x)" />：</p>
+            <h3 className="font-bold text-green-800 mb-3">2. 除法算式</h3>
+            <p className="text-slate-700 mb-3">長除法完成後，可以把結果寫成以下關係：</p>
             <div className="bg-white rounded-lg p-4 overflow-x-auto">
               <Latex math="\begin{aligned} \text{被除式} &= \text{除式} \times \text{商式} + \text{餘式} \\ f(x) &= p(x) \cdot Q(x) + R(x) \end{aligned}" block />
             </div>
-            <p className="text-slate-700 mt-3">其中 <Latex math="R(x)" /> 的次數必須小於 <Latex math="p(x)" /> 的次數。</p>
+            <p className="text-slate-700 mt-3">其中餘式 <Latex math="R(x)" /> 的次數必須小於除式 <Latex math="p(x)" /> 的次數。以上例子可寫成 <Latex math="6x^2+7x+7=(2x+1)(3x+2)+5" />。</p>
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-green-200">
