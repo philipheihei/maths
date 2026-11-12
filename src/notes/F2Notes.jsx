@@ -270,18 +270,18 @@ export const SimilarTrianglesNotes = ({ activeSub }) => {
                   (c) 2對邊夾住一對角 <span className="text-green-600 text-sm bg-green-50 px-2 py-0.5 rounded">← 夾角</span>
                 </div>
                 {/* 📐 判定 兩邊成比例且夾角相等 */}
-                <svg viewBox="0 0 320 130" className="w-full max-w-sm mx-auto my-2 overflow-visible">
+                <svg viewBox="0 0 320 140" className="w-full max-w-sm mx-auto my-2 overflow-visible">
                   <g transform="translate(20, 10)">
                     <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />
                     <text x="14" y="45" fontSize="14" fill="#334155" fontStyle="italic">b</text>
                     <text x="45" y="95" fontSize="14" fill="#334155" fontStyle="italic">a</text>
                     <path d="M 25 80 A 15 15 0 0 0 15.9 66.2" fill="none" stroke="#0ea5e9" strokeWidth="1.5" />
-                    {/* 綠箭頭指夾角 */}
+                    {/* 箭頭繞過三角形底邊，避免遮住圖形 */}
                     <g stroke="#16a34a" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M 50 65 Q 40 70 30 72" />
-                      <polyline points="33,66 30,72 37,76" />
+                      <path d="M 28 101 Q 19 94 11 84" />
+                      <polyline points="9,92 11,84 19,87" />
                     </g>
-                    <text x="55" y="58" fontSize="14" fill="#16a34a" fontWeight="bold">夾角</text>
+                    <text x="0" y="112" fontSize="14" fill="#16a34a" fontWeight="bold">夾角</text>
                   </g>
                   <g transform="translate(160, 5) scale(1.3)">
                     <polygon points="40,10 10,80 80,80" fill="#f8fafc" stroke="#334155" strokeWidth="2" strokeLinejoin="round" />

@@ -213,17 +213,17 @@ export const TrigRatiosNotesBlock = () => {
             <line x1="210" y1="155" x2="270" y2="101" stroke="#5ba678" strokeWidth="3" strokeDasharray="8,6" markerEnd="url(#arrowGreenShared)" />
 
             <text x="165" y="90" textAnchor="end" fill="#3b75a6" fontSize="24" fontWeight="bold" fontFamily="sans-serif">
-              <tspan x="165" dy="0"><tspan fontStyle="italic">θ</tspan> 對住個條邊</tspan>
+              <tspan x="165" dy="0"><tspan fontStyle="italic">θ</tspan> 對住的邊</tspan>
               <tspan x="165" dy="35">(對邊)</tspan>
             </text>
 
             <text x="280" y="225" textAnchor="middle" fill="#c9665e" fontSize="24" fontWeight="bold" fontFamily="sans-serif">
               <tspan fontStyle="italic">θ</tspan>
-              <tspan> 同直角夾住個條邊 (鄰邊)</tspan>
+              <tspan> 同直角夾住的邊 (鄰邊)</tspan>
             </text>
 
             <text x="435" y="80" textAnchor="middle" fill="#5ba678" fontSize="24" fontWeight="bold" fontFamily="sans-serif">
-              <tspan x="435" dy="0">直角對住個條邊</tspan>
+              <tspan x="435" dy="0">直角對住的邊</tspan>
               <tspan x="435" dy="35">(斜邊)</tspan>
             </text>
           </svg>

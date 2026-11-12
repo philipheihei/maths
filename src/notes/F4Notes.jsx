@@ -685,7 +685,7 @@ export const QuadraticEquationNotes = ({ activeSub }) => {
                 <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
                   <span className="shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center">4</span>
                   <div className="text-blue-800">
-                    <p>逐一代入 <InlineMath math="k=10" /> matching：</p>
+                    <p>逐一代入 <InlineMath math="k=10" /> 作配對：</p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 mt-1">
                       <span>A：<InlineMath math="\dfrac{2(10)+1}{10^2-1}=\dfrac{21}{99}=\dfrac{7}{33}" /></span>
                       <span>B：<InlineMath math="\dfrac{2(10)-1}{10^2+1}=\dfrac{19}{101}" /></span>
@@ -1064,42 +1064,6 @@ const CubicFactorCalculatorNotes = ({ onBack }) => {
               <p className="font-bold mb-1">預期結果：</p>
               <p>之後每按一次 <span className="px-2 py-1 bg-gray-900 text-white rounded text-xs font-bold">EXE</span>，應逐個得到三個根 <strong>1、2、3</strong>。</p>
               <p className="mt-1 text-xs">顯示次序可能不同；只要三個答案都是 1、2、3，即代表程式輸入正確。</p>
-            </div>
-          </div>
-
-          <div className="bg-violet-50 border-2 border-violet-200 rounded-xl p-4">
-            <h3 className="text-violet-900 font-bold mb-2">🔎 複數根怎樣看、怎樣寫</h3>
-            <p className="text-sm text-slate-700 mb-2">每按一次 EXE，螢幕顯示一個根；例如 <Latex math="1+2i" inline /> 就直接寫成根 <Latex math="x=1+2i" inline />。實係數三次方程的非實根會成共軛一對，實部相同、虛部正負相反；顯示次序可以不同。</p>
-            <p className="text-sm text-slate-700 mb-2">根 <Latex math="r" inline /> 對應因式 <Latex math="x-r" inline />，減去整個根時要保留括號。共軛根可合併為：</p>
-            <div className="bg-white rounded-lg p-2 mb-4 border border-violet-200">
-              <Latex math="\left[x-(a+bi)\right]\left[x-(a-bi)\right]=(x-a)^2+b^2\quad (i^2=-1)" block />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              <div className="border-t-2 border-violet-300 pt-3">
-                <h4 className="text-violet-900 font-bold mb-2">例 1：正實部</h4>
-                <p className="text-slate-700">方程：<Latex math="x^3-5x^2+11x-15=0" inline /></p>
-                <p className="text-slate-700">螢幕根：<Latex math="3,\ 1+2i,\ 1-2i" inline /></p>
-                <p className="text-slate-700">寫根：<Latex math="x=3,\ 1\pm2i" inline /></p>
-                <p className="text-slate-700 mt-1">因式形式：</p>
-                <Latex math="(x-3)\left((x-1)^2+4\right)=0" block />
-              </div>
-              <div className="border-t-2 border-violet-300 pt-3">
-                <h4 className="text-violet-900 font-bold mb-2">例 2：負實部</h4>
-                <p className="text-slate-700">方程：<Latex math="x^3+3x^2+9x-13=0" inline /></p>
-                <p className="text-slate-700">螢幕根：<Latex math="-2+3i,\ 1,\ -2-3i" inline /></p>
-                <p className="text-slate-700">寫根：<Latex math="x=1,\ -2\pm3i" inline /></p>
-                <p className="text-slate-700 mt-1">因式形式：</p>
-                <Latex math="(x-1)\left((x+2)^2+9\right)=0" block />
-              </div>
-              <div className="border-t-2 border-violet-300 pt-3">
-                <h4 className="text-violet-900 font-bold mb-2">例 3：純虛根</h4>
-                <p className="text-slate-700">方程：<Latex math="x^3+4x^2+4x+16=0" inline /></p>
-                <p className="text-slate-700">螢幕根：<Latex math="-4,\ 2i,\ -2i" inline /></p>
-                <p className="text-slate-700">寫根：<Latex math="x=-4,\ \pm2i" inline /></p>
-                <p className="text-slate-700 mt-1">因式形式：</p>
-                <Latex math="(x+4)(x^2+4)=0" block />
-              </div>
             </div>
           </div>
 
@@ -2723,13 +2687,13 @@ export const LogFunctionNotes = ({ activeSub }) => {
               <div className="bg-white p-3 rounded-lg">
                 <MathDisplay latex={String.raw`
 \begin{aligned}
-2^x &= 30 \quad \leftarrow \text{(準確至 3 位有效數字)} \\
+2^x &= 30 \\
 \log(2^x) &= \log 30 \quad \leftarrow \text{要加括號} \\
 x \log 2 &= \log 30 \\
 x &= \frac{\log 30}{\log 2} \\
-x &= 4.91
+x &= 4.91 \quad \leftarrow \text{(準確至 3 位有效數字)}
 \end{aligned}
-                `} />
+                `} className="text-[10px] md:text-base" />
               </div>
               <div className="bg-white p-3 rounded-lg">
                 <MathDisplay latex={String.raw`

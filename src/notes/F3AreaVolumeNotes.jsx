@@ -204,7 +204,7 @@ export const AreaVolumeF3Notes = ({ activeSub }) => {
                   <div className="mt-2 text-center">
                     <div className="inline-grid grid-cols-[auto_auto] gap-x-1 text-left font-sans leading-5">
                       <span>三角形的面積</span>
-                        <span>= <Latex math="\\frac{1}{2}" /> × 12 × 7</span>
+                        <span>= <Latex math="\frac{1}{2}" /> × 12 × 7</span>
                       <span></span>
                       <span>= <span className="underline">42 m²</span></span>
                     </div>

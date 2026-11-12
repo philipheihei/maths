@@ -196,7 +196,7 @@ const ComplexNotes = ({ onBack }) => (
             <div className="flex items-center gap-2 bg-blue-50 rounded-lg px-3 py-2">
               <span className="shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center">4</span>
               <div className="text-blue-800">
-                <p>逐一代入 <InlineMath math="k=10" /> matching：</p>
+                <p>逐一代入 <InlineMath math="k=10" /> 作配對：</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 mt-1">
                   <span>A：<InlineMath math="\dfrac{2(10)+1}{10^2-1}=\dfrac{21}{99}=\dfrac{7}{33}" /></span>
                   <span>B：<InlineMath math="\dfrac{2(10)-1}{10^2+1}=\dfrac{19}{101}" /></span>

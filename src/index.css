@@ -140,6 +140,43 @@ body {
   text-align: right;
 }
 
+.calculator-lcd-monitor {
+  align-items: flex-end;
+  gap: 0.08em;
+  padding-top: 1.05rem;
+  padding-bottom: 0.35rem;
+}
+
+.calculator-lcd-monitor-mode,
+.calculator-lcd-monitor-expression {
+  position: absolute;
+  top: 4px;
+  z-index: 1;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.calculator-lcd-monitor-mode {
+  left: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+}
+
+.calculator-lcd-monitor-expression {
+  right: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+}
+
+.calculator-lcd-monitor-suffix {
+  align-self: flex-end;
+  margin-bottom: 0.1em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.72em;
+  line-height: 1;
+}
+
 .calculator-lcd-glare {
   position: absolute;
   inset: 0;
