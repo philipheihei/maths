@@ -1474,24 +1474,42 @@ export const RemainderFactorNotes = ({ activeSub }) => {
 
       <CollapsibleSection id="cubic-factorization" title="三次方程的因式分解" num={5} color="purple" activeSub={activeSub} sectionRef={s5}>
         <div className="space-y-4">
-          <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
-            <h3 className="font-bold text-purple-800 mb-3">方法：利用已知因式，再逐步因式分解</h3>
-            <p className="text-slate-700">DSE 題目通常會提供一個因式（整除），先除以已知因式，再把剩下的二次式因式分解。</p>
-          </div>
-
           <div className="bg-white rounded-lg p-4 border border-purple-200">
-            <h3 className="font-bold text-purple-700 mb-3">例題：解一元三次方程</h3>
-            <div className="bg-amber-50 rounded-lg p-3 text-center mb-4 overflow-x-auto">
-              <Latex math="2x^3-3x^2-11x+6=0" block />
+            <h3 className="font-bold text-purple-700 mb-3">例題：因式分解三次多項式</h3>
+            <div className="bg-amber-50 rounded-lg p-3 mb-4">
+              <p className="text-slate-700">設 <Latex math="f(x)=2x^3-3x^2-11x+6" />。已知 <Latex math="x+2" /> 是 <Latex math="f(x)" /> 的因式。因式分解 <Latex math="f(x)" />。</p>
             </div>
             <div className="space-y-3 text-slate-700">
-              <div className="bg-blue-50 rounded-lg p-3">
-                <p className="font-bold text-blue-800 mb-2">Step 1：題目已知因式 <Latex math="x+2" />，除以後再因式分解</p>
-                <Latex math="\begin{aligned} &\phantom{=} 2x^3-3x^2-11x+6 \\ &= (x+2)(2x^2-7x+3) \\ &= (x+2)(2x-1)(x-3) \end{aligned}" block />
-              </div>
-              <div className="bg-green-50 rounded-lg p-3 text-green-800 font-bold">
-                <p>∴ <Latex math="(x+2)(2x-1)(x-3)=0" /></p>
-                <p className="mt-2">答案：<Latex math="x=-2,\ \frac{1}{2},\ 3" /></p>
+              <div className="bg-blue-50 rounded-lg p-3 space-y-3">
+                <p className="font-bold text-blue-800">方法 1：用直觀法找二次因式</p>
+                <p>已知 <Latex math="x+2" /> 是因式，也可以用長除式除以 <Latex math="x+2" /> 求商；本例的商是 <Latex math="2x^2-7x+3" />（長除式步驟略）。以下改用直觀法逐格找出這個二次因式：</p>
+                <div className="bg-white rounded-lg p-2 overflow-x-auto">
+                  <Latex math="(\colorbox{#fef08a}{$x$}\colorbox{#bbf7d0}{$+2$})(\colorbox{#fef08a}{$\square x^2$}+\square x+\colorbox{#bbf7d0}{$\square$})" block />
+                </div>
+                <p className="text-sm text-slate-600"><span className="rounded bg-yellow-200 px-1">黃色部分相乘</span>，先配出 <Latex math="x^3" /> 項；<span className="rounded bg-green-200 px-1">綠色部分相乘</span>，配出常數項。</p>
+                <div className="space-y-2">
+                  <p><strong>① 看 <Latex math="x^3" /> 項：</strong><Latex math="x" /> 乘甚麼才得到 <Latex math="2x^3" />？是 <Latex math="2x^2" />，所以第一格填 <Latex math="2" />。</p>
+                  <p><strong>② 看常數項：</strong><Latex math="2" /> 乘甚麼才得到 <Latex math="6" />？是 <Latex math="3" />，所以最後一格填 <Latex math="3" />。</p>
+                </div>
+                <p>現在只剩中間一格：</p>
+                <div className="bg-white rounded-lg p-2 overflow-x-auto">
+                  <Latex math="(\colorbox{#bae6fd}{$x$}\colorbox{#fbcfe8}{$+2$})(2x^2+\colorbox{#fbcfe8}{$\square x$}+\colorbox{#bae6fd}{$3$})" block />
+                </div>
+                <p className="text-sm text-slate-600"><span className="rounded bg-sky-200 px-1">淺藍配對</span>：<Latex math="x" /> 和 <Latex math="3" />；<span className="rounded bg-pink-200 px-1">粉紅配對</span>：<Latex math="+2" /> 和 <Latex math="\square x" />。兩組相乘後相加，便得到 <Latex math="x" /> 項。</p>
+                <p><strong>③ 看 <Latex math="x" /> 項：</strong>展開後，<Latex math="x" /> 項由 <Latex math="x\times 3" /> 和 <Latex math="2\times(\square x)" /> 相加而成，要得到 <Latex math="-11x" />。</p>
+                <p>把兩組配對所得的 <Latex math="x" /> 項相加：</p>
+                <Latex math="\begin{aligned} 3x+2(\square x) &= -11x \\ 2(\square x) &= -14x \\ \square x &= -7x \\ \square &= -7 \end{aligned}" block />
+                <p>所以中間一格填 <Latex math="-7" />，二次因式就是 <Latex math="2x^2-7x+3" />。</p>
+                <div className="bg-white rounded-lg p-2 overflow-x-auto">
+                  <Latex math="f(x)=(x+2)\colorbox{#fef08a}{$(2x^2-7x+3)$}" block />
+                </div>
+                <p><strong>看看這個二次因式能否再分解：</strong><Latex math="2x^2-7x+3" /> 可以分解為 <Latex math="(2x-1)(x-3)" />。</p>
+                <p className="rounded-lg bg-white p-3 text-black font-bold">∴ <Latex math="f(x)=(x+2)\colorbox{#fef08a}{$(2x-1)(x-3)$}" /></p>
+                <p className="text-sm text-slate-600">二次因式不一定能再分解成有理數係數的一次因式；若沒有有理數根，就不能這樣分解。若題目要求求根，答案亦可能是無理數或虛數。</p>
+                <div className="border-t border-blue-200 pt-3">
+                  <p className="font-bold text-blue-800">方法 2：用長除式</p>
+                  <p>用 <Latex math="x+2" /> 除 <Latex math="f(x)" />，商為 <Latex math="2x^2-7x+3" />（不展示步驟）。</p>
+                </div>
               </div>
             </div>
           </div>
