@@ -2084,14 +2084,14 @@ export const IdentitiesF2Notes = ({ activeSub }) => {
                  <div className="border-l-4 border-emerald-500 bg-emerald-50 p-4">
                    <h4 className="mb-1 font-bold text-emerald-800">代入數字檢查</h4>
                    <p className="mb-3 text-sm text-slate-700">令 <Latex math="a=1,\quad b=3" />，比較兩種算法：</p>
-                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2 [&_.katex-display]:mb-0 [&>div>span.block]:mb-0">
                      <div className="border-l-2 border-sky-400 pl-3">
                        <p className="mb-1 font-semibold text-sky-800">正確：平方整個和</p>
-                       <Latex math="\begin{aligned}(a+b)^2 &= (1+3)^2 \\ &= 4^2 = 16\end{aligned}" block left />
+                       <Latex math="\begin{aligned}(a+b)^2 &= (1+3)^2 \\ &= 4^2 \\ &= 16\end{aligned}" block left />
                      </div>
                      <div className="border-l-2 border-violet-400 pl-3">
                        <p className="mb-1 font-semibold text-violet-800">錯誤：平方後相加</p>
-                       <Latex math="\begin{aligned}a^2+b^2 &= 1^2+3^2 \\ &= 1+9 = 10\end{aligned}" block left />
+                       <Latex math="\begin{aligned}a^2+b^2 &= 1^2+3^2 \\ &= 1+9 \\ &= 10\end{aligned}" block left />
                      </div>
                    </div>
                  </div>

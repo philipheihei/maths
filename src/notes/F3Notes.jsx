@@ -638,7 +638,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
               <p className="text-slate-700 mb-2">3. 已知三邊邊長，求 <span className="text-green-600 font-bold"><Latex math="\frac{\tan\theta}{\cos\theta}" inline /></span></p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
                   <div className="text-blue-600">
-                    <Latex math="\begin{aligned} \tan\theta &= \frac{3}{\sqrt{40}}, \quad \cos\theta = \frac{\sqrt{40}}{7} \\ \therefore \frac{\tan\theta}{\cos\theta} &= \frac{3}{\sqrt{40}} \times \frac{7}{\sqrt{40}} = \frac{21}{40} \end{aligned}" block left />
+                    <Latex math="\begin{aligned} \tan\theta &= \frac{3}{\sqrt{40}} \\[-3px] \cos\theta &= \frac{\sqrt{40}}{7} \\[-3px] \therefore \frac{\tan\theta}{\cos\theta} &= \frac{3}{\sqrt{40}} \times \frac{7}{\sqrt{40}} \\[-3px] &= \frac{21}{40} \end{aligned}" block left />
                   </div>
                   <div className="flex items-center justify-center">
                     <svg width="100%" height="auto" viewBox="10 28 320 205" className="max-w-[280px] mx-auto block">
@@ -722,7 +722,7 @@ export const TrigonometricIdentitiesNotes = ({ activeSub }) => {
             </div>
             <div className="flex items-center gap-4 flex-wrap">
               <div className="text-blue-600 text-lg">
-                <Latex math="\begin{aligned} 2\sin\theta &= \sqrt{3} \\[-3px] \sin\theta &= \frac{\sqrt{3}}{2} \\[-3px] \theta &= 60^\circ \end{aligned}" block left />
+                <Latex math="\begin{aligned} 2\sin\theta\phantom{\mathbin{-}\sqrt{3}} &= \sqrt{3} \\[-3px] \sin\theta\phantom{2\,\mathbin{-}\sqrt{3}} &= \frac{\sqrt{3}}{2} \\[-3px] \theta\phantom{2\,\sin\,\mathbin{-}\sqrt{3}} &= 60^\circ \end{aligned}" block left />
               </div>
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-green-600 text-2xl">←</span>

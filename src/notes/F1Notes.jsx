@@ -3731,10 +3731,16 @@ export const RateRatioNotes = ({ activeSub }) => {
             <div className="mb-4 flex items-center font-sans">
               <div className="text-blue-800">e.g. <span className="bg-yellow-300 font-bold"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
               <span className="mx-4 font-bold text-2xl">⇒</span>
-              <div className="inline-block align-middle space-y-1 bg-slate-50 p-2 rounded">
-                <div><span className="bg-yellow-300 font-bold px-1"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span></div>
-                <div><span className="bg-yellow-300 font-bold px-1"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
-                <div><span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span> <Latex math="=" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></div>
+              <div className="inline-grid grid-cols-[max-content_max-content_max-content] items-center gap-x-1 gap-y-1 align-middle bg-slate-50 p-2 rounded">
+                <span><span className="bg-yellow-300 font-bold px-1"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span></span>
+                <Latex math="=" />
+                <span><span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span></span>
+                <span><span className="bg-yellow-300 font-bold px-1"><Latex math="a" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span></span>
+                <Latex math="=" />
+                <span><span className="bg-yellow-300 font-bold px-1"><Latex math="4" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></span>
+                <span className="relative left-0.5"><span className="bg-pink-300 font-bold px-1"><Latex math="b" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="c" /></span></span>
+                <Latex math="=" />
+                <span><span className="bg-pink-300 font-bold px-1"><Latex math="5" /></span> <Latex math=":" /> <span className="bg-green-300 font-bold px-1"><Latex math="6" /></span></span>
               </div>
             </div>
           </div>
@@ -3857,7 +3863,7 @@ export const RateRatioNotes = ({ activeSub }) => {
               <span className="font-sans">比例尺</span>
               <span className="text-green-600 text-2xl">→</span>
               <div className="flex flex-col items-center font-sans">
-                <span>1 : n</span>
+                <span className="relative left-1">1 : n</span>
                 <span className="text-red-600 text-sm font-sans mt-1"><span className="border border-red-600 p-0.5 rounded">圖</span>的長度 : <span className="text-red-600 font-bold">實際</span>長度</span>
               </div>
             </div>

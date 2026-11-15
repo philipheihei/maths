@@ -128,7 +128,7 @@ export const TrigApplicationsF4Notes = ({ activeSub }) => {
       
       {/* Left angle (62°) */}
       <path d="M 119 160 A 24 24 0 0 0 106.3 138.8" fill="none" stroke="#334155" strokeWidth="2" />
-      <text x="122" y="150" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">62°</text>
+      <text x="134" y="152" fontSize="13" fill="#334155" textAnchor="middle" fontWeight="bold">62°</text>
 
       {/* Right angle (39°) */}
       <path d="M 279 160 A 26 26 0 0 1 284.7 143.6" fill="none" stroke="#334155" strokeWidth="2" />

@@ -977,7 +977,7 @@ export const MCTopicsNotes = ({ activeSub }) => {
                 <div className="flex items-start gap-2 bg-white p-3 rounded-lg border border-slate-200">
                   <span className="font-bold text-emerald-600 shrink-0">Step 3</span>
                   <div>
-                    <Latex math="\Delta ABC" /> 與 <Latex math="\Delta ACD" /> 共用相同的高（即梯形的高），因此面積比亦為 3 : 2：
+                    <Latex math="\Delta ABC" /> 與 <Latex math="\Delta ACD" /> 共用相同的高（即梯形的高），因此面積比亦為 3 : 2
                     <div className="font-bold text-slate-800 mt-1">
                       <Latex math="\Delta ABC \text{ 面積} = 112 \div 2 \times 3 = 168" />
                     </div>

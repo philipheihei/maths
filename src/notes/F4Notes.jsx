@@ -921,8 +921,8 @@ export const NatureOfRootsNotes = ({ activeSub }) => {
                 <Latex math="\begin{aligned}
 &\colorbox{#fef08a}{$\alpha+\beta$}=−\frac{b}{a}=\colorbox{#fef08a}{$−k$},\quad \colorbox{#fbcfe8}{$\alpha\beta$}=\frac{c}{a}=\colorbox{#fbcfe8}{$−3$} \\
 &\alpha^2+\beta^2=(\colorbox{#fef08a}{$\alpha+\beta$})^2−2\colorbox{#fbcfe8}{$\alpha\beta$} \\
-&\qquad\qquad\ =(\colorbox{#fef08a}{$−k$})^2−2(\colorbox{#fbcfe8}{$−3$}) \\
-&\qquad\qquad\ =k^2+6
+&\phantom{\alpha^2+\beta^2}=(\colorbox{#fef08a}{$−k$})^2−2(\colorbox{#fbcfe8}{$−3$}) \\
+&\phantom{\alpha^2+\beta^2}=k^2+6
 \end{aligned}" block />
               </div>
               <p className="mt-2 text-slate-700 font-bold">正確選擇：B</p>
@@ -2093,7 +2093,7 @@ export const StraightLineEquationNotes = ({ activeSub }) => {
                 </div>
                 <span className="font-bold text-xl">→</span>
                 <div>
-                  <Latex math="\begin{cases} x + 2y = 5 \\ x − y = −1 \end{cases}" />
+                  <Latex math="\begin{cases} \begin{aligned} x + 2y &= 5 \\ x − y &= −1 \end{aligned} \end{cases}" />
                 </div>
               </div>
             </div>

@@ -1896,7 +1896,9 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
                     <p className="text-blue-800 font-bold text-sm mb-1">e.g. 若係數不為 1，需先全式除之：</p>
                     <Latex math="\color{#0e7490}{2x^2 + 2y^2 - 12x + 16y - 22 = 0}" block />
                     <p className="text-green-600 font-bold text-sm text-center my-1">全式 ÷ 2 ↓</p>
-                    <Latex math="\color{#16a34a}{\underline{x^2 + y^2}} \color{#0e7490}{- 6x + 8y - 11 = 0}" block />
+                    <div className="relative left-6">
+                      <Latex math="\color{#16a34a}{\underline{x^2 + y^2}} \color{#0e7490}{- 6x + 8y - 11 = 0}" block />
+                    </div>
                   </div>
                   <div className="text-green-600 font-bold text-lg bg-green-50 px-3 py-2 rounded shrink-0">
                     <Latex math="x^2" inline /> 和 <Latex math="y^2" inline /> 的係數必定為 1
@@ -2043,7 +2045,7 @@ export const LocusAndCircleNotes = ({ activeSub, onNavigate }) => {
                       <div className="font-bold text-red-800">情況 III</div>
                       <div><Latex math="\Delta < 0" inline /></div>
                       <svg viewBox="0 0 84 48" className="w-full h-12 mt-1" aria-label="直線與圓沒有交點">
-                        <circle cx="42" cy="31" r="17" fill="white" stroke="#0f172a" strokeWidth="1.5" />
+                        <circle cx="42" cy="29" r="17" fill="white" stroke="#0f172a" strokeWidth="1.5" />
                         <line x1="8" y1="4" x2="76" y2="4" stroke="#0f172a" strokeWidth="1.5" />
                       </svg>
                       <div className="font-bold mt-1">沒有交點</div>
